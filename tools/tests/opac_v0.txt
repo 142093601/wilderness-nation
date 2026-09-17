@@ -1,0 +1,37 @@
+# v0 功能验收（单机部分）
+#
+# 每条 cmd 会用真客户端执行，输出从 logs/latest.log 读回**文本**再断言。
+# 这里只放"单机就能确定"的项；多人相关（跨玩家领地权限、领地内机械被他人操作）
+# 必须两个真实玩家，归到专用服务端 + 多客户端那一层。
+
+# 1) OPAC 命令树在
+cmd: /help oclaims
+expect: /oclaims claim
+expect: /oclaims server \(
+expect: /oclaims sub-claim
+
+# 2) 领地状态可读（未圈地也应正常回话）
+cmd: /oclaims about
+expect: Open Parties and Claims
+expect: Claims: \d+ / \d+
+expect: Forceload-marked: \d+ / \d+
+
+# 3) 圈地：不带参数＝圈脚下这块地。已圈过会说 already/claimed，都算通过
+cmd: /oclaims claim
+expect: claimed the chunk|Already claimed|already claimed|Successfully claimed
+
+# 4) 圈完地后状态里至少有 1 块（换个说法再验一次，防止只看一句话）
+cmd: /oclaims about
+expect: Claims: [1-9]\d* /
+
+# 5) 性能读数可用（TPS 盲区的探针）
+cmd: /spark tps
+expect: TPS from last
+expect: Tick durations
+
+# 6) 服务端健康度（spark 的汇总报告：TPS / tick / 内存）
+cmd: /spark health
+expect: TPS|tick|Health|ms
+
+# 截图留证：领地界面（真正的"看画面"部分，文本断言覆盖不到）
+shot: v0-claim.png

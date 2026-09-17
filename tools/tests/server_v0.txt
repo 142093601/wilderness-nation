@@ -1,0 +1,64 @@
+# v0 服务端验收（走 RCON，纯文本，不涉及窗口）
+#
+# 服务端与客户端 mod 集合不同（纯客户端 mod 必须排除、服务端专用 mod 必须加入），
+# 所以"客户端能跑"不等于"服务端能跑"。这里确认：包能起、关键 mod 真的加载了、
+# 设计稿要用的命令都能用。
+#
+# 两条写测试的纪律（都是实测踩出来的）：
+#   1. **回归必须可重复执行**。setblock 把方块设成"完全相同的状态"时，
+#      原版 Level.setBlock 返回 false → "Could not set the block"。
+#      所以断言**不能写在 setblock 上**：先清成空气再放，且断言只放在查询命令上。
+#   2. 断言用不带 run 的 `execute if block`：通过回 "Test passed"、不通过回 "Test failed"。
+#      已做正反对照验证（错方块名确实回 Test failed），所以它是能区分的断言。
+
+# ── 1) 服务端活着、能接受 RCON ────────────────────────────────────────────────
+cmd: list
+expect: players online|There are
+
+# ── 2) 性能读数：TPS + tick 百分位（性能预算要的 MSPT 就来自这里）──────────────
+# ⚠️ 不要用 spark tps 做主断言：实测**它在 RCON 下没有输出**（连试两次皆空），
+#    而原版 /tick query 有。它不依赖任何 mod，且直接给 P50/P95/P99。
+cmd: tick query
+expect: Target tick rate: 20\.0
+expect: Average time per tick
+expect: Percentiles: P50
+
+# ── 3) OPAC 在服务端侧加载了（它有服务端权威逻辑，光客户端有没用）────────────
+cmd: help oclaims
+expect: /oclaims claim
+
+# ── 4) Create 在服务端侧加载了（放得下方块 = 注册表里有）──────────────────────
+cmd: forceload add 0 0
+expect: Marked chunk|force load
+cmd: setblock 0 100 0 minecraft:air
+cmd: setblock 0 100 0 create:cogwheel
+cmd: setblock 0 101 0 minecraft:air
+cmd: setblock 0 101 0 create:mechanical_press
+cmd: setblock 0 102 0 minecraft:air
+cmd: setblock 0 102 0 create:creative_motor
+cmd: execute if block 0 100 0 create:cogwheel
+expect: Test passed
+cmd: execute if block 0 101 0 create:mechanical_press
+expect: Test passed
+cmd: execute if block 0 102 0 create:creative_motor
+expect: Test passed
+
+# ── 5) 设计稿要用的世界设置命令（世界边界 5~8k 是设计约定）────────────────────
+cmd: worldborder set 6000
+expect: World border|world border|border
+cmd: worldborder get
+expect: 6000
+
+# ── 6) 日历与时代推进要用的时间/天气/存档命令 ────────────────────────────────
+cmd: time set day
+expect: Set the time
+cmd: weather clear
+expect: Set the weather
+cmd: save-all
+expect: Saved the game
+
+# ── 7) 清掉测试痕迹（不断言：成功时可能没有回话）────────────────────────────
+cmd: setblock 0 100 0 minecraft:air
+cmd: setblock 0 101 0 minecraft:air
+cmd: setblock 0 102 0 minecraft:air
+cmd: forceload remove 0 0

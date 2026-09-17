@@ -1,0 +1,3 @@
+# 需要汉化的 mod（由 tools/lang_audit.py 生成）
+
+open-parties-and-claims-neoforge-1.21.1-0.31.6.jar	613 键	其他语言: 无

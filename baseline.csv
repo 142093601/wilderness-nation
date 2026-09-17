@@ -1,0 +1,19 @@
+日期,阶段,mod数,启动耗时s,空闲帧数,TPS,内存峰值GB,新增内容,结论
+,组0 纯加载器,0,,,,,无,未做（建议补：否则没有"性能组带来多少开销"的对照）
+2026-09-14,组1 性能核心,12,32,,20,,11个性能mod + 1前置 configurable,通过。常驻中位 4.3ms/tick（p95 11.2ms）＝满 TPS；加载期有尖峰（单 tick 最长 2350ms，伴随 GC）。注：启动耗时为旧口径（ModLauncher→进世界）
+2026-09-14,组1.5 MoreCulling,14,27.9,,20,,moreculling + cloth-config（自动前置）,通过。口径=ModernFix "Game took N seconds to start"：首启 37.0s → 二次 27.9s，**确认首启变慢是资源/模型烘焙缓存重建**（MoreCulling 注入方块模型剔除）。二次启动仅到主菜单未进世界
+2026-09-14,组1.5 封口（15 jar）,15,33.5,,19.94,,MoreCulling + cloth-config + ScalableLux（C2ME 已撤）,通过。标准口径：ModernFix total_load 33.5s / game_start 27.2s / 主菜单→进世界 6.3s。**稳态 TPS：10s 19.94 / 5s 19.96 / 15m 19.79（达标 ≥19.5）**；tick 中位 8.6ms（≈17% 预算，余量充足）；进程 CPU 13~25%。注：1m TPS 17.3 源于一次 339.9ms 尖峰（加载残留），非稳态
+2026-09-14,组1.5 C2ME,15,,,,,c2me 0.4.0-alpha,撤掉（未采纳）。日志证据：关掉 ModernFix 4 项优化（含 bugfix.chunk_deadlock）· 自身 natives_math 模块因 Java 版本禁用 · mixin 静态绑定违规（PRIVATE @Overwrite readChunk）· 与 ScalableLux 光照/线程领域重叠 · alpha · 与 RoadWeaver 已知不兼容。已挪回 mods-staging
+2026-09-14,组2 Create,16,36.95,,正常（主观）,,create 6.0.10（自带 flywheel 1.0.6 + ponder 1.0.82 + registrate）,通过。total_load 36.95s（+3.5s vs 组1.5）；实际游玩 3.7 分钟无卡顿；零崩溃、**无新增警告类别**。**关键实测通过：Schematicannon 认得 scripts 生成的 .nbt 图纸 → 图纸库可程序化批量产出（省 10~15h）**
+2026-09-15,组3+4 合并（OPAC + YBD）,19,38.27,,未测（仅冒烟）,,open-parties-and-claims + YungsBetterDungeons + YungsApi,通过（冒烟级）。**首次全自动启动**（tools/autotest.py）：classpath 106 条全唯一 · 自动进世界 · 停留 45s · graceful 退出 · 自清 session.lock · 自动采快照。ModernFix：total_load 38.27s / game_start 34.75s / 主菜单→进世界 3.52s（+1.3s vs 组2，与新增 2 个 mod 相符）。ERROR 2 条＝QuickPlayLog 写 quickplay 日志失败（版本目录路径含中文，无害；反证 quick-play 生效）；非 refmap WARN 23 条、无新增类别。**未做功能验收（圈地/机械）与 TPS 实测**
+2026-09-15,组3+4 未做,,,,,,,待办：进世界后用 ' 打开 OPAC 界面圈一块地；在领地内放 Create 机械验证不被保护拦截（OPAC 明确支持 Create）。这是 v0 唯一剩下的人工步骤
+,,,,,,,,组5 中文界面 + 字体,待办：OPAC 已确认**只有 en_us**（无中文）；MC 本体 lang 已是 zh_cn。缺的是各 mod 自带文本的汉化，需另找来源
+2026-09-15,⚠️ 作废说明,,,,,,,--demo 试玩模式,上文 09-14 的自动测量**全部跑在试玩模式**（版本 JSON 的 --demo 被错误加入命令行：解析器忽略 rules.features）。试玩模式禁多人、有 5 游戏日上限。**数值本身可能仍可比，但配置不同，需重测确认**（加载耗时/DPS 类指标重测成本已接近零）
+2026-09-15,真客户端自动化回归（19 jar）,19,,,20.0/20.0/17.6/19.5/19.8,,tools/game_agent.py + tests/opac_v0.txt,通过 **6/6**（退出码 0）：/help oclaims · /oclaims about · claim · 复查 · /spark tps · /spark health。首个**可断言文本输出**的回归套件（命令输出直接读 logs/latest.log，不靠截图）。tick 3.6/6.7/11.6/21.6ms（10s）；内存 833MB/6GB；进程 CPU 12~31%。**圈地验收项 1 通过**（claim 回话 successfully claimed）
+2026-09-15,数据安全教训,,,,,,,强杀 java 会丢 OPAC 领地数据（上次硬杀后开局读到 Claims: 0/500）。**必须优雅退出**——autotest/game_agent 已改用 WM_CLOSE + 超时才强杀
+2026-09-15,组1.5 服务端（专用）,,,,,,,专用服务端 15 mod（客户端 19 − 4 纯客户端）,"通过。首次启动 Done (7.502s)，ModernFix 记加载总时长 29.0s。空闲 MSPT avg 0.4ms（P50 0.4/P95 0.6/P99 0.7）。**服务端套件 22/22，连跑两次结果一致**。注：环境坑＝PATH 上是 JDK 17，run.bat 用裸 java 会因 major 65.0 启动即死且卡在 pause"
+2026-09-15,组1.5+ 服务端 1 人在线,,,,,20.0（全窗口）,,联机（客户端 19 mod ↔ 服务端 15 mod）,"通过 **9/9**。**1 人在线 MSPT：avg 5.0ms，P50 4.6/P95 8.4/P99 9.2**（设计预算 ≤30ms）。联机下 Create 方块可放、OPAC 可圈地、spark 可读 TPS；客户端圈的地服务端可见（跨层断言）。领地数据经客户端+服务端重启仍在"
+2026-09-15,服务端注意事项,,,,,,,`Can't keep up! Running 4503ms or 90 ticks behind`,save-all 同步存档时出现一次掉队警告（0 人在线）。稳态无此问题（P99 0.7ms）。**排查方向**：首次世界生成后的存档开销；后续用 1 人/多人复测确认是否复现
+2026-09-15,图纸批量校验（离线）,不存在磁盘,,,,,blueprint_check.py,通过 **10/10 结构 · 12/12 方块 ID**。根键/gzip/坐标范围/无 Properties 全过；图纸用到的 12 种方块全部在包内真实存在（用版本 jar + 19 个 mod jar 的 blockstates 反查）。10 张里 2 张是 Create 自己写出的 uploaded/。**不开游戏、不起服务端即可重跑**
+2026-09-15,中文本地化审计（离线）,,,,,,lang_audit.py,结论：**OPAC 是唯一硬缺口（613 键 0% 中文）**；create 6 已 99%（3619/3639）；modernfix 86%、YBD 80%、moreculling 89%、neruina 99%、cloth-config 98%、entityculling 100%；10 个 mod 无面向玩家的文本。**"组5"因此从"找汉化包"变成"给 OPAC 补一份 zh_cn 资源包"**
+2026-09-15,押后项,,,,,,,DEFERRED.md,已登记：A 联机功能（跨领地保护/领地内机械/队伍共有/领地内图纸/领地界面）· B 界面视觉（Ponder/领地界面/图纸观感/字体）· C 中文补全 · D 性能并发（等真服务器）· E 可选（组0 基线、图纸扩到 5 模块）

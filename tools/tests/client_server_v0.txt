@@ -1,0 +1,47 @@
+# 客户端连专用服务端（真·联机链路）
+#
+# 先决条件：server_ctl.py --start 已就绪；ops.json 里是**离线 UUID**
+# （online-mode=false 时服务端会忽略客户端自报 UUID，改按名字算离线 UUID ——
+#  用 RCON `op 玩家名` 时玩家不在线，会写进一个随机 UUID，白写）。
+#
+# 验的是：带客户端 mod 的客户端 ↔ 只装服务端 mod 的服务端，两边 mod 集合不同才是真实联机配置。
+#
+# ⚠️ 两条实测出来的断言纪律：
+#   1. **原版命令回显跟随客户端语言**（本地 lang=zh_cn）→ 英文断言全不匹配
+#      （"Changed the block" 实际是"已更改位于…的方块"）。
+#      所以凡"能问服务端"的事实，一律用 rcon: 步骤 —— 服务端控制台**永远英文**。
+#   2. mod 自己的消息不受影响：OPAC 只有 en_us、spark 也没翻译，所以它们是英文的。
+
+# ── 客户端侧：必须是"玩家本人"才能做的事，以及 mod 自己的英文输出 ──────────────
+cmd: /oclaims about
+expect: Open Parties and Claims
+expect: Claims: \d+ / \d+
+expect: Forceload-marked: \d+ / \d+
+
+cmd: /oclaims claim
+expect: claimed the chunk|Already claimed|already claimed
+
+cmd: /spark tps
+expect: TPS from last
+expect: Tick durations
+
+# 客户端放一个 Create 方块（这一步只看"有没有输出"，判定交给下面的 rcon 断言）
+cmd: /setblock 0 110 0 create:cogwheel
+
+# ── 服务端侧核对：RCON 输出永远是英文，断言稳定 ──────────────────────────────
+rcon: execute if block 0 110 0 create:cogwheel
+expect: Test passed
+
+rcon: list
+expect: players online
+
+rcon: tick query
+expect: Target tick rate: 20\.0
+expect: Percentiles: P50
+
+# 服务端权威的领地系统在联机下生效（客户端刚圈的地，服务端应该看得见）
+rcon: oclaims about niuniu_jiang
+expect: Claims: [1-9]\d* / 500
+
+# ── 收尾 ─────────────────────────────────────────────────────────────────────
+rcon: setblock 0 110 0 minecraft:air

@@ -1,0 +1,67 @@
+# ============================================================================
+# nation-pack · 什么进仓库、什么不进
+#
+# 原则：**仓库里只放文本与决策**。mod 的 jar、服务端安装、世界存档、
+# 运行产物一律不进——它们由 packwiz 的元数据引用（mods/*.pw.toml），
+# 玩家端用 packwiz-installer 增量同步。
+#
+# 为什么 jar 不进（用真实数字说话）：
+#   · 参照成熟包 All the Mods 10 = 479 个 jar / 1.3 GB（同为 1.21.1 NeoForge）
+#   · GitHub 单文件硬限 100 MB；Git LFS 免费额度只有 1 GB 存储 + 1 GB/月流量 → 必爆
+#   · 很多 mod 的再分发许可**明确禁止**被内嵌进整合包分发（清单引用才是稳的）
+# ============================================================================
+
+# ---------- mod 本体：只有元数据进仓库 ----------
+mods/*.jar
+!mods/*.pw.toml
+mods-staging/
+server/
+*.jar.tmp
+
+# ---------- 运行与测试产物 ----------
+data/
+logs/
+crash-reports/
+saves/
+options.txt
+options.txt.autotest-backup
+servers.dat
+usercache.json
+usernamecache.json
+*.log
+.session.lock
+session.lock
+
+# ---------- 导出/构建产物（要发布时手动 git add -f） ----------
+dist/
+export/
+*.mrpack
+*.cf.zip
+build/
+out/
+
+# ---------- 密钥与个人信息（发布前必须扫一遍） ----------
+.env
+*.env
+*secret*
+*token*
+api_key*
+*.key
+*.pem
+*.p12
+rcon-password*
+
+# ---------- Python ----------
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# ---------- 系统 ----------
+.DS_Store
+Thumbs.db
+desktop.ini
+*.bak
+
+# ---------- 例外：文档里要展示的图 ----------
+!docs/img/**
