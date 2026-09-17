@@ -171,3 +171,29 @@ l_enders-cataclysm	hold	高难 boss 与结构（可作"占领区"素材，看时
 # ── 中文化（2026-09-15 重大发现：这是社区已解决的工程，不需要手写翻译）──
 i18nupdatemod	plan	中文化·自动汉化更新（CF；ATM10 实证 I18nUpdateMod-3.7.0-all.jar）
 vaultpatcher	hold	中文化·硬编码汉化（CF；龙之冒险实证 vaultpatcher-1.4.2+2；作者警告可能崩溃，需评估）
+
+# ── 跨整合包共识补漏（2026-09-15）：解析 50 个 NeoForge 包的 .mrpack 得到 ──
+# 方法：tools/modpack_survey.py（下载 .mrpack 读 modrinth.index.json）→ tools/consensus_gap.py 对差
+# 参照：50 个 NeoForge 包 / 1816 个不同 mod。下面前缀数字 = 被多少个包选中。
+# 注：榜单前段大量"前置库"已排除（它们会随依赖自动进来）；sodium 等 Fabric 渲染器也排除。
+create-steam-n-rails-1.21.1	plan	12 包·Create 铁路扩展（"蒸汽与铁轨"，服务铁路环线毕业工程）
+copycats	plan	22 包·Create: Copycats+（复制方块外观，建筑表现力）
+create-dragons-plus	plan	23 包·Create 扩展（冷门却 23 包选中）
+create-design-n-decor	plan	12 包·Create 装饰
+macaws-bridges	plan	11 包·桥梁构件（★ 正好补上原先"待补候选"的桥梁类）
+macaws-windows	plan	11 包·窗户构件
+macaws-fences-and-walls	plan	10 包·栅栏与围墙构件
+amendments	plan	12 包·装饰与功能方块（Supplementaries 同作者）
+exposure	plan	11 包·摄影（拍照片 → 国史插图、纪念碑、地图墙）
+towns-and-towers	plan	11 包·村庄与塔结构（旧世痕迹）
+gravestone-mod	plan	11 包·墓碑（死亡掉落保护 → 与"事故碑"设定天然契合）
+carry-on	plan	12 包·搬运方块/机器（建筑时挪箱子与机械）
+better-combat	plan	14 包·战斗手感（威胁主菜的体感）
+badoptimizations	plan	20 包·性能优化（★ 我们性能组里漏了这个 20 包共识项）
+dynamic-fps	plan	25 包·后台自动降帧（★ 25 包共识的性能/QoL 项）
+noisium	plan	11 包·世界生成性能（配合 Terralith 的世界生成开销）
+jade-addons-forge	plan	14 包·Jade 扩展（配我们选的 Jade）
+lambdynamiclights	plan	13 包·动态光源（手持火把照亮）
+tectonic	hold	12 包·地形大修（与 Terralith 并列候选；RoadWeaver 正文说 mod 版兼容——需二选一实测）
+e4mc	hold	13 包·局域网→公网（朋友免开服的联机方式，看你们怎么开服）
+connector	hold	16 包·Sinytra Connector：在 NeoForge 上跑 Fabric mod（★ 生态事实：16/50 个 NeoForge 包在用；若采用可解锁 Fabric 独占 mod，但有兼容风险）

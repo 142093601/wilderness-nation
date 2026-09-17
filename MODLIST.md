@@ -286,6 +286,75 @@ ftb-jei-extras-21.1.7.jar             ftb-filter-system-neoforge-21.1.4.jar
 | `kubejs` ⏳ | 3 | **脚本层候选**：日历与国力要用脚本，设计说"第一版只做两个脚本资产" → 需评估 |
 | `l_enders-cataclysm` ⏳ | 3 | 高难 boss 与结构 → 可作"占领区"素材 |
 
+## 十三·补二、跨整合包共识（50 个 NeoForge 包）
+
+**为什么还要做这一层**：本机只有 3 个参照包（其中一个还是 1.20 的）。要"把网撒大",
+更硬的证据源是 **Modrinth 上的整合包本身**——`.mrpack` 里的 `modrinth.index.json`
+**就是一份完整清单**，拿几十个包统计"某 mod 被多少个包选中"，等于**策展者的投票**。
+
+**方法**：`tools/modpack_survey.py` → 搜 1.21.1 整合包（下载量前 90 + 11 个主题关键词）
+→ 下载 `.mrpack` 读 `dependencies` 过滤出 **NeoForge** 包 → 抽取 mod 清单 →
+`tools/consensus_gap.py` 与我们的清单对差（两者都可重跑）。
+
+**结果**：
+
+```
+扫描 253 个包 → 成功解析 50 个 NeoForge 包 → 合计 1816 个不同 mod（1807 个拿到元数据）
+被 ≥2 个包选中、而我们清单里没有的：789 个（含大量前置库）
+```
+
+**踩到并修掉的两个 bug**（都记在工具注释里）：
+1. **不要用 `loaders:neoforge` 筛整合包**——实测 `modpack + 1.21.1 + neoforge` 只有 **1 个**结果，
+   而 `modpack + 1.21.1` 有 **4882 个**：整合包作者极少标 loaders。正确信号在 `.mrpack` 的 `dependencies` 里。
+2. **批量查项目是 `GET /projects?ids=[...]`**，不是 POST——写错会**静默失败**（表现为"解析 0 个项目"）。
+
+**一个限制**：为控时我设了 30MB 上限，**误杀了一些 NeoForge 大包**
+（`better-mc-neoforge-bmc5` 34MB · `cassetus-building-pack` 294MB · `villagecraft-3` 35MB）→ 下次跑要调高。
+
+**找到的最相关的主题包**（它们是"被选中"这件事的来源）：
+
+| 包 | mod 数 | 为什么相关 |
+|---|---|---|
+| **`create-kingdom-fallensprout`** | 272 | 名字就是「**Create 王国**」 |
+| **`international-coalition-of-nations`** | 247 | 「**国家联盟**」——与"建国"主题直接对口 |
+| `train-yard` · `create-rpg-plus` · `adventurecraft-modpack` · `explorisa` | 213~222 | Create 铁路向 / RPG / 冒险 |
+| `stardew-village-3` | 167 | 村庄与农业向（星露谷式） |
+| **`create.ultimate`** | 80 | **NeoForge 21.1.250——与我们版本号完全相同** |
+| `medieval-explorers` · `mc-medieval` · `mightybuilding` · `jeff-stedis-building-modpack` | 31~171 | 中世纪 / 建筑向 |
+
+**补进 20 个**（筛掉前置库与 Fabric 渲染器后的真正漏项）：
+
+| 补进 | 被几个包选中 | 为什么该有 |
+|---|---|---|
+| **`create-steam-n-rails`** | 12 | Create 的**铁路扩展**（蒸汽与铁轨）→ 直接服务"铁路环线"毕业工程 |
+| **`copycats`**（Create: Copycats+） | 22 | 复制任意方块外观 → 建筑表现力 |
+| `create-dragons-plus` | **23** | Create 扩展，下载量仅 296 万却 23 包选中（典型"冷门好 mod"） |
+| `create-design-n-decor` | 12 | Create 装饰 |
+| **`macaws-bridges`** · `macaws-windows` · `macaws-fences-and-walls` | 10~11 | ★ **正好补上原先"待补候选"的桥梁/窗户/围墙构件** |
+| `amendments` | 12 | 装饰与功能方块（Supplementaries 同作者） |
+| **`exposure`** | 11 | **摄影**：拍照片 → 国史插图、纪念碑、地图墙 |
+| `towns-and-towers` | 11 | 村庄与塔结构 → 旧世痕迹 |
+| **`gravestone-mod`** | 11 | 墓碑（死亡掉落保护）→ **与"事故碑"设定天然契合** |
+| `carry-on` | 12 | 搬运方块/机器（建筑时挪箱子与机械） |
+| `better-combat` | 14 | 战斗手感 → 威胁主菜的体感 |
+| **`badoptimizations`** | **20** | ★ 性能优化——**我们性能组里漏了这个 20 包共识项** |
+| **`dynamic-fps`** | **25** | ★ 后台自动降帧（25 包共识的性能/QoL） |
+| `noisium` | 11 | 世界生成性能（配 Terralith 的世界生成开销） |
+| `jade-addons-forge` | 14 | Jade 扩展（配我们选的 Jade） |
+| `lambdynamiclights` | 13 | 动态光源（手持火把照亮） |
+| `tectonic` ⏳ | 12 | 地形大修，与 Terralith 并列候选（RoadWeaver 说 mod 版兼容）→ 需二选一实测 |
+| `e4mc` ⏳ | 13 | 局域网→公网（朋友免开服的联机方式，看你们怎么开服） |
+| `connector`（Sinytra Connector）⏳ | 16 | 见下方生态事实 |
+
+**两个生态事实（值得单独记）**：
+
+1. **榜单前段几乎全是前置库**（Cloth Config 41 包 · Architectury 41 · Kotlin for Forge 39 ·
+   Moonlight 32 · Geckolib 30 · YACL 28 …）。它们会**随依赖自动进来**，所以不该当"漏项"——
+   这也说明"按数量算 mod"很容易被库灌水。
+2. **16/50 个所谓 NeoForge 包其实靠 `Sinytra Connector` 跑 Fabric mod**
+   （`forgified-fabric-api` 22 包、`sodium` 46 包就是证据）。这动摇了我们"只查 neoforge"的前提：
+   若采用 Connector，可解锁 Fabric 独占 mod；代价是**兼容风险**（这正是它进 ⏳ 而不是 📌 的原因）。
+
 ## 十四、待定项（唯一还没定的，以及缺什么才能定）
 
 | # | 待定 | 缺什么 | 影响 |
@@ -314,29 +383,30 @@ ftb-jei-extras-21.1.7.jar             ftb-filter-system-neoforge-21.1.4.jar
 | 视觉与音效 | 13（含 2 待定） |
 | 食物与农业 | 9 |
 | 社交与身份 | 3 |
-| **内容/功能 mod 合计** | **约 120** |
-| 前置库（随依赖自动进） | 约 20~30 |
-| **jar 总数（估）** | **约 140~150** |
+| **内容/功能 mod 合计** | **约 140** |
+| 前置库（随依赖自动进） | 约 20~35 |
+| **jar 总数（估）** | **约 165~175** |
 
-对照参照系：本机 All the Mods 10 是 **479 个 jar / 1.3 GB**（同版本），另一个主题包 235 个。
-**本包定位是主题包不是大杂烩**，所以 140~150 是合理落点；不够再按"主菜优先"补，而不是按数字堆。
+对照参照系：本机 All the Mods 10 是 **479 个 jar / 1.3 GB**（同版本）；这一次解析的 50 个 NeoForge 包里，
+**272 mod（create-kingdom-fallensprout）、247（international-coalition-of-nations）、252（adventurecraft-modpack）**都在其中。
+**本包定位是主题包不是大杂烩**，165~175 已经相当接近一个成熟主题包；不够再按"主菜优先"补，而不是按数字堆。
 
 ### 清单核验（`tools/apply_modlist.py --verify`）
 
 ```
-清单载入：129 条  hold=7 · installed=16 · plan=103 · skip=3
-核验结果：129/129 通过
+清单载入：152 条  hold=11 · installed=16 · plan=122 · skip=3
+核验结果：152/152 通过
 ```
 
 五条**证据来源**（每一类都标明，不含"我觉得它有"）：
 
-| 来源 | 说明 |
-|---|---|
-| 本地候选池 | 两个 survey JSON 本身就是按 `1.21.1 + neoforge` 筛出来的 |
-| 已装运行中 | 它正跑在这个包里，`baseline.csv` 有它的加载/TPS 证据 |
-| **本地参照包实证** | 本机成熟包的 jar 文件名带版本号 —— **专门补 CurseForge 侧**（FTB 系列、Twilight Forest、Lootr 等） |
-| 联网补查（Modrinth 接口） | 少数不在池里的 |
-| ✗ 不合格 | 会被拦下、不允许进清单（如 `lets-do-bakery`） |
+| 来源 | 条数 | 说明 |
+|---|---|---|
+| 本地候选池 | 105 | 两个 survey JSON 本身就是按 `1.21.1 + neoforge` 筛出来的 |
+| **本地参照包实证** | 26 | 本机成熟包的 jar 文件名带版本号 —— **专门补 CurseForge 侧**（FTB 系列、Twilight Forest、Lootr、I18nUpdateMod 等） |
+| 联网补查（Modrinth 接口） | 13 | 少数不在池里的 |
+| 已装运行中 | 8 | 它正跑在这个包里，`baseline.csv` 有它的加载/TPS 证据 |
+| ✗ 不合格 | — | 会被拦下、不允许进清单（如 `lets-do-bakery`；`sinytra-connector` 的 slug 应写作 `connector`） |
 
 ## 十六、装载顺序（按时代，对接 `DESIGN.md` §17）
 
