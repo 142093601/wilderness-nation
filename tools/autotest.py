@@ -31,14 +31,20 @@ import time
 from pathlib import Path
 from typing import Any
 
-# ── 本机默认路径（都可被命令行覆盖）────────────────────────────────────────────
+# ── 本机默认值：读 tools/pack.local.json（不进仓库；模板见 pack.local.example.json）──
+# 以前这些值是**写死在代码里**的（实例路径 / java / 用户名 / UUID）。
+# 公开仓库里那等于把机器信息一起公开，而且换台机器要改 6 个文件。
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import pack_paths  # noqa: E402  同目录模块
+
+_P = pack_paths.paths()
 DEFAULTS = {
-    "version_dir": r"D:\game\PCL\.minecraft\versions\1.21.1-NeoForge_21.1.250",
-    "version_id": "1.21.1-NeoForge_21.1.250",
-    "game_root": r"D:\game\PCL\.minecraft",
-    "java": r"C:\Program Files\Java\jdk-21.0.10\bin\java.exe",
-    "username": "niuniu_jiang",
-    "uuid": "000000000000300C9E852A55F8735F5E",
+    "version_dir": _P["instance_dir"],
+    "version_id": Path(_P["instance_dir"]).name,   # PCL 的实例目录名就是版本 id
+    "game_root": _P["game_root"],
+    "java": _P["java"],
+    "username": _P["username"],
+    "uuid": _P["uuid"],
     "world": "新的世界",
     "xmx": "6G",
     "width": "854",

@@ -248,12 +248,14 @@ def main() -> int:
     except Exception:
         pass
 
+    import pack_paths   # 同目录模块：读本机配置（实例路径不进仓库）
+    _inst = Path(pack_paths.paths()["instance_dir"])
     ap = argparse.ArgumentParser(description="批量校验图纸 .nbt")
     ap.add_argument("--dir", required=True)
     ap.add_argument("--offline-registry", action="store_true", default=True,
                     help="离线校验方块 ID 是否真实存在（读 jar 里的 blockstates，默认开）")
-    ap.add_argument("--version-jar", default=r"D:\game\PCL\.minecraft\versions\1.21.1-NeoForge_21.1.250\1.21.1-NeoForge_21.1.250.jar")
-    ap.add_argument("--mods-dir", default=r"D:\game\PCL\.minecraft\versions\1.21.1-NeoForge_21.1.250\mods")
+    ap.add_argument("--version-jar", default=str(_inst / f"{_inst.name}.jar"))
+    ap.add_argument("--mods-dir", default=str(_inst / "mods"))
     ap.add_argument("--verify-registry", action="store_true",
                     help="改用运行时验证：连服务端逐个 setblock（更权威但需要服务端在跑）")
     ap.add_argument("--json")

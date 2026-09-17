@@ -1,0 +1,12 @@
+{
+  "_说明": "把这份复制成 pack.local.json 再改成本机的真实值。pack.local.json 已被 .gitignore 排除，不会进仓库。",
+  "instance_dir": "改成你的客户端实例目录，例如 D:\\\\game\\\\PCL\\\\.minecraft\\\\versions\\\\1.21.1-NeoForge_21.1.250",
+  "game_root": "改成你的 .minecraft 根目录，例如 D:\\\\game\\\\PCL\\\\.minecraft",
+  "java": "改成你的 Java 21 可执行文件，例如 C:\\\\Program Files\\\\Java\\\\jdk-21.0.10\\\\bin\\\\java.exe",
+  "username": "改成你的游戏 ID",
+  "uuid": "改成你的离线/正版 UUID（离线模式用 OfflinePlayer 算出来的那个）",
+  "server_dir": "改成你的服务端目录，例如 D:\\\\project\\\\nation-pack\\\\server",
+  "rcon_host": "127.0.0.1",
+  "rcon_port": "25575",
+  "rcon_password": "换成你自己的 RCON 口令，别用默认值"
+}

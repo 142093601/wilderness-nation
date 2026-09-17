@@ -32,13 +32,17 @@ import sys
 import time
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import pack_paths  # noqa: E402  同目录模块：读取本机配置
+
+_P = pack_paths.paths()
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
-DEFAULT_SERVER = ROOT / "server"
-INSTANCE_MODS = Path(r"D:\game\PCL\.minecraft\versions\1.21.1-NeoForge_21.1.250\mods")
-JAVA = r"C:\Program Files\Java\jdk-21.0.10\bin\java.exe"
+DEFAULT_SERVER = Path(_P["server_dir"])
+INSTANCE_MODS = Path(_P["instance_dir"]) / "mods"
+JAVA = _P["java"]
 NEOFORGE_VER = "21.1.250"
-RCON_HOST, RCON_PORT, RCON_PASS = "127.0.0.1", 25575, "nationpack"
+RCON_HOST, RCON_PORT, RCON_PASS = _P["rcon_host"], int(_P["rcon_port"]), _P["rcon_password"]
 
 # 设计稿 §12 的性能目标；服务端用目标的**上限**，这样才能压出问题
 SERVER_PROPS = {

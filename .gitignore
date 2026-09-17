@@ -41,6 +41,8 @@ build/
 out/
 
 # ---------- 密钥与个人信息（发布前必须扫一遍） ----------
+# 本机配置：路径 / 用户名 / UUID / RCON 口令。模板 pack.local.example.json 进仓库，真值不进
+tools/pack.local.json
 .env
 *.env
 *secret*

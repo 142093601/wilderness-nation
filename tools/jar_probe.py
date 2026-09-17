@@ -33,7 +33,10 @@ import sys
 import zipfile
 from pathlib import Path
 
-DEFAULT_MODS = Path(r"D:\game\PCL\.minecraft\versions\1.21.1-NeoForge_21.1.250\mods")
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import pack_paths  # noqa: E402  同目录模块：读取本机配置
+
+DEFAULT_MODS = Path(pack_paths.paths()["instance_dir"]) / "mods"
 
 
 def utf8_constants(data: bytes) -> list[str]:

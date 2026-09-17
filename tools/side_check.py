@@ -11,7 +11,7 @@
 
 用法
 ----
-    python side_check.py --mods "D:\\game\\PCL\\.minecraft\\versions\\1.21.1-NeoForge_21.1.250\\mods"
+    python side_check.py --mods "<你的实例目录>\\mods"
     python side_check.py --mods <dir> --write-lists lists     # 顺便产出 server-only 清单
 """
 

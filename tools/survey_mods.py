@@ -135,9 +135,11 @@ def installed_slugs() -> set[str]:
     **mods 目录里**（`<实例>/mods/mods-manifest.json`）——于是整张表"已装"全是 0，
     看起来像"一个都没装"，会误导选型。
     """
+    import pack_paths   # 同目录模块：实例路径不进仓库（见 pack.local.example.json）
+    p = pack_paths.paths()
     candidates = [
-        Path(r"D:\game\PCL\.minecraft\versions\1.21.1-NeoForge_21.1.250\mods\mods-manifest.json"),
-        Path(r"D:\project\nation-pack\server\mods\mods-manifest.json"),
+        Path(p["instance_dir"]) / "mods" / "mods-manifest.json",
+        Path(p["server_dir"]) / "mods" / "mods-manifest.json",
         HERE.parent / "data" / "mods-manifest.json",
     ]
     out: set[str] = set()

@@ -150,7 +150,7 @@ def clean_lines(raw: str) -> list[str]:
         m2 = SERVER_FEEDBACK_RE.search(line)
         if m2:
             body = m2.group(1)
-            # 服务端反馈形如 "niuniu_jiang: 文本"
+            # 服务端反馈形如 "<玩家名>: 文本"
             out.append(body.split(": ", 1)[1] if ": " in body else body)
             continue
         if "/ERROR]" in line or "/WARN]" in line:
@@ -216,6 +216,14 @@ def parse_script(path: Path) -> list[dict]:
     return steps
 
 
+def expand(text: str, cfg: dict) -> str:
+    """把脚本里的 `{{player}}` 换成**本机配置里的游戏 ID**。
+
+    这样测试脚本可以进公开仓库，而不用把某个人的游戏 ID 写死在仓库里。
+    """
+    return text.replace("{{player}}", str(cfg.get("username", "")))
+
+
 def run_script(cfg: dict, steps: list[dict], out_dir: Path) -> int:
     sys.path.insert(0, str(HERE))
     import server_ctl  # 延迟导入：只有脚本里真用了 rcon 才需要它
@@ -228,13 +236,13 @@ def run_script(cfg: dict, steps: list[dict], out_dir: Path) -> int:
             if kind == "rcon":
                 if rcon is None:
                     rcon = server_ctl.Rcon()
-                text = rcon.cmd(step["rcon"])
+                text = rcon.cmd(expand(step["rcon"], cfg))
                 ok = True
             else:
-                res = run_command(cfg, step["cmd"])
+                res = run_command(cfg, expand(step["cmd"], cfg))
                 text = "\n".join(res["lines"])
                 ok = res["ok"]
-            label = step.get("rcon") if kind == "rcon" else step["cmd"]
+            label = expand(step.get("rcon") if kind == "rcon" else step["cmd"], cfg)
             if not ok:
                 print(f"[{i}] FAIL(无输出) {label}")
                 failures += 1

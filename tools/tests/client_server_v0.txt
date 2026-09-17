@@ -40,7 +40,8 @@ expect: Target tick rate: 20\.0
 expect: Percentiles: P50
 
 # 服务端权威的领地系统在联机下生效（客户端刚圈的地，服务端应该看得见）
-rcon: oclaims about niuniu_jiang
+# {{player}} 会被 game_agent 换成**本机配置里的游戏 ID** —— 仓库里不写死某个人的 ID
+rcon: oclaims about {{player}}
 expect: Claims: [1-9]\d* / 500
 
 # ── 收尾 ─────────────────────────────────────────────────────────────────────

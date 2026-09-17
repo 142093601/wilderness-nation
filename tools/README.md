@@ -71,7 +71,7 @@
 ## 五、用法
 
 ```powershell
-cd D:\project\nation-pack\tools
+cd <仓库路径>\tools
 python gen_structures.py out
 ```
 
@@ -238,7 +238,7 @@ schtasks /Create /SC MINUTE /MO 30 /TN "MC Review Snapshot" /TR "powershell -NoP
 读版本 JSON → 拼 classpath → 直接调 NeoForge 的 `BootstrapLauncher`，带 `--quickPlaySingleplayer <世界名>` 自动进世界。离线鉴权用**固定 UUID + 固定用户名**——这样 `world/stats/<uuid>.json` 的统计能连续累加，而不是每次多出一个新玩家。
 
 ```powershell
-cd D:\project\nation-pack\tools
+cd <仓库路径>\tools
 python autotest.py --seconds 45      # 默认世界「新的世界」、6G 堆
 python autotest.py --dry-run         # 只打印将执行的命令，不启动
 ```
@@ -303,7 +303,7 @@ python autotest.py --dry-run         # 只打印将执行的命令，不启动
 
 ```
 [22:39:03] [Render thread/INFO] [minecraft/ChatComponent]: [System] [CHAT] Claims: 1 / 500
-[22:38:59] [Server thread/INFO] [...MinecraftServer/]: [niuniu_jiang: Successfully claimed the chunk at (-2, -2) ...]
+[22:38:59] [Server thread/INFO] [...MinecraftServer/]: [<玩家>: Successfully claimed the chunk at (-2, -2) ...]
 ```
 
 所以命令输出是**纯文本**：完整、不截断、可 grep、可断言。
@@ -312,7 +312,7 @@ python autotest.py --dry-run         # 只打印将执行的命令，不启动
 ### 用法
 
 ```powershell
-cd D:\project\nation-pack\tools
+cd <仓库路径>\tools
 python game_agent.py --run "/oclaims about" --launch   # 单条命令，直接看输出
 python game_agent.py --script tests\opac_v0.txt        # 回归脚本
 python game_agent.py --run "/spark tps" --attach       # 附着在已开着的游戏上
@@ -439,7 +439,7 @@ python blueprint_check.py --dir <图纸目录> --verify-registry    # 可选：�
 ```
 
 实测（实例 `schematics/`）：**结构 10/10 通过 · 方块 ID 12/12 存在**
-（10 张里有 2 张是 Create 自己写出的 `uploaded/niuniu_jiang/`，所以报告一律带相对路径，免得看成"重复行"）。
+（10 张里有 2 张是 Create 自己写出的 `uploaded/<玩家>/`，所以报告一律带相对路径，免得看成"重复行"）。
 
 > 为什么不做"每张图纸都真放一遍"：同一套生成器写出的文件**格式与材质表是共享的**，
 > 单点已验证 Create 接受该格式；本工具再覆盖"全部文件结构一致 + 全部方块 ID 真实"。
@@ -462,3 +462,41 @@ python blueprint_check.py --dir <图纸目录> --verify-registry    # 可选：�
 | 4 | **后台任务的 `workdir` 必须事先存在** | 在命令里才 `mkdir` 的目录，进程启动时不存在 → `spawn failed: ENOENT` |
 | 5 | **控制台里中文乱码不代表文件错** | Windows 控制台是 GBK；文件内容是 UTF-8 且正确。要看内容就打开文件，别信控制台回显 |
 | 6 | **别用记忆代替接口** | 版本、命令名、能力面一律查接口/字节码（`survey_mods.py` / `jar_probe.py`）。这个会话里"OPAC 命令名"就是靠字节码纠正的 |
+
+---
+
+## 十七、本机配置：`pack.local.json`（不进仓库）
+
+### 为什么有这个东西
+
+工具原本把机器相关的值**写死在代码里**：实例路径、Java 路径、游戏 ID、UUID，以及
+`server_ctl.py` 里的 **RCON 口令**（那是能远程执行服务器命令的口子）。
+
+公开仓库里这有三个后果：
+
+1. **密码与个人目录结构公开**；
+2. **换台机器就废**——要在 6 个文件里改路径；
+3. **实例改名就再废一次**（例如以后从 `1.21.1-NeoForge_21.1.250` 换成正式服目录名）。
+
+现在改成：**真值放 `pack.local.json`（被 `.gitignore` 排除），模板 `pack.local.example.json` 进仓库。**
+
+### 用法
+
+```powershell
+copy pack.local.example.json pack.local.json    # 然后改里面的路径 / 用户名 / 口令
+python pack_paths.py                            # 自检：打印生效配置（口令自动打码）
+```
+
+没有 `pack.local.json` 时，工具不会报一堆 traceback，而是**回退到模板值并明确提示**；
+真正要跑时会给出"复制模板 → 改两行"的照抄命令（`pack_paths.require_usable()`）。
+
+### 用到它的工具
+
+| 工具 | 用到的配置 |
+|---|---|
+| `autotest.py` · `game_agent.py` | `instance_dir` · `game_root` · `java` · `username` · `uuid` |
+| `server_ctl.py` | `server_dir` · `instance_dir` · `java` · `rcon_*` |
+| `blueprint_check.py` · `jar_probe.py` · `survey_mods.py` | `instance_dir` · `server_dir` |
+
+测试脚本里凡是要写玩家名的地方，写 **`{{player}}`**，`game_agent.py` 会用配置里的 ID 替换
+——这样**仓库里不出现任何人的游戏 ID**。
