@@ -167,3 +167,7 @@ connectivity	plan	生活质量·网络优化（多人服包体量下有用）
 sophisticatedbackpacks	hold	背包（与 Traveler's Backpack 二选一：都很好，需实测手感）
 kubejs	hold	脚本层候选（日历/国力要用脚本，设计说"第一版只做两个脚本资产"——需评估）
 l_enders-cataclysm	hold	高难 boss 与结构（可作"占领区"素材，看时代 3/4 需不需要）
+
+# ── 中文化（2026-09-15 重大发现：这是社区已解决的工程，不需要手写翻译）──
+i18nupdatemod	plan	中文化·自动汉化更新（CF；ATM10 实证 I18nUpdateMod-3.7.0-all.jar）
+vaultpatcher	hold	中文化·硬编码汉化（CF；龙之冒险实证 vaultpatcher-1.4.2+2；作者警告可能崩溃，需评估）
