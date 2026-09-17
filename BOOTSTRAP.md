@@ -26,7 +26,10 @@
 
 ### 3. CF-only 的 mod 会挡一下
 
-包里有几个只走 CurseForge（FTB 系列、Twilight Forest）。packwiz 走 CF 需要 API key，**手动下 jar 则没这个问题**——这也是"先实例目录"更省事的原因之一。
+包里有几个只走 CurseForge（FTB 系列、Twilight Forest、Lootr、拼音搜索等）。~~packwiz 走 CF 需要 API key~~ —— **这条早先写错了，已实测更正**：`packwiz curseforge add` **内置了 CF 访问，不需要 API key**（`packwiz curseforge add ftb-quests-forge -y` 直接成功，还会自动解析依赖）。两个注意点：① **CF 的 slug 与 Modrinth 不同**（CF 上是 `ftb-quests-forge`）；② 这边访问 CF API **偶发 TLS 握手超时**，要能重试。
+
+> **顺带一条更重要的教训**：清单曾经**只扫 Modrinth**，导致一批常见 mod 整批漏掉（以及任务书错选了 Questlog）。
+> 现在两条候选来源都要用：Modrinth 接口筛选 + **本机成熟包的 mods 共识**（`tools/reference_pack_diff.py`）。
 
 ---
 
