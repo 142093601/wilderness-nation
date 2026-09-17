@@ -134,6 +134,9 @@ The Hordes · Undead Nights · Questlog · Dimensional Dungeons · When Dungeons
 理由：RoadWeaver 作者正文**点名兼容** · **客户端 optional**（不必人人装）· **只用原版方块**（与图纸生成器 / 配色规范 / 建材经济零冲突）。
 ⚠️ **不能从已有世界移除，也不建议后加到旧世界** → 必须在**开新世界前**就位。
 
+> 📌 **最终清单不在这份表里**：本节是功能位的**决策理由**；**具体装哪些（含 slug 与状态）见 `MODLIST.md` + `modlist.tsv`**，
+> 共 104 条、全部通过 `tools/apply_modlist.py --verify` 核验。
+
 ### 6.2 本轮新增的核实（都带证据）
 
 | 结论 | 证据 |

@@ -1,0 +1,140 @@
+# 荒野建国 · mod 清单元数据（给脚本读的权威来源）
+#
+# 格式：slug <TAB> 状态 <TAB> 功能位
+#   状态：installed=已装已验 · plan=已定待装 · hold=待核实 · skip=不装
+# 用途：
+#   python tools/apply_modlist.py --verify      # 逐个查 Modrinth，确认 1.21.1+neoforge 都有版本
+#   python tools/apply_modlist.py --apply       # 把 plan 的全部加进 packwiz 包（会真的下载）
+#
+# 为什么单独存一份 TSV：清单写在 md 里给人看，写在 tsv 里给脚本用。
+# 两者同源，避免"文档说装了、实际没装"这种漂移。
+
+# ── 性能组（13，已装）──
+embeddium	installed	渲染优化
+lithium	installed	服务端逻辑
+ferrite-core	installed	内存
+modernfix	installed	加载与修复
+entityculling	installed	实体剔除
+immediatelyfast	installed	界面即时渲染
+clumps	installed	经验球合并
+servercore	installed	服务端通用
+neruina	installed	崩溃守护
+spark	installed	诊断
+chunky	installed	预生成
+moreculling	installed	区块剔除
+scalablelux	installed	光照
+
+# ── 引擎与基础 ──
+jei	plan	配方查询
+jade	plan	方块与实体信息
+crash-assistant	plan	崩溃可读提示
+paxi	plan	数据包自动加载
+alternate-current	hold	红石性能（装前跑基线对比）
+
+# ── 世界生成 ──
+terralith	plan	群系与地形
+lithostitched	plan	世界生成兼容库（Terralith 前置）
+roadweaver	plan	世界路网
+yungs-better-dungeons	installed	结构·地牢
+yungs-better-nether-fortresses	plan	结构·下界要塞
+yungs-better-ocean-monuments	plan	结构·海底神殿
+yungs-better-mineshafts	plan	结构·废弃矿井
+yungs-better-jungle-temples	plan	结构·丛林神庙
+yungs-better-end-island	plan	结构·末地
+yungs-better-strongholds	plan	结构·要塞
+when-dungeons-arise	plan	结构·大型地牢
+dungeons-and-taverns	plan	结构·村镇
+dimensional-dungeons	hold	远征维度（形态未核实）
+
+# ── 领地与治理 ──
+open-parties-and-claims	installed	领地/队伍/权限
+grieflogger	plan	方块改动记录
+glra	plan	回滚命令
+simple-backups	plan	备份
+patchouli	plan	约定与国史载体
+
+# ── 建造与自动化 ──
+create	installed	自动化核心（含列车与物流）
+portable-blueprints	plan	图纸工程制与服务端分发
+effortless-building	plan	建筑辅助
+worldedit	plan	管理工具（op）
+chipped	plan	建材变体
+rechiseled	plan	建材变体·凿刻
+rechiseled-create	plan	建材变体·Create 方块
+supplementaries	plan	装饰与功能方块
+handcrafted	plan	家具
+another-furniture	plan	家具
+
+# ── 交通 ──
+waystones	plan	传送节点
+create-aeronautics	plan	载具（远征风味）
+
+# ── 威胁 ──
+the-hordes	plan	袭击排期引擎
+undead-nights	plan	拆墙与难度档位
+zombie-awareness	skip	怪物 AI（第一版不装：无时代闸门、三方兼容未验、更新停在 2024-09）
+
+# ── 远征与冒险 ──
+natures-compass	plan	群系定位
+explorers-compass	plan	结构定位
+xaeros-minimap	plan	小地图
+xaeros-world-map	plan	世界地图
+travelersbackpack	plan	背包
+curios	plan	饰品槽 API（前置）
+better-archeology	plan	考古（契合"旧世"设定）
+comforts	plan	远征休憩
+simply-swords	plan	武器
+easy-anvils	plan	铁砧便利
+enchanting-infuser	plan	附魔便利
+
+# ── 任务书 ──
+questlog	hold	任务书载体（承载能力未核实 → 先试做一章）
+
+# ── 生活质量 ──
+mouse-tweaks	plan	物品栏整理
+inventory-profiles-next	plan	物品栏配置
+shulkerboxtooltip	plan	潜影盒预览
+controlling	plan	按键冲突查找
+searchables	plan	配置项搜索
+betterf3	plan	更好的 F3
+modelfix	plan	模型缝隙修复
+packet-fixer	plan	网络包兼容
+enchantment-descriptions	plan	附魔说明
+legendary-tooltips	plan	提示框美化
+item-highlighter	plan	物品高亮
+
+# ── 视觉与音效 ──
+iris	hold	光影支持（装了要重算性能预算）
+distanthorizons	hold	远景（同上）
+sodium-extra	plan	视频设置扩展
+reeses-sodium-options	plan	视频设置界面
+continuity	plan	连接纹理
+athena-ctm	plan	连接纹理前置
+entitytexturefeatures	plan	实体纹理
+entity-model-features	plan	实体模型
+not-enough-animations	plan	动画
+3dskinlayers	plan	皮肤层
+chat-heads	plan	聊天头像
+sound-physics-remastered	plan	音效物理
+ambientsounds	plan	环境音
+particle-rain	plan	粒子
+
+# ── 食物与农业 ──
+farmers-delight	plan	食物核心
+expanded-delight	plan	食物扩展
+oceans-delight	plan	食物扩展
+enders-delight	plan	食物扩展
+my-nethers-delight	plan	食物扩展
+create-central-kitchen	plan	Create 食物链
+slice-and-dice	plan	Create 食物链
+lets-do-farm-charm	plan	生活系列·农业
+lets-do-vinery	plan	生活系列·酿造
+chefs-delight	plan	食物扩展·厨师村民（替代 lets-do-bakery：它在 1.21.1+neoforge 上无版本，见 MODLIST.md）
+smarter-farmers-farmers-replant	plan	农业便利·自动补种
+rightclickharvest	plan	农业便利·右键收获
+
+# ── 社交与身份 ──
+immersive-paintings	plan	国旗/国史/地图墙展示
+ping-wheel	plan	协作标记
+what-are-they-up-to	plan	队友状态
+simple-voice-chat	skip	语音（用户明确不要）

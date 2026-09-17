@@ -1306,3 +1306,7 @@ RoadWeaver **不能在已加载区块生成**，且未生成完的路段不能�
 | **已装已验**（4） | OPAC · Create 6（含列车/物流/图纸）· 性能组 · YBD |
 | **已定未装**（约 11） | The Hordes · Undead Nights · Questlog · Dimensional Dungeons · WDA · D&T · Portable Blueprints · Effortless Building · WorldEdit · RoadWeaver · GriefLogger+GLRA · Simple Backups |
 | **仍未选**（0 个） | ✅ **已清空**：群系扩充定为 `terralith`（+ 前置 `lithostitched`） |
+
+**完整清单**：见 **`MODLIST.md`**（人读）与 **`modlist.tsv`**（脚本读，由 `tools/apply_modlist.py` 核验/应用）。
+当前 **104 条**：已装 16 · 已定待装 81 · 待核实 5 · 不装 2 —— 且 **104/104 通过核验**
+（每个 slug 在 `1.21.1 + neoforge` 上确有版本；来源：本地候选池 86 / 已装运行中 8 / 联网补查 10）。

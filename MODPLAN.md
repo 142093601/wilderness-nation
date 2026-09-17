@@ -1,5 +1,8 @@
 # 选型计划（MODPLAN）：从 472 个候选里选出本包要的
 
+> ⚠️ **本文是"过程与候选"。定下来的最终清单在 `MODLIST.md`（人读）+ `modlist.tsv`（脚本读）**，
+> 且每一条都过了 `tools/apply_modlist.py --verify` 的核验（**104/104 通过**）。要看"到底装哪些"，看 MODLIST。
+
 > **数据源**：`tools/survey_mods.py` 查 Modrinth 搜索接口，筛选 **`1.21.1` + `neoforge` + `project_type:mod`**，按下载量取各类前 60，去重后 **472 个**。
 > **原始候选**：`CANDIDATES.md`（按功能位分组，可重跑）。
 >
