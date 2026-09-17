@@ -114,11 +114,37 @@
 | 武器 | Simply Swords | 双 | 📌 | |
 | 附魔/铁砧便利 | Easy Anvils + Enchanting Infuser | 双 | 📌 | 减少"附魔台抽卡"的挫败 |
 
-## 八、任务书（1）
+## 八、任务书（FTB 系列，6）
 
-| 功能位 | 选定 | 端侧 | 状态 | 说明 |
-|---|---|---|---|---|
-| 任务书载体 | Questlog | 双 | ⏳ | 1.21.1 上唯一已核实的载体；**能否承载"章 + 清单 + 长文本"未核实** → 先试做一章（5 个任务 + 依赖）再决定 |
+> **为什么不是 Questlog**：最初写 Questlog **不是因为它更好，而是因为它"能被核实"**——
+> FTB 系列只在 CurseForge 分发，而候选池是从 **Modrinth 接口**拉的，它根本没进过候选池。
+> 补上证据后（见下方实证文件名），改用 FTB Quests：真任务树、章节、依赖、奖励、**团队进度共享**，
+> 而 Questlog 只是 checklist 式，撑不起"六章国策链"。
+
+| 功能位 | 选定 | 端侧 | 来源 | 状态 | 说明 |
+|---|---|---|---|---|---|
+| **任务书载体** | **FTB Quests** | 双 | CF | 📌 | 章节 + 任务树 + 依赖 + 奖励；`config/ftbquests` 是它的数据目录 |
+| 任务书依赖·团队 | FTB Teams | 双 | CF | 📌 | ⚠️ **需设成"全员同队"**（你们本来就是一个国家）→ 任务进度才能共享；具体配置项装好后实测 |
+| 任务书前置 | FTB Library | 双 | CF | 📌 | 必需 |
+| FTB 跨 mod 兼容 | FTB XMod Compat | 双 | CF | 📌 | 让 FTB 组件认识其他 mod 的方块/物品 |
+| JEI 扩展 | FTB JEI Extras | 双 | CF | 📌 | 配我们选的 JEI |
+| 物品过滤 | FTB Filter System | 双 | CF | 📌 | 小工具，配合自动化 |
+| ~~任务书备选~~ | ~~Questlog~~ | — | MR | ❌ | 降级为**备选**：若 FTB Quests 出问题再回退 |
+
+**CF 类的核验证据**（本机参照包里的 jar 文件名，本身就是版本硬证据）：
+
+```
+ftb-quests-neoforge-2101.1.24.jar     ftb-teams-neoforge-2101.1.10.jar
+ftb-library-neoforge-2101.1.31.jar    ftb-xmod-compat-neoforge-21.1.8.jar
+ftb-jei-extras-21.1.7.jar             ftb-filter-system-neoforge-21.1.4.jar
+```
+
+（`2101.x` = NeoForge **21.1** 分支。来源：All the Mods 10 与 Skyhive，两个都是 1.21.1 NeoForge 的成熟包。）
+
+> ⚠️ **实操约束**：`packwiz curseforge add` 需要 **CurseForge API key**（免费申请）。
+> 没有 key 时的两条路：① 去申请一个（一次性）；② 这 6 个 jar **手动下载放进 `pack/mods/`**，
+> 再用 `packwiz refresh` 让索引认识它们（缺点是以后不自动更新）。
+> 这条早在 `BOOTSTRAP.md` 里记过——"packwiz 走 CF 需要 API key，手动下 jar 则没这个问题"。
 
 ## 九、生活质量（11）
 
@@ -162,12 +188,12 @@
 | Create 食物链 | Create: Central Kitchen + Slice & Dice | 双 | 📌 | 与自动化主菜咬合（把食物做成产线） |
 | 生活系列 | Let's Do: Farm & Charm · Vinery | 双 | 📌 | 农业与手作的生活感 |
 | 厨师村民 | Chef's Delight | 双 | 📌 | 村民厨师 → 世界"本来有文明" |
+| 农业便利 | Smarter Farmers（自动补种）· RightClickHarvest | 服/双 | 📌 | 降低重复劳动（注意别让材料经济过松） |
 
 > **核验器抓到的第一个不合格项**：原清单里写了 `lets-do-bakery`，`tools/apply_modlist.py --verify`
 > 查出它**在 1.21.1 + neoforge 上没有版本**（检索同类只有它的 Farm&Charm 补丁），于是按规则剔除、
 > 换成池内已核验的 `chefs-delight`。**这就是"清单必须可核验"的意义**——不核验的话，这个 mod 会一路
 > 混到装包时才炸。
-| 农业便利 | Smarter Farmers（自动补种）· RightClickHarvest | 服/双 | 📌 | 降低重复劳动（注意别让材料经济过松） |
 
 ## 十二、社交与身份（3）
 
@@ -191,14 +217,17 @@
 | 宝可梦/小游戏/猎奇/PvP 向 | 与"回归者建国"无关（反目标） |
 | Litematica 自动放置 | 客户端模拟点击，官方警告可能被反作弊判定 |
 | 任何语音类 | 用户已定 |
-| 重复职能的第二选择 | JEI/EMI 二选一 · 地图只用 Xaero · 背包只用 Traveler's · 存储用 Create 自带（不装 Tom's/AE2，避免职能重叠削弱"仓库是你们建的"） |
+| **FTB Essentials**（`/home` `/tpa` `/back`） | 🚫 **会打掉设计约束**：设计规定"**玩家级交通等级决定远征半径**"，免费传送一开这条就没了。真要传送，走 Waystones（有材料门槛、并且是我们设计的"交通等级最高一档"） |
+| **FTB Ultimine**（连锁挖矿） | 🚫 与我们排除的 VeinMiner 同类：松化材料经济、削弱"基建要有成本"（H7） |
+| **FTB Ranks**（权限/头衔） | 🚫 本包已定"**零头衔**"，Ranks 很容易滑向职位体系——设计明确删过"职位体系" |
+| 重复职能的第二选择 | JEI/EMI 二选一 · 地图只用 Xaero · 背包只用 Traveler's · 存储用 Create 自带（不装 Tom's/AE2，避免职能重叠削弱"仓库是你们建的"） · 备份用 Simple Backups（不装 FTB Backups 2） |
 
 ## 十四、待定项（唯一还没定的，以及缺什么才能定）
 
 | # | 待定 | 缺什么 | 影响 |
 |---|---|---|---|
 | 1 | **Dimensional Dungeons 的形态** | 读文档/实测：是"可探索区域"还是"一次性副本" | 时代 3「出关」的目标怎么写 |
-| 2 | **Questlog 的承载能力** | 试做一章（5 任务 + 依赖链） | 任务书方案要改 / 退化 / 换载体 |
+| 2 | **FTB Teams 的"全员同队"怎么配** | 装好后实测配置项（目标：任务进度全队共享，且不引入第二个"队伍"概念） | 任务书能不能承载"国策级"团队任务 |
 | 3 | **Iris 光影 + Distant Horizons** | 加装后跑性能基线（§12 指标） | 决定能不能给朋友开光影 |
 | 4 | **Alternate Current** | 与 ModernFix 的优化是否重叠 | 影响服务端基线 |
 | 5 | **Guard Villagers** | 实机判断会不会变成"NPC 替你打" | 与反目标 #3 冲突与否 |
@@ -216,22 +245,38 @@
 | 交通 | 2 + Create 自带 |
 | 威胁 | 2 |
 | 远征与冒险 | 10 |
-| 任务书 | 1 |
+| **任务书（FTB 系列）** | **6**（Quests/Teams/Library/XModCompat/JEIExtras/FilterSystem） |
 | 生活质量 | 11 |
 | 视觉与音效 | 13（含 2 待定） |
 | 食物与农业 | 9 |
 | 社交与身份 | 3 |
-| **内容/功能 mod 合计** | **约 97** |
+| **内容/功能 mod 合计** | **约 102** |
 | 前置库（随依赖自动进） | 约 20~30 |
-| **jar 总数（估）** | **约 120~130** |
+| **jar 总数（估）** | **约 125~135** |
 
 对照参照系：本机 All the Mods 10 是 **479 个 jar / 1.3 GB**（同版本），另一个主题包 235 个。
-**本包定位是主题包不是大杂烩**，所以 120~130 是合理落点；不够再按"主菜优先"补，而不是按数字堆。
+**本包定位是主题包不是大杂烩**，所以 125~135 是合理落点；不够再按"主菜优先"补，而不是按数字堆。
+
+### 清单核验（`tools/apply_modlist.py --verify`）
+
+```
+清单载入：110 条  hold=4 · installed=16 · plan=87 · skip=3
+核验结果：110/110 通过
+```
+
+四条**证据来源**（每一类都标明，不含"我觉得它有"）：
+
+| 来源 | 条数 | 说明 |
+|---|---|---|
+| 本地候选池 | 86 | 两个 survey JSON 本身就是按 `1.21.1 + neoforge` 筛出来的 |
+| 已装运行中 | 8 | 它正跑在这个包里，`baseline.csv` 有它的加载/TPS 证据 |
+| **本地参照包实证** | 6 | **FTB 系列（CF 专用）**：本机两个成熟包的 jar 文件名带版本号 |
+| 联网补查（Modrinth 接口） | 10 | 少数不在池里的 |
 
 ## 十六、装载顺序（按时代，对接 `DESIGN.md` §17）
 
 1. **建世界之前必须定**：Terralith + Lithostitched · RoadWeaver（要预生成）
-2. **时代 0–1 之前**：JEI · Jade · Patchouli（约定载体）· Crash Assistant · Paxi · 结构 mod 补齐
+2. **时代 0–1 之前**：JEI · Jade · Patchouli（约定载体）· Crash Assistant · Paxi · 结构 mod 补齐 · **FTB Quests 系列（任务书是时代 1 的国策链载体）**
 3. **时代 2 之前**：Portable Blueprints · Effortless Building · WorldEdit · Chipped/Rechiseled · 装饰家具 · 食物组
 4. **时代 3 之前**：维度（先核实形态）· 定位工具 · 地图 · 背包 · 考古 · 探险装备
 5. **时代 4 之前**：**The Hordes + Undead Nights**（最不能开天窗）·（可选）Zombie Awareness 验证

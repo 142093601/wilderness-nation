@@ -35,7 +35,7 @@
 | **拆墙与难度缩放** | **Undead Nights** (`undead-nights`) | — | 4 | 双端 | **唯一有显式拆方块子系统**：`blockBreaking` + `blockBreakingTier` 1–4（4 = 黑曜石）+ 携 TNT 的拆迁僵尸；档位**由难度等级驱动**（默认关闭，需逐级开启）。另有 `dynamicScaling` 按玩家数缩放属性、`numberOfPlayersToGetHordePerHordeEvent` 等多人项。**这才是让城墙成为真工事的那一块** | ✅ 能力面已核实（含源码） |
 | **占领区（第二季）** | **Sculk Horde** (`sculk-horde`) | 第一版用手工地牢据点 | 5 | 双端 | 袭击是**地点级**的：成功/失败后该地点进入 `no_raid_zone` 冷却（480 分钟）→ 几乎就是"占领区"的现成实现。但它是**同化型**威胁（把墙转化成侵染方块而非拆除），风格极强、配置极多、单位上限 200，**不进第一版** | ✅ 能力面已核实 |
 | **袭击内容多样性** | Illager Invasion (`illager-invasion`) —— **可选** | — | 4 | 双端 | **已降级为内容 mod**：它不生成袭击（寄生原版袭击）、无命令/API、波次数组硬编码不可调。当灾厄村民内容包用，**不当威胁系统** | ✅ 能力面已核实 |
-| **任务书** | Questlog (`questlog`) | ❓FTB Quests（仅 CF，未核实） | 全程 | 双端 | 1.21.1 上唯一已核实的载体；但它是 **checklist 式**，能否承载 6 章 20~30 任务的依赖链**必须先试做一章** | ⚠️ 版本✅ / 容量未核实 |
+| **任务书** | **FTB Quests (`ftb-quests`)** + FTB Teams / FTB Library | Questlog（降为备选） | 全程 | 双端 | **改用 FTB 的理由**：真任务树（章节 + 依赖 + 奖励 + **团队进度共享**），而 Questlog 只是 checklist 式，撑不起六章国策链。此前选 Questlog **不是因为它更好，而是因为候选池来自 Modrinth 接口、而 FTB 只在 CF 分发**——补上证据后换掉。⚠️ FTB Teams 需配成"全队同队" | ✅ **已实证**：`ftb-quests-neoforge-2101.1.24.jar` 等 6 个（本机两个 1.21.1 NeoForge 成熟包的 jar 文件名即版本证据） |
 | **回滚与审计** | GriefLogger (`grieflogger`) + GLRA (`glra`) | Ledger（仅 Fabric）、CoreProtect（仅插件端 🚫） | 全程 | 服务端 | GriefLogger 记录方块改动，GLRA 提供 **rollback 命令**——"玩家误破坏可恢复"是多人服底线 | ✅ GriefLogger 两版本 / GLRA 1.21.1 NeoForge |
 | **备份** | Simple Backups (`simple-backups`) | Advanced Backups（至 1.21.4） | 全程 | 服务端 | 备份必须停机或 `save-off` 后做；用 mod 自动化这件事，但**仍要定期验证备份能恢复** | ✅ 1.21.1 NeoForge |
 
@@ -90,8 +90,8 @@
 
 | # | 待核实 | 怎么补 | 不补的后果 |
 |---|---|---|---|
-| 1 | ❓FTB Quests / FTB Chunks / Twilight Forest 在 1.21.1 是否存在 | CurseForge 官网或官方 GitHub releases（CF 有 Cloudflare 拦截风险） | 任务书与维度位可能各缺一个更好的选择 |
-| 2 | Questlog 能否承载 6 章 20~30 任务的依赖链 | **试做一章**（5 个任务 + 依赖） | 任务全链可能烂尾或需要缩规模 |
+| 1 | ✅ FTB Quests 等 6 个已实证（1.21.1 NeoForge）；仍待查 **Twilight Forest** | 本机参照包的 jar 文件名（`ftb-*-neoforge-2101.*`）；Twilight Forest 需另找渠道 | 维度位可能还缺一个候选 |
+| 2 | **FTB Teams 的"全员同队"配置** | 装好后实测 `config/ftb-teams.snbt` | 任务进度无法全队共享，或与 OPAC party 形成两个"队伍"概念 |
 | 3 | Dimensional Dungeons 是开放区域还是一次性副本 | 读其文档/试玩 | 阶段 3"出关远征"的设计要改写 |
 
 > 原先的「威胁 mod 强度可调性」已核实完毕，结论见「三·补」。**核实结果反过来改变了设计**：城墙从"可能只能当掩体"变成"可以真被攻破"，而"预警报方向"被证明做不到。
@@ -127,7 +127,7 @@
 其中 **4 个是纯客户端**，不上服务端（见 `tools/lists/server-mods.txt` / `client-only.txt`）。
 
 **B. 已定未装**（12 项）
-The Hordes · Undead Nights · Questlog · Dimensional Dungeons · When Dungeons Arise · Dungeons and Taverns · Portable Blueprints · Effortless Building · WorldEdit · RoadWeaver · GriefLogger + GLRA · Simple Backups
+The Hordes · Undead Nights · FTB Quests 系列 · Dimensional Dungeons · When Dungeons Arise · Dungeons and Taverns · Portable Blueprints · Effortless Building · WorldEdit · RoadWeaver · GriefLogger + GLRA · Simple Backups
 → **按时代分批装**（见 §6.4），不要一次全装。
 
 **C. 仍未选** → ✅ **已解决：`terralith`**（+ 前置 `lithostitched`）

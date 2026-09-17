@@ -186,7 +186,7 @@
 - [ ] `baseline.csv` 里有 **6 行以上**记录，且 TPS ≥ 19.5
 - [ ] 🔬 Create 认不认 `.nbt` 的结论已记录（认 / 不认 / 认但难看）
 
-**v0 之后才是 v1**：图纸闭环（Portable Blueprints）· 任务书（Questlog 试做一章）· 威胁（The Hordes + Undead Nights）· 回滚（GriefLogger + GLRA）· 备份（Simple Backups）· 时代碑与一页约定。
+**v0 之后才是 v1**：图纸闭环（Portable Blueprints）· 任务书（**FTB Quests**，见 `MODLIST.md`）· 威胁（The Hordes + Undead Nights）· 回滚（GriefLogger + GLRA）· 备份（Simple Backups）· 时代碑与一页约定。
 
 ---
 
@@ -198,6 +198,6 @@
 | 地形/群系扩充（Terralith） | **不是"未核实"了**——`terralith` + 前置 `lithostitched` 已定（接口核实 1.21.1 NeoForge，RoadWeaver 正文点名兼容）。这里不装的理由改成：**v0 是技术验证世界，不该引入地形变量**；而正式世界**必须在建世界前就位**（不能后加到旧世界，也不能移除） |
 | Sculk Horde | 第二季内容，配置极多、性能要求高 |
 | Illager Invasion | 已降级为可选内容 mod，不影响 v0 |
-| Questlog | 任务书等 v1；且它的容量需要单独试做一章 |
+| FTB Quests 系列 | 任务书等 v1（载体已定为 FTB Quests，仅 CF 分发；v0 只验技术栈，不引任务内容） |
 | The Hordes / Undead Nights | 威胁是 v1 的事；它们会引入大量实体，会污染性能基线 |
 | 汉化之外的美化类 mod | 一切"看起来更好但增加变量"的东西都往后放 |

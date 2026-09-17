@@ -47,13 +47,18 @@ def load_tsv(path: Path) -> list[dict]:
             continue
         parts = [p.strip() for p in line.split("\t")]
         if len(parts) < 3:
-            print(f"  ! 第 {lineno} 行字段不足（需要 slug<TAB>状态<TAB>功能位）: {line}")
+            print(f"  ! 第 {lineno} 行字段不足（需要 slug<TAB>状态<TAB>功能位[<TAB>来源]）: {line}")
             continue
         slug, status, slot = parts[0], parts[1], parts[2]
+        # 第 4 列：来源。mr=Modrinth（默认）· cf=CurseForge（如 FTB 系列）
+        src = parts[3].lower() if len(parts) > 3 and parts[3] else "mr"
         if status not in VALID:
             print(f"  ! 第 {lineno} 行状态非法 '{status}'（应为 {sorted(VALID)}）")
             continue
-        rows.append({"slug": slug, "status": status, "slot": slot})
+        if src not in ("mr", "cf"):
+            print(f"  ! 第 {lineno} 行来源非法 '{src}'（应为 mr / cf）")
+            continue
+        rows.append({"slug": slug, "status": status, "slot": slot, "src": src})
     return rows
 
 
@@ -95,15 +100,50 @@ def load_pool_slugs() -> set[str]:
     return pool
 
 
+def reference_pack_jars() -> dict[str, str]:
+    """本机**参照包**里的 jar 文件名 → 路径。
+
+    为什么需要：FTB 系列（Quests/Teams/Chunks…）**只在 CurseForge 分发**，
+    Modrinth 上查不到 —— 用 Modrinth 的核验器会把它们全判成"查无"。
+    但本机装着两个 1.21.1 NeoForge 的成熟包（All the Mods 10 / Skyhive），
+    它们的 `mods/` 里就有 `ftb-quests-neoforge-2101.1.24.jar` 这种**带版本号的硬证据**。
+    → 于是核验多了一条来源：**本地参照包实证**。
+    """
+    out: dict[str, str] = {}
+    try:
+        import pack_paths
+        raw = pack_paths.paths().get("reference_packs", "") or ""
+    except Exception:
+        raw = ""
+    for d in [x.strip() for x in raw.split(";") if x.strip()]:
+        p = Path(d)
+        if not p.is_dir():
+            continue
+        for jar in p.glob("*.jar"):
+            out[jar.name.lower()] = str(jar)
+    return out
+
+
 def verify(rows: list[dict]) -> list[dict]:
     pool = load_pool_slugs()
-    local = sum(1 for r in rows if r["slug"] in pool)
+    refs = reference_pack_jars()
+    n_cf = sum(1 for r in rows if r.get("src") == "cf")
+    local = sum(1 for r in rows if r.get("src", "mr") == "mr" and r["slug"] in pool)
     installed = sum(1 for r in rows if r["slug"] not in pool and r["status"] == "installed")
+    print(f"  参照包 jar 索引 {len(refs)} 个（供 CF 类核实用）")
     print(f"  本地候选池命中 {local} 条；已装（活证据，免查） {installed} 条；"
-          f"需联网 {len(rows) - local - installed} 条")
+          f"CF 类 {n_cf} 条；其余需联网")
     for i, row in enumerate(rows, 1):
-        slug = row["slug"]
-        if slug in pool:
+        slug, src = row["slug"], row.get("src", "mr")
+        if src == "cf":
+            # 在参照包里找文件名含该 slug 的 jar（FTB 的命名就是 ftb-quests-neoforge-2101.1.24.jar）
+            hit = next((name for name in refs if slug.replace("-", "") in name.replace("-", "")), None)
+            if hit:
+                row["verify"], row["source"] = "OK", "本地参照包实证"
+                row["file"] = hit
+            else:
+                row["verify"], row["source"] = "CF_UNVERIFIED", "需要人工看 CurseForge"
+        elif slug in pool:
             row["verify"], row["source"] = "OK", "本地候选池"
         elif row["status"] == "installed":
             # 它正跑在这个包里，且 baseline.csv 有它的加载/TPS 证据 —— 不需要再问接口
@@ -123,7 +163,7 @@ def verify(rows: list[dict]) -> list[dict]:
                 row["file"] = (vers[0].get("files") or [{}])[0].get("filename")
             time.sleep(0.15)
         if row["verify"] != "OK":
-            print(f"  [{i:>3}/{len(rows)}] 失败 {slug:<34} {row['verify']}", flush=True)
+            print(f"  [{i:>3}/{len(rows)}] 失败 {slug:<34} [{src}] {row['verify']}", flush=True)
     return rows
 
 
@@ -132,7 +172,9 @@ def apply_plan(rows: list[dict], pack_dir: Path) -> int:
     print(f"\n要加入 packwiz 的：{len(todo)} 个（状态 plan 且已核验通过）")
     failed = []
     for i, r in enumerate(todo, 1):
-        cmd = ["packwiz", "modrinth", "add", r["slug"], "-y"]
+        # 来源决定用哪个 packwiz 子命令：FTB 系列在 CurseForge，用 modrinth 加会失败
+        sub = "curseforge" if r.get("src") == "cf" else "modrinth"
+        cmd = ["packwiz", sub, "add", r["slug"], "-y"]
         p = subprocess.run(cmd, cwd=str(pack_dir), capture_output=True, text=True,
                            encoding="utf-8", errors="replace")
         ok = p.returncode == 0

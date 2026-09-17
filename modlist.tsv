@@ -87,8 +87,14 @@ simply-swords	plan	武器
 easy-anvils	plan	铁砧便利
 enchanting-infuser	plan	附魔便利
 
-# ── 任务书 ──
-questlog	hold	任务书载体（承载能力未核实 → 先试做一章）
+# ── 任务书（FTB 系列：仅 CurseForge 分发，故 src=cf；版本证据见 MODLIST.md）──
+ftb-library	plan	任务书前置（CF）	cf
+ftb-teams	plan	任务书依赖·团队（CF）	cf
+ftb-quests	plan	任务书载体（CF）	cf
+ftb-xmod-compat	plan	FTB 跨 mod 兼容（CF）	cf
+ftb-jei-extras	plan	JEI 扩展（CF）	cf
+ftb-filter-system	plan	物品过滤（CF）	cf
+questlog	skip	任务书载体·已降级为备选（改用 FTB Quests）
 
 # ── 生活质量 ──
 mouse-tweaks	plan	物品栏整理

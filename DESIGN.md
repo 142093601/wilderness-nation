@@ -73,8 +73,8 @@
 
 | # | 待核实 | 不补的后果 |
 |---|---|---|
-| 1 | ❓CF 侧的 **FTB Quests / FTB Chunks / Twilight Forest**（都不在 Modrinth） | 任务书与维度位可能各缺更好的选择 |
-| 2 | **Questlog 能否承载**「章 + 清单 + 长文本」 | 任务书方案要改，或退化为"只做任务" |
+| 1 | ✅ **FTB Quests 已实证**：本机两个 1.21.1 NeoForge 成熟包自带 `ftb-quests-neoforge-2101.1.24`（及 Teams/Library 等 5 个）→ 任务书定为 FTB Quests。仍待查 **Twilight Forest**（维度备选） | 任务书已解决；维度位目前仍只有 Dimensional Dungeons |
+| 2 | **FTB Teams 的"全员同队"怎么配**（FTB Quests 依赖它） | 任务进度能否全队共享；配不好会多出第二个"队伍"概念 |
 | 3 | **Dimensional Dungeons 的形态**（开放区域 or 一次性副本） | 时代 3「出关」的目标要重写 |
 | 4 | **RoadWeaver 兼容** —— ✅ **正文已给出名单**：「2.0.6+ 与 **Tectonic-V2** / 史诗地形 / **Terralith** 兼容，与 **Tectonic-V3** 不兼容」。⚠️ 但当前正文**未提 C2ME**（旧记录说 2.1.0 及以前与 C2ME 不兼容） | **群系扩充因此可以定 `terralith`**。另外 **C2ME 本包已撤**（见 `baseline.csv`），所以"C2ME × RoadWeaver"这条**对现状已不构成阻塞**，只需在真装 RoadWeaver 时复核一次 |
 
@@ -481,7 +481,7 @@ B 形态的国家感一半来自"大家一起定的规矩"。建议在项目里�
 - **能靠任务书既有机制表达的，就不要写脚本**；
 - 第一版只做两个脚本资产：**日历累加器** + **一个 Power 值（低频统计）**；
 - 维度分、世界事件日历、称号系统等，等第一版跑顺再加；
-- **日历系统不依赖任务书**（Questlog 承载能力尚未验证）：任务书只负责"任务属于哪个时代"，年份与判定留在脚本里——这样任务书塌了也不会拖垮整个引擎。
+- **日历系统不依赖任务书**（载体已定 FTB Quests，但引擎仍然不依赖它）：任务书只负责"任务属于哪个时代"，年份与判定留在脚本里——这样任务书塌了也不会拖垮整个引擎。
 
 ### 9.6 节奏调节与低谷对策
 
@@ -985,7 +985,7 @@ Horde Nights 的 **Blood Ritual**（营火仪式手动召唤月亮事件）可�
 **④ 游玩建议（开篇与每章开头各一段）**
 把 README 里的要点改写成"对玩家说的话"：袭击来了怎么办（敲钟集结、别硬扛）、远征前要去驿站登记（D2）、投影可以但自动放置不行、物资拿了往里补。**游戏内可读比文档可读有用得多。**
 
-**依赖与降级**：载体是 Questlog（容量待验证）。如果它承载不了这种"章 + 清单 + 长文本"，就退化为：**任务书只做任务，背景与建议放进议事厅的成书 + 开篇的世界提示**——这也正是任务书不能成为引擎依赖项的原因（见 9.5）。
+**依赖与降级**：载体是 **FTB Quests**（依赖 FTB Teams，需配成"全队同队"才有多人共享进度）。如果它承载不了这种"章 + 清单 + 长文本"，就退化为：**任务书只做任务，背景与建议放进议事厅的成书 + 开篇的世界提示**——这也正是任务书不能成为引擎依赖项的原因（见 9.5）。
 
 ## 十一、世界与地理
 
@@ -1156,7 +1156,7 @@ RoadWeaver **不能在已加载区块生成**，且未生成完的路段不能�
 | 结构 / 地牢 | ✅ 三个候选 | ✅ 三个候选 |
 | **新维度（远征目标）** | ✅ Blue Skies / Dimensional Dungeons /（CF）Twilight Forest | ⚠️ **只剩 Dimensional Dungeons，无冗余** |
 | 威胁事件 | ✅ 三个以上候选 | ✅ The Hordes / Illager Invasion / Undead Nights |
-| 任务书 | ✅ FTB Quests（CF）/ Odyssey Quests / Questlog | ⚠️ **只有 Questlog（checklist 式）**；FTB Quests 待 CF 核实 |
+| 任务书 | ✅ FTB Quests（CF）/ Odyssey Quests / Questlog | ✅ **FTB Quests 已实证**（`ftb-quests-neoforge-2101.1.24`，见 `MODLIST.md`）；Questlog 降为备选 |
 | 经济与共享仓库 | ✅ Lightman's / Simple Shops / Stash | ⚠️ Simple Shops 与 Stash 无 1.21.1；**独立共享存储 mod 未找到** |
 | Java | 17 | 21 |
 
@@ -1170,14 +1170,14 @@ RoadWeaver **不能在已加载区块生成**，且未生成完的路段不能�
 
 ### 进选型前必须补的核实（本次证据的盲区）
 
-1. **CurseForge 侧**：FTB Quests（1.21.1 是否存在）、FTB Chunks（领地替代）、Twilight Forest（新维度候选）——这三个都不在 Modrinth，是**最大盲区**。
-2. **Questlog 实机试用**：能否承载 6 章 20~30 个任务的依赖链。**若不能，任务全链要么降规模、要么换载体、要么改版本**——这是唯一可能翻转版本结论的未知。
+1. **CurseForge 侧**：✅ FTB Quests 已实证（1.21.1 NeoForge 有版本，证据见 `MODLIST.md`）；仍待查 **Twilight Forest**（维度候选）。
+2. **FTB Teams 的同队配置**：任务进度要全队共享，且不能与 OPAC 的 party 形成第二个"队伍"概念。
 3. **威胁 mod 的能力面**（Modrinth API 不暴露配置项）：袭击强度能否随国力/阶段调整、能否与城墙防御真实交互。这直接决定"阶段 4 御敌"能否成立。
 4. **小版本锁定**：多个主力 mod（YBD、When Dungeons Arise、Create 6）只覆盖 1.21.1，所以"1.21.x"必须锁死 **1.21.1**，不要漂到 1.21.4+。
 
 ### 下一步
 
-1. 补做上面四项核实（CF 侧 / Questlog / 威胁能力面 / 锁小版本）；
+1. 补做上面四项核实（CF 侧 / FTB Teams 配置 / 威胁能力面 / 锁小版本）；
 2. 按功能位走 `mod-selection` 决策表落地具体 mod，每格标注来源；
 3. 按 `modpack-scaffold` 建骨架、落 `AGENTS.md`（用模板）、装"能启动的最小集合"，逐组加、逐组验证；
 4. 性能基线从第一组 mod 开始记录，贯穿全程。
@@ -1304,7 +1304,7 @@ RoadWeaver **不能在已加载区块生成**，且未生成完的路段不能�
 | 清单 | 内容 |
 |---|---|
 | **已装已验**（4） | OPAC · Create 6（含列车/物流/图纸）· 性能组 · YBD |
-| **已定未装**（约 11） | The Hordes · Undead Nights · Questlog · Dimensional Dungeons · WDA · D&T · Portable Blueprints · Effortless Building · WorldEdit · RoadWeaver · GriefLogger+GLRA · Simple Backups |
+| **已定未装**（约 12） | The Hordes · Undead Nights · **FTB Quests 系列** · Dimensional Dungeons · WDA · D&T · Portable Blueprints · Effortless Building · WorldEdit · RoadWeaver · GriefLogger+GLRA · Simple Backups |
 | **仍未选**（0 个） | ✅ **已清空**：群系扩充定为 `terralith`（+ 前置 `lithostitched`） |
 
 **完整清单**：见 **`MODLIST.md`**（人读）与 **`modlist.tsv`**（脚本读，由 `tools/apply_modlist.py` 核验/应用）。

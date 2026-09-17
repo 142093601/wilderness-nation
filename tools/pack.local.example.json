@@ -8,5 +8,6 @@
   "server_dir": "改成你的服务端目录，例如 D:\\\\project\\\\nation-pack\\\\server",
   "rcon_host": "127.0.0.1",
   "rcon_port": "25575",
-  "rcon_password": "换成你自己的 RCON 口令，别用默认值"
+  "rcon_password": "换成你自己的 RCON 口令，别用默认值",
+  "reference_packs": "可选：本机其他整合包的 mods 目录，分号分隔。用于核实「只在 CurseForge 分发」的 mod（如 FTB 系列）——它们的 jar 文件名里带版本号，是硬证据"
 }
