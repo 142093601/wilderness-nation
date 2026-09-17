@@ -144,3 +144,26 @@ immersive-paintings	plan	国旗/国史/地图墙展示
 ping-wheel	plan	协作标记
 what-are-they-up-to	plan	队友状态
 simple-voice-chat	skip	语音（用户明确不要）
+
+# ── 参照包共识补漏（2026-09-15）：来自本机 3 个成熟包的 mods 目录 ──
+# 起因：候选池只有 Modrinth，而大量常见 mod 只在 CurseForge 分发 → 系统性漏项。
+# 方法：tools/reference_pack_diff.py 找出"出现在 ≥2 个参照包里"的主流 mod，再与我们的清单对差。
+twilightforest	plan	远征维度（★ 1.21.1 有版本 —— 解决了原先"CF 侧未核实"的待核实项）
+lootr	plan	多人·独立战利品（3~7 人同时开箱不抢箱，远征主菜的刚需）
+jecharacters	plan	生活质量·拼音搜索（中文玩家搜英文物品名的刚需，直接服务中文化）
+appleskin	plan	生活质量·饥饿与饱和度显示（基础 QoL，原先漏了）
+torchmaster	plan	建造·火把抑制刷怪（让基地与工事区域不被刷怪，配"威胁从时代 4 开始"）
+polymorph	plan	配方冲突选择（多 mod 包实用：同一配方冲突时让玩家选）
+attributefix	plan	属性上限修复（多 mod 叠加必备）
+solcarrot	plan	食物·多样性系统（吃不同食物提升上限，与 Farmer's Delight 天生一对）
+cookingforblockheads	plan	食物·厨房方块（配食物系统）
+farmingforblockheads	plan	食物·市场方块（配公共仓库与以物易物）
+elevatorid	plan	建造·电梯（建筑内部交通）
+trashslot	plan	生活质量·垃圾桶槽位
+craftingtweaks	plan	生活质量·合成整理
+betteradvancements	plan	生活质量·成就界面
+colorfulhearts	plan	生活质量·血量显示
+connectivity	plan	生活质量·网络优化（多人服包体量下有用）
+sophisticatedbackpacks	hold	背包（与 Traveler's Backpack 二选一：都很好，需实测手感）
+kubejs	hold	脚本层候选（日历/国力要用脚本，设计说"第一版只做两个脚本资产"——需评估）
+l_enders-cataclysm	hold	高难 boss 与结构（可作"占领区"素材，看时代 3/4 需不需要）

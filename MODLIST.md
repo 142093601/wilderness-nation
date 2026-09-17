@@ -2,10 +2,12 @@
 
 > **这份文件回答一个问题：这个包到底装哪些 mod。** 每个功能位一行，没有"以后再想"。
 >
-> **挑选纪律（很重要）**：本表所有 mod **只从已核实的候选池里挑**——
-> `CANDIDATES.md`（472 个）与 `CANDIDATES-THICK.md`（662 个）里的条目，
-> 其 `1.21.1 + neoforge` 支持来自 Modrinth **接口返回**（`tools/survey_mods.py`），不是记忆。
-> 挑不到合适候选的功能位，一律标 ⏳**并写明缺什么**，绝不凭印象塞一个进去。
+> **挑选纪律（很重要）**：
+> 1. **清单必须同时覆盖 Modrinth 与 CurseForge** —— 只扫一个平台就是**系统性偏差**。
+>    这曾导致两个后果：任务书错选 Questlog（FTB 在 CF，没进过候选池）、以及一批常见 mod 整批漏掉。
+> 2. 候选来源有两条，都要用：① Modrinth 接口筛选（`tools/survey_mods.py`）；
+>    ② **本机成熟包的 `mods/` 共识**（`tools/reference_pack_diff.py`），专门补 CF 侧。
+> 3. 挑不到合适候选的功能位，一律标 ⏳**并写明缺什么**，绝不凭印象塞一个进去。
 >
 > 状态：✅ 已装已验 · 📌 已定待装 · ⏳ 待核实后才定 · ❌ 不装（含理由）
 > 端侧：双 = 客户端+服务端都要 · 客 = 仅客户端 · 服 = 仅服务端
@@ -141,10 +143,13 @@ ftb-jei-extras-21.1.7.jar             ftb-filter-system-neoforge-21.1.4.jar
 
 （`2101.x` = NeoForge **21.1** 分支。来源：All the Mods 10 与 Skyhive，两个都是 1.21.1 NeoForge 的成熟包。）
 
-> ⚠️ **实操约束**：`packwiz curseforge add` 需要 **CurseForge API key**（免费申请）。
-> 没有 key 时的两条路：① 去申请一个（一次性）；② 这 6 个 jar **手动下载放进 `pack/mods/`**，
-> 再用 `packwiz refresh` 让索引认识它们（缺点是以后不自动更新）。
-> 这条早在 `BOOTSTRAP.md` 里记过——"packwiz 走 CF 需要 API key，手动下 jar 则没这个问题"。
+> ⚠️ **这条早先写错了，已更正**：我以为 `packwiz curseforge add` 需要申请 CurseForge API key。
+> **实测它内置了 CF 访问，不需要 key**：`packwiz curseforge add ftb-quests-forge -y` 直接成功，
+> 连依赖都自动解析了（Architectury → FTB Library → FTB Teams → FTB Quests），
+> 元数据写成 `mode = "metadata:curseforge"`（**不内嵌 jar**，由安装器从 CF 取——许可上最稳）。
+>
+> 两个要注意的：① **CF 的 slug 与 Modrinth 不同**（CF 上叫 `ftb-quests-forge`，Modrinth 上根本没有）；
+> ② 这边访问 CF API **偶发 TLS 握手超时**（实测 `ftb-chunks-forge` 就超时了一次）→ 要能重试。
 
 ## 九、生活质量（11）
 
@@ -221,12 +226,42 @@ ftb-jei-extras-21.1.7.jar             ftb-filter-system-neoforge-21.1.4.jar
 | **FTB Ultimine**（连锁挖矿） | 🚫 与我们排除的 VeinMiner 同类：松化材料经济、削弱"基建要有成本"（H7） |
 | **FTB Ranks**（权限/头衔） | 🚫 本包已定"**零头衔**"，Ranks 很容易滑向职位体系——设计明确删过"职位体系" |
 | 重复职能的第二选择 | JEI/EMI 二选一 · 地图只用 Xaero · 背包只用 Traveler's · 存储用 Create 自带（不装 Tom's/AE2，避免职能重叠削弱"仓库是你们建的"） · 备份用 Simple Backups（不装 FTB Backups 2） |
+| 科技/魔法大件（AE2 全家 · Ars Nouveau 全家 · Apotheosis · Draconic Evolution · EnderIO · allthemodium · Dyson Cube · Compact Machines…） | 参照包共识里它们很主流，但**那是大杂烩包的构成**；本包是主题包，自动化只认 Create 一套。加了会稀释主线、拉高学习成本与性能风险 |
+
+## 十三·补、参照包共识补漏（2026-09-15）
+
+**起因**：清单一度只扫 Modrinth，而**大量常见 mod 只在 CurseForge 分发** → **系统性漏项**。
+用户一句"常见的 mod 你都没加入"点出了这个偏差（与"任务书错选 Questlog"是同一个根因）。
+
+**方法**（可重跑、**全离线**）：`tools/reference_pack_diff.py` 扫本机 3 个成熟包的 `mods/`
+（All the Mods 10 = 479 jar · Skyhive = 348 · 龙之冒险 = 235，**合计 881 个**），
+把 jar 文件名归一成"家族"，**出现在 ≥2 个包里的视为主流**，再与我们的清单对差。
+
+**结果**：家族 749 个 → 主流 261 个 → **我们漏了 230 个**（其中三个包全有的 37 个）。
+筛掉与主题无关的科技魔法大件后，**补进 19 个**：
+
+| 补进 | 出现在几个包 | 为什么该有 |
+|---|---|---|
+| **`twilightforest`** | **3** | ★ **远征维度候选，且 1.21.1 有版本**（`twilightforest-1.21.1-4.8.3345`）。它一直躺在"CF 侧未核实"的待核实项里——**证据其实就在本机** |
+| **`lootr`** | **3** | ★ 每个玩家独立战利品箱 → **3~7 人同时探索不用抢箱**，远征主菜的刚需 |
+| **`jecharacters`** | **3** | ★ **拼音搜索**（在 JEI 里用拼音搜英文物品名）→ 中文玩家刚需，**直接服务"中文化"那一项** |
+| `appleskin` | 3 | 饥饿/饱和度显示——基础 QoL，原先居然漏了 |
+| `torchmaster` | 3 | 火把抑制刷怪 → 基地与工事区不被刷怪，配"威胁从时代 4 开始" |
+| `polymorph` | 3 | 配方冲突时让玩家选（多 mod 包实用） |
+| `attributefix` | 3 | 属性上限修复（多 mod 叠加必备） |
+| `solcarrot` | 3 | 食物多样性提升上限 → 与 Farmer's Delight 天生一对 |
+| `cookingforblockheads` · `farmingforblockheads` | 2 | 厨房方块 / 市场方块 → 配食物系统与公共仓库 |
+| `elevatorid` | 2 | 电梯（建筑内部交通） |
+| `craftingtweaks` · `trashslot` · `betteradvancements` · `colorfulhearts` · `connectivity` | 2~3 | 小 QoL |
+| `sophisticatedbackpacks` ⏳ | 3 | 背包（**与 Traveler's Backpack 二选一**，待实测手感） |
+| `kubejs` ⏳ | 3 | **脚本层候选**：日历与国力要用脚本，设计说"第一版只做两个脚本资产" → 需评估 |
+| `l_enders-cataclysm` ⏳ | 3 | 高难 boss 与结构 → 可作"占领区"素材 |
 
 ## 十四、待定项（唯一还没定的，以及缺什么才能定）
 
 | # | 待定 | 缺什么 | 影响 |
 |---|---|---|---|
-| 1 | **Dimensional Dungeons 的形态** | 读文档/实测：是"可探索区域"还是"一次性副本" | 时代 3「出关」的目标怎么写 |
+| 1 | **远征维度选谁** | ✅ **Twilight Forest 已实证 1.21.1 有版本**（参照包共识补漏时发现的）→ 现在有两个候选：Twilight Forest（成形、资料多）vs Dimensional Dungeons（形态仍未核实）。需实测取舍 | 时代 3「出关」的目标怎么写 |
 | 2 | **FTB Teams 的"全员同队"怎么配** | 装好后实测配置项（目标：任务进度全队共享，且不引入第二个"队伍"概念） | 任务书能不能承载"国策级"团队任务 |
 | 3 | **Iris 光影 + Distant Horizons** | 加装后跑性能基线（§12 指标） | 决定能不能给朋友开光影 |
 | 4 | **Alternate Current** | 与 ModernFix 的优化是否重叠 | 影响服务端基线 |
@@ -250,28 +285,29 @@ ftb-jei-extras-21.1.7.jar             ftb-filter-system-neoforge-21.1.4.jar
 | 视觉与音效 | 13（含 2 待定） |
 | 食物与农业 | 9 |
 | 社交与身份 | 3 |
-| **内容/功能 mod 合计** | **约 102** |
+| **内容/功能 mod 合计** | **约 120** |
 | 前置库（随依赖自动进） | 约 20~30 |
-| **jar 总数（估）** | **约 125~135** |
+| **jar 总数（估）** | **约 140~150** |
 
 对照参照系：本机 All the Mods 10 是 **479 个 jar / 1.3 GB**（同版本），另一个主题包 235 个。
-**本包定位是主题包不是大杂烩**，所以 125~135 是合理落点；不够再按"主菜优先"补，而不是按数字堆。
+**本包定位是主题包不是大杂烩**，所以 140~150 是合理落点；不够再按"主菜优先"补，而不是按数字堆。
 
 ### 清单核验（`tools/apply_modlist.py --verify`）
 
 ```
-清单载入：110 条  hold=4 · installed=16 · plan=87 · skip=3
-核验结果：110/110 通过
+清单载入：129 条  hold=7 · installed=16 · plan=103 · skip=3
+核验结果：129/129 通过
 ```
 
-四条**证据来源**（每一类都标明，不含"我觉得它有"）：
+五条**证据来源**（每一类都标明，不含"我觉得它有"）：
 
-| 来源 | 条数 | 说明 |
-|---|---|---|
-| 本地候选池 | 86 | 两个 survey JSON 本身就是按 `1.21.1 + neoforge` 筛出来的 |
-| 已装运行中 | 8 | 它正跑在这个包里，`baseline.csv` 有它的加载/TPS 证据 |
-| **本地参照包实证** | 6 | **FTB 系列（CF 专用）**：本机两个成熟包的 jar 文件名带版本号 |
-| 联网补查（Modrinth 接口） | 10 | 少数不在池里的 |
+| 来源 | 说明 |
+|---|---|
+| 本地候选池 | 两个 survey JSON 本身就是按 `1.21.1 + neoforge` 筛出来的 |
+| 已装运行中 | 它正跑在这个包里，`baseline.csv` 有它的加载/TPS 证据 |
+| **本地参照包实证** | 本机成熟包的 jar 文件名带版本号 —— **专门补 CurseForge 侧**（FTB 系列、Twilight Forest、Lootr 等） |
+| 联网补查（Modrinth 接口） | 少数不在池里的 |
+| ✗ 不合格 | 会被拦下、不允许进清单（如 `lets-do-bakery`） |
 
 ## 十六、装载顺序（按时代，对接 `DESIGN.md` §17）
 

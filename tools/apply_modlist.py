@@ -148,6 +148,11 @@ def verify(rows: list[dict]) -> list[dict]:
         elif row["status"] == "installed":
             # 它正跑在这个包里，且 baseline.csv 有它的加载/TPS 证据 —— 不需要再问接口
             row["verify"], row["source"] = "OK", "已装运行中"
+        elif (hit := next((n for n in refs if slug.replace("-", "") in n.replace("-", "")), None)):
+            # **参照包实证对 mr 类同样适用**：候选池只有 Modrinth，而常见 mod 常只在 CF 分发；
+            # 本机成熟包的 jar 文件名就是硬证据 —— 先看它，再去问接口（也省掉一次慢请求）
+            row["verify"], row["source"] = "OK", "本地参照包实证"
+            row["file"] = hit
         else:
             vers = api_get(f"/project/{slug}/version", {
                 "loaders": json.dumps([LOADER]),
