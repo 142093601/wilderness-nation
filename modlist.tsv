@@ -197,3 +197,34 @@ lambdynamiclights	plan	13 包·动态光源（手持火把照亮）
 tectonic	hold	12 包·地形大修（与 Terralith 并列候选；RoadWeaver 正文说 mod 版兼容——需二选一实测）
 e4mc	hold	13 包·局域网→公网（朋友免开服的联机方式，看你们怎么开服）
 connector	hold	16 包·Sinytra Connector：在 NeoForge 上跑 Fabric mod（★ 生态事实：16/50 个 NeoForge 包在用；若采用可解锁 Fabric 独占 mod，但有兼容风险）
+
+# ── 冷门好 mod（第二次筛：被多个策展包选中但下载量低的那批）──
+# 前缀数字 = 被多少个 NeoForge 包选中（源自 data/consensus-gap.md 的 B 表）
+create-pattern-schematics	plan	9 包·Create 图纸图案（★ 与我们的图纸系统直接相关）
+create-railways-navigator	plan	9 包·Create 铁路导航（服务铁路环线毕业工程）
+hypertube	plan	9 包·Create 管道运输
+blocks-bogies	plan	8 包·Create 转向架与轮组（列车部件）
+create-train-parts	plan	6 包·Create 列车部件
+create-framed	plan	9 包·Create 框架方块（建筑造型）
+create-tfmg	plan	8 包·Create 工厂扩展（The Factory Must Grow，服务自动化深度）
+macaws-trapdoors	plan	10 包·活板门构件
+macaws-lights-and-lamps	plan	8 包·灯具构件
+macaws-paths-and-pavings	plan	6 包·道路铺装（服务世界路网）
+macaws-paintings	plan	5 包·画作（国旗/国史展示的另一个手段）
+medieval-buildings	plan	5 包·中世纪建筑构件（★ 主题高度对口）
+diagonal-walls	plan	5 包·斜墙（建筑表现力）
+framedblocks	plan	5 包·自由造型方块（建筑表现力）
+repurposed-structures-forge	plan	5 包·原版结构重制（旧世痕迹）
+additional-structures	plan	5 包·更多结构（远征探索）
+tidal-towns	plan	5 包·城镇结构（旧世痕迹）
+friends-and-foes-forge	plan	6 包·原版风格新生物
+brewin-and-chewin	plan	6 包·酿造与奶酪（食物系统）
+miners-delight	plan	5 包·矿工食物（配 Farmer's Delight）
+storage-delight	plan	5 包·储物与食物
+corpse	plan	8 包·尸体（死亡后物品留在尸体里 → 与"失败=掠夺、但不烧家"的设定契合）
+almostunified	plan	6 包·材料统一（多 mod 的矿锭/材料归并，降低混乱）
+small-ships	plan	5 包·小船（水上交通 → 配合海与运河）
+exposure-polaroid	plan	5 包·拍立得（配 exposure 摄影）
+c2me-neoforge	hold	9 包·C2ME 区块并发（我们撤过：alpha + 与 RoadWeaver 冲突 + 覆盖 ModernFix 优化；但 9/50 包在用 → 留档供复议）
+skills	hold	8 包·Pufferfish's Skills 技能系统（与"零头衔/简洁"有张力，需判断）
+saturn	hold	7 包·内存优化（我们性能组之外的候选）

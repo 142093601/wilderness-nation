@@ -322,9 +322,7 @@ ftb-jei-extras-21.1.7.jar             ftb-filter-system-neoforge-21.1.4.jar
 | **`create.ultimate`** | 80 | **NeoForge 21.1.250——与我们版本号完全相同** |
 | `medieval-explorers` · `mc-medieval` · `mightybuilding` · `jeff-stedis-building-modpack` | 31~171 | 中世纪 / 建筑向 |
 
-**补进 20 个**（筛掉前置库与 Fabric 渲染器后的真正漏项）：
-
-| 补进 | 被几个包选中 | 为什么该有 |
+**补进 20 个**（筛掉前置库与 Fabric 渲染器后的真正漏项）：| 补进 | 被几个包选中 | 为什么该有 |
 |---|---|---|
 | **`create-steam-n-rails`** | 12 | Create 的**铁路扩展**（蒸汽与铁轨）→ 直接服务"铁路环线"毕业工程 |
 | **`copycats`**（Create: Copycats+） | 22 | 复制任意方块外观 → 建筑表现力 |
@@ -355,6 +353,25 @@ ftb-jei-extras-21.1.7.jar             ftb-filter-system-neoforge-21.1.4.jar
    （`forgified-fabric-api` 22 包、`sodium` 46 包就是证据）。这动摇了我们"只查 neoforge"的前提：
    若采用 Connector，可解锁 Fabric 独占 mod；代价是**兼容风险**（这正是它进 ⏳ 而不是 📌 的原因）。
 
+### 第二次筛：冷门好 mod（被多个策展包选中、但下载量低）
+
+B 表的判据是 **被 ≥2 个包选中 且 下载量 < 600 万**——这类往往是「**作者圈认可、但不靠量堆**」的。
+这一轮又补进 **25 个**（清单 152 → **180 条**）：
+
+| 方向 | 补进 | 为什么 |
+|---|---|---|
+| **Create 生态**（自动化主菜） | `create-pattern-schematics`（9 包）· `create-railways-navigator`（9）· `hypertube`（9）· `blocks-bogies`（8）· `create-tfmg`（8）· `create-framed`（9）· `create-train-parts`（6） | ★ **`create-pattern-schematics` 与我们的图纸系统直接相关**；铁路三件套服务"铁路环线"毕业工程；hypertube 是管道运输 |
+| **建筑构件** | `macaws-trapdoors`（10）· `macaws-lights-and-lamps`（8）· `macaws-paths-and-pavings`（6）· `macaws-paintings`（5）· **`medieval-buildings`（5）** · `diagonal-walls`（5）· `framedblocks`（5） | Macaw's 系列补齐；**`medieval-buildings` 主题高度对口**；`macaws-paths-and-pavings` 服务世界路网；`macaws-paintings` 是国旗/国史展示的另一个手段 |
+| **结构**（旧世痕迹 / 远征） | `repurposed-structures-forge`（5）· `additional-structures`（5）· `tidal-towns`（5） | 结构位扩容 |
+| **玩法与体验** | **`corpse`（8）** · `almostunified`（6）· `small-ships`（5）· `exposure-polaroid`（5）· `friends-and-foes-forge`（6） | `corpse` 让"失败=掠夺但不烧家"落得更实；`almostunified` 归并多 mod 材料、降低混乱；`small-ships` 服务水上交通 |
+| **食物** | `brewin-and-chewin`（6）· `miners-delight`（5）· `storage-delight`（5） | 配 Farmer's Delight |
+| **留档待复议** | `c2me-neoforge`（9 包！）· `skills`（8）· `saturn`（7） | ⚠️ **C2ME 被 9/50 个包选中**——我们撤它有三条理由（alpha / 与 RoadWeaver 冲突 / 覆盖 ModernFix 优化），留档供复议；`skills` 与"零头衔/简洁"有张力 |
+
+> ⚠️ **这一轮的已知缺口**：为控时我设了 30MB 上限，**85 个包被跳过**（多数是宝可梦/PvP，但含
+> `cassetus-building-pack` 294MB · `blossoming-kingdoms` · `kingdom-network` · `medieval-mc-neoforge-mmc5`
+> · `minecolonies-origins` · `better-mc-neoforge-bmc5` 等**主题对口的大包**）。
+> 补跑这批（上限 350MB、16 个包）**已启动但按用户要求中止** → **这个缺口如实留着**，需要时再跑。
+
 ## 十四、待定项（唯一还没定的，以及缺什么才能定）
 
 | # | 待定 | 缺什么 | 影响 |
@@ -383,28 +400,28 @@ ftb-jei-extras-21.1.7.jar             ftb-filter-system-neoforge-21.1.4.jar
 | 视觉与音效 | 13（含 2 待定） |
 | 食物与农业 | 9 |
 | 社交与身份 | 3 |
-| **内容/功能 mod 合计** | **约 140** |
-| 前置库（随依赖自动进） | 约 20~35 |
-| **jar 总数（估）** | **约 165~175** |
+| **内容/功能 mod 合计** | **约 165** |
+| 前置库（随依赖自动进） | 约 25~40 |
+| **jar 总数（估）** | **约 190~205** |
 
-对照参照系：本机 All the Mods 10 是 **479 个 jar / 1.3 GB**（同版本）；这一次解析的 50 个 NeoForge 包里，
-**272 mod（create-kingdom-fallensprout）、247（international-coalition-of-nations）、252（adventurecraft-modpack）**都在其中。
-**本包定位是主题包不是大杂烩**，165~175 已经相当接近一个成熟主题包；不够再按"主菜优先"补，而不是按数字堆。
+对照参照系：本机 All the Mods 10 是 **479 个 jar / 1.3 GB**（同版本）；跨包共识里解析的 50 个 NeoForge 包中，
+**272（create-kingdom-fallensprout）、252（adventurecraft-modpack）、247（international-coalition-of-nations）**都在其中。
+**本包定位是主题包不是大杂烩**，190~205 已经落在一个成熟主题包的区间内。
 
 ### 清单核验（`tools/apply_modlist.py --verify`）
 
 ```
-清单载入：152 条  hold=11 · installed=16 · plan=122 · skip=3
-核验结果：152/152 通过
+清单载入：180 条  hold=14 · installed=16 · plan=147 · skip=3
+核验结果：180/180 通过
 ```
 
-五条**证据来源**（每一类都标明，不含"我觉得它有"）：
+四条**证据来源**（每一类都标明，不含"我觉得它有"）：
 
 | 来源 | 条数 | 说明 |
 |---|---|---|
-| 本地候选池 | 105 | 两个 survey JSON 本身就是按 `1.21.1 + neoforge` 筛出来的 |
-| **本地参照包实证** | 26 | 本机成熟包的 jar 文件名带版本号 —— **专门补 CurseForge 侧**（FTB 系列、Twilight Forest、Lootr、I18nUpdateMod 等） |
-| 联网补查（Modrinth 接口） | 13 | 少数不在池里的 |
+| 本地候选池 | 118 | 两个 survey JSON 本身就是按 `1.21.1 + neoforge` 筛出来的 |
+| **本地参照包实证** | 28 | 本机成熟包的 jar 文件名带版本号 —— **专门补 CurseForge 侧**（FTB 系列、Twilight Forest、Lootr、I18nUpdateMod 等） |
+| 联网补查（Modrinth 接口） | 26 | 少数不在池里的 |
 | 已装运行中 | 8 | 它正跑在这个包里，`baseline.csv` 有它的加载/TPS 证据 |
 | ✗ 不合格 | — | 会被拦下、不允许进清单（如 `lets-do-bakery`；`sinytra-connector` 的 slug 应写作 `connector`） |
 

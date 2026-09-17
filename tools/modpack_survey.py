@@ -102,7 +102,7 @@ def find_packs(top: int, queries: list[str]) -> list[dict]:
     return sorted(found.values(), key=lambda p: -p["downloads"])
 
 
-def pack_mod_ids(pack: dict) -> tuple[set[str], str]:
+def pack_mod_ids(pack: dict, max_mb: float = 30.0) -> tuple[set[str], str]:
     """下载 .mrpack 取 modrinth.index.json，抽出用到的 project id。
 
     只在 `dependencies` 里出现 **neoforge** 的包才算数——这是加载器的权威信号。
@@ -117,8 +117,8 @@ def pack_mod_ids(pack: dict) -> tuple[set[str], str]:
     url, size = files[0].get("url"), files[0].get("size") or 0
     if not url:
         return set(), "没有下载地址"
-    if size > 30 * 1024 * 1024:      # 超过 30MB 的多半内嵌 overrides，跳过以免太慢
-        return set(), f"文件过大（{size/1e6:.1f}MB）"
+    if size > max_mb * 1024 * 1024:
+        return set(), f"文件过大（{size/1e6:.1f}MB > {max_mb}MB）"
     try:
         req = urllib.request.Request(url, headers={"User-Agent": UA})
         with urllib.request.urlopen(req, timeout=60) as r:
@@ -173,20 +173,30 @@ def main() -> int:
     ap.add_argument("--top", type=int, default=25, help="按下载量取前 N 个整合包")
     ap.add_argument("--queries", default="medieval,kingdom,building,survival,rpg,village,colony",
                     help="额外按主题关键词搜整合包")
+    ap.add_argument("--packs", default="",
+                    help="直接给包 slug（逗号分隔），跳过搜索阶段——用于补跑上次被大小上限跳过的包")
+    ap.add_argument("--max-mb", type=float, default=30.0,
+                    help="单个 .mrpack 的大小上限（MB）。上次 30MB 误杀了多个 NeoForge 大包，补跑时调高")
+    ap.add_argument("--merge", help="把结果并入这个已有的 consensus JSON（累加被选中次数）")
     ap.add_argument("--md")
     ap.add_argument("--json")
     ap.add_argument("--min-packs", type=int, default=2, help="至少被几个包选中才算共识")
     args = ap.parse_args()
 
     queries = [q.strip() for q in args.queries.split(",") if q.strip()]
-    packs = find_packs(args.top, queries)
-    print(f"找到 1.21.1+neoforge 整合包 {len(packs)} 个（下载量前列 + {len(queries)} 个主题关键词）")
+    explicit = [s.strip() for s in args.packs.split(",") if s.strip()]
+    if explicit:
+        packs = [{"slug": s, "title": s, "downloads": 0, "tags": ["explicit"]} for s in explicit]
+        print(f"显式指定 {len(packs)} 个包（跳过搜索），大小上限 {args.max_mb}MB")
+    else:
+        packs = find_packs(args.top, queries)
+        print(f"找到 1.21.1+neoforge 整合包 {len(packs)} 个（下载量前列 + {len(queries)} 个主题关键词）")
 
     usage: Counter[str] = Counter()
     in_packs: dict[str, list[str]] = defaultdict(list)
     ok_packs: list[str] = []
     for i, p in enumerate(packs, 1):
-        ids, note = pack_mod_ids(p)
+        ids, note = pack_mod_ids(p, args.max_mb)
         print(f"  [{i:>3}/{len(packs)}] {p['slug']:<34} {note}", flush=True)
         if not ids:
             continue
@@ -204,40 +214,60 @@ def main() -> int:
     meta = resolve_ids(sorted(usage, key=lambda k: -usage[k]))
     print(f"已解析 {len(meta)} 个项目的元数据")
 
-    consensus = [(pid, n) for pid, n in usage.items() if n >= args.min_packs]
-    consensus.sort(key=lambda kv: (-kv[1], meta.get(kv[0], {}).get("downloads", 0)))
+    # ── 统一成 slug 键（输出格式如此），便于与基线合并 ──
+    usage_by_slug: Counter[str] = Counter()
+    meta_by_slug: dict[str, dict] = {}
+    for pid, n in usage.items():
+        m = meta.get(pid) or {}
+        slug = m.get("slug") or pid
+        usage_by_slug[slug] += n
+        if m:
+            meta_by_slug[slug] = m
+    if args.merge:
+        base_path = Path(args.merge)
+        if base_path.is_file():
+            bj = json.loads(base_path.read_text(encoding="utf-8"))
+            for s, n in (bj.get("usage") or {}).items():
+                usage_by_slug[s] += n
+            for m in (bj.get("meta") or {}).values():
+                s = m.get("slug")
+                if s:
+                    meta_by_slug.setdefault(s, m)
+            ok_packs = list(bj.get("ok_packs") or []) + ok_packs
+            print(f"已并入基线 {base_path.name}：现共 {len(ok_packs)} 个包 · {len(usage_by_slug)} 个 mod")
+
+    consensus = [(s, n) for s, n in usage_by_slug.items() if n >= args.min_packs]
+    consensus.sort(key=lambda kv: (-kv[1], (meta_by_slug.get(kv[0], {}).get("downloads") or 0)))
 
     # ── 找"冷门好 mod"：被多个包选中、但下载量不高 ──
     curated: list[tuple[str, int, dict]] = []
-    for pid, n in consensus:
-        m = meta.get(pid) or {}
-        if not m:
-            continue
+    for s, n in consensus:
+        m = meta_by_slug.get(s) or {}
         if n >= 2 and (m.get("downloads") or 0) < 6_000_000:
-            curated.append((pid, n, m))
-    curated.sort(key=lambda t: (-t[1], t[2].get("downloads", 0)))
+            curated.append((s, n, m))
+    curated.sort(key=lambda t: (-t[1], t[2].get("downloads") or 0))
 
     lines = [
         "# 跨整合包 mod 共识（从真实包挖出来的）\n",
-        f"> 数据源：Modrinth 上 **{len(packs)} 个** 1.21.1+neoforge 整合包的 `.mrpack` 内 `modrinth.index.json`",
-        f">（成功解析 {len(ok_packs)} 个）。工具：`tools/modpack_survey.py`，可重跑。\n",
-        f"> 合计 {len(usage)} 个不同 mod；**被 ≥{args.min_packs} 个包选中的 {len(consensus)} 个**。\n",
+        f"> 数据源：Modrinth 上整合包的 `.mrpack` 内 `modrinth.index.json`",
+        f">（成功解析 **{len(ok_packs)} 个 NeoForge 包**）。工具：`tools/modpack_survey.py`，可重跑（支持 `--merge` 增量补跑）。\n",
+        f"> 合计 {len(usage_by_slug)} 个不同 mod；**被 ≥{args.min_packs} 个包选中的 {len(consensus)} 个**。\n",
         "## 一、跨包共识（被越多包选中越主流）\n",
         "| mod | 被几个包选中 | 下载量 | 端侧 | slug |",
         "|---|---|---|---|---|",
     ]
-    for pid, n in consensus[:250]:
-        m = meta.get(pid) or {}
+    for slug, n in consensus[:300]:
+        m = meta_by_slug.get(slug) or {}
         lines.append(f"| {m.get('title','?')} | **{n}** | {m.get('downloads',0):,} | "
-                     f"{m.get('client_side')}/{m.get('server_side')} | `{m.get('slug')}` |")
+                     f"{m.get('client_side')}/{m.get('server_side')} | `{slug}` |")
 
     lines += ["\n## 二、冷门好 mod（被多个策展包选中，但总下载量不高）\n",
               "> 判据：**被 ≥2 个包选中** 且 **下载量 < 600 万**。这类往往是「作者圈认可、但不靠量堆」的。\n",
               "| mod | 被几个包选中 | 下载量 | 端侧 | slug |",
               "|---|---|---|---|---|"]
-    for pid, n, m in curated[:150]:
+    for slug, n, m in curated[:200]:
         lines.append(f"| {m.get('title','?')} | **{n}** | {m.get('downloads',0):,} | "
-                     f"{m.get('client_side')}/{m.get('server_side')} | `{m.get('slug')}` |")
+                     f"{m.get('client_side')}/{m.get('server_side')} | `{slug}` |")
 
     report = "\n".join(lines)
     if args.md:
@@ -247,8 +277,8 @@ def main() -> int:
     if args.json:
         Path(args.json).write_text(json.dumps(
             {"packs": [p["slug"] for p in packs], "ok_packs": ok_packs,
-             "usage": {meta.get(k, {}).get("slug", k): v for k, v in usage.items()},
-             "meta": meta}, ensure_ascii=False, indent=2), encoding="utf-8")
+             "usage": dict(usage_by_slug), "meta": meta_by_slug},
+            ensure_ascii=False, indent=2), encoding="utf-8")
         print(f"已写: {args.json}")
     return 0
 
