@@ -500,3 +500,36 @@ python pack_paths.py                            # 自检：打印生效配置（
 
 测试脚本里凡是要写玩家名的地方，写 **`{{player}}`**，`game_agent.py` 会用配置里的 ID 替换
 ——这样**仓库里不出现任何人的游戏 ID**。
+
+---
+
+## 十八、推送这个仓库时的网络坑（实测踩过）
+
+**症状**：`git push` 报
+
+```
+fatal: unable to access 'https://github.com/.../wilderness-nation.git/':
+Failed to connect to github.com port 443 via 127.0.0.1 after 2065 ms
+```
+
+**原因**：`git config --global http.proxy` 指向 `http://127.0.0.1:7897`（Clash 的端口），
+**但那个端口当时没在监听**（Clash 没开）。而 GitHub **直连其实是通的**。
+
+**两种解法**（按情况选）：
+
+```powershell
+# ① Clash 没开时：一次性绕过代理（不改任何配置，最稳）
+git -c http.proxy= -c https.proxy= push origin main
+
+# ② GitHub 直连不通时：确认 Clash 在跑，用全局代理推
+git push origin main
+```
+
+**自查命令**（先分清是代理问题还是网络问题）：
+
+```powershell
+git config --global --get http.proxy          # 看代理配的哪个端口
+Test-NetConnection 127.0.0.1 -Port 7897       # 那个端口有没有在监听
+Invoke-WebRequest https://github.com -Method Head   # 直连通不通
+```
+
