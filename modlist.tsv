@@ -88,9 +88,9 @@ easy-anvils	plan	铁砧便利
 enchanting-infuser	plan	附魔便利
 
 # ── 任务书（FTB 系列：仅 CurseForge 分发，故 src=cf；版本证据见 MODLIST.md）──
-ftb-library	plan	任务书前置（CF）	cf
-ftb-teams	plan	任务书依赖·团队（CF）	cf
-ftb-quests	plan	任务书载体（CF）	cf
+ftb-library-forge	plan	任务书前置（CF；★ slug 必须是 CF 的 `-forge` 形式，否则 packwiz curseforge add 会失败）	cf
+ftb-teams-forge	plan	任务书依赖·团队（CF；同上）	cf
+ftb-quests-forge	plan	任务书载体（CF；同上）	cf
 ftb-xmod-compat	plan	FTB 跨 mod 兼容（CF）	cf
 ftb-jei-extras	plan	JEI 扩展（CF）	cf
 ftb-filter-system	plan	物品过滤（CF）	cf
@@ -256,7 +256,37 @@ refurbished-furniture	plan	CF·MrCrayfish 家具（家具位补充）
 buildersaddition	plan	CF·建造者附加方块
 macaws-furniture	plan	CF·Macaw's 家具（补全 Macaw's 系列）
 create-horse-power	plan	CF·Create 马力（马车运输 → 早期交通）
-ftb-quests-optimizer	plan	CF·FTB Quests 性能优化（★ 我们已定用 FTB Quests）
-ftb-quests-lang-splitter	plan	CF·FTB Quests 文本拆分（★ 中文化要用到——ATM10 汉化补丁里就有它）
+ftb-quests-optimizer	plan	CF·FTB Quests 性能优化（★ 我们已定用 FTB Quests）	cf
+ftb-quests-lang-splitter	plan	CF·FTB Quests 文本拆分（★ 中文化要用到——ATM10 汉化补丁里就有它）	cf
 extraquests	plan	CF·FTB Quests 扩展任务类型
 ftb-chunks-forge	hold	CF·FTB Chunks 领地（1.3 亿下载的领地主流方案；但 OPAC 已实测通过 → 留档）
+# ── MC百科（mcmod.cn）目录对差补漏（2026-09-18）：第四条腿 · 中文社区维度 ──
+# 来源：mcmod.cn/modlist.html?mcver=1.21.1 —— 334 页，去重后 9238 条（百科自称收录 10672 条）。
+# 方法：tools/mcmod_survey.py --list → --cmp（与清单对差，缺口 6853 条）→ --slots（按简介中文关键词分 15 个功能位桶）。
+# 核验：tools/verify_candidates.py —— Modrinth 用 facets[versions:1.21.1, categories:neoforge] 搜，
+#       再过 /project/<slug>/version 确认真有文件；CF 用 api.curse.tools 搜 + /mods/<id>/files 确认，
+#       并逐条检查返回文件载荷的 gameVersions 真含 "1.21.1"+"NeoForge"（防止过滤器被忽略造成假 OK）。
+# 边界（诚实记录）：mcmod 列表页不提供加载器与版本；其「指数走势」热度需登录 → 默认排序的语义
+#       无法验证。因此 mcmod 只当**发现**来源，判定一律落在 Modrinth / CurseForge 接口上。
+imblocker-original	plan	界面·输入法冲突修复（中文玩家刚需，与本包 zh_cn 侧重一致）
+xaeroplus	plan	界面·Xaero 地图增强与性能（本包已用 Xaero 小地图+世界地图）
+put-a-plug-in-it!	plan	性能·内存泄漏修复（轻量、低风险，长线服值得）
+certain-questing-additions	plan	任务书·FTB Quests 的 QoL 与动画补充
+todolist	plan	协作·多人共享待办 TeamTasks: TodoList（中文作者，支持多人）
+easy-mob-spawn-control	plan	威胁·生物生成控制（时代威胁闸门的执行器；备选 mobspawncontroller）
+travelers-titles	plan	氛围·进入群系与维度显示标题（强化开疆拓土的仪式感）
+stellarcreateoptimization	plan	CF·性能·Create 6.0.x 服务端 tick 与客户端渲染优化（基建时代核心是 Create）	cf
+bye-pregen	plan	CF·性能·降低区块生成引起的 MSPT 尖峰与卡顿（与已装 chunky 预生成互补）	cf
+polyglottooltip	plan	CF·界面·提示框补多语言名称行（缓解未汉化 mod 的阅读问题）	cf
+quest-enhance	plan	CF·任务书制作·FTB Quest Enhance（剪贴板贴图/章节画布/生物模型图标；直接服务 90~110 个任务的编写）	cf
+chunk-plan	plan	CF·治理·服务端探索配额（对应远征半径与服务器资源控制）	cf
+dungeon-difficulty	hold	威胁·按群系提升难度并给匹配奖励（可能与本包的时代难度曲线冲突，待定位）
+orcinvasion	hold	威胁·兽人入侵（御敌时代内容，但仅 275 下载 → 采用率过低，兼容与质量未验）
+zstdnet-minekuai	hold	部署工具·客户端↔服务端流量 ZSTD 压缩（**是代理而非包内容，装机时不要放进 mods**）
+datatip	hold	CF·界面·JSON/资源包驱动的自定义 tooltip（与 PolyglotTooltip 功能重叠，二选一后再定）	cf
+ftbquest-slot-rewards	hold	CF·任务书·与 Curios 饰品栏位互通（体量小，可选）	cf
+offlineskins	hold	CF·多人·离线皮肤缓存（本项目测试环境为离线模式，优先级低）	cf
+millenaire	hold	CF·治理·千年村庄（村庄生成/当村长/村庄关系，与建国主题强相关；但 1.21.1 移植版仅 2 个文件，稳定与兼容风险待验）	cf
+banner-claim	skip	领地·旗帜圈地（Modrinth 有项目但无 1.21.1+NeoForge 版本；且与已实测的 OPAC 形成双领地体系，冲突）
+litematica-printer	skip	建造·投影自动放置（Modrinth 有项目但无 1.21.1+NeoForge 版本；且会削弱建造劳动）
+visualblueprintmaterials	skip	建造·蓝图材料清单（Modrinth 与 CurseForge 均查无）

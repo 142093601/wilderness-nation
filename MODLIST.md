@@ -125,17 +125,29 @@
 
 | 功能位 | 选定 | 端侧 | 来源 | 状态 | 说明 |
 |---|---|---|---|---|---|
-| **任务书载体** | **FTB Quests** | 双 | CF | 📌 | 章节 + 任务树 + 依赖 + 奖励；`config/ftbquests` 是它的数据目录 |
-| 任务书依赖·团队 | FTB Teams | 双 | CF | 📌 | ⚠️ **需设成"全员同队"**（你们本来就是一个国家）→ 任务进度才能共享；具体配置项装好后实测 |
-| 任务书前置 | FTB Library | 双 | CF | 📌 | 必需 |
-| FTB 跨 mod 兼容 | FTB XMod Compat | 双 | CF | 📌 | 让 FTB 组件认识其他 mod 的方块/物品 |
-| JEI 扩展 | FTB JEI Extras | 双 | CF | 📌 | 配我们选的 JEI |
-| 物品过滤 | FTB Filter System | 双 | CF | 📌 | 小工具，配合自动化 |
+| **任务书载体** | **FTB Quests**（CF slug `ftb-quests-forge`） | 双 | CF | 📌 | 章节 + 任务树 + 依赖 + 奖励；`config/ftbquests` 是它的数据目录 |
+| 任务书依赖·团队 | FTB Teams（CF slug `ftb-teams-forge`） | 双 | CF | 📌 | ⚠️ **需设成"全员同队"**（你们本来就是一个国家）→ 任务进度才能共享；具体配置项装好后实测 |
+| 任务书前置 | FTB Library（CF slug `ftb-library-forge`） | 双 | CF | 📌 | 必需 |
+| FTB 跨 mod 兼容 | FTB XMod Compat（`ftb-xmod-compat`） | 双 | CF | 📌 | 让 FTB 组件认识其他 mod 的方块/物品 |
+| JEI 扩展 | FTB JEI Extras（`ftb-jei-extras`） | 双 | CF | 📌 | 配我们选的 JEI |
+| 物品过滤 | FTB Filter System（`ftb-filter-system`） | 双 | CF | 📌 | 小工具，配合自动化 |
 | ~~任务书备选~~ | ~~Questlog~~ | — | MR | ❌ | 降级为**备选**：若 FTB Quests 出问题再回退 |
 
-**CF 类的核验证据**（本机参照包里的 jar 文件名，本身就是版本硬证据）：
+> ⚠️ **前三个的 slug 必须是带 `-forge` 的 CF 形式**（2026-09-18 实测）：`ftb-quests` / `ftb-teams` / `ftb-library`
+> 在 CF 接口里**查无**，写错的话 `packwiz curseforge add` 会直接失败——而这正是任务书的三件核心。
+> 后三个（`ftb-xmod-compat` / `ftb-jei-extras` / `ftb-filter-system`）本身就是 CF 的真实 slug。
+> 已按 slug 逐个解析到 CF 项目 id，证据见 `tools/lists/cf-verified.tsv`。
+
+**CF 类的核验证据**（两重：CF 接口按 slug 解析出的 1.21.1+NeoForge 文件 + 本机参照包的 jar 文件名）：
 
 ```
+CF 接口（2026-09-18 复核）：
+  [NEOFORGE][1.21.1] FTB Quests 2101.1.36      （id 289412）
+  [NEOFORGE][1.21.1] FTB Teams 2101.1.11       （id 404468）
+  [NEOFORGE][1.21.1] FTB Library 2101.1.36     （id 404465）
+  [NEOFORGE][1.21.1] FTB XMod Compat 21.1.12   · FTB JEI Extras 21.1.7 · FTB Filter System 21.1.4
+
+本机参照包 jar 文件名（ATM10 与 Skyhive）：
 ftb-quests-neoforge-2101.1.24.jar     ftb-teams-neoforge-2101.1.10.jar
 ftb-library-neoforge-2101.1.31.jar    ftb-xmod-compat-neoforge-21.1.8.jar
 ftb-jei-extras-21.1.7.jar             ftb-filter-system-neoforge-21.1.4.jar
@@ -416,6 +428,91 @@ sortField=6       按总下载量
 修法两层：① **每次请求后立刻把结果落盘成缓存**（`data/cf-cache.json`），断了不白跑；
 ② 加 `--only categories|queries` **分段执行**，每次调用都短。
 
+## 十三·补四、MC百科（mcmod.cn）目录对差（2026-09-18）：第四条腿 · 中文社区维度
+
+**起因**：用户问"你能看一下 mcmod.cn 这个里面的内容吗"。
+
+**这条腿补的是什么偏差**：前三条腿（本机参照包 / 跨包共识 / CurseForge）**全是英文社区视角**。
+本包的用户是中文玩家，而中文社区有一批"自己圈子里常用、但在 Modrinth / CF 榜单上不显眼"的 mod
+（典型：输入法冲突修复、提示框多语言、FTB 任务书的中文侧工具）。这是第四条腿。
+
+**站点能力（实测，不是推测）**：
+
+| 项 | 实测结果 |
+|---|---|
+| robots.txt | 只禁 `add/edit` 这类**提交**路径；检索页可访问 → 只读检索页与 mod 页 |
+| 检索页 | 服务端渲染，支持 `?mcver=1.21.1` · `?category=N` · `?api=N` · `?page=N` |
+| 加载器编号 | 1=Forge · 2=Fabric · 3=Rift · 4=LiteLoader · 5=数据包 · 6=命令方块 · 7=文件覆盖 · 8=行为包 —— **没有 NeoForge 这一档** |
+| 排序参数 | 只有「默认排序」与「按收录时间」两个真实选项；`sort=views/hot/popular/downloads` 全被忽略 |
+| 整合包区 `/modpack.html` | **整条路径带验证码**（带参数与不带参数都是 403 + 算式验证）→ **不使用**（那是绕过访问控制，不做） |
+
+**两件"看不懂就当热度用"的诱惑，我都停住了**：
+
+1. 默认排序**不是**时间序（首页同时混着 ID 1796 的老 mod 和 30958 的新 mod），很像热度序 ——
+   但站点没有任何文字说明它是什么，而能证伪的「指数走势」/「贡献统计」两个入口**都跳 `/login/`**。
+   → **默认序语义无法验证，因此名次只当稳定遍历顺序用，不当热度证据。**
+2. 「按数量算 mod」会被前置库灌水（跨包共识那轮已经踩过），所以这轮不按数量交付。
+
+**规模与对差**：`?mcver=1.21.1` 共 **334 页**（百科自称收录 10672 条），抓完去重 **9238 条**。
+与 `modlist.tsv` 对差后缺口 **6853 条**，按**条目简介的中文关键词**分成 15 个功能位桶
+（自动化/机械 160 · 多人/联机 246 · 冒险/远征 219 · 存储/背包 193 · 界面/信息 192 · 世界生成 177 …）。
+
+**踩到并修掉的匹配 bug（会造成"假缺口"）**：mcmod 上不少条目没有独立英文名字段，
+英文名带着标签前缀落在中文名字段里（`name="[FFS] FTB Filter System"`、`ename=""`）。
+第一版只拿 `ename` 匹配 → **`FTB Filter System`、`OPAC` 这些我们清单里已有的 mod 被判成缺口**。
+修法：`ename` 与 `name` 都作候选、剥掉 `[TAG]` 前缀、音标折叠（`Millénaire` → `millenaire`，否则 `é` 被吃掉会误匹配）。
+命中数 **1150 → 2385**，缺口 **8088 → 6853**；顺带把已有 mod 的百科中文名覆盖做到 **179/208**（`data/mcmod-names.tsv`）。
+
+**核验**（`tools/verify_candidates.py`，24 条候选 → **20 条拿到证据**）：mcmod 只做**发现**，
+判定一律落回接口 —— Modrinth 用 `facets[versions:1.21.1, categories:neoforge]` 搜，
+再过 `/project/<slug>/version` 确认真有文件；CF 用 `api.curse.tools` 搜 + `/mods/<id>/files` 确认。
+
+**两个自查**（否则证据是假的）：
+
+- `Millénaire` 第一次匹配到的是 `civilis-millenaire-compatibility`（**兼容补丁，不是本体**）→ 收紧成 CF 只认全等后正确命中本体。
+- **CF 的 `gameVersion`/`modLoaderType` 过滤器万一被代理忽略**，`/files` 会返回全部文件、"CF-OK" 就是假的。
+  逐条读返回载荷的 `gameVersions` 复核：所有命中文件都真含 `['1.21.1', 'NeoForge']`（Millénaire 只有 2 个文件，确实是移植版本身）。
+
+**补进 12 条 `plan`**：
+
+| 补进 | 功能位理由 |
+|---|---|
+| **`imblocker-original`** | ★ 输入法冲突修复 —— **中文玩家刚需**，开着输入法也能正常操作 |
+| **`polyglottooltip`** | ★ 提示框补多语言名称行 → 直接缓解"未汉化 mod 读不懂" |
+| **`quest-enhance`** | ★ FTB Quest Enhance：剪贴板贴图 / 章节画布 / 生物模型图标 → 直接服务我们要写的 90~110 个任务 |
+| `certain-questing-additions` | FTB Quests 的 QoL 与动画补充 |
+| **`stellarcreateoptimization`** | ★ Create 6.0.x 服务端 tick + 客户端渲染优化（基建时代的核心就是 Create） |
+| **`bye-pregen`** | ★ 降低区块生成造成的 MSPT 尖峰与服务端冻结（与已装 `chunky` 预生成互补） |
+| `xaeroplus` | 本包已用 Xaero 小地图 + 世界地图 → 性能与功能增强 |
+| `put-a-plug-in-it!` | 内存泄漏修复，轻量、低风险 |
+| **`chunk-plan`** | 服务端**探索配额** → 正好对应"交通等级决定远征半径"与服务器资源控制 |
+| `easy-mob-spawn-control` | 时代**威胁闸门**的执行器（御敌时代的强度分级要靠它落地） |
+| `todolist` | TeamTasks：多人共享待办，协作治国的轻量载体 |
+| `travelers-titles` | 进入群系/维度显示标题 → 强化"开疆拓土"的仪式感 |
+
+**6 条 `hold` 连同理由**（不装的理由也是结论）：
+
+| hold | 为什么先不装 |
+|---|---|
+| `millenaire` | 主题强相关（村庄生成/当村长/村庄关系），但 1.21.1 移植版**只有 2 个文件** → 稳定与兼容风险待实测 |
+| `orcinvasion` | 御敌时代内容对味，但**只有 275 次下载** → 采用率过低，兼容与质量都没验 |
+| `dungeon-difficulty` | 按群系提难度，可能与**本包按时代推进的难度曲线**打架，需先定位 |
+| `datatip` | 与 `polyglottooltip` 功能重叠 → 二选一 |
+| `ftbquest-slot-rewards` | 任务书与 Curios 栏位互通，体量小、可选 |
+| `offlineskins` | 离线皮肤缓存（本项目测试环境就是离线模式），优先级低 |
+| `zstdnet-minekuai` | **不是包内容**：它是客户端↔服务端之间的**代理**（ZSTD 压缩流量）→ 属部署工具，装机时不要放进 `mods/` |
+
+**3 条 `skip`**：`banner-claim`（旗帜圈地，主题很对味，但 Modrinth 有项目却**无 1.21.1+NeoForge 版本**，
+且会与已实测通过的 OPAC 形成**双领地体系**）· `litematica-printer`（投影自动放置：无 1.21.1+NeoForge 版本，
+且会削弱建造劳动）· `visualblueprintmaterials`（Modrinth 与 CF 均查无）。
+
+**顺带修掉的工具问题**：`--verify` 原来把 `skip` 行也计入失败并返回非零退出码 →
+"已定不装因而查无版本"被误报成回归，失败信号被噪声淹没。现在 skip 单列，不参与通过率。
+
+**核验链打通**：`apply_modlist.py` 的 CF 证据来源原来只读 `data/cf-survey.json`，
+而本轮逐条核验过的 CF 独占 mod 未必在它的结果里 → 已把 `data/candidate-verify.json` 的 CF-OK 结果并入，
+否则这些**已经拿到硬证据**的 mod 会在 `--verify` 阶段被判 `CF_UNVERIFIED` 而装不上。
+
 ## 十四、待定项（唯一还没定的，以及缺什么才能定）
 
 | # | 待定 | 缺什么 | 影响 |
@@ -426,6 +523,9 @@ sortField=6       按总下载量
 | 4 | **Alternate Current** | 与 ModernFix 的优化是否重叠 | 影响服务端基线 |
 | 5 | **Guard Villagers** | 实机判断会不会变成"NPC 替你打" | 与反目标 #3 冲突与否 |
 | 6 | **桥梁/屋顶类建筑构件** | **候选池里没有合适的**（Macaw's 的 bridges/roofs 未出现在检索结果里）→ 需要单独补一轮候选 | 公共工程（跨海大桥/铁路环线）的构件 |
+| 7 | **`datatip` vs `polyglottooltip` 二选一** | 装好后实测两者对"未汉化 mod"的实际补足程度 | 中文化设施最终装哪一个 |
+| 8 | **`millenaire` 能不能用** | 实机跑一段，看村庄生成/性能，以及与 OPAC 领地、Create 是否冲突 | 立国时代"世界本来就有文明"这条线要不要加 |
+| 9 | **`chunk-plan` 的配额怎么定** | 先量"1 人探索的区块/小时"，再换算到 3~7 人 | 远征半径与服务器流量的落地参数 |
 
 ## 十五、数量账
 
@@ -444,9 +544,9 @@ sortField=6       按总下载量
 | 视觉与音效 | 13（含 2 待定） |
 | 食物与农业 | 9 |
 | 社交与身份 | 3 |
-| **内容/功能 mod 合计** | **约 190** |
+| **内容/功能 mod 合计** | **约 202** |
 | 前置库（随依赖自动进） | 约 25~40 |
-| **jar 总数（估）** | **约 215~230** |
+| **jar 总数（估）** | **约 227~242** |
 
 对照参照系：本机 All the Mods 10 是 **479 个 jar / 1.3 GB**（同版本）；跨包共识里解析的 50 个 NeoForge 包中，
 **272（create-kingdom-fallensprout）、252（adventurecraft-modpack）、247（international-coalition-of-nations）**都在其中。
@@ -455,20 +555,20 @@ sortField=6       按总下载量
 ### 清单核验（`tools/apply_modlist.py --verify`）
 
 ```
-清单载入：208 条  hold=15 · installed=16 · plan=174 · skip=3
-核验结果：208/208 通过
+清单载入：230 条  hold=22 · installed=16 · plan=186 · skip=6
+核验结果：227/227 通过（另有 3 条 skip 不参与）
 ```
 
 五条**证据来源**（每一类都标明，不含"我觉得它有"）：
 
 | 来源 | 条数 | 说明 |
 |---|---|---|
-| 本地候选池 | 124 | 两个 survey JSON 本身就是按 `1.21.1 + neoforge` 筛出来的（Modrinth） |
+| 本地候选池 | 125 | 两个 survey JSON 本身就是按 `1.21.1 + neoforge` 筛出来的（Modrinth） |
 | **本地参照包实证** | 30 | 本机成熟包的 jar 文件名带版本号（FTB 系列、Twilight Forest、Lootr、I18nUpdateMod 等） |
-| **CF 目录** | 27 | ★ `data/cf-survey.json`：CF 接口按 `1.21.1 + NeoForge` 筛出来的 —— **专治"只在 CF 分发"的 mod**（Modrinth 接口对它们一律 `PROJECT_NOT_FOUND`，早先就是因此错选了 Questlog） |
+| **CF 目录** | 27 + 9 | ★ `data/cf-survey.json` 与**逐条核验过的** `data/candidate-verify.json`（后者是 mcmod 那轮补的）——**专治"只在 CF 分发"的 mod** |
 | 联网补查（Modrinth 接口） | 19 | 少数不在池里的 |
 | 已装运行中 | 8 | 它正跑在这个包里，`baseline.csv` 有它的加载/TPS 证据 |
-| ✗ 不合格 | — | 会被拦下、不允许进清单（如 `lets-do-bakery`；`sinytra-connector` 的 slug 应写作 `connector`） |
+| ✗ 不合格 | 3（`skip`，不参与通过率） | 已定不装且查无版本：`banner-claim` · `litematica-printer` · `visualblueprintmaterials` |
 
 ## 十六、装载顺序（按时代，对接 `DESIGN.md` §17）
 

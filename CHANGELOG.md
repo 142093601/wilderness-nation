@@ -12,22 +12,30 @@
 
 **状态**：**选型已定案，但一个 mod 都还没装进包里。**
 
-- ✅ **mod 清单定案：180 条**（`MODLIST.md` / `modlist.tsv`），**180/180 通过核验**
-- ✅ 选型方法确立：三条证据来源并用 —— Modrinth 接口筛选 · 本机成熟包实证（补 CF 侧）· **跨整合包共识**
-  （解析 **50 个 NeoForge 整合包**的 `.mrpack`，共 1816 个 mod）
+- ✅ **mod 清单定案：230 条**（`MODLIST.md` / `modlist.tsv`），**227/227 通过核验**（另有 3 条 `skip` 不参与）
+- ✅ 选型方法确立：**四条**证据来源并用 —— Modrinth 接口筛选 · 本机成熟包实证（补 CF 侧）· **跨整合包共识**
+  （解析 **50 个 NeoForge 整合包**的 `.mrpack`，共 1816 个 mod）· **MC百科中文社区目录**
+  （334 页 / 去重 9238 条，补"中文社区常用但英文榜不显眼"的第四种偏差）
 - ✅ **中文化方案定案**：改用社区四层设施（I18nUpdateMod + 汉化资源包 + VaultPatcher + KubeJS 注入），
   在一个 479 mod 的同版本包上验证过 → 不再需要手写翻译
 - ✅ 任务书载体改定 **FTB Quests**（替代原 Questlog：原选择是因为候选池只扫 Modrinth，属证据盲区）
-- ✅ 工具链扩展到 8 个新工具（跨包共识、参照包对差、清单核验、mod 详情、jar 探针、端侧分类等）
+- ✅ 工具链扩展到 10 个新工具（跨包共识、参照包对差、清单核验、mod 详情、jar 探针、端侧分类、
+  MC百科目录调研、候选核验等）
 
 ### 新增（mod：仅"定案"，尚未安装）
 
-**180 条已定案**，其中最关键的几类：性能组补漏（`badoptimizations` / `dynamic-fps`）·
+**230 条已定案**，其中最关键的几类：性能组补漏（`badoptimizations` / `dynamic-fps`）·
 Create 生态 30+ 件（含 `create-pattern-schematics` 图纸图案、铁路三件套）·
 建筑构件（Macaw's 全套 · `medieval-buildings` · `framedblocks`）·
 结构扩容（YUNG's 全家桶 · Twilight Forest · Repurposed Structures）·
 多人体验（`lootr` 不抢箱 · `corpse` · 拼音搜索 `jecharacters`）·
 中文化（`i18nupdatemod`）· 任务书（FTB Quests 系列）。
+
+**MC百科那轮补进 12 条**（每条都有功能位理由）：`imblocker-original`（输入法冲突修复，中文玩家刚需）·
+`polyglottooltip`（提示框多语言名，缓解未汉化）· `quest-enhance`（FTB 任务书制作工具）·
+`certain-questing-additions` · `stellarcreateoptimization`（Create 服务端 tick/客户端渲染）·
+`bye-pregen`（区块生成的 MSPT 尖峰）· `xaeroplus` · `put-a-plug-in-it!` · `chunk-plan`（探索配额）·
+`easy-mob-spawn-control`（威胁闸门执行器）· `todolist` · `travelers-titles`。
 
 ### 移除
 

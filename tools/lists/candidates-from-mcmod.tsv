@@ -1,0 +1,25 @@
+mcmod_id	name_en	name_zh	slot	why
+29395	StellarCreateOptimization	SCO 星光机械动力优化	性能	改善机械动力大型自动化工厂的客户端帧率与渲染性能、服务端 tick（本包基建时代以 Create 为核心）
+28278	Bye?Pregen!	再见？预生成！	性能/世界生成	降低地形生成时的方块放置/后处理开销，减少级联区块加载（远征预生成）
+11298	XaeroPlus	Xaero 的地图增强	界面/性能	优化 Xaero 小地图与世界地图性能并增添功能
+26687	Put A Plug In it!	堵漏	性能	修复内存泄漏、优化内存使用
+3358	IMBlocker	输入法冲突修复	界面	开着输入法也能正常操作游戏（中文玩家刚需，与本包 zh_cn 侧重一致）
+29772	PolyglotTooltip	多语言提示框	界面	在物品提示框中显示多语言名称，缓解未汉化 mod 的阅读问题
+27611	DataTip	数据提示	界面	JSON/资源包驱动的自定义 tooltip，多语言富文本，可用来补写中文说明
+28696	Quest Enhance	FTB 任务书增强	任务/引导	FTB 任务书内贴图/背景/文字、图标展示生物模型（任务书是本包四根承重墙之一）
+22780	Certain Questing Additions	任务书补充	任务/引导	为 FTB 任务模组新增小幅改进与过渡动画
+24337	FTB Quest Slot Rewards	FTB 任务栏位奖励	任务/引导	任务书与 Curios 饰品栏位互通
+21366	PlayerNoticeBoard	玩家公告板	任务/引导	公告板让玩家互相发布任务，契合多人协作建国
+25456	TeamTasks: TodoList	待办列表	多人	多人服务器共享待办事项，协作治理用
+27614	MobSpawnController	生物生成控制器	威胁	精细控制生物生成方式与属性，可作时代威胁闸门的执行器
+27137	Easy Mob Spawn Control	简易生物生成控制	威胁	快速禁用怪物、改生成率与上限，无需改配置文件
+29737	orcinvasion	兽人入侵	威胁	数十种兽人与地精来袭+战争机器，御敌时代的入侵内容
+21930	Banner Claim	旗帜圈地	领地	放置旗帜来圈地，与「建国插旗」主题契合（需评估与 OPAC 是否冲突）
+46	Millénaire	千年村庄	建造/治理	修改村庄建筑生成、当村长、村庄间关系，与建国主题强相关
+29720	Chunk Plan	探索限额	多人/治理	服务端为玩家探索设置配额，控制硬件与流量消耗（可对应远征半径）
+27010	ZSTDNET	ZSTD 带宽压缩	多人	以极低开销做带宽压缩，7 人自建服上传流量优化
+7197	OfflineSkins	离线皮肤	多人	离线模式下也能显示皮肤（本项目测试环境即离线模式）
+8233	Litematica Printer	投影打印机	建造	在投影中自动放置正确方块以加快大型结构建造（需评估是否削弱建造劳动）
+28005	VisualBlueprintMaterials	蓝图材料清单	建造	渲染机械动力剪贴板所需材料清单的 UI
+8720	Dungeon Difficulty	地牢难度	威胁/奖励	按群系增加难度并获得匹配奖励
+4471	Traveler's Titles	旅行者称号	氛围	进入群系与维度时显示 RPG 风格标题，强化「开疆拓土」的仪式感

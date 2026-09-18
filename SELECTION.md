@@ -35,7 +35,7 @@
 | **拆墙与难度缩放** | **Undead Nights** (`undead-nights`) | — | 4 | 双端 | **唯一有显式拆方块子系统**：`blockBreaking` + `blockBreakingTier` 1–4（4 = 黑曜石）+ 携 TNT 的拆迁僵尸；档位**由难度等级驱动**（默认关闭，需逐级开启）。另有 `dynamicScaling` 按玩家数缩放属性、`numberOfPlayersToGetHordePerHordeEvent` 等多人项。**这才是让城墙成为真工事的那一块** | ✅ 能力面已核实（含源码） |
 | **占领区（第二季）** | **Sculk Horde** (`sculk-horde`) | 第一版用手工地牢据点 | 5 | 双端 | 袭击是**地点级**的：成功/失败后该地点进入 `no_raid_zone` 冷却（480 分钟）→ 几乎就是"占领区"的现成实现。但它是**同化型**威胁（把墙转化成侵染方块而非拆除），风格极强、配置极多、单位上限 200，**不进第一版** | ✅ 能力面已核实 |
 | **袭击内容多样性** | Illager Invasion (`illager-invasion`) —— **可选** | — | 4 | 双端 | **已降级为内容 mod**：它不生成袭击（寄生原版袭击）、无命令/API、波次数组硬编码不可调。当灾厄村民内容包用，**不当威胁系统** | ✅ 能力面已核实 |
-| **任务书** | **FTB Quests (`ftb-quests`)** + FTB Teams / FTB Library | Questlog（降为备选） | 全程 | 双端 | **改用 FTB 的理由**：真任务树（章节 + 依赖 + 奖励 + **团队进度共享**），而 Questlog 只是 checklist 式，撑不起六章国策链。此前选 Questlog **不是因为它更好，而是因为候选池来自 Modrinth 接口、而 FTB 只在 CF 分发**——补上证据后换掉。⚠️ FTB Teams 需配成"全队同队" | ✅ **已实证**：`ftb-quests-neoforge-2101.1.24.jar` 等 6 个（本机两个 1.21.1 NeoForge 成熟包的 jar 文件名即版本证据） |
+| **任务书** | **FTB Quests (`ftb-quests-forge`)** + FTB Teams (`ftb-teams-forge`) / FTB Library (`ftb-library-forge`) | Questlog（降为备选） | 全程 | 双端 | **改用 FTB 的理由**：真任务树（章节 + 依赖 + 奖励 + **团队进度共享**），而 Questlog 只是 checklist 式，撑不起六章国策链。此前选 Questlog **不是因为它更好，而是因为候选池来自 Modrinth 接口、而 FTB 只在 CF 分发**——补上证据后换掉。⚠️ FTB Teams 需配成"全队同队" | ✅ **已实证**：`ftb-quests-neoforge-2101.1.24.jar` 等 6 个（本机两个 1.21.1 NeoForge 成熟包的 jar 文件名即版本证据） |
 | **回滚与审计** | GriefLogger (`grieflogger`) + GLRA (`glra`) | Ledger（仅 Fabric）、CoreProtect（仅插件端 🚫） | 全程 | 服务端 | GriefLogger 记录方块改动，GLRA 提供 **rollback 命令**——"玩家误破坏可恢复"是多人服底线 | ✅ GriefLogger 两版本 / GLRA 1.21.1 NeoForge |
 | **备份** | Simple Backups (`simple-backups`) | Advanced Backups（至 1.21.4） | 全程 | 服务端 | 备份必须停机或 `save-off` 后做；用 mod 自动化这件事，但**仍要定期验证备份能恢复** | ✅ 1.21.1 NeoForge |
 
@@ -163,3 +163,28 @@ The Hordes · Undead Nights · FTB Quests 系列 · Dimensional Dungeons · When
 5. **时代 4 之前**：The Hordes + Undead Nights——**设计 B 形态的引擎**，也是最不能开天窗的一项
 6. **全程**：GriefLogger + GLRA（回滚底线）· Simple Backups（且必须定期验证可恢复）
 7. **每装一批**：跑现有自动套件（`autotest` / `game_agent` / `server_ctl` / `blueprint_check` / `lang_audit`）+ 记 `baseline.csv`
+
+---
+
+## 七、第四条证据腿：MC百科（中文社区，2026-09-18 补）
+
+**为什么还要第四条**：前三条腿（Modrinth 接口 / 本机成熟包 / 跨整合包共识）**全是英文社区视角**，
+而本包的用户是中文玩家。中文社区有一批"圈内常用、但英文榜不显眼"的 mod。
+
+**它只做发现，不做判定**——mcmod 列表页不提供加载器与版本，其「指数走势」热度页需登录，
+所以默认排序的语义**无法验证**（不能当"热门"用）。所有判定一律落回 Modrinth / CurseForge 接口，
+并且逐条检查返回文件载荷的 `gameVersions` 真含 `1.21.1` + `NeoForge`。
+方法与边界见 `MODLIST.md` §十三·补四 与 `tools/README.md` §十五·补。
+
+**这一轮补进 12 条 `plan`（都带 1.21.1+NeoForge 硬证据）**，其中与本表功能位直接相关的：
+
+| 功能位 | 选型 | 理由与状态 |
+|---|---|---|
+| **威胁闸门（执行器）** | `easy-mob-spawn-control` | 御敌时代要做"规模随国力上升"的分级 → 需要能在游戏里按档调整生成率/上限的工具。✅ 1.21.1 NeoForge（Modrinth 版本接口核实） |
+| **治理（远征半径）** | `chunk-plan` | 服务端**探索配额**——正好是"交通等级决定远征半径"与服务器流量的落地抓手（参数待量）。✅ 1.21.1 NeoForge（CF `/files` 载荷核实） |
+| **性能（基建时代）** | `stellarcreateoptimization` · `bye-pregen` | 基建时代核心是 Create → Create 大型工厂的 tick/渲染优化；区块生成造成的 MSPT 尖峰对 7 人自建服是硬指标。✅ 1.21.1 NeoForge（CF 载荷核实）；`bye-pregen` 与已装 `chunky` 互补 |
+| **中文化（辅助）** | `polyglottooltip` · `imblocker-original` | 前者在提示框补多语言名行 → 直接缓解"未汉化 mod 读不懂"；后者是中文玩家刚需（输入法冲突）。✅ 1.21.1 NeoForge |
+| **任务书（制作侧）** | `quest-enhance` | FTB Quest Enhance：剪贴板贴图/章节画布/生物模型图标 → 直接服务还要写的 90~110 个任务。✅ 1.21.1 NeoForge（CF 载荷核实） |
+
+**明确 hold 的两条与本表有关**：`millenaire`（千年村庄，与"世界本来就有文明"强相关，
+但 1.21.1 移植版只有 2 个文件 → 稳定与兼容风险待实测）· `orcinvasion`（御敌内容对味，但仅 275 次下载）。

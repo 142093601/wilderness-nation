@@ -452,6 +452,68 @@ python blueprint_check.py --dir <图纸目录> --verify-registry    # 可选：�
 
 ---
 
+## 十五·补、选型证据来源（第四条腿：MC百科）
+
+前三条腿（本机参照包 / 跨包共识 / CurseForge）**全是英文社区视角**。本包用户是中文玩家，
+所以要有一条中文社区的腿。两个工具，一个负责**发现**，一个负责**判定**。
+
+### `mcmod_survey.py` —— MC百科目录（发现）
+
+```bash
+python tools/mcmod_survey.py --probe                    # 探清 URL 参数语义（加载器编号/分页/排序）
+python tools/mcmod_survey.py --list --query "mcver=1.21.1" --pages 334
+python tools/mcmod_survey.py --cmp                      # 与 modlist.tsv 对差 → data/mcmod-gap.{md,json}
+python tools/mcmod_survey.py --slots                    # 缺口按简介中文关键词分 15 个功能位桶
+python tools/mcmod_survey.py --names                    # 导出已有 mod 的百科官方中文名索引
+```
+
+**站点边界（实测，不要想当然）**：
+
+| 项 | 实测 |
+|---|---|
+| robots.txt | 只禁 `add/edit` 提交路径 → 检索页可读；工具**只读**检索页 |
+| 加载器编号 | 1=Forge · 2=Fabric · 3=Rift · 4=LiteLoader · 5=数据包 · 6=命令方块 · 7=文件覆盖 · 8=行为包 —— **没有 NeoForge 档** |
+| 排序 | 只有「默认排序」与「按收录时间」；`sort=views/hot/popular/downloads` 全被静默忽略 |
+| 整合包区 | `/modpack.html` **整条路径带验证码** → 该腿不用（不绕过访问控制） |
+
+**这里最容易犯的错**：默认排序不是时间序（首页混着老 mod 与新 mod），很像热度序 ——
+但站点没写它是什么，能证伪的「指数走势」跳 `/login/`。**语义无法验证的东西不能当证据用**，
+所以名次只作稳定遍历顺序，不做排序依据。
+
+**踩到并修掉的匹配 bug**：不少条目 `ename` 为空、英文名带 `[TAG]` 前缀落在中文名字段里
+（`name="[FFS] FTB Filter System"`）→ 只按 `ename` 匹配会把**已有的 mod 判成缺口**。
+修法：两个字段都作候选 + 剥前缀 + 音标折叠。命中 1150→2385，缺口 8088→6853。
+
+### `verify_candidates.py` —— 候选核验（判定）
+
+```bash
+python tools/verify_candidates.py                       # 读 tools/lists/candidates-from-mcmod.tsv
+python tools/verify_candidates.py --only Millenaire      # 只核验某条
+```
+
+判定链：Modrinth `facets[versions:1.21.1, categories:neoforge]` 搜 → `/project/<slug>/version` 确认真有文件；
+CF `api.curse.tools` 搜 → `/mods/<id>/files` 确认。产出 `data/candidate-verify.{md,json}`。
+
+**两个自查（不做的话证据是假的）**：
+
+1. 名字全等仍可能是同名不同 mod，也会被松匹配误伤：`Millénaire` 第一次匹配到
+   `civilis-millenaire-compatibility`（**兼容补丁，不是本体**）→ CF 侧改成只认全等，弱匹配标 `WEAK` 交人工。
+2. **不要相信筛选参数，要读载荷自身字段**：若 CF 代理忽略了 `gameVersion`/`modLoaderType`，
+   `/files` 会返回全部文件，"CF-OK" 就是假的 → 逐条读每个文件载荷的 `gameVersions`，
+   确认真含 `['1.21.1','NeoForge']`。
+
+**清单链路已打通**：`apply_modlist.py` 的 CF 证据来源现在读三处 —— `data/cf-survey.json`、
+`data/candidate-verify.json`，以及**进仓库的结论表** `tools/lists/cf-verified.tsv`。
+前两个是 gitignore 的产物，只用它们的话**新克隆会把 CF 独占的 mod 判成 `CF_UNVERIFIED` 而装不上**，
+所以结论必须留一份在仓库里。
+
+**同一轮抓到的一个真 bug**：CF 上 FTB 三件套的真实 slug 是 `ftb-quests-forge` / `ftb-teams-forge` /
+`ftb-library-forge`，而清单里写的是不带 `-forge` 的短名 —— **CF 接口按 slug 查是"查无"**，
+装机时 `packwiz curseforge add` 会直接失败；而这恰好是任务书的三件核心（本包承重墙之一）。
+教训：跨平台的 **slug 不是同一个**，写错不会在核验阶段报错，只会在装机那一刻炸 → 现在按 slug 逐个解析到 CF 项目 id 并记进结论表。
+
+---
+
 ## 十六、写这些脚本时的纪律（全都是踩出来的）
 
 | # | 纪律 | 踩过的样子 |
@@ -462,6 +524,13 @@ python blueprint_check.py --dir <图纸目录> --verify-registry    # 可选：�
 | 4 | **后台任务的 `workdir` 必须事先存在** | 在命令里才 `mkdir` 的目录，进程启动时不存在 → `spawn failed: ENOENT` |
 | 5 | **控制台里中文乱码不代表文件错** | Windows 控制台是 GBK；文件内容是 UTF-8 且正确。要看内容就打开文件，别信控制台回显 |
 | 6 | **别用记忆代替接口** | 版本、命令名、能力面一律查接口/字节码（`survey_mods.py` / `jar_probe.py`）。这个会话里"OPAC 命令名"就是靠字节码纠正的 |
+| 7 | **失败响应不要写进缓存** | 只把 HTTP 200 当缓存命中；否则一次 TLS/网络抖动会被**永久固化**（`mcmod_survey.py` 真的踩到：改好证书后仍命中了上次的 `CERTIFICATE_VERIFY_FAILED`） |
+| 8 | **别信筛选参数，读载荷自身字段** | 接口的 `gameVersion`/`modLoaderType` 过滤万一被忽略，返回的"有版本"就是假的 → 逐条看返回文件里的 `gameVersions` |
+| 9 | **证书不认时不要降级成不校验** | 本机 Python 的信任库不认 mcmod.cn 的中间证书（Windows 会自动补、OpenSSL 不会）→ 用 `certifi` 的 CA 包，**仍完整校验**，不要 `_create_unverified_context()` |
+| 10 | **名字匹配要折叠音标、按角色收紧** | `Millénaire` 的 `é` 被归一化吃掉后误配到 `civilis-millenaire-compatibility`；CF 侧只认全等，弱匹配必须标出来给人看 |
+| 11 | **无法验证语义的排序不要当证据** | mcmod 默认序很像热度序，但站点没定义、热度页要登录 → 只能当遍历顺序，不能写进结论当"热门" |
+| 12 | **跨平台的 slug 不是同一个** | CF 上 FTB 三件套叫 `ftb-quests-forge` / `ftb-teams-forge` / `ftb-library-forge`，短名在 CF 接口里"查无"。写错**不会在核验阶段报错**，只在装机那一刻炸 |
+| 13 | **结论要进仓库，原始产物不用** | `data/` 是 gitignore 的 → 把核验结论（`tools/lists/*.tsv`）留一份在仓库里，否则新克隆的核验链是断的 |
 
 ---
 

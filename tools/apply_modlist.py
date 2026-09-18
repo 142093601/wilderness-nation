@@ -110,12 +110,36 @@ def load_cf_slugs() -> set[str]:
     但其实完全可用（早先就是因此错选了 Questlog）。
     """
     p = ROOT / "data" / "cf-survey.json"
-    if not p.is_file():
-        return set()
-    try:
-        return {r["slug"] for r in json.loads(p.read_text(encoding="utf-8")) if r.get("slug")}
-    except Exception:
-        return set()
+    slugs = set()
+    if p.is_file():
+        try:
+            slugs |= {r["slug"] for r in json.loads(p.read_text(encoding="utf-8")) if r.get("slug")}
+        except Exception:
+            pass
+    # 第二条来源：候选核验器逐条查过 /files?gameVersion=1.21.1&modLoaderType=6 且载荷里
+    # 真含 1.21.1+NeoForge 文件的那批（tools/verify_candidates.py）。
+    # 为什么必须接进来：CF 目录调查是按类目/关键词扫的，逐条核验过的 mod 未必在它的结果里；
+    # 不接的话，这些已经拿到硬证据的 CF 独占 mod 会在 --verify 阶段被判成 CF_UNVERIFIED 而装不上。
+    p2 = ROOT / "data" / "candidate-verify.json"
+    if p2.is_file():
+        try:
+            for r in json.loads(p2.read_text(encoding="utf-8")):
+                if r.get("cf_verdict") == "OK" and r.get("cf_slug"):
+                    slugs.add(r["cf_slug"])
+        except Exception:
+            pass
+    # 第三条来源（**进仓库的那一份**）：tools/lists/cf-verified.tsv。
+    # 为什么必须有它：上面两个 data/*.json 都是 gitignore 的产物 → 新克隆的仓库里没有它们，
+    # CF 独占的 mod（FTB 三件套等）会被判 CF_UNVERIFIED 而装不上。
+    # 这份 TSV 只放"CF 才是记录在案的证据"的结论，能离线复现核验。
+    p3 = ROOT / "tools" / "lists" / "cf-verified.tsv"
+    if p3.is_file():
+        for line in p3.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            slugs.add(line.split("\t")[0].strip())
+    return slugs
 
 
 def reference_pack_jars() -> dict[str, str]:
@@ -243,9 +267,17 @@ def main() -> int:
     if args.verify or args.apply:
         print(f"\n核验（目标 {MC} + {LOADER}）...")
         rows = verify(rows)
-        bad = [r for r in rows if r["verify"] != "OK"]
-        ok_n = len(rows) - len(bad)
-        print(f"\n核验结果：{ok_n}/{len(rows)} 通过")
+        # skip 行**本来就不装**，查无版本是它进 skip 的原因而不是回归 —— 不能算失败，
+        # 否则每次 --verify 都以非零退出码收场，失败信号会被噪声淹没。
+        bad = [r for r in rows if r["verify"] != "OK" and r["status"] != "skip"]
+        skipped = [r for r in rows if r["verify"] != "OK" and r["status"] == "skip"]
+        ok_n = len(rows) - len(bad) - len(skipped)
+        print(f"\n核验结果：{ok_n}/{len(rows) - len(skipped)} 通过"
+              f"（另有 {len(skipped)} 条 skip 不参与）")
+        if skipped:
+            print("skip（已定不装，查无版本属预期）：")
+            for r in skipped:
+                print(f"  - {r['slug']:<34} {r['verify']} — {r.get('slot', '')[:40]}")
         if bad:
             print("未通过（这些**不允许进清单**，需改名或换候选）：")
             for r in bad:
