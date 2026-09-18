@@ -212,6 +212,46 @@ ftb-jei-extras-21.1.7.jar             ftb-filter-system-neoforge-21.1.4.jar
 指挥轮盘与指挥杖在第一人称下的实际手感 · "关系系统"会不会与 OPAC party、FTB Teams 形成**三套队伍** ·
 兵力与实体预算（作者建议 150% 实体渲染距离，与 §12 红线冲突，必须量）· 工人系统与 Create 的重叠程度（决定时代闸门怎么切）。
 
+## 八·补二、攻打据点（2026-09-18 补）
+
+> **它不只是"多加内容"**：原来的威胁设计是**单向正反馈**（国力↑ → 袭击↑），玩家只能被动接、看不到尽头。
+> **据点给了玩家一个杠杆**——袭击有了来源，就有了可以掐断的地方。它同时缝起三根墙：
+> 威胁墙有了"来源" · 远征墙有了"目标" · 时间墙有了可见的转折点（**从守土到开疆**）。规格见 `DESIGN.md` §17.9 (7)。
+
+**重要前提（本次核验推翻了一个想当然的做法）**：
+
+> **不能把据点押在 `hundred-years-warfare` 上。** 它的正文写的是"currently includes **entity-focused** content
+> （单位/器械/招募/工人）"，而"**NPC 势力与聚落**"是它的**目标**、结构仍在 **future plans** 里
+> —— **现在没有可攻打的 NPC 聚落**。
+
+**所以据点建在"原版本来就有的逻辑"上**（更稳，且不需要编）：
+**原版的袭击本来就是从掠夺者前哨站发起的**——"袭击有来源"这件事在游戏里是**真的**。
+据点三个来源：① 原版（前哨站 / 林地府邸 / 要塞）；② 已在清单的结构 mod（WDA 敌对船只与法师塔 · D&T 前哨站 · YUNG's 要塞）；
+③ **手工布置的占领区**（设计已定"第一版手工布置"，数量与位置我们可控——最稳的兜底）。
+
+**攻守转换三个阶段**：时代 3 **发现**（据点进情报墙）→ 时代 4 **挨打→反击**（清剿能降低袭击压力）→ 时代 5 **成建制攻城**（要塞级目标）。
+
+**收益三条**（没有收益就没有动机）：① 拔点 → 袭击频率/规模**下降一段**（设计里第一次给玩家**降低威胁**的手段）；
+② 据点出**高阶图纸** → 填掉空缺 #5「战利品与图纸掉落」；③ 占领后作**前哨**（远征补给点）。
+
+**平衡三条**（防止把威胁墙架空）：① 据点**会重新被占据** → 清剿是周期性的；② 减益**有上限**（只能压制、不能清零）；
+③ 攻城**消耗国力**（军队损耗 + 器械消耗）→ 与供养机制挂钩。
+
+**选型（版本数 = 1.21.1+NeoForge，全部本次核验）**：
+
+| 功能位 | 候选 | 版本 | 端侧 | 判断 |
+|---|---|---|---|---|
+| **敌方据点（势力化）** | `it-takes-a-pillage-continuation` | **8** | 双端必需 | ✅ **主选**：掠夺者扩张文明、建立营地与外哨 |
+| **有守军的要塞** | `grim-kingdoms-lost-structures-ruins` | **8** | 服务端必需 / 客户端可选 | ✅ **主选**：炮台/城堡/要塞 + 独特怪 + 隐藏战利品 |
+| 世界有"文明在自保" | `millager` | **13** | 双端必需 | ⏳ 待核实：给村民常备军，要确认不会变成"NPC 替你打" |
+| 原版前哨站加强 | `improved-pillager-outpost` | 5 | 服务端必需（数据包） | ⏳ 备选 |
+| 大型城堡 | `embers-castles-and-keeps` | 3 | 服务端必需 | ⏳ 加厚备选 |
+| 阵营系统 | `mob-factions` | **1** | 双端必需 | ⏳ 只有 1 个版本，风险高 |
+| 攻城器械 | HYW 自带 + `medieval-siege-machines`（已在清单）+ `ballista`（hold） | 4 | 双端必需 | ✅ 已有 / 备选 |
+
+> **不要重复装**：`dungeons-and-taverns-pillager-outpost-overhaul` 与 `-stronghold-overhaul` 是 D&T 的
+> **独立拆出版**，而 `dungeons-and-taverns` **已在清单里** → 装了内容重复，**不单独加**。
+
 ## 九、生活质量（11）
 
 | 功能位 | 选定 | 端侧 | 状态 |
@@ -593,9 +633,9 @@ sortField=6       按总下载量
 | 视觉与音效 | 13（含 2 待定） |
 | 食物与农业 | 9 |
 | 社交与身份 | 3 |
-| **内容/功能 mod 合计** | **约 208** |
+| **内容/功能 mod 合计** | **约 214** |
 | 前置库（随依赖自动进） | 约 25~40 |
-| **jar 总数（估）** | **约 233~248** |
+| **jar 总数（估）** | **约 239~254** |
 
 对照参照系：本机 All the Mods 10 是 **479 个 jar / 1.3 GB**（同版本）；跨包共识里解析的 50 个 NeoForge 包中，
 **272（create-kingdom-fallensprout）、252（adventurecraft-modpack）、247（international-coalition-of-nations）**都在其中。
@@ -604,8 +644,8 @@ sortField=6       按总下载量
 ### 清单核验（`tools/apply_modlist.py --verify`）
 
 ```
-清单载入：236 条  hold=27 · installed=16 · plan=187 · skip=6
-核验结果：233/233 通过（另有 3 条 skip 不参与）
+清单载入：242 条  hold=31 · installed=16 · plan=189 · skip=6
+核验结果：239/239 通过（另有 3 条 skip 不参与）
 ```
 
 五条**证据来源**（每一类都标明，不含"我觉得它有"）：
@@ -625,7 +665,7 @@ sortField=6       按总下载量
 2. **时代 0–1 之前**：JEI · Jade · Patchouli（约定载体）· Crash Assistant · Paxi · 结构 mod 补齐 · **FTB Quests 系列（任务书是时代 1 的国策链载体）**
 3. **时代 2 之前**：Portable Blueprints · Effortless Building · WorldEdit · Chipped/Rechiseled · 装饰家具 · 食物组
 4. **时代 3 之前**：维度（先核实形态）· 定位工具 · 地图 · 背包 · 考古 · 探险装备
-5. **时代 4 之前**：**The Hordes + Undead Nights**（最不能开天窗）· **军事 `hundred-years-warfare`（军队是这一代的主菜之一，见 §八·补）** ·（可选）Zombie Awareness 验证
+5. **时代 4 之前**：**The Hordes + Undead Nights**（最不能开天窗）· **军事 `hundred-years-warfare` + 可攻打的据点（见 §八·补 / 八·补二）** ·（可选）Zombie Awareness 验证
 6. **时代 5 之前**：WorldEdit 已就位 · 大工程构件（待补候选）
 7. **全程**：GriefLogger + GLRA · Simple Backups
 8. **每批之后**：`autotest` 冒烟 → `server_ctl --script tests/server_v0.txt` → `blueprint_check` / `lang_audit` → 记 `baseline.csv`

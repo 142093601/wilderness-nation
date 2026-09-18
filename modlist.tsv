@@ -302,3 +302,14 @@ ancient-warfare-3-worksites	hold	生产/军事·AW3 工作站方块与逻辑（�
 ballista	hold	军事·攻城器械（4 个版本；补"御敌"的道具缺口；若主选自带攻城器械则不需要）
 illager-siege-weapons	hold	军事/威胁·灾厄围攻武器与小股军队在世界生成（只有 **1 个** 版本；题材契合但风险高）
 kingdom-civilization-expansion	hold	治理/军事·把村庄变成成长中的王国（2 个版本，双端 optional；与"世界本来有文明"契合）
+# ── 攻打据点（2026-09-18 补）：把"威胁的来源"做成可攻打的目标 ──
+# 设计规格见 DESIGN.md §17.9 (7)。关键前提：**不能押在 hundred-years-warfare 上** ——
+#   它当前是 entity-focused，"NPC 势力与聚落"仍在 future plans（本次核验其正文确认）。
+# 所以据点建在**原版已有逻辑**上：原版的袭击本来就是从掠夺者前哨站发起的，"袭击有来源"是真的。
+# 候选对比来源 data/survey-stronghold.json（13 个据点/要塞/攻城关键词，去重 103 个）逐个核版本。
+it-takes-a-pillage-continuation	plan	据点·敌方势力主选（掠夺者扩张文明、建立营地与前哨 → 袭击有实体来源；**8 个** 1.21.1+NeoForge 版本，双端必需）
+grim-kingdoms-lost-structures-ruins	plan	据点·有守军的要塞（炮台/城堡/要塞 + 独特怪 + 隐藏战利品 = 可攻打的据点；**8 个**版本，服务端必需/客户端可选）
+millager	hold	据点/世界·给村民一方常备军（13 个版本；与"世界本来有文明"契合，但要确认不会变成"NPC 替你打"）
+improved-pillager-outpost	hold	据点·原版前哨站大修（5 个版本，纯数据包形态；注意与已定 dungeons-and-taverns 的拆出版**可能重复**）
+embers-castles-and-keeps	hold	据点·大型城堡与塔（3 个版本；带陷阱/敌人/战利品，作"要塞级据点"的加厚备选）
+mob-factions	hold	据点·通用阵营目标系统（几乎任意怪物都能分阵营 → 可自定义谁和谁敌对；但只有 **1 个**版本，风险高）
