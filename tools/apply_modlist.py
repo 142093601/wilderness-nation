@@ -100,6 +100,24 @@ def load_pool_slugs() -> set[str]:
     return pool
 
 
+def load_cf_slugs() -> set[str]:
+    """CurseForge 目录里的 slug（`tools/cf_survey.py` 的产出）。
+
+    为什么这也算"已核验"：那份结果是 CF 搜索接口在筛选
+    `gameVersion=1.21.1` + `modLoaderType=6`(NeoForge) 之后返回的 —— **能返回就说明有版本**。
+    这补上了"只扫 Modrinth"的系统性偏差：FTB 系列、`epic-knights-armor-and-weapons`、
+    `refurbished-furniture` 等只在 CF 分发的 mod，在 Modrinth 接口里是 PROJECT_NOT_FOUND，
+    但其实完全可用（早先就是因此错选了 Questlog）。
+    """
+    p = ROOT / "data" / "cf-survey.json"
+    if not p.is_file():
+        return set()
+    try:
+        return {r["slug"] for r in json.loads(p.read_text(encoding="utf-8")) if r.get("slug")}
+    except Exception:
+        return set()
+
+
 def reference_pack_jars() -> dict[str, str]:
     """本机**参照包**里的 jar 文件名 → 路径。
 
@@ -127,20 +145,22 @@ def reference_pack_jars() -> dict[str, str]:
 def verify(rows: list[dict]) -> list[dict]:
     pool = load_pool_slugs()
     refs = reference_pack_jars()
+    cf_slugs = load_cf_slugs()
     n_cf = sum(1 for r in rows if r.get("src") == "cf")
     local = sum(1 for r in rows if r.get("src", "mr") == "mr" and r["slug"] in pool)
     installed = sum(1 for r in rows if r["slug"] not in pool and r["status"] == "installed")
-    print(f"  参照包 jar 索引 {len(refs)} 个（供 CF 类核实用）")
+    print(f"  参照包 jar 索引 {len(refs)} 个 · CF 目录索引 {len(cf_slugs)} 个")
     print(f"  本地候选池命中 {local} 条；已装（活证据，免查） {installed} 条；"
-          f"CF 类 {n_cf} 条；其余需联网")
+          f"标了 cf 的 {n_cf} 条；其余按顺序查")
     for i, row in enumerate(rows, 1):
         slug, src = row["slug"], row.get("src", "mr")
         if src == "cf":
-            # 在参照包里找文件名含该 slug 的 jar（FTB 的命名就是 ftb-quests-neoforge-2101.1.24.jar）
+            # 优先在参照包里找文件名含该 slug 的 jar（= 带版本号的硬证据），否则查 CF 目录
             hit = next((name for name in refs if slug.replace("-", "") in name.replace("-", "")), None)
             if hit:
-                row["verify"], row["source"] = "OK", "本地参照包实证"
-                row["file"] = hit
+                row["verify"], row["source"], row["file"] = "OK", "本地参照包实证", hit
+            elif slug in cf_slugs:
+                row["verify"], row["source"] = "OK", "CF 目录（1.21.1+NeoForge）"
             else:
                 row["verify"], row["source"] = "CF_UNVERIFIED", "需要人工看 CurseForge"
         elif slug in pool:
@@ -153,6 +173,10 @@ def verify(rows: list[dict]) -> list[dict]:
             # 本机成熟包的 jar 文件名就是硬证据 —— 先看它，再去问接口（也省掉一次慢请求）
             row["verify"], row["source"] = "OK", "本地参照包实证"
             row["file"] = hit
+        elif slug in cf_slugs:
+            # **CF 目录也是证据**：它是 CF 接口按 1.21.1 + NeoForge 筛出来的 → 版本已验证。
+            # 这条专治"只在 CF 分发"的 mod（Modrinth 接口对它们一律返回 PROJECT_NOT_FOUND）。
+            row["verify"], row["source"], row["cf_only"] = "OK", "CF 目录（1.21.1+NeoForge）", True
         else:
             vers = api_get(f"/project/{slug}/version", {
                 "loaders": json.dumps([LOADER]),
@@ -177,8 +201,8 @@ def apply_plan(rows: list[dict], pack_dir: Path) -> int:
     print(f"\n要加入 packwiz 的：{len(todo)} 个（状态 plan 且已核验通过）")
     failed = []
     for i, r in enumerate(todo, 1):
-        # 来源决定用哪个 packwiz 子命令：FTB 系列在 CurseForge，用 modrinth 加会失败
-        sub = "curseforge" if r.get("src") == "cf" else "modrinth"
+        # 来源决定用哪个 packwiz 子命令：CF 独占的（如 FTB 系列）用 modrinth 加会失败
+        sub = "curseforge" if (r.get("src") == "cf" or r.get("cf_only")) else "modrinth"
         cmd = ["packwiz", sub, "add", r["slug"], "-y"]
         p = subprocess.run(cmd, cwd=str(pack_dir), capture_output=True, text=True,
                            encoding="utf-8", errors="replace")

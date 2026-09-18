@@ -228,3 +228,35 @@ exposure-polaroid	plan	5 包·拍立得（配 exposure 摄影）
 c2me-neoforge	hold	9 包·C2ME 区块并发（我们撤过：alpha + 与 RoadWeaver 冲突 + 覆盖 ModernFix 优化；但 9/50 包在用 → 留档供复议）
 skills	hold	8 包·Pufferfish's Skills 技能系统（与"零头衔/简洁"有张力，需判断）
 saturn	hold	7 包·内存优化（我们性能组之外的候选）
+
+# ── CurseForge 侧补漏（2026-09-15）：cf_survey.py 扫 CF 目录（1048 候选 / 964 漏项）──
+# 来源：CurseForge 公开代理 api.curse.tools · gameId=432 · classId=6(Mods) · 1.21.1 · modLoaderType=6(NeoForge)
+# 这是补上"只扫 Modrinth"那个系统性偏差的第二条腿（第一条是本机参照包）。
+every-compat	plan	CF·Wood Good 木材兼容（让所有木材 mod 互相通用 —— 多建造 mod 包的刚需）
+just-enough-resources-jer	plan	CF·JER 资源分布（JEI 的经典搭档：矿石/生物分布查询）
+yungs-better-caves	plan	CF·YUNG's 洞穴（补全 YUNG 全家桶）
+deeperdarker	plan	CF·深暗之境（★ 远征维度的第三个候选）
+corail-tombstone	plan	CF·墓碑（下载量比 gravestone-mod 更高；与"事故碑"设定契合）
+enhanced-celestials	plan	CF·血月/蓝月等天象（★ 与"尸潮按周期来"的排期设定契合）
+medieval-siege-machines	plan	CF·中世纪攻城机械（★ 与"御敌"主菜契合）
+medieval-paintings	plan	CF·中世纪画作（国旗/国史展示）
+medieval-music	plan	CF·中世纪音乐（氛围）
+medieval-buildings-end-edition	plan	CF·中世纪建筑·末地版（补全 medieval-buildings 系列）
+medieval-buildings-nether-edition	plan	CF·中世纪建筑·下界版
+epic-knights-armor-and-weapons	plan	CF·中世纪骑士装备
+armor-of-the-ages	plan	CF·时代盔甲（中世纪风格装备）
+choicetheorems-overhauled-village	plan	CF·村庄大修（旧世痕迹 / 世界感）
+stoneholm-forge	plan	CF·地下村庄（同上）
+villager-names	plan	CF·村民名字（让"世界本来有文明"有质感）
+more-villagers	plan	CF·更多村民职业
+trading-post	plan	CF·交易站（配公共仓库与以物易物）
+naturalist	plan	CF·更多动物（生态丰富度）
+ecologics	plan	CF·生态与生物（同上）
+refurbished-furniture	plan	CF·MrCrayfish 家具（家具位补充）
+buildersaddition	plan	CF·建造者附加方块
+macaws-furniture	plan	CF·Macaw's 家具（补全 Macaw's 系列）
+create-horse-power	plan	CF·Create 马力（马车运输 → 早期交通）
+ftb-quests-optimizer	plan	CF·FTB Quests 性能优化（★ 我们已定用 FTB Quests）
+ftb-quests-lang-splitter	plan	CF·FTB Quests 文本拆分（★ 中文化要用到——ATM10 汉化补丁里就有它）
+extraquests	plan	CF·FTB Quests 扩展任务类型
+ftb-chunks-forge	hold	CF·FTB Chunks 领地（1.3 亿下载的领地主流方案；但 OPAC 已实测通过 → 留档）

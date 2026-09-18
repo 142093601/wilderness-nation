@@ -372,6 +372,50 @@ B 表的判据是 **被 ≥2 个包选中 且 下载量 < 600 万**——这类�
 > · `minecolonies-origins` · `better-mc-neoforge-bmc5` 等**主题对口的大包**）。
 > 补跑这批（上限 350MB、16 个包）**已启动但按用户要求中止** → **这个缺口如实留着**，需要时再跑。
 
+## 十三·补三、CurseForge 侧（★ 2026-09-15 补上的第二个系统性偏差）
+
+**起因**：用户问"你扫过 CurseForge 的内容吗"——**答案是没有**。此前候选池只来自 Modrinth，
+CF 只被"本机恰好装了的包"**间接**碰到。这与 Questlog 选错是同一个根因。
+
+**为什么以前没做**：以为 CF 官方 API 要 key 就进不去。**实测：存在公开代理** `api.curse.tools`
+（按官方 API 形状转发，无需 key）。关键参数一次踩对：
+
+```
+gameId=432        Minecraft
+classId=6         **Mods**（不写会混进整合包/材质包 —— 第一次就踩了这个）
+gameVersion=1.21.1
+modLoaderType=6   NeoForge（1=Forge, 4=Fabric, 5=Quilt, 6=NeoForge）
+sortField=6       按总下载量
+```
+
+**结果**：13 个类目 + 14 个主题关键词 × 50 条 → **1048 个 CF 候选，其中 964 个不在我们清单里**；
+筛掉前置库与不相关题材后**补进 27 个**（清单 180 → **208 条**）。
+
+| 补进 | 为什么 |
+|---|---|
+| **`every-compat`**（Wood Good） | ★ **木材兼容**：让所有木材 mod 互相通用——多建造 mod 包的刚需 |
+| **`just-enough-resources-jer`** | JEI 的经典搭档（矿石/生物分布查询） |
+| **`deeperdarker`** | ★ 远征维度的**第三个**候选（另有 Twilight Forest / Dimensional Dungeons） |
+| **`enhanced-celestials`** | ★ 血月/蓝月等天象 → 与"尸潮按周期来"的排期设定契合 |
+| **`medieval-siege-machines`** | ★ 中世纪攻城机械 → 与"御敌"主菜契合 |
+| `yungs-better-caves` | 补全 YUNG 全家桶 |
+| `corail-tombstone` | 墓碑（下载量比 `gravestone-mod` 更高） |
+| `medieval-paintings` · `medieval-music` · `medieval-buildings-end/nether-edition` · `epic-knights-armor-and-weapons` · `armor-of-the-ages` | **中世纪系列**——CF 侧明显更厚的题材 |
+| `choicetheorems-overhauled-village` · `stoneholm-forge` · `villager-names` · `more-villagers` · `trading-post` | 村庄与城镇：让"世界本来有文明"更有质感 |
+| `naturalist` · `ecologics` | 生态与动物 |
+| `refurbished-furniture` · `buildersaddition` · `macaws-furniture` | 家具与建材补全 |
+| `create-horse-power` | Create 马力（马车 → 早期交通） |
+| **`ftb-quests-optimizer`** · `ftb-quests-lang-splitter` · `extraquests` | ★ 我们在用 FTB Quests —— 这三个是它的**性能优化 / 文本拆分（中文化要用）/ 扩展任务类型** |
+| `ftb-chunks-forge` ⏳ | CF 上领地的主流方案（1.3 亿下载）；OPAC 已实测通过 → 留档 |
+
+**核验器因此多了第四条来源**：`data/cf-survey.json` 是 CF 接口按 `1.21.1 + NeoForge` 筛出来的，
+**能返回就说明有版本** → 那 27 个"只在 CF 分发"的 mod（在 Modrinth 接口里一律 `PROJECT_NOT_FOUND`）
+现在能被正确验过，`--apply` 也会自动改用 `packwiz curseforge add`。
+
+**一条工具教训**：这个调查要打 27 次接口、约 1~3 分钟，**连续被打断两次**（跑到第 17 个查询被掐、输出全丢）。
+修法两层：① **每次请求后立刻把结果落盘成缓存**（`data/cf-cache.json`），断了不白跑；
+② 加 `--only categories|queries` **分段执行**，每次调用都短。
+
 ## 十四、待定项（唯一还没定的，以及缺什么才能定）
 
 | # | 待定 | 缺什么 | 影响 |
@@ -400,28 +444,29 @@ B 表的判据是 **被 ≥2 个包选中 且 下载量 < 600 万**——这类�
 | 视觉与音效 | 13（含 2 待定） |
 | 食物与农业 | 9 |
 | 社交与身份 | 3 |
-| **内容/功能 mod 合计** | **约 165** |
+| **内容/功能 mod 合计** | **约 190** |
 | 前置库（随依赖自动进） | 约 25~40 |
-| **jar 总数（估）** | **约 190~205** |
+| **jar 总数（估）** | **约 215~230** |
 
 对照参照系：本机 All the Mods 10 是 **479 个 jar / 1.3 GB**（同版本）；跨包共识里解析的 50 个 NeoForge 包中，
 **272（create-kingdom-fallensprout）、252（adventurecraft-modpack）、247（international-coalition-of-nations）**都在其中。
-**本包定位是主题包不是大杂烩**，190~205 已经落在一个成熟主题包的区间内。
+**本包定位是主题包不是大杂烩**，215~230 已经与那些主题包同量级。
 
 ### 清单核验（`tools/apply_modlist.py --verify`）
 
 ```
-清单载入：180 条  hold=14 · installed=16 · plan=147 · skip=3
-核验结果：180/180 通过
+清单载入：208 条  hold=15 · installed=16 · plan=174 · skip=3
+核验结果：208/208 通过
 ```
 
-四条**证据来源**（每一类都标明，不含"我觉得它有"）：
+五条**证据来源**（每一类都标明，不含"我觉得它有"）：
 
 | 来源 | 条数 | 说明 |
 |---|---|---|
-| 本地候选池 | 118 | 两个 survey JSON 本身就是按 `1.21.1 + neoforge` 筛出来的 |
-| **本地参照包实证** | 28 | 本机成熟包的 jar 文件名带版本号 —— **专门补 CurseForge 侧**（FTB 系列、Twilight Forest、Lootr、I18nUpdateMod 等） |
-| 联网补查（Modrinth 接口） | 26 | 少数不在池里的 |
+| 本地候选池 | 124 | 两个 survey JSON 本身就是按 `1.21.1 + neoforge` 筛出来的（Modrinth） |
+| **本地参照包实证** | 30 | 本机成熟包的 jar 文件名带版本号（FTB 系列、Twilight Forest、Lootr、I18nUpdateMod 等） |
+| **CF 目录** | 27 | ★ `data/cf-survey.json`：CF 接口按 `1.21.1 + NeoForge` 筛出来的 —— **专治"只在 CF 分发"的 mod**（Modrinth 接口对它们一律 `PROJECT_NOT_FOUND`，早先就是因此错选了 Questlog） |
+| 联网补查（Modrinth 接口） | 19 | 少数不在池里的 |
 | 已装运行中 | 8 | 它正跑在这个包里，`baseline.csv` 有它的加载/TPS 证据 |
 | ✗ 不合格 | — | 会被拦下、不允许进清单（如 `lets-do-bakery`；`sinytra-connector` 的 slug 应写作 `connector`） |
 
