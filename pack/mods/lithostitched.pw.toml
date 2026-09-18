@@ -3,11 +3,11 @@ filename = "lithostitched-1.8.0+beta6-neoforge-21.1.jar"
 side = "both"
 
 [download]
-url = "https://cdn.modrinth.com/data/XaDC71GB/versions/xDAotknu/lithostitched-1.8.0%2Bbeta6-neoforge-21.1.jar"
-hash-format = "sha512"
-hash = "d3654fdab95ca5b929778a21fb30c2124f6f66e3c6067af23595301800d797f584dd099ce046f8ae288a6084e92c46a161a8238d19ac793bd3bface2b3b2eef8"
+hash-format = "sha1"
+hash = "b8526bb7fcfb844ce91513ab349c408dd1a8279e"
+mode = "metadata:curseforge"
 
 [update]
-[update.modrinth]
-mod-id = "XaDC71GB"
-version = "xDAotknu"
+[update.curseforge]
+file-id = 8819894
+project-id = 936015

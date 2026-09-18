@@ -29,6 +29,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import ssl
 import sys
 import time
@@ -158,6 +159,37 @@ def download(url: str, dest: Path, fmt: str, want: str) -> tuple[bool, str]:
     return True, "已下载并校验" if (fmt in HASHERS and want) else "已下载（无哈希可比）"
 
 
+def mod_stem(filename: str) -> str:
+    """文件名去掉版本号后的前缀，用来判断"是不是同一个 mod 的另一个版本"。
+
+    例：YungsApi-1.21.1-NeoForge-5.1.8.jar → "yungsapi-"
+        create-1.21.1-6.0.10.jar            → "create-"
+    """
+    return re.split(r"[-_]?\d", filename.lower())[0]
+
+
+def prune_stale(dest: Path, entries: list[dict], dry: bool) -> int:
+    """删除被 pack 管理的 mod 的其它版本文件。
+
+    为什么需要：版本升级后旧 jar 会留在目录里 → **同一个 mod 两个版本**，
+    游戏会报"mods have version differences that were not resolved"，甚至行为不确定。
+    只按 pack 里存在的 stem 匹配 → 手工安装的、不在 pack 里的 mod 一律不碰。
+    """
+    want_by_stem: dict[str, str] = {}
+    for e in entries:
+        want_by_stem.setdefault(mod_stem(e["filename"]), e["filename"])
+    removed = 0
+    for jar in sorted(dest.glob("*.jar")):
+        stem = mod_stem(jar.name)
+        expected = want_by_stem.get(stem)
+        if expected and jar.name != expected:
+            print(f"  prune 旧版本：{jar.name}（应为 {expected}）")
+            if not dry:
+                jar.unlink()
+            removed += 1
+    return removed
+
+
 def main() -> int:
     try:
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # type: ignore[attr-defined]
@@ -174,6 +206,9 @@ def main() -> int:
     ap.add_argument("--side", choices=["client", "server"],
                     help="只落某一端需要的（读 .pw.toml 的 side 字段；both 两端都要）。"
                          "落服务端时用 --side server --dest <server>/mods")
+    ap.add_argument("--prune", action="store_true",
+                    help="删掉被 pack 管理的 mod 的**旧版本文件**（升版后的残渣）。"
+                         "只按「文件名去掉版本号后的前缀」匹配，手工装的、不在 pack 里的一律不动。")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
 
@@ -251,6 +286,10 @@ def main() -> int:
     print(f"\n结果：新下 {n_ok} · 已存在 {n_skip} · 失败 {n_fail}")
     if failed:
         print("失败：" + ", ".join(failed))
+    if args.prune:
+        print("\n清理旧版本残渣：")
+        n_pruned = prune_stale(dest, entries, args.dry_run)
+        print(f"  删除 {n_pruned} 个" + ("（dry-run，未真删）" if args.dry_run else ""))
     return 1 if n_fail else 0
 
 

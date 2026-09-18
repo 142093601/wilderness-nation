@@ -148,7 +148,7 @@ simple-voice-chat	skip	语音（用户明确不要）
 # ── 参照包共识补漏（2026-09-15）：来自本机 3 个成熟包的 mods 目录 ──
 # 起因：候选池只有 Modrinth，而大量常见 mod 只在 CurseForge 分发 → 系统性漏项。
 # 方法：tools/reference_pack_diff.py 找出"出现在 ≥2 个参照包里"的主流 mod，再与我们的清单对差。
-the-twilight-forest	plan	远征维度（★ 1.21.1 有版本 —— 解决了原先"CF 侧未核实"的待核实项）｜slug 已修正（原 twilightforest）：CF id 227639：15 个 1.21.1+NeoForge 文件，最新「Twilight Forest - MC 1.21.1 - 4.8.3345」与参照包 jar 完全一致	cf
+the-twilight-forest	hold	远征维度候选 —— **装机实测：加上它就开世界静默挂起**（到主菜单 38.9 秒后既无 "Starting integrated minecraft server" 也无任何报错/崩溃报告；单独装它即可复现，撤掉就正常）。1.21.1 上已是最新版 4.8.3345（2026-03-22）。尚未区分是它自身缺陷还是与 quickPlay/Terralith 的交互 → 留待单独排查；替代：deeperdarker / dimensional-dungeons	cf
 lootr	plan	多人·独立战利品（3~7 人同时开箱不抢箱，远征主菜的刚需）
 justenoughcharacters	plan	生活质量·拼音搜索（中文玩家搜英文物品名的刚需，直接服务中文化）｜slug 已修正（原 jecharacters）：MR：JustEnoughCharacters，13 个 1.21.1+neoforge 版本；它的 jar 名恰好叫 jecharacters-*（这就是混淆来源）	mr
 appleskin	plan	生活质量·饥饿与饱和度显示（基础 QoL，原先漏了）
@@ -235,7 +235,7 @@ saturn	hold	7 包·内存优化（我们性能组之外的候选）
 every-compat	plan	CF·Wood Good 木材兼容（让所有木材 mod 互相通用 —— 多建造 mod 包的刚需）
 just-enough-resources-jer	plan	CF·JER 资源分布（JEI 的经典搭档：矿石/生物分布查询）
 yungs-better-caves	plan	CF·YUNG's 洞穴（补全 YUNG 全家桶）
-deeperdarker	plan	CF·深暗之境（★ 远征维度的第三个候选）
+deeperdarker	hold	远征维度候选·深暗之下 —— **装机实测：加它就开世界静默挂起**。已用配对协议复验（服务端/客户端/世界三者同集）：只加它 → FAIL；去掉 terralith+lithostitched 只加它 → 仍 FAIL。1.21.1 上已是最新 1.4.1（2026-06）→ 与 twilightforest 同属「维度 mod 进不去世界」这一类，机制待查（可能是与某个基础 mod 的交互）
 corail-tombstone	plan	CF·墓碑（下载量比 gravestone-mod 更高；与"事故碑"设定契合）
 enhanced-celestials	plan	CF·血月/蓝月等天象（★ 与"尸潮按周期来"的排期设定契合）
 medieval-siege-machines	plan	CF·中世纪攻城机械（★ 与"御敌"主菜契合）
@@ -246,7 +246,7 @@ medieval-buildings-nether-edition	plan	CF·中世纪建筑·下界版
 epic-knights-armor-and-weapons	plan	CF·中世纪骑士装备
 armor-of-the-ages	plan	CF·时代盔甲（中世纪风格装备）
 choicetheorems-overhauled-village	plan	CF·村庄大修（旧世痕迹 / 世界感）
-stoneholm-forge	plan	CF·地下村庄（同上）
+stoneholm-forge	skip	据点/村庄·地下村庄 —— **装机实测：进世界即崩**（崩溃报告 crash-2026-09-19_03.33.53-server.txt）：其 StructurePoolAccessor mixin 未生效（primaryPoolAccessor 为 null），Stoneholm.onServerStarting 抛 NPE → 服务器 tick 循环异常。1.21.1 上已是最新版（2.1.2），无法靠升级解决
 villager-names	plan	CF·村民名字（让"世界本来有文明"有质感）
 more-villagers	plan	CF·更多村民职业
 trading-post	plan	CF·交易站（配公共仓库与以物易物）

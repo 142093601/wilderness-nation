@@ -52,7 +52,6 @@
 2	tidal-towns	mr	5 包·城镇结构（旧世痕迹）
 2	towns-and-towers	mr	11 包·村庄与塔结构（旧世痕迹）
 2	choicetheorems-overhauled-village	mr	CF·村庄大修（旧世痕迹 / 世界感）
-2	stoneholm-forge	mr	CF·地下村庄（同上）
 2	villager-names	mr	CF·村民名字（让"世界本来有文明"有质感）
 2	more-villagers	mr	CF·更多村民职业
 2	trading-post	mr	CF·交易站（配公共仓库与以物易物）
@@ -61,8 +60,6 @@
 2	medieval-buildings	mr	5 包·中世纪建筑构件（★ 主题高度对口）
 2	medieval-buildings-end-edition	mr	CF·中世纪建筑·末地版（补全 medieval-buildings 系列）
 2	medieval-buildings-nether-edition	mr	CF·中世纪建筑·下界版
-2	the-twilight-forest	cf	远征维度（★ 1.21.1 有版本 —— 解决了原先"CF 侧未核实"的待核实项）｜slug 已修正（原 twilightforest）：CF id 227639：15 个 1.21.1+NeoForge 文件，最新「Twilight Forest - MC 1.21.1 - 4.8.3345」与参照包 jar 完全一致
-2	deeperdarker	mr	CF·深暗之境（★ 远征维度的第三个候选）
 2	better-archeology	mr	考古（契合"旧世"设定）
 2	friends-and-foes-forge	mr	6 包·原版风格新生物
 2	it-takes-a-pillage-continuation	mr	据点·敌方势力主选（掠夺者扩张文明、建立营地与前哨 → 袭击有实体来源；**8 个** 1.21.1+NeoForge 版本，双端必需）
