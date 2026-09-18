@@ -12,7 +12,7 @@ metafile = true
 
 [[files]]
 file = "mods/certain-questing-additions.pw.toml"
-hash = "9b638a69442bee4961aee921b086ca32df54f4b35e9b10c7ca74bc251bff912e"
+hash = "f6c66309441287f882f7deaa40d49d88f4603a52f8e33c1916ff6b0139a3c5d3"
 metafile = true
 
 [[files]]
@@ -112,7 +112,7 @@ metafile = true
 
 [[files]]
 file = "mods/just-enough-resources-jer.pw.toml"
-hash = "f61a3526d323d232fbac74dedb5d89e07f45981db1c5a705c66dbe5da7507a68"
+hash = "5010832fb583d7ec10e3d8dcb4b5e6741bf99202b0868e4b8e94ff7d8ca45ca4"
 metafile = true
 
 [[files]]
@@ -187,7 +187,7 @@ metafile = true
 
 [[files]]
 file = "mods/xaeroplus.pw.toml"
-hash = "45ad609bee750d3b617a4ca0bbff8155d123981ce149619a3fb1f80636503ea9"
+hash = "0c2c2a97dd4d764097ee0765230887587b87e17172991f13719ac6668d9d9693"
 metafile = true
 
 [[files]]

@@ -171,6 +171,9 @@ def main() -> int:
     ap.add_argument("--batch", type=int, help="只落 install-batches.tsv 里该批次的 slug")
     ap.add_argument("--batches-file", default=str(ROOT / "tools" / "lists" / "install-batches.tsv"))
     ap.add_argument("--only", help="逗号分隔的 slug 白名单")
+    ap.add_argument("--side", choices=["client", "server"],
+                    help="只落某一端需要的（读 .pw.toml 的 side 字段；both 两端都要）。"
+                         "落服务端时用 --side server --dest <server>/mods")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
 
@@ -203,6 +206,12 @@ def main() -> int:
     if args.only:
         keep = {s.strip() for s in args.only.split(",")}
         entries = [e for e in entries if e["slug"] in keep]
+    if args.side:
+        # side 字段是 packwiz 的端侧标记：both / client / server
+        want = {"both", args.side}
+        before = len(entries)
+        entries = [e for e in entries if (e.get("side") or "both") in want]
+        print(f"端侧过滤 --side {args.side}：{before} → {len(entries)} 条（both + {args.side}）")
 
     print(f"pack: {pack_dir}  →  dest: {dest}")
     print(f"待处理 {len(entries)} 条\n")
