@@ -1,0 +1,13 @@
+name = "Portable blueprints"
+filename = "portable_blueprints-v2.0.10-mv1.21.1neoforge.jar"
+side = "both"
+
+[download]
+hash-format = "sha1"
+hash = "82e8bde6f714bc28687675846acb35b63d85e025"
+mode = "metadata:curseforge"
+
+[update]
+[update.curseforge]
+file-id = 7709339
+project-id = 1231499

@@ -1,0 +1,17 @@
+# 隔离清单（quarantine）——这些 mod 已被判 hold/skip，但它们的 jar 可能还留在
+# 客户端实例 / 服务端 mods 目录里。**任何测试前都必须先把它们挪出去**，否则测试会被污染。
+#
+# 为什么需要单独一张表：批次表（install-batches.tsv）只列 plan 状态的 slug，
+# 而 hold/skip 的 mod 元数据已从 pack/ 移除 → 测试器既无法从批次表知道它们，
+# 也无法从 .pw.toml 拿到文件名 → **撤不出去**。
+# 本会话因此误判过两轮（先白折腾 30 分钟，后又让 b1+b2 假 FAIL 一次）。
+#
+# 字段：slug <TAB> jar 文件名 <TAB> 原因
+the-twilight-forest	twilightforest-1.21.1-4.8.3345-universal.jar	C7 加它就进不去世界（安全方向复验）→ hold
+deeperdarker	deeperdarker-neoforge-1.21.1-1.4.1.jar	C6 加它就进不去世界（配对复验 + 去 Terralith 复验）→ hold
+stoneholm-forge	stoneholm-2.1.2+1.21.1.jar	C5 进世界即崩（StructurePoolAccessor NPE，有崩溃报告）→ skip
+stellarcreateoptimization	stellarcreateoptimization-neoforge-1.21.1-1.0.6.jar	C3 硬依赖 sodium（本包用 embeddium）→ skip
+bye-pregen	byepregen-1.21.1-1.1.2.4.jar	C4 与 noisium 显式不兼容 → skip
+veil	veil-neoforge-1.21.1-1.1.6.jar	临时隔离以定位"谁需要它"（Veil 要求 Sodium，与 embeddium 冲突）
+create-aeronautics	create-aeronautics-bundled-1.21.1-1.3.2.jar	C8 与 embeddium + scalablelux 硬冲突（见 sable/veil）→ hold
+sable	sable-neoforge-1.21.1-2.0.5.jar	C8 sable 与 scalablelux 不兼容，且内嵌 veil（要求 sodium）→ 随 aeronautics 一起隔离

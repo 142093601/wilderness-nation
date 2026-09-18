@@ -117,6 +117,7 @@ def read_entries(pack_dir: Path) -> list[dict]:
             "hash": dl.get("hash"),
             "hash_format": (dl.get("hash-format") or "").lower(),
             "mode": dl.get("mode"),
+            "mod_id": ((d.get("update") or {}).get("modrinth") or {}).get("mod-id"),
             "cf_project": ((d.get("update") or {}).get("curseforge") or {}).get("project-id"),
             "cf_file": ((d.get("update") or {}).get("curseforge") or {}).get("file-id"),
         })
@@ -159,34 +160,49 @@ def download(url: str, dest: Path, fmt: str, want: str) -> tuple[bool, str]:
     return True, "已下载并校验" if (fmt in HASHERS and want) else "已下载（无哈希可比）"
 
 
-def mod_stem(filename: str) -> str:
-    """文件名去掉版本号后的前缀，用来判断"是不是同一个 mod 的另一个版本"。
+def entry_identity(e: dict) -> str:
+    """条目的**唯一身份**：Modrinth 的 mod-id / CurseForge 的 project-id。
 
-    例：YungsApi-1.21.1-NeoForge-5.1.8.jar → "yungsapi-"
-        create-1.21.1-6.0.10.jar            → "create-"
+    为什么不能按文件名判断"是不是同一个 mod 的旧版本"：
+    `SuperMartijn642's Core Lib` 与 `SuperMartijn642's Config Lib` 是两个不同的项目，
+    但文件名都以 `supermartijn642` 开头 —— 第一版 prune 按"第一个数字前的前缀"匹配，
+    于是把 corelib 当成了 configlib 的旧版本 **删掉了**（2026-09-19 真实踩到）。
+    → 只有项目 id 是可靠的同一性判据。
     """
-    return re.split(r"[-_]?\d", filename.lower())[0]
+    if e.get("mod_id"):
+        return "mr:" + e["mod_id"]
+    if e.get("cf_project"):
+        return "cf:%s" % e["cf_project"]
+    return "slug:" + e["slug"]
 
 
 def prune_stale(dest: Path, entries: list[dict], dry: bool) -> int:
-    """删除被 pack 管理的 mod 的其它版本文件。
+    """按**项目 id 记账**删除旧版本文件（升级后残留会变成"同一 mod 两个版本"）。
 
-    为什么需要：版本升级后旧 jar 会留在目录里 → **同一个 mod 两个版本**，
-    游戏会报"mods have version differences that were not resolved"，甚至行为不确定。
-    只按 pack 里存在的 stem 匹配 → 手工安装的、不在 pack 里的 mod 一律不碰。
+    安全边界：只删"本工具上次为**同一个项目 id** 写下的、且与当前文件名不同的"文件。
+    手工安装的、不在 pack 里的、以及别的 mod，一律不碰。
     """
-    want_by_stem: dict[str, str] = {}
-    for e in entries:
-        want_by_stem.setdefault(mod_stem(e["filename"]), e["filename"])
+    man_path = ROOT / "data" / "materialize-manifest.json"
+    try:
+        manifest = json.loads(man_path.read_text(encoding="utf-8")) if man_path.is_file() else {}
+    except Exception:  # noqa: BLE001
+        manifest = {}
     removed = 0
-    for jar in sorted(dest.glob("*.jar")):
-        stem = mod_stem(jar.name)
-        expected = want_by_stem.get(stem)
-        if expected and jar.name != expected:
-            print(f"  prune 旧版本：{jar.name}（应为 {expected}）")
-            if not dry:
-                jar.unlink()
-            removed += 1
+    new_manifest: dict[str, str] = {}
+    for e in entries:
+        ident = entry_identity(e)
+        prev = manifest.get(ident)
+        if prev and prev != e["filename"]:
+            old = dest / prev
+            if old.is_file():
+                print(f"  prune 旧版本：{prev}（该项目现为 {e['filename']}）")
+                if not dry:
+                    old.unlink()
+                removed += 1
+        new_manifest[ident] = e["filename"]
+    if not dry:
+        man_path.parent.mkdir(parents=True, exist_ok=True)
+        man_path.write_text(json.dumps(new_manifest, ensure_ascii=False, indent=1), encoding="utf-8")
     return removed
 
 

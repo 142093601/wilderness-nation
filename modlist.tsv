@@ -67,7 +67,7 @@ another-furniture	plan	家具
 
 # ── 交通 ──
 waystones	plan	传送节点
-create-aeronautics	plan	载具（远征风味）
+create-aeronautics	hold	交通·机械动力：航空学 —— **装机实测：与已装的两个性能 mod 硬冲突**。它必需 `sable`（物理系统），而 sable ① 与 `scalablelux`（我们的光照引擎）声明不兼容 ② 内嵌 `veil`（jar-in-jar），veil 又要求 `sodium 0.8.12-alpha+`，与我们的 `embeddium` 不兼容。→ 要用它必须整体换掉渲染器与光照引擎（Sodium 栈），代价大于收益 → hold。替代：Create 自带列车/物流 + `waystones`
 
 # ── 威胁 ──
 the-hordes	plan	袭击排期引擎
@@ -160,7 +160,7 @@ cooking-for-blockheads	plan	食物·厨房方块（配食物系统）｜slug 已
 farming-for-blockheads	plan	食物·市场方块（配公共仓库与以物易物）｜slug 已修正（原 farmingforblockheads）：MR：Farming for Blockheads	mr
 openblocks-elevator	plan	建造·电梯（建筑内部交通）｜slug 已修正（原 elevatorid）：CF id 250832：OpenBlocks Elevator —— 它的 jar 文件名就叫 elevatorid-neoforge-1.21.1-1.11.4.jar	cf
 trashslot	plan	生活质量·垃圾桶槽位
-craftingtweaks	plan	生活质量·合成整理
+crafting-tweaks	plan	合成辅助（旋转/均分/清空合成格）｜slug 已修正（原 craftingtweaks）：**两个项目同名** —— `craftingtweaks` 是 3,888 下载的另一个项目（1.21.1+neoforge 0 个版本，packwiz add 报 datapack loader 错），真身是 `crafting-tweaks`（988 万下载，10 个版本）。注：这属于「存在性检查抓不到的类型」——两个项目都叫 Crafting Tweaks
 better-advancements	plan	生活质量·成就界面｜slug 已修正（原 betteradvancements）：MR：Better Advancements	mr
 colorful-hearts	plan	生活质量·血量显示｜slug 已修正（原 colorfulhearts）：MR：Colorful Hearts	mr
 connectivity	plan	生活质量·网络优化（多人服包体量下有用）｜slug 已修正（原 connectivity）：CF id 470193：Connectivity，1.21.1+NeoForge 文件在	cf

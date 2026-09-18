@@ -1,0 +1,13 @@
+name = "Builders Crafts & Additions"
+filename = "buildersaddition2-neoforge-1.21.1-2.1.2.jar"
+side = "both"
+
+[download]
+hash-format = "sha1"
+hash = "efa88263c7a14a81f5951f3e5864e9b117eb2698"
+mode = "metadata:curseforge"
+
+[update]
+[update.curseforge]
+file-id = 8155184
+project-id = 389697

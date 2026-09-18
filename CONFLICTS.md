@@ -5,7 +5,8 @@
 >
 > **范围**：只做"能跑起来 + 冲突清账"。**具体魔改（配方/数值/配置调参）不在本轮**，见文末「待魔改清单」。
 >
-> **进度**：批 1 ✅ 已装已验 · 批 2 ✅ 已装已验（剔除 3 个问题 mod）· 批 3~5 待装。最后更新 2026-09-19。
+> **进度**：批 1 ✅ 已装已验 · 批 2 ✅ 已装已验（剔除 3 个问题 mod）·
+> 批 3 已装（59 条），验收中（已剔除 C8；余下有一个未定的启动期问题 C9）· 批 4~5 待装。最后更新 2026-09-19。
 
 ---
 
@@ -18,6 +19,8 @@
 | **C5** | `stoneholm-forge` **进世界即崩**（NPE，有崩溃报告） | 🔴 致命 | 改 `skip` ✅ |
 | **C6** | `deeperdarker` **加它就进不去世界**（配对协议复验） | 🔴 致命 | 改 `hold` ⏳ 机制待查 |
 | **C7** | `the-twilight-forest` **加它就进不去世界**（安全方向复验） | 🔴 致命 | 改 `hold` ⏳ 机制待查 |
+| **C8** | `create-aeronautics` → `sable`（内嵌 `veil`）与 **`embeddium` + `scalablelux` 双硬冲突** | 🔴 致命 | 改 `hold` ✅ 证据完整 |
+| **C9** | 批 3 全量（160 jar）客户端**在资源重载阶段静默死亡**（无崩溃报告/无 hs_err/无系统事件） | 🟠 未定 | ⏳ 下一轮定位（可能规模阈值或某个 mod） |
 | **C3** | `stellarcreateoptimization` 硬依赖 `sodium 0.6.9+`，本包用 `embeddium` | 🟠 装了就崩 | 改 `skip` ✅ |
 | **C4** | `byepregen` 与 `noisium` **显式不兼容**（mod 自己声明） | 🟠 装了就崩 | 取 `noisium`，`byepregen` → `skip` ✅ |
 | **T1** | 12 条 slug 取自 jar 文件名，与项目真 slug 不符 | 🟠 装机必失败 | 全部修正 + 加核验关卡 ✅ |
@@ -26,6 +29,11 @@
 | **T4** | 跨批次依赖：`xaeroplus` 需要 `xaeros-worldmap`（在批 4） | 🟡 流程 | `xaeroplus` 移到批 4 ✅ |
 | **T5** | 升版后旧 jar 残留 → 同一 mod 两个版本 | 🟡 流程 | `materialize --prune` ✅ |
 | **T6** | **验证方法本身出过假结论**（见第五节，含一次 30 分钟的误判） | 🟠 方法论 | 改用「配对测试」协议 ✅ |
+| **T7** | **判了 hold/skip 的 mod，jar 撤不出去**：元数据从 `pack/` 移除后，测试器既不在批次表里、也拿不到文件名 → 永久残留污染每一轮测试 | 🟠 方法论 | 新增**隔离清单** `tools/lists/quarantine.tsv`（不管状态，一律挪出）✅ |
+| **T8** | **前置库被误当"多余"撤掉**：测试器若只按批次 slug 保留，包里的自动依赖（architectury/yungs-api/puzzleslib…）会被撤走 → `Mod ftbquests requires architectury` 启动崩 | 🟠 方法论 | ① 新增 `data/depgraph.py`（依赖闭包，含 CF 依赖与 CF id → 我们 slug 的映射）② 新增 `--all-keep`（顺序装机下验证最新一批=保留 pack 全部条目）✅ |
+| **T9** | **同一 jar 文件名被两个 slug 引用**（`yungs-api` 与 `yungs-api-neoforge` 指向同一个 jar）→ 逐个 slug 处理时互相覆盖 | 🟠 方法论 | `set_side` 改为按**文件名集合**决策 ✅ |
+| **T10** | **从 pack 移除 mod 不会删掉实例里的 jar**（`sable`/`create-aeronautics` 移除后仍在 mods 目录里 → 继续崩） | 🟠 流程 | 记入隔离清单 + 手工清理；`materialize --prune` 只管同项目换版，不管"整个 mod 被移除" ⏳ 待工具化 |
+| **T11** | `--prune` 的"按第一个数字切分"启发式把 `supermartijn642corelib` 当成 `supermartijn642configlib` 的旧版**误删**（名字里带数字） | 🔴 自伤 | 改为**按项目 id 记账**（`data/materialize-manifest.json`）✅ |
 
 **三条硬规律**（都是这次撞出来的，见第三节）：
 **R1 世界与 mod 集必须匹配**（缺 mod 时开世界**静默失败**，没有任何报错）·
@@ -96,6 +104,40 @@ java.lang.NullPointerException: Cannot invoke "…StructurePoolAccessor.getRawTe
 **共同点：两个都是维度 mod**（新增 dimension）。但也可能是它们与某个基础 mod 的交互 →
 **尚未定位到机制**，所以先 `hold` 而不是 `skip`。替代品：`imensional-dungeons`（hold，形态未核实）。
 > ⚠️ 早期一度把"暮色森林"当作唯一凶手，但当时用的验证方法有缺陷（见 T6），因此 **C6/C7 是重验后的结论**。
+
+### C8 · `create-aeronautics` 与渲染器/光照引擎双硬冲突（🔴 证据完整）
+
+**现象**：批 3 加进来后，客户端**启动即崩**（有崩溃报告 `crash-2026-09-19_06.55.02-fml.txt`）：
+
+```
+-- Mod loading issue for: veil --
+  Mod file: .../mods/sable-neoforge-1.21.1-2.0.5.jar#478!/META-INF/jarjar/veil-neoforge-1.21.1-4.3.2.jar
+  Failure message: Mod veil is incompatible with embeddium any
+      Currently, embeddium is 1.0.15+mc1.21.1
+      The reason is: Veil supports Sodium 0.8.12-alpha.2+mc1.21.1 and above
+-- Mod loading issue for: sable --
+  Failure message: Mod sable is incompatible with scalablelux any
+```
+
+**依赖链（从日志与依赖图读出来的）**：
+`create-aeronautics` → 必需 `sable`（物理系统）→ ① `sable` 声明与 **`scalablelux`（我们的光照引擎）** 不兼容；
+② `sable` **内嵌 `veil`（jar-in-jar）**，而 `veil` 要求 **`sodium 0.8.12-alpha+`**，与 **`embeddium`（我们的渲染器）** 不兼容。
+
+**处置**：`create-aeronautics` → `hold`。要用它就得**同时换掉渲染器与光照引擎**（改用 Sodium 栈），
+为一个"载具"内容 mod 动基础设施，代价大于收益。替代：Create 自带列车/物流 + `waystones`（都在清单里）。
+
+> **这条是系统性的**：Create 生态的新附属越来越依赖 **Sodium + Veil 渲染栈**。
+> 下一批（批 4）里 `sodium-extra`/`reeses-sodium-options` 也是 Sodium 系 → **渲染器选型（embeddium vs sodium）
+> 迟早要重新决策一次**。已记入「待魔改清单」。
+
+### C9 · 批 3 全量客户端在资源重载阶段静默死亡（🟠 未定，下一轮查）
+
+**现象**：批 1+2+3 全量（客户端 **160** jar / 服务端 132）→ 服务端正常生成世界（`Done (155.758s)`），
+但客户端在**资源重载阶段**日志中断（最后是 `BlockStateModelLoader` / `ModelBakery` 的缺模型 WARN），
+进程消失。取证：**无崩溃报告、无 hs_err、Windows 事件日志无记录、无 OOM 信息**。
+
+**已知边界**：批 1+2（66 jar）能稳定进世界；批 3 全量不行。是"规模阈值"还是"某个 mod"，尚未区分。
+**下一轮做法**：先做一个干净的批 1+2 基准世界，再用 `--reuse-world` 二分批 3（每轮约 2 分钟）。
 
 ### C3 / C4 · 两条选型冲突（装机冒烟直接报出，非推测）
 
@@ -200,8 +242,8 @@ lithostitched 1.8.0-beta6（2026-09）差 20 个月 → **不报错，只卡死*
 |---|---|---|---|
 | 1 地基（33 条） | 世界生成三件 + 引擎 + 性能 + 中文化 + 运维 | ✅ **已装已验** | 修掉 C1/C2/C3/C4 |
 | 2 世界内容（29 条） | 结构 / 维度 / 村庄 / 中世纪 / 据点结构 | ✅ **已装已验**（26 条） | 剔除 C5 `stoneholm`（skip）、C6 `deeperdarker`、C7 `the-twilight-forest`（hold） |
-| 3 立国与基建（61 条） | Create 生态 / 图纸系 / 建材装饰 / 交通 / 食物农业 | ⏳ 待装 | |
-| 4 远征与生活（56 条） | 地图背包定位 / 战利品遗物 / QoL / 视觉音效 | ⏳ 待装 | `xaeroplus` 已移入本批 |
+| 3 立国与基建（59 条） | Create 生态 / 图纸系 / 建材装饰 / 交通 / 食物农业 | ⚠️ 已装，**验收未完成** | 剔除 C8 `create-aeronautics`（hold）；余下卡在 C9（客户端启动期静默死亡，无证据可读） |
+| 4 远征与生活（56 条） | 地图背包定位 / 战利品遗物 / QoL / 视觉音效 | ⏳ 待装 | `xaeroplus` 已移入本批；注意 `sodium-extra`/`reeses-sodium-options` 是 Sodium 系（见 C8 的渲染器选型问题） |
 | 5 御敌与文明（8 条） | 威胁 / 军事单位 / 攻城 / 大工程 | ⏳ 待装 | |
 
 **验证方式**（每批都要跑）：

@@ -79,7 +79,6 @@
 3	create-central-kitchen	mr	Create 食物链
 3	slice-and-dice	mr	Create 食物链
 3	create-horse-power	mr	CF·Create 马力（马车运输 → 早期交通）
-3	create-aeronautics	mr	载具（远征风味）
 3	portable-blueprints	mr	图纸工程制与服务端分发
 3	effortless-building	mr	建筑辅助
 3	worldedit	mr	管理工具（op）
@@ -105,7 +104,7 @@
 3	every-compat	mr	CF·Wood Good 木材兼容（让所有木材 mod 互相通用 —— 多建造 mod 包的刚需）
 3	almostunified	mr	6 包·材料统一（多 mod 的矿锭/材料归并，降低混乱）
 3	polymorph	mr	配方冲突选择（多 mod 包实用：同一配方冲突时让玩家选）
-3	craftingtweaks	mr	生活质量·合成整理
+3	crafting-tweaks	mr	合成辅助（旋转/均分/清空合成格）｜slug 已修正（原 craftingtweaks）：**两个项目同名** —— `craftingtweaks` 是 3,888 下载的另一个项目（1.21.1+neoforge 0 个版本，packwiz add 报 datapack loader 错），真身是 `crafting-tweaks`（988 万下载，10 个版本）。注：这属于「存在性检查抓不到的类型」——两个项目都叫 Crafting Tweaks
 3	trashslot	mr	生活质量·垃圾桶槽位
 3	openblocks-elevator	cf	建造·电梯（建筑内部交通）｜slug 已修正（原 elevatorid）：CF id 250832：OpenBlocks Elevator —— 它的 jar 文件名就叫 elevatorid-neoforge-1.21.1-1.11.4.jar
 3	waystones	mr	传送节点
