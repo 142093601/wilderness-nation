@@ -290,3 +290,15 @@ millenaire	hold	CF·治理·千年村庄（村庄生成/当村长/村庄关系�
 banner-claim	skip	领地·旗帜圈地（Modrinth 有项目但无 1.21.1+NeoForge 版本；且与已实测的 OPAC 形成双领地体系，冲突）
 litematica-printer	skip	建造·投影自动放置（Modrinth 有项目但无 1.21.1+NeoForge 版本；且会削弱建造劳动）
 visualblueprintmaterials	skip	建造·蓝图材料清单（Modrinth 与 CurseForge 均查无）
+# ── 军事 / 带兵打仗（2026-09-18 定：保留军队、砍掉俯视角）──
+# 设计规格见 DESIGN.md §17.9。边界：**建造与生产不外包给 NPC，军事可以指挥但必须靠国力供养**。
+# 证据：Modrinth /project 与 /project/<slug>/version?game_versions=["1.21.1"]&loaders=["neoforge"]（本次实测）；
+#   候选对比来源 data/survey-army.json（13 个军队/战争关键词，去重 82 个）+ tools/mod_info.py 逐条读简介与许可。
+# 许可注意：hundred-years-warfare 是 All-Rights-Reserved，正文写明"可放进整合包，但需署名作者与来源、不得盈利"
+#   → 我们用 packwiz 的 metadata 方式引用（不内嵌 jar），并在 README 署名。
+hundred-years-warfare	plan	军事·带兵打仗主选（兵种相克 + 招募 + 指挥轮盘/指挥杖/RTS 三种指挥方式，前两种第一人称即可用；**23 个** 1.21.1+NeoForge 版本；与 better-combat 有专门兼容；它推荐的优化组合恰是我们已装的那套）
+ancient-warfare-3-npcs	hold	军事·AW3 的 NPC 模块（祖师爷；但只有 **3 个** 1.21.1 版本，能力面偏"NPC 干活"而非带兵）— 作参照
+ancient-warfare-3-worksites	hold	生产/军事·AW3 工作站方块与逻辑（与 hundred-years-warfare 的工人系统同源 → **二者不要同时上**）
+ballista	hold	军事·攻城器械（4 个版本；补"御敌"的道具缺口；若主选自带攻城器械则不需要）
+illager-siege-weapons	hold	军事/威胁·灾厄围攻武器与小股军队在世界生成（只有 **1 个** 版本；题材契合但风险高）
+kingdom-civilization-expansion	hold	治理/军事·把村庄变成成长中的王国（2 个版本，双端 optional；与"世界本来有文明"契合）

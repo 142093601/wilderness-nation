@@ -12,7 +12,7 @@
 
 **状态**：**选型已定案，但一个 mod 都还没装进包里。**
 
-- ✅ **mod 清单定案：230 条**（`MODLIST.md` / `modlist.tsv`），**227/227 通过核验**（另有 3 条 `skip` 不参与）
+- ✅ **mod 清单定案：236 条**（`MODLIST.md` / `modlist.tsv`），**233/233 通过核验**（另有 3 条 `skip` 不参与）
 - ✅ 选型方法确立：**四条**证据来源并用 —— Modrinth 接口筛选 · 本机成熟包实证（补 CF 侧）· **跨整合包共识**
   （解析 **50 个 NeoForge 整合包**的 `.mrpack`，共 1816 个 mod）· **MC百科中文社区目录**
   （334 页 / 去重 9238 条，补"中文社区常用但英文榜不显眼"的第四种偏差）
@@ -24,7 +24,7 @@
 
 ### 新增（mod：仅"定案"，尚未安装）
 
-**230 条已定案**，其中最关键的几类：性能组补漏（`badoptimizations` / `dynamic-fps`）·
+**236 条已定案**，其中最关键的几类：性能组补漏（`badoptimizations` / `dynamic-fps`）·
 Create 生态 30+ 件（含 `create-pattern-schematics` 图纸图案、铁路三件套）·
 建筑构件（Macaw's 全套 · `medieval-buildings` · `framedblocks`）·
 结构扩容（YUNG's 全家桶 · Twilight Forest · Repurposed Structures）·
@@ -36,6 +36,18 @@ Create 生态 30+ 件（含 `create-pattern-schematics` 图纸图案、铁路三
 `certain-questing-additions` · `stellarcreateoptimization`（Create 服务端 tick/客户端渲染）·
 `bye-pregen`（区块生成的 MSPT 尖峰）· `xaeroplus` · `put-a-plug-in-it!` · `chunk-plan`（探索配额）·
 `easy-mob-spawn-control`（威胁闸门执行器）· `todolist` · `travelers-titles`。
+
+### 设计变更：军队 / 带兵打仗（2026-09-18）
+
+- ✅ **定案：保留军队、砍掉俯视角**。反目标 #3 由"不搞 NPC 替你打"改写为
+  **"建造与国家形态不外包；军事可以指挥，但必须靠国力供养"**（`DESIGN.md` §17.9）
+- ✅ 新增 **`DESIGN.md` §17.9 军队与带兵打仗**：六个时代里的位置（时代 3 苗头 / 时代 4 主菜 / 时代 5 成建制）、
+  与四根承重墙的咬合、供养机制，以及**俯视角的否决记录**（每条候选都附接口证据）
+- ✅ 新增机制空缺 **#8 军队供养与兵力上限**（§17.7）——不补的话军队会把包从 B 路线推回 A 路线
+- ✅ 新增军事选型 **`hundred-years-warfare`**（23 个 1.21.1+NeoForge 版本 · 指挥轮盘/指挥杖/RTS 三种指挥方式 ·
+  兵种相克 · 与 `better-combat` 有专门兼容 · **它推荐的优化组合恰是我们已装的那套**）；备选 5 条进 `hold`
+- ✅ `DEFERRED.md` 新增 **F 组**（6 项军事实测，与 A 组联机验收一起做，不零散占用你的时间）
+- ✅ README 新增**第三方署名与许可**一节（该 mod 条款要求署名且禁盈利；本包不重分发任何 mod 文件）
 
 ### 移除
 

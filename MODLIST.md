@@ -163,6 +163,55 @@ ftb-jei-extras-21.1.7.jar             ftb-filter-system-neoforge-21.1.4.jar
 > 两个要注意的：① **CF 的 slug 与 Modrinth 不同**（CF 上叫 `ftb-quests-forge`，Modrinth 上根本没有）；
 > ② 这边访问 CF API **偶发 TLS 握手超时**（实测 `ftb-chunks-forge` 就超时了一次）→ 要能重试。
 
+## 八·补、军事 / 带兵打仗（2026-09-18 定）
+
+> **设计上为什么现在才有**：反目标 #3 原写作"不搞 NPC 替你打"，所以设计稿里一直没有军队。
+> 需求方明确要"带兵打仗"后，把它按 **B 路线（玩家城邦）** 的边界重新划了一遍，规格见 `DESIGN.md` §17.9。
+
+**边界（这条决定包的性质，不能含糊）**：
+
+| 环节 | 交给 NPC？ | 理由 |
+|---|---|---|
+| 建造（盖房/修墙/铺路/公共工程） | ❌ **不行** | 这正是 B 路线的定义"每一块砖都是玩家自己放的" |
+| 生产（资源/运输/合成/存储） | ⚠️ **卡时代** | 重复劳动可外包，但不能跳过 Create 的学习曲线 |
+| 军事（守城/野战/攻城） | ✅ **可指挥** | 但必须靠国力供养，关键决策由玩家做 |
+
+**主选：`hundred-years-warfare`（百年战争）** —— 以下全部为本次接口核验：
+
+| 项 | 实测结果 |
+|---|---|
+| 1.21.1 + NeoForge 版本 | **23 个**（对比：AW3 的 NPC 模块只有 3 个） |
+| 端侧 | 双端必需（client=required / server=required） |
+| 指挥方式 | **指挥轮盘 · 指挥杖 · RTS 模式**——前两种第一人称即可用，**所以砍掉俯视角不影响它** |
+| 兵种 | 弓箭抛射 · 骑兵冲锋 · 攻城器械，且**兵种相克** |
+| 其他 | 招募系统 · NPC 势力与据点 · 工人/工作台（源自 Ancient Warfare 2）· 关系/团队系统 |
+| 兼容 | 与 **`better-combat`（我们已在计划里）** · Epic Fight · TaCZ · Iron's Spells · Freecam 有专门兼容 |
+| 性能 | 作者推荐的优化组合（Embeddium / EntityCulling / ImmediatelyFast / Lithium 类）**恰好就是我们已装的那套** |
+| 许可 | All-Rights-Reserved：**允许放进整合包，需署名作者与来源、不得盈利** → 用 packwiz metadata 引用（不内嵌 jar）+ README 署名 |
+
+**候选对比（为什么是它）**：`data/survey-army.json` 用 13 个军队/战争关键词扫出 82 个候选，逐个核版本后：
+
+| 候选 | 1.21.1 版本 | 判断 |
+|---|---|---|
+| **`hundred-years-warfare`** | **23** | ✅ **主选**：维护活跃、指挥方式完整、与我们的战斗 mod 兼容 |
+| `ancient-warfare-3-npcs` / `-worksites` | 3 / 2 | ⏳ 留档参照：祖师爷，但版本少且偏"NPC 干活" |
+| `ballista` | 4 | ⏳ 攻城器械备选 |
+| `illager-siege-weapons` | 1 | ⏳ 灾厄围攻题材契合，但只有 1 个版本 |
+| `kingdom-civilization-expansion` | 2 | ⏳ 村庄→王国，双端 optional |
+| `clay-soldiers-remake` / `tiny-soldiers` | 3 / 1 | ❌ 迷你军团，玩具尺度，撑不起"国家军队" |
+| `minecolonies` / `minefortress` | **0 / 0** | ❌ **不支持我们的版本**，直接排除 |
+| `guard-villagers` | 17 | ⏳ 已在清单（hold）；有了军队后它更可能是冗余 |
+
+**已否决：俯视角（同期核验，全部有接口证据）**
+`dungeons-perspective`（Dungeons 式俯视）只有 2 个版本、1.6 万下载，正文写明 **NeoForge 需 Sinytra Connector**，
+且要求 Sodium、并明说"穿墙看不见就关掉实体剔除"——与已装的 `entityculling` 冲突；
+`picture-mode`/`freecam` 只能看、不能边看边玩；第三人称类（`better-third-person` 2100 万下载）是**过肩**不是俯视。
+→ 结论：**军队不需要俯视角也能成立**，而"俯视冒险"在 1.21.1 NeoForge 上没有低风险选项。
+
+**⚠️ 待实测（已进 `DEFERRED.md`）**：三套袭击系统会不会打架（The Hordes 排期 / Undead Nights 拆墙 / 本 mod 的袭击扩展能否关或延后）·
+指挥轮盘与指挥杖在第一人称下的实际手感 · "关系系统"会不会与 OPAC party、FTB Teams 形成**三套队伍** ·
+兵力与实体预算（作者建议 150% 实体渲染距离，与 §12 红线冲突，必须量）· 工人系统与 Create 的重叠程度（决定时代闸门怎么切）。
+
 ## 九、生活质量（11）
 
 | 功能位 | 选定 | 端侧 | 状态 |
@@ -544,9 +593,9 @@ sortField=6       按总下载量
 | 视觉与音效 | 13（含 2 待定） |
 | 食物与农业 | 9 |
 | 社交与身份 | 3 |
-| **内容/功能 mod 合计** | **约 202** |
+| **内容/功能 mod 合计** | **约 208** |
 | 前置库（随依赖自动进） | 约 25~40 |
-| **jar 总数（估）** | **约 227~242** |
+| **jar 总数（估）** | **约 233~248** |
 
 对照参照系：本机 All the Mods 10 是 **479 个 jar / 1.3 GB**（同版本）；跨包共识里解析的 50 个 NeoForge 包中，
 **272（create-kingdom-fallensprout）、252（adventurecraft-modpack）、247（international-coalition-of-nations）**都在其中。
@@ -555,8 +604,8 @@ sortField=6       按总下载量
 ### 清单核验（`tools/apply_modlist.py --verify`）
 
 ```
-清单载入：230 条  hold=22 · installed=16 · plan=186 · skip=6
-核验结果：227/227 通过（另有 3 条 skip 不参与）
+清单载入：236 条  hold=27 · installed=16 · plan=187 · skip=6
+核验结果：233/233 通过（另有 3 条 skip 不参与）
 ```
 
 五条**证据来源**（每一类都标明，不含"我觉得它有"）：
@@ -576,7 +625,7 @@ sortField=6       按总下载量
 2. **时代 0–1 之前**：JEI · Jade · Patchouli（约定载体）· Crash Assistant · Paxi · 结构 mod 补齐 · **FTB Quests 系列（任务书是时代 1 的国策链载体）**
 3. **时代 2 之前**：Portable Blueprints · Effortless Building · WorldEdit · Chipped/Rechiseled · 装饰家具 · 食物组
 4. **时代 3 之前**：维度（先核实形态）· 定位工具 · 地图 · 背包 · 考古 · 探险装备
-5. **时代 4 之前**：**The Hordes + Undead Nights**（最不能开天窗）·（可选）Zombie Awareness 验证
+5. **时代 4 之前**：**The Hordes + Undead Nights**（最不能开天窗）· **军事 `hundred-years-warfare`（军队是这一代的主菜之一，见 §八·补）** ·（可选）Zombie Awareness 验证
 6. **时代 5 之前**：WorldEdit 已就位 · 大工程构件（待补候选）
 7. **全程**：GriefLogger + GLRA · Simple Backups
 8. **每批之后**：`autotest` 冒烟 → `server_ctl --script tests/server_v0.txt` → `blueprint_check` / `lang_audit` → 记 `baseline.csv`
