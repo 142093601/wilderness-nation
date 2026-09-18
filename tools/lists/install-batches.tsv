@@ -1,0 +1,197 @@
+# 分批装机计划（进仓库）。生成脚本：data/scratch-batches.py
+# 原则：**不可逆性优先** —— 影响世界生成的（群系扩充 / 结构 / 据点结构）必须在**建世界之前**装完，
+#   因为 Terralith 装了就不能从已有世界增删；其余按时代主菜排。
+# 用法：python tools/apply_modlist.py --verify --batch <N> --apply
+# 字段：批次 <TAB> slug <TAB> 来源(mr|cf) <TAB> 功能位
+# ── 批 1 · 地基：不可逆的世界生成 + 引擎 + 性能 + 中文化 + 运维 ──
+1	terralith	mr	群系与地形
+1	lithostitched	mr	世界生成兼容库（Terralith 前置）
+1	roadweaver	mr	世界路网
+1	jei	mr	配方查询
+1	jade	mr	方块与实体信息
+1	crash-assistant	mr	崩溃可读提示
+1	paxi	mr	数据包自动加载
+1	patchouli	mr	约定与国史载体
+1	badoptimizations	mr	20 包·性能优化（★ 我们性能组里漏了这个 20 包共识项）
+1	dynamic-fps	mr	25 包·后台自动降帧（★ 25 包共识的性能/QoL 项）
+1	noisium	mr	11 包·世界生成性能（配合 Terralith 的世界生成开销）
+1	put-a-plug-in-it!	mr	性能·内存泄漏修复（轻量、低风险，长线服值得）
+1	i18nupdatemod	mr	中文化·自动汉化更新（CF；ATM10 实证 I18nUpdateMod-3.7.0-all.jar）
+1	justenoughcharacters	mr	生活质量·拼音搜索（中文玩家搜英文物品名的刚需，直接服务中文化）｜slug 已修正（原 jecharacters）：MR：JustEnoughCharacters，13 个 1.21.1+neoforge 版本；它的 jar 名恰好叫 jecharacters-*（这就是混淆来源）
+1	imblocker-original	mr	界面·输入法冲突修复（中文玩家刚需，与本包 zh_cn 侧重一致）
+1	polyglottooltip	cf	CF·界面·提示框补多语言名称行（缓解未汉化 mod 的阅读问题）
+1	grieflogger	mr	方块改动记录
+1	glra	mr	回滚命令
+1	simple-backups	mr	备份
+1	chunk-plan	cf	CF·治理·服务端探索配额（对应远征半径与服务器资源控制）
+1	just-enough-resources-jer	mr	CF·JER 资源分布（JEI 的经典搭档：矿石/生物分布查询）
+1	ftb-library-forge	cf	任务书前置（CF；★ slug 必须是 CF 的 `-forge` 形式，否则 packwiz curseforge add 会失败）
+1	ftb-teams-forge	cf	任务书依赖·团队（CF；同上）
+1	ftb-quests-forge	cf	任务书载体（CF；同上）
+1	ftb-xmod-compat	cf	FTB 跨 mod 兼容（CF）
+1	ftb-jei-extras	cf	JEI 扩展（CF）
+1	ftb-filter-system	cf	物品过滤（CF）
+1	ftb-quests-optimizer	cf	CF·FTB Quests 性能优化（★ 我们已定用 FTB Quests）
+1	ftb-quests-lang-splitter	cf	CF·FTB Quests 文本拆分（★ 中文化要用到——ATM10 汉化补丁里就有它）
+1	extraquests	mr	CF·FTB Quests 扩展任务类型
+1	certain-questing-additions	mr	任务书·FTB Quests 的 QoL 与动画补充
+1	quest-enhance	cf	CF·任务书制作·FTB Quest Enhance（剪贴板贴图/章节画布/生物模型图标；直接服务 90~110 个任务的编写）
+1	todolist	mr	协作·多人共享待办 TeamTasks: TodoList（中文作者，支持多人）
+# ── 批 2 · 世界内容：结构/维度/村庄/据点结构（同样要在建世界前装完） ──
+2	yungs-better-nether-fortresses	mr	结构·下界要塞
+2	yungs-better-ocean-monuments	mr	结构·海底神殿
+2	yungs-better-mineshafts	mr	结构·废弃矿井
+2	yungs-better-jungle-temples	mr	结构·丛林神庙
+2	yungs-better-end-island	mr	结构·末地
+2	yungs-better-strongholds	mr	结构·要塞
+2	yungs-better-caves	mr	CF·YUNG's 洞穴（补全 YUNG 全家桶）
+2	when-dungeons-arise	mr	结构·大型地牢
+2	dungeons-and-taverns	mr	结构·村镇
+2	repurposed-structures-forge	mr	5 包·原版结构重制（旧世痕迹）
+2	additional-structures	mr	5 包·更多结构（远征探索）
+2	tidal-towns	mr	5 包·城镇结构（旧世痕迹）
+2	towns-and-towers	mr	11 包·村庄与塔结构（旧世痕迹）
+2	choicetheorems-overhauled-village	mr	CF·村庄大修（旧世痕迹 / 世界感）
+2	stoneholm-forge	mr	CF·地下村庄（同上）
+2	villager-names	mr	CF·村民名字（让"世界本来有文明"有质感）
+2	more-villagers	mr	CF·更多村民职业
+2	trading-post	mr	CF·交易站（配公共仓库与以物易物）
+2	naturalist	mr	CF·更多动物（生态丰富度）
+2	ecologics	mr	CF·生态与生物（同上）
+2	medieval-buildings	mr	5 包·中世纪建筑构件（★ 主题高度对口）
+2	medieval-buildings-end-edition	mr	CF·中世纪建筑·末地版（补全 medieval-buildings 系列）
+2	medieval-buildings-nether-edition	mr	CF·中世纪建筑·下界版
+2	the-twilight-forest	cf	远征维度（★ 1.21.1 有版本 —— 解决了原先"CF 侧未核实"的待核实项）｜slug 已修正（原 twilightforest）：CF id 227639：15 个 1.21.1+NeoForge 文件，最新「Twilight Forest - MC 1.21.1 - 4.8.3345」与参照包 jar 完全一致
+2	deeperdarker	mr	CF·深暗之境（★ 远征维度的第三个候选）
+2	better-archeology	mr	考古（契合"旧世"设定）
+2	friends-and-foes-forge	mr	6 包·原版风格新生物
+2	it-takes-a-pillage-continuation	mr	据点·敌方势力主选（掠夺者扩张文明、建立营地与前哨 → 袭击有实体来源；**8 个** 1.21.1+NeoForge 版本，双端必需）
+2	grim-kingdoms-lost-structures-ruins	mr	据点·有守军的要塞（炮台/城堡/要塞 + 独特怪 + 隐藏战利品 = 可攻打的据点；**8 个**版本，服务端必需/客户端可选）
+# ── 批 3 · 立国与基建：Create 生态 / 图纸系 / 建材装饰 / 交通 / 食物农业 ──
+3	create-steam-n-rails-1.21.1	mr	12 包·Create 铁路扩展（"蒸汽与铁轨"，服务铁路环线毕业工程）
+3	copycats	mr	22 包·Create: Copycats+（复制方块外观，建筑表现力）
+3	create-dragons-plus	mr	23 包·Create 扩展（冷门却 23 包选中）
+3	create-design-n-decor	mr	12 包·Create 装饰
+3	create-pattern-schematics	mr	9 包·Create 图纸图案（★ 与我们的图纸系统直接相关）
+3	create-railways-navigator	mr	9 包·Create 铁路导航（服务铁路环线毕业工程）
+3	hypertube	mr	9 包·Create 管道运输
+3	blocks-bogies	mr	8 包·Create 转向架与轮组（列车部件）
+3	create-train-parts	mr	6 包·Create 列车部件
+3	create-framed	mr	9 包·Create 框架方块（建筑造型）
+3	create-tfmg	mr	8 包·Create 工厂扩展（The Factory Must Grow，服务自动化深度）
+3	create-central-kitchen	mr	Create 食物链
+3	slice-and-dice	mr	Create 食物链
+3	create-horse-power	mr	CF·Create 马力（马车运输 → 早期交通）
+3	create-aeronautics	mr	载具（远征风味）
+3	portable-blueprints	mr	图纸工程制与服务端分发
+3	effortless-building	mr	建筑辅助
+3	worldedit	mr	管理工具（op）
+3	chipped	mr	建材变体
+3	rechiseled	mr	建材变体·凿刻
+3	rechiseled-create	mr	建材变体·Create 方块
+3	framedblocks	mr	5 包·自由造型方块（建筑表现力）
+3	diagonal-walls	mr	5 包·斜墙（建筑表现力）
+3	supplementaries	mr	装饰与功能方块
+3	handcrafted	mr	家具
+3	another-furniture	mr	家具
+3	amendments	mr	12 包·装饰与功能方块（Supplementaries 同作者）
+3	macaws-bridges	mr	11 包·桥梁构件（★ 正好补上原先"待补候选"的桥梁类）
+3	macaws-windows	mr	11 包·窗户构件
+3	macaws-fences-and-walls	mr	10 包·栅栏与围墙构件
+3	macaws-trapdoors	mr	10 包·活板门构件
+3	macaws-lights-and-lamps	mr	8 包·灯具构件
+3	macaws-paths-and-pavings	mr	6 包·道路铺装（服务世界路网）
+3	macaws-paintings	mr	5 包·画作（国旗/国史展示的另一个手段）
+3	macaws-furniture	mr	CF·Macaw's 家具（补全 Macaw's 系列）
+3	refurbished-furniture	mr	CF·MrCrayfish 家具（家具位补充）
+3	buildersaddition	mr	CF·建造者附加方块
+3	every-compat	mr	CF·Wood Good 木材兼容（让所有木材 mod 互相通用 —— 多建造 mod 包的刚需）
+3	almostunified	mr	6 包·材料统一（多 mod 的矿锭/材料归并，降低混乱）
+3	polymorph	mr	配方冲突选择（多 mod 包实用：同一配方冲突时让玩家选）
+3	craftingtweaks	mr	生活质量·合成整理
+3	trashslot	mr	生活质量·垃圾桶槽位
+3	openblocks-elevator	cf	建造·电梯（建筑内部交通）｜slug 已修正（原 elevatorid）：CF id 250832：OpenBlocks Elevator —— 它的 jar 文件名就叫 elevatorid-neoforge-1.21.1-1.11.4.jar
+3	waystones	mr	传送节点
+3	small-ships	mr	5 包·小船（水上交通 → 配合海与运河）
+3	farmers-delight	mr	食物核心
+3	expanded-delight	mr	食物扩展
+3	oceans-delight	mr	食物扩展
+3	enders-delight	mr	食物扩展
+3	my-nethers-delight	mr	食物扩展
+3	lets-do-farm-charm	mr	生活系列·农业
+3	lets-do-vinery	mr	生活系列·酿造
+3	chefs-delight	mr	食物扩展·厨师村民（替代 lets-do-bakery：它在 1.21.1+neoforge 上无版本，见 MODLIST.md）
+3	cooking-for-blockheads	mr	食物·厨房方块（配食物系统）｜slug 已修正（原 cookingforblockheads）：MR：Cooking for Blockheads
+3	farming-for-blockheads	mr	食物·市场方块（配公共仓库与以物易物）｜slug 已修正（原 farmingforblockheads）：MR：Farming for Blockheads
+3	spice-of-life-carrot-edition	cf	食物·多样性系统（吃不同食物提升上限，与 Farmer's Delight 天生一对）｜slug 已修正（原 solcarrot）：CF id 277616：Spice of Life: Carrot Edition
+3	rightclickharvest	mr	农业便利·右键收获
+3	smarter-farmers-farmers-replant	mr	农业便利·自动补种
+3	brewin-and-chewin	mr	6 包·酿造与奶酪（食物系统）
+3	miners-delight	mr	5 包·矿工食物（配 Farmer's Delight）
+3	storage-delight	mr	5 包·储物与食物
+# ── 批 4 · 远征与生活：地图背包定位 / 战利品遗物 / QoL / 视觉音效 / 社交 ──
+4	natures-compass	mr	群系定位
+4	explorers-compass	mr	结构定位
+4	xaeros-minimap	mr	小地图
+4	xaeros-world-map	mr	世界地图
+4	xaeroplus	mr	界面·Xaero 地图增强与性能（本包已用 Xaero 小地图+世界地图）
+4	travelersbackpack	mr	背包
+4	curios	mr	饰品槽 API（前置）
+4	comforts	mr	远征休憩
+4	simply-swords	mr	武器
+4	easy-anvils	mr	铁砧便利
+4	enchanting-infuser	mr	附魔便利
+4	better-combat	mr	14 包·战斗手感（威胁主菜的体感）
+4	lootr	mr	多人·独立战利品（3~7 人同时开箱不抢箱，远征主菜的刚需）
+4	corpse	mr	8 包·尸体（死亡后物品留在尸体里 → 与"失败=掠夺、但不烧家"的设定契合）
+4	corail-tombstone	mr	CF·墓碑（下载量比 gravestone-mod 更高；与"事故碑"设定契合）
+4	gravestone-mod	mr	11 包·墓碑（死亡掉落保护 → 与"事故碑"设定天然契合）
+4	carry-on	mr	12 包·搬运方块/机器（建筑时挪箱子与机械）
+4	exposure	mr	11 包·摄影（拍照片 → 国史插图、纪念碑、地图墙）
+4	exposure-polaroid	mr	5 包·拍立得（配 exposure 摄影）
+4	appleskin	mr	生活质量·饥饿与饱和度显示（基础 QoL，原先漏了）
+4	torchmaster	mr	建造·火把抑制刷怪（让基地与工事区域不被刷怪，配"威胁从时代 4 开始"）
+4	attributefix	mr	属性上限修复（多 mod 叠加必备）
+4	connectivity	cf	生活质量·网络优化（多人服包体量下有用）｜slug 已修正（原 connectivity）：CF id 470193：Connectivity，1.21.1+NeoForge 文件在
+4	colorful-hearts	mr	生活质量·血量显示｜slug 已修正（原 colorfulhearts）：MR：Colorful Hearts
+4	better-advancements	mr	生活质量·成就界面｜slug 已修正（原 betteradvancements）：MR：Better Advancements
+4	mouse-tweaks	mr	物品栏整理
+4	inventory-profiles-next	mr	物品栏配置
+4	shulkerboxtooltip	mr	潜影盒预览
+4	controlling	mr	按键冲突查找
+4	searchables	mr	配置项搜索
+4	betterf3	mr	更好的 F3
+4	modelfix	mr	模型缝隙修复
+4	packet-fixer	mr	网络包兼容
+4	enchantment-descriptions	mr	附魔说明
+4	legendary-tooltips	mr	提示框美化
+4	item-highlighter	mr	物品高亮
+4	jade-addons-forge	mr	14 包·Jade 扩展（配我们选的 Jade）
+4	lambdynamiclights	mr	13 包·动态光源（手持火把照亮）
+4	not-enough-animations	mr	动画
+4	3dskinlayers	mr	皮肤层
+4	chat-heads	mr	聊天头像
+4	sound-physics-remastered	mr	音效物理
+4	ambientsounds	mr	环境音
+4	particle-rain	mr	粒子
+4	continuity	mr	连接纹理
+4	athena-ctm	mr	连接纹理前置
+4	entitytexturefeatures	mr	实体纹理
+4	entity-model-features	mr	实体模型
+4	sodium-extra	mr	视频设置扩展
+4	reeses-sodium-options	mr	视频设置界面
+4	immersive-paintings	mr	国旗/国史/地图墙展示
+4	ping-wheel	mr	协作标记
+4	what-are-they-up-to	mr	队友状态
+4	travelers-titles	mr	氛围·进入群系与维度显示标题（强化开疆拓土的仪式感）
+4	medieval-music	cf	CF·中世纪音乐（氛围）｜slug 已修正（原 medieval-music）：CF id 521932：Medieval Music
+4	medieval-paintings	mr	CF·中世纪画作（国旗/国史展示）
+# ── 批 5 · 御敌与文明：威胁 / 军事单位 / 攻城 / 大工程 ──
+5	the-hordes	mr	袭击排期引擎
+5	undead-nights	mr	拆墙与难度档位
+5	enhanced-celestials	mr	CF·血月/蓝月等天象（★ 与"尸潮按周期来"的排期设定契合）
+5	medieval-siege-machines	mr	CF·中世纪攻城机械（★ 与"御敌"主菜契合）
+5	easy-mob-spawn-control	mr	威胁·生物生成控制（时代威胁闸门的执行器；备选 mobspawncontroller）
+5	hundred-years-warfare	mr	军事·带兵打仗主选（兵种相克 + 招募 + 指挥轮盘/指挥杖/RTS 三种指挥方式，前两种第一人称即可用；**23 个** 1.21.1+NeoForge 版本；与 better-combat 有专门兼容；它推荐的优化组合恰是我们已装的那套）
+5	epic-knights-armor-and-weapons	mr	CF·中世纪骑士装备
+5	armor-of-the-ages	mr	CF·时代盔甲（中世纪风格装备）

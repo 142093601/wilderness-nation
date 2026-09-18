@@ -1,26 +1,31 @@
 # CurseForge 侧「已核验」的结论表（进仓库；原始调查产物 data/*.json 是 gitignore 的）。
-# 为什么需要它：apply_modlist.py --verify 的 CF 证据链原本只读 data/cf-survey.json 与
+# 为什么需要它：apply_modlist.py --verify 的 CF 证据链读 data/cf-survey.json 与
 #   data/candidate-verify.json，两者都进不了仓库 → 新克隆会把这些 CF 独占 mod 误判成
 #   CF_UNVERIFIED 而装不上。结论留在这里，核验链即可离线复现。
 # 收录范围：清单里标了 src=cf 的全部条目（CF 才是记录在案的证据）。
 # 证据：CF 搜索接口按 slug 精确解析出项目 id，再取 /mods/<id>/files?gameVersion=1.21.1
-#   &modLoaderType=6 —— 下面记录最新文件名；带文件名的都复核过载荷 gameVersions 含
-#   '1.21.1' + 'NeoForge'。
+#   &modLoaderType=6，并复核返回载荷的 gameVersions 真含 '1.21.1' + 'NeoForge'。
 # 字段：slug <TAB> curseforge id <TAB> 证据 <TAB> 名称 <TAB> 最新文件名
-ftb-library-forge	404465	CF slug 解析 + 1.21.1/NeoForge 文件	FTB Library (NeoForge)	[NEOFORGE][1.21.1] FTB Library 2101.1.36
-ftb-teams-forge	404468	CF slug 解析 + 1.21.1/NeoForge 文件	FTB Teams (NeoForge)	[NEOFORGE][1.21.1] FTB Teams 2101.1.11
-ftb-quests-forge	289412	CF slug 解析 + 1.21.1/NeoForge 文件	FTB Quests (NeoForge)	[NEOFORGE][1.21.1] FTB Quests 2101.1.36
-ftb-xmod-compat	889915	CF slug 解析 + 1.21.1/NeoForge 文件	FTB XMod Compat	[NEOFORGE][1.21.1] FTB XMod Compat 21.1.12
-ftb-jei-extras	1103259	CF slug 解析 + 1.21.1/NeoForge 文件	FTB JEI Extras	[NEOFORGE][1.21.1] FTB JEI Extras 21.1.7
-ftb-filter-system	943925	CF slug 解析 + 1.21.1/NeoForge 文件	FTB Filter System	[NEOFORGE][1.21.1] FTB Filter System 21.1.4
-ftb-quests-optimizer	912469	CF slug 解析 + 1.21.1/NeoForge 文件	FTB Quests Optimizer	FTBQuestsOptimizer-neoforge-3.2.0-1.21.1
-ftb-quests-lang-splitter	1326856	CF slug 解析 + 1.21.1/NeoForge 文件	Quests Lang Splitter	ftbquestslangsplitter-1.0.7.jar
-stellarcreateoptimization	1637437	CF slug 解析 + 1.21.1/NeoForge 文件	StellarCreateOptimization	stellarcreateoptimization-neoforge-1.21.1-1.0.6.jar
-bye-pregen	1567378	CF slug 解析 + 1.21.1/NeoForge 文件	Bye?Pregen!	byepregen-1.21.1-1.1.2.4.jar
-polyglottooltip	1485078	CF slug 解析 + 1.21.1/NeoForge 文件	PolyglotTooltip (Multi Language Search)	polyglottooltip-1.21.1-1.6.0.jar
-quest-enhance	1610171	CF slug 解析 + 1.21.1/NeoForge 文件	FTB Quest Enhance	Quest Enhance 3.9 - 1.21.1 NeoForge
-chunk-plan	1653385	CF slug 解析 + 1.21.1/NeoForge 文件	Chunk Plan	chunkplan-0.3.0-neoforge-1.21.1.jar
-datatip	1564179	CF slug 解析 + 1.21.1/NeoForge 文件	DataTip	datatip-1.2.7-neoforge.jar
-ftbquest-slot-rewards	1452984	CF slug 解析 + 1.21.1/NeoForge 文件	FtbQuest Slot reword	ftbquest_slot_rewards-1.21.1-1.1.1.jar
-offlineskins	241420	CF slug 解析 + 1.21.1/NeoForge 文件	OfflineSkins	offlineskins-1.21.1-v1a-neoforge.jar
-millenaire	270871	CF slug 解析 + 1.21.1/NeoForge 文件	Millenaire	millenaire-9.0.1.jar
+bye-pregen	1567378	CF slug 解析 + 1.21.1/NeoForge 文件复核	Bye?Pregen!	byepregen-1.21.1-1.1.2.4.jar
+chunk-plan	1653385	CF slug 解析 + 1.21.1/NeoForge 文件复核	Chunk Plan	chunkplan-0.3.0-neoforge-1.21.1.jar
+connectivity	470193	CF slug 解析 + 1.21.1/NeoForge 文件复核	Connectivity	connectivity-1.21.1-7.6.jar
+datatip	1564179	CF slug 解析 + 1.21.1/NeoForge 文件复核	DataTip	datatip-1.2.7-neoforge.jar
+ftb-filter-system	943925	CF slug 解析 + 1.21.1/NeoForge 文件复核	FTB Filter System	[NEOFORGE][1.21.1] FTB Filter System 21.1.4
+ftb-jei-extras	1103259	CF slug 解析 + 1.21.1/NeoForge 文件复核	FTB JEI Extras	[NEOFORGE][1.21.1] FTB JEI Extras 21.1.7
+ftb-library-forge	404465	CF slug 解析 + 1.21.1/NeoForge 文件复核	FTB Library (NeoForge)	[NEOFORGE][1.21.1] FTB Library 2101.1.36
+ftb-quests-forge	289412	CF slug 解析 + 1.21.1/NeoForge 文件复核	FTB Quests (NeoForge)	[NEOFORGE][1.21.1] FTB Quests 2101.1.36
+ftb-quests-lang-splitter	1326856	CF slug 解析 + 1.21.1/NeoForge 文件复核	Quests Lang Splitter	ftbquestslangsplitter-1.0.7.jar
+ftb-quests-optimizer	912469	CF slug 解析 + 1.21.1/NeoForge 文件复核	FTB Quests Optimizer	FTBQuestsOptimizer-neoforge-3.2.0-1.21.1
+ftb-teams-forge	404468	CF slug 解析 + 1.21.1/NeoForge 文件复核	FTB Teams (NeoForge)	[NEOFORGE][1.21.1] FTB Teams 2101.1.11
+ftb-xmod-compat	889915	CF slug 解析 + 1.21.1/NeoForge 文件复核	FTB XMod Compat	[NEOFORGE][1.21.1] FTB XMod Compat 21.1.12
+ftbquest-slot-rewards	1452984	CF slug 解析 + 1.21.1/NeoForge 文件复核	FtbQuest Slot reword	ftbquest_slot_rewards-1.21.1-1.1.1.jar
+medieval-music	521932	CF slug 解析 + 1.21.1/NeoForge 文件复核	Medieval Music	zmedievalmusic-1.21-2.1.jar
+millenaire	270871	CF slug 解析 + 1.21.1/NeoForge 文件复核	Millenaire	millenaire-9.0.1.jar
+offlineskins	241420	CF slug 解析 + 1.21.1/NeoForge 文件复核	OfflineSkins	offlineskins-1.21.1-v1a-neoforge.jar
+openblocks-elevator	250832	CF slug 解析 + 1.21.1/NeoForge 文件复核	OpenBlocks Elevator	elevatorid-neoforge-1.21.1-1.11.4.jar
+polyglottooltip	1485078	CF slug 解析 + 1.21.1/NeoForge 文件复核	PolyglotTooltip (Multi Language Search)	polyglottooltip-1.21.1-1.6.0.jar
+quest-enhance	1610171	CF slug 解析 + 1.21.1/NeoForge 文件复核	FTB Quest Enhance	Quest Enhance 3.9 - 1.21.1 NeoForge
+spice-of-life-carrot-edition	277616	CF slug 解析 + 1.21.1/NeoForge 文件复核	Spice of Life: Carrot Edition	solcarrot-1.21.1-1.16.6.jar
+stellarcreateoptimization	1637437	CF slug 解析 + 1.21.1/NeoForge 文件复核	StellarCreateOptimization	stellarcreateoptimization-neoforge-1.21.1-1.0.6.jar
+the-twilight-forest	227639	CF slug 解析 + 1.21.1/NeoForge 文件复核	The Twilight Forest	Twilight Forest - MC 1.21.1 - 4.8.3345
+vault-patcher	967052	CF slug 解析 + 1.21.1/NeoForge 文件复核	Vault Patcher	vaultpatcher-all-1.5.3-fix.jar

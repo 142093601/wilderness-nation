@@ -181,8 +181,16 @@ def verify(rows: list[dict]) -> list[dict]:
         if src == "cf":
             # 优先在参照包里找文件名含该 slug 的 jar（= 带版本号的硬证据），否则查 CF 目录
             hit = next((name for name in refs if slug.replace("-", "") in name.replace("-", "")), None)
-            if hit:
-                row["verify"], row["source"], row["file"] = "OK", "本地参照包实证", hit
+            if hit and slug in cf_slugs:
+                row["verify"], row["source"], row["file"] = "OK", "本地参照包实证 + CF 目录", hit
+            elif hit:
+                # **参照包实证只证明"这个 jar 存在过"，不证明 slug 是项目的真 slug**：
+                # jar 文件名会把连字符去掉（sophisticatedbackpacks-1.21.1-…），
+                # 而项目 slug 多半带连字符（sophisticated-backpacks）→ 错 slug 也能"通过核验"，
+                # 一直到 packwiz add 那一刻才炸（2026-09-18 就这样炸出 12 条）。
+                row["verify"] = "SLUG_NOT_FOUND"
+                row["source"] = f"参照包命中 {hit}，但该 slug 不在 CF 已核验表里 → slug 需修正"
+                row["file"] = hit
             elif slug in cf_slugs:
                 row["verify"], row["source"] = "OK", "CF 目录（1.21.1+NeoForge）"
             else:
@@ -195,8 +203,19 @@ def verify(rows: list[dict]) -> list[dict]:
         elif (hit := next((n for n in refs if slug.replace("-", "") in n.replace("-", "")), None)):
             # **参照包实证对 mr 类同样适用**：候选池只有 Modrinth，而常见 mod 常只在 CF 分发；
             # 本机成熟包的 jar 文件名就是硬证据 —— 先看它，再去问接口（也省掉一次慢请求）
-            row["verify"], row["source"] = "OK", "本地参照包实证"
             row["file"] = hit
+            if slug in cf_slugs:
+                row["verify"], row["source"] = "OK", "本地参照包实证 + CF 目录"
+            else:
+                # 同上面 cf 分支的理由：**必须再确认 slug 真的是项目的 slug**，
+                # 否则"参照包实证"会把 12 条错 slug 全部放过去。
+                proj = api_get(f"/project/{slug}")
+                if proj is None:
+                    row["verify"] = "SLUG_NOT_FOUND"
+                    row["source"] = f"参照包命中 {hit}，但 Modrinth/CF 都没有这个 slug → slug 需修正"
+                else:
+                    row["verify"], row["source"] = "OK", "本地参照包实证 + 接口确认 slug"
+                time.sleep(0.15)
         elif slug in cf_slugs:
             # **CF 目录也是证据**：它是 CF 接口按 1.21.1 + NeoForge 筛出来的 → 版本已验证。
             # 这条专治"只在 CF 分发"的 mod（Modrinth 接口对它们一律返回 PROJECT_NOT_FOUND）。
@@ -251,6 +270,9 @@ def main() -> int:
     ap.add_argument("--tsv", default=str(ROOT / "modlist.tsv"))
     ap.add_argument("--verify", action="store_true")
     ap.add_argument("--apply", action="store_true")
+    ap.add_argument("--batch", type=int,
+                    help="只处理 tools/lists/install-batches.tsv 里该批次的 slug（分批装机用）")
+    ap.add_argument("--batches-file", default=str(ROOT / "tools" / "lists" / "install-batches.tsv"))
     ap.add_argument("--pack", default=str(ROOT / "pack"), help="packwiz 工作目录")
     ap.add_argument("--json")
     args = ap.parse_args()
@@ -259,6 +281,31 @@ def main() -> int:
     if not rows:
         print("清单为空")
         return 1
+    # 分批装机：**不能一次把 189 条 plan 全装** —— 单批失败要能归因，而且
+    # 影响世界生成的（Terralith / 结构 / 据点结构）有硬顺序：必须在建世界之前装完。
+    if args.batch:
+        bf = Path(args.batches_file)
+        if not bf.is_file():
+            print(f"批次文件不存在：{bf}")
+            return 1
+        want = set()
+        for line in bf.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            parts = line.split("\t")
+            if len(parts) >= 2 and parts[0].strip() == str(args.batch):
+                want.add(parts[1].strip())
+        if not want:
+            print(f"批次 {args.batch} 在 {bf.name} 里没有任何条目")
+            return 1
+        before = len(rows)
+        all_slugs = {r["slug"] for r in rows}
+        rows = [r for r in rows if r["slug"] in want]
+        extra = want - all_slugs
+        print(f"批次 {args.batch}：{len(rows)} 条（清单共 {before} 条）")
+        if extra:
+            print(f"  ! 批次文件里有清单中不存在的 slug：{', '.join(sorted(extra))}")
     by_status: dict[str, int] = {}
     for r in rows:
         by_status[r["status"]] = by_status.get(r["status"], 0) + 1

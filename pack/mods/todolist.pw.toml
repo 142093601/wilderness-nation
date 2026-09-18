@@ -1,0 +1,13 @@
+name = "TeamTasks: TodoList"
+filename = "todolist-neoforge-1.21.1-1.4.2.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/RcGBxDyt/versions/DPMczPPZ/todolist-neoforge-1.21.1-1.4.2.jar"
+hash-format = "sha512"
+hash = "d554df5b89f77c305080ff5c7b85e021b68f824e219812c9f38580750428c0ce85229260ebe61dbd2a97c77cce47794f5c1bf7d5d4d70da6587d88676db9e91f"
+
+[update]
+[update.modrinth]
+mod-id = "RcGBxDyt"
+version = "DPMczPPZ"

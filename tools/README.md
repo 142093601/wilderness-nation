@@ -514,6 +514,71 @@ CF `api.curse.tools` 搜 → `/mods/<id>/files` 确认。产出 `data/candidate-
 
 ---
 
+## 十九、装机流程：分批 + 落盘 + 冒烟（2026-09-19 起）
+
+**为什么分批**：187 条 `plan` 一次性装进去，失败无法归因；而且**影响世界生成的 mod 有硬顺序**
+（`terralith` 装了就不能从已有世界增删）→ 必须"不可逆的先装、且在建世界之前装完"。
+
+**五批（`tools/lists/install-batches.tsv`，进仓库）**：
+
+| 批 | 内容 | 为什么这个顺序 |
+|---|---|---|
+| 1 地基 | 世界生成三件 + 引擎 + 性能 + 中文化 + 运维底线 | 不可逆项必须先就位 |
+| 2 世界内容 | YUNG's 全家 / WDA / D&T / 结构 / 村庄 / 中世纪 / 维度 / **据点结构** | 结构也影响世界生成 → 同样要在建世界前 |
+| 3 立国与基建 | Create 生态 / 图纸系 / 建材装饰 / Macaw's / 交通 / 食物农业 | 时代 1~2 主菜 |
+| 4 远征与生活 | 地图背包定位 / 战利品遗物 / QoL / 视觉音效 / 社交 | 时代 3 之前 |
+| 5 御敌与文明 | 威胁 / 军事单位 / 攻城 / 大工程 | 时代 4~5 |
+
+**流程（每批四步）**：
+
+```bash
+python tools/apply_modlist.py --verify --batch 1              # 先核验这一批
+python tools/apply_modlist.py --verify --batch 1 --apply      # 写进 pack/（**只写元数据**）
+python tools/materialize_pack.py                              # 落 jar 进实例（**不要加 --batch**，见下）
+python tools/autotest.py --seconds 45                         # L0 装载冒烟
+```
+
+### `materialize_pack.py` —— 把元数据落成 jar（带哈希校验）
+
+`--apply` 只写元数据（`metadata:curseforge` 或直链），**不下载 jar**。本工具用同一份元数据自己下载并**校验哈希**：
+
+- Modrinth 条目：`[download] url` + `sha512` → 直链下载 + 校验
+- CurseForge 条目：只有 `file-id`/`project-id` → 经 CF 接口换地址 + `sha1` 校验
+
+> ⚠️ **别用 `--batch` 落盘**：packwiz 会把依赖也写进 `pack/mods/`（`architectury`、`extralib`…），
+> 而 `--batch` 只落批次内的 slug → 依赖缺 jar，**游戏启动直接崩**（2026-09-19 实测踩到）。
+> 正确做法：`--apply` 之后**无参数**跑一次。
+
+> ⚠️ **CF 换下载地址的端点形状**：`/mods/{projectId}/files/{fileId}` 在公开代理上是 **404**，
+> 必须用 `/mods/{projectId}/files`（列表）再按 `file-id` 筛出 `downloadUrl`。
+
+> ⚠️ **`Path.stem` 的坑**：`Path("jei.pw.toml").stem` 是 `"jei.pw"`（只去掉最后一个后缀）
+> → 剥 slug 必须手工去 `.pw.toml`，否则批次过滤永远匹配 0 条。
+
+### 第一批的实测结果（2026-09-19）
+
+冒烟测试一次性抓出 **4 个真问题**（2 个选型错误 + 2 个流程错误）：
+
+| 问题 | 性质 | 处理 |
+|---|---|---|
+| `architectury` / `extralib` 缺 jar | 流程（`--batch` 不含自动依赖） | 改为无参数落盘 |
+| `xaeroplus` 需要 `xaeroworldmap` | 跨批次依赖（地图在批 4、增强在批 1） | 把 `xaeroplus` 移到批 4 |
+| `stellarcreateoptimization` 硬依赖 `sodium 0.6.9+` | **选型冲突**（本包用 `embeddium`，mod id 对不上） | 改 `skip` + 写明理由 |
+| `byepregen` 与 `noisium` 显式不兼容 | **选型冲突**（mod 自己声明） | 改 `skip`，取 `noisium` |
+
+**⚠️ 仍未解决（下一轮第一件事）**：60 个 mod **全部加载无异常**、游戏到主菜单（43.9 秒），
+但 **quickPlay 打开世界时卡住**——`saves/<世界>/session.lock` 被写过（确实开始开世界了），
+而 `latest.log` 里**既没有"Starting integrated minecraft server"也没有"Stopping"**，
+Windows 事件日志也无 Java 崩溃记录 → **不是崩溃，是挂起**。
+
+`Crash Assistant` 弹的"已崩溃但未生成崩溃报告"是**误报**：它的日志显示它是启动时被拉起的**独立看守进程**
+（`Parent PID` + 模组列表快照），游戏被 autotest 超时回收后它才弹窗。
+
+**下一步手段**：复现挂起 → 对挂住的进程跑 **`jstack`**（JDK 21 自带）拿线程转储 → 直接看出哪个 mod 在阻塞。
+比逐个二分快得多，而且能沉淀成工具（补上"卡死"这类问题——现有 `crashlog-triage` 只覆盖崩溃）。
+
+---
+
 ## 十六、写这些脚本时的纪律（全都是踩出来的）
 
 | # | 纪律 | 踩过的样子 |
@@ -531,6 +596,9 @@ CF `api.curse.tools` 搜 → `/mods/<id>/files` 确认。产出 `data/candidate-
 | 11 | **无法验证语义的排序不要当证据** | mcmod 默认序很像热度序，但站点没定义、热度页要登录 → 只能当遍历顺序，不能写进结论当"热门" |
 | 12 | **跨平台的 slug 不是同一个** | CF 上 FTB 三件套叫 `ftb-quests-forge` / `ftb-teams-forge` / `ftb-library-forge`，短名在 CF 接口里"查无"。写错**不会在核验阶段报错**，只在装机那一刻炸 |
 | 13 | **结论要进仓库，原始产物不用** | `data/` 是 gitignore 的 → 把核验结论（`tools/lists/*.tsv`）留一份在仓库里，否则新克隆的核验链是断的 |
+| 14 | **"参照包里有这个 jar"不等于"slug 是对的"** | jar 文件名会把连字符去掉（`sophisticatedbackpacks-1.21.1-…`），而项目 slug 是 `sophisticated-backpacks` → 12 条错 slug 全部"通过核验"，直到装机才炸。现在参照包实证必须先确认 slug 在 Modrinth/CF 真的存在（`SLUG_NOT_FOUND`） |
+| 15 | **一个工具要落盘，就得校验哈希** | `materialize_pack.py` 下载后按 `.pw.toml` 里的 sha512/sha1 复核；不校验的话"下载成功但文件损坏"会在很久以后以诡异崩溃的形式出现 |
+| 16 | **"崩了"和"卡死了"要分开查** | 没有异常、没有崩溃报告、没有系统崩溃事件 = **挂起**，不是崩溃。挂起要向进程要 `jstack` 线程转储，别去翻崩溃日志 |
 
 ---
 

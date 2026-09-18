@@ -148,29 +148,29 @@ simple-voice-chat	skip	语音（用户明确不要）
 # ── 参照包共识补漏（2026-09-15）：来自本机 3 个成熟包的 mods 目录 ──
 # 起因：候选池只有 Modrinth，而大量常见 mod 只在 CurseForge 分发 → 系统性漏项。
 # 方法：tools/reference_pack_diff.py 找出"出现在 ≥2 个参照包里"的主流 mod，再与我们的清单对差。
-twilightforest	plan	远征维度（★ 1.21.1 有版本 —— 解决了原先"CF 侧未核实"的待核实项）
+the-twilight-forest	plan	远征维度（★ 1.21.1 有版本 —— 解决了原先"CF 侧未核实"的待核实项）｜slug 已修正（原 twilightforest）：CF id 227639：15 个 1.21.1+NeoForge 文件，最新「Twilight Forest - MC 1.21.1 - 4.8.3345」与参照包 jar 完全一致	cf
 lootr	plan	多人·独立战利品（3~7 人同时开箱不抢箱，远征主菜的刚需）
-jecharacters	plan	生活质量·拼音搜索（中文玩家搜英文物品名的刚需，直接服务中文化）
+justenoughcharacters	plan	生活质量·拼音搜索（中文玩家搜英文物品名的刚需，直接服务中文化）｜slug 已修正（原 jecharacters）：MR：JustEnoughCharacters，13 个 1.21.1+neoforge 版本；它的 jar 名恰好叫 jecharacters-*（这就是混淆来源）	mr
 appleskin	plan	生活质量·饥饿与饱和度显示（基础 QoL，原先漏了）
 torchmaster	plan	建造·火把抑制刷怪（让基地与工事区域不被刷怪，配"威胁从时代 4 开始"）
 polymorph	plan	配方冲突选择（多 mod 包实用：同一配方冲突时让玩家选）
 attributefix	plan	属性上限修复（多 mod 叠加必备）
-solcarrot	plan	食物·多样性系统（吃不同食物提升上限，与 Farmer's Delight 天生一对）
-cookingforblockheads	plan	食物·厨房方块（配食物系统）
-farmingforblockheads	plan	食物·市场方块（配公共仓库与以物易物）
-elevatorid	plan	建造·电梯（建筑内部交通）
+spice-of-life-carrot-edition	plan	食物·多样性系统（吃不同食物提升上限，与 Farmer's Delight 天生一对）｜slug 已修正（原 solcarrot）：CF id 277616：Spice of Life: Carrot Edition	cf
+cooking-for-blockheads	plan	食物·厨房方块（配食物系统）｜slug 已修正（原 cookingforblockheads）：MR：Cooking for Blockheads	mr
+farming-for-blockheads	plan	食物·市场方块（配公共仓库与以物易物）｜slug 已修正（原 farmingforblockheads）：MR：Farming for Blockheads	mr
+openblocks-elevator	plan	建造·电梯（建筑内部交通）｜slug 已修正（原 elevatorid）：CF id 250832：OpenBlocks Elevator —— 它的 jar 文件名就叫 elevatorid-neoforge-1.21.1-1.11.4.jar	cf
 trashslot	plan	生活质量·垃圾桶槽位
 craftingtweaks	plan	生活质量·合成整理
-betteradvancements	plan	生活质量·成就界面
-colorfulhearts	plan	生活质量·血量显示
-connectivity	plan	生活质量·网络优化（多人服包体量下有用）
-sophisticatedbackpacks	hold	背包（与 Traveler's Backpack 二选一：都很好，需实测手感）
+better-advancements	plan	生活质量·成就界面｜slug 已修正（原 betteradvancements）：MR：Better Advancements	mr
+colorful-hearts	plan	生活质量·血量显示｜slug 已修正（原 colorfulhearts）：MR：Colorful Hearts	mr
+connectivity	plan	生活质量·网络优化（多人服包体量下有用）｜slug 已修正（原 connectivity）：CF id 470193：Connectivity，1.21.1+NeoForge 文件在	cf
+sophisticated-backpacks	hold	背包（与 Traveler's Backpack 二选一：都很好，需实测手感）｜slug 已修正（原 sophisticatedbackpacks）：MR：Sophisticated Backpacks	mr
 kubejs	hold	脚本层候选（日历/国力要用脚本，设计说"第一版只做两个脚本资产"——需评估）
 l_enders-cataclysm	hold	高难 boss 与结构（可作"占领区"素材，看时代 3/4 需不需要）
 
 # ── 中文化（2026-09-15 重大发现：这是社区已解决的工程，不需要手写翻译）──
 i18nupdatemod	plan	中文化·自动汉化更新（CF；ATM10 实证 I18nUpdateMod-3.7.0-all.jar）
-vaultpatcher	hold	中文化·硬编码汉化（CF；龙之冒险实证 vaultpatcher-1.4.2+2；作者警告可能崩溃，需评估）
+vault-patcher	hold	中文化·硬编码汉化（CF；龙之冒险实证 vaultpatcher-1.4.2+2；作者警告可能崩溃，需评估）｜slug 已修正（原 vaultpatcher）：CF id 967052：Vault Patcher，文件含 1.21.1 + NeoForge	cf
 
 # ── 跨整合包共识补漏（2026-09-15）：解析 50 个 NeoForge 包的 .mrpack 得到 ──
 # 方法：tools/modpack_survey.py（下载 .mrpack 读 modrinth.index.json）→ tools/consensus_gap.py 对差
@@ -240,7 +240,7 @@ corail-tombstone	plan	CF·墓碑（下载量比 gravestone-mod 更高；与"事�
 enhanced-celestials	plan	CF·血月/蓝月等天象（★ 与"尸潮按周期来"的排期设定契合）
 medieval-siege-machines	plan	CF·中世纪攻城机械（★ 与"御敌"主菜契合）
 medieval-paintings	plan	CF·中世纪画作（国旗/国史展示）
-medieval-music	plan	CF·中世纪音乐（氛围）
+medieval-music	plan	CF·中世纪音乐（氛围）｜slug 已修正（原 medieval-music）：CF id 521932：Medieval Music	cf
 medieval-buildings-end-edition	plan	CF·中世纪建筑·末地版（补全 medieval-buildings 系列）
 medieval-buildings-nether-edition	plan	CF·中世纪建筑·下界版
 epic-knights-armor-and-weapons	plan	CF·中世纪骑士装备
@@ -275,8 +275,8 @@ certain-questing-additions	plan	任务书·FTB Quests 的 QoL 与动画补充
 todolist	plan	协作·多人共享待办 TeamTasks: TodoList（中文作者，支持多人）
 easy-mob-spawn-control	plan	威胁·生物生成控制（时代威胁闸门的执行器；备选 mobspawncontroller）
 travelers-titles	plan	氛围·进入群系与维度显示标题（强化开疆拓土的仪式感）
-stellarcreateoptimization	plan	CF·性能·Create 6.0.x 服务端 tick 与客户端渲染优化（基建时代核心是 Create）	cf
-bye-pregen	plan	CF·性能·降低区块生成引起的 MSPT 尖峰与卡顿（与已装 chunky 预生成互补）	cf
+stellarcreateoptimization	skip	CF·性能·Create 服务端 tick/渲染优化 —— **装机冒烟实测：硬依赖 `sodium 0.6.9+`，而本包用的是 `embeddium`（mod id 对不上）→ 装了就崩**。要用它就得整体改用 Sodium 渲染器（连带 Iris 等，属另一项决策）	cf
+bye-pregen	skip	CF·性能·降低区块生成的 MSPT 尖峰 —— **装机冒烟实测：mod 自己声明与 `noisium` 不兼容**（incompatibility，非我猜测）→ 二选一取 `noisium`（跨整合包共识里采用更广）	cf
 polyglottooltip	plan	CF·界面·提示框补多语言名称行（缓解未汉化 mod 的阅读问题）	cf
 quest-enhance	plan	CF·任务书制作·FTB Quest Enhance（剪贴板贴图/章节画布/生物模型图标；直接服务 90~110 个任务的编写）	cf
 chunk-plan	plan	CF·治理·服务端探索配额（对应远征半径与服务器资源控制）	cf

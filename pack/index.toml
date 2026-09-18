@@ -1,2 +1,206 @@
 hash-format = "sha256"
-files = []
+
+[[files]]
+file = "mods/architectury-api.pw.toml"
+hash = "657a01a86bbf8617e4726c77df08f708e43a3db12db74b837eebd8eb1d93faae"
+metafile = true
+
+[[files]]
+file = "mods/badoptimizations.pw.toml"
+hash = "dd56ff2bcc4253d1d70c08333632743fb56cdc4cf5518dc6afc024164633145d"
+metafile = true
+
+[[files]]
+file = "mods/certain-questing-additions.pw.toml"
+hash = "9b638a69442bee4961aee921b086ca32df54f4b35e9b10c7ca74bc251bff912e"
+metafile = true
+
+[[files]]
+file = "mods/chunk-plan.pw.toml"
+hash = "7b879775406b7e3d3a968287cbe188ac525dc76ccd83ce3fbaa0db5d4e67a09a"
+metafile = true
+
+[[files]]
+file = "mods/crash-assistant.pw.toml"
+hash = "f13994485d9005720181e64c20c8b20204edea6749030877fdcbe0b6fd6de443"
+metafile = true
+
+[[files]]
+file = "mods/dynamic-fps.pw.toml"
+hash = "ae6fd52d8bdcbeca5bbe6db840f22f92c1928fe0fda22017b19612b9b00a245a"
+metafile = true
+
+[[files]]
+file = "mods/extralib.pw.toml"
+hash = "f73caac98fdc8f7b1496d2fd90f77c1316ee3341a3be98055ee0c292981b9543"
+metafile = true
+
+[[files]]
+file = "mods/extraquests.pw.toml"
+hash = "6d3059fed5bd156f40b224b24da17791e5eef3382b769d9835575d59d720cd87"
+metafile = true
+
+[[files]]
+file = "mods/ftb-filter-system.pw.toml"
+hash = "9cb8d355c77067b00a96d96db398f60db62a6ee238dabff45ade33dd8d9f9e3b"
+metafile = true
+
+[[files]]
+file = "mods/ftb-jei-extras.pw.toml"
+hash = "2d84cfd5fb3079d41713ed47e596e9986eb427f8e64906a2217cb459410c062e"
+metafile = true
+
+[[files]]
+file = "mods/ftb-library-forge.pw.toml"
+hash = "2e72d40c6d7b128981b19b71c19d45eb6813f1af87ae1abe1cf92adfa5e8223f"
+metafile = true
+
+[[files]]
+file = "mods/ftb-quests-forge.pw.toml"
+hash = "93330f6ec85532067df176c6baee0e0f6d685c78088b1a2217726f6421899148"
+metafile = true
+
+[[files]]
+file = "mods/ftb-quests-lang-splitter.pw.toml"
+hash = "e72c1ce92af4730914851896523bd4e0d1b538e5056160fbfcd5e18f4eb2e43c"
+metafile = true
+
+[[files]]
+file = "mods/ftb-quests-optimizer.pw.toml"
+hash = "96dcf3ac4d2780468b34de83620540d85e9c37fa8531816c68ee4da5788c4020"
+metafile = true
+
+[[files]]
+file = "mods/ftb-teams-forge.pw.toml"
+hash = "c21c2308684a75cda7dd9d557d129c9f89f49be527da3d5aa675fff444c11f5e"
+metafile = true
+
+[[files]]
+file = "mods/ftb-xmod-compat.pw.toml"
+hash = "6ad22c468d67dcbb65784e161d4af9e671d3437cb5bfb1e86a42ae25207cf25b"
+metafile = true
+
+[[files]]
+file = "mods/glra.pw.toml"
+hash = "57f86a90bf245a25f8f35520a240a96805234f56f8597f5aee90485959bb29db"
+metafile = true
+
+[[files]]
+file = "mods/grieflogger.pw.toml"
+hash = "e464124dbd5ab9412aea3ffaee03c8a956a08400c7ba6d80084e46db9aa517f6"
+metafile = true
+
+[[files]]
+file = "mods/i18nupdatemod.pw.toml"
+hash = "f596d49b8d8a5ce74b39bfb9dd140175ae97b30e822c113cdc5c093926177426"
+metafile = true
+
+[[files]]
+file = "mods/imblocker-original.pw.toml"
+hash = "91a73d149ab0a877d9a0ab5c10b0938ca049f23e23632db31aea834cd002252c"
+metafile = true
+
+[[files]]
+file = "mods/jade.pw.toml"
+hash = "4de3e4a1a49e332c1ad313283e0403c4273b628d634c17a9ff0c9da3d6b67f9a"
+metafile = true
+
+[[files]]
+file = "mods/jei.pw.toml"
+hash = "58ed8e868a732911b326d45f10478dfd959b2717d720e1a60c8e1230f8bc1da2"
+metafile = true
+
+[[files]]
+file = "mods/just-enough-resources-jer.pw.toml"
+hash = "f61a3526d323d232fbac74dedb5d89e07f45981db1c5a705c66dbe5da7507a68"
+metafile = true
+
+[[files]]
+file = "mods/justenoughcharacters.pw.toml"
+hash = "ba61e63ab7dd6827b3e1d00185014837fce3b586b3721118ace9b97eed596f12"
+metafile = true
+
+[[files]]
+file = "mods/lithostitched.pw.toml"
+hash = "e95a7c54f936eda33a548766784f806aef2195204864a79e8535ce132c94e0f1"
+metafile = true
+
+[[files]]
+file = "mods/mezzconfig.pw.toml"
+hash = "da44af473a317f1e3a1f900dd30042564e648b034115b932ce9f34dd723c2882"
+metafile = true
+
+[[files]]
+file = "mods/noisium.pw.toml"
+hash = "b3e831b3e4d6ddbf23806b0fec6087eca264af1ebc04e747c89024972aaa8607"
+metafile = true
+
+[[files]]
+file = "mods/patchouli.pw.toml"
+hash = "d7f360ebb9f009d6dc0b368cd8fa399bdff70c0f6ef931687b2a35137f72715d"
+metafile = true
+
+[[files]]
+file = "mods/paxi.pw.toml"
+hash = "215d597764d5c5db89e700fc3495b72dc0a7f09c975de19dc8c580bde3469a5e"
+metafile = true
+
+[[files]]
+file = "mods/polyglottooltip.pw.toml"
+hash = "8d2859e08c1aa157932cbf3a919a8a25470dc79b8ba870ab7b4d99455e020aa7"
+metafile = true
+
+[[files]]
+file = "mods/put-a-plug-in-it!.pw.toml"
+hash = "040261d2126a295b05ff082c0683018fdf1b368b08d030e65618d30d47346356"
+metafile = true
+
+[[files]]
+file = "mods/quest-enhance.pw.toml"
+hash = "923554028f5e6473660b80c4cfa29485a97e6211e432d8104232b1c132efae92"
+metafile = true
+
+[[files]]
+file = "mods/roadweaver.pw.toml"
+hash = "c880329abe93f494b60db126a7f4c679ee82bf1299509dd4ef5a5b7a041430f1"
+metafile = true
+
+[[files]]
+file = "mods/simple-backups.pw.toml"
+hash = "b3b444ca79a5786d5c7589a7119fcf4c3e4cf73c70860c17acb63c88fc06749a"
+metafile = true
+
+[[files]]
+file = "mods/supermartijn642s-config-lib.pw.toml"
+hash = "62bd7012826fdcccf17a089055be67f87fb7335c88e73efc52bc9e51a1bf3188"
+metafile = true
+
+[[files]]
+file = "mods/terralith.pw.toml"
+hash = "da7ee99189ad35aac094919fe33cac647d98533b23c228f10d4811f08989e2b8"
+metafile = true
+
+[[files]]
+file = "mods/todolist.pw.toml"
+hash = "6da5ca5144aafa064f5a751927a12829a0405c46a276c773cc38547b60420cbb"
+metafile = true
+
+[[files]]
+file = "mods/xaeroplus.pw.toml"
+hash = "45ad609bee750d3b617a4ca0bbff8155d123981ce149619a3fb1f80636503ea9"
+metafile = true
+
+[[files]]
+file = "mods/xaeros-minimap.pw.toml"
+hash = "64670072fa3b4db4a721769dd3d66a2865daac01c9a2480b9561675b1e9e9737"
+metafile = true
+
+[[files]]
+file = "mods/xaeros-world-map.pw.toml"
+hash = "f8cc300d53ae8bf71d77124e6c46a5e85fe31654b39c5d73a1652a4d9c404af4"
+metafile = true
+
+[[files]]
+file = "mods/yungs-api.pw.toml"
+hash = "dde31f05114c72cb2f58e522417487730b872e456f77fdd02c032c9235791f6c"
+metafile = true

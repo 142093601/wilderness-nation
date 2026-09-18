@@ -1,0 +1,13 @@
+name = "Chunk Plan"
+filename = "chunkplan-0.3.0-neoforge-1.21.1.jar"
+side = "both"
+
+[download]
+hash-format = "sha1"
+hash = "d9dd3ba941a68b343d6800b28230474185341f61"
+mode = "metadata:curseforge"
+
+[update]
+[update.curseforge]
+file-id = 8904569
+project-id = 1653385
