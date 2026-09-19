@@ -606,15 +606,32 @@ sortField=6       按总下载量
 
 | # | 待定 | 缺什么 | 影响 |
 |---|---|---|---|
-| 1 | **远征维度选谁** | ✅ **Twilight Forest 已实证 1.21.1 有版本**（参照包共识补漏时发现的）→ 现在有两个候选：Twilight Forest（成形、资料多）vs Dimensional Dungeons（形态仍未核实）。需实测取舍 | 时代 3「出关」的目标怎么写 |
+| 0 | **渲染器选型：`embeddium` vs `sodium`** | 需要拍板。C3/C8/C10 **三处冲突都指向它**；换 Sodium 系可解锁 4 个 mod（`stellarcreateoptimization`、`create-aeronautics`、`sodium-extra`、`reeses-sodium-options`），但要重做渲染侧验证与性能基线 | 直接决定 `hold` 里 4 条的去留；见 `CONFLICTS.md` 决策点 |
+| 1 | **远征维度选谁** | ✅ 已实证 1.21.1 有版本，但**装机时 `the-twilight-forest` 加进去就进不去世界**（C7，机制待查）→ 现在 Twilight Forest 处于 `hold`；备选 Dimensional Dungeons（形态仍未核实） | 时代 3「出关」的目标怎么写 |
 | 2 | **FTB Teams 的"全员同队"怎么配** | 装好后实测配置项（目标：任务进度全队共享，且不引入第二个"队伍"概念） | 任务书能不能承载"国策级"团队任务 |
-| 3 | **Iris 光影 + Distant Horizons** | 加装后跑性能基线（§12 指标） | 决定能不能给朋友开光影 |
+| 3 | **Iris 光影 + Distant Horizons** | 加装后跑性能基线（§12 指标）。**与"待定 0 渲染器选型"绑定**：Iris 依赖 Sodium 系 | 决定能不能给朋友开光影 |
 | 4 | **Alternate Current** | 与 ModernFix 的优化是否重叠 | 影响服务端基线 |
 | 5 | **Guard Villagers** | 实机判断会不会变成"NPC 替你打" | 与反目标 #3 冲突与否 |
 | 6 | **桥梁/屋顶类建筑构件** | **候选池里没有合适的**（Macaw's 的 bridges/roofs 未出现在检索结果里）→ 需要单独补一轮候选 | 公共工程（跨海大桥/铁路环线）的构件 |
 | 7 | **`datatip` vs `polyglottooltip` 二选一** | 装好后实测两者对"未汉化 mod"的实际补足程度 | 中文化设施最终装哪一个 |
 | 8 | **`millenaire` 能不能用** | 实机跑一段，看村庄生成/性能，以及与 OPAC 领地、Create 是否冲突 | 立国时代"世界本来就有文明"这条线要不要加 |
 | 9 | **`chunk-plan` 的配额怎么定** | 先量"1 人探索的区块/小时"，再换算到 3~7 人 | 远征半径与服务器流量的落地参数 |
+
+## 十四·补、装机结论（2026-09-19）
+
+**清单已全部落地**：`plan` 181 + 已装地基 16 = **197 条全部就位**（客户端 236 jar / 服务端 201 jar），
+分 6 批（批 0 地基 + 批 1~5）逐批验证通过。
+**装机过程中真撞到的冲突与缺陷逐条记在 `CONFLICTS.md`**（C1~C10 / T1~T16 / R1~R4）。
+
+当前未就位的 45 条，全部有明确理由：
+
+| 状态 | 条数 | 含义 |
+|---|---|---|
+| `hold` | 36 | **押后重审**：多为"与已装项冲突"或"要等渲染器决策"。**不是判死**，证据都在 `CONFLICTS.md` |
+| `skip` | 9 | **确定不装**，含 C3 `stellarcreateoptimization`（硬要 sodium）· C4 `byepregen`（与 noisium 显式不兼容）· C5 `stoneholm-forge`（进世界即崩） |
+
+> **本文件的状态列（✅/📌/⏳/❌）反映的是"选型时"的判定**；**权威装机状态在 `modlist.tsv`**（脚本读）
+> 与 `CONFLICTS.md`（含证据）。
 
 ## 十五、数量账
 
@@ -644,8 +661,9 @@ sortField=6       按总下载量
 ### 清单核验（`tools/apply_modlist.py --verify`）
 
 ```
-清单载入：242 条  hold=31 · installed=16 · plan=189 · skip=6
+清单载入：242 条  hold=36 · installed=16 · plan=181 · skip=9
 核验结果：239/239 通过（另有 3 条 skip 不参与）
+装机结果：197/197 就位（客户端 236 jar · 服务端 201 jar）
 ```
 
 五条**证据来源**（每一类都标明，不含"我觉得它有"）：

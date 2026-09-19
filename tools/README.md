@@ -519,10 +519,11 @@ CF `api.curse.tools` 搜 → `/mods/<id>/files` 确认。产出 `data/candidate-
 **为什么分批**：187 条 `plan` 一次性装进去，失败无法归因；而且**影响世界生成的 mod 有硬顺序**
 （`terralith` 装了就不能从已有世界增删）→ 必须"不可逆的先装、且在建世界之前装完"。
 
-**五批（`tools/lists/install-batches.tsv`，进仓库）**：
+**六批（`tools/lists/install-batches.tsv`，进仓库）**：
 
 | 批 | 内容 | 为什么这个顺序 |
 |---|---|---|
+| 0 已装地基 | 性能组 + OPAC + Create + YBD（16 条，**早已在实例里**但不在 pack 里） | 世界是用它生成的 → **测试时必须永远在场**（R4） |
 | 1 地基 | 世界生成三件 + 引擎 + 性能 + 中文化 + 运维底线 | 不可逆项必须先就位 |
 | 2 世界内容 | YUNG's 全家 / WDA / D&T / 结构 / 村庄 / 中世纪 / 维度 / **据点结构** | 结构也影响世界生成 → 同样要在建世界前 |
 | 3 立国与基建 | Create 生态 / 图纸系 / 建材装饰 / Macaw's / 交通 / 食物农业 | 时代 1~2 主菜 |
@@ -566,16 +567,67 @@ python tools/autotest.py --seconds 45                         # L0 装载冒烟
 | `stellarcreateoptimization` 硬依赖 `sodium 0.6.9+` | **选型冲突**（本包用 `embeddium`，mod id 对不上） | 改 `skip` + 写明理由 |
 | `byepregen` 与 `noisium` 显式不兼容 | **选型冲突**（mod 自己声明） | 改 `skip`，取 `noisium` |
 
-**⚠️ 仍未解决（下一轮第一件事）**：60 个 mod **全部加载无异常**、游戏到主菜单（43.9 秒），
-但 **quickPlay 打开世界时卡住**——`saves/<世界>/session.lock` 被写过（确实开始开世界了），
-而 `latest.log` 里**既没有"Starting integrated minecraft server"也没有"Stopping"**，
-Windows 事件日志也无 Java 崩溃记录 → **不是崩溃，是挂起**。
+**⚠️ 挂起问题的最终定论（已解决，2026-09-19）**：那次"quickPlay 打开世界时卡住"，
+根因是**验证流程本身**，不是 mod 冲突 —— 详见下一节的「两步流程」与 `CONFLICTS.md` 的 C9/C2。
+**注意区分两种"进不去世界"**：
+- **静默失败**（无异常、无崩溃报告）= 客户端 mod 集 ⊉ 世界 mod 集（R1），或流程问题（C9）；
+- **崩溃报告**（FML `Mod loading has failed`）= 真缺依赖/真冲突 —— 但**先查 `data/held-back/` 里有没有那个 jar**（R4）。
 
 `Crash Assistant` 弹的"已崩溃但未生成崩溃报告"是**误报**：它的日志显示它是启动时被拉起的**独立看守进程**
 （`Parent PID` + 模组列表快照），游戏被 autotest 超时回收后它才弹窗。
 
-**下一步手段**：复现挂起 → 对挂住的进程跑 **`jstack`**（JDK 21 自带）拿线程转储 → 直接看出哪个 mod 在阻塞。
-比逐个二分快得多，而且能沉淀成工具（补上"卡死"这类问题——现有 `crashlog-triage` 只覆盖崩溃）。
+---
+
+## 二十、验证协议：两步流程 + 依赖图纪律（批 2~5 撞出来的）
+
+### 为什么不能"同进程先服务端再客户端"（C9）
+
+**全配对模式**（一个进程里先起专用服务端、再起客户端）会让客户端在 **mod 加载阶段静默死亡**：
+4/4 次复现，**没有崩溃报告、没有 hs_err、Windows 事件日志也干净**。
+而同样 140 个 jar 用**两步流程**跑 → 一次通过。→ 判定为**验证流程/资源问题**，不是 mod 冲突。
+
+**所以固定为两步**：
+
+```bash
+# ① 用目标 mod 集生成世界，并备份下来（这步跑专用服务端）
+python tools/paired_check.py --group b1,b2,b3,b4,b5 --world-only --backup-world data/b5-world
+# ② 复用那份世界，单独启动真实客户端进世界（这步不跑服务端）
+python tools/paired_check.py --group b1,b2,b3,b4,b5 --reuse-world data/b5-world --world b5v
+```
+
+**判定标记**：客户端日志出现 `Starting integrated minecraft server` = 进世界成功。
+
+### 三条记账纪律（每条都是真实踩出来的）
+
+1. **分批测试必须带批 0**：`parse_groups` 无条件并入批 0。批 0 是"一直该在场的地基"，
+   只用批次表表达的话，任何一次子集测试都会把它搬走 → 世界里的方块/实体没了 → 静默失败（R4）。
+2. **每次往 `pack/` 加/删条目，必须重建依赖图**：`python tools/depgraph.py --build`。
+   `packwiz add` **不写 `[dependencies]`**，依赖边全靠 `depgraph.py` 现查并缓存；
+   缓存过期 → 闭包漏掉前置库 → 测试器把前置库搬走 → FML 报"requires X"，**看起来像真冲突**（T15）。
+   测试器已加绊线：`want` 里出现图里没有的条目 → 立即停下、**返回码 6**。
+3. **"缺 mod"先查 `data/held-back/{cli,srv,quarantine}`**：测试器有权搬走 jar，
+   所以任何"缺 mod / 进不去世界"的第一动作是翻隔离区 —— 有 → 是测试器干的（T15/T6）；
+   没有 → 才是真冲突（R4）。
+
+### 隔离清单（`tools/lists/quarantine.tsv`）
+
+判了 `hold` / `skip` 的 mod，如果只把它们从 `pack/` 移除元数据，测试器就**再也定位不到它们的 jar**，
+于是它们会永久残留在实例里、污染此后每一轮测试（T7）。所以另存一份清单：**不管状态，一律挪出**。
+
+### `--prune` 按**项目 id** 记账（T11）
+
+"同一个 mod 换了版本"必须删掉旧 jar，但**不能按文件名前缀猜**：
+`SuperMartijn642's Core Lib` 与 `SuperMartijn642's Config Lib` 都以 `supermartijn642` 开头 ——
+第一版按"第一个数字前的前缀"匹配，把 corelib 当成 configlib 的旧版**误删**。
+→ 改为按 Modrinth mod-id / CF project-id 记账（`data/materialize-manifest.json`）。
+
+### `.gitattributes`：换行符会让 pack 失效（T16）
+
+本机 `core.autocrlf=true`，而仓库原本没有 `.gitattributes` → 新克隆时 `pack/**` 会被转成 CRLF →
+`pack/index.toml` 里的哈希**全部失配**，别人 `packwiz install` 直接失败。
+→ `pack/**` 标 `-text`（字节精确）。**注意 gitattributes 后匹配的规则赢**，
+`pack/** -text` 必须写在 `*.toml text eol=lf` 之后（用 `git check-attr -a <路径>` 自检）。
+
 
 ---
 

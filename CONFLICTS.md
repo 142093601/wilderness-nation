@@ -26,6 +26,7 @@
 | **T14** | **pack/ 不包含那 16 个"已装"mod**（embeddium / scalablelux / OPAC / Create / 性能组…）→ pack 不能独立复现环境，也是 C10 的根源 | 🟠 结构性 | 全部纳入包（**批 0**，版本零漂移）✅ **已修并验证** |
 | **T15** | **过期依赖图会静默抽走前置库**：`packwiz add` 不写依赖段，图没重建 → `configurable` 被测试器搬走 → 报 `Mod neruina requires configurable`（**看起来像真冲突的假冲突**） | 🟠 方法论 | 重建依赖图 + 测试器加**图过期绊线**（返回码 6）✅ |
 | **T16** | **换行符会让 pack 失去可复现性**：本机 `core.autocrlf=true` 且仓库无 `.gitattributes` → 新克隆时 `pack/**` 被转成 CRLF → `pack/index.toml` 里的哈希全部失配，别人 `packwiz install` 直接失败 | 🟠 可复现性 | 新增 `.gitattributes`，`pack/**` 标 `-text`（字节精确）✅ |
+| **T17** | **`index.toml` 里有一个陈旧哈希**：C2 手工 pin Terralith 后没 `packwiz refresh` → 安装器在 terralith 这一步必然失败（**本机不读 index.toml，所以永远看不到**） | 🟠 可复现性 | `packwiz refresh`（已确认幂等）✅ |
 | **C3** | `stellarcreateoptimization` 硬依赖 `sodium 0.6.9+`，本包用 `embeddium` | 🟠 装了就崩 | 改 `skip` ✅ |
 | **C4** | `byepregen` 与 `noisium` **显式不兼容**（mod 自己声明） | 🟠 装了就崩 | 取 `noisium`，`byepregen` → `skip` ✅ |
 | **T1** | 12 条 slug 取自 jar 文件名，与项目真 slug 不符 | 🟠 装机必失败 | 全部修正 + 加核验关卡 ✅ |
@@ -251,6 +252,29 @@ Failure message: Mod neruina requires configurable 3.5.1 or above
 `pack/** -text` 必须写在 `*.toml text eol=lf` 这类规则**之后**，否则会被覆盖（第一版就写反了，
 `git check-attr` 一眼看出 `text: set`，改序后变成 `text: unset`）。
 
+### T17 · `index.toml` 里躺着一个**陈旧哈希**（🔴 已修，本轮最后抓到的）
+
+**怎么抓到的**：所有批次装完后，做了一次"pack 自身完整性"检查 ——
+复制 `pack/index.toml` → 跑 `packwiz refresh` → 对比是否被改写。结果它**真的被改写了**：
+
+```diff
+ [[files]]
+ file = "mods/terralith.pw.toml"
+-hash = "da7ee99189ad35aac094919fe33cac647d98533b23c228f10d4811f08989e2b8"
++hash = "81c5c05f9ed4c07b9f027ff6c421939bb04e476075091f135d34aaa05af1f950"
+```
+
+**根因**：C2 修 Terralith 版本错配时是**手工编辑** `terralith.pw.toml`（pin 到 2.6.2 / `IY93YaEe`），
+改完**没有** `packwiz refresh` → `index.toml` 里留的是旧版元数据的哈希。
+
+**后果**：`index.toml` 是安装器校验与增量同步的依据 —— 哈希对不上，
+**别人装这个包会在 terralith 这一步失败**。而**本机永远不会暴露**：
+我们的实例是由 `materialize_pack.py` 直接落 jar 的，根本不读 `index.toml`。
+
+**修法**：跑 `packwiz refresh`（已跑；再跑一次确认**幂等**，说明索引与元数据确实同步了）。
+**纪律**：**任何手工改动 `pack/mods/*.pw.toml` 之后必须 `packwiz refresh`**；
+走 `apply_modlist`（内部调 packwiz 命令）的自动化路径不会有这个问题。
+
 ### C3 / C4 · 两条选型冲突（装机冒烟直接报出，非推测）
 
 - **C3 `stellarcreateoptimization`**：FML 报 `requires sodium 0.6.9 or above`，`Actual version: [MISSING]`。
@@ -301,6 +325,9 @@ lithostitched 1.8.0-beta6（2026-09）差 20 个月 → **不报错，只卡死*
 
 ## 四、T 系列 · 工具链与元数据缺陷（已修，防复发）
 
+> **T1~T6 是较早一轮的完整版**；**T7~T16** 的摘要见第一节的表格，其中 **T14 / T15 / T16** 有完整详情（第二节）。
+> 全系列共 16 条，**全部已修**（T10 部分工具化）。
+
 | # | 问题 | 修法 |
 |---|---|---|
 | **T1** | **12 条错 slug**：参照包 jar 文件名会把连字符去掉（`sophisticatedbackpacks-1.21.1-…`），而项目 slug 是 `sophisticated-backpacks` → "参照包实证"只查文件名包含关系 → 错 slug 全部通过核验、到装机才炸 | 修正 12 条（`twilightforest`→`the-twilight-forest`、`jecharacters`→`justenoughcharacters`、`elevatorid`→`openblocks-elevator`…）+ **加关卡**：参照包命中后必须确认 slug 在接口上真实存在，否则判 `SLUG_NOT_FOUND` |
@@ -309,6 +336,10 @@ lithostitched 1.8.0-beta6（2026-09）差 20 个月 → **不报错，只卡死*
 | **T4** | **跨批次依赖**：`xaeroplus` 硬依赖 `xaeros-worldmap`（原在批 4） | `xaeroplus` 移到批 4 |
 | **T5** | **旧版本残留**：升版后旧 jar 留在目录里 → 同一 mod 两个版本（游戏报 "version differences that were not resolved"） | 新增 `materialize_pack.py --prune`（只删被 pack 管理的 mod 的其它版本，不碰手工装的） |
 | **T6** | **验证方法本身出过假结论**（详见第五节） | 改用「配对测试」协议 + 文件名模糊兜底 |
+| **T7~T13** | 隔离清单 · 依赖闭包被误撤 · 同名 jar 两 slug · 从 pack 移除不删实例 jar · `--prune` 启发式误删 · CF 误拒 · `Task` 不跨 pwsh 存活 | 见第一节摘要表逐条 |
+| **T14** | **pack/ 与实例不一致**（16 个已装 mod 不在 pack 里）→ 也是 C10 的根源 | 纳入批 0（同版，零漂移）✅ 见第二节 |
+| **T15** | **过期依赖图静默抽走前置库**，伪装成 `requires X` 假冲突 | 重建图 + 测试器加绊线（返回码 6）✅ 见第二节 |
+| **T16** | **换行符让 pack 哈希失配**（`core.autocrlf=true` 且无 `.gitattributes`） | `pack/** -text` ✅ 见第二节 |
 
 ---
 
@@ -375,6 +406,75 @@ lithostitched 1.8.0-beta6（2026-09）差 20 个月 → **不报错，只卡死*
 `hold` / `skip` 的条目全部留在 `tools/lists/quarantine.tsv` 与 `modlist.tsv` 里，**原因逐条可查**。
 
 
-**验证方式**（每批都要跑）：
-`apply_modlist --batch N --apply` → `materialize_pack.py`（无参数，含依赖）→
-`materialize_pack.py --side server --dest server/mods` → **`data/paired-test.py --group b1,b2,…`**（配对进世界）。
+**验证方式**（每批都要跑，**两步流程**，见 `tools/README.md` 第二十节）：
+`apply_modlist --verify --batch N --apply` → `materialize_pack.py`（无参数，含依赖）→
+`materialize_pack.py --side server --dest server/mods` →
+① `paired_check.py --group b1,…,bN --world-only --backup-world data/bN-world`（生成并备份世界）→
+② `paired_check.py --group b1,…,bN --reuse-world data/bN-world --world bNv`（单独跑客户端）。
+**判定**：客户端日志出现 `Starting integrated minecraft server` = 进世界。
+
+---
+
+## 九、最终结论
+
+> 本轮任务：**把定案的 mod 全部装进 `pack/` 并逐批验证，把撞到的冲突与缺陷全部总结出来**。
+> 魔改（配方/数值/配置）按用户指示押后，不在本轮。
+
+### 1. 装机结论：**197/197 就位，五批全部验证通过**
+
+| 项 | 结果 |
+|---|---|
+| 选中条目 | **197**（`plan` 181 + 已装地基 16）= 252 条候选里筛下来的 |
+| 未就位 | **45** = `hold` 36 + `skip` 9，**逐条有理由**（`modlist.tsv` / `quarantine.tsv`） |
+| 客户端 | **236 jar 进世界 PASS**（两步流程，标记 `Starting integrated minecraft server`） |
+| 服务端 | **201 jar**（仅客户端的 mod 已按端侧划分排除） |
+| `pack/` | **237 条元数据**，自洽、可复现（已补批 0，且 `pack/**` 锁字节精确） |
+
+**判定为"能跑起来"**，不能判定"能玩"——后者要靠魔改与真人试玩。
+
+### 2. 冲突结论：**9 条真·装不到一起（2 条已修、7 条已处置），1 条不是 mod 冲突**
+
+10 条 C 系列里，**9 条是真冲突**（每条都有崩溃报告、接口证据或 mod 自声明的不兼容）：
+
+| 真冲突 | 一句话原因 | 处置 |
+|---|---|---|
+| **C1** `certain-questing-additions` | mixin 进 FTB Library 触碰 `MultiBufferSource` → **专用服务端起不来**（连带任务书） | 改 `side=client` ✅ **已修并验证** |
+| **C2** `Terralith 2.5.8` × `lithostitched` beta | 版本差 20 个月**错配 → 卡死**（不报错） | pin Terralith 2.6.2 ✅ **已修并验证** |
+| **C3** `stellarcreateoptimization` | **硬依赖 `sodium`**，本包是 `embeddium`（mod id 不同）→ 永远满足不了 | `skip`（除非换渲染器） |
+| **C4** `byepregen` × `noisium` | mod **自己声明**不兼容 | 取 `noisium`，`byepregen` `skip` |
+| **C5** `stoneholm-forge` | 进世界即崩（`StructurePoolAccessor` NPE） | `skip` |
+| **C6** `deeperdarker` | **加它就进不去世界**（配对协议复验，机制待查） | `hold` |
+| **C7** `the-twilight-forest` | **加它就进不去世界**（安全方向复验，机制待查） | `hold` |
+| **C8** `create-aeronautics` → `sable` | 与 `embeddium` + `scalablelux` **双硬冲突** | `hold`（等渲染器决策） |
+| **C10** `sodium-extra` / `reeses-sodium-options` | 把 `sodium` 作为依赖拉进来 → 与 `embeddium` 互斥（真冲突）；**但根源是我们自己的 pack 没声明用 embeddium**（T14） | 两者 `hold`，`sodium` 移出 ✅ |
+
+**唯一不是 mod 冲突的是 C9**：全配对模式（同进程先服务端再客户端）让客户端在 mod 加载阶段静默死亡，
+4/4 复现、无任何崩溃痕迹；同样 140 jar 用两步流程一次通过 → **是验证流程问题**，改两步流程解决。
+
+**最危险的一类**：**报错长得跟真冲突一样的假冲突**——不查清就会把自己工具的记账错误写进总账：
+
+| 假冲突长什么样 | 真因 | 怎么一眼认出来 |
+|---|---|---|
+| `Mod X requires Y / not installed` | **依赖图过期**：测试器把前置库搬走了（T15） | 去 `data/held-back/` 翻有没有那个 jar（R4） |
+| 进世界**静默失败**（无报错无崩溃） | 客户端 mod 集**不包含**世界的 mod 集（R1）；或缺了批 0 地基（R4） | `level.dat` 里的命名空间 ↔ 客户端 mods 对不对得上 |
+| "卡死 / 挂了" | 流程问题（C9）或版本错配（C2），**不是崩溃** | 没有崩溃报告 = 先向 JVM 要 `jstack` 转储，别翻崩溃日志 |
+
+工具层已加两道绊线：依赖图过期 → `paired_check` **返回码 6** 拒绝开测；
+`pack/**` 换行符 → `.gitattributes` 锁字节精确（否则别人克隆下来哈希全错，T16）。
+
+### 3. 还需要拍板的**唯一一件事**
+
+**渲染器：留在 `embeddium`，还是换 `sodium` 系？**
+C3 / C8 / C10 三处冲突都指向它。换过去可解锁 **4 个 mod**（`stellarcreateoptimization`、
+`create-aeronautics`、`sodium-extra`、`reeses-sodium-options`），代价是重做渲染侧验证 + 重跑性能基线。
+**这是设计取舍，不是技术障碍** —— 所以留给用户定，不在本轮擅自动手。
+
+### 4. 本轮**没做**的（按用户指示押后）
+
+配方衔接与产线 · 时代闸门 · 威胁数值 · 军队供养与兵力上限 · 据点收益与重占节奏 ·
+中文化逐条补全 · 任务书 27 → 90~110 条 · `ftb-teams` 全员同队配置 · `chunk-plan` 配额参数。
+见 §七 与 `DEFERRED.md`。
+
+**一句话总结**：**这个包现在装得起来、进得去世界、冲突已经清账**；
+它离"能玩"还差的是**内容层的魔改**，而不是兼容性。
+
