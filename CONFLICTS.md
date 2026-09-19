@@ -33,6 +33,7 @@
 | **T16** | **换行符会让 pack 失去可复现性**：本机 `core.autocrlf=true` 且仓库无 `.gitattributes` → 新克隆时 `pack/**` 被转成 CRLF → `pack/index.toml` 里的哈希全部失配，别人 `packwiz install` 直接失败 | 🟠 可复现性 | 新增 `.gitattributes`，`pack/**` 标 `-text`（字节精确）✅ |
 | **T17** | **`index.toml` 里有一个陈旧哈希**：C2 手工 pin Terralith 后没 `packwiz refresh` → 安装器在 terralith 这一步必然失败（**本机不读 index.toml，所以永远看不到**） | 🟠 可复现性 | `packwiz refresh`（已确认幂等）✅ |
 | **C12** | **客户端开世界即崩**：`InventoryProfilesNext 2.2.5` 在 `Minecraft.doWorldLoad` 时 `ConfigScreenSettings.<clinit>` NPE（libIPN 的 delegate 为空）→ **客户端进不了任何世界** | 🔴 致命（客户端全线瘫痪） | 三次复现；排除 Connector/FFAPI/continuity/陈旧配置后仍崩 → `inventory-profiles-next` 改 **`hold`**，移除后客户端正常加载世界 ✅ |
+| **C16** | **性能：加载一个已建世界约 10 分钟；进世界后持续卡顿（约"卡 3 秒 / 顺 1 秒"）** | 🔴 致命（不可玩） | 加载慢已归因（JEI 注册）；游玩期卡顿**尚未归因**，需 spark profile；已先做四项低风险缓解 ✅ 部分 |
 | **C15** | **`additionalstructures` 在玩家登入时于服务端主线程发 HTTP**（查 Patreon 赞助者），网络不通时**单次 tick 冻结 41 秒**（ModernFix 看门狗误报"死锁"）→ 游戏像卡死 | 🔴 致命（玩家侧进世界即卡） | 关掉它的 `patreon_rewards`（**已用字节码验证**该分支会跳过三个 URL）+ 关掉它的 update-checker ✅ |
 | **C14** | **Epic Knights 的 mixin 配置带 UTF-8 BOM**，而 PCL 会加 `-Dfile.encoding=COMPAT`（中文 Windows 上 = **GBK**）→ 用户一启动就崩（`Expected BEGIN_OBJECT but was STRING`）| 🔴 致命（玩家侧启动失败） | ① 新工具 `tools/strip_bom.py` 去 BOM（客户端+服务端已执行）② 把"启动必须 UTF-8"写成硬要求 ✅ |
 | **C13** |：判据 `Starting integrated minecraft server` 在**开世界早期**就写，之后崩溃仍被判 PASS → **批 4、批 5 的"验收通过"是假的** | 🔴 致命（结论不可信） | 判据加"关卡加载完成"证据 + "本次零新崩溃报告"硬闸门；旧结论待重验 ✅ |
@@ -757,3 +758,46 @@ planning.initialPlanRadiusChunks        = 128
 （`--reuse-world data/bN-world`），走的是"加载已有世界 + 进世界"。而真人第一次玩做的是
 **新建世界**（完整世界生成）+ **首次登入**（触发 `firePlayerLoggedIn` 那条链）。
 → 已加入验收清单：**每批验收必须包含一次"新建世界并首次登入"**，且要能模拟玩家的启动参数（见 C14 的 `--jvm-args`）。
+
+### C16 · 性能：加载 10 分钟 + 游玩期持续卡顿（🟠 **尚未归因**，已做部分缓解）
+
+**现象（用户实测，2026-09-19 18:08~18:20）**：
+加载一个**已存在**的世界进入游戏约 **10 分钟**；进去之后持续卡顿，大约"卡 3 秒、顺 1 秒"循环，无法正常游玩。
+
+**① 10 分钟加载：已归因（有日志证据）** —— **JEI 在渲染线程上注册分类/配方**：
+
+```
+18:11:37  Registering ingredients: jei:minecraft is running and has taken 5.796 seconds so far
+18:11:53  Registering categories: jeresources:minecraft took 5.x sec
+18:11:53  Registering categories: create:jei_plugin took 47.85 sec      ← 单个插件就 47 秒
+18:13:xx  Registering recipes: create:jei_plugin took 9.494 sec
+18:14:xx  Building ingredient list took 7.283 seconds
+18:19:48  Sending Runtime Unavailable: jei:neoforge_gui（结束）
+```
+
+231 个 mod 的 JEI 插件逐个注册，**单条几十秒**，累计约 8 分钟。这是**加载成本**，不是"卡"。
+
+**② 那次 4.6 分钟的"冻结"是假象**：日志显示 `Saving and pausing game...`（游戏被暂停了 4.6 分钟，
+例如切出窗口/打开菜单），恢复时把暂停时长报成了 `Running 275975ms or 5519 ticks behind`。
+→ **不能拿它当"卡死"的证据。**
+
+**③ 游玩期卡顿：服务端没有痕迹。** 18:14:33 之后到 18:19:17 之间**没有任何 `Can't keep up`**，
+而用户正是在这段时间游玩并且持续卡顿 → **卡顿不是（或不只是）服务端 tick 造成的**，
+更可能是**客户端侧**（渲染 / GC / 某个周期性任务）。**这条必须用 profile 归因，不能猜。**
+
+**已做的四项低风险缓解**：
+
+| 项 | 改动 | 理由 |
+|---|---|---|
+| 模拟距离 | `options.txt` simulationDistance **12 → 8** | 服务端 tick 的大头；231 个 mod 在 4 核 i3-12100F 上，12 太重 |
+| RoadWeaver 动态规划 | `dynamicPlanEnabled` **true → false** | "边玩边按 128 区块半径重规划路网"是**周期性卡顿的头号嫌疑**；关掉不影响已生成的路 |
+| RoadWeaver OpenCL | `opencl*Enabled` **→ false** | 本机 OpenCL 不可用（有 NoClassDefFoundError），开着只是反复失败回退 CPU |
+| 内存 | 建议启动器 **7.3G → 10G**（需用户在 PCL 设置里改） | 之前已发生一次 `OutOfMemoryError` |
+
+**待做（决定性的那一步）**：`spark` 已装（1.10.124，双端）。
+进游戏执行 **`/spark profiler --timeout 60`**，把报告链接拿回来 → 直接看出**哪个 mod 吃 tick / 吃帧**。
+（轻量替代：`/spark health`。）
+
+**这里暴露的验收缺口（与 C15 并列的第二条）**：批次验收只验了"**进得去**"，从未验过"**跑得动**"。
+`DESIGN.md` §12 本来就规定了 TPS/MSPT/启动时长指标，但装机阶段一条都没测。
+→ 待办：把**性能验收**加进流程（进世界后测 MSPT/帧时间，并记录在 `baseline.csv`）。
