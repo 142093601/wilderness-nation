@@ -24,12 +24,16 @@ public final class EraTable {
         List<Era> sorted = new ArrayList<>(input);
         sorted.sort(Comparator.comparingInt(Era::ordinal));
 
+        Set<Integer> ordinals = new HashSet<>();
         Set<String> ids = new HashSet<>();
         for (int i = 0; i < sorted.size(); i++) {
             Era e = sorted.get(i);
+            if (!ordinals.add(e.ordinal())) {
+                throw new IllegalArgumentException("重复的时代序号：" + e.ordinal());
+            }
             if (e.ordinal() != i) {
                 throw new IllegalArgumentException(
-                        "时代序号必须从 0 连续：期望 " + i + "，实际 " + e.ordinal());
+                        "时代序号必须从 0 连续：第 " + i + " 个的 ordinal 是 " + e.ordinal());
             }
             if (!ids.add(e.id())) {
                 throw new IllegalArgumentException("重复的时代 id：" + e.id());
@@ -46,6 +50,7 @@ public final class EraTable {
         return eras;
     }
 
+    /** 越界（含负数）一律钳到有效范围，不抛异常——存档里的脏序号不该炸掉游戏。 */
     public Era byOrdinal(int ordinal) {
         int clamped = Math.max(0, Math.min(eras.size() - 1, ordinal));
         return eras.get(clamped);
@@ -58,9 +63,9 @@ public final class EraTable {
         return eras.stream().filter(e -> e.id().equals(id)).findFirst();
     }
 
-    /** 按累计在线小时取当前时代；超出末尾停在最后一个，负数按 0 处理。 */
+    /** 按累计在线小时取当前时代；超出末尾停在最后一个，负数与 NaN 按 0 处理。 */
     public Era currentFor(double elapsedOnlineHours) {
-        double t = Math.max(0.0, elapsedOnlineHours);
+        double t = elapsedOnlineHours > 0.0 ? elapsedOnlineHours : 0.0;   // NaN 也会落到 0
         double acc = 0.0;
         for (Era e : eras) {
             acc += e.durationHours();
@@ -71,10 +76,21 @@ public final class EraTable {
         return eras.get(eras.size() - 1);
     }
 
-    /** 该能力是否已在 current（含）之前的任何时代被声明解锁。 */
+    /**
+     * 该能力是否已在 current（含）之前被任何时代声明解锁。
+     *
+     * <p>null 一律返回 false（不抛）——调用方多半来自存档/命令，不该因为空值崩。
+     *
+     * <p>不属于本表的 Era（存档里换了时代表就会这样）按 {@link #byOrdinal} 的钳位语义处理：
+     * 序号 99 当作"最后一个时代"，而不是拿一个表外序号去和表内比较。
+     */
     public boolean isUnlocked(String unlockKey, Era current) {
+        if (unlockKey == null || current == null) {
+            return false;
+        }
+        int limit = byOrdinal(current.ordinal()).ordinal();
         for (Era e : eras) {
-            if (e.ordinal() > current.ordinal()) {
+            if (e.ordinal() > limit) {
                 break;
             }
             if (e.unlocks().contains(unlockKey)) {
@@ -84,8 +100,11 @@ public final class EraTable {
         return false;
     }
 
-    /** 存档里出现未知 eraId 时的归位：钳到 [0, size-1]。 */
+    /**
+     * 存档里出现未知 eraId 时的归位。
+     * 已知 id 直接返回对应时代；未知 id 才用提示序号钳位（并在返回值上体现"是猜的"由调用方决定是否记日志）。
+     */
     public Era fallbackForUnknownId(String unknownId, int hintedOrdinal) {
-        return byOrdinal(hintedOrdinal);
+        return byId(unknownId).orElseGet(() -> byOrdinal(hintedOrdinal));
     }
 }

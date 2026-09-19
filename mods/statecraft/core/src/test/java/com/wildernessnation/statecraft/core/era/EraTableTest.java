@@ -90,6 +90,16 @@ class EraTableTest {
                 era("b", 2, 10, Set.of()))));
     }
 
+    /** 重复序号必然破坏连续性，但诊断信息必须说"重复"而不是说"不连续"。 */
+    @Test
+    void rejectsDuplicateOrdinalsWithTheRightDiagnosis() {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> new EraTable(List.of(
+                        era("a", 0, 10, Set.of()),
+                        era("b", 0, 10, Set.of()))));
+        assertTrue(ex.getMessage().contains("重复"), "诊断要指向重复序号：" + ex.getMessage());
+    }
+
     @Test
     void rejectsDuplicateIds() {
         assertThrows(IllegalArgumentException.class, () -> new EraTable(List.of(
@@ -100,5 +110,77 @@ class EraTableTest {
     @Test
     void rejectsEmptyTable() {
         assertThrows(IllegalArgumentException.class, () -> new EraTable(List.of()));
+    }
+
+    @Test
+    void rejectsNullTable() {
+        assertThrows(IllegalArgumentException.class, () -> new EraTable(null));
+    }
+
+    @Test
+    void byOrdinalClampsInsteadOfThrowing() {
+        EraTable t = sixEras();
+        assertEquals("landing", t.byOrdinal(-4).id(), "负数钳到第 0 个");
+        assertEquals("civilization", t.byOrdinal(99).id(), "超界钳到最后一个");
+    }
+
+    @Test
+    void currentForTreatsNaNAsZero() {
+        assertEquals("landing", sixEras().currentFor(Double.NaN).id());
+    }
+
+    @Test
+    void totalDurationIsTheSumOfAllEras() {
+        EraTable t = sixEras();
+        assertEquals("expedition", t.currentFor(81.9).id(), "12+20+25+25=82 之前的最后一刻");
+        assertEquals("defense", t.currentFor(82.0).id(), "正好 82 小时进入第 5 个时代");
+        assertEquals("defense", t.currentFor(111.9).id(), "12+20+25+25+30=112 之前仍是第 5 个");
+        assertEquals("civilization", t.currentFor(112.0).id());
+        assertEquals("civilization", t.currentFor(150.0).id(), "正好走完总时长仍停在最后一个");
+    }
+
+    @Test
+    void isUnlockedReturnsFalseForNulls() {
+        EraTable t = sixEras();
+        assertFalse(t.isUnlocked(null, t.byOrdinal(5)));
+        assertFalse(t.isUnlocked("intel_station", null));
+    }
+
+    /** 存档换了时代表时，表外 Era 的序号要按 byOrdinal 的钳位语义处理，而不是拿 99 去比。 */
+    @Test
+    void isUnlockedClampsEraFromAnotherTable() {
+        EraTable t = sixEras();
+        Era foreign = new Era("alien", "外来", 99, 10, 1.0, Set.of("nothing"));
+        assertTrue(t.isUnlocked("intel_station", foreign), "按最后一个时代处理 → 已解锁");
+        Era foreignLow = new Era("alien0", "外来", 0, 10, 1.0, Set.of("nothing"));
+        assertFalse(t.isUnlocked("intel_station", foreignLow), "按第 0 个时代处理 → 未解锁");
+    }
+
+    /** 已知 id 优先于提示序号——归位不能把已知时代搬走。 */
+    @Test
+    void knownEraIdWinsOverTheHintedOrdinal() {
+        EraTable t = sixEras();
+        assertEquals("infra", t.fallbackForUnknownId("infra", 5).id());
+    }
+
+    @Test
+    void eraRejectsItsOwnInvalidFields() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Era(null, "无名", 0, 10, 1.0, Set.of()));
+        assertThrows(IllegalArgumentException.class,
+                () -> new Era("  ", "无名", 0, 10, 1.0, Set.of()));
+        assertThrows(IllegalArgumentException.class,
+                () -> new Era("a", "无名", -1, 10, 1.0, Set.of()));
+        assertThrows(IllegalArgumentException.class,
+                () -> new Era("a", "无名", 0, 0, 1.0, Set.of()));
+        assertThrows(IllegalArgumentException.class,
+                () -> new Era("a", "无名", 0, -5, 1.0, Set.of()));
+    }
+
+    @Test
+    void eraUnlocksAreAnImmutableCopyAndNullBecomesEmpty() {
+        Era e = new Era("a", "甲", 0, 10, 1.0, null);
+        assertEquals(Set.of(), e.unlocks());
+        assertThrows(UnsupportedOperationException.class, () -> e.unlocks().add("x"));
     }
 }

@@ -1445,3 +1445,20 @@ git commit -m "docs(statecraft): core 完成 + mod 源码 README + 环境约束"
 `StatecraftConfig` 的字段名在测试与实现中一致 ·
 `WorldGenerator.developmentFor/stanceFor/generate` ·
 `Nation.withPosition/distanceTo` · `WorldState.withNations` —— 全部在测试与实现中出现同名同签名。
+
+---
+
+## 执行后偏差记录（2026-09-19，计划 1 跑完之后补记）
+
+| 计划里写的 | 实际做的 | 为什么 |
+|---|---|---|
+| `StatecraftConfig` 有 `placementAngleStepDeg` 字段 | **删掉了** | 布点用的是 `0..2π` 均匀角，这个字段从没被读过 —— 一个"改了没反应"的死配置比抛异常更难查 |
+| `stanceFor(dev, jitter)`，`60.0` 写死在方法里 | `stanceFor(dev, jitter, cfg)`，读 `cfg.stanceBase()` | 同上：`stanceBase` 原本是死配置 |
+| `StatecraftConfig.minPlacementRadiusAsInt()` | **没有这个方法**，测试直接用 `minPlacementRadius()`（double） | 测试专用 helper 不该进生产 API |
+| `WorldState.withNations`（见上面"类型一致性"） | **没有这个方法** | 全库零调用方；计划自己写着"没人用的字段不写"，那就不写 |
+| `validated()` 只钳 dev 下界（`Math.max(0.0, …)`） | dev 上下界都钳进 `[0,100]`；所有 double 查 `Double.isFinite`；薄环带/几何不可行在**校验期**抛出 | 审查实测：`devMin=-30`、`devMax=165` 能通过 `validated()`，然后在 `Nation` 构造器才炸；外半径设 1000 会被静默钳成退化环带，最后以"间距太严？"的错误原因抛 |
+| `EraTable.isUnlocked` 只看 `current.ordinal()` | 表外 Era 先按 `byOrdinal` 钳位 | 传入 ordinal=99 的表外 Era 原本会静默返回 true |
+| `WorldGenerator` 国名"跨文化取" | **优先本国文化池**，用尽才按文化表顺序回退；总容量不足在生成入口报错 | 与 §十六"国名池（按文化）"对齐；审查实测原实现 48.6% 的名字来自别的文化，且 16 国配 12 名会在生成中途崩 |
+| 无主和候选时 `ensureNearestIsPacific` 静默返回 | **抛 `IllegalStateException`** | 设计里唯一带"绝对不允许"字样的硬规则不该被静默放弃 |
+| 预计 30 个 JUnit 用例 | **85 个**（7 个测试类） | 独立审查列出 14 处漏测分支，全部补上；并加了一条硬规则护栏 + 变异探针验证它有牙齿（见 `mods/statecraft/README.md`）|
+

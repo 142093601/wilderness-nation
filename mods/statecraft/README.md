@@ -25,17 +25,21 @@
 > 本包源码含中文（国名、事件文本），而 Gradle 默认按**平台编码**读源码 —— 中文 Windows 上是 GBK，
 > 会把 UTF-8 源码错误解码、**字符串静默损坏**。2026-09-19 实测踩到过（与 `CONFLICTS.md` C14 同一类坑）。
 
-## 当前进度（计划 1 完成）
+## 当前进度（计划 1 完成 + 独立审查修复）
 
 | 组件 | 状态 |
 |---|---|
-| `DeterministicRandom` | ✅ `hash(seed,seq,tag)` 纯函数随机（可复现、可重放）|
-| `StatecraftConfig` | ✅ 全部默认值 + 钳制校验 |
-| `Era` / `EraTable` | ✅ 时代**数据驱动**、按 era id 解锁、未知 id 归位（测 3/6/9 三套表）|
-| `Culture` / `Nation` / `WorldState` | ✅ 数据模型 |
-| `WorldGenerator` | ✅ 布点（最小间距）/ 规模 / **发展度与规模反比** / 倾向 / **最近国主和**（交换位置而非改数值）/ 国名唯一 |
+| `DeterministicRandom` | ✅ `hash(seed,seq,tag)` 纯函数随机（可复现、可重放）；反向区间/NaN/null 标签一律拒绝 |
+| `StatecraftConfig` | ✅ 全部默认值 + 钳制校验（dev 钳进 0..100、所有 double 查 finite、薄环带在**校验期**就报出 rmin/rmax —— 原来会静默退化到布点阶段再以错误的原因抛）|
+| `Era` / `EraTable` | ✅ 时代**数据驱动**、按 era id 解锁、未知 id 归位（已知 id 优先）、表外 Era 按钳位语义（测 3/6/9 三套表）|
+| `Culture` / `Nation` / `WorldState` | ✅ 数据模型，**NaN/负军力/空文本/负序号全部拒绝**（NaN 曾能穿透范围检查）|
+| `WorldGenerator` | ✅ 布点（最小间距 + 环带）/ 规模 / **发展度与规模反比** / 倾向（`stanceBase` 真的接上了）/ **最近国主和 = 交换位置**（无主和候选时**抛异常**而不是静默放过）/ 国名按文化优先 + 回退、全局唯一 |
 
-**31 个 JUnit 用例全绿**，全程离线、不需要开游戏。
+**85 个 JUnit 用例全绿**（含 7 个测试类），全程离线、不需要开游戏。
+
+> 🔒 **硬规则护栏**：`stanceAlwaysStaysInsideTheFormulaEnvelope` 保证最近国主和只能靠"交换位置"实现。
+> 2026-09-19 用变异探针验证过它有牙齿：把交换改写成"翻转该国 stance"后，**只有这条断言失败**，
+> 而旧的"最近国主和"断言照样绿。
 
 ## 加内容的入口（数据驱动）
 

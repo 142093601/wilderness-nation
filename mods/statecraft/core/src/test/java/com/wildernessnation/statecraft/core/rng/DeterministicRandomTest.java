@@ -63,4 +63,30 @@ class DeterministicRandomTest {
         DeterministicRandom r = new DeterministicRandom(1L);
         assertThrows(IllegalArgumentException.class, () -> r.range(0L, "x", 5, 4));
     }
+
+    @Test
+    void rejectsNullTag() {
+        DeterministicRandom r = new DeterministicRandom(1L);
+        assertThrows(IllegalArgumentException.class, () -> r.hash(0L, null));
+        assertThrows(IllegalArgumentException.class, () -> r.nextDouble(0L, null));
+    }
+
+    /** rangeDouble 原本缺反向区间守卫（range 有），API 不对称将来会咬人。 */
+    @Test
+    void rejectsInvertedDoubleRangeAndNaN() {
+        DeterministicRandom r = new DeterministicRandom(1L);
+        assertThrows(IllegalArgumentException.class, () -> r.rangeDouble(0L, "x", 8.0, -8.0));
+        assertThrows(IllegalArgumentException.class,
+                () -> r.rangeDouble(0L, "x", Double.NaN, 1.0));
+        assertThrows(IllegalArgumentException.class,
+                () -> r.rangeDouble(0L, "x", 0.0, Double.NaN));
+    }
+
+    @Test
+    void degenerateRangesStillReturnTheirOnlyValue() {
+        DeterministicRandom r = new DeterministicRandom(1L);
+        assertEquals(4, r.range(0L, "x", 4, 4));
+        assertEquals(0, r.nextInt(0L, "x", 1));
+        assertEquals(3.5, r.rangeDouble(0L, "x", 3.5, 3.5), 0.0);
+    }
 }

@@ -7,7 +7,8 @@ import java.util.List;
  *
  * @param id            稳定标识（bandit / desert_raider / 自造）
  * @param displayName   中文显示名
- * @param namePrefixes  国名前缀池（全局唯一由生成器负责）
+ * @param namePrefixes  本国文化的国名池；生成器优先从这里取名，用尽才回退到别的文化池
+ *                      （全局不重名始终由生成器保证）
  */
 public record Culture(String id, String displayName, List<String> namePrefixes) {
 

@@ -32,6 +32,9 @@ public final class DeterministicRandom {
     }
 
     public long hash(long seq, String tag) {
+        if (tag == null) {
+            throw new IllegalArgumentException("tag 不能为 null");
+        }
         return mixTag(mix(seed ^ (seq * 0x9E3779B97F4A7C15L)), tag);
     }
 
@@ -57,8 +60,11 @@ public final class DeterministicRandom {
         return minInclusive + nextInt(seq, tag, maxInclusive - minInclusive + 1);
     }
 
-    /** [min, max] 的双精度数。 */
+    /** [min, max] 的双精度数（与 range 一样挡住反向区间与 NaN）。 */
     public double rangeDouble(long seq, String tag, double min, double max) {
+        if (!(max >= min)) {          // NaN 也会落到这里
+            throw new IllegalArgumentException("max 必须 >= min：" + min + ".." + max);
+        }
         return min + nextDouble(seq, tag) * (max - min);
     }
 }
