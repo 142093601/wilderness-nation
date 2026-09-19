@@ -202,15 +202,19 @@ presentation（薄）
 
 ```jsonc
 [
-  { "id": "landing",  "name": "落地", "ordinal": 0, "durationHours": 12,
+  { "id": "landing",  "name": "落地", "ordinal": 0, "durationHours": 24,
     "coefficient": 1.00, "unlocks": ["intel_book"] },
-  { "id": "founding", "name": "立国", "ordinal": 1, "durationHours": 20,
+  { "id": "founding", "name": "立国", "ordinal": 1, "durationHours": 40,
     "coefficient": 1.15, "unlocks": [] },
-  { "id": "infra",    "name": "基建", "ordinal": 2, "durationHours": 25,
+  { "id": "infra",    "name": "基建", "ordinal": 2, "durationHours": 50,
     "coefficient": 1.30, "unlocks": ["intel_station", "declaration"] }
   // …数量、名称、时长、系数、解锁项全部是数据。代码里不出现 "6"
 ]
 ```
+
+> **时长口径（2026-09-19 改定）**：整条曲线**翻倍** → 24 / 40 / 50 / 50 / 60 / 76 ≈ **300 小时累计在线**。
+> 理由：推进按**全服累计在线时间**算，只要有人在线就烧全服预算 —— 3~7 人时 150 小时太快。
+> 口径的原始定义在 `DESIGN.md` §9.1（包侧文档），这里的数据文件是 mod 侧的权威副本。
 
 - 解锁一律按 **`unlocks` 声明的 era id** 判定。
 - 存档与事件**同时记** `eraId`（表意）与 `eraOrdinal`（排序）；**未知 id 归到最近 ordinal + 一次警告** → 时代表改了旧存档不废。

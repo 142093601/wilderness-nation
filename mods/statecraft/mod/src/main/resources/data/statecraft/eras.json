@@ -1,14 +1,14 @@
 [
-  { "id": "landing",      "name": "落地", "ordinal": 0, "durationHours": 12,
+  { "id": "landing",      "name": "落地", "ordinal": 0, "durationHours": 24,
     "coefficient": 1.00, "unlocks": ["intel_book"] },
-  { "id": "founding",     "name": "立国", "ordinal": 1, "durationHours": 20,
+  { "id": "founding",     "name": "立国", "ordinal": 1, "durationHours": 40,
     "coefficient": 1.15, "unlocks": [] },
-  { "id": "infra",        "name": "基建", "ordinal": 2, "durationHours": 25,
+  { "id": "infra",        "name": "基建", "ordinal": 2, "durationHours": 50,
     "coefficient": 1.30, "unlocks": ["intel_station", "declaration"] },
-  { "id": "expedition",   "name": "远征", "ordinal": 3, "durationHours": 25,
+  { "id": "expedition",   "name": "远征", "ordinal": 3, "durationHours": 50,
     "coefficient": 1.45, "unlocks": [] },
-  { "id": "defense",      "name": "御敌", "ordinal": 4, "durationHours": 30,
+  { "id": "defense",      "name": "御敌", "ordinal": 4, "durationHours": 60,
     "coefficient": 1.60, "unlocks": [] },
-  { "id": "civilization", "name": "文明", "ordinal": 5, "durationHours": 38,
+  { "id": "civilization", "name": "文明", "ordinal": 5, "durationHours": 76,
     "coefficient": 1.75, "unlocks": ["intel_station_2"] }
 ]
