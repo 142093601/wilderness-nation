@@ -837,3 +837,31 @@ planning.initialPlanRadiusChunks        = 128
 
 **第三条验收缺口（与 C15 并列）**：装机验收只验了"进得去"，**从未测内存与帧时间**。
 `DESIGN.md` §12 早有指标（TPS/MSPT/启动时长），装机阶段一条没测。→ 待办：把内存与帧时间纳入验收。
+
+### C16 追加：12G 之后的 spark profile 结论（2026-09-19 19:18）
+
+用户把启动器内存调到 **12G** 后自己跑了一次 profiler，产出
+`C:\Users\87335\Downloads\sTCOBBL816.sparkprofile`（protobuf，2.0 MB，60.5 秒 / 1200 份采样）。
+本机没有现成解析器，于是**自己写解析**（protobuf：`f3=类名 · f4=方法名 · f8=两个 double 的窗口时间`）。
+
+**结果（注意：spark 在单人游戏里采的是「集成服务端」，不含客户端渲染）：**
+
+| 项 | 60 秒内 | 占比 |
+|---|---|---|
+| 服务端线程 `parkNanos` 等下一 tick（**纯空闲**） | **39.9 s** | **66%** |
+| 真正 tick（`tickServer`）| 19.8 s | 33% |
+| └ `ServerLevel.tick` | 16.7 s | 28% |
+| &nbsp;&nbsp;├ `ServerChunkCache.tick` | 8.3 s | 14% |
+| &nbsp;&nbsp;└ `EntityTickList.forEach` | 6.5 s | 11% |
+| 栈里出现的 mod | neruina 0.6% · roadweaver 0.5% · naturalist 0.3% · friendsandfoes 0.2% | 全部可忽略 |
+
+**结论**：
+1. **服务端侧健康**——线程 66% 时间在**空闲等 tick**，说明它跟得上；**没有 GC 主导**（G1 未进热点）
+   → 12G 那一步把 GC 死亡螺旋解决了（与我的 GC 日志结论一致）。
+2. **没有任何 mod 主导服务端 tick**：最大的 mod 只占 0.6%。所以**不能再靠"砍某个 mod"来解决卡顿**——
+   至少服务端侧没有可砍的目标。
+3. **这个 profile 看不到客户端渲染**。若玩家仍感觉卡，瓶颈在**渲染侧**（区块网格构建 / 模型 / GPU），
+   需要客户端侧测量才能归因（spark 客户端采样，或 F3 的帧时间与 GPU 占用）。
+
+**待确认**：12G 之后用户是否仍然卡。若仍卡 → 下一步测客户端渲染侧，而不是继续查服务端。
+
