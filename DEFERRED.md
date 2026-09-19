@@ -9,6 +9,7 @@
 
 | 套件 | 命令 | 上次结果 |
 |---|---|---|
+| **电脑控制插件自检** | `python wcu_probe.py` | 22 工具 / health 全绿（2026-09-20，用法见 `tools/COMPUTER-USE.md`）|
 | 装载冒烟（L0） | `python autotest.py --seconds 45` | 通过 |
 | 单机功能回归（L3） | `python game_agent.py --script tests\opac_v0.txt --launch` | 6/6 |
 | 服务端回归（L1） | `python server_ctl.py --start` + `--script tests\server_v0.txt` | 22/22（连跑两次一致） |
