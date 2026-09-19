@@ -1,0 +1,93 @@
+# NEXT：给"重启后的新会话"的交接说明
+
+> **为什么有这份文件**：DSH 重启（或新开会话）之后，**上一段对话的历史就没了** ——
+> 新会话只看得到仓库。所以恢复工作靠这份文件 + git + 长工程目标，不靠记忆。
+> **读到这份文件时先做三件事**：① `git log --oneline -3` 看最新提交；② 读本文件的"下一步"；
+> ③ 用 `get_goal` 看长工程目标是否还在（在的话 `update_goal` 用 `resume` 重新授权）。
+
+---
+
+## 一、这是什么项目
+
+- **仓库**：`D:\project\nation-pack`（`github.com/142093601/wilderness-nation`，公开，main）
+- **两条腿**：① 整合包（`pack/`，195 mod + `CONFLICTS.md` 冲突账本）；
+  ② **自研 mod `Statecraft`（「邦交」）**，在 `mods/statecraft/`（`core` 纯 Java 零 MC 依赖 + `mod` NeoForge 薄层）
+- **设计文档**：`NATIONS.md`（mod 侧）· `DESIGN.md`（包侧）· `OPEN-DESIGN.md`（**待定设计，搁置中**）
+- **纪律**（用户明确要求）：反过度设计 · 尽量不让用户手工测试 · 结论必须有原始证据 · 记下自己的错
+
+## 二、当前进度（截至最后一次提交）
+
+| 层 | 状态 |
+|---|---|
+| 计划 1（生成）、计划 2（存档+迁移+mod 薄层）、计划 3（结算+外交+事务日志） | ✅ 完成，**199 个 JUnit 全绿** |
+| M2 真机 | ✅ 存档落盘/读档已证；命令通道补验待做（死亡屏那个坑） |
+| **M1 收尾（环境判定 + 幂等决策）** | 🟡 **进行中** —— 见 `PLAN-m1-env-idempotency.md` |
+| M0（HYW 会不会打玩家） | 方案+脚本就绪（`PLAN-m0-hyw.md` / `tools/tests/m0_hyw.txt`），**未跑**，只挡计划 5 |
+| 计划 4（建筑/村民/情报站/情报册/周报/国书） | 未开始；**core 侧全部可离线做** |
+
+## 三、下一步（**从这里接着干**）
+
+**第一个动作**：完成环境判定包的剩下两个文件 + 测试：
+
+```
+mods/statecraft/core/src/main/java/com/wildernessnation/statecraft/core/env/
+    EnvironmentSnapshot.java     ✅ 已写（4 个读数；刻意没有方块/形状信息）
+    EnvironRequirement.java      ✅ 已写（一档要求 + 逐条 unmet 原因）
+    EnvironmentVerdict.java      ⬜ 待写（可用档位 + 下一个档位 + 未满足原因）
+    EnvironmentRules.java        ⬜ 待写（evaluate(tiers, snapshot)：取满足的最高档）
+mods/statecraft/core/src/test/java/.../core/env/EnvironmentRulesTest.java   ⬜ 待写
+```
+
+**测试要覆盖**：阈值边界（59.9% vs 60%、体积 11 vs 12）· 多条不满足时**全部**列出来 ·
+档位取"满足的最高档" · 档位表空/重复 id 要抛 · **以及一条结构性护栏**：
+断言 `EnvironmentSnapshot` 的 record 分量恰好是那 4 个名字（有人加"方块列表"就红）。
+
+然后按 `PLAN-m1-env-idempotency.md` 的 Task 1 / 3 / 4 继续（Task 1 = `Building` + `WorldState.buildings` +
+并入 v2 迁移；Task 3 = 幂等决策；Task 4 = 实体化节流），最后 Task 5 文档 + 提交。
+
+**跑测试的命令**（本机没装 Gradle，用缓存分发）：
+
+```powershell
+& "$env:USERPROFILE\.gradle\wrapper\dists\gradle-8.11.1-bin\eac4u065zwes5phglpt5f9b9e\gradle-8.11.1\bin\gradle.bat" `
+  -p D:\project\nation-pack\mods\statecraft :core:test --console=plain
+```
+
+**每个 Task 的循环**：写代码 → 测试全绿 → 文档同步（`NATIONS.md`/README/计划文档）→
+`git add -A` → 用 write 工具写提交信息文件 → `git commit -F <文件>` → `git -c http.proxy= -c https.proxy= push origin main`。
+
+## 四、之后的工作链（已与用户确认）
+
+```
+阶段 1  M1 收尾（环境判定 + 幂等决策）            ← 现在在这
+阶段 2  计划 4 的 core 侧（数据层/文本渲染/周报/国书/图纸授权/情报册/村民绑定/占位内容）
+   ↑ 以上全部离线，不用开游戏
+阶段 3  mod 薄层 + 真机（**一次性批量**）：真实环境读数 · 占位方块/村民 · 图纸加农炮链路
+        + 顺带清掉积压：M0 · M2 命令通道补验 · v1→v2 迁移实档确认
+阶段 4  暂缓：City + 国力合成 + 多城（等用户拍板，见 OPEN-DESIGN.md）
+```
+
+## 五、等用户拍板的事（不要自己替他定）
+
+`OPEN-DESIGN.md` 里 5 条：一国一城 vs 多城（含 B-lite 方案与四层难度评估）· 国力的合成方式 ·
+城内资源分类与上限公式 · 边镇要不要有实体 · 终局。
+**都不阻塞阶段 1/2**，所以搁着继续推进。
+
+## 六、电脑控制插件（`dsh-computer-use-win`）
+
+重启后模型侧应出现 **`mcp__wincu__*`** 共 22 个工具（用法见 `tools/COMPUTER-USE.md`）。
+- **自检**：`python tools\wcu_probe.py`（握手 + 列工具 + health）
+- **立刻能用上工作的三处**：
+  1. **驱动 PCL 启动器**（原生控件程序，UIA 很强）：改内存、加 `-Dfile.encoding=UTF-8`、点安装器按钮 ——
+     以前这些要用户自己去 GUI 里点；
+  2. **抓画面做证据**：`snapshot` 直接返回图片（`type:"image"`），比自建的 `win_ctl` 截图更省事；
+  3. **阶段三看游戏画面**：开世界后判读建筑/村民/情报册长什么样（MC 是自绘窗口，UIA 树是空的，
+     所以游戏里用"截图 + 坐标点击 + 按键"）。
+- 用之前先 `list_windows` 拿 `nativeWindowHandle`，后续调用都带上（焦点随时会跑）。
+- 两个坑写在 `tools/COMPUTER-USE.md`：LSP 式 `Content-Length` 分帧、Junction 路径会让入口守卫失效。
+
+## 七、重启后怎么跟用户继续
+
+用户在等你**继续推长工程**。直接说"我从 `NEXT.md` 的第三节接着干"，然后开工；
+如果目标被 disarm 了，先 `get_goal` → `update_goal resume` 再干。
+**不要重新问一遍需求**：已定的都写在 `OPEN-DESIGN.md` 附录（时间口径 300h、不做 PvP、占领后规则、
+计划 4 用占位内容、允许魔改）。
