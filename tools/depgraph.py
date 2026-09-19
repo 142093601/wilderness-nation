@@ -112,6 +112,7 @@ def build(force=False):
         ours[norm(slug)] = slug
         d = tomllib.loads((ROOT / "pack" / "mods" / (slug + ".pw.toml")).read_text(encoding="utf-8"))
         ours[norm(d.get("filename"))] = slug
+    resolve_by_name(graph, ids, entries, cache)
     for pid, slug in CF_ID_ALIAS.items():
         if slug in entries:
             ids["cf:%s" % pid] = slug
@@ -160,6 +161,50 @@ def closure(want, data=None):
                 seen.add(child)
                 stack.append(child)
     return seen
+
+
+def resolve_by_name(graph, ids, entries, cache, log=print):
+    """把"未映射的依赖 id"按**名字**反查回我们的条目。
+
+    为什么需要：同一个 mod 可能我们这边用 CF 分发，而别人声明依赖时用的是它的 **Modrinth id**
+    （反之亦然）。实测：`lithostitched` 我们是 CF 元数据，而 `terralith` 声明依赖用的是它的 MR id
+    `XaDC71GB` → 这条边断了，闭包会漏掉前置库。
+    """
+    def norm(x):
+        return "".join(ch for ch in (x or "").lower() if ch.isalnum())
+    by_name = {}
+    for slug in entries:
+        f = ROOT / "pack" / "mods" / (slug + ".pw.toml")
+        d = tomllib.loads(f.read_text(encoding="utf-8"))
+        if d.get("name"):
+            by_name[norm(d["name"])] = slug
+        by_name.setdefault(norm(slug), slug)
+    unresolved = set()
+    for g in graph.values():
+        for pid in g.get("mr", []):
+            if ("mr:" + pid) not in ids:
+                unresolved.add(("mr", pid))
+        for pid in g.get("cf", []):
+            if ("cf:%s" % pid) not in ids:
+                unresolved.add(("cf", str(pid)))
+    fixed = 0
+    for kind, pid in sorted(unresolved):
+        name = None
+        try:
+            if kind == "mr":
+                info = V.get("%s/project/%s" % (V.MR, pid), cache)
+                name = (info or {}).get("title")
+            else:
+                info = V.get("%s/mods/%s" % (V.CF, pid), cache)
+                name = (info or {}).get("name")
+        except Exception:  # noqa: BLE001
+            name = None
+        hit = by_name.get(norm(name)) if name else None
+        if hit:
+            ids["%s:%s" % (kind, pid)] = hit
+            fixed += 1
+            log("   %s:%s (%s) → %s" % (kind, pid, (name or "")[:26], hit))
+    return fixed
 
 
 def main():
