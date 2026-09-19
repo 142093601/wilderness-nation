@@ -5,10 +5,12 @@
 >
 > **范围**：只做"能跑起来 + 冲突清账"。**具体魔改（配方/数值/配置调参）不在本轮**，见文末「待魔改清单」。
 >
-> **进度**：**六批全部装完并验证通过** —— 批 0 已装地基 ✅ · 批 1 ✅ · 批 2 ✅ · 批 3 ✅ · 批 4 ✅ · 批 5 ✅。
-> `plan` 197 条全部就位；**客户端 236 jar 进世界 PASS**、**服务端 198 jar `Done (28s)`**。
-> 剩下的是 `hold`/`skip` 的取舍（36 + 9），以及一件需要拍板的事
-> 最后更新 2026-09-19。
+> **进度**：197 条全部装完。
+> **⚠️ 2026-09-19 傍晚重大更正**：批 4 与批 5 的"验收通过"是**假阳性**——客户端**从未进过世界**（见 C13）。
+> 这两批**验收作废、待用强判据重验**；批 0~3 的结论也需按新判据复核。
+> 因此"客户端 236 jar 进世界 PASS"这句**不成立**，已改。
+> **服务端 198 jar · `Done (28s)`** 是另一条腿（不含客户端渲染路径），暂视为成立，但客户端修好后要复验一次联机。
+> 最后更新 2026-09-19（傍晚）。
 
 ---
 
@@ -29,6 +31,9 @@
 | **T15** | **过期依赖图会静默抽走前置库**：`packwiz add` 不写依赖段，图没重建 → `configurable` 被测试器搬走 → 报 `Mod neruina requires configurable`（**看起来像真冲突的假冲突**） | 🟠 方法论 | 重建依赖图 + 测试器加**图过期绊线**（返回码 6）✅ |
 | **T16** | **换行符会让 pack 失去可复现性**：本机 `core.autocrlf=true` 且仓库无 `.gitattributes` → 新克隆时 `pack/**` 被转成 CRLF → `pack/index.toml` 里的哈希全部失配，别人 `packwiz install` 直接失败 | 🟠 可复现性 | 新增 `.gitattributes`，`pack/**` 标 `-text`（字节精确）✅ |
 | **T17** | **`index.toml` 里有一个陈旧哈希**：C2 手工 pin Terralith 后没 `packwiz refresh` → 安装器在 terralith 这一步必然失败（**本机不读 index.toml，所以永远看不到**） | 🟠 可复现性 | `packwiz refresh`（已确认幂等）✅ |
+| **C12** | **客户端开世界即崩**：`InventoryProfilesNext 2.2.5` 在 `Minecraft.doWorldLoad` 时 `ConfigScreenSettings.<clinit>` NPE（libIPN 的 delegate 为空）→ **客户端进不了任何世界** | 🔴 致命（客户端全线瘫痪） | 三次复现；排除 Connector/FFAPI/continuity/陈旧配置后仍崩 → `inventory-profiles-next` 改 **`hold`**，移除后客户端正常加载世界 ✅ |
+| **C13** | **验收协议假阳性（方法论）**：判据 `Starting integrated minecraft server` 在**开世界早期**就写，之后崩溃仍被判 PASS → **批 4、批 5 的"验收通过"是假的** | 🔴 致命（结论不可信） | 判据加"关卡加载完成"证据 + "本次零新崩溃报告"硬闸门；旧结论待重验 ✅ |
+| **T18** | **`hold` 的 mod 被依赖拖进 pack，还混入了 Fabric 侧 mod**：批 4 选了 `continuity`（Fabric 侧，与已装 `fusion` 重复），它 `required connector` → packwiz 把 `connector` 写进 pack 并装入客户端（连带 FFAPI） | 🟠 流程 | `continuity` 改 `skip`；`connector`/FFAPI 移出；给 `apply_modlist.py` 加两道防线（拒 Fabric 侧 mod、拒被依赖带进来的 hold/skip）✅ |
 | **C3** | `stellarcreateoptimization` 硬依赖 `sodium 0.6.9+`，本包用 `embeddium` | 🟠 装了就崩 | 改 `skip` ✅ |
 | **C4** | `byepregen` 与 `noisium` **显式不兼容**（mod 自己声明） | 🟠 装了就崩 | 取 `noisium`，`byepregen` → `skip` ✅ |
 | **T1** | 12 条 slug 取自 jar 文件名，与项目真 slug 不符 | 🟠 装机必失败 | 全部修正 + 加核验关卡 ✅ |
@@ -438,8 +443,8 @@ lithostitched 1.8.0-beta6（2026-09）差 20 个月 → **不报错，只卡死*
 | 1 地基（33 条） | 世界生成三件 + 引擎 + 性能 + 中文化 + 运维 | ✅ **已装已验** | 修掉 C1/C2/C3/C4 |
 | 2 世界内容（29 条） | 结构 / 维度 / 村庄 / 中世纪 / 据点结构 | ✅ **已装已验**（26 条） | 剔除 C5 `stoneholm`（skip）、C6 `deeperdarker`、C7 `the-twilight-forest`（hold） |
 | 3 立国与基建（59 条） | Create 生态 / 图纸系 / 建材装饰 / 交通 / 食物农业 | ✅ **已装已验** | 剔除 C8 `create-aeronautics`（hold）；C9 定为流程问题（见 C9 详情） |
-| 4 远征与生活（54 条） | 地图背包定位 / 战利品遗物 / QoL / 视觉音效 | ✅ **已装已验** | 剔除 C10 的 sodium 系三个；`medieval-paintings`/`medieval-music` 用 packwiz `--addon-id/--file-id` 显式 id 补装（搜索匹配会误拒） |
-| 5 御敌与文明（8 条） | 威胁 / 军事单位 / 攻城 / 大工程 | ✅ **已装已验** | 客户端 236 jar 进世界 PASS（两步流程）· 服务端 198 jar `Done (28s)`；期间修掉 T14/T15/T16/T17 与 C11 |
+| 4 远征与生活（54 条） | 地图背包定位 / 战利品遗物 / QoL / 视觉音效 | ⚠️ **已装，验收作废** | 剔除 C10 的 sodium 系三个；`medieval-paintings`/`medieval-music` 用 packwiz `--addon-id/--file-id` 显式 id 补装（搜索匹配会误拒） |
+| 5 御敌与文明（8 条） | 威胁 / 军事单位 / 攻城 / 大工程 | ⚠️ **已装，验收作废** | 当时的"客户端 236 jar 进世界 PASS"是假阳性（C13）；服务端 198 jar `Done (28s)` 独立成立。期间修掉 T14/T15/T16/T17 与 C11 |
 
 **装机结论**：`plan` 181 条 + 已装地基 16 条 = **197 条全部就位**，客户端 236 jar / 服务端 198 jar。
 `hold` / `skip` 的条目全部留在 `tools/lists/quarantine.tsv` 与 `modlist.tsv` 里，**原因逐条可查**。
@@ -503,7 +508,7 @@ lithostitched 1.8.0-beta6（2026-09）差 20 个月 → **不报错，只卡死*
 |---|---|
 | 选中条目 | **197**（`plan` 181 + 已装地基 16）= 252 条候选里筛下来的 |
 | 未就位 | **45** = `hold` 36 + `skip` 9，**逐条有理由**（`modlist.tsv` / `quarantine.tsv`） |
-| 客户端 | **236 jar 进世界 PASS**（两步流程，标记 `Starting integrated minecraft server`） |
+| 客户端 | ⚠️ **原结论作废**：当时报的"236 jar 进世界 PASS"是假阳性（C13，客户端其实因 C12 崩溃，从未进世界）。修好后需用强判据重验 |
 | 服务端 | **198 jar**（= 端侧取证要求的 180 + 18 个 CF 独占分发、无声明可查的）· 启动 `Done (28.121s)` |
 | `pack/` | **237 条元数据**，自洽、可复现（已补批 0，且 `pack/**` 锁字节精确） |
 
@@ -563,3 +568,86 @@ C3 / C8 / C10 三处冲突都指向它。换过去可解锁 **4 个 mod**（`ste
 **一句话总结**：**这个包现在装得起来、进得去世界、冲突已经清账**；
 它离"能玩"还差的是**内容层的魔改**，而不是兼容性。
 
+---
+
+## 十一、重大更正（2026-09-19 傍晚）：客户端开世界崩溃 + 验收协议失效
+
+> 这一节是**对前面结论的更正**，不是新功能。触发点：M0 真机验证任务里子代理反复进不去世界，
+> 于是回头查日志，发现**我此前报的验收有假**。
+
+### C12 · `InventoryProfilesNext` 让客户端**进不了任何世界**
+
+**现象**：客户端到主菜单没问题，一开世界就崩。今天同一签名崩了 **6 次**
+（09:16:53 / 09:30:21 / 09:44:31 / 14:53:30 / 15:11:45 / 16:01:39）。
+
+```
+Description: Rendering screen
+  ... Minecraft.doWorldLoad            ← 正在开世界
+  → ClientHooks.drawScreen
+  → inventoryprofilesnext ConfigScreenSettings.<clinit>
+  → inventoryprofilesnext Features.getENABLE_PROFILES
+  → NullPointerException（libIPN 的 AsDelegate 还是空的）
+```
+
+**关键判据**：崩溃报告里**没有任何"已加载关卡"的信息**（`Affected level` 段缺失）→ **玩家从没进过世界**。
+
+**排除过程（四次实验，每次约 5 分钟）**：
+
+| 实验 | 动作 | 结果 |
+|---|---|---|
+| 1 | 移出 `connector`（hold，却装在客户端） | 仍崩；且暴露下一环：FML 报 `Mod continuity requires connector any` |
+| 2 | 再移出 `continuity`（Fabric 侧、与 `fusion` 重复） | **仍崩**（还是 IPN 同一栈）→ 证明 Connector 不是唯一元凶 |
+| 3 | 再移出 Connector 的依赖 `forgified-fabric-api` + 清掉 IPN 陈旧配置 | **仍崩** |
+| 4 | 把 `inventory-profiles-next` + `libipn` 判为 `hold` 并移出 | ✅ **客户端正常加载世界**：`LoggerChunkProgressListener: Time elapsed: 582 ms`、**本次零新崩溃报告**、此后一直存活 |
+
+**顺带排除**：IPN 与 libIPN **不是版本错配**（IPN 2.2.5 声明 `libipn [6.6.3,6.7)`，装的就是 6.6.3，两者都是 1.21.1 最新）→ 是 IPN 自身在这个环境里的真 bug。
+**处置**：`inventory-profiles-next` → `hold`（纯便利 mod，拿它换"客户端能玩"完全划算；证据是三次硬崩溃）。
+
+### C13 · 验收协议**假阳性**（这一条比 C12 更严重）
+
+**判据缺陷**：`Starting integrated minecraft server` 这行在**开世界早期**就写进日志，
+关卡加载**之后**才崩的客户端也会被判成 PASS。
+
+**铁证（时间差）**：
+
+| 弱判据写入 | 崩溃报告 | 我的结论 |
+|---|---|---|
+| 09:30:21 前 | 09:30:21 | **09:31:10 报 PASS**（+49s）|
+| 09:44:31 前 | 09:44:31 | **09:45:19 报 PASS**（+48s）|
+| 15:57:57.446 | 15:57:58 | 实验 2 被判"进世界" |
+| 16:01:38.125 | 16:01:39 | 实验 3 被判"进世界" |
+
+→ **批 4（提交 09:17，崩溃 09:16:53）与批 5（提交 09:46，崩溃 09:44:31）的"验收通过"都是假的。**
+
+**修法（已做）**：
+1. 判据必须**同时**满足：① 弱标记 ② **关卡加载完成**证据
+   （`LoggerChunkProgressListener` / `Preparing spawn area` / `Time elapsed:`）③ **本次零新崩溃报告**。
+2. `autotest.py` 在等进世界时，一旦发现新崩溃报告或崩溃标记就**立刻判失败**（不再等超时）。
+3. 修掉 `autotest.py` 里旧检查的误报：原来是"最近 600 秒内有崩溃报告就报警"，
+   会把**上一轮**的报告算到这一轮账上（实验 4 明明没崩却被误报）→ 改成"只看本次启动之后写入的报告"。
+4. 记一条**我自己犯的错**：一开始把 `joined the game` 当单机判据，结果白等一轮——
+   那行是**连服务器**场景才有的；单机要用上面第 ① 条那组。
+
+### T18 · `hold` 的 mod 被依赖拖进 pack
+
+- 批 4 的 **65 个条目**里混进了 `connector.pw.toml`（清单里是 `hold`）与 `forgified-fabric-api`。
+- 链条：`continuity`（Fabric 侧连接材质）→ `required: connector` → packwiz 解析依赖时写进 pack。
+- 而 `continuity` 本身也是**选型错误**：它和已装的 `fusion`（NeoForge 原生连接材质）是**同一个功能位**，
+  正是设计里"同一功能位只留一个"明令禁止的重复。
+- **防线（本轮补上）**：`apply_modlist.py` 加两道关卡——
+  ① **拒绝 Fabric 侧 mod**（jar 有 `fabric.mod.json` 且无 `neoforge.mods.toml` → 直接拒，本项目不走 Connector 路线）；
+  ② **拒绝被依赖带进来的 `hold`/`skip` 条目**（解析 packwiz 实际写入的 slug，凡不在 plan/installed 名单里的就报错停下）。
+
+### 附带：专用服务端 `-Xmx4G` 无人在线也会 OOM
+
+子代理在跑"真客户端连专用服务端"时抓到：服务端 `Done (36.495s)` 后约 3 分钟
+`OutOfMemoryError: Java heap space`（崩在 WorldEdit 7.3.8 的 `PlatformReadyEvent` 派发里，**当时无玩家在线**），
+OOM 后自旋实测 **12 秒吃掉 86.9s CPU（7.2/8 核）**，把客户端饿死。
+**处置**：把 `server/user_jvm_args.txt` 的堆调到 6~8G（3~7 人联机形态下必须修）。
+
+### 由此产生的待办（按顺序）
+
+1. 用新判据**重跑批 1~5 验收**（每批约 5 分钟，可连跑）。
+2. 更新 README / CHANGELOG 里所有"进世界 PASS"的表述（当前不可信）。
+3. 服务端堆调大并复验 `Done (`。
+4. 然后回到 M0（HYW 单位能否刷出并攻击玩家）→ 计划 1。

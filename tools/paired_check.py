@@ -186,6 +186,8 @@ def parse_groups(spec, bg, label):
 def run_client_test(world_name, timeout, want_desc):
     """让客户端进世界，返回 (entered, crashed)。"""
     GAME_LOG.unlink(missing_ok=True)
+    crash_dir = INST / "crash-reports"
+    crash_before = {p.name for p in crash_dir.glob("*.txt")} if crash_dir.is_dir() else set()
     try:
         subprocess.run([sys.executable, "-u", "tools/autotest.py", "--seconds", "15",
                         "--startup-timeout", str(timeout), "--world", world_name],
@@ -195,8 +197,15 @@ def run_client_test(world_name, timeout, want_desc):
     except subprocess.TimeoutExpired:
         log("  (autotest 超时未返回)")
     txt = GAME_LOG.read_text(encoding="utf-8", errors="replace") if GAME_LOG.is_file() else ""
-    entered = MARKER in txt
-    crashed = "Encountered an unexpected exception" in txt
+    # 2026-09-19 假阳性事故：只查 MARKER 会把"开世界时崩溃"误判成 PASS
+    # （那行在开世界早期就写了）→ 必须同时确认"本次没有新崩溃报告"。
+    crash_dir = INST / "crash-reports"
+    new_crashes = ({p.name for p in crash_dir.glob("*.txt")} if crash_dir.is_dir() else set()) - crash_before
+    entered = MARKER in txt and not new_crashes and any(
+        m in txt for m in ("LoggerChunkProgressListener", "Preparing spawn area", "Time elapsed:"))
+    crashed = bool(new_crashes) or "Encountered an unexpected exception" in txt
+    if new_crashes:
+        log("  !! 本次产生了新崩溃报告：%s" % ", ".join(sorted(new_crashes)))
     log("  >>> %s%s ｜ %s" % ("PASS 进世界" if entered else "FAIL 未进世界",
                               "（进世界后崩）" if crashed else "", want_desc))
     return entered, crashed

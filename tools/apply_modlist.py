@@ -257,6 +257,22 @@ def apply_plan(rows: list[dict], pack_dir: Path) -> int:
             print(f"        {tail[0][:150]}")
     if failed:
         print(f"\n失败 {len(failed)} 个：{', '.join(failed)}")
+
+    # 防线（2026-09-19 T18 事故之后加的）。
+    # 事故：批 4 选了 `continuity`，它 `requires connector` → packwiz 解析依赖时
+    # 把清单里状态为 `hold` 的 `connector` 写进了 pack，还装进了客户端；
+    # Connector 在场 + IPN 在场 → 客户端开世界必崩（C12）→ 两次验收假阳性（C13）。
+    # 所以装完必须**回头看一遍 pack**：凡状态是 hold/skip 的 slug 都算越界，直接报错。
+    excluded = {r["slug"] for r in rows if r["status"] in ("hold", "skip")}
+    present = {p.name[: -len(".pw.toml")] for p in (pack_dir / "mods").glob("*.pw.toml")}
+    intruders = sorted(excluded & present)
+    if intruders:
+        print("\n🔴 越界 mod（被依赖拖进 pack，但清单里是 hold/skip）：")
+        for s in intruders:
+            print("   " + s)
+        print("   → 从 pack 移除它们，并检查是谁把它们拖进来的（tools/loader_check.py 能揪出")
+        print("     'requires connector' 这类依赖），必要时改用不含该依赖的替代品。")
+        failed.extend(intruders)
     return len(failed)
 
 
