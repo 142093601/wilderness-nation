@@ -1,3 +1,55 @@
-# 需要汉化的 mod（由 tools/lang_audit.py 生成）
-
+# 需要汉化的 mod（由 tools/lang_audit.py 生成，2026-09-19 · 236 jar 实测）
+#
+# 口径：jar 里有 en_us 键、但没有 zh_cn 的 mod。按缺口键数降序。
+# 全量结果：129 个已有 zh_cn · 58 个无文本（库/性能，不面向玩家）· 48 个缺 zh_cn（合计 13166 键）。
+# 优先级提示：OPAC（open-parties-and-claims，613 键）是唯一"承重墙级"缺口 —— 领地界面全靠它；
+#           带 zh_tw 等中文变体的可**直接转写**，成本最低（见文件末尾标注）。
+# 重新生成：python tools/lang_audit.py --mods <实例>\mods --json data\lang-audit.json --worklist tools\lists\i18n-todo.txt
+chipped-neoforge-1.21.1-4.0.2.jar	7265 键	其他语言: 无
+Design-n-Decor-1.21.1-2.2b.jar	905 键	其他语言: en_ud,ru_ru
+refurbished_furniture-neoforge-1.21.1-1.0.22.jar	654 键	其他语言: en_au
 open-parties-and-claims-neoforge-1.21.1-0.31.6.jar	613 键	其他语言: 无
+collective-1.21.1-8.39.jar	561 键	其他语言: 无
+buildersaddition2-neoforge-1.21.1-2.1.2.jar	327 键	其他语言: 无
+mcw-mcwwindows-2.4.2-mc1.21.1neoforge.jar	326 键	其他语言: de_de,es_cl,es_es,es_mx,fr_fr,it_it,ja_jp,ko_kr,pt_br,ru_ru,tr_tr,uk_ua,zh_tw
+xaeroworldmap-neoforge-1.21.1-1.46.0.jar	322 键	其他语言: de_de
+mcw-mcwpaths-1.1.1-mc1.21.1neoforge.jar	318 键	其他语言: de_de,es_cl,fr_fr,ru_ru,tr_tr,uk_ua
+rechiseledcreate-1.1.1-neoforge-mc1.21.jar	243 键	其他语言: uk_ua
+mcw-paintings-1.1.0-mc1.21.1neoforge.jar	180 键	其他语言: fr_fr,ko_kr,ru_ru,tr_tr,uk_ua
+portable_blueprints-v2.0.10-mv1.21.1neoforge.jar	163 键	其他语言: es_es,fr_fr,it_it,pt_br,pt_pt,ru_ru
+dungeons-and-taverns-v4.4.4.jar	137 键	其他语言: de_de,fr_fr,pt_br,ru_ru
+UndeadNights-2.2.5-NeoForge-mc1.21.jar	122 键	其他语言: de_de,ru_ru
+expandeddelight-0.1.4.jar	119 键	其他语言: 无
+ftb-teams-neoforge-2101.1.11.jar	112 键	其他语言: es_es,es_mx,fr_fr,id_id,ja_jp,ko_kr,pt_br,ru_ru,tr_tr,uk_ua
+smallships-neoforge-1.21.1-2.0.0-b2.1.jar	95 键	其他语言: de_de,es_es,fr_fr,pl_pl,ru_ru,tr_tr
+griefloggerrollbackaddon_GLRA-1.0.0-neoforge1.21.1.jar	80 键	其他语言: de_de
+dragonlib-neoforge-1.21.1-beta-3.0.28.jar	69 键	其他语言: de_de
+ftb-filter-system-neoforge-21.1.4.jar	65 键	其他语言: pt_br,ru_ru,tr_tr
+YungsBetterMineshafts-1.21.1-NeoForge-5.1.1.jar	60 键	其他语言: ru_ru,uk_ua
+grieflogger-1.2.10-1.21.1-neoforge.jar	46 键	其他语言: zh_tw
+JadeAddons-1.21.1-NeoForge-6.1.1.jar	38 键	其他语言: ko_kr,pt_br,ru_ru,tr_tr
+balm-neoforge-1.21.1-21.0.65.jar	36 键	其他语言: es_ar,es_mx,it_it,pt_br,tr_tr
+[1.21.1-neoforge]-Siege-Machines-1.33.jar	35 键	其他语言: ge_ge,ru_ru
+createhorsepower-1.21.1-1.1.0.jar	34 键	其他语言: 无
+SimplyTooltips-neoforge-0.1.5.jar	31 键	其他语言: 无
+resourcefulconfig-neoforge-1.21-3.0.11.jar	28 键	其他语言: cs_cz
+certain_questing_additions-neoforge-1.2.0.4+mc1.21.1.jar	26 键	其他语言: ru_ru
+jamlib-neoforge-1.3.6+1.21.1.jar	18 键	其他语言: ru_ru
+mezz_config-1.21.1-neoforge-0.5.9.jar	18 键	其他语言: 无
+polyglottooltip-1.21.1-1.6.0.jar	15 键	其他语言: zh_tw
+colorfulhearts-neoforge-1.21.1-10.5.9.jar	14 键	其他语言: ru_ru,tr_tr,zh_tw
+YungsBetterEndIsland-1.21.1-NeoForge-3.1.2.jar	13 键	其他语言: ru_ru
+ftbquestslangsplitter-1.0.7.jar	13 键	其他语言: pt_br
+ExtraQuests-1.7.0-1.21.1-NeoForge.jar	11 键	其他语言: ru_ru
+YungsBetterJungleTemples-1.21.1-NeoForge-3.1.2.jar	11 键	其他语言: ru_ru,uk_ua
+YungsBetterStrongholds-1.21.1-NeoForge-5.1.3.jar	11 键	其他语言: ru_ru,uk_ua
+fusion-1.3.15a-neoforge-mc1.21.1.jar	8 键	其他语言: hu_hu,tr_tr
+YungsBetterCaves-1.21.1-NeoForge-3.1.6.jar	5 键	其他语言: 无
+YungsBetterNetherFortresses-1.21.1-NeoForge-3.1.5.jar	4 键	其他语言: ru_ru,uk_ua
+YungsBetterOceanMonuments-1.21.1-NeoForge-4.1.2.jar	4 键	其他语言: ru_ru,uk_ua
+Paxi-1.21.1-NeoForge-5.1.3.jar	3 键	其他语言: 无
+YungsApi-1.21.1-NeoForge-5.1.9.jar	3 键	其他语言: pt_br,ru_ru,uk_ua
+chefsdelight-1.0.5-neoforge-1.21.1.jar	2 键	其他语言: pt_br
+BetterAdvancements-NeoForge-1.21.1-0.4.3.21.jar	1 键	其他语言: fr_fr
+LegendaryTooltips-1.21.1-neoforge-1.5.5.jar	1 键	其他语言: 无
+supermartijn642corelib-1.1.24-neoforge-mc1.21.jar	1 键	其他语言: 无

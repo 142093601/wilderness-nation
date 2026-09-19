@@ -419,8 +419,14 @@ lithostitched 1.8.0-beta6（2026-09）差 20 个月 → **不报错，只卡死*
 - 威胁数值（国力 → 难度映射、袭击规模曲线）
 - 军队供养与兵力上限（`DESIGN.md` §17.7 空缺 #8）
 - 据点的收益与重新占据节奏（空缺 #9）
-- 中文化补全（OPAC 613 条等）
+- 中文化补全 —— **已用量化清单取代猜测**（`tools/lang_audit.py` 对 236 jar 实测，2026-09-19）：
+  **129 个已有 `zh_cn`** · **58 个无文本**（库/性能，不面向玩家）· **48 个缺 `zh_cn`，合计 13 166 键**。
+  缺口最大：`chipped` 7265 · `Design n' Decor` 905 · `refurbished_furniture` 654 ·
+  **`OPAC` 613**（唯一"承重墙级"缺口：领地界面全靠它）· `collective` 561 · `buildersaddition2` 327 ·
+  `xaeroworldmap` 322。**4 个带 `zh_tw` 等中文变体**（mcwwindows 326 / grieflogger 46 / polyglottooltip 15 /
+  colorfulhearts 14）→ 这批可**直接转写**，成本最低。逐条清单见 `tools/lists/i18n-todo.txt`。
 - `ftb-teams` 全员同队配置；`chunk-plan` 配额参数
+- （可选加内容）`dye-depot` → 一次解锁 dndecor 预置好的 **256 个染色装饰变体**（见第九节）
 
 ---
 
