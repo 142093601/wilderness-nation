@@ -22,7 +22,7 @@ class WorldStateTest {
     }
 
     private static Relation peace(String a, String b) {
-        return new Relation(a, b, 0.0, Relation.State.PEACE, 0.0, 0L);
+        return Relation.peace(a, b);
     }
 
     private static WorldState state(List<Nation> nations) {

@@ -109,8 +109,7 @@ public final class WorldGenerator {
         List<Relation> out = new ArrayList<>();
         for (int i = 0; i < nations.size(); i++) {
             for (int j = i + 1; j < nations.size(); j++) {
-                out.add(new Relation(nations.get(i).id(), nations.get(j).id(), 0.0,
-                        Relation.State.PEACE, 0.0, 0L));
+                out.add(Relation.peace(nations.get(i).id(), nations.get(j).id()));
             }
         }
         return out;

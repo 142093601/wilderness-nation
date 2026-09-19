@@ -89,6 +89,7 @@ public final class StateCodec {
         f.put("state", new StateNode.Str(r.state().name()));
         f.put("warScore", new StateNode.Dec(r.warScore()));
         f.put("truceUntilSeq", new StateNode.Int(r.truceUntilSeq()));
+        f.put("losingStreak", new StateNode.Int(r.losingStreak()));
         return new StateNode.Obj(f);
     }
 
@@ -172,7 +173,8 @@ public final class StateCodec {
                 readEnum(Relation.State.class, node.field(p, "state").asString(p + ".state"),
                         p + ".state"),
                 node.field(p, "warScore").asDouble(p + ".warScore"),
-                node.field(p, "truceUntilSeq").asLong(p + ".truceUntilSeq"));
+                node.field(p, "truceUntilSeq").asLong(p + ".truceUntilSeq"),
+                node.field(p, "losingStreak").asInt(p + ".losingStreak"));
     }
 
     private static Event readEvent(StateNode node, String p) {

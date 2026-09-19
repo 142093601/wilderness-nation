@@ -70,7 +70,7 @@ class StateCodecTest {
         Map<String, StateNode> relation =
                 ((StateNode.Arr) fields.get("relations")).items().get(0).asObj("relations[0]").fields();
         assertEquals(
-                List.of("a", "b", "attitude", "state", "warScore", "truceUntilSeq"),
+                List.of("a", "b", "attitude", "state", "warScore", "truceUntilSeq", "losingStreak"),
                 List.copyOf(relation.keySet()));
     }
 
@@ -147,7 +147,7 @@ class StateCodecTest {
     void relationsAndEventsSurviveTheRoundTrip() {
         Nation a = Nation.spawn("n0", "赤沙", "bandit", 5, 60.0, -10.0, 20.0, 50.0, 0.0, 0.0);
         Nation b = Nation.spawn("n1", "黑岩", "bandit", 3, 80.0, 20.0, 16.0, 60.0, 100.0, 0.0);
-        Relation war = new Relation("n0", "n1", -63.5, Relation.State.WAR, -42.25, 17L);
+        Relation war = new Relation("n0", "n1", -63.5, Relation.State.WAR, -42.25, 17L, 2);
         Event event = new Event(41L, EventTypes.BATTLE, List.of("n0", "n1", Event.PARTY_PLAYER),
                 "battle", List.of("赤沙国", "石口"), true, false);
         WorldState state = new WorldState(

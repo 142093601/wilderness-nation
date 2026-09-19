@@ -86,6 +86,7 @@ public final class StateMigrations {
         f.put("state", new StateNode.Str(Relation.State.PEACE.name()));
         f.put("warScore", new StateNode.Dec(0.0));
         f.put("truceUntilSeq", new StateNode.Int(0));
+        f.put("losingStreak", new StateNode.Int(0));
         return new StateNode.Obj(f);
     }
 }

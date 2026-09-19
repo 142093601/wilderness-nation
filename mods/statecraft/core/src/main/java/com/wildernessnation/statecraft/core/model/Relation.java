@@ -10,6 +10,10 @@ import java.util.List;
  *
  * <p>存成列表而不是 `Map`：`n=12` 也只有 66 对，而"用两个 id 拼一个 map key"在 NBT/JSON 里
  * 既难读又容易出错（分隔符撞上 id 里本来就有的字符）。查一对关系用 {@link WorldState#relation}。
+ *
+ * <p>{@code warScore} 的符号约定：**正数 = a 占优**。{@code losingStreak} 记"当前占劣的那一方
+ * 已经连输了几步"——§八.4 的灭亡条件要"连输 ≥3 步"，而它不属于 §五 列的字段，
+ * 这里是**有意追加**（当时 v2 还没写出过任何存档，所以直接并进 v2，不必再加一级迁移）。
  */
 public record Relation(
         String a,
@@ -17,7 +21,8 @@ public record Relation(
         double attitude,
         State state,
         double warScore,
-        long truceUntilSeq) {
+        long truceUntilSeq,
+        int losingStreak) {
 
     public enum State {
         /** 和平（默认）。 */
@@ -44,6 +49,14 @@ public record Relation(
         if (truceUntilSeq < 0) {
             throw new IllegalArgumentException("Relation.truceUntilSeq 不能为负：" + truceUntilSeq);
         }
+        if (losingStreak < 0) {
+            throw new IllegalArgumentException("Relation.losingStreak 不能为负：" + losingStreak);
+        }
+    }
+
+    /** 停战（全零）关系，用作新建关系的默认值。 */
+    public static Relation peace(String a, String b) {
+        return new Relation(a, b, 0.0, State.PEACE, 0.0, 0L, 0);
     }
 
     /** 是否是"这一段"关系（无视双方顺序）。 */
@@ -52,19 +65,28 @@ public record Relation(
     }
 
     public Relation withAttitude(double v) {
-        return new Relation(a, b, v, state, warScore, truceUntilSeq);
+        return new Relation(a, b, v, state, warScore, truceUntilSeq, losingStreak);
     }
 
     public Relation withState(State v) {
-        return new Relation(a, b, attitude, v, warScore, truceUntilSeq);
+        return new Relation(a, b, attitude, v, warScore, truceUntilSeq, losingStreak);
     }
 
     public Relation withWarScore(double v) {
-        return new Relation(a, b, attitude, state, v, truceUntilSeq);
+        return new Relation(a, b, attitude, state, v, truceUntilSeq, losingStreak);
     }
 
     public Relation withTruceUntilSeq(long v) {
-        return new Relation(a, b, attitude, state, warScore, v);
+        return new Relation(a, b, attitude, state, warScore, v, losingStreak);
+    }
+
+    public Relation withLosingStreak(int v) {
+        return new Relation(a, b, attitude, state, warScore, truceUntilSeq, v);
+    }
+
+    /** 回到和平：战果与连败计数一起清零（战果属于那场战争，战争结束就该消失）。 */
+    public Relation backToPeace() {
+        return new Relation(a, b, attitude, State.PEACE, 0.0, truceUntilSeq, 0);
     }
 
     private static void requireText(String v, String what) {
