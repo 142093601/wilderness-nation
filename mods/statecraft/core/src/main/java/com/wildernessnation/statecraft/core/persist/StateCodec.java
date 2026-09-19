@@ -75,7 +75,9 @@ public final class StateCodec {
         f.put("met", new StateNode.Bool(n.met()));
         f.put("attitudeToParty", new StateNode.Dec(n.attitudeToParty()));
         f.put("status", new StateNode.Str(n.status().name()));
-        f.put("warOnParty", new StateNode.Bool(n.warOnParty()));
+        f.put("partyStatus", new StateNode.Str(n.partyStatus().name()));
+        f.put("partyStatusUntilSeq", new StateNode.Int(n.partyStatusUntilSeq()));
+        f.put("partyWarScore", new StateNode.Dec(n.partyWarScore()));
         f.put("fatigue", new StateNode.Dec(n.fatigue()));
         f.put("absorbedCount", new StateNode.Int(n.absorbedCount()));
         return new StateNode.Obj(f);
@@ -160,7 +162,11 @@ public final class StateCodec {
                 node.field(p, "attitudeToParty").asDouble(p + ".attitudeToParty"),
                 readEnum(Nation.Status.class, node.field(p, "status").asString(p + ".status"),
                         p + ".status"),
-                node.field(p, "warOnParty").asBool(p + ".warOnParty"),
+                readEnum(Nation.PartyStatus.class,
+                        node.field(p, "partyStatus").asString(p + ".partyStatus"),
+                        p + ".partyStatus"),
+                node.field(p, "partyStatusUntilSeq").asLong(p + ".partyStatusUntilSeq"),
+                node.field(p, "partyWarScore").asDouble(p + ".partyWarScore"),
                 node.field(p, "fatigue").asDouble(p + ".fatigue"),
                 node.field(p, "absorbedCount").asInt(p + ".absorbedCount"));
     }

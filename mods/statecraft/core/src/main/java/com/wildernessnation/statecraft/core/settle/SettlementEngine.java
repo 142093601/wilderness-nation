@@ -79,7 +79,7 @@ public final class SettlementEngine {
             applyFatigueDecay(work);
             applyAttitudeRegression(work, relations, rng, seq);
         }
-        applyTruceExpiry(relations, seq);
+        applyTruceExpiry(work, relations, seq);
         advanceWars(work, relations, rng, seq, events);
         applyPressureOnPlayer(work, rng, seq, events);
         if (eraAdvance) {
@@ -171,8 +171,15 @@ public final class SettlementEngine {
         return value > 0 ? Math.max(0.0, next) : Math.min(0.0, next);
     }
 
-    /** 停战到期自动回到和平。 */
-    private void applyTruceExpiry(List<Relation> relations, long seq) {
+    /** 停战到期自动回到和平（国家 ↔ 玩家、国家 ↔ 国家两处都要）。 */
+    private void applyTruceExpiry(
+            Map<String, Nation> work, List<Relation> relations, long seq) {
+        for (Map.Entry<String, Nation> e : work.entrySet()) {
+            Nation n = e.getValue();
+            if (n.partyStatus() == Nation.PartyStatus.TRUCE && seq >= n.partyStatusUntilSeq()) {
+                e.setValue(n.withPartyStatus(Nation.PartyStatus.NEUTRAL, 0L));
+            }
+        }
         for (int k = 0; k < relations.size(); k++) {
             Relation r = relations.get(k);
             if (r.state() == Relation.State.TRUCE && seq >= r.truceUntilSeq()) {
@@ -309,7 +316,7 @@ public final class SettlementEngine {
     // ---- §九 国家对玩家的压力 ----
 
     /**
-     * §9.1 的宣战门槛：{@code attitude ≤ −40 且 stance ≥ +40}。
+     * §9.1 的宣战门槛：{@code attitude ≤ −40 且 stance ≥ +40}，**且"不侵犯承诺"已过期**。
      *
      * <p>公开出来是有意的：**一次结算里"态度回归"先跑**，所以刚好卡在 −40 的国家会在同一拍里
      * 漂回 −38 而失去资格——边界值在整条流水线上根本观察不到。要有能直接问"这个国家够不够凶"
@@ -318,10 +325,13 @@ public final class SettlementEngine {
      * <p>【占位】§9.1 还写了"还要看发展度差与你们最近的扩张速度"：发展度差需要**玩家方的发展度**，
      * 扩张速度需要**你的领地**——两者都在 `playerLedger` / `domains` 里，属于计划 4/5。
      * 现在只实现态度与倾向这两项，缺的那两项等有数据源再接（不猜一个替代公式）。
+     *
+     * <p>「朝贡」换来的不侵犯承诺（`nonAggressionUntilSeq`）在这里生效：
+     * 承诺期内不论多恨都不会宣战——这是 §11.2 那句"'不侵犯'承诺"的实际含义。
      */
-    public boolean willDeclareWarOnPlayer(Nation n) {
+    public boolean willDeclareWarOnPlayer(Nation n, long seq) {
         return n.alive()
-                && !n.warOnParty()
+                && n.freeToDeclareWarOnParty(seq)
                 && n.attitudeToParty() <= cfg.warDeclarationAttitude()
                 && n.stance() >= cfg.warDeclarationStance();
     }
@@ -332,13 +342,13 @@ public final class SettlementEngine {
         for (Map.Entry<String, Nation> e : work.entrySet()) {
             Nation n = e.getValue();
             i++;
-            if (willDeclareWarOnPlayer(n)) {
-                e.setValue(n.withWarOnParty(true));
+            if (willDeclareWarOnPlayer(n, seq)) {
+                e.setValue(n.withPartyStatus(Nation.PartyStatus.WAR, 0L));
                 events.add(new Event(seq, EventTypes.WAR_DECLARED, List.of(n.id(),
                         Event.PARTY_PLAYER), "war_declared_player", List.of(n.name()), true, false));
                 continue;
             }
-            if (n.alive() && n.warOnParty() && rng.nextDouble(seq, "raidRoll#" + i) < cfg.raidChance()) {
+            if (n.atWarWithParty() && rng.nextDouble(seq, "raidRoll#" + i) < cfg.raidChance()) {
                 int scale = raidScale(n);
                 events.add(new Event(seq, EventTypes.RAID, List.of(Event.PARTY_PLAYER, n.id()),
                         "raid", List.of(n.name(), String.valueOf(scale)), true, false));

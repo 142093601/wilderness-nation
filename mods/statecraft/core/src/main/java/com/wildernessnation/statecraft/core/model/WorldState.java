@@ -10,8 +10,13 @@ import java.util.Set;
  * 世界状态（`NATIONS.md` §五）。
  *
  * <p>字段顺序与设计文档 §五 保持一致：`schemaVersion, seed, eraId, eraOrdinal, seq, nations,
- * relations, events`。**唯一的追加**是 {@code elapsedOnlineHours} —— 文档没列它，
- * 但 §七 的"按累计在线时间推进时代"必须有个地方攒这个数。
+ * relations, events`。**追加的一个**是 {@code elapsedOnlineHours}：§七 按累计在线时间推进时代，
+ * 总得有地方攒这个数。
+ *
+ * <p>**这里刻意没有"玩家动作序号"**：玩家动作是外部输入（和命令一样），它的随机来源必须由
+ * 调用方递进来、并被事务日志记下来才能重放。把计数器塞进世界状态，会让
+ * "同 seed 同输入必得同结果"悄悄变成"同 seed 同输入还得看它内部数到几"。
+
  *
  * <p>还没做的字段（`unread` / `letters` / `buildings` / `domains` / `playerLedger`）属于计划 4/5：
  * `unread` 由 {@link Event#read} 派生（见 {@link #unreadEvents()}），其余等有规则读它们时再加。
@@ -135,6 +140,15 @@ public record WorldState(
         return out;
     }
 
+    /** 换掉某个国家的状态（其余原样）。找不到该 id 时原样返回（调用方负责先校验）。 */
+    public WorldState withNation(Nation replacement) {
+        List<Nation> out = new ArrayList<>(nations.size());
+        for (Nation n : nations) {
+            out.add(n.id().equals(replacement.id()) ? replacement : n);
+        }
+        return withNations(out);
+    }
+
     public WorldState withNations(List<Nation> v) {
         return new WorldState(schemaVersion, seed, eraId, eraOrdinal, seq, v, relations, events,
                 elapsedOnlineHours);
@@ -168,4 +182,5 @@ public record WorldState(
         return new WorldState(schemaVersion, seed, newEraId, newEraOrdinal, newSeq, nations,
                 relations, events, hours);
     }
+
 }

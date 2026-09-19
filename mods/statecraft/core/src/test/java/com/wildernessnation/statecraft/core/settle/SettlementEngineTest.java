@@ -308,14 +308,14 @@ class SettlementEngineTest {
     void playerWarGateUsesAttitudeAndStance() {
         SettlementEngine e = engine(SettlementConfig.defaults());
         assertTrue(e.willDeclareWarOnPlayer(
-                nation("n0", 5, 20.0, 40.0, 60.0).withAttitudeToParty(-40.0)), "刚好到门槛");
+                nation("n0", 5, 20.0, 40.0, 60.0).withAttitudeToParty(-40.0), 0L), "刚好到门槛");
         assertFalse(e.willDeclareWarOnPlayer(
-                nation("n0", 5, 20.0, 40.0, 60.0).withAttitudeToParty(-39.9)), "差一点就不够恨");
+                nation("n0", 5, 20.0, 40.0, 60.0).withAttitudeToParty(-39.9), 0L), "差一点就不够恨");
         assertFalse(e.willDeclareWarOnPlayer(
-                nation("n0", 5, 20.0, 39.9, 60.0).withAttitudeToParty(-80.0)), "倾向不够凶");
+                nation("n0", 5, 20.0, 39.9, 60.0).withAttitudeToParty(-80.0), 0L), "倾向不够凶");
         assertFalse(e.willDeclareWarOnPlayer(
                 nation("n0", 5, 20.0, 80.0, 60.0).withAttitudeToParty(-80.0)
-                        .withWarOnParty(true)), "已经在打就不再重复宣战");
+                        .withPartyStatus(Nation.PartyStatus.WAR, 0L), 0L), "已经在打就不再重复宣战");
     }
 
     @Test
@@ -323,14 +323,14 @@ class SettlementEngineTest {
         SettlementConfig c = noWar();
         Nation hostile = nation("n0", 5, 20.0, 50.0, 60.0).withAttitudeToParty(-80.0);
         WorldState after = engine(c).settle(single(hostile), SettlementInput.periodic(c));
-        assertTrue(after.nation("n0").orElseThrow().warOnParty(), "够恨就该宣战");
+        assertTrue(after.nation("n0").orElseThrow().atWarWithParty(), "够恨就该宣战");
         assertTrue(has(after, EventTypes.WAR_DECLARED));
     }
 
     @Test
     void raidIsEmittedOnlyWhenAtWarWithThePlayer() {
         Nation hostile = nation("n0", 6, 120.0, 50.0, 40.0)
-                .withAttitudeToParty(-80.0).withWarOnParty(true);
+                .withAttitudeToParty(-80.0).withPartyStatus(Nation.PartyStatus.WAR, 0L);
         SettlementConfig c = cfg(0.0, 12.0, 40.0, 50.0, 1.0);      // 袭击概率 1
         WorldState after = engine(c).settle(single(hostile), SettlementInput.periodic(c));
         assertTrue(has(after, EventTypes.RAID), "已宣战 + 概率 1 → 必须有袭击：" + after.events());

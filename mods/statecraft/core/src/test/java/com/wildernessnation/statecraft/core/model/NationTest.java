@@ -15,7 +15,16 @@ class NationTest {
             double development, double stance, double military, double treasury,
             double x, double z, boolean met, double attitude) {
         return new Nation(id, name, cultureId, size, development, stance, military, treasury,
-                x, z, met, attitude, Nation.Status.ALIVE, false, 0.0, 0);
+                x, z, met, attitude, Nation.Status.ALIVE, Nation.PartyStatus.NEUTRAL, 0L, 0.0,
+                0.0, 0);
+    }
+
+    /** 只为了把"扩展字段的非法组合"逐个试一遍。 */
+    private static Nation settlementFields(
+            Nation.PartyStatus partyStatus, long untilSeq, double warScore, double fatigue,
+            int absorbed) {
+        return new Nation("n0", "赤沙", "bandit", 5, 60, 0, 20, 50, 0, 0, false, 0.0,
+                Nation.Status.ALIVE, partyStatus, untilSeq, warScore, fatigue, absorbed);
     }
 
     private static Nation ok() {
@@ -39,7 +48,7 @@ class NationTest {
     void spawnUsesQuietDefaults() {
         Nation n = Nation.spawn("n1", "黑岩", "bandit", 3, 80.0, -20.0, 16.0, 60.0, 0.0, 0.0);
         assertEquals(Nation.Status.ALIVE, n.status());
-        assertFalse(n.warOnParty());
+        assertEquals(Nation.PartyStatus.NEUTRAL, n.partyStatus());
         assertEquals(0.0, n.fatigue(), 0.0);
         assertEquals(0, n.absorbedCount());
         assertFalse(n.met());
@@ -121,18 +130,18 @@ class NationTest {
 
     @Test
     void rejectsBadSettlementFields() {
+        assertThrows(IllegalArgumentException.class, () -> settlementFields(null, 0L, 0.0, 0.0, 0));
         assertThrows(IllegalArgumentException.class,
-                () -> new Nation("n0", "赤沙", "bandit", 5, 60, 0, 20, 50, 0, 0, false, 0.0,
-                        null, false, 0.0, 0));
+                () -> settlementFields(Nation.PartyStatus.NEUTRAL, 0L, 0.0, -0.1, 0));
         assertThrows(IllegalArgumentException.class,
-                () -> new Nation("n0", "赤沙", "bandit", 5, 60, 0, 20, 50, 0, 0, false, 0.0,
-                        Nation.Status.ALIVE, false, -0.1, 0));
+                () -> settlementFields(Nation.PartyStatus.NEUTRAL, 0L, Double.NaN, 0.0, 0));
         assertThrows(IllegalArgumentException.class,
-                () -> new Nation("n0", "赤沙", "bandit", 5, 60, 0, 20, 50, 0, 0, false, 0.0,
-                        Nation.Status.ALIVE, false, Double.NaN, 0));
+                () -> settlementFields(Nation.PartyStatus.NEUTRAL, 0L, 0.0, 0.0, -1));
+        // 只有 TRUCE 才有期限，别的状态带期限就是写错了
         assertThrows(IllegalArgumentException.class,
-                () -> new Nation("n0", "赤沙", "bandit", 5, 60, 0, 20, 50, 0, 0, false, 0.0,
-                        Nation.Status.ALIVE, false, 0.0, -1));
+                () -> settlementFields(Nation.PartyStatus.NEUTRAL, -5L, 0.0, 0.0, 0));
+        assertThrows(IllegalArgumentException.class,
+                () -> settlementFields(Nation.PartyStatus.WAR, 9L, 0.0, 0.0, 0));
     }
 
     @Test
@@ -194,9 +203,9 @@ class NationTest {
         assertFalse(dead.alive());
         assertSameExcept(a, dead, "status");
 
-        Nation war = a.withWarOnParty(true);
-        assertTrue(war.warOnParty());
-        assertSameExcept(a, war, "warOnParty");
+        Nation war = a.withPartyStatus(Nation.PartyStatus.WAR, 0L);
+        assertTrue(war.atWarWithParty());
+        assertSameExcept(a, war, "partyStatus");
 
         Nation fat = a.withFatigue(2.5);
         assertEquals(2.5, fat.fatigue(), 0.0);
@@ -239,8 +248,10 @@ class NationTest {
         if (!changed.equals("status")) {
             assertEquals(a.status(), b.status(), "status 不该变");
         }
-        if (!changed.equals("warOnParty")) {
-            assertEquals(a.warOnParty(), b.warOnParty(), "warOnParty 不该变");
+        if (!changed.equals("partyStatus")) {
+            assertEquals(a.partyStatus(), b.partyStatus(), "partyStatus 不该变");
+            assertEquals(a.partyStatusUntilSeq(), b.partyStatusUntilSeq(), "期限不该变");
+            assertEquals(a.partyWarScore(), b.partyWarScore(), 0.0, "战果不该变");
         }
         if (!changed.equals("fatigue")) {
             assertEquals(a.fatigue(), b.fatigue(), 0.0, "fatigue 不该变");

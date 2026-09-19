@@ -29,8 +29,8 @@ public final class StateMigrations {
      *
      * <p>补的东西**必须都是"没有任何副作用"的默认值**，否则"迁移"就变成了"凭旧档猜历史"：
      * <ul>
-     *   <li>国家：{@code status=ALIVE}、{@code warOnParty=false}、{@code fatigue=0}、
-     *       {@code absorbedCount=0}（v1 时期还没有战争与吸收，所以这些就是"还没发生过"）</li>
+     *   <li>国家：{@code status=ALIVE}、{@code partyStatus=NEUTRAL}、{@code fatigue=0}、
+     *       {@code absorbedCount=0}（v1 时期还没有战争、外交与吸收，所以这些就是"还没发生过"）</li>
      *   <li>关系：所有国家两两之间 {@code PEACE}、态度 0（v1 时期国家之间没有任何互动）</li>
      *   <li>事件：空表（v1 不产生事件）</li>
      *   <li>{@code elapsedOnlineHours=0} —— 这个值 v1 **真的没记过**，
@@ -72,7 +72,10 @@ public final class StateMigrations {
         Map<String, StateNode> f = StateNode.fields();
         f.putAll(nation.asObj("nations[]").fields());
         f.put("status", new StateNode.Str(com.wildernessnation.statecraft.core.model.Nation.Status.ALIVE.name()));
-        f.put("warOnParty", new StateNode.Bool(false));
+        f.put("partyStatus", new StateNode.Str(
+                com.wildernessnation.statecraft.core.model.Nation.PartyStatus.NEUTRAL.name()));
+        f.put("partyStatusUntilSeq", new StateNode.Int(0));
+        f.put("partyWarScore", new StateNode.Dec(0.0));
         f.put("fatigue", new StateNode.Dec(0.0));
         f.put("absorbedCount", new StateNode.Int(0));
         return new StateNode.Obj(f);

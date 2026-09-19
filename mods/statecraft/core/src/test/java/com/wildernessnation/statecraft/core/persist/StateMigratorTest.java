@@ -108,7 +108,8 @@ class StateMigratorTest {
         assertEquals(5, first.size());
         assertEquals(60.0, first.development(), 0.0);
         assertEquals(Nation.Status.ALIVE, first.status(), "补「还没发生过」");
-        assertFalse(first.warOnParty());
+        assertEquals(Nation.PartyStatus.NEUTRAL, first.partyStatus(), "补「还没发生过」");
+        assertEquals(0.0, first.partyWarScore(), 0.0);
         assertEquals(0.0, first.fatigue(), 0.0);
         assertEquals(0, first.absorbedCount());
 

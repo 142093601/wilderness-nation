@@ -64,7 +64,8 @@ class StateCodecTest {
         assertEquals(
                 List.of("id", "name", "cultureId", "size", "development", "stance",
                         "military", "treasury", "x", "z", "met", "attitudeToParty",
-                        "status", "warOnParty", "fatigue", "absorbedCount"),
+                        "status", "partyStatus", "partyStatusUntilSeq", "partyWarScore",
+                        "fatigue", "absorbedCount"),
                 List.copyOf(nation.keySet()));
 
         Map<String, StateNode> relation =
@@ -136,7 +137,8 @@ class StateCodecTest {
     @Test
     void settlementFieldsSurviveTheRoundTrip() {
         Nation n = new Nation("n7", "赤沙", "bandit", 9, 12.5, 47.5, 28.0, 26.25,
-                -1234.5, 9876.25, true, -55.5, Nation.Status.DEAD, true, 2.5, 3);
+                -1234.5, 9876.25, true, -55.5, Nation.Status.DEAD, Nation.PartyStatus.WAR,
+                0L, -42.5, 2.5, 3);
         WorldState state = new WorldState(
                 WorldState.CURRENT_SCHEMA_VERSION, -1L, "infra", 2, 41L,
                 List.of(n), List.of(), List.of(), 33.75);
