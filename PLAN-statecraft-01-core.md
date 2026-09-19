@@ -105,22 +105,25 @@ expect: Test failed
 
 - [ ] **Step 3: 跑脚本**
 
-Run:
+Run（注意 `game_agent.py` 的 `--script` 是**相对 tools/ 目录**解析的，所以要先进 tools）：
 ```powershell
-cd D:\project\nation-pack
-python tools/game_agent.py --launch --script tests\hyw_units.txt
+cd D:\project\nation-pack\tools
+python game_agent.py --launch --script tests\hyw_units.txt
 ```
 Expected: 全部 `PASS`，退出码 0；`logs/latest.log` 里能看到这些命令的聊天行（含 `Test passed` / `Test failed`）。
 
-- [ ] **Step 4: 判定敌对性（人工看两次血量）**
+- [ ] **Step 4: 判定敌对性（两次血量对比，同一个 shell 里做完）**
 
 ```powershell
-python tools/game_agent.py --attach --run "/effect clear @s"
-python tools/game_agent.py --attach --run "/data get entity @s Health"
-# 等 15 秒（站着别动，让它来打你）
-python tools/game_agent.py --attach --run "/data get entity @s Health"
+cd D:\project\nation-pack\tools
+python game_agent.py --attach --run "/effect clear @s"
+python game_agent.py --attach --run "/data get entity @s Health"
+Start-Sleep -Seconds 15          # 站着别动，让它来打你
+python game_agent.py --attach --run "/data get entity @s Health"
 ```
 Expected（通过）: 第二次的数值**小于**第一次 → 它会攻击玩家。
+若 `--attach` 报"找不到窗口"（上一步启动的客户端已退出）→ 改用 `--launch` 重进一次再读血量；
+注意**实体是存在存档里的**，重进后那只 bandit 还在原地，所以这个兜底不会让实验失效。
 Expected（不通过）: 两次相同 → 它不主动攻击，记录到 `NATIONS.md` 的 §十四，并触发下面的**退路**。
 
 
