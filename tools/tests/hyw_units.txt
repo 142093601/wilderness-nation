@@ -1,0 +1,15 @@
+# M0：验证能否刷出 HYW 单位、以及它们会不会攻击玩家
+cmd: /time set day
+cmd: /gamemode survival
+cmd: /effect give @s minecraft:resistance 60 4 true
+cmd: /summon hundred_years_war:bandit_soldier ~ ~ ~4
+cmd: /execute if entity @e[type=hundred_years_war:bandit_soldier,limit=1]
+expect: Test passed
+cmd: /summon hundred_years_war:desert_raider_commander ~ ~ ~6
+cmd: /execute if entity @e[type=hundred_years_war:desert_raider_commander,limit=1]
+expect: Test passed
+cmd: /summon hundred_years_war:battering_ram ~ ~ ~8
+cmd: /execute if entity @e[type=hundred_years_war:battering_ram,limit=1]
+expect: Test passed
+cmd: /execute if entity @e[type=hundred_years_war:nonexistent_probe,limit=1]
+expect: Test failed
