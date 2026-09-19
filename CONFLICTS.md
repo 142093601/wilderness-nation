@@ -865,3 +865,48 @@ planning.initialPlanRadiusChunks        = 128
 
 **待确认**：12G 之后用户是否仍然卡。若仍卡 → 下一步测客户端渲染侧，而不是继续查服务端。
 
+### C17 · 加载**未生成区块**时卡顿，且同一局内越来越长（🟠 已定位 + 已调参）
+
+**现象（用户实测，12G 会话）**：进游戏后不再卡死（C16 已解决），但**走去没去过的区块时会卡**，
+用户怀疑"越玩越严重"。
+
+**证据 ①：卡顿确实在变长**（同一局的服务端日志）：
+
+```
+19:12:23  Can't keep up! Running 2507ms or 50 ticks behind
+19:14:27  Can't keep up! Running 6818ms or 136 ticks behind
+19:16:20  Can't keep up! Running 9230ms or 184 ticks behind
+```
+
+**证据 ②：区块相关工作的构成**（用户提供的 spark profile，60s 窗口，单位≈毫秒）：
+
+| 帧 | 时间 |
+|---|---|
+| `ChunkMap.processUnloads`（卸载） | 2296 |
+| `ChunkMap.tick` / `saveChunkIfNeeded` | 2668 / 932 |
+| `roadweaver.planning.neoforge.ServerPl.onServerTick` | 792 |
+| `roadweaver.generation.RoadGenerationS.tick` / `refreshQueue` | 768 / 768 |
+| `roadweaver.persistence.files.Structur.readFileState` / `getStructureConnections` | 768 |
+
+**"越玩越严重"的机制（这是关键）**：RoadWeaver 的
+`structurePrediction.predictRadiusChunks = 1024`（**1024 区块 = 16384 格**）——它要在这么大的范围内
+预测结构，才能让路网绕开它们。**探索越远、该范围内已知结构越多 → 预测越贵 → 每次新区块的停顿越长**。
+（已排除：GC 不再是因素——12G 后 profile 里 GC 未进热点、服务端 66% 空闲。）
+
+**已做的调整（配置已备份到 `data/roadweaver.json.bak`，可回退）**：
+
+| 参数 | 原值 | 新值 | 理由 |
+|---|---|---|---|
+| `structurePrediction.predictRadiusChunks` | 1024 | **256** | 把"预测成本随探索增长"这一项**封顶**（代价：远处结构避让变弱，路偶尔穿过结构）|
+| `planning.initialPlanRadiusChunks` | 128 | **64** | 建世界/进入时的初始路网规划范围减半 |
+| `planning.dynamicPlanRadiusChunks` | 128 | **64** | 动态规划（已关）的范围，进一步降底 |
+
+**根治手段（建议，未执行）**：**用 Chunky 预生成**（已装）。把常活动范围一次性生成完，
+正常游玩就不再触发新区块生成 → 卡顿从"玩的时候"挪到"维护的时候"。
+建议：无人在线时 `chunky radius 2000` 之类，先小范围试，看磁盘与耗时。
+
+**长期观察项（用户担心的"越玩越严重"）**：
+① RoadWeaver 的结构连接状态文件（`Structur.readFileState`）随探索增长 —— 已通过降低预测半径封顶其单次成本；
+② 区块卸载/存档（`processUnloads` / `saveChunkIfNeeded`）随世界体积增长 —— 需监控存档大小与 MSPT；
+③ 实体/掉落物累积（本包已装 `servercore` 做清理）—— 需在多人服上实测。
+
