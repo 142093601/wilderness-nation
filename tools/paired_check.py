@@ -206,6 +206,9 @@ def main():
     ap.add_argument("--exclude", default="", help="强制排除的 slug")
     ap.add_argument("--world", default="ptworld")
     ap.add_argument("--reuse-world", default="", help="复用已有世界目录（纯客户端测试，不碰服务端）")
+    ap.add_argument("--world-only", action="store_true",
+                    help="只生成并备份世界，不跑客户端（两步流程的第一步；C9 证明同进程内跑完服务端再跑客户端不可靠）")
+    ap.add_argument("--backup-world", default="", help="--world-only 时把世界备份到这个目录")
     ap.add_argument("--all-keep", action="store_true",
                     help="保留 pack/mods 的全部条目（批次是顺序应用的，验证最新一批时不需要子集；"
                          "只有二分定位嫌疑 mod 时才用 --group/--exclude）")
@@ -295,6 +298,17 @@ def main():
         except Exception as e:  # noqa: BLE001
             log("  !! 拷世界失败：%s" % e)
             return 6
+
+    if args.world_only:
+        if args.backup_world:
+            try:
+                shutil.rmtree(args.backup_world, ignore_errors=True)
+                shutil.copytree(ROOT / "server" / "world", args.backup_world)
+                log("  世界已备份 → %s（两步流程第一步完成）" % args.backup_world)
+            except Exception as e:  # noqa: BLE001
+                log("  !! 备份世界失败：%s" % e)
+                return 7
+        return 0
 
     settle()
     entered, _ = run_client_test(args.world, args.startup_timeout, args.group)

@@ -1,0 +1,13 @@
+name = "TorchMaster"
+filename = "torchmaster-neoforge-1.21.1-21.1.12.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/Tl8ESrhX/versions/H6N0F5PT/torchmaster-neoforge-1.21.1-21.1.12.jar"
+hash-format = "sha512"
+hash = "addb7b4971d0d5ffa05ad08e25291b77fbf9f0490223eeb6162563f818cef36b893c5ee9239fd6df4ed042ee4cbea1f6de984e89690311c87624eb254292cefc"
+
+[update]
+[update.modrinth]
+mod-id = "Tl8ESrhX"
+version = "H6N0F5PT"

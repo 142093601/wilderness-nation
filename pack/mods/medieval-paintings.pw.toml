@@ -1,0 +1,13 @@
+name = "Medieval Paintings"
+filename = "medieval_paintings-1.21.1-7.0.jar"
+side = "both"
+
+[download]
+hash-format = "sha1"
+hash = "a126b225fb23ecc3a00f8a2a5c00abd418a6077b"
+mode = "metadata:curseforge"
+
+[update]
+[update.curseforge]
+file-id = 7900449
+project-id = 585081

@@ -112,8 +112,8 @@ item-highlighter	plan	物品高亮
 # ── 视觉与音效 ──
 iris	hold	光影支持（装了要重算性能预算）
 distanthorizons	hold	远景（同上）
-sodium-extra	plan	视频设置扩展
-reeses-sodium-options	plan	视频设置界面
+sodium-extra	hold	视觉/性能·Sodium 专用 —— **装机实测：它们把 `sodium` 作为依赖拉进来**，而 `sodium` 与本包渲染器 `embeddium` **互相声明不兼容**（崩溃报告 crash-2026-09-19_09.04.28-fml.txt：「Mod embeddium is incompatible with sodium」）。→ 除非整体改用 Sodium 渲染栈，否则不能装（见 CONFLICTS.md C10 与「渲染器选型」决策点）
+reeses-sodium-options	hold	视觉/性能·Sodium 专用 —— **装机实测：它们把 `sodium` 作为依赖拉进来**，而 `sodium` 与本包渲染器 `embeddium` **互相声明不兼容**（崩溃报告 crash-2026-09-19_09.04.28-fml.txt：「Mod embeddium is incompatible with sodium」）。→ 除非整体改用 Sodium 渲染栈，否则不能装（见 CONFLICTS.md C10 与「渲染器选型」决策点）
 continuity	plan	连接纹理
 athena-ctm	plan	连接纹理前置
 entitytexturefeatures	plan	实体纹理

@@ -21,6 +21,8 @@
 | **C7** | `the-twilight-forest` **加它就进不去世界**（安全方向复验） | 🔴 致命 | 改 `hold` ⏳ 机制待查 |
 | **C8** | `create-aeronautics` → `sable`（内嵌 `veil`）与 **`embeddium` + `scalablelux` 双硬冲突** | 🔴 致命 | 改 `hold` ✅ 证据完整 |
 | **C9** | 全配对模式（同进程内先跑服务端再跑客户端）→ 客户端在 **mod 加载阶段**静默死亡 | 🟢 **已定论：测试流程问题，非 mod 冲突** | 改用**两步流程**（先生成世界、再单独跑客户端）✅ 已验证 |
+| **C10** | `sodium-extra` / `reeses-sodium-options` 把 **`sodium`** 作为依赖拉进来 → 与我们的 **`embeddium`** 互斥 | 🔴 致命 | 两者改 `hold`，`sodium` 移出 pack ✅ |
+| **T14** | **pack/ 不包含那 16 个"已装"mod**（embeddium / scalablelux / OPAC / Create / 性能组…）→ pack 不能独立复现环境，也是 C10 的根源 | 🟠 结构性 | ⏳ 下一步把它们纳入 pack |
 | **C3** | `stellarcreateoptimization` 硬依赖 `sodium 0.6.9+`，本包用 `embeddium` | 🟠 装了就崩 | 改 `skip` ✅ |
 | **C4** | `byepregen` 与 `noisium` **显式不兼容**（mod 自己声明） | 🟠 装了就崩 | 取 `noisium`，`byepregen` → `skip` ✅ |
 | **T1** | 12 条 slug 取自 jar 文件名，与项目真 slug 不符 | 🟠 装机必失败 | 全部修正 + 加核验关卡 ✅ |
@@ -156,6 +158,49 @@ java.lang.NullPointerException: Cannot invoke "…StructurePoolAccessor.getRawTe
 **教训**：这类"环境/流程"问题会伪装成"某个 mod 有问题"，且症状与真冲突一模一样（启动期静默死亡）。
 → 判定顺序应当是：**先排除验证流程，再怀疑 mod**。
 
+### C10 · Sodium 系 mod 与我们的渲染器互斥（🔴 证据完整）
+
+**现象**：批 4 加进来后，客户端**启动即崩**（`crash-2026-09-19_09.04.28-fml.txt`）：
+
+```
+Mod file: .../mods/embeddium-1.0.15+mc1.21.1.jar
+  Failure message: Mod embeddium is incompatible with sodium 0 or above
+Mod file: .../mods/sodium-neoforge-0.8.13+mc1.21.1.jar#417!/META-INF/jarjar/net.caffeinemc.sodium-neoforge-0.8...
+  Failure message: Mod sodium is incompatible with embeddium 0.0.1 or above
+```
+
+**依赖链**：批 4 的 `sodium-extra` 与 `reeses-sodium-options` 声明依赖 **`sodium`** → packwiz 自动把它写进 pack
+→ 与实例里的 **`embeddium`**（Sodium 的 Fork）互斥。
+
+**处置**：`sodium-extra` / `reeses-sodium-options` → `hold`；`sodium` 从 pack 移除。
+
+#### ⚠️ 由此浮出的决策点：**渲染器选型（embeddium vs sodium）**
+
+三处冲突全部指向同一个选择：
+
+| 冲突 | 若改用 Sodium | 若保持 embeddium |
+|---|---|---|
+| **C3** `stellarcreateoptimization`（硬依赖 sodium） | ✅ 可用 | ❌ 不可用 |
+| **C8** `create-aeronautics` → `sable` → `veil`（要求 sodium） | ✅ 可用（但 `sable`×`scalablelux` 仍冲突） | ❌ 不可用 |
+| **C10** `sodium-extra` / `reeses-sodium-options` | ✅ 可用 | ❌ 不可用 |
+
+也就是说：**换到 Sodium 栈能解锁 4 个 mod，代价是替换渲染器（并可能连带光照引擎）**。
+本轮不做这个决定（属"魔改/基础设施"范畴），只把它登记为**待决策点**，并保持现状（embeddium）。
+
+### T14 · pack/ 与实例不一致（🟠 结构性，下一步修）
+
+**事实**：`pack/` 里只有批次 1~4 的 plan 条目与它们的依赖；而实例里有 **16 个"已装"mod 不在 pack 里**：
+性能组（embeddium / lithium / ferrite-core / modernfix / entityculling / immediatelyfast / clumps /
+servercore / neruina / spark / chunky / moreculling / scalablelux）+ OPAC + Create + YBD。
+
+**两个后果**：
+1. **别人按 pack 装出来的包 ≠ 我们的环境**（拿不到 embeddium / OPAC / Create）；
+2. **C10 的根源**：pack 里没有"我们用的是 embeddium"这个声明 → packwiz 才会心安理得地把 sodium 拉进来。
+
+**下一步**：把这 16 个也纳入 `pack/`（它们都有 1.21.1+NeoForge 版本，且已在实例里跑过），
+pack 才自洽、可复现。注意：纳入后 `materialize` 会按 packwiz 选版拉**较新版本**，
+可能与我们 `baseline.csv` 的性能基线所依据的版本不同 → 需重跑一次基线。
+
 ### C3 / C4 · 两条选型冲突（装机冒烟直接报出，非推测）
 
 - **C3 `stellarcreateoptimization`**：FML 报 `requires sodium 0.6.9 or above`，`Actual version: [MISSING]`。
@@ -260,7 +305,7 @@ lithostitched 1.8.0-beta6（2026-09）差 20 个月 → **不报错，只卡死*
 | 1 地基（33 条） | 世界生成三件 + 引擎 + 性能 + 中文化 + 运维 | ✅ **已装已验** | 修掉 C1/C2/C3/C4 |
 | 2 世界内容（29 条） | 结构 / 维度 / 村庄 / 中世纪 / 据点结构 | ✅ **已装已验**（26 条） | 剔除 C5 `stoneholm`（skip）、C6 `deeperdarker`、C7 `the-twilight-forest`（hold） |
 | 3 立国与基建（59 条） | Create 生态 / 图纸系 / 建材装饰 / 交通 / 食物农业 | ✅ **已装已验** | 剔除 C8 `create-aeronautics`（hold）；C9 定为流程问题（见 C9 详情） |
-| 4 远征与生活（56 条） | 地图背包定位 / 战利品遗物 / QoL / 视觉音效 | ⏳ 待装 | `xaeroplus` 已移入本批；注意 `sodium-extra`/`reeses-sodium-options` 是 Sodium 系（见 C8 的渲染器选型问题） |
+| 4 远征与生活（54 条） | 地图背包定位 / 战利品遗物 / QoL / 视觉音效 | ⚠️ 已装（54 条），验收中 | 剔除 C10 的 sodium 系三个；`medieval-paintings`/`medieval-music` 用 packwiz `--addon-id/--file-id` 显式 id 补装（搜索匹配会误拒） |
 | 5 御敌与文明（8 条） | 威胁 / 军事单位 / 攻城 / 大工程 | ⏳ 待装 | |
 
 **验证方式**（每批都要跑）：
