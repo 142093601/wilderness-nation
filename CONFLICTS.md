@@ -33,7 +33,8 @@
 | **T16** | **换行符会让 pack 失去可复现性**：本机 `core.autocrlf=true` 且仓库无 `.gitattributes` → 新克隆时 `pack/**` 被转成 CRLF → `pack/index.toml` 里的哈希全部失配，别人 `packwiz install` 直接失败 | 🟠 可复现性 | 新增 `.gitattributes`，`pack/**` 标 `-text`（字节精确）✅ |
 | **T17** | **`index.toml` 里有一个陈旧哈希**：C2 手工 pin Terralith 后没 `packwiz refresh` → 安装器在 terralith 这一步必然失败（**本机不读 index.toml，所以永远看不到**） | 🟠 可复现性 | `packwiz refresh`（已确认幂等）✅ |
 | **C12** | **客户端开世界即崩**：`InventoryProfilesNext 2.2.5` 在 `Minecraft.doWorldLoad` 时 `ConfigScreenSettings.<clinit>` NPE（libIPN 的 delegate 为空）→ **客户端进不了任何世界** | 🔴 致命（客户端全线瘫痪） | 三次复现；排除 Connector/FFAPI/continuity/陈旧配置后仍崩 → `inventory-profiles-next` 改 **`hold`**，移除后客户端正常加载世界 ✅ |
-| **C13** | **验收协议假阳性（方法论）**：判据 `Starting integrated minecraft server` 在**开世界早期**就写，之后崩溃仍被判 PASS → **批 4、批 5 的"验收通过"是假的** | 🔴 致命（结论不可信） | 判据加"关卡加载完成"证据 + "本次零新崩溃报告"硬闸门；旧结论待重验 ✅ |
+| **C14** | **Epic Knights 的 mixin 配置带 UTF-8 BOM**，而 PCL 会加 `-Dfile.encoding=COMPAT`（中文 Windows 上 = **GBK**）→ 用户一启动就崩（`Expected BEGIN_OBJECT but was STRING`）| 🔴 致命（玩家侧启动失败） | ① 新工具 `tools/strip_bom.py` 去 BOM（客户端+服务端已执行）② 把"启动必须 UTF-8"写成硬要求 ✅ |
+| **C13** |：判据 `Starting integrated minecraft server` 在**开世界早期**就写，之后崩溃仍被判 PASS → **批 4、批 5 的"验收通过"是假的** | 🔴 致命（结论不可信） | 判据加"关卡加载完成"证据 + "本次零新崩溃报告"硬闸门；旧结论待重验 ✅ |
 | **T18** | **`hold` 的 mod 被依赖拖进 pack，还混入了 Fabric 侧 mod**：批 4 选了 `continuity`（Fabric 侧，与已装 `fusion` 重复），它 `required connector` → packwiz 把 `connector` 写进 pack 并装入客户端（连带 FFAPI） | 🟠 流程 | `continuity` 改 `skip`；`connector`/FFAPI 移出；给 `apply_modlist.py` 加两道防线（拒 Fabric 侧 mod、拒被依赖带进来的 hold/skip）✅ |
 | **C3** | `stellarcreateoptimization` 硬依赖 `sodium 0.6.9+`，本包用 `embeddium` | 🟠 装了就崩 | 改 `skip` ✅ |
 | **C4** | `byepregen` 与 `noisium` **显式不兼容**（mod 自己声明） | 🟠 装了就崩 | 取 `noisium`，`byepregen` → `skip` ✅ |
@@ -653,3 +654,46 @@ OOM 后自旋实测 **12 秒吃掉 86.9s CPU（7.2/8 核）**，把客户端饿�
 2. 更新 README / CHANGELOG 里所有"进世界 PASS"的表述（当前不可信）。
 3. 服务端堆调大并复验 `Done (`。
 4. 然后回到 M0（HYW 单位能否刷出并攻击玩家）→ 计划 1。
+
+### C14 · Epic Knights 的 mixin 配置带 **UTF-8 BOM** → 用 PCL 启动即崩（🔴 已修）
+
+**现象（用户本人实测，2026-09-19 17:28）**：
+
+```
+The specified resource 'magistuarmory.mixins.json' was invalid or could not be read
+Caused by: JsonSyntaxException: Expected BEGIN_OBJECT but was STRING at line 1 column 1
+```
+
+**真因是两件事凑到一起**：
+
+1. `epic-knights-1.21.1-neoforge-10.15.jar` 里的 `magistuarmory.mixins.json` 以 `EF BB BF`（UTF-8 BOM）开头。
+   已从 CurseForge 下载**最新版**核对：**仍然带 BOM** → 换版本解决不了。
+2. **PCL 给 JVM 加了 `-Dfile.encoding=COMPAT`** —— 在中文 Windows 上它的意思是"用系统默认编码"= **GBK**。
+
+同一份文件，两种解码：
+
+| 启动参数 | `file.encoding` | 结果 |
+|---|---|---|
+| 无（我们的自动化） | UTF-8 | `\ufeff{` → Mixin 容忍 → 正常 |
+| `-Dfile.encoding=COMPAT`（PCL） | **GBK** | `锘縶` → 解析器看到的不是 `{` → **崩** |
+| COMPAT 在前、UTF-8 在后 | UTF-8 | ✅ 正常（**JVM 以最后一个同名 -D 为准**）|
+| UTF-8 在前、COMPAT 在后 | GBK | ❌ 崩 |
+
+**为什么整套自动化一直没发现（这条比崩溃本身更重要）**：
+我们的启动器**不带** `COMPAT` → JDK 21 默认 UTF-8 → 从没复现过。
+**"我的启动方式"和"玩家的启动方式"不是同一个环境。**
+→ 已给 `autotest.py` 加 `--jvm-args`，用来模拟启动器参数；**以后所有"玩家视角"的验收都必须带上它跑一遍**。
+
+**全库扫描（客户端）**：6 个 jar / 271 个 JSON 带 BOM。
+其中**只有 `epic-knights` 带 BOM 的 mixin 配置**（就是崩的那个）；`HundredYearsWar` 17 个、`storagedelight` 231 个是数据文件
+（MC 用显式 UTF-8 读，**暂时无害**）；cookingforblockheads / mcw-bridges / minersdelight 各 1 个语言文件。
+
+**修法（两条都做了）**：
+
+- **A 文件侧**：新工具 `tools/strip_bom.py`（去掉 jar 内 JSON 的 BOM；**只改本地实例，不重新分发任何 mod 文件**）。
+  已对客户端与服务端执行，6 个 jar 全部"剩余 0 个"。⚠️ **packwiz / materialize 重新下载这些 jar 后需要重跑**。
+- **B 启动器侧（对玩家是硬要求）**：JVM 参数加 `-Dfile.encoding=UTF-8`，且必须排在启动器自身参数**之后**。
+  已写进 `README` 与 `BOOTSTRAP`：**本包的启动环境必须是 UTF-8 默认编码**。
+
+**一个自证**：我用 PowerShell 的 `Set-Content -Encoding utf8` 写 Java 测试文件时，它也给文件加了 BOM，
+`javac` 当场报 `非法字符: '\ufeff'` —— 同一个 bug 在同一台机器上原样复现了一次。

@@ -122,6 +122,13 @@
 **为什么把缺口写出来**：它决定你该期待什么。现在能承诺的是"**设计完整、选型可核验、197 个 mod 装得进去且进得去世界**"；
 还不能承诺"玩得下去"——因为**配方衔接、时代闸门、威胁数值这些魔改还没做**（`CONFLICTS.md` §七 / `DEFERRED.md`）。
 
+> ⚠️ **启动要求（必读，2026-09-19 用户实测踩到）**：本包要求 **JVM 默认编码为 UTF-8**。
+> 部分启动器（如 PCL）会自动加 `-Dfile.encoding=COMPAT`，在中文 Windows 上等于 **GBK**，
+> 会让 `epic-knights` 的 mixin 配置（带 UTF-8 BOM）解析失败、**游戏启动即崩**：
+> `The specified resource 'magistuarmory.mixins.json' was invalid or could not be read`。
+> **解决**：在启动器的 JVM 参数里加 `-Dfile.encoding=UTF-8`（**必须排在启动器自带参数之后**，JVM 以最后一个为准）。
+> 详见 `CONFLICTS.md` 的 C14。
+
 ## 怎么加入（客户端）
 
 1. 装一个 **1.21.1 + NeoForge 21.1.250** 的实例——**版本要与包完全一致**，否则连不上服

@@ -389,6 +389,9 @@ def main() -> int:
     ap.add_argument("--seconds", type=int, default=60, help="进世界后停留秒数")
     ap.add_argument("--startup-timeout", type=int, default=300, help="等待进世界的上限（秒）")
     ap.add_argument("--world", default=DEFAULTS["world"])
+    ap.add_argument("--jvm-args", default="",
+                    help="额外 JVM 参数（空格分隔），用来模拟玩家的启动器。"
+                         "例：--jvm-args \"-Dfile.encoding=COMPAT\" 复现 PCL 的编码环境")
     ap.add_argument("--server", default="", help="多人：host:port（留空=单机进存档）")
     ap.add_argument("--no-options", action="store_true",
                     help="不要动 options.txt（pauseOnLostFocus 保持原样，后台跑会被暂停打断）")
@@ -413,6 +416,20 @@ def main() -> int:
     except Exception as exc:
         print(f"构造启动命令失败: {type(exc).__name__}: {exc}")
         return 2
+
+    # 模拟玩家的启动器参数（2026-09-19 C14 事故之后加的）。
+    # PCL 会给 JVM 加 `-Dfile.encoding=COMPAT`（中文 Windows 上 = GBK），
+    # 而我们的自动化一直不带它 → 用 UTF-8 → **从没暴露过 BOM 引起的启动崩溃**。
+    # 所以"玩家视角"的验收必须能复现那套参数：JVM 以**最后一个同名 -D 为准**，
+    # 这里插在 -cp 之前（即版本 JSON 的 jvm 参数之后），与"启动器把用户参数放后面"一致。
+    extra_jvm = [a for a in (args.jvm_args or "").split() if a]
+    if extra_jvm:
+        try:
+            at_cp = cmd.index("-cp")
+        except ValueError:
+            at_cp = len(cmd)
+        cmd[at_cp:at_cp] = extra_jvm
+        print(f"extra JVM args: {' '.join(extra_jvm)}")
 
     print(f"version : {cfg['version_id']}")
     print(f"java    : {cfg['java']}")
