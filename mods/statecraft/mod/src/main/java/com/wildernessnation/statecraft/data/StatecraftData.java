@@ -8,6 +8,7 @@ import com.wildernessnation.statecraft.core.data.NationData;
 import com.wildernessnation.statecraft.core.era.EraTable;
 import com.wildernessnation.statecraft.core.model.Culture;
 import com.wildernessnation.statecraft.core.persist.StateMigrator;
+import com.wildernessnation.statecraft.core.persist.StateMigrations;
 import com.wildernessnation.statecraft.core.persist.StateNode;
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,7 +42,8 @@ public final class StatecraftData {
     public static void load() {
         eras = DataFiles.eras(read(ERAS_PATH));
         nations = DataFiles.nations(read(NATIONS_PATH));
-        migrator = StateMigrator.currentOnly();
+        // 生产迁移链（core 侧）：v1 是**真的发布过**的格式，测试世界里的 .dat 就是 v1
+        migrator = StateMigrations.production();
         LOG.info("Statecraft 数据已载入：{} 个时代、{} 个文化、国名池 {} 个",
                 eras.size(),
                 nations.cultures().size(),

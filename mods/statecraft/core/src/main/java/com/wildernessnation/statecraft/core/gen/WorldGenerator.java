@@ -3,6 +3,7 @@ package com.wildernessnation.statecraft.core.gen;
 import com.wildernessnation.statecraft.core.config.StatecraftConfig;
 import com.wildernessnation.statecraft.core.model.Culture;
 import com.wildernessnation.statecraft.core.model.Nation;
+import com.wildernessnation.statecraft.core.model.Relation;
 import com.wildernessnation.statecraft.core.model.WorldState;
 import com.wildernessnation.statecraft.core.rng.DeterministicRandom;
 import java.util.ArrayList;
@@ -86,15 +87,33 @@ public final class WorldGenerator {
             double stance = stanceFor(development, stanceJitter, cfg);
             double military = 10.0 + size * 2.0;
             double treasury = 20.0 + development * 0.5;
-            nations.add(new Nation(
+            nations.add(Nation.spawn(
                     "n" + i, name, culture.id(), size, development, stance,
-                    military, treasury, points.get(i)[0], points.get(i)[1], false, 0.0));
+                    military, treasury, points.get(i)[0], points.get(i)[1]));
         }
 
         ensureNearestIsPacific(nations, spawnX, spawnZ);
         return new WorldState(
-                WorldState.CURRENT_SCHEMA_VERSION, seed, nations, startingEraId,
-                startingEraOrdinal, 0L);
+                WorldState.CURRENT_SCHEMA_VERSION, seed, startingEraId,
+                startingEraOrdinal, 0L, nations, initialRelations(nations), List.of(), 0.0);
+    }
+
+    /**
+     * 开局关系：所有国家两两之间都是和平、态度 0。
+     *
+     * <p>刻意<strong>不</strong>随机初始态度：设计里国家之间的关系是由后续结算推出来的
+     * （§八"由 stance、attitude、邻接关系决定开战概率"），开局就撒随机态度只会让
+     * 世界变得更难复现，而没有设计上的必要。
+     */
+    private static List<Relation> initialRelations(List<Nation> nations) {
+        List<Relation> out = new ArrayList<>();
+        for (int i = 0; i < nations.size(); i++) {
+            for (int j = i + 1; j < nations.size(); j++) {
+                out.add(new Relation(nations.get(i).id(), nations.get(j).id(), 0.0,
+                        Relation.State.PEACE, 0.0, 0L));
+            }
+        }
+        return out;
     }
 
     /**
