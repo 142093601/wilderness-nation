@@ -46,7 +46,7 @@ DEFAULTS = {
     "username": _P["username"],
     "uuid": _P["uuid"],
     "world": "新的世界",
-    "xmx": "6G",
+    "xmx": "10G",
     "width": "854",
     "height": "480",
 }
