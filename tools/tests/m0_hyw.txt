@@ -1,0 +1,85 @@
+# M0：HYW 单位能不能刷出来、**并且会不会主动攻击玩家**（`NATIONS.md` §十四 风险 1）
+#
+# 为什么不能照抄旧的 hyw_units.txt：
+#   ① 它用 `/execute if entity` 当判据 —— 那只证明"刷出来了"，**不证明"它会打人"**，
+#      而 M0 要回答的恰恰是后者（夺城的前置）；
+#   ② 它断言 `Test passed`，那是命令回显，**跟随客户端语言**（本机 zh_cn）→ 英文断言必然不匹配。
+#
+# 本脚本的判据只有两件与语言无关的事：
+#   ① 玩家血量真的掉了（scoreboard 的 health 准则 + `if score` 比较，输出是我们自己 say 的 ASCII 标记）；
+#   ② 印记行落进日志（`say` 会广播 + 记日志，所以哪怕 RCON 回显不可靠也读得到）。
+#
+# 通道：**全部走 rcon（服务端）**。玩家就算被打死也不影响 —— 死亡屏只吞客户端按键，
+# RCON 是另一条通道。这正是 2026-09-19 那次 0/3 假失败的根因（命令全丢在加载期/死亡屏后面）。
+#
+# 前置：
+#   1) python server_ctl.py --setup --start        （服务端起来，RCON 就绪）
+#   2) python game_agent.py --server 127.0.0.1:25565 --script tests\m0_hyw.txt
+#
+# 反例判读：这里刻意**不**加"没挨打就 FAIL"的期望 —— 本脚本只负责产出证据。
+# 若最后一行 M0_RESULT 没出现，就说明"它没打玩家"，那时要看的旋钮见文件末尾。
+
+# ---- 0) 通道自检：先证明 RCON 有回显，否则后面"无输出"没法解释 ----
+rcon: list
+expect: There are \d+ of a max of \d+ players online
+
+# ---- 1) 清干扰：野生怪、昼夜、天气、自然回血都不许混进判据 ----
+rcon: gamerule doMobSpawning false
+rcon: gamerule doDaylightCycle false
+rcon: gamerule doWeatherCycle false
+rcon: gamerule naturalRegeneration false
+rcon: time set noon
+rcon: difficulty normal
+rcon: gamemode survival {{player}}
+rcon: effect clear {{player}}
+rcon: execute at {{player}} run kill @e[type=!player,distance=..64]
+
+# ---- 2) 健康计分板 + 阴性对照：动手之前必须是满血 ----
+rcon: scoreboard objectives add m0hp health
+rcon: execute at {{player}} run effect give {{player}} minecraft:instant_health 1 10 true
+rcon: scoreboard players get {{player}} m0hp
+expect: has 20
+shot: m0/m0-before.png
+
+# ---- 3) 刷一个**无主** HYW 单位（/summon 出来的就是无主的），并确认它真的在 ----
+# 放在玩家身边 5 格：不考验寻路，先回答"它愿不愿意打人"
+rcon: execute at {{player}} run summon hundred_years_war:bandit_soldier ~ ~ ~5
+rcon: execute at {{player}} if entity @e[type=hundred_years_war:bandit_soldier,distance=..32] run say M0_SPAWN=YES
+expect: M0_SPAWN=YES
+
+# ---- 4) 等它自己走过来动手（这一条就是 wait 存在的理由：AI 需要时间）----
+wait: 45
+shot: m0/m0-during.png
+
+# ---- 5) 通道还活着吗？（否则下一步的"无输出"无法区分"没挨打"和"RCON 挂了"）----
+rcon: say M0_CHANNEL=ALIVE
+expect: M0_CHANNEL=ALIVE
+
+# ---- 6) 证据：血量读数 + 判据 ----
+rcon: scoreboard players get {{player}} m0hp
+rcon: execute if score {{player}} m0hp < 20 run say M0_RESULT=ATTACKS_PLAYER
+expect: M0_RESULT=ATTACKS_PLAYER
+
+# ---- 7) 收尾：把刷出来的东西清掉，别污染这个世界 ----
+rcon: execute at {{player}} run kill @e[type=hundred_years_war:bandit_soldier,distance=..64]
+
+# ============================================================================
+# 如果第 6 步没有输出（= 它没打玩家），按这个顺序查：
+#
+#   1) config/hundredyearswar/hyw_main.json5 的这两项（本机当前值见括号）：
+#        "nullOwnerUnitsAggressive": true            → 无主单位攻击**所有活物**，
+#                                                      除了自然生物（牲畜/鱼/海豚/蝙蝠）和 Enemy 阵营怪
+#        "nullOwnerUnitsFriendlyToEnemy": false      → 无主单位**不**对 Enemy 阵营友好
+#      按注释，hostile_target_list / target_list 那两组名单**只在 FriendlyToEnemy 为 true 时生效**。
+#      → 想让它打玩家，Aggressive 必须是 true（当前就是）。
+#   2) 服务端与客户端**都要**有 HYW（服务端列表里有它，见 tools/lists/server-mods.txt）。
+#   3) 难度不能是 peaceful（本脚本已设 normal）；玩家不能是创造（已设 survival）。
+#   4) 若"刷得出来但就是不理人"，把 `nullOwnerUnitsFriendlyToEnemy` 改成 true 再测一次 ——
+#      那会打开 hostile_target_list 那条路径，是**下一个**可比对的实验，不是同一件事。
+#
+# 顺带记一笔对计划 5（夺城）有影响的项：
+#   "enableSupplySystem": true  → 士兵需要补给，否则吃惩罚。
+#     守军要是长期站着没人管，会不会因为缺补给而变弱，得在夺城环节单独验。
+#   "despawnNullOwnerUnitsWhenFriendlyToEnemy": false → 无主单位默认自然消失的条件没开，
+#     所以"临时守军"不会自己跑掉（是好事），但也要注意别在世界里留一堆。
+# ============================================================================

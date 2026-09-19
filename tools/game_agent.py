@@ -238,6 +238,16 @@ def parse_script(path: Path) -> list[dict]:
         if key in ("cmd", "rcon"):
             cur = {"kind": key, key: value, "expect": [], "shots": [], "line": lineno}
             steps.append(cur)
+        elif key == "wait":
+            # 有些现象需要**时间流逝**才看得见（怪物得走过来、AI 得选目标）。
+            # 没有这一步时只能拿一串无关命令去"烧时间"，既慢又骗人。
+            try:
+                seconds = float(value)
+            except ValueError:
+                print(f"  ! 脚本第 {lineno} 行 wait 不是数字: {value}")
+                continue
+            cur = {"kind": "wait", "seconds": seconds, "expect": [], "shots": [], "line": lineno}
+            steps.append(cur)
         elif key == "expect" and cur is not None:
             cur["expect"].append(value)
         elif key == "shot" and cur is not None:
@@ -264,6 +274,14 @@ def run_script(cfg: dict, steps: list[dict], out_dir: Path) -> int:
     try:
         for i, step in enumerate(steps, 1):
             kind = step.get("kind", "cmd")
+            if kind == "wait":
+                print(f"[{i}] 等 {step['seconds']:.0f} 秒 ...")
+                time.sleep(step["seconds"])
+                # 挂在 wait 上的截图要在**等完之后**拍（"等待期间发生了什么"才是要看的画面）
+                for shot in step["shots"]:
+                    note = screenshot(out_dir / shot)
+                    print(f"      shot -> {shot}  {note}")
+                continue
             if kind == "rcon":
                 if rcon is None:
                     rcon = server_ctl.Rcon()

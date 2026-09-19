@@ -19,6 +19,27 @@
 
 ---
 
+## G. M0：夺城的前置验证（2026-09-19 新增，**唯一挡住计划 5 的事**）
+
+> 详细方案与脚本见 `PLAN-m0-hyw.md` + `tools/tests/m0_hyw.txt`。
+> 为什么必须开游戏：要一个**真玩家**当靶子，而且怪得真的走过来动手。
+
+- [ ] **G1 HYW 单位会不会主动攻击玩家**（判据：生存难度下玩家血量真的掉了 +
+      `M0_RESULT=ATTACKS_PLAYER` 印记落进服务端日志）
+      - 静态证据已指向"会"：`hyw_main.json5` 里 `nullOwnerUnitsAggressive=true` 且
+        `nullOwnerUnitsFriendlyToEnemy=false`，而 `/summon` 出来的是**无主**单位 → 按配置应当攻击所有活物
+      - 跑法：`server_ctl.py --setup --start` → `game_agent.py --server 127.0.0.1:25565 --script tests\m0_hyw.txt`
+      - **判据刻意不依赖客户端按键**（玩家很可能被打死，死亡屏会吞按键；RCON 是另一条通道）
+- [ ] **G2（G1 失败时才做）** 把 `nullOwnerUnitsFriendlyToEnemy` 改成 `true` 再跑一次 ——
+      那会打开 `hostile_target_list` 那条路径。两次结果都要留证；这决定夺城是"改设计"还是"改配置"
+- [ ] **G3（顺带）** `enableSupplySystem=true` 下，长期无人管的守军会不会因缺补给变弱
+      （直接影响夺城"临时守军"的可行性）
+
+**M0 未验成之前不要开始计划 5** —— 夺城整套（旗座/守军/指挥官/百姓隐藏）都建立在
+"能按我们的意思刷出并指挥 HYW 单位"之上。
+
+---
+
 ## A. 联机功能验收（需要：服务端 + 2 个客户端同时开）
 
 > 为什么必须后置：跨玩家权限**物理上需要两个真实玩家**；而且两个客户端 + 服务端大概要 5~6GB 内存，

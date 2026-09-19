@@ -453,6 +453,14 @@ mod 幂等生成一个【绑定村民】= 这座建筑的功能接口 + 城里�
 
 1. **能否刷出 HYW 单位、并让它们攻击玩家** —— **仍未验证：2026-09-19 两次真机尝试都被环境阻断，没拿到任何动态证据**。HYW 注册了 103 个实体、含两套敌对势力与攻城器械（静态证据充分：本次核对 `entity.hundred_years_war.*` 共 **103** 键，`bandit_soldier` / `desert_raider_commander` / `battering_ram` 三个 id 齐全），但"运行时刷出并作战"的活体验证没做成，两个阻断点都在环境侧：① **单机真客户端必崩在进世界那一步**（当日 5 次同签名：09:16 / 09:30 / 09:44 / 14:53 / 15:11；崩点是 `inventoryprofilesnext` 2.2.5 的类初始化环 `Features.ENABLE_PROFILES$delegate is null`，触发屏 `LevelLoadingScreen`，见 `crash-reports/crash-2026-09-19_14.53.30-client.txt`）——按 `tools/tests/hyw_units.txt` 跑两次都是 0/10、全部"无输出"，命令从未进到活着的游戏；② 退路（真客户端连专用服务端，即 3~7 人的真实部署形态）同样被阻断：服务端以自带的 `-Xmx4G` 起来后约 3 分钟即 `OutOfMemoryError: Java heap space`（崩在 WorldEdit 的 `PlatformReadyEvent` 派发中，`server/logs/latest.log` 15:24:49，**当时无玩家在线**），随后 OOM 自旋吃掉 8 核里的 7.2 核，客户端连 `Connecting to` 都到不了。**先修这两点（客户端换掉/升级 InventoryProfilesNext；服务端调大 `server/user_jvm_args.txt` 的堆）再重跑该脚本即可判定**；另注意本机 `options.txt` 是 `lang:zh_cn`，脚本里的英文断言（`Test passed`）很可能不匹配（回显为中文），届时以输出行人工判读为准。
    → **本 mod 的第一个验证项**；夺城环节完全挂在这上面。
+   **2026-09-19 傍晚更新**：两个环境阻断点**都已经修掉**（C12 客户端进不了世界 / C14 BOM 编码），
+   而且方案已经重新设计过 —— 见 `PLAN-m0-hyw.md` + `tools/tests/m0_hyw.txt`：
+   判据改成"生存难度下玩家血量真的掉了"（不依赖客户端按键，因为玩家可能被打死、死亡屏会吞按键），
+   通道全部走 RCON，跑在专用服务端 + 一个真客户端加入的形态上。
+   **静态证据已经指向"会打"**：`hyw_main.json5` 里 `nullOwnerUnitsAggressive=true`、
+   `nullOwnerUnitsFriendlyToEnemy=false`，而 `/summon` 出来的是无主单位 → 按配置应当攻击所有活物
+   （`hostile_target_list` 那两组名单只在 `FriendlyToEnemy=true` 时才生效）。
+   差的就是真机跑一次。
 2. **RCON 命令通道不可靠**：自带 `server_ctl.py` 与手写裸客户端都能登录成功但只拿到空响应，服务端日志也无命令痕迹。
    → **所有自动化测试跑在 `core` 层**；命令只留人工调试。
 3. **`Portable Blueprints` 的真实能力未核实**（是否支持"图纸即物品"、材料代扣的确切行为）。
