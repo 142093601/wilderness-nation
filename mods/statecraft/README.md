@@ -66,9 +66,9 @@
 | `StateNode` | ✅ 中性数据树（`Obj/Arr/Str/Int/Dec/Bool`）——core 与 NBT 的唯一接缝。`Int`/`Dec` 分开是为了 **long 种子不丢精度**；字段保插入序（不能用 `Map.copyOf`，它不保证顺序）|
 | `StateCodec` | ✅ `WorldState ↔ StateNode` 往返；字段名与 `NATIONS.md` §五 一致；读失败时报**完整路径**（如 `world.nations[3].size`）|
 | `StateMigration` / `StateMigrator` | ✅ 按 `schemaVersion` 选迁移链；**版本太新 / 缺迁移 / 内容损坏 → 只重置国家系统 + 中文警告，绝不让存档报废**；`eraId` 不在当前时代表里 → 归位；`eraId` 与 `eraOrdinal` 矛盾 → 以 id 为准 |
-| 事务日志 / 崩溃重放 | ⏸ **刻意没做**：它要记"结算序号 + 输入哈希"，而"输入"由结算引擎（计划 3）定义，现在写就是凭空猜接口 |
+| `StateHash` / `SettlementLog` / `ReplayResult` | ✅ 事务日志与重放（计划 3）：日志记**输入**（结算序号 + 触发 + 小时数 + 动手前状态哈希），`replay` 逐步校验、`verify` 核对最终结果；支持从快照接着重放 |
 
-**188 个 JUnit 用例全绿**（13 个测试类），全程离线、不需要开游戏。
+**199 个 JUnit 用例全绿**（15 个测试类），全程离线、不需要开游戏。
 
 > 🔒 **硬规则护栏**：`stanceAlwaysStaysInsideTheFormulaEnvelope` 保证最近国主和只能靠"交换位置"实现。
 > 2026-09-19 用变异探针验证过它有牙齿：把交换改写成"翻转该国 stance"后，**只有这条断言失败**，
