@@ -33,6 +33,7 @@
 | **T16** | **换行符会让 pack 失去可复现性**：本机 `core.autocrlf=true` 且仓库无 `.gitattributes` → 新克隆时 `pack/**` 被转成 CRLF → `pack/index.toml` 里的哈希全部失配，别人 `packwiz install` 直接失败 | 🟠 可复现性 | 新增 `.gitattributes`，`pack/**` 标 `-text`（字节精确）✅ |
 | **T17** | **`index.toml` 里有一个陈旧哈希**：C2 手工 pin Terralith 后没 `packwiz refresh` → 安装器在 terralith 这一步必然失败（**本机不读 index.toml，所以永远看不到**） | 🟠 可复现性 | `packwiz refresh`（已确认幂等）✅ |
 | **C12** | **客户端开世界即崩**：`InventoryProfilesNext 2.2.5` 在 `Minecraft.doWorldLoad` 时 `ConfigScreenSettings.<clinit>` NPE（libIPN 的 delegate 为空）→ **客户端进不了任何世界** | 🔴 致命（客户端全线瘫痪） | 三次复现；排除 Connector/FFAPI/continuity/陈旧配置后仍崩 → `inventory-profiles-next` 改 **`hold`**，移除后客户端正常加载世界 ✅ |
+| **C15** | **`additionalstructures` 在玩家登入时于服务端主线程发 HTTP**（查 Patreon 赞助者），网络不通时**单次 tick 冻结 41 秒**（ModernFix 看门狗误报"死锁"）→ 游戏像卡死 | 🔴 致命（玩家侧进世界即卡） | 关掉它的 `patreon_rewards`（**已用字节码验证**该分支会跳过三个 URL）+ 关掉它的 update-checker ✅ |
 | **C14** | **Epic Knights 的 mixin 配置带 UTF-8 BOM**，而 PCL 会加 `-Dfile.encoding=COMPAT`（中文 Windows 上 = **GBK**）→ 用户一启动就崩（`Expected BEGIN_OBJECT but was STRING`）| 🔴 致命（玩家侧启动失败） | ① 新工具 `tools/strip_bom.py` 去 BOM（客户端+服务端已执行）② 把"启动必须 UTF-8"写成硬要求 ✅ |
 | **C13** |：判据 `Starting integrated minecraft server` 在**开世界早期**就写，之后崩溃仍被判 PASS → **批 4、批 5 的"验收通过"是假的** | 🔴 致命（结论不可信） | 判据加"关卡加载完成"证据 + "本次零新崩溃报告"硬闸门；旧结论待重验 ✅ |
 | **T18** | **`hold` 的 mod 被依赖拖进 pack，还混入了 Fabric 侧 mod**：批 4 选了 `continuity`（Fabric 侧，与已装 `fusion` 重复），它 `required connector` → packwiz 把 `connector` 写进 pack 并装入客户端（连带 FFAPI） | 🟠 流程 | `continuity` 改 `skip`；`connector`/FFAPI 移出；给 `apply_modlist.py` 加两道防线（拒 Fabric 侧 mod、拒被依赖带进来的 hold/skip）✅ |
@@ -697,3 +698,62 @@ Caused by: JsonSyntaxException: Expected BEGIN_OBJECT but was STRING at line 1 c
 
 **一个自证**：我用 PowerShell 的 `Set-Content -Encoding utf8` 写 Java 测试文件时，它也给文件加了 BOM，
 `javac` 当场报 `非法字符: '\ufeff'` —— 同一个 bug 在同一台机器上原样复现了一次。
+
+### C15 · `additionalstructures` 在**玩家登入**时于服务端主线程发 HTTP → 冻结 41 秒（🔴 已修）
+
+**现象（用户实测，2026-09-19 17:54）**：新建世界后进游戏，区块加载很慢，加载两三个区块后**卡死**；
+ModernFix 看门狗报 `A single server tick has taken 41366 ms`（>40000ms），提示"很可能已死锁"，并让看线程转储。
+
+**线程转储给出的真相**（不是死锁，是**网络阻塞**）：
+
+```
+"Server thread" RUNNABLE (in native)
+  sun.nio.ch.SocketDispatcher.read0 ... sun.net.www.http.HttpClient.parseHTTPHeader   ← 卡在 HTTP
+  ↑ 调用者
+  additionalstructures@6.3.2  Events.SupporterCheck(Events.java:157)
+  additionalstructures@6.3.2  Events.SupporterRewards(Events.java:104)
+  neoforge  EventHooks.firePlayerLoggedIn        ← 玩家刚登入
+  minecraft PlayerList.placeNewPlayer
+```
+
+`additionalstructures` 的 `Events` 类里**硬编码**了三个 URL：
+`raw.githubusercontent.com/XxRexRaptorxX/Patreons/main/{Supporter, Premium%20Supporter, Elite}`，
+在**玩家登入时**逐个请求，网络不通就各超时 15 秒 → 3 个就是 45 秒。
+
+**修法与验证**：它的配置只有两个开关。把 `config/additionalstructures-server.toml` 的
+`patreon_rewards = true` 改成 `false`、`additionalstructures-client.toml` 的 `update-checker` 改成 `false`。
+**没靠配置项的说明文字下结论**：反汇编 `SupporterRewards` 确认了闸门——
+
+```
+10: getstatic Config.PATREON_REWARDS
+28: ifeq 442                  ← false 直接跳到末尾
+31: new URL ".../Supporter"   ← 三个 HTTP 请求都在跳转之后
+```
+
+**为什么这类问题只在真人玩时才暴露**（与 C14 同一个教训）：我们的自动化启动时网络往往还能通到那几个地址，
+所以从没卡过；而玩家那次网络不通 → 15 秒 ×3。**网络依赖型的阻塞调用，机器再快也救不了。**
+
+### 附带两条（同一次事故里查出来的）
+
+**① OOM 是"卡死"拖出来的后果，不是原因**。时间线：17:54:47 第一次卡 41 秒 → 反复卡 → **18:00:0x 才**
+`OutOfMemoryError: Java heap space`（栈在 `CompoundTag.readNamedTagData`，读 NBT）。堆确实偏紧
+（玩家启动器给到 7.3G）→ 建议 **10G**；但根因是那次阻塞。
+
+**② 新建世界慢的一个大头是 RoadWeaver 的预测半径**：
+
+```jsonc
+structurePrediction.predictRadiusChunks = 1024   // 1024 区块 = 16384 格的范围里预测结构（为了绕开结构修路）
+planning.initialPlanRadiusChunks        = 128
+```
+
+上次服务端建世界时它的实测工作量是 `radiusApproxChunks=128 tiles=289 samples=263169`。
+**本轮已关掉 `performance.opencl*`（本机 OpenCL 不可用，开着只是反复失败回退 CPU，纯浪费）。**
+`predictRadiusChunks` 是**影响世界内容的**参数（调小 = 路网对远处结构的避让变弱），
+所以没有擅自改，留待拍板：建议 `1024 → 256`。
+
+### 由此暴露的验收缺口（重要）
+
+**"新建世界 + 首次登入"这条路径，我们此前从未验过**——所有批次验收用的都是**预先生成好的世界备份**
+（`--reuse-world data/bN-world`），走的是"加载已有世界 + 进世界"。而真人第一次玩做的是
+**新建世界**（完整世界生成）+ **首次登入**（触发 `firePlayerLoggedIn` 那条链）。
+→ 已加入验收清单：**每批验收必须包含一次"新建世界并首次登入"**，且要能模拟玩家的启动参数（见 C14 的 `--jvm-args`）。
