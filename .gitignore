@@ -19,7 +19,13 @@ server/
 *.jar.tmp
 
 # ---------- 运行与测试产物 ----------
-data/
+# 必须**锚定到仓库根**（前导斜杠）：写成裸 `data/` 会匹配**任意层级**的 data 目录，
+# 于是把我们自己的源码一起吞掉 —— 2026-09-19 实测：
+#   mods/statecraft/core/src/main/java/.../core/data/     ← 被吞
+#   mods/statecraft/mod/src/main/java/.../statecraft/data/ ← 被吞
+#   mods/statecraft/mod/src/main/resources/data/          ← 被吞（eras.json / nations.json）
+# 而 Gradle 不看 .gitignore，所以本地构建完全正常、推上去却少一半源码。属于"本地绿、别人红"的经典坑。
+/data/
 logs/
 crash-reports/
 saves/
@@ -68,8 +74,13 @@ desktop.ini
 # ---------- 例外：文档里要展示的图 ----------
 !docs/img/**
 
+# tools/data/ 是历史上误建的报告目录（脚本要的 `data/` 都在仓库根，没有任何脚本读 tools/data/）。
+# 以前是被上面那条裸 `data/` 顺带忽略的，锚定之后要显式写出来，避免它突然变成"新文件"混进提交。
+tools/data/
+
 # Gradle 构建产物（mods/statecraft）
 mods/statecraft/.gradle/
 mods/statecraft/build/
 mods/statecraft/**/build/
 mods/statecraft/.gradle*
+mods/statecraft/**/run/

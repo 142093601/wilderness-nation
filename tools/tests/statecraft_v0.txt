@@ -1,0 +1,27 @@
+# M2 验收（计划 2）：存档真的接上了游戏
+#
+# 前置（**必须**，否则会像 2026-09-19 那样拿到 0/3 的假失败）：
+#   1) mods/statecraft-0.1.0.jar 已装进实例；
+#   2) 测试世界**不是玩家在玩的那个**；
+#   3) **玩家是创造模式、世界是和平** —— 死亡屏会吞掉所有按键（实测被卫道士杀过），
+#      于是命令一条都进不去，看起来像"mod 功能坏了"。
+#
+# 每条 cmd 用真客户端执行，输出从 logs/latest.log 读回文本再断言。
+#
+# 另外：**落盘/读档不靠这个脚本**（按键通道不可靠）。
+#   第 1 次启动 → 日志出现「Statecraft 建库」，并落盘 saves/<world>/data/statecraft.dat；
+#   第 2 次启动 → 日志出现「Statecraft 读档成功」且 **seed 与第一次相同**。
+# 这两行是服务端启动时打的，玩家死不死都会打，所以比脚本证据更稳。
+# 存盘内容可以用 tools/nbt_dump.py 直接核对。
+
+# 1) 建库/读档都该让 /statecraft info 有话说
+cmd: /statecraft info
+expect: STATECRAFT_INFO seed=-?\d+ era=(landing|founding|infra|expedition|defense|civilization) ordinal=\d+ seq=\d+ nations=\d+
+
+# 2) 国家真的生成了，且文化取自内置 nations.json
+cmd: /statecraft info
+expect: bandit|desert_raider
+
+# 3) 核心验收：写进 NBT 再读回来，逐字段相等
+cmd: /statecraft roundtrip
+expect: STATECRAFT_ROUNDTRIP=OK

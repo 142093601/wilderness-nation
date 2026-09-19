@@ -163,6 +163,37 @@ def clean_lines(raw: str) -> list[str]:
     return deduped
 
 
+# ── 输入就绪探针 ──────────────────────────────────────────────────────────────
+
+def wait_for_input_ready(cfg: dict, timeout: float = 420.0, gap: float = 4.0) -> bool:
+    """等"我发出去的按键真的被游戏收到了"。
+
+    为什么不能只等日志里的"进世界"标记：`LoggerChunkProgressListener` / `Preparing spawn area`
+    都是生成区域的**开始**（第一行就是 2%），实测比真正能交互早得多 ——
+    2026-09-19 的 statecraft 脚本 3 条命令全发在服务端起来之前，结果是 0/3，
+    而它看起来像"mod 功能坏了"。判据必须是**闭环**的：发一条探针，等它自己在日志里出现。
+
+    探针用**普通聊天**而不是命令：聊天回显由服务端写进日志，不依赖任何 mod 注册命令，
+    也不受客户端语言影响（原版命令的回显跟随 zh_cn 会变成中文，英文断言会全部失效）。
+    """
+    log = log_path(cfg)
+    deadline = time.time() + timeout
+    attempt = 0
+    while time.time() < deadline:
+        attempt += 1
+        token = f"sc-probe-{attempt}"
+        offset = log_size(log)
+        send_command(token)
+        time.sleep(1.5)
+        raw, _ = read_delta(log, offset)
+        if token in raw:
+            print(f"  按键通道已就绪（第 {attempt} 次探针在日志里出现）")
+            return True
+        send_tap(0x1B)
+        time.sleep(gap)
+    return False
+
+
 # ── 命令执行（含自愈） ────────────────────────────────────────────────────────
 
 def run_command(cfg: dict, command: str, settle: float = 1.6, attempts: int = 3) -> dict:
@@ -321,10 +352,15 @@ def main() -> int:
                 proc = subprocess.Popen(cmd, cwd=str(version_dir), stdout=out, stderr=subprocess.STDOUT)
             # 连服务器时不会出现单机那行判据，要改等"加入游戏"的广播
             probe = re.compile(r"joined the game|Connecting to") if cfg["server"] else None
-            if not at.wait_for_in_world(log_path(cfg), proc, time.time() + 300, launched_at, probe):
+            if not at.wait_for_in_world(log_path(cfg), proc, time.time() + 420, launched_at, probe):
                 print("未能进入世界")
                 return 1
             print("  已进入世界")
+            # 日志说"进了世界"不等于客户端已经能收按键（这个包从启动到服务端真正起来要 ~4 分钟）。
+            # 不做这一步，脚本会对着还在加载的游戏打字，然后报一堆像"功能坏了"的假失败。
+            if not wait_for_input_ready(cfg):
+                print("!! 世界里一直收不到按键（客户端始终没就绪）→ 不跑脚本，免得产出假失败")
+                return 1
             time.sleep(3)
 
         if not window_present():

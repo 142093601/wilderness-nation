@@ -64,11 +64,17 @@ CRASH_LOG_PATTERNS = (
     "Encountered an unexpected exception",
 )
 
-# 单机模式的**真正**"关卡已加载"证据：只有关卡真的载入完成时才会写这几行。
-# 注意：`joined the game` 是**连服务器**场景的判据，**单机不会出现**
-# （2026-09-19 我自己先把它当单机判据，白等了一轮）。
-LEVEL_LOADED_MARKER = re.compile(
-    r"LoggerChunkProgressListener|Preparing spawn area|Time elapsed:")
+# 单机模式的**真正**"关卡已加载"证据。
+#
+# 2026-09-19 第二次踩假阳性：原来这里是
+#     r"LoggerChunkProgressListener|Preparing spawn area|Time elapsed:"
+# 其中前两个都是**开始**生成区域时写的（`LoggerChunkProgressListener` 第一行就是"2%"），
+# 比真正完成早得多 —— 实测 `LoggerChunkProgressListener` 在 20:14:07、真正完成在 20:14:22，
+# 于是 game_agent 提前 15 秒就以为进了世界，脚本命令全发在服务端起来之前（详见 game_agent.wait_for_input_ready）。
+# 现在只认**完成**标记：`Time elapsed: N ms` 由 ServerLevel 载入流程最后一行写出。
+# 注意它是纯日志字符串、**不跟随客户端语言**（本机 zh_cn 下实测仍是英文），
+# 而 "准备生成区域中：x%" 那行是翻译过的 —— 这也是不能用它的原因之一。
+LEVEL_LOADED_MARKER = re.compile(r"Time elapsed:")
 
 
 
@@ -402,8 +408,12 @@ def main() -> int:
     args = ap.parse_args()
 
     cfg = dict(DEFAULTS)
+    # `world` 曾经**不在**这个列表里 → `cfg["world"]` 永远是 DEFAULTS 的「新的世界」，
+    # 于是 `--world X` 从来就没生效过：它照旧启动玩家在玩的真实世界，而表头还打印你传的 X。
+    # 2026-09-19 抓到（第二次落盘验证时，游戏参数里赫然是「新的世界」）。教训：表头必须打印
+    # **真正用来启动的那个值**，否则它只会替 bug 打掩护。
     for key in ("version_dir", "version_id", "game_root", "java", "username", "uuid", "xmx",
-                "width", "height"):
+                "width", "height", "world"):
         cfg[key] = getattr(args, key)
     cfg["server"] = args.server
     version_dir = Path(cfg["version_dir"])
@@ -433,7 +443,7 @@ def main() -> int:
 
     print(f"version : {cfg['version_id']}")
     print(f"java    : {cfg['java']}")
-    print(f"world   : {args.world}" + (f"  server: {args.server}" if args.server else ""))
+    print(f"world   : {cfg['world']}" + (f"  server: {args.server}" if args.server else ""))
     print(f"window  : {cfg['width']}x{cfg['height']}")
     print(f"classpath entries: {cmd[cmd.index('-cp') + 1].count(';') + 1}")
 

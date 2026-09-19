@@ -8,28 +8,44 @@
 | 模块 | 内容 | 需要 Minecraft 吗 |
 |---|---|---|
 | `core` | 全部规则：生成、结算、外交状态机、环境判定、文本模板、**存档编解码与迁移** | **不需要**（纯 Java，JUnit 直接跑） |
-| `mod`（后续）| NeoForge 适配：SavedData、方块、实体、界面 | 需要（**当前被网络阻塞**，见下） |
+| `mod` | NeoForge 适配：`SavedData`、数据文件载入、命令 | 需要（ModDevGradle 2.0.147 + NeoForge 21.1.250）|
 
 **为什么这样切**：`core` 不 import 任何 Minecraft 类 → 几个时代的推演可以在命令行里一次跑完，
 不需要开游戏、不需要服务器。这是"少让人工测试"的技术前提。
+**mod 层只允许放"什么时候调用"和"格式怎么翻译"，一旦把规则写进去，那些规则就再也测不了了。**
 
 ## 构建与测试
 
 本机没装 Gradle，`gradlew` 会去下 130MB 分发（网络慢）。用缓存里的分发直接跑：
 
 ```powershell
+# 只跑 core（离线、秒级）
 & "$env:USERPROFILE\.gradle\wrapper\dists\gradle-8.11.1-bin\eac4u065zwes5phgltp5f9b9e\gradle-8.11.1\bin\gradle.bat" `
   -p D:\project\nation-pack\mods\statecraft :core:test --console=plain
+
+# 连 mod 一起构建（**首次**需要代理：ModDevGradle 插件与 MC 产物都在 maven.neoforged.net 上）
+& "$env:USERPROFILE\.gradle\wrapper\dists\gradle-8.11.1-bin\eac4u065zwes5phgltp5f9b9e\gradle-8.11.1\bin\gradle.bat" `
+  -p D:\project\nation-pack\mods\statecraft :core:test :mod:build `
+  "-Dhttp.proxyHost=127.0.0.1" "-Dhttp.proxyPort=7897" `
+  "-Dhttps.proxyHost=127.0.0.1" "-Dhttps.proxyPort=7897"
 ```
 
-> ⚠️ **源码编码必须锁 UTF-8**（`core/build.gradle.kts` 里的 `tasks.withType<JavaCompile>`）。
-> 本包源码含中文（国名、事件文本），而 Gradle 默认按**平台编码**读源码 —— 中文 Windows 上是 GBK，
-> 会把 UTF-8 源码错误解码、**字符串静默损坏**。2026-09-19 实测踩到过（与 `CONFLICTS.md` C14 同一类坑）。
+产物 `mod/build/libs/statecraft-0.1.0.jar`（**core 的 class 直接打进去**，单 jar 交付）。
+装法：拷到 `versions\1.21.1-NeoForge_21.1.250\mods\`。
 
-> ⛔ **`mod` 模块暂时做不了**：它要 NeoForge 的 Gradle 插件与 userdev 产物，而这些只在
-> `maven.neoforged.net` 上，本机直连超时、`127.0.0.1:7897` 代理当时没在监听；
-> Gradle 缓存里也**没有**任何 `net.neoforged` 产物。**把代理开起来**就能继续。
-> `core` 完全不受影响（零 MC 依赖）。
+**两个刻意选择**（都为了少踩坑）：
+
+- `disableRecompilation = true`：跳过 NeoForm 的反编译/重编译，我们只需要**能编译**，
+  不需要在 IDE 里读 MC 源码。首次建 MC 产物约 112 秒，之后 up-to-date。
+- `neoforge.mods.toml` **不走 `ProcessResources.expand`**：那会把中文元数据交给平台编码解码，
+  正是 `CONFLICTS.md` C14 那一类坑。代价是版本号有两处，所以加了构建期校验
+  （`verifyModMetadata`）——已用 `-Pmod_version=9.9.9` 探针验证过它真的会让构建失败。
+
+> ⚠️ **源码编码必须锁 UTF-8**（`core/build.gradle.kts` 与 `mod/build.gradle` 里的
+> `tasks.withType<JavaCompile>`）。本包源码含中文（国名、事件文本），而 Gradle 默认按**平台编码**
+> 读源码 —— 中文 Windows 上是 GBK，会把 UTF-8 源码错误解码、**字符串静默损坏**。
+> 2026-09-19 实测踩到过（与 `CONFLICTS.md` C14 同一类坑）。
+
 
 ## 当前进度
 

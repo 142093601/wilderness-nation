@@ -491,7 +491,7 @@ mod 幂等生成一个【绑定村民】= 这座建筑的功能接口 + 城里�
 |---|---|---|
 | **M0** | **验证风险 #1**：刷 HYW 单位并确认它们攻击玩家 | 真机确认（夺城的前置） |
 | **M1** | `core`：数据模型 + 生成 + 结算 + 吸收与疲劳 + 外交状态机 + 国家对玩家压力 + **环境判定与幂等决策** + 文本模板 | 🟡 **骨架与本计划范围已绿**：数据模型 / `StatecraftConfig` / `DeterministicRandom` / `Era`+`EraTable`（含 3/6/9 三套时代表）/ `WorldGenerator` —— **85 个 JUnit 用例全绿**（2026-09-19；独立审查后从 31 扩到 85，并修完其 P0/P1：NaN 穿透、dev 越界、薄环带误报、无主和候选静默失败、两个死配置、国名池容量）。结算、吸收与疲劳、外交状态机、环境判定在计划 3 |
-| **M2** | 持久化（SavedData + schema/era 迁移 + 事务日志）+ 命令 | 🟡 **core 侧已完成**（`PLAN-statecraft-02-persist.md`）：中性数据树 `StateNode` + `StateCodec` 往返 + `schemaVersion` 迁移链 + `eraId` 归位；**版本太新 / 缺迁移 / 内容损坏一律只重置国家系统并给中文警告，绝不让存档报废**（长种子不丢精度也已钉住）。此时共 **116 个 JUnit 用例全绿**。**未做**：NeoForge `SavedData` 薄层（被 `maven.neoforged.net` 不可达阻塞）、事务日志（等计划 3 定义"结算输入"再写） |
+| **M2** | 持久化（SavedData + schema/era 迁移 + 事务日志）+ 命令 | 🟡 **core + mod 薄层已完成，真机落盘已证**（`PLAN-statecraft-02-persist.md`）：`StateNode`/`StateCodec` 往返、`schemaVersion` 迁移链、`eraId` 归位；**版本太新 / 缺迁移 / 内容损坏一律只重置国家系统并给中文警告，绝不让存档报废**。mod 侧用 ModDevGradle 2.0.147 + NeoForge 21.1.250 构建，真机装载成功、生成 12 国并写出 `saves/<world>/data/statecraft.dat`（用 `tools/nbt_dump.py` 核对：`schemaVersion=1`、long 种子未丢精度、12 国名字/文化/坐标俱全）。**共 129 个 JUnit 用例全绿**。**未做**：事务日志（等计划 3 定义"结算输入"再写）、命令的按键通道验证（测试世界的死亡屏会吞按键，见 `CONFLICTS.md` T19）|
 | **M3** | 建筑工 NPC + 图纸授权 + 情报站建筑 + **文书村民（生成/绑定/对话）** + 情报册 + 周报 + 国书 | 游戏内：买授权 → 打图纸 → 文书出现 → 读到真实情报 |
 | **M4** | **夺城环节**（旗座 + 守军 + 指挥官 + 百姓隐藏/恢复 + 占领碑） | 完整链路真机跑通一次 |
 | **M5** | 升级件 + 自定义界面（很可能不需要）+ 打磨 | 手感验收 |

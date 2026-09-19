@@ -1,0 +1,79 @@
+import org.gradle.jvm.toolchain.JavaLanguageVersion
+
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.147'
+}
+
+// 这个子模块的构建脚本故意用 Groovy 而不是 Kotlin DSL：
+// ModDevGradle 的官方文档、模板与 `neoForge {}` 扩展示例全是 Groovy，
+// 照抄能少一层"Kotlin DSL 里这个容器该用 register 还是 create"的猜测。
+// 同一个 Gradle 构建里混用两种 DSL 是支持的，core 保持 Kotlin DSL 不变。
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+version = mod_version
+base {
+    archivesName = 'statecraft'
+}
+
+neoForge {
+    enable {
+        // 与整合包实例（1.21.1-NeoForge_21.1.250）保持一致
+        version = neo_version
+        // 跳过 NeoForm 的反编译 + 重编译：我们只需要**能编译**，不需要在 IDE 里读 MC 源码。
+        // 这一步默认要几十分钟，是"少让人等"的关键开关。
+        disableRecompilation = true
+    }
+    mods {
+        statecraft {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+// neoforge.mods.toml 是**手写不展开**的（不走 ProcessResources 的 expand）：
+// 那会把中文元数据交给平台编码去解码，正是 CONFLICTS.md C14 那一类坑。
+// 代价是版本号有两处，所以这里加一道构建期校验，写歪了直接构建失败，而不是悄悄发出一个版本号不对的 jar。
+def modMetadata = file('src/main/resources/META-INF/neoforge.mods.toml')
+tasks.register('verifyModMetadata') {
+    inputs.file(modMetadata)
+    doLast {
+        def text = modMetadata.getText('UTF-8')
+        if (!text.contains("version = \"${mod_version}\"".toString())) {
+            throw new GradleException(
+                    "neoforge.mods.toml 的 version 与 gradle.properties 的 mod_version 不一致：" +
+                            "应写成 version = \"${mod_version}\"")
+        }
+        if (!text.contains('modId = "statecraft"')) {
+            throw new GradleException('neoforge.mods.toml 里的 modId 必须是 statecraft')
+        }
+    }
+}
+tasks.named('processResources') {
+    dependsOn 'verifyModMetadata'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':core')
+}
+
+// 源码里有中文（事件文本、警告），必须显式锁 UTF-8：
+// Gradle 默认按平台编码读源码，中文 Windows 上是 GBK，会把 UTF-8 源码静默解坏（CONFLICTS.md C14 同类坑）。
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+// core 的 class 直接打进 mod jar。
+// core 是零依赖的纯 Java，单 jar 交付最简单，不需要 jarJar 那套元数据。
+tasks.named('jar') {
+    from project(':core').sourceSets.main.output
+}

@@ -1,0 +1,27 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+license = "All Rights Reserved"
+
+[[mods]]
+modId = "statecraft"
+version = "0.1.0"
+displayName = "Statecraft（邦交）"
+authors = "142093601"
+description = '''
+《荒野建国》的配套 mod：开局生成周边国家、时代推进、外交与远征。
+规则全部在 core（纯 Java，离线 JUnit 可跑），这一层只做 NeoForge 适配。
+'''
+
+[[dependencies.statecraft]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.1.0,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.statecraft]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21.1, 1.22)"
+ordering = "NONE"
+side = "BOTH"
