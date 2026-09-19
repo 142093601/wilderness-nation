@@ -787,7 +787,7 @@ metafile = true
 
 [[files]]
 file = "mods/moreculling.pw.toml"
-hash = "f32f944f62c4ea97b2d1f8582bb5f1a0adf7f62983b35f75288e27025365d7d0"
+hash = "d6183e3e5f6f98aa2dc8dec2491ca2a4802262007f75781ef449296f7d9671ba"
 metafile = true
 
 [[files]]
@@ -847,7 +847,7 @@ metafile = true
 
 [[files]]
 file = "mods/particle-rain.pw.toml"
-hash = "a5002024b70bba96cdcfdec654d7b224f5386da01b992e8c71225effe7cd8351"
+hash = "70a1250e9612f8194f88e9c14b405907d16e7b2df7742d6b4d1c42473486395e"
 metafile = true
 
 [[files]]
@@ -1117,7 +1117,7 @@ metafile = true
 
 [[files]]
 file = "mods/xaeroplus.pw.toml"
-hash = "45ad609bee750d3b617a4ca0bbff8155d123981ce149619a3fb1f80636503ea9"
+hash = "b308cf9101293f37238217cfd0a37375fbf34664c4c36955986592fcac9fe879"
 metafile = true
 
 [[files]]

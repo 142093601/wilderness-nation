@@ -5,8 +5,9 @@
 >
 > **范围**：只做"能跑起来 + 冲突清账"。**具体魔改（配方/数值/配置调参）不在本轮**，见文末「待魔改清单」。
 >
-> **进度**：**五批全部装完并验证通过** —— 批 0 已装地基 ✅ · 批 1 ✅ · 批 2 ✅ · 批 3 ✅ · 批 4 ✅ ·
-> 批 5 ✅（客户端 236 jar 进世界 PASS）。`plan` 197 条全部就位，剩下的是 `hold`/`skip` 的取舍。
+> **进度**：**六批全部装完并验证通过** —— 批 0 已装地基 ✅ · 批 1 ✅ · 批 2 ✅ · 批 3 ✅ · 批 4 ✅ · 批 5 ✅。
+> `plan` 197 条全部就位；**客户端 236 jar 进世界 PASS**、**服务端 198 jar `Done (28s)`**。
+> 剩下的是 `hold`/`skip` 的取舍（36 + 9），以及一件需要拍板的事
 > 最后更新 2026-09-19。
 
 ---
@@ -23,6 +24,7 @@
 | **C8** | `create-aeronautics` → `sable`（内嵌 `veil`）与 **`embeddium` + `scalablelux` 双硬冲突** | 🔴 致命 | 改 `hold` ✅ 证据完整 |
 | **C9** | 全配对模式（同进程内先跑服务端再跑客户端）→ 客户端在 **mod 加载阶段**静默死亡 | 🟢 **已定论：测试流程问题，非 mod 冲突** | 改用**两步流程**（先生成世界、再单独跑客户端）✅ 已验证 |
 | **C10** | `sodium-extra` / `reeses-sodium-options` 把 **`sodium`** 作为依赖拉进来 → 与我们的 **`embeddium`** 互斥 | 🔴 致命 | 两者改 `hold`，`sodium` 移出 pack ✅ |
+| **C11** | **3 个纯客户端 mod 被装进了服务端**（`xaeroplus` / `moreculling` / `particle-rain`）：pack 元数据写 `side="both"`，而 Modrinth 官方标注是**仅客户端** | 🟠 服务端污染 | 改 `side="client"` + 从 `server/mods` 挪出（201 → **198**）✅ |
 | **T14** | **pack/ 不包含那 16 个"已装"mod**（embeddium / scalablelux / OPAC / Create / 性能组…）→ pack 不能独立复现环境，也是 C10 的根源 | 🟠 结构性 | 全部纳入包（**批 0**，版本零漂移）✅ **已修并验证** |
 | **T15** | **过期依赖图会静默抽走前置库**：`packwiz add` 不写依赖段，图没重建 → `configurable` 被测试器搬走 → 报 `Mod neruina requires configurable`（**看起来像真冲突的假冲突**） | 🟠 方法论 | 重建依赖图 + 测试器加**图过期绊线**（返回码 6）✅ |
 | **T16** | **换行符会让 pack 失去可复现性**：本机 `core.autocrlf=true` 且仓库无 `.gitattributes` → 新克隆时 `pack/**` 被转成 CRLF → `pack/index.toml` 里的哈希全部失配，别人 `packwiz install` 直接失败 | 🟠 可复现性 | 新增 `.gitattributes`，`pack/**` 标 `-text`（字节精确）✅ |
@@ -252,6 +254,37 @@ Failure message: Mod neruina requires configurable 3.5.1 or above
 `pack/** -text` 必须写在 `*.toml text eol=lf` 这类规则**之后**，否则会被覆盖（第一版就写反了，
 `git check-attr` 一眼看出 `text: set`，改序后变成 `text: unset`）。
 
+### C11 · 3 个纯客户端 mod 被装进了服务端（🔴 已修并验证）
+
+**怎么发现的**：批 5 装完后跑了一次**全量端侧取证** —— `side_check.py` 拿实例里 236 个 jar 的
+**SHA-1** 逐个反查 Modrinth，读它官方标注的 `client_side` / `server_side`：
+
+```
+合计 236 个：服务端要装 180 · 纯客户端 38 · 未知 18
+```
+
+再拿这份结论去对 `pack/mods/*.pw.toml` 的 `side` 字段 —— **恰好 3 条对不上**，
+而 `server/mods` 里正好躺着这 3 个 jar：
+
+| slug | pack 里写的 | Modrinth 官方标注 | 结果 |
+|---|---|---|---|
+| `xaeroplus` | `both` | **仅客户端** | 装进了服务端 |
+| `moreculling` | `both` | **仅客户端** | 装进了服务端 |
+| `particle-rain` | `both` | **仅客户端** | 装进了服务端 |
+
+**这是 T2 的翻版**：packwiz 的 `side` 字段不可信，而**只有服务端那边会露出来** ——
+客户端多装几个纯客户端 mod 没问题，服务端多装就可能出事（这次它们只是白加载，没崩）。
+
+**修法（已做并复验）**：改 `side = "client"` → `packwiz refresh`（守 T17 纪律）→
+按 T10 把 3 个 jar 从 `server/mods` 挪出（**改 pack 不会自动删实例 jar**）→
+**服务端 201 → 198 jar，启动 `Done (28.121s)`，日志里这 3 个 mod 已不再被扫描**。
+
+**还剩 18 个"未知"**：它们是 **CF 独占分发**（FTB 全家桶 / WorldEdit / Spice of Life / Polyglot 等），
+文件不在 Modrinth 的哈希索引里 → 查不到官方端侧标注。
+`side_probe.py` 试着直接读 jar 自己的 `neoforge.mods.toml` 声明（`clientSideOnly`/`serverSideOnly`），
+**实测 4/4 全是"未声明"** → 这条路在 NeoForge 1.21 上不成立（mod 普遍不写）。
+→ 所以对这 18 个，**证据换成行为证据**：它们都在 198 jar 的服务端里，而服务端起得来、跑得完世界生成。
+
 ### T17 · `index.toml` 里躺着一个**陈旧哈希**（🔴 已修，本轮最后抓到的）
 
 **怎么抓到的**：所有批次装完后，做了一次"pack 自身完整性"检查 ——
@@ -400,9 +433,9 @@ lithostitched 1.8.0-beta6（2026-09）差 20 个月 → **不报错，只卡死*
 | 2 世界内容（29 条） | 结构 / 维度 / 村庄 / 中世纪 / 据点结构 | ✅ **已装已验**（26 条） | 剔除 C5 `stoneholm`（skip）、C6 `deeperdarker`、C7 `the-twilight-forest`（hold） |
 | 3 立国与基建（59 条） | Create 生态 / 图纸系 / 建材装饰 / 交通 / 食物农业 | ✅ **已装已验** | 剔除 C8 `create-aeronautics`（hold）；C9 定为流程问题（见 C9 详情） |
 | 4 远征与生活（54 条） | 地图背包定位 / 战利品遗物 / QoL / 视觉音效 | ✅ **已装已验** | 剔除 C10 的 sodium 系三个；`medieval-paintings`/`medieval-music` 用 packwiz `--addon-id/--file-id` 显式 id 补装（搜索匹配会误拒） |
-| 5 御敌与文明（8 条） | 威胁 / 军事单位 / 攻城 / 大工程 | ✅ **已装已验** | 客户端 236 jar 进世界 PASS（两步流程）；期间修掉 T14/T15 |
+| 5 御敌与文明（8 条） | 威胁 / 军事单位 / 攻城 / 大工程 | ✅ **已装已验** | 客户端 236 jar 进世界 PASS（两步流程）· 服务端 198 jar `Done (28s)`；期间修掉 T14/T15/T16/T17 与 C11 |
 
-**装机结论**：`plan` 181 条 + 已装地基 16 条 = **197 条全部就位**，客户端 236 jar / 服务端 201 jar。
+**装机结论**：`plan` 181 条 + 已装地基 16 条 = **197 条全部就位**，客户端 236 jar / 服务端 198 jar。
 `hold` / `skip` 的条目全部留在 `tools/lists/quarantine.tsv` 与 `modlist.tsv` 里，**原因逐条可查**。
 
 
@@ -415,26 +448,64 @@ lithostitched 1.8.0-beta6（2026-09）差 20 个月 → **不报错，只卡死*
 
 ---
 
-## 九、最终结论
+## 九、服务端侧观察（非致命，但都有日志证据）
+
+> 服务端冒烟（198 jar）：**`Done (28.121s)`**，能起、能跑。
+> 但日志里有 **1257 行 ERROR** —— 逐类归完之后，**没有一条能把服务端起崩**，
+> 只有 **1 类是真缺陷**、**2 类是"兼容条目给缺席 mod 写的"**、其余是杂项。
+> 记在这里是因为：**"起得来"不等于"干净"**，这些会在以后排查时变成噪音。
+
+| 行数 | 来源 | 性质 | 结论 |
+|---|---|---|---|
+| **720** | `farmingforblockheads:market/*` 配方 | 市场配方为**缺席的 mod** 预生成（pamhc2trees / byg / croptopia / thermal / tropicraft / twilightforest / quark / ars_nouveau / betterendforge…） | 🟡 **无害噪音**：那些 mod 不在包里，配方本就该无效。FFH 没给它们加"mod 存在才加载"的条件 |
+| **276** | `railways:track_*` 战利品表 | 同上：Create 铁路为缺席 mod 生成的轨枕变体（tfc / byg / biomesoplenty / twilightforest / natures_spirit） | 🟡 **同源噪音** |
+| **256** | `dndecor:blocks/*` 战利品表 | **真缺陷**：Design n' Decor 的 **16 个非原版颜色**（amber / mint / slate / rose / navy / olive / verdant / maroon / coral / aqua / beige / tan / teal / indigo / ginger / forest）× 16 种构件 = 256 个变体，**物品没注册**，但 datagen 的战利品表照发 | 🟠 **见下**：这是**软依赖未装**，不是冲突 |
+| 2 | `farmersdelight` / `farmersrespite` 配方 | 用了 `neoforge:never` 条件 codec，**当前 NeoForge 不认这个 codec** → 那两条配方加载失败（如西瓜汁） | 🟠 少 1~2 条配方，不影响启动 |
+| 1 | `endersdelight:chorus_pie_slice` | 配方用 `{"id":…,"count":…}`，而 1.21.1 期望 `"item"` 键 → **该 mod 的数据是按更高 MC 版本写的**痕迹 | 🟠 少 1 条配方 |
+| 1 行（4 个） | `Couldn't load advancements` | `minecraft:wander_add_map` · `minecraft:give_quest_trader_trade` · `dungeons_arise:find_thornborn_towers` · `find_fishing_hut` | 🟡 4 个成就缺失，无功能影响 |
+| 1 | MoonlightLib：`Fabric API detected!` | 误报（它探到 Fabric 风格的 API 痕迹） | 🟢 无视 |
+| 35 | `Ignoring unknown attribute 'forge:entity_gravity'` | 某 mod 仍按**旧 `forge:` 命名空间**注册属性，NeoForge 21.1 已不认 | 🟢 无害（属性被忽略） |
+| 3 | `connectivity` × `packetfixer` mixin `@ModifyConstant` 互撞 | NeoForge **按优先级跳过**其中一个并明确记日志 | 🟢 **可控重叠**：两者共存，只丢 1 个 mixin |
+| — | `roadweaver` 尝试 OpenCL | 专用服务端 classpath **没有 LWJGL 的 OpenCL 模块** → `NoClassDefFoundError: org/lwjgl/system/FunctionProvider` → **自动回退 CPU** | 🟠 解释了服务端世界生成 **166 秒**的一部分；属配置/魔改范畴 |
+| — | 客户端额外杂项 | `Invalid path in pack: byg:textures/block/track/TODO.txt`（Railways 把 TODO.txt 打进资源包）· `Unable to parse animation: Shooting` · dev cape 拉取失败（离线，无害） | 🟡 打包疏漏类，无功能影响 |
+
+### dndecor 那 256 行：**软依赖未装的典型形态**（证据链）
+
+1. **观察到**：256 个 `dndecor:*` 战利品表报 `Unknown registry key in ResourceKey[minecraft:item]: dndecor:<名>`
+   → 是**物品没注册**，不是战利品表本身写错（方块状态 847 个 / 战利品表 848 个都在 jar 里、语言键也在）。
+2. **做对照**：把失败的 256 个与成功的 591 个按"颜色前缀"分类 ——
+   失败的全是 **amber / mint / slate / rose / navy / olive / verdant / maroon / coral / aqua / beige /
+   tan / teal / indigo / ginger / forest**（各 15~16 个），
+   **原版 16 色（white/black/red/…/light_gray）全部正常**。
+3. **读字节码定位**：在 `Design-n-Decor-1.21.1-2.2b.jar` 里搜，`dye_depot` 出现在
+   `DnDecor.class` / `DnDecorDatagen.class` / `DnDecorUtils.class` ——
+   那 16 个颜色正是 **Dye Depot** 的调色板。`neoforge.mods.toml` 里**没有**声明它 → **软依赖**。
+4. **结论**：dndecor 把 Dye Depot 的染色变体**datagen 出来并打进 jar**（战利品表/方块状态无条件发），
+   但方块/物品**只在 Dye Depot 存在时注册** → 未装就剩 256 个孤儿战利品表。
+   **不是冲突，是无害噪音**；而且它给出了一条**可选的加内容路径**（见下）。
+
+> **可选内容机会（记下，不在本轮做）**：加 `dye-depot` 就能一次解锁 **256 个染色装饰变体**
+> （已被 dndecor 预先 datagen 好，只差颜色来源）。属于**加内容**的选型决策，不是修冲突。
+
+## 十、最终结论
 
 > 本轮任务：**把定案的 mod 全部装进 `pack/` 并逐批验证，把撞到的冲突与缺陷全部总结出来**。
 > 魔改（配方/数值/配置）按用户指示押后，不在本轮。
 
 ### 1. 装机结论：**197/197 就位，五批全部验证通过**
-
 | 项 | 结果 |
 |---|---|
 | 选中条目 | **197**（`plan` 181 + 已装地基 16）= 252 条候选里筛下来的 |
 | 未就位 | **45** = `hold` 36 + `skip` 9，**逐条有理由**（`modlist.tsv` / `quarantine.tsv`） |
 | 客户端 | **236 jar 进世界 PASS**（两步流程，标记 `Starting integrated minecraft server`） |
-| 服务端 | **201 jar**（仅客户端的 mod 已按端侧划分排除） |
+| 服务端 | **198 jar**（= 端侧取证要求的 180 + 18 个 CF 独占分发、无声明可查的）· 启动 `Done (28.121s)` |
 | `pack/` | **237 条元数据**，自洽、可复现（已补批 0，且 `pack/**` 锁字节精确） |
 
 **判定为"能跑起来"**，不能判定"能玩"——后者要靠魔改与真人试玩。
 
-### 2. 冲突结论：**9 条真·装不到一起（2 条已修、7 条已处置），1 条不是 mod 冲突**
+### 2. 冲突结论：**9 条真·装不到一起（2 已修 / 7 已处置）· 1 条流程问题 · 1 条服务端污染**
 
-10 条 C 系列里，**9 条是真冲突**（每条都有崩溃报告、接口证据或 mod 自声明的不兼容）：
+11 条 C 系列里，**9 条是真冲突**（每条都有崩溃报告、接口证据或 mod 自声明的不兼容）：
 
 | 真冲突 | 一句话原因 | 处置 |
 |---|---|---|
@@ -450,6 +521,14 @@ lithostitched 1.8.0-beta6（2026-09）差 20 个月 → **不报错，只卡死*
 
 **唯一不是 mod 冲突的是 C9**：全配对模式（同进程先服务端再客户端）让客户端在 mod 加载阶段静默死亡，
 4/4 复现、无任何崩溃痕迹；同样 140 jar 用两步流程一次通过 → **是验证流程问题**，改两步流程解决。
+
+**C11 是另一类**：不是 mod 之间冲突，而是**我们自己的元数据把 3 个纯客户端 mod 送上了服务端**
+（`side` 字段写错，T2 的翻版）→ 已修，服务端 201 → 198 jar。
+
+**服务端那 1257 行 ERROR 全部归完类**（见第九节）：**没有一条能起崩服务端**，
+其中 996 行是"兼容条目给缺席 mod 预生成"的无害噪音（FFH 市场 720 + railways 轨枕 276），
+256 行是 dndecor 对 **Dye Depot** 软依赖未装留下的孤儿战利品表，
+真正算缺陷的只有 `farmersdelight` / `farmersrespite` / `endersdelight` 共 4 条配方 + 4 个成就。
 
 **最危险的一类**：**报错长得跟真冲突一样的假冲突**——不查清就会把自己工具的记账错误写进总账：
 
