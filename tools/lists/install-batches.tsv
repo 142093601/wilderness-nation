@@ -3,6 +3,23 @@
 #   因为 Terralith 装了就不能从已有世界增删；其余按时代主菜排。
 # 用法：python tools/apply_modlist.py --verify --batch <N> --apply
 # 字段：批次 <TAB> slug <TAB> 来源(mr|cf) <TAB> 功能位
+# ── 批 0 · 批 0·已装地基（性能组 + OPAC + Create + YBD，已在实例里跑过） ──
+0	embeddium	mr	渲染优化
+0	lithium	mr	服务端逻辑
+0	ferrite-core	mr	内存
+0	modernfix	mr	加载与修复
+0	entityculling	mr	实体剔除
+0	immediatelyfast	mr	界面即时渲染
+0	clumps	mr	经验球合并
+0	servercore	mr	服务端通用
+0	neruina	mr	崩溃守护
+0	spark	mr	诊断
+0	chunky	mr	预生成
+0	moreculling	mr	区块剔除
+0	scalablelux	mr	光照
+0	yungs-better-dungeons	mr	结构·地牢
+0	open-parties-and-claims	mr	领地/队伍/权限
+0	create	mr	自动化核心（含列车与物流）
 # ── 批 1 · 地基：不可逆的世界生成 + 引擎 + 性能 + 中文化 + 运维 ──
 1	terralith	mr	群系与地形
 1	lithostitched	mr	世界生成兼容库（Terralith 前置）

@@ -1,0 +1,13 @@
+# 表格/脚本/文档：统一 LF，避免跨平台 diff 噪音
+tools/lists/*.tsv text eol=lf
+*.py text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.txt text eol=lf
+*.cfg text eol=lf
+
+# packwiz 元数据必须**字节精确**：换行一变，pack/index.toml 里的哈希就全部失配，
+# 别人克隆下来 `packwiz install` 会报 hash mismatch（T16）。
+# 本机 core.autocrlf=true，若不锁死，checkout 时 LF → CRLF。
+# 注意：gitattributes **后匹配的规则赢**，所以 pack/** 必须放在 *.toml 之类之后。
+pack/** -text

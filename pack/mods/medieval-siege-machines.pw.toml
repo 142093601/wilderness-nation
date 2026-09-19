@@ -1,0 +1,13 @@
+name = "Medieval Siege Machines"
+filename = "[1.21.1-neoforge]-Siege-Machines-1.33.jar"
+side = "both"
+
+[download]
+hash-format = "sha1"
+hash = "86d95bdbe77ad43c97056d7f1a72c9d5d7ff82ad"
+mode = "metadata:curseforge"
+
+[update]
+[update.curseforge]
+file-id = 7202627
+project-id = 585964

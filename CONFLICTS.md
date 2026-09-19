@@ -1,12 +1,13 @@
 # 冲突与问题总账（CONFLICTS.md）
 
 > **目的**：把装机过程中**真实撞到**的冲突/缺陷逐条记下来——每条都带**取证过程**与**接口证据**，
-> 而不是"我感觉不兼容"。它回答：这 187 条选型里，**哪些装不到一起、哪些会崩、哪些需要改**。
+> 而不是"我感觉不兼容"。它回答：这 197 条选型里，**哪些装不到一起、哪些会崩、哪些需要改**。
 >
 > **范围**：只做"能跑起来 + 冲突清账"。**具体魔改（配方/数值/配置调参）不在本轮**，见文末「待魔改清单」。
 >
-> **进度**：批 1 ✅ 已装已验 · 批 2 ✅ 已装已验（剔除 3 个问题 mod）·
-> 批 3 ✅ **已装已验**（剔除 C8）· 批 4 ✅ **已装已验**（剔除 C10）· 批 5 待装。最后更新 2026-09-19。
+> **进度**：**五批全部装完并验证通过** —— 批 0 已装地基 ✅ · 批 1 ✅ · 批 2 ✅ · 批 3 ✅ · 批 4 ✅ ·
+> 批 5 ✅（客户端 236 jar 进世界 PASS）。`plan` 197 条全部就位，剩下的是 `hold`/`skip` 的取舍。
+> 最后更新 2026-09-19。
 
 ---
 
@@ -22,7 +23,9 @@
 | **C8** | `create-aeronautics` → `sable`（内嵌 `veil`）与 **`embeddium` + `scalablelux` 双硬冲突** | 🔴 致命 | 改 `hold` ✅ 证据完整 |
 | **C9** | 全配对模式（同进程内先跑服务端再跑客户端）→ 客户端在 **mod 加载阶段**静默死亡 | 🟢 **已定论：测试流程问题，非 mod 冲突** | 改用**两步流程**（先生成世界、再单独跑客户端）✅ 已验证 |
 | **C10** | `sodium-extra` / `reeses-sodium-options` 把 **`sodium`** 作为依赖拉进来 → 与我们的 **`embeddium`** 互斥 | 🔴 致命 | 两者改 `hold`，`sodium` 移出 pack ✅ |
-| **T14** | **pack/ 不包含那 16 个"已装"mod**（embeddium / scalablelux / OPAC / Create / 性能组…）→ pack 不能独立复现环境，也是 C10 的根源 | 🟠 结构性 | ⏳ 下一步把它们纳入 pack |
+| **T14** | **pack/ 不包含那 16 个"已装"mod**（embeddium / scalablelux / OPAC / Create / 性能组…）→ pack 不能独立复现环境，也是 C10 的根源 | 🟠 结构性 | 全部纳入包（**批 0**，版本零漂移）✅ **已修并验证** |
+| **T15** | **过期依赖图会静默抽走前置库**：`packwiz add` 不写依赖段，图没重建 → `configurable` 被测试器搬走 → 报 `Mod neruina requires configurable`（**看起来像真冲突的假冲突**） | 🟠 方法论 | 重建依赖图 + 测试器加**图过期绊线**（返回码 6）✅ |
+| **T16** | **换行符会让 pack 失去可复现性**：本机 `core.autocrlf=true` 且仓库无 `.gitattributes` → 新克隆时 `pack/**` 被转成 CRLF → `pack/index.toml` 里的哈希全部失配，别人 `packwiz install` 直接失败 | 🟠 可复现性 | 新增 `.gitattributes`，`pack/**` 标 `-text`（字节精确）✅ |
 | **C3** | `stellarcreateoptimization` 硬依赖 `sodium 0.6.9+`，本包用 `embeddium` | 🟠 装了就崩 | 改 `skip` ✅ |
 | **C4** | `byepregen` 与 `noisium` **显式不兼容**（mod 自己声明） | 🟠 装了就崩 | 取 `noisium`，`byepregen` → `skip` ✅ |
 | **T1** | 12 条 slug 取自 jar 文件名，与项目真 slug 不符 | 🟠 装机必失败 | 全部修正 + 加核验关卡 ✅ |
@@ -37,10 +40,11 @@
 | **T10** | **从 pack 移除 mod 不会删掉实例里的 jar**（`sable`/`create-aeronautics` 移除后仍在 mods 目录里 → 继续崩） | 🟠 流程 | 记入隔离清单 + 手工清理；`materialize --prune` 只管同项目换版，不管"整个 mod 被移除" ⏳ 待工具化 |
 | **T11** | `--prune` 的"按第一个数字切分"启发式把 `supermartijn642corelib` 当成 `supermartijn642configlib` 的旧版**误删**（名字里带数字） | 🔴 自伤 | 改为**按项目 id 记账**（`data/materialize-manifest.json`）✅ |
 
-**三条硬规律**（都是这次撞出来的，见第三节）：
+**四条硬规律**（都是这次撞出来的，见第三节）：
 **R1 世界与 mod 集必须匹配**（缺 mod 时开世界**静默失败**，没有任何报错）·
 **R2 世界生成类 mod 之间要核对版本同期性**（错配不报错，只卡死）·
-**R3 影响世界生成的 mod 有硬顺序**（必须建世界前就位）。
+**R3 影响世界生成的 mod 有硬顺序**（必须建世界前就位）·
+**R4 测试器搬走的 jar 必须能被解释**（"缺 mod"先查 `held-back/`，别急着当冲突）。
 
 ---
 
@@ -187,7 +191,7 @@ Mod file: .../mods/sodium-neoforge-0.8.13+mc1.21.1.jar#417!/META-INF/jarjar/net.
 也就是说：**换到 Sodium 栈能解锁 4 个 mod，代价是替换渲染器（并可能连带光照引擎）**。
 本轮不做这个决定（属"魔改/基础设施"范畴），只把它登记为**待决策点**，并保持现状（embeddium）。
 
-### T14 · pack/ 与实例不一致（🟠 结构性，下一步修）
+### T14 · pack/ 与实例不一致（🔴 已修并验证）
 
 **事实**：`pack/` 里只有批次 1~4 的 plan 条目与它们的依赖；而实例里有 **16 个"已装"mod 不在 pack 里**：
 性能组（embeddium / lithium / ferrite-core / modernfix / entityculling / immediatelyfast / clumps /
@@ -197,9 +201,55 @@ servercore / neruina / spark / chunky / moreculling / scalablelux）+ OPAC + Cre
 1. **别人按 pack 装出来的包 ≠ 我们的环境**（拿不到 embeddium / OPAC / Create）；
 2. **C10 的根源**：pack 里没有"我们用的是 embeddium"这个声明 → packwiz 才会心安理得地把 sodium 拉进来。
 
-**下一步**：把这 16 个也纳入 `pack/`（它们都有 1.21.1+NeoForge 版本，且已在实例里跑过），
-pack 才自洽、可复现。注意：纳入后 `materialize` 会按 packwiz 选版拉**较新版本**，
-可能与我们 `baseline.csv` 的性能基线所依据的版本不同 → 需重跑一次基线。
+**修法（已做）**：把这 16 个逐个 `packwiz modrinth add` 纳为 **批 0（已装地基）**。
+结果比预期好：16 条全部找到**与实例完全同版**的版本（版本零漂移，`materialize` 新下 0 个 jar），
+所以上面担心的"拉较新版本 → 基线失效"**没有发生，性能基线无需重跑**。
+
+同时把批 0 写进 `tools/lists/install-batches.tsv`，并让测试器**永远带上批 0**
+（`parse_groups` 里以 `want = set(bg["0"])` 起手）——理由见 R4 与 T15。
+
+### T15 · 过期依赖图会**静默抽走前置库**，伪装成 mod 冲突（🔴 已修，加了绊线）
+
+**现象**：T14 纳入 16 个条目后复验，客户端 FAIL 未进世界。这次不是 C9 那种静默死亡，
+而是留下了 FML 崩溃报告：
+
+```
+-- Mod loading issue for: neruina --
+Failure message: Mod neruina requires configurable 3.5.1 or above
+    Currently, configurable is not installed
+```
+
+**真因与 neruina / configurable 无关**，是测试器自己把 `configurable` 从客户端搬走了：
+
+1. `packwiz modrinth add` **不写 `[dependencies]` 段** —— 依赖边全靠 `tools/depgraph.py`
+   现查 Modrinth 接口，缓存进 `data/dep-graph.json`；
+2. 该缓存是**增量**建的，T14 新加的 16 条还没进图 → `neruina` 在图里没有键；
+3. `paired_check` 的 `want = closure(批次)` 因此**漏掉 configurable**；
+4. `set_side` 的职责是"不在 want 里的 jar 一律搬去 `data/held-back/cli`" →
+   **它把 configurable 搬走了**（该 jar 明明在 `pack/` 里、也在 `materialize-manifest.json` 里）；
+5. 客户端于是缺前置库 → FML 崩溃。
+
+**为什么这条最危险**：报错文本**与真实 mod 冲突一模一样**（"requires X / not installed"），
+但它测的是测试器的记账，不是 mod 的兼容性。若不去 `held-back/cli` 里翻一眼那个 jar，
+就会把它当成"neruina × configurable 冲突"写进总账 —— 一条**凭空的假冲突**。
+
+**修法（两层）**：
+- **数据层**：`python tools/depgraph.py --build` 重建（242 条；`neruina → configurable` 边已出现）。
+  **纪律**：每次往 `pack/` 加/删条目，必须重建依赖图，否则下一次测试结论不可信。
+- **工具层（防复发绊线）**：`paired_check.py` 在求闭包**之前**检查"`want` 里有没有图里不存在的条目"，
+  有就立即停下、返回码 **6**，提示先 `--build` —— 宁可拒绝开测，也不带着过期图把前置库搬走。
+
+### T16 · 换行符足以让 pack 失去可复现性（🔴 已修）
+
+**事实**：本机 `git config core.autocrlf` = `true`，而仓库**没有 `.gitattributes`**。
+于是 `pack/` 下的 `.pw.toml` / `index.toml` / `pack.toml` 在新克隆时会 LF → CRLF，
+而 `pack/index.toml` 里存的是**每个文件的 sha512/sha1** → 换行一变，哈希全错，
+别人 `packwiz install` / 启动器同步会直接失败。**而这是我们自己开发机上永远看不到的**。
+
+**修法**：新增 `.gitattributes`，把 `pack/**` 标为 `-text`（当作二进制，不做任何换行转换），
+其余源码/清单/文档统一 `eol=lf`。**注意 gitattributes 是"后匹配的规则赢"** ——
+`pack/** -text` 必须写在 `*.toml text eol=lf` 这类规则**之后**，否则会被覆盖（第一版就写反了，
+`git check-attr` 一眼看出 `text: set`，改序后变成 `text: unset`）。
 
 ### C3 / C4 · 两条选型冲突（装机冒烟直接报出，非推测）
 
@@ -211,7 +261,7 @@ pack 才自洽、可复现。注意：纳入后 `materialize` 会按 packwiz 选
 
 ---
 
-## 三、三条硬规律（本次撞出来的，值得写进选型纪律）
+## 三、四条硬规律（本次撞出来的，值得写进选型纪律）
 
 ### R1 · 世界与 mod 集必须匹配；**缺 mod 时开世界是静默失败**
 
@@ -234,6 +284,18 @@ lithostitched 1.8.0-beta6（2026-09）差 20 个月 → **不报错，只卡死*
 群系扩充 / 结构 / 据点结构 / **维度 mod** 都属于此类：
 **必须在建世界之前就位**，否则要么静默进不去，要么只能在新区块生效。
 → 所以装机批次按"不可逆性"排，且**每次验证都要用同集重新生成世界**（配对测试协议）。
+
+### R4 · 测试器搬走的 jar 必须能被解释
+
+`set_side` 会主动把不在 `want` 里的 jar 搬到 `data/held-back/`。这是二分定位的必需能力，
+但它意味着**测试器有权限制造"缺 mod"现象**。所以往后任何一次"缺 mod / 进不去世界"，
+第一件事就是去 `data/held-back/cli`、`data/held-back/srv`、`data/held-back/quarantine`
+里翻有没有那个 jar：
+- **有** → 是测试器搬走的，属 T15 / T6 同类（记账问题），不是 mod 冲突；
+- **没有** → 才是真的缺 mod / 真冲突。
+
+推论：**"已装地基"（批 0）这类一直该在场的 mod，不能只靠批次表表达**，
+否则任何一次子集测试都会把它搬走。现在由 `parse_groups` 无条件并入批 0 来解决。
 
 ---
 
@@ -302,11 +364,16 @@ lithostitched 1.8.0-beta6（2026-09）差 20 个月 → **不报错，只卡死*
 
 | 批 | 内容 | 状态 | 备注 |
 |---|---|---|---|
+| 0 已装地基（16 条） | 性能组 + OPAC + Create + YBD | ✅ **已纳入 pack 并验证** | 原本只存在于实例、不在 pack 里（T14）；纳入后 pack 才自洽。测试器无条件带上它（R4） |
 | 1 地基（33 条） | 世界生成三件 + 引擎 + 性能 + 中文化 + 运维 | ✅ **已装已验** | 修掉 C1/C2/C3/C4 |
 | 2 世界内容（29 条） | 结构 / 维度 / 村庄 / 中世纪 / 据点结构 | ✅ **已装已验**（26 条） | 剔除 C5 `stoneholm`（skip）、C6 `deeperdarker`、C7 `the-twilight-forest`（hold） |
 | 3 立国与基建（59 条） | Create 生态 / 图纸系 / 建材装饰 / 交通 / 食物农业 | ✅ **已装已验** | 剔除 C8 `create-aeronautics`（hold）；C9 定为流程问题（见 C9 详情） |
 | 4 远征与生活（54 条） | 地图背包定位 / 战利品遗物 / QoL / 视觉音效 | ✅ **已装已验** | 剔除 C10 的 sodium 系三个；`medieval-paintings`/`medieval-music` 用 packwiz `--addon-id/--file-id` 显式 id 补装（搜索匹配会误拒） |
-| 5 御敌与文明（8 条） | 威胁 / 军事单位 / 攻城 / 大工程 | ⏳ 待装 | |
+| 5 御敌与文明（8 条） | 威胁 / 军事单位 / 攻城 / 大工程 | ✅ **已装已验** | 客户端 236 jar 进世界 PASS（两步流程）；期间修掉 T14/T15 |
+
+**装机结论**：`plan` 181 条 + 已装地基 16 条 = **197 条全部就位**，客户端 236 jar / 服务端 201 jar。
+`hold` / `skip` 的条目全部留在 `tools/lists/quarantine.tsv` 与 `modlist.tsv` 里，**原因逐条可查**。
+
 
 **验证方式**（每批都要跑）：
 `apply_modlist --batch N --apply` → `materialize_pack.py`（无参数，含依赖）→

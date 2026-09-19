@@ -169,7 +169,11 @@ def set_side(dest: Path, keep: set, managed: list, other_hold: Path):
 
 
 def parse_groups(spec, bg, label):
-    want = set()
+    # 批 0 = 实例里早就装好的地基（性能组 / OPAC / Create / YBD）。
+    # 它不属于任何一个"新装批次"，但**永远在场**：世界是用它生成的，
+    # 撤掉它 → 世界里的方块/实体/区块都没了 → 进世界静默失败（2026-09-19 真实踩到：
+    # T14 把 16 个已装 mod 登记进 pack 后复验 FAIL，就是这个原因）。
+    want = set(bg.get("0", []))
     for g in [x.strip().lower() for x in spec.split(",") if x.strip()]:
         key = g.lstrip("b")
         if key not in bg:
@@ -232,6 +236,18 @@ def main():
         want = set(managed)
         world_set = set(managed)
     elif DG is not None:
+        # 依赖图**过期**是本项目最阴的坑（T15，2026-09-19 真实踩到）：
+        #   `packwiz modrinth add` 不写 [dependencies]，依赖边全靠 depgraph 现查；
+        #   新加的条目不在图里 → 闭包漏掉它的前置库 → set_side 把前置库**搬出客户端**
+        #   → 客户端起不来，报的是 `Mod neruina requires configurable`，
+        #   看起来像 mod 冲突，其实是测试器自己抽走了它。
+        # 所以：want 里任何条目在图中没有键，就先停下来重建图，不要带着过期图开测。
+        _g = (DG.load() or {}).get("graph", {})
+        stale = sorted(s for s in want if s not in _g)
+        if stale:
+            log("  !! 依赖图过期：want 里这些条目图里没有 → %s" % ", ".join(stale[:12]))
+            log("  !! 先跑 python tools/depgraph.py --build，否则前置库会被误判为多余而搬走")
+            return 6
         # 子集模式：必须把依赖闭包并进来（前置库不在批次表里，少了它们选中的 mod 起不来）
         want = DG.closure(want)
         world_set = DG.closure(world_set)

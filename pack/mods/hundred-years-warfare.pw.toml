@@ -1,0 +1,13 @@
+name = "Hundred Years Warfare"
+filename = "HundredYearsWar-0.7.1r-fix1-1.21.1-neoforge.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/sGwWd97l/versions/ytDfVhfQ/HundredYearsWar-0.7.1r-fix1-1.21.1-neoforge.jar"
+hash-format = "sha512"
+hash = "9e2fa4f8b90be56358a8c3624cf2217ab41e780be5deeb7c47eb17529197e6d3bb7af671be52da1c2ceba8e40efe82c8651f30cf953522be6dc41d50bc6010ce"
+
+[update]
+[update.modrinth]
+mod-id = "sGwWd97l"
+version = "ytDfVhfQ"
