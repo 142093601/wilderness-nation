@@ -67,3 +67,9 @@ desktop.ini
 
 # ---------- 例外：文档里要展示的图 ----------
 !docs/img/**
+
+# Gradle 构建产物（mods/statecraft）
+mods/statecraft/.gradle/
+mods/statecraft/build/
+mods/statecraft/**/build/
+mods/statecraft/.gradle*

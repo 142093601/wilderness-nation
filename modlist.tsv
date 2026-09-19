@@ -98,7 +98,7 @@ questlog	skip	任务书载体·已降级为备选（改用 FTB Quests）
 
 # ── 生活质量 ──
 mouse-tweaks	plan	物品栏整理
-inventory-profiles-next	plan	物品栏配置
+inventory-profiles-next	hold	★C12 客户端开世界崩溃：IPN 2.2.5 在 Minecraft.doWorldLoad 时 ConfigScreenSettings.<clinit> NPE（libIPN 的 AsDelegate 为空），三次独立复现；移除后客户端正常加载世界（Time elapsed 582ms、零新崩溃）→ 判 hold（2026-09-19）
 shulkerboxtooltip	plan	潜影盒预览
 controlling	plan	按键冲突查找
 searchables	plan	配置项搜索
@@ -114,7 +114,7 @@ iris	hold	光影支持（装了要重算性能预算）
 distanthorizons	hold	远景（同上）
 sodium-extra	hold	视觉/性能·Sodium 专用 —— **装机实测：它们把 `sodium` 作为依赖拉进来**，而 `sodium` 与本包渲染器 `embeddium` **互相声明不兼容**（崩溃报告 crash-2026-09-19_09.04.28-fml.txt：「Mod embeddium is incompatible with sodium」）。→ 除非整体改用 Sodium 渲染栈，否则不能装（见 CONFLICTS.md C10 与「渲染器选型」决策点）
 reeses-sodium-options	hold	视觉/性能·Sodium 专用 —— **装机实测：它们把 `sodium` 作为依赖拉进来**，而 `sodium` 与本包渲染器 `embeddium` **互相声明不兼容**（崩溃报告 crash-2026-09-19_09.04.28-fml.txt：「Mod embeddium is incompatible with sodium」）。→ 除非整体改用 Sodium 渲染栈，否则不能装（见 CONFLICTS.md C10 与「渲染器选型」决策点）
-continuity	plan	连接纹理
+continuity	skip	Fabric 侧连接材质，与已装 fusion（NeoForge 原生）功能重复；且它 required connector（hold）→ 批 4 把它带进来时，packwiz 顺手把 connector 写进了 pack 并装入客户端（T18，2026-09-19 假 PASS 事故链条的起点）
 athena-ctm	plan	连接纹理前置
 entitytexturefeatures	plan	实体纹理
 entity-model-features	plan	实体模型
@@ -196,7 +196,7 @@ jade-addons-forge	plan	14 包·Jade 扩展（配我们选的 Jade）
 lambdynamiclights	plan	13 包·动态光源（手持火把照亮）
 tectonic	hold	12 包·地形大修（与 Terralith 并列候选；RoadWeaver 正文说 mod 版兼容——需二选一实测）
 e4mc	hold	13 包·局域网→公网（朋友免开服的联机方式，看你们怎么开服）
-connector	hold	16 包·Sinytra Connector：在 NeoForge 上跑 Fabric mod（★ 生态事实：16/50 个 NeoForge 包在用；若采用可解锁 Fabric 独占 mod，但有兼容风险）
+connector	hold	★2026-09-19：曾被 continuity 的依赖拖进 pack 并装入客户端（T18），是假 PASS 事故链条的一环；已移出，本项目不走 Connector 路线，永不再引入
 
 # ── 冷门好 mod（第二次筛：被多个策展包选中但下载量低的那批）──
 # 前缀数字 = 被多少个 NeoForge 包选中（源自 data/consensus-gap.md 的 B 表）

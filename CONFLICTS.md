@@ -5,10 +5,13 @@
 >
 > **范围**：只做"能跑起来 + 冲突清账"。**具体魔改（配方/数值/配置调参）不在本轮**，见文末「待魔改清单」。
 >
-> **进度**：**六批全部装完并验证通过** —— 批 0 已装地基 ✅ · 批 1 ✅ · 批 2 ✅ · 批 3 ✅ · 批 4 ✅ · 批 5 ✅。
-> `plan` 197 条全部就位；**客户端 236 jar 进世界 PASS**、**服务端 198 jar `Done (28s)`**。
-> 剩下的是 `hold`/`skip` 的取舍（36 + 9），以及一件需要拍板的事
-> 最后更新 2026-09-19。
+> **进度**：197 条全部装完。
+> **⚠️ 2026-09-19 傍晚重大更正**：批 4 与批 5 的"验收通过"曾是**假阳性**（客户端从未进世界，见 C13）。
+> **已修好并用新判据重验**：16:13~16:24 四次运行（b1,b2 → 87 jar · b1~b3 → 157 · b1~b4 → 218 · b1~b5 → **231**）**全部 PASS**，
+> 且每次都满足"关卡加载完成 + 本次零新崩溃报告"。批 1~3 的原结论因此**被证实**；批 4/批 5 的结论由这次重验取代。
+> 因此"客户端 236 jar 进世界 PASS"这句**不成立**，已改。
+> **服务端 198 jar · `Done (28s)`** 是另一条腿（不含客户端渲染路径），暂视为成立，但客户端修好后要复验一次联机。
+> 最后更新 2026-09-19（傍晚）。
 
 ---
 
@@ -29,6 +32,12 @@
 | **T15** | **过期依赖图会静默抽走前置库**：`packwiz add` 不写依赖段，图没重建 → `configurable` 被测试器搬走 → 报 `Mod neruina requires configurable`（**看起来像真冲突的假冲突**） | 🟠 方法论 | 重建依赖图 + 测试器加**图过期绊线**（返回码 6）✅ |
 | **T16** | **换行符会让 pack 失去可复现性**：本机 `core.autocrlf=true` 且仓库无 `.gitattributes` → 新克隆时 `pack/**` 被转成 CRLF → `pack/index.toml` 里的哈希全部失配，别人 `packwiz install` 直接失败 | 🟠 可复现性 | 新增 `.gitattributes`，`pack/**` 标 `-text`（字节精确）✅ |
 | **T17** | **`index.toml` 里有一个陈旧哈希**：C2 手工 pin Terralith 后没 `packwiz refresh` → 安装器在 terralith 这一步必然失败（**本机不读 index.toml，所以永远看不到**） | 🟠 可复现性 | `packwiz refresh`（已确认幂等）✅ |
+| **C12** | **客户端开世界即崩**：`InventoryProfilesNext 2.2.5` 在 `Minecraft.doWorldLoad` 时 `ConfigScreenSettings.<clinit>` NPE（libIPN 的 delegate 为空）→ **客户端进不了任何世界** | 🔴 致命（客户端全线瘫痪） | 三次复现；排除 Connector/FFAPI/continuity/陈旧配置后仍崩 → `inventory-profiles-next` 改 **`hold`**，移除后客户端正常加载世界 ✅ |
+| **C16** | **性能：加载一个已建世界约 10 分钟；进世界后持续卡顿（约"卡 3 秒 / 顺 1 秒"）** | 🔴 致命（不可玩） | 加载慢已归因（JEI 注册）；游玩期卡顿**尚未归因**，需 spark profile；已先做四项低风险缓解 ✅ 部分 |
+| **C15** | **`additionalstructures` 在玩家登入时于服务端主线程发 HTTP**（查 Patreon 赞助者），网络不通时**单次 tick 冻结 41 秒**（ModernFix 看门狗误报"死锁"）→ 游戏像卡死 | 🔴 致命（玩家侧进世界即卡） | 关掉它的 `patreon_rewards`（**已用字节码验证**该分支会跳过三个 URL）+ 关掉它的 update-checker ✅ |
+| **C14** | **Epic Knights 的 mixin 配置带 UTF-8 BOM**，而 PCL 会加 `-Dfile.encoding=COMPAT`（中文 Windows 上 = **GBK**）→ 用户一启动就崩（`Expected BEGIN_OBJECT but was STRING`）| 🔴 致命（玩家侧启动失败） | ① 新工具 `tools/strip_bom.py` 去 BOM（客户端+服务端已执行）② 把"启动必须 UTF-8"写成硬要求 ✅ |
+| **C13** |：判据 `Starting integrated minecraft server` 在**开世界早期**就写，之后崩溃仍被判 PASS → **批 4、批 5 的"验收通过"是假的** | 🔴 致命（结论不可信） | 判据加"关卡加载完成"证据 + "本次零新崩溃报告"硬闸门；旧结论待重验 ✅ |
+| **T18** | **`hold` 的 mod 被依赖拖进 pack，还混入了 Fabric 侧 mod**：批 4 选了 `continuity`（Fabric 侧，与已装 `fusion` 重复），它 `required connector` → packwiz 把 `connector` 写进 pack 并装入客户端（连带 FFAPI） | 🟠 流程 | `continuity` 改 `skip`；`connector`/FFAPI 移出；给 `apply_modlist.py` 加两道防线（拒 Fabric 侧 mod、拒被依赖带进来的 hold/skip）✅ |
 | **C3** | `stellarcreateoptimization` 硬依赖 `sodium 0.6.9+`，本包用 `embeddium` | 🟠 装了就崩 | 改 `skip` ✅ |
 | **C4** | `byepregen` 与 `noisium` **显式不兼容**（mod 自己声明） | 🟠 装了就崩 | 取 `noisium`，`byepregen` → `skip` ✅ |
 | **T1** | 12 条 slug 取自 jar 文件名，与项目真 slug 不符 | 🟠 装机必失败 | 全部修正 + 加核验关卡 ✅ |
@@ -438,10 +447,11 @@ lithostitched 1.8.0-beta6（2026-09）差 20 个月 → **不报错，只卡死*
 | 1 地基（33 条） | 世界生成三件 + 引擎 + 性能 + 中文化 + 运维 | ✅ **已装已验** | 修掉 C1/C2/C3/C4 |
 | 2 世界内容（29 条） | 结构 / 维度 / 村庄 / 中世纪 / 据点结构 | ✅ **已装已验**（26 条） | 剔除 C5 `stoneholm`（skip）、C6 `deeperdarker`、C7 `the-twilight-forest`（hold） |
 | 3 立国与基建（59 条） | Create 生态 / 图纸系 / 建材装饰 / 交通 / 食物农业 | ✅ **已装已验** | 剔除 C8 `create-aeronautics`（hold）；C9 定为流程问题（见 C9 详情） |
-| 4 远征与生活（54 条） | 地图背包定位 / 战利品遗物 / QoL / 视觉音效 | ✅ **已装已验** | 剔除 C10 的 sodium 系三个；`medieval-paintings`/`medieval-music` 用 packwiz `--addon-id/--file-id` 显式 id 补装（搜索匹配会误拒） |
-| 5 御敌与文明（8 条） | 威胁 / 军事单位 / 攻城 / 大工程 | ✅ **已装已验** | 客户端 236 jar 进世界 PASS（两步流程）· 服务端 198 jar `Done (28s)`；期间修掉 T14/T15/T16/T17 与 C11 |
+| 4 远征与生活（54 条） | 地图背包定位 / 战利品遗物 / QoL / 视觉音效 | ✅ **已装已验（重验）** | 剔除 C10 的 sodium 系三个；`medieval-paintings`/`medieval-music` 用 packwiz `--addon-id/--file-id` 显式 id 补装（搜索匹配会误拒） |
+| 5 御敌与文明（8 条） | 威胁 / 军事单位 / 攻城 / 大工程 | ✅ **已装已验（重验）** | 当时的"客户端 236 jar 进世界 PASS"是假阳性（C13）；服务端 198 jar `Done (28s)` 独立成立。期间修掉 T14/T15/T16/T17 与 C11 |
 
-**装机结论**：`plan` 181 条 + 已装地基 16 条 = **197 条全部就位**，客户端 236 jar / 服务端 198 jar。
+**装机结论**：`plan` 179 + 已装地基 16 = **195 条就位**（`continuity`/`inventory-profiles-next` 因 C12/T18 改判 hold/skip），
+客户端 **231 jar 进世界 PASS（2026-09-19 16:24 用强判据重验）** / 服务端 **196 jar**。
 `hold` / `skip` 的条目全部留在 `tools/lists/quarantine.tsv` 与 `modlist.tsv` 里，**原因逐条可查**。
 
 
@@ -503,7 +513,7 @@ lithostitched 1.8.0-beta6（2026-09）差 20 个月 → **不报错，只卡死*
 |---|---|
 | 选中条目 | **197**（`plan` 181 + 已装地基 16）= 252 条候选里筛下来的 |
 | 未就位 | **45** = `hold` 36 + `skip` 9，**逐条有理由**（`modlist.tsv` / `quarantine.tsv`） |
-| 客户端 | **236 jar 进世界 PASS**（两步流程，标记 `Starting integrated minecraft server`） |
+| 客户端 | ✅ **231 jar 进世界 PASS**（2026-09-19 16:24，新判据：关卡加载完成 + 本次零新崩溃报告）；原"236 jar PASS"是假阳性，已作废 |
 | 服务端 | **198 jar**（= 端侧取证要求的 180 + 18 个 CF 独占分发、无声明可查的）· 启动 `Done (28.121s)` |
 | `pack/` | **237 条元数据**，自洽、可复现（已补批 0，且 `pack/**` 锁字节精确） |
 
@@ -562,4 +572,341 @@ C3 / C8 / C10 三处冲突都指向它。换过去可解锁 **4 个 mod**（`ste
 
 **一句话总结**：**这个包现在装得起来、进得去世界、冲突已经清账**；
 它离"能玩"还差的是**内容层的魔改**，而不是兼容性。
+
+---
+
+## 十一、重大更正（2026-09-19 傍晚）：客户端开世界崩溃 + 验收协议失效
+
+> 这一节是**对前面结论的更正**，不是新功能。触发点：M0 真机验证任务里子代理反复进不去世界，
+> 于是回头查日志，发现**我此前报的验收有假**。
+
+### C12 · `InventoryProfilesNext` 让客户端**进不了任何世界**
+
+**现象**：客户端到主菜单没问题，一开世界就崩。今天同一签名崩了 **6 次**
+（09:16:53 / 09:30:21 / 09:44:31 / 14:53:30 / 15:11:45 / 16:01:39）。
+
+```
+Description: Rendering screen
+  ... Minecraft.doWorldLoad            ← 正在开世界
+  → ClientHooks.drawScreen
+  → inventoryprofilesnext ConfigScreenSettings.<clinit>
+  → inventoryprofilesnext Features.getENABLE_PROFILES
+  → NullPointerException（libIPN 的 AsDelegate 还是空的）
+```
+
+**关键判据**：崩溃报告里**没有任何"已加载关卡"的信息**（`Affected level` 段缺失）→ **玩家从没进过世界**。
+
+**排除过程（四次实验，每次约 5 分钟）**：
+
+| 实验 | 动作 | 结果 |
+|---|---|---|
+| 1 | 移出 `connector`（hold，却装在客户端） | 仍崩；且暴露下一环：FML 报 `Mod continuity requires connector any` |
+| 2 | 再移出 `continuity`（Fabric 侧、与 `fusion` 重复） | **仍崩**（还是 IPN 同一栈）→ 证明 Connector 不是唯一元凶 |
+| 3 | 再移出 Connector 的依赖 `forgified-fabric-api` + 清掉 IPN 陈旧配置 | **仍崩** |
+| 4 | 把 `inventory-profiles-next` + `libipn` 判为 `hold` 并移出 | ✅ **客户端正常加载世界**：`LoggerChunkProgressListener: Time elapsed: 582 ms`、**本次零新崩溃报告**、此后一直存活 |
+
+**顺带排除**：IPN 与 libIPN **不是版本错配**（IPN 2.2.5 声明 `libipn [6.6.3,6.7)`，装的就是 6.6.3，两者都是 1.21.1 最新）→ 是 IPN 自身在这个环境里的真 bug。
+**处置**：`inventory-profiles-next` → `hold`（纯便利 mod，拿它换"客户端能玩"完全划算；证据是三次硬崩溃）。
+
+### C13 · 验收协议**假阳性**（这一条比 C12 更严重）
+
+**判据缺陷**：`Starting integrated minecraft server` 这行在**开世界早期**就写进日志，
+关卡加载**之后**才崩的客户端也会被判成 PASS。
+
+**铁证（时间差）**：
+
+| 弱判据写入 | 崩溃报告 | 我的结论 |
+|---|---|---|
+| 09:30:21 前 | 09:30:21 | **09:31:10 报 PASS**（+49s）|
+| 09:44:31 前 | 09:44:31 | **09:45:19 报 PASS**（+48s）|
+| 15:57:57.446 | 15:57:58 | 实验 2 被判"进世界" |
+| 16:01:38.125 | 16:01:39 | 实验 3 被判"进世界" |
+
+→ **批 4（提交 09:17，崩溃 09:16:53）与批 5（提交 09:46，崩溃 09:44:31）的"验收通过"都是假的。**
+
+**修法（已做）**：
+1. 判据必须**同时**满足：① 弱标记 ② **关卡加载完成**证据
+   （`LoggerChunkProgressListener` / `Preparing spawn area` / `Time elapsed:`）③ **本次零新崩溃报告**。
+2. `autotest.py` 在等进世界时，一旦发现新崩溃报告或崩溃标记就**立刻判失败**（不再等超时）。
+3. 修掉 `autotest.py` 里旧检查的误报：原来是"最近 600 秒内有崩溃报告就报警"，
+   会把**上一轮**的报告算到这一轮账上（实验 4 明明没崩却被误报）→ 改成"只看本次启动之后写入的报告"。
+4. 记一条**我自己犯的错**：一开始把 `joined the game` 当单机判据，结果白等一轮——
+   那行是**连服务器**场景才有的；单机要用上面第 ① 条那组。
+
+### T18 · `hold` 的 mod 被依赖拖进 pack
+
+- 批 4 的 **65 个条目**里混进了 `connector.pw.toml`（清单里是 `hold`）与 `forgified-fabric-api`。
+- 链条：`continuity`（Fabric 侧连接材质）→ `required: connector` → packwiz 解析依赖时写进 pack。
+- 而 `continuity` 本身也是**选型错误**：它和已装的 `fusion`（NeoForge 原生连接材质）是**同一个功能位**，
+  正是设计里"同一功能位只留一个"明令禁止的重复。
+- **防线（本轮补上）**：`apply_modlist.py` 加两道关卡——
+  ① **拒绝 Fabric 侧 mod**（jar 有 `fabric.mod.json` 且无 `neoforge.mods.toml` → 直接拒，本项目不走 Connector 路线）；
+  ② **拒绝被依赖带进来的 `hold`/`skip` 条目**（解析 packwiz 实际写入的 slug，凡不在 plan/installed 名单里的就报错停下）。
+
+### 附带：专用服务端 `-Xmx4G` 无人在线也会 OOM
+
+子代理在跑"真客户端连专用服务端"时抓到：服务端 `Done (36.495s)` 后约 3 分钟
+`OutOfMemoryError: Java heap space`（崩在 WorldEdit 7.3.8 的 `PlatformReadyEvent` 派发里，**当时无玩家在线**），
+OOM 后自旋实测 **12 秒吃掉 86.9s CPU（7.2/8 核）**，把客户端饿死。
+**处置**：把 `server/user_jvm_args.txt` 的堆调到 6~8G（3~7 人联机形态下必须修）。
+
+### 由此产生的待办（按顺序）
+
+1. 用新判据**重跑批 1~5 验收**（每批约 5 分钟，可连跑）。
+2. 更新 README / CHANGELOG 里所有"进世界 PASS"的表述（当前不可信）。
+3. 服务端堆调大并复验 `Done (`。
+4. 然后回到 M0（HYW 单位能否刷出并攻击玩家）→ 计划 1。
+
+### C14 · Epic Knights 的 mixin 配置带 **UTF-8 BOM** → 用 PCL 启动即崩（🔴 已修）
+
+**现象（用户本人实测，2026-09-19 17:28）**：
+
+```
+The specified resource 'magistuarmory.mixins.json' was invalid or could not be read
+Caused by: JsonSyntaxException: Expected BEGIN_OBJECT but was STRING at line 1 column 1
+```
+
+**真因是两件事凑到一起**：
+
+1. `epic-knights-1.21.1-neoforge-10.15.jar` 里的 `magistuarmory.mixins.json` 以 `EF BB BF`（UTF-8 BOM）开头。
+   已从 CurseForge 下载**最新版**核对：**仍然带 BOM** → 换版本解决不了。
+2. **PCL 给 JVM 加了 `-Dfile.encoding=COMPAT`** —— 在中文 Windows 上它的意思是"用系统默认编码"= **GBK**。
+
+同一份文件，两种解码：
+
+| 启动参数 | `file.encoding` | 结果 |
+|---|---|---|
+| 无（我们的自动化） | UTF-8 | `\ufeff{` → Mixin 容忍 → 正常 |
+| `-Dfile.encoding=COMPAT`（PCL） | **GBK** | `锘縶` → 解析器看到的不是 `{` → **崩** |
+| COMPAT 在前、UTF-8 在后 | UTF-8 | ✅ 正常（**JVM 以最后一个同名 -D 为准**）|
+| UTF-8 在前、COMPAT 在后 | GBK | ❌ 崩 |
+
+**为什么整套自动化一直没发现（这条比崩溃本身更重要）**：
+我们的启动器**不带** `COMPAT` → JDK 21 默认 UTF-8 → 从没复现过。
+**"我的启动方式"和"玩家的启动方式"不是同一个环境。**
+→ 已给 `autotest.py` 加 `--jvm-args`，用来模拟启动器参数；**以后所有"玩家视角"的验收都必须带上它跑一遍**。
+
+**全库扫描（客户端）**：6 个 jar / 271 个 JSON 带 BOM。
+其中**只有 `epic-knights` 带 BOM 的 mixin 配置**（就是崩的那个）；`HundredYearsWar` 17 个、`storagedelight` 231 个是数据文件
+（MC 用显式 UTF-8 读，**暂时无害**）；cookingforblockheads / mcw-bridges / minersdelight 各 1 个语言文件。
+
+**修法（两条都做了）**：
+
+- **A 文件侧**：新工具 `tools/strip_bom.py`（去掉 jar 内 JSON 的 BOM；**只改本地实例，不重新分发任何 mod 文件**）。
+  已对客户端与服务端执行，6 个 jar 全部"剩余 0 个"。⚠️ **packwiz / materialize 重新下载这些 jar 后需要重跑**。
+- **B 启动器侧（对玩家是硬要求）**：JVM 参数加 `-Dfile.encoding=UTF-8`，且必须排在启动器自身参数**之后**。
+  已写进 `README` 与 `BOOTSTRAP`：**本包的启动环境必须是 UTF-8 默认编码**。
+
+**一个自证**：我用 PowerShell 的 `Set-Content -Encoding utf8` 写 Java 测试文件时，它也给文件加了 BOM，
+`javac` 当场报 `非法字符: '\ufeff'` —— 同一个 bug 在同一台机器上原样复现了一次。
+
+### C15 · `additionalstructures` 在**玩家登入**时于服务端主线程发 HTTP → 冻结 41 秒（🔴 已修）
+
+**现象（用户实测，2026-09-19 17:54）**：新建世界后进游戏，区块加载很慢，加载两三个区块后**卡死**；
+ModernFix 看门狗报 `A single server tick has taken 41366 ms`（>40000ms），提示"很可能已死锁"，并让看线程转储。
+
+**线程转储给出的真相**（不是死锁，是**网络阻塞**）：
+
+```
+"Server thread" RUNNABLE (in native)
+  sun.nio.ch.SocketDispatcher.read0 ... sun.net.www.http.HttpClient.parseHTTPHeader   ← 卡在 HTTP
+  ↑ 调用者
+  additionalstructures@6.3.2  Events.SupporterCheck(Events.java:157)
+  additionalstructures@6.3.2  Events.SupporterRewards(Events.java:104)
+  neoforge  EventHooks.firePlayerLoggedIn        ← 玩家刚登入
+  minecraft PlayerList.placeNewPlayer
+```
+
+`additionalstructures` 的 `Events` 类里**硬编码**了三个 URL：
+`raw.githubusercontent.com/XxRexRaptorxX/Patreons/main/{Supporter, Premium%20Supporter, Elite}`，
+在**玩家登入时**逐个请求，网络不通就各超时 15 秒 → 3 个就是 45 秒。
+
+**修法与验证**：它的配置只有两个开关。把 `config/additionalstructures-server.toml` 的
+`patreon_rewards = true` 改成 `false`、`additionalstructures-client.toml` 的 `update-checker` 改成 `false`。
+**没靠配置项的说明文字下结论**：反汇编 `SupporterRewards` 确认了闸门——
+
+```
+10: getstatic Config.PATREON_REWARDS
+28: ifeq 442                  ← false 直接跳到末尾
+31: new URL ".../Supporter"   ← 三个 HTTP 请求都在跳转之后
+```
+
+**为什么这类问题只在真人玩时才暴露**（与 C14 同一个教训）：我们的自动化启动时网络往往还能通到那几个地址，
+所以从没卡过；而玩家那次网络不通 → 15 秒 ×3。**网络依赖型的阻塞调用，机器再快也救不了。**
+
+### 附带两条（同一次事故里查出来的）
+
+**① OOM 是"卡死"拖出来的后果，不是原因**。时间线：17:54:47 第一次卡 41 秒 → 反复卡 → **18:00:0x 才**
+`OutOfMemoryError: Java heap space`（栈在 `CompoundTag.readNamedTagData`，读 NBT）。堆确实偏紧
+（玩家启动器给到 7.3G）→ 建议 **10G**；但根因是那次阻塞。
+
+**② 新建世界慢的一个大头是 RoadWeaver 的预测半径**：
+
+```jsonc
+structurePrediction.predictRadiusChunks = 1024   // 1024 区块 = 16384 格的范围里预测结构（为了绕开结构修路）
+planning.initialPlanRadiusChunks        = 128
+```
+
+上次服务端建世界时它的实测工作量是 `radiusApproxChunks=128 tiles=289 samples=263169`。
+**本轮已关掉 `performance.opencl*`（本机 OpenCL 不可用，开着只是反复失败回退 CPU，纯浪费）。**
+`predictRadiusChunks` 是**影响世界内容的**参数（调小 = 路网对远处结构的避让变弱），
+所以没有擅自改，留待拍板：建议 `1024 → 256`。
+
+### 由此暴露的验收缺口（重要）
+
+**"新建世界 + 首次登入"这条路径，我们此前从未验过**——所有批次验收用的都是**预先生成好的世界备份**
+（`--reuse-world data/bN-world`），走的是"加载已有世界 + 进世界"。而真人第一次玩做的是
+**新建世界**（完整世界生成）+ **首次登入**（触发 `firePlayerLoggedIn` 那条链）。
+→ 已加入验收清单：**每批验收必须包含一次"新建世界并首次登入"**，且要能模拟玩家的启动参数（见 C14 的 `--jvm-args`）。
+
+### C16 · 性能：加载 10 分钟 + 游玩期持续卡顿（🟠 **尚未归因**，已做部分缓解）
+
+**现象（用户实测，2026-09-19 18:08~18:20）**：
+加载一个**已存在**的世界进入游戏约 **10 分钟**；进去之后持续卡顿，大约"卡 3 秒、顺 1 秒"循环，无法正常游玩。
+
+**① 10 分钟加载：已归因（有日志证据）** —— **JEI 在渲染线程上注册分类/配方**：
+
+```
+18:11:37  Registering ingredients: jei:minecraft is running and has taken 5.796 seconds so far
+18:11:53  Registering categories: jeresources:minecraft took 5.x sec
+18:11:53  Registering categories: create:jei_plugin took 47.85 sec      ← 单个插件就 47 秒
+18:13:xx  Registering recipes: create:jei_plugin took 9.494 sec
+18:14:xx  Building ingredient list took 7.283 seconds
+18:19:48  Sending Runtime Unavailable: jei:neoforge_gui（结束）
+```
+
+231 个 mod 的 JEI 插件逐个注册，**单条几十秒**，累计约 8 分钟。这是**加载成本**，不是"卡"。
+
+**② 那次 4.6 分钟的"冻结"是假象**：日志显示 `Saving and pausing game...`（游戏被暂停了 4.6 分钟，
+例如切出窗口/打开菜单），恢复时把暂停时长报成了 `Running 275975ms or 5519 ticks behind`。
+→ **不能拿它当"卡死"的证据。**
+
+**③ 游玩期卡顿：服务端没有痕迹。** 18:14:33 之后到 18:19:17 之间**没有任何 `Can't keep up`**，
+而用户正是在这段时间游玩并且持续卡顿 → **卡顿不是（或不只是）服务端 tick 造成的**，
+更可能是**客户端侧**（渲染 / GC / 某个周期性任务）。**这条必须用 profile 归因，不能猜。**
+
+**已做的四项低风险缓解**：
+
+| 项 | 改动 | 理由 |
+|---|---|---|
+| 模拟距离 | `options.txt` simulationDistance **12 → 8** | 服务端 tick 的大头；231 个 mod 在 4 核 i3-12100F 上，12 太重 |
+| RoadWeaver 动态规划 | `dynamicPlanEnabled` **true → false** | "边玩边按 128 区块半径重规划路网"是**周期性卡顿的头号嫌疑**；关掉不影响已生成的路 |
+| RoadWeaver OpenCL | `opencl*Enabled` **→ false** | 本机 OpenCL 不可用（有 NoClassDefFoundError），开着只是反复失败回退 CPU |
+| 内存 | 建议启动器 **7.3G → 10G**（需用户在 PCL 设置里改） | 之前已发生一次 `OutOfMemoryError` |
+
+**待做（决定性的那一步）**：`spark` 已装（1.10.124，双端）。
+进游戏执行 **`/spark profiler --timeout 60`**，把报告链接拿回来 → 直接看出**哪个 mod 吃 tick / 吃帧**。
+（轻量替代：`/spark health`。）
+
+**这里暴露的验收缺口（与 C15 并列的第二条）**：批次验收只验了"**进得去**"，从未验过"**跑得动**"。
+`DESIGN.md` §12 本来就规定了 TPS/MSPT/启动时长指标，但装机阶段一条都没测。
+→ 待办：把**性能验收**加进流程（进世界后测 MSPT/帧时间，并记录在 `baseline.csv`）。
+
+### C16 结案（2026-09-19 18:34~18:48）：GC 死亡螺旋，不是 bug
+
+**取证方法**：用户反馈"进游戏后卡到没机会手打 `/spark`"，所以**不要求用户操作**，
+改为我用 `data/perf_sample.py` 自动化复现：复制用户世界 → autotest（quickPlay，不用 UI 自动化）启动
+→ **每 5 秒取一份 jstack**，并用 jstack 自己判断阶段（Render thread 栈里是否还有 `doWorldLoad`）
+→ 同时开 `-Xlog:gc`。
+
+**v1 的教训**：第一次采样全采在加载画面上——**`Time elapsed`（关卡加载完成）≠ 能玩了**，
+之后客户端还要在加载画面跑约 8 分钟（JEI 逐个注册 231 个 mod 的配方）。
+→ 阶段判断不能靠日志时间点，要看 jstack。
+
+**GC 日志（决定性证据，6G 堆）**：
+
+| 指标 | 数值 |
+|---|---|
+| **Pause Full 次数** | **302** |
+| 单次停顿 | 平均 **2409 ms**（中位 2141，最长 **4353**）|
+| **累计停顿** | **727.6 秒**，占这段 14.7 分钟的 **83%** |
+| 每次回收 | `6137M -> 6137M`，**0 MB** |
+| Pause Young | 311 次，平均 28 ms（正常）|
+
+**活跃集趋势**（每 20 次取一点）：第 1 次 Full GC 回收到 **5554M**、第 26 次 6117M、第 76 次起恒为 6137M
+→ **加载完活跃对象就有 5.5~6 GB**，而堆上限 6G → 零余量 → Full GC 反复跑却回收不到东西。
+
+**83% 的时间在停顿 = 玩家"卡三秒顺一秒"（约 75% 卡）** —— 与体感完全吻合。
+
+**修法**：
+1. **启动器内存 6G/7.3G → 12G**（机器 31G，够）。这是决定性的一步。
+2. **工具链纠正**：`autotest.py` 默认 xmx **6G → 10G**。
+   为什么必须改：我们整套"验收通过"都用 6G 跑的，所以**从没暴露过这个死亡螺旋**——
+   又一次"**我的环境和玩家环境不是一个环境**"（与 C14 的编码、C15 的加载器参数同一个教训）。
+3. 若 12G 后仍卡：说明活跃集继续涨到 10G+，那时才需要查累积/泄漏或减内容。
+
+**第三条验收缺口（与 C15 并列）**：装机验收只验了"进得去"，**从未测内存与帧时间**。
+`DESIGN.md` §12 早有指标（TPS/MSPT/启动时长），装机阶段一条没测。→ 待办：把内存与帧时间纳入验收。
+
+### C16 追加：12G 之后的 spark profile 结论（2026-09-19 19:18）
+
+用户把启动器内存调到 **12G** 后自己跑了一次 profiler，产出
+`C:\Users\87335\Downloads\sTCOBBL816.sparkprofile`（protobuf，2.0 MB，60.5 秒 / 1200 份采样）。
+本机没有现成解析器，于是**自己写解析**（protobuf：`f3=类名 · f4=方法名 · f8=两个 double 的窗口时间`）。
+
+**结果（注意：spark 在单人游戏里采的是「集成服务端」，不含客户端渲染）：**
+
+| 项 | 60 秒内 | 占比 |
+|---|---|---|
+| 服务端线程 `parkNanos` 等下一 tick（**纯空闲**） | **39.9 s** | **66%** |
+| 真正 tick（`tickServer`）| 19.8 s | 33% |
+| └ `ServerLevel.tick` | 16.7 s | 28% |
+| &nbsp;&nbsp;├ `ServerChunkCache.tick` | 8.3 s | 14% |
+| &nbsp;&nbsp;└ `EntityTickList.forEach` | 6.5 s | 11% |
+| 栈里出现的 mod | neruina 0.6% · roadweaver 0.5% · naturalist 0.3% · friendsandfoes 0.2% | 全部可忽略 |
+
+**结论**：
+1. **服务端侧健康**——线程 66% 时间在**空闲等 tick**，说明它跟得上；**没有 GC 主导**（G1 未进热点）
+   → 12G 那一步把 GC 死亡螺旋解决了（与我的 GC 日志结论一致）。
+2. **没有任何 mod 主导服务端 tick**：最大的 mod 只占 0.6%。所以**不能再靠"砍某个 mod"来解决卡顿**——
+   至少服务端侧没有可砍的目标。
+3. **这个 profile 看不到客户端渲染**。若玩家仍感觉卡，瓶颈在**渲染侧**（区块网格构建 / 模型 / GPU），
+   需要客户端侧测量才能归因（spark 客户端采样，或 F3 的帧时间与 GPU 占用）。
+
+**待确认**：12G 之后用户是否仍然卡。若仍卡 → 下一步测客户端渲染侧，而不是继续查服务端。
+
+### C17 · 加载**未生成区块**时卡顿，且同一局内越来越长（🟠 已定位 + 已调参）
+
+**现象（用户实测，12G 会话）**：进游戏后不再卡死（C16 已解决），但**走去没去过的区块时会卡**，
+用户怀疑"越玩越严重"。
+
+**证据 ①：卡顿确实在变长**（同一局的服务端日志）：
+
+```
+19:12:23  Can't keep up! Running 2507ms or 50 ticks behind
+19:14:27  Can't keep up! Running 6818ms or 136 ticks behind
+19:16:20  Can't keep up! Running 9230ms or 184 ticks behind
+```
+
+**证据 ②：区块相关工作的构成**（用户提供的 spark profile，60s 窗口，单位≈毫秒）：
+
+| 帧 | 时间 |
+|---|---|
+| `ChunkMap.processUnloads`（卸载） | 2296 |
+| `ChunkMap.tick` / `saveChunkIfNeeded` | 2668 / 932 |
+| `roadweaver.planning.neoforge.ServerPl.onServerTick` | 792 |
+| `roadweaver.generation.RoadGenerationS.tick` / `refreshQueue` | 768 / 768 |
+| `roadweaver.persistence.files.Structur.readFileState` / `getStructureConnections` | 768 |
+
+**"越玩越严重"的机制（这是关键）**：RoadWeaver 的
+`structurePrediction.predictRadiusChunks = 1024`（**1024 区块 = 16384 格**）——它要在这么大的范围内
+预测结构，才能让路网绕开它们。**探索越远、该范围内已知结构越多 → 预测越贵 → 每次新区块的停顿越长**。
+（已排除：GC 不再是因素——12G 后 profile 里 GC 未进热点、服务端 66% 空闲。）
+
+**已做的调整（配置已备份到 `data/roadweaver.json.bak`，可回退）**：
+
+| 参数 | 原值 | 新值 | 理由 |
+|---|---|---|---|
+| `structurePrediction.predictRadiusChunks` | 1024 | **256** | 把"预测成本随探索增长"这一项**封顶**（代价：远处结构避让变弱，路偶尔穿过结构）|
+| `planning.initialPlanRadiusChunks` | 128 | **64** | 建世界/进入时的初始路网规划范围减半 |
+| `planning.dynamicPlanRadiusChunks` | 128 | **64** | 动态规划（已关）的范围，进一步降底 |
+
+**根治手段（建议，未执行）**：**用 Chunky 预生成**（已装）。把常活动范围一次性生成完，
+正常游玩就不再触发新区块生成 → 卡顿从"玩的时候"挪到"维护的时候"。
+建议：无人在线时 `chunky radius 2000` 之类，先小范围试，看磁盘与耗时。
+
+**长期观察项（用户担心的"越玩越严重"）**：
+① RoadWeaver 的结构连接状态文件（`Structur.readFileState`）随探索增长 —— 已通过降低预测半径封顶其单次成本；
+② 区块卸载/存档（`processUnloads` / `saveChunkIfNeeded`）随世界体积增长 —— 需监控存档大小与 MSPT；
+③ 实体/掉落物累积（本包已装 `servercore` 做清理）—— 需在多人服上实测。
 

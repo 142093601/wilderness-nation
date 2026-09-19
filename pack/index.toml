@@ -186,16 +186,6 @@ hash = "81105a1a363873f3675a861d228abcf0f2a8356f1a17850c06f6d6c47e454634"
 metafile = true
 
 [[files]]
-file = "mods/connector.pw.toml"
-hash = "a38d72ca403e9064338be6e0cf69532768b0c1aba8f88703a8ce74c2734da522"
-metafile = true
-
-[[files]]
-file = "mods/continuity.pw.toml"
-hash = "2e082857985c7550efdad38a1997b9805051b07fb61b0cd30921e786a8521130"
-metafile = true
-
-[[files]]
 file = "mods/controlling.pw.toml"
 hash = "65c8086d2ec3d39acc7bd36c7a0306ccc43b602b38fa07d13291bc478ef7dfff"
 metafile = true
@@ -456,11 +446,6 @@ hash = "73360e397134d238ee8fd21d33fd7f9275e9441f74f8f1b6ed92278877c0b9f1"
 metafile = true
 
 [[files]]
-file = "mods/forgified-fabric-api.pw.toml"
-hash = "c490f7b680875f034af39a1556911d6edb1dcdd76a114ee6a4eca0f158cd92b2"
-metafile = true
-
-[[files]]
 file = "mods/framedblocks.pw.toml"
 hash = "20eee73cffcd55bfe041b16bbc3adc64c38859bf928486bf1db1368b6dba2058"
 metafile = true
@@ -591,11 +576,6 @@ hash = "f4f4f93fd59e6a43e7484b44c667875cc8a5d8e5621d98b61e8944c9e0838d61"
 metafile = true
 
 [[files]]
-file = "mods/inventory-profiles-next.pw.toml"
-hash = "ab503e89461dff879ee793253e173625b6ab868f570a371323ef725e567cf5ea"
-metafile = true
-
-[[files]]
 file = "mods/it-takes-a-pillage-continuation.pw.toml"
 hash = "59f143c0c7bc463e09ef4f6c6172e3e45208a1a4c01663d2a0a4637a4df3eb73"
 metafile = true
@@ -658,11 +638,6 @@ metafile = true
 [[files]]
 file = "mods/lets-do-vinery.pw.toml"
 hash = "535e8e9c6bc184e9771cf4e35795c8f162d89abeb5b9aed9c2ea2988c710776f"
-metafile = true
-
-[[files]]
-file = "mods/libipn.pw.toml"
-hash = "0d2a00252d64ed7d2d9b19994f7accb780304be61f3903d36e810714b414c6cb"
 metafile = true
 
 [[files]]

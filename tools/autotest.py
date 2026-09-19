@@ -46,12 +46,39 @@ DEFAULTS = {
     "username": _P["username"],
     "uuid": _P["uuid"],
     "world": "新的世界",
-    "xmx": "6G",
+    "xmx": "10G",
     "width": "854",
     "height": "480",
 }
 
 IN_WORLD_MARKER = re.compile(r"Starting integrated minecraft server")
+
+# 2026-09-19 假阳性事故之后加的硬闸门。
+# 事故：`Starting integrated minecraft server` 这行在**开世界早期**就写进日志了，
+# 之后客户端在 `Minecraft.doWorldLoad` 里崩掉，这行依然在 → 连续被判成 PASS。
+# 结果：批 4、批 5 两次"验收通过"都是假的（客户端从没进过世界）。
+# 教训：判据必须**同时**满足 ① 有进世界标记 ② 本次启动没有新崩溃报告、日志里也没有崩溃标记。
+CRASH_LOG_PATTERNS = (
+    "Crash report saved",
+    "A fatal error has been detected",
+    "Encountered an unexpected exception",
+)
+
+# 单机模式的**真正**"关卡已加载"证据：只有关卡真的载入完成时才会写这几行。
+# 注意：`joined the game` 是**连服务器**场景的判据，**单机不会出现**
+# （2026-09-19 我自己先把它当单机判据，白等了一轮）。
+LEVEL_LOADED_MARKER = re.compile(
+    r"LoggerChunkProgressListener|Preparing spawn area|Time elapsed:")
+
+
+
+def snapshot_crash_reports(version_dir: Path) -> set:
+    """崩溃报告文件名快照，用来判断"本次启动有没有新崩溃"。"""
+    d = version_dir / "crash-reports"
+    if not d.is_dir():
+        return set()
+    return {p.name for p in d.glob("*.txt")}
+
 
 
 # ── 版本 JSON 解析 ────────────────────────────────────────────────────────────
@@ -237,9 +264,12 @@ def wait_for_in_world(log: Path, proc: subprocess.Popen, deadline: float,
     pattern 可覆盖判据：**连服务器时**不会出现 "Starting integrated minecraft server"，
     要改等 "joined the game"（服务端广播的加入消息会被客户端聊天栏记进日志）。
     """
+    custom = pattern is not None
     probe = pattern or IN_WORLD_MARKER
     if launched_at is None:
         launched_at = time.time()
+    version_dir = log.parent.parent
+    crash_before = snapshot_crash_reports(version_dir)
     while time.time() < deadline:
         if proc.poll() is not None:
             print(f"  !! 游戏进程已退出（exit code {proc.returncode}）")
@@ -253,7 +283,12 @@ def wait_for_in_world(log: Path, proc: subprocess.Popen, deadline: float,
                 text = log.read_text(encoding="utf-8", errors="replace")
             except OSError:
                 text = ""
-            if probe.search(text):
+            new_crashes = snapshot_crash_reports(version_dir) - crash_before
+            if new_crashes or any(p in text for p in CRASH_LOG_PATTERNS):
+                detail = ", ".join(sorted(new_crashes)) if new_crashes else "日志里有崩溃标记"
+                print(f"  !! 客户端崩溃（{detail}）→ 判定未进世界")
+                return False
+            if probe.search(text) and (custom or LEVEL_LOADED_MARKER.search(text)):
                 return True
         time.sleep(2)
     return False
@@ -354,6 +389,9 @@ def main() -> int:
     ap.add_argument("--seconds", type=int, default=60, help="进世界后停留秒数")
     ap.add_argument("--startup-timeout", type=int, default=300, help="等待进世界的上限（秒）")
     ap.add_argument("--world", default=DEFAULTS["world"])
+    ap.add_argument("--jvm-args", default="",
+                    help="额外 JVM 参数（空格分隔），用来模拟玩家的启动器。"
+                         "例：--jvm-args \"-Dfile.encoding=COMPAT\" 复现 PCL 的编码环境")
     ap.add_argument("--server", default="", help="多人：host:port（留空=单机进存档）")
     ap.add_argument("--no-options", action="store_true",
                     help="不要动 options.txt（pauseOnLostFocus 保持原样，后台跑会被暂停打断）")
@@ -378,6 +416,20 @@ def main() -> int:
     except Exception as exc:
         print(f"构造启动命令失败: {type(exc).__name__}: {exc}")
         return 2
+
+    # 模拟玩家的启动器参数（2026-09-19 C14 事故之后加的）。
+    # PCL 会给 JVM 加 `-Dfile.encoding=COMPAT`（中文 Windows 上 = GBK），
+    # 而我们的自动化一直不带它 → 用 UTF-8 → **从没暴露过 BOM 引起的启动崩溃**。
+    # 所以"玩家视角"的验收必须能复现那套参数：JVM 以**最后一个同名 -D 为准**，
+    # 这里插在 -cp 之前（即版本 JSON 的 jvm 参数之后），与"启动器把用户参数放后面"一致。
+    extra_jvm = [a for a in (args.jvm_args or "").split() if a]
+    if extra_jvm:
+        try:
+            at_cp = cmd.index("-cp")
+        except ValueError:
+            at_cp = len(cmd)
+        cmd[at_cp:at_cp] = extra_jvm
+        print(f"extra JVM args: {' '.join(extra_jvm)}")
 
     print(f"version : {cfg['version_id']}")
     print(f"java    : {cfg['java']}")
@@ -465,12 +517,14 @@ def main() -> int:
         print("  E " + l[-160:])
     for l in [x for x in text.splitlines() if "ModernFix/" in x and ("Game took" in x or "Total time" in x or "main menu to in-game" in x)]:
         print("  M " + l.split("]:", 1)[-1].strip())
-    crashes = sorted(crash_dir.glob("*.txt"), key=lambda p: p.stat().st_mtime) if crash_dir.is_dir() else []
+    # 只认「本次运行之后写入」的崩溃报告。
+    # 旧写法是"最近 600 秒内有崩溃报告就报警"，会把**上一轮**留下的报告算到这一轮头上
+    # （2026-09-19 实测：实验 4 明明没崩，却被上一轮 16:01:39 的报告误报）。
+    crashes = ([p for p in crash_dir.glob("*.txt") if p.stat().st_mtime > launched_at]
+               if crash_dir.is_dir() else [])
     if crashes:
-        newest = crashes[-1]
-        age = time.time() - newest.stat().st_mtime
-        if age < 600:
-            print(f"  !! 新的崩溃报告: {newest.name}")
+        newest = max(crashes, key=lambda p: p.stat().st_mtime)
+        print(f"  !! 本次运行产生了崩溃报告: {newest.name}")
     return 0
 
 
