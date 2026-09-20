@@ -171,6 +171,7 @@ tasks = [
 	{ type = "item", item = "minecraft:stone_bricks", count = 16 },
 ]
 rewards = [
+	{ type = "command", command = "/statecraft accelerate" },
 	{ type = "xp", xp = 50 },
 	{ type = "toast" },
 ]

@@ -338,12 +338,18 @@
 		id: "FAF2D6F95D0D6573"
 		rewards: [
 		{
-			xp: 120
+			command: "/statecraft accelerate"
+			permission_level: 2
 			id: "21892721033AE9E9"
+			type: "command"
+		}
+		{
+			xp: 120
+			id: "FCDEAB6C0B9A7AFE"
 			type: "xp"
 		}
 		{
-			id: "FCDEAB6C0B9A7AFE"
+			id: "F2CD5C9D49AA0AA8"
 			type: "toast"
 		}
 		]

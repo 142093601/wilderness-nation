@@ -113,6 +113,20 @@ TASK_REQUIRED_FIELDS = {
     "checkmark": [],
 }
 
+# 奖励类型的字段默认值（写 SNBT 时补齐）
+#
+# **为什么需要这个**：FTB Quests 的 `CommandReward` 默认 `permissionLevel = 0`
+# （javap 实测从字节码常量里读到：构造器 `iconst_0` → putfield permissionLevel）。
+# 而我们的 `/statecraft accelerate` 要求 `hasPermission(2)`。
+# 不显式提升权限，任务书发的命令**会被拒绝执行、而且不会报错** ——
+# 表现就是"做完主线拿到钥匙，但什么也没发生"。
+#
+# 所以：凡是 `command` 奖励，一律补 `permission_level = 2`（需要 op 才能被领奖者触发）。
+# 放在生成器里而不是逐条写进 TOML，是为了以后新增 command 奖励时不会再漏。
+REWARD_EXTRA_DEFAULTS: dict[str, dict] = {
+    "command": {"permission_level": 2},
+}
+
 DATA_SNBT_TEMPLATE = """{{
 \tdefault_autoclaim_rewards: "disabled"
 \tdefault_consume_items: false
@@ -439,6 +453,11 @@ class Compiler:
                     qerr(f"奖励 #{i + 1} 的 type='{rtype}' 不在白名单（见 QUESTBOOK-FORMAT.md §6.2）")
                     continue
                 obj = {k: v for k, v in r.items() if k != "type"}
+                # 补齐该类型的必需默认（如 command 的 permission_level）
+                for k, v in REWARD_EXTRA_DEFAULTS.get(str(rtype), {}).items():
+                    obj.setdefault(k, v)
+                if rtype == "command" and not obj.get("command"):
+                    qerr(f"奖励 #{i + 1} 是 command 但没有 command 字段")
                 obj["id"] = self.ids.make("reward", ch.key, name, str(i))
                 obj["type"] = rtype
                 rewards.append(obj)
