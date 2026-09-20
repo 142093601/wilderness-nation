@@ -76,6 +76,45 @@
 
 ---
 
+## J. **实体不落盘**（2026-09-20 真机实测，**整合包级 bug，优先级最高**）
+
+> 这是跑阶段 3 真机验收时撞出来的：**我们的村民每次重启都消失**。查下去发现
+> **整个世界重启后一个实体都没有**（连自然生成的、以及用原版 `/summon` 刷的都没有）。
+
+**证据（都是 RCON 原始回显，服务端 `D:\project\nation-pack\server`）**
+
+| 步骤 | 命令 | 回显 |
+|---|---|---|
+| 同一会话内 | `summon minecraft:villager 0 100 0` | `Summoned new Deana` |
+| 同一会话内 | `execute if entity @e[type=villager,x=0,y=100,z=0,distance=..32]` | `Test passed, count: 1` |
+| `save-all flush` | — | `Saved the game` |
+| **重启后** | 同一条 `execute if entity ...` | **`Test failed`** |
+| 重启后 | `execute if entity @e`（全世界） | **`Test failed`（0 个实体）** |
+
+**关键对照**：同一区块的**方块**没丢（脚本里 `anchorIntact=true` —— 讲台还在、
+房间还在，判定出来的原因是「村民不在了」而不是「锚点没了」）。所以是**实体这一路**的问题，
+不是区块整个没存。
+
+**为什么这条最优先**：它不止影响我们 —— 村民、动物、掉落物、Waystones、尸体袋、
+HYW 单位（**M0 与夺城整套都靠它**）全都会在每次重启后消失。
+
+- [ ] **J1 二分定位**：先怀疑"动过实体序列化/刷怪"的那几个 ——
+      `servercore`、`easy_mob_spawn_control`、`chunkplan`、`neruina`、`ScalableLux`、
+      `connectivity`、`ferritecore` / `modernfix`（后两个只动内存布局，先排除）。
+      跑法：`tools/server_ctl.py --setup` 前后手工增删单个 jar → `/summon` 一只 → `save-all flush`
+      → 重启 → `execute if entity @e`。**判据就是那一行 `Test passed` / `Test failed`。**
+- [ ] **J2 对照纯原版**：只装 NeoForge + 我们自己的 mod 跑同一个流程。
+      若也丢 → 是我们的 mod 或 NeoForge；若正常 → 确认是某个 mod（回到 J1）。
+      （我们的 mod 目前**没有任何**实体相关的 mixin/事件，嫌疑很小，但要排除。）
+- [ ] **J3 修复后的回归**：在情报站旁重启两次，`/statecraft buildings` 必须稳定 `healthy=true`，
+      且房间里**只有一个**村民。
+
+**在 J 修好之前，本 mod 的行为是（有意如此，不是 bug）**：村民没了 → 按 §10.4 走
+**重雇冷却（1 小时累计在线）**再重新雇一个。所以"每次重启多一个文书"不会发生，
+但"每次重启都要重新雇"会发生 —— 直到 J 修好。
+
+---
+
 ## A. 联机功能验收（需要：服务端 + 2 个客户端同时开）
 
 > 为什么必须后置：跨玩家权限**物理上需要两个真实玩家**；而且两个客户端 + 服务端大概要 5~6GB 内存，

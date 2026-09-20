@@ -45,8 +45,15 @@ public final class IdempotencyRules {
         if (observed.bindingHealthy()) {
             return MaterializationDecision.SKIP;      // §10.3 幂等：匹配就不生成
         }
-        if (building.materializedAtSeq() == seq) {
-            return MaterializationDecision.SKIP;      // §10.3：同一 seq 不重复生成
+        // §10.3：同一 seq 不重复生成。
+        //
+        // ⚠️ 必须带 everMaterialized()：`materializedAtSeq == 0` 同时表示"从未实体化"，
+        // 而 seq 自己也从 0 开始 —— 少了这个前提，**新世界里刚登记的每一座建筑
+        // 都会被判成"这次结算已经生成过了"**，于是永远不刷村民。
+        // 这条是 2026-09-20 在真服务端上踩出来的（`/statecraft materialize` 对刚登记的
+        // 情报站回 SKIP）；JUnit 当时全绿，是因为用例都从 seq ≥ 1 开始。
+        if (building.everMaterialized() && building.materializedAtSeq() == seq) {
+            return MaterializationDecision.SKIP;
         }
         if (building.everMaterialized()) {
             double cooldown = cooldownFor(observed);

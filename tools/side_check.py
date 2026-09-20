@@ -29,6 +29,9 @@ from pathlib import Path
 API = "https://api.modrinth.com/v2"
 UA = "nation-pack-side-check/0.1 (personal modpack dev)"
 
+# 自研 mod 的 jar 名前缀：Modrinth 上查不到，但**服务端一定要装**（见下方 server 清单处）。
+LOCAL_SERVER_PREFIX = "statecraft-"
+
 
 def api_get(path: str) -> dict | None:
     req = urllib.request.Request(API + path, headers={"User-Agent": UA})
@@ -116,7 +119,27 @@ def main() -> int:
     server = [r for r in rows if r.get("server_side") in ("required", "optional")]
     client_only = [r for r in rows if r.get("server_side") == "unsupported"]
     unknown = [r for r in rows if r.get("server_side") not in ("required", "optional", "unsupported")]
+
+    # 未知的一律**并入**服务端清单。
+    # 为什么不是"排除待确认"：Modrinth 查不到 ≠ 不要装。曾经按"排除"写过一版，
+    # 结果 `ftb-quests` 被踢出去、而 `FTBQuestsOptimizer` 还在 —— 服务端直接起不来
+    # （"Mod ftbqopt requires ftbquests"）。这是个**开发用**服务端：除了被明确标成
+    # `unsupported` 的纯客户端 mod，其余全装才是安全解，宁可多装也不要少装。
+    server.extend(unknown)
+
+    # 自家 mod 永远进服务端清单。
+    # 为什么必须在这里写死：这个脚本靠 Modrinth 的 SHA1 查 side，而我们自己的 jar
+    # 当然查不到 → 会被上面的规则顺带并进去，但那条规则随时可能改，
+    # 所以这里再钉一次（曾经真的发生过：`--setup` 把我们的 mod 当多余的删掉了）。
+    for r in rows:
+        if r["file"].startswith(LOCAL_SERVER_PREFIX):
+            r["verdict"] = "本地自研 mod → 服务端必装"
+            if r not in server:
+                server.append(r)
     print(f"\n合计 {len(rows)} 个：服务端要装 {len(server)} · 纯客户端 {len(client_only)} · 未知 {len(unknown)}")
+    print("  本地自研（无条件装服务端）: " + ", ".join(
+        r["file"] for r in server if r["file"].startswith(LOCAL_SERVER_PREFIX)) or "  （没有）")
+
     if client_only:
         print("  纯客户端（务必排除）: " + ", ".join(r["file"] for r in client_only))
     if unknown:
@@ -126,10 +149,11 @@ def main() -> int:
         out = Path(args.write_lists)
         out.mkdir(parents=True, exist_ok=True)
         (out / "server-mods.txt").write_text(
-            "\n".join(r["file"] for r in server) + "\n", encoding="utf-8")
+            "\n".join(sorted(r["file"] for r in server)) + "\n", encoding="utf-8")
         (out / "client-only.txt").write_text(
             "\n".join(r["file"] for r in client_only) + "\n", encoding="utf-8")
         print(f"已写: {out/'server-mods.txt'} / {out/'client-only.txt'}")
+        print(f"  其中 {len(unknown)} 个是 Modrinth 查不到 side 的（已按「宁可多装」并入）")
     if args.json:
         Path(args.json).write_text(json.dumps(rows, ensure_ascii=False, indent=2), encoding="utf-8")
         print(f"已写: {args.json}")

@@ -44,6 +44,43 @@ class IdempotencyTest {
                 "第一次实体化不该被冷却挡住");
     }
 
+    /**
+     * **新世界（seq = 0）里刚登记的建築也要能生成**。
+     *
+     * <p>这条是 2026-09-20 在真服务端上踩出来的：`materializedAtSeq == 0` 既是"从未实体化"，
+     * 又和"新世界的当前 seq"撞在一起，于是"同一 seq 不重复生成"那条把**所有新建筑**
+     * 都判成了"这次已经生成过了"。当时的用例全从 seq ≥ 1 开始，所以一条都没红。
+     */
+    @Test
+    void aFreshBuildingInAFreshWorldStillMaterializes() {
+        Building fresh = Building.register("b1", "intel_station", ANCHOR);
+        assertEquals(Building.NEVER, fresh.materializedAtSeq(), "刚登记 = 从未实体化（哨兵 -1，不是 0）");
+        assertFalse(fresh.everMaterialized());
+        assertEquals(MaterializationDecision.RESPAWN,
+                RULES.decide(fresh, StaffObservation.staffGone(), 0L, 0.0),
+                "seq=0 的新世界里，刚登记的建筑必须能刷出村民");
+    }
+
+    /**
+     * 在 seq 0 实体化过的建筑，**两件事都要成立**（这是哨兵改成 -1 的完整意义）：
+     * 同一 seq 不重复生成；冷却与"重雇"也要真的生效。
+     */
+    @Test
+    void aBuildingMaterializedAtSeqZeroBehavesLikeAnyOther() {
+        Building b = bound("b1", 0L, 0.0);
+        assertTrue(b.everMaterialized(), "在 seq 0 实体化过 = 实体化过");
+        assertEquals(0L, b.materializedAt(), "§五 的 materializedAt 就是那个序号（0 是合法值）");
+
+        assertEquals(MaterializationDecision.SKIP,
+                RULES.decide(b, StaffObservation.staffGone(), 0L, 0.0),
+                "同一 seq 不重复生成");
+        assertEquals(MaterializationDecision.WAIT_COOLDOWN,
+                RULES.decide(b, StaffObservation.staffGone(), 1L, CFG.rehireCooldownHours() / 2),
+                "村民没了也要等重雇冷却（旧实现在这里会立刻 RESPAWN）");
+        assertEquals(MaterializationDecision.RESPAWN,
+                RULES.decide(b, StaffObservation.staffGone(), 1L, CFG.rehireCooldownHours() + 1e-9));
+    }
+
     // ---- §10.4 锚点：房子没了就是"失效"，不是"重生" ----
 
     @Test
@@ -156,8 +193,11 @@ class IdempotencyTest {
                 () -> new Building("b1", "intel_station", null, 1, null, 0, 0.0, 0));
         assertThrows(IllegalArgumentException.class,
                 () -> new Building("b1", "intel_station", ANCHOR, 0, null, 0, 0.0, 0));
+        // 哨兵改成 -1 之后，-1 是**合法**的（= 从未），-2 才是写坏了
+        assertEquals(Building.NEVER, new Building("b1", "intel_station", ANCHOR, 1, null, -1, 0.0, 0)
+                .materializedAtSeq());
         assertThrows(IllegalArgumentException.class,
-                () -> new Building("b1", "intel_station", ANCHOR, 1, null, -1, 0.0, 0));
+                () -> new Building("b1", "intel_station", ANCHOR, 1, null, -2, 0.0, 0));
         assertThrows(IllegalArgumentException.class,
                 () -> new Building("b1", "intel_station", ANCHOR, 1, null, 0, Double.NaN, 0));
         assertThrows(IllegalArgumentException.class,

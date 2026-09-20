@@ -6,7 +6,6 @@ BetterF3-11.0.3-NeoForge-1.21.1.jar
 certain_questing_additions-neoforge-1.2.0.4+mc1.21.1.jar
 chat_heads-0.15.7-neoforge-1.21.jar
 colorfulhearts-neoforge-1.21.1-10.5.9.jar
-continuity-3.0.0+1.21.neoforge.jar
 Controlling-neoforge-1.21.1-19.0.5.jar
 CrashAssistant-neoforge-1.20.6-1.21.4-1.11.12.jar
 dynamic-fps-3.11.4+minecraft-1.21.0-neoforge.jar
@@ -19,12 +18,10 @@ Highlighter-1.21-neoforge-1.1.11.jar
 I18nUpdateMod-3.7.0-all.jar
 IMBlocker-5.0.2-1.20.6+.jar
 ImmediatelyFast-NeoForge-1.6.14+1.21.1.jar
-InventoryProfilesNext-neoforge-1.21.1-2.2.5.jar
 jecharacters-1.21.1-neoforge-4.5.29.jar
 JustEnoughResources-NeoForge-1.21.1-1.6.0.17.jar
 lambdynamiclights-4.8.11+1.21.1.jar
 LegendaryTooltips-1.21.1-neoforge-1.5.5.jar
-libIPN-neoforge-1.21.1-6.6.3.jar
 modelfix-1.21-1.10.jar
 moreculling-neoforge-1.21.1-1.0.10.jar
 MouseTweaks-neoforge-mc1.21-2.26.1.jar
