@@ -76,42 +76,49 @@
 
 ---
 
-## J. **实体不落盘**（2026-09-20 真机实测，**整合包级 bug，优先级最高**）
+## J. **实体存了但没装回世界**（2026-09-20 真机实测，**已定位一半**）
 
-> 这是跑阶段 3 真机验收时撞出来的：**我们的村民每次重启都消失**。查下去发现
-> **整个世界重启后一个实体都没有**（连自然生成的、以及用原版 `/summon` 刷的都没有）。
+> 这是跑阶段 3 真机验收时撞出来的：**我们的村民每次重启都消失**。
+> 往下查发现更狠的现象：重启后整个世界 `execute if entity @e` 是 **0 个**，
+> 连原版 `/summon` 出来的村民也没有。
+>
+> **但盘上它们是有的** —— 用新写的 `tools/mca_probe.py` 直接读实体区：
+>
+> ```
+> python tools/mca_probe.py --region server/world/entities/r.0.0.mca --chunk 6 6
+>   Entities：7 个
+>     - minecraft:villager @ 105.5,152.0,103.5 name="Jaunita"
+>     - minecraft:villager @ 103.5,152.0,103.5 name="陆知白"
+>         data={'statecraft:profession': 'scribe',
+>               'statecraft:building': 'intel_station@minecraft:overworld:103,151,103'}
+>     ...（另外 5 个同样是我们刷的，标签都在）
+> ```
+>
+> 所以**不是存的问题，是读的问题**：区块的方块装回来了（讲台还在、`anchorIntact=true`），
+> 实体却没装回来。
 
-**证据（都是 RCON 原始回显，服务端 `D:\project\nation-pack\server`）**
+**最可能的原因**：这台验证服务端**从头到尾没有一个玩家在线**。
+1.17 之后实体存在 `<world>/entities/*.mca`，而实体是在区块进入 **entity-ticking**
+状态时才装进世界的 —— 那要求区块处在某个玩家的实体距离内。
+force-load 只保证区块被加载、方块在跑，**不等于实体被装回来**。
+（所以这很可能是原版行为，不是整合包 bug；之前怀疑的"某个 mod 把实体序列化搞坏了"可以降级。）
 
-| 步骤 | 命令 | 回显 |
-|---|---|---|
-| 同一会话内 | `summon minecraft:villager 0 100 0` | `Summoned new Deana` |
-| 同一会话内 | `execute if entity @e[type=villager,x=0,y=100,z=0,distance=..32]` | `Test passed, count: 1` |
-| `save-all flush` | — | `Saved the game` |
-| **重启后** | 同一条 `execute if entity ...` | **`Test failed`** |
-| 重启后 | `execute if entity @e`（全世界） | **`Test failed`（0 个实体）** |
+- [ ] **J1 带一个客户端重跑（第一步，最省事）**：
+      `server_ctl.py --start` 之后用 `game_agent.py --server 127.0.0.1:25565` 连进去站到
+      (103,152,103) 附近，再 `/statecraft buildings` —— 判据：**`healthy=true` 且房间里只有
+      一个村民**。若是，J 关闭（只是"没人时实体不装"的原版行为，验收必须带客户端）。
+- [ ] **J2 若带客户端仍不装**，才去二分那几个动实体序列化的 mod：
+      `servercore`、`easy_mob_spawn_control`、`chunkplan`、`neruina`、`ScalableLux`、`connectivity`。
+      判据依旧是重启后那一行 `execute if entity @e` 的 `Test passed` / `Test failed`，
+      而 `mca_probe.py` 可以随时回答"盘上到底有没有"。
+- [ ] **J3 修复后的回归**：连续重启两次，`/statecraft buildings` 稳定 `healthy=true` 且只有 1 个村民。
 
-**关键对照**：同一区块的**方块**没丢（脚本里 `anchorIntact=true` —— 讲台还在、
-房间还在，判定出来的原因是「村民不在了」而不是「锚点没了」）。所以是**实体这一路**的问题，
-不是区块整个没存。
+**v1 的行为（有意如此）**：村民真没了 → 按 §10.4 走**重雇冷却（1 小时累计在线）**再雇一个。
+而"**重复生成**"那条路已经被两道闸挡住：§10.3 的"同一 seq 不重复生成"+ mod 层"按标签改认"
+（`BuildingService.findStaff`）—— 实测在修之前攒出过 **6 个文书**，修之后不会再发生。
 
-**为什么这条最优先**：它不止影响我们 —— 村民、动物、掉落物、Waystones、尸体袋、
-HYW 单位（**M0 与夺城整套都靠它**）全都会在每次重启后消失。
-
-- [ ] **J1 二分定位**：先怀疑"动过实体序列化/刷怪"的那几个 ——
-      `servercore`、`easy_mob_spawn_control`、`chunkplan`、`neruina`、`ScalableLux`、
-      `connectivity`、`ferritecore` / `modernfix`（后两个只动内存布局，先排除）。
-      跑法：`tools/server_ctl.py --setup` 前后手工增删单个 jar → `/summon` 一只 → `save-all flush`
-      → 重启 → `execute if entity @e`。**判据就是那一行 `Test passed` / `Test failed`。**
-- [ ] **J2 对照纯原版**：只装 NeoForge + 我们自己的 mod 跑同一个流程。
-      若也丢 → 是我们的 mod 或 NeoForge；若正常 → 确认是某个 mod（回到 J1）。
-      （我们的 mod 目前**没有任何**实体相关的 mixin/事件，嫌疑很小，但要排除。）
-- [ ] **J3 修复后的回归**：在情报站旁重启两次，`/statecraft buildings` 必须稳定 `healthy=true`，
-      且房间里**只有一个**村民。
-
-**在 J 修好之前，本 mod 的行为是（有意如此，不是 bug）**：村民没了 → 按 §10.4 走
-**重雇冷却（1 小时累计在线）**再重新雇一个。所以"每次重启多一个文书"不会发生，
-但"每次重启都要重新雇"会发生 —— 直到 J 修好。
+**工具**：`tools/mca_probe.py`（读 region / 实体区里的区块 NBT，打印 `Entities` 清单与实体上的
+`NeoForgeData`）—— 以后凡是"东西到底在不在盘上"的问题都用它，别猜。
 
 ---
 
