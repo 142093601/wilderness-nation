@@ -1,0 +1,19 @@
+{
+ "entity_model_features.config.allowed_cem": "允许的模型",
+ "entity_model_features.config.allowed_cem.all": "全部",
+ "entity_model_features.config.allowed_cem.known_only": "仅已知（多为原版 / OptiFine）",
+ "entity_model_features.config.allowed_cem.tooltip": "决定 EMF 会尝试与哪些模型交互。注意：这并不完美，有些模组直接使用原版命名空间 id，EMF 对此几乎无能为力",
+ "entity_model_features.config.allowed_cem.unknown_only": "仅未知（多为模组）",
+ "entity_model_features.config.armor_hack": "盔甲继承自定义动画",
+ "entity_model_features.config.armor_hack.tooltip": "在 1.21.9+ 中，盔甲不再自动继承基础模型的自定义动画，此选项可复现旧版行为。",
+ "entity_model_features.config.asmmaths": "编译动画数学",
+ "entity_model_features.config.asmmaths.logASM": "会造成日志刷屏，除非开发者要求你提供带此项的日志，否则你大概不需要它。",
+ "entity_model_features.config.asmmaths.tooltip": "你几乎总是希望它开启。\n禁用后，动画系统会改用计算开销更大的表达式树，这在调试时可能更有用。",
+ "entity_model_features.config.export_rotations": "导出旋转",
+ "entity_model_features.config.export_rotations.tooltip": "导出的 jem 模型不应包含旋转值，因为它们会从原版部件继承\n 不过有些模型编辑器可能希望包含这些值\n 此选项会将它们包含在导出的 jem 文件中",
+ "entity_model_features.config.logASM": "记录编译后的数学状态",
+ "entity_model_features.config.parrot_shoulder_animate": "鹦鹉肩部跟随玩家动画",
+ "entity_model_features.config.parrot_shoulder_animate.tooltip": "默认会自动让鹦鹉的肩部位置跟随玩家动画位置，这与 `parrot_left` 和 `parrot_right` 附着点并不等同，因为后者不会旋转。",
+ "entity_model_features.config.sulfur_cube_block": "Sulfur Cube 方块默认动画",
+ "entity_model_features.config.sulfur_cube_block.tooltip": "默认会自动让 Sulfur Cube 的内部方块播放动画，等同于在模型 'cube' 部件中添加偏移为 0,0,0 的 'sulfur_cube_block' 附着点。"
+}

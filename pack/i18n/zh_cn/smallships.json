@@ -1,0 +1,7 @@
+{
+ "death.attack.cannon_ball": "%s 被炮弹击中了。",
+ "death.attack.cannon_ball.player": "%s 被 %s 用炮弹击中了。",
+ "death.attack.ship_hit": "%s 被船撞了。",
+ "death.attack.ship_hit.player": "%s 被 %s 用船撞了。",
+ "smallships.creative_mode_tab": "Small Ships 模组"
+}

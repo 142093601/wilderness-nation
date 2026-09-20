@@ -1,0 +1,4 @@
+{
+ "embeddium.options.use_render_pass_optimization.name": "使用渲染通道优化",
+ "embeddium.options.use_render_pass_optimization.tooltip": "启用后，Embeddium 会检测那些被标记为透明（或半透明）但纹理实际上是不透明（或透明）的方块模型面，并自动为它们使用更优的渲染通道。\n\n当着色器包处于激活状态时，此优化不会生效。"
+}

@@ -1159,3 +1159,7 @@ metafile = true
 file = "mods/yungs-better-strongholds.pw.toml"
 hash = "03084966c05070b5c4b17cd89234f3c0d813940a2d76b405a6699deac10a0ab8"
 metafile = true
+
+[[files]]
+file = "resourcepacks/荒野建国-中文补全.zip"
+hash = "f26df5165abfbd803d7446167acbba4e60f9d765eb88fc78b6a3c6eb15b45601"

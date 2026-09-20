@@ -1,0 +1,17 @@
+{
+ "enhancedcelestials.ec2_announcement.curseforge": "在 CurseForge 上打开",
+ "enhancedcelestials.ec2_announcement.curseforge.tooltip": "在 CurseForge 上查看 Enhanced Celestials 2 的核心、默认月亮事件与光影支持模组。",
+ "enhancedcelestials.ec2_announcement.dismiss": "关闭",
+ "enhancedcelestials.ec2_announcement.dismiss.tooltip": "关闭此通知。在你下次进入世界之前不会再显示。",
+ "enhancedcelestials.ec2_announcement.message": "Enhanced Celestials 2 现已推出，具备原生光影支持与大量错误修复。",
+ "enhancedcelestials.ec2_announcement.modrinth": "在 Modrinth 上打开",
+ "enhancedcelestials.ec2_announcement.modrinth.tooltip": "在 Modrinth 上查看 Enhanced Celestials 2 的核心、默认月亮事件与光影支持模组。",
+ "enhancedcelestials.ec2_announcement.title": "Enhanced Celestials 2 来了！",
+ "enhancedcelestials.ec2_links.core": "核心",
+ "enhancedcelestials.ec2_links.core.tooltip": "所有其他 Enhanced Celestials 2 模组的必需前置。添加月相系统、月亮事件框架，以及其他模组赖以构建的 API。",
+ "enhancedcelestials.ec2_links.lunar_events": "默认月亮事件",
+ "enhancedcelestials.ec2_links.lunar_events.tooltip": "添加构建于核心之上的内置月亮事件（血月、蓝月、丰收月、超级月亮及其变体）。",
+ "enhancedcelestials.ec2_links.shader_support": "光影支持",
+ "enhancedcelestials.ec2_links.shader_support.tooltip": "添加原生兼容，使 Enhanced Celestials 2 的天空与月亮渲染能在光影包下正常工作。",
+ "enhancedcelestials.ec2_links.title": "Enhanced Celestials 2"
+}

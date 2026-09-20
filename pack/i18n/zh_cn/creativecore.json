@@ -1,0 +1,9 @@
+{
+ "gui.config.reset": "r",
+ "gui.false": "false",
+ "gui.ingredient.latest": "最近的原料：",
+ "gui.play": "播放",
+ "gui.true": "true",
+ "minecraft.blocks": "方块",
+ "minecraft.blocks.counting": "%s 个方块"
+}

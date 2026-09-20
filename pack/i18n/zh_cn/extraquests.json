@@ -1,0 +1,13 @@
+{
+ "extraquests.key_value.ignore": "忽略？",
+ "extraquests.key_value.ignore.tooltip": "奖励是否会忽略任务进度？",
+ "extraquests.key_value.key": "键",
+ "extraquests.key_value.key.tooltip": "用于存储数值的键",
+ "extraquests.key_value.title": "%s：%s",
+ "extraquests.key_value.value": "值",
+ "extraquests.key_value.value.tooltip": "键对应的值",
+ "extraquests.reward.command.console": "控制台",
+ "extraquests.reward.command.console.tooltip": "从控制台执行一条命令",
+ "ftbquests.reward.extraquests.key_value": "键值对",
+ "ftbquests.task.extraquests.key_value": "键值对"
+}

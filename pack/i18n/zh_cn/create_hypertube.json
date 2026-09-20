@@ -1,0 +1,14 @@
+{
+ "create_hypertube.ponder.splitter.header": "超级管道分流器",
+ "create_hypertube.ponder.splitter.text_1": "超级管道分流器最多可连接三根管道，将一条线路分叉为多条路径。",
+ "create_hypertube.ponder.splitter.text_2": "穿梭途中，你可以用移动键选择要前往的方向。",
+ "create_hypertube.ponder.splitter.text_3": "手持扳手右击它，可循环切换分流器的模式。",
+ "create_hypertube.ponder.splitter.text_4": "在继续模式下，穿梭者总是穿过两侧的管道继续前进。",
+ "create_hypertube.ponder.splitter.text_5": "在居中模式下，穿梭者总是被引导穿过正前方的管道。",
+ "create_hypertube.ponder.splitter.text_6": "红石检测器附件可在两种强制模式之间切换。",
+ "key.categories.hypertube": "Create：超级管道",
+ "key.hypertube.tube_escape": "超级管道脱离键",
+ "subtitles.create_hypertube.chose_direction": "选择方向",
+ "subtitles.create_hypertube.entrance_close": "超级管道入口：关闭",
+ "subtitles.create_hypertube.entrance_open": "超级管道入口：打开"
+}

@@ -1,0 +1,17 @@
+{
+ "config.jade.plugin_polyglottooltip.jade_block_name": "方块副名称",
+ "config.jade.plugin_polyglottooltip.jade_entity_name": "实体副名称",
+ "polyglottooltip.configuration.alwaysShow": "始终显示",
+ "polyglottooltip.configuration.alwaysShow.tooltip": "即使额外语言与当前游戏语言相同，也照样显示。",
+ "polyglottooltip.configuration.displayLanguage": "显示语言",
+ "polyglottooltip.configuration.displayLanguage.tooltip": "在此输入语言代码，以额外语言显示物品名称。",
+ "polyglottooltip.configuration.enableChineseScriptMatching": "简繁交叉搜索",
+ "polyglottooltip.configuration.enableChineseScriptMatching.tooltip": "允许搜索同时匹配简体与繁体中文。",
+ "polyglottooltip.configuration.jadeSecondaryNameFormat": "Jade 副名称格式",
+ "polyglottooltip.configuration.jadeSecondaryNameFormat.tooltip": "Jade 中副语言名称所用的旧版格式代码，例如 &7 或 &7&l。",
+ "polyglottooltip.configuration.section.polyglottooltip.client.toml": "PolyglotTooltip 设置",
+ "polyglottooltip.configuration.section.polyglottooltip.client.toml.title": "PolyglotTooltip 设置",
+ "polyglottooltip.configuration.title": "PolyglotTooltip",
+ "polyglottooltip.configuration.tooltipSecondaryNameFormat": "提示框副名称格式",
+ "polyglottooltip.configuration.tooltipSecondaryNameFormat.tooltip": "普通提示框中副语言名称所用的旧版格式代码，例如 &7 或 &7&l。"
+}

@@ -1,0 +1,8 @@
+{
+ "gui.easy_mob_spawn_control.combined_light_mode": "切换为分别的方块/天空光照",
+ "gui.easy_mob_spawn_control.max_block_light.label": "最高方块光照：",
+ "gui.easy_mob_spawn_control.max_sky_light.label": "最高天空光照：",
+ "gui.easy_mob_spawn_control.min_block_light.label": "最低方块光照：",
+ "gui.easy_mob_spawn_control.min_sky_light.label": "最低天空光照：",
+ "gui.easy_mob_spawn_control.separate_light_mode": "切换为合并光照"
+}

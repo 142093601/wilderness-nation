@@ -1,0 +1,20 @@
+{
+ "craftingtweaks.configuration.client": "客户端",
+ "craftingtweaks.configuration.client.disabledAddons": "禁用的附加功能",
+ "craftingtweaks.configuration.client.disabledAddons.tooltip": "在此填入你希望禁用合成辅助支持的模组 id。",
+ "craftingtweaks.configuration.client.hideVanillaCraftingGuide": "隐藏原版合成指南",
+ "craftingtweaks.configuration.client.hideVanillaCraftingGuide.tooltip": "我们都知道 JEI 好用得多。此选项会隐藏原版的配方书按钮，而不是移动它。",
+ "craftingtweaks.configuration.client.mode": "模式",
+ "craftingtweaks.configuration.client.mode.tooltip": "设为 'DEFAULT' 同时启用按钮与快捷键。设为 'BUTTONS' 仅启用按钮。设为 'HOTKEYS' 仅启用快捷键。设为 'DISABLED' 则完全禁用。",
+ "craftingtweaks.configuration.client.rightClickCraftsStack": "右键合成一组",
+ "craftingtweaks.configuration.client.rightClickCraftsStack.tooltip": "若设为 true，右键点击工作台的产物槽位将一次合成一整组。",
+ "craftingtweaks.configuration.client.vanillaCraftingGuideOffsetX": "原版合成指南偏移 X",
+ "craftingtweaks.configuration.client.vanillaCraftingGuideOffsetX.tooltip": "重新定位原版配方书按钮时距右侧的偏移量。",
+ "craftingtweaks.configuration.client.vanillaCraftingGuideOffsetY": "原版合成指南偏移 Y",
+ "craftingtweaks.configuration.client.vanillaCraftingGuideOffsetY.tooltip": "重新定位原版配方书按钮时距顶部的偏移量。",
+ "craftingtweaks.configuration.common": "通用",
+ "craftingtweaks.configuration.common.compressDenylist": "压缩黑名单",
+ "craftingtweaks.configuration.common.compressDenylist.tooltip": "不会被压缩快捷键合成的 modid:name 条目列表。",
+ "craftingtweaks.configuration.common.compressRequiresCraftingGrid": "压缩需要合成网格",
+ "craftingtweaks.configuration.common.compressRequiresCraftingGrid.tooltip": "如果你希望（解）压缩功能在合成界面之外也能使用，请将此项设为 false（仅当服务端也安装且位于玩家物品栏时有效）"
+}

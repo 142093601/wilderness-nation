@@ -1,0 +1,12 @@
+{
+ "screen.torchmaster.feral_flare_lantern.description": "光源放置",
+ "screen.torchmaster.feral_flare_lantern.line_of_sight.disabled": "即使墙壁后方也照亮。",
+ "screen.torchmaster.feral_flare_lantern.line_of_sight.disabled.description": "灯笼不需要通视。",
+ "screen.torchmaster.feral_flare_lantern.line_of_sight.enabled": "只照亮灯笼能看到的区域。",
+ "screen.torchmaster.feral_flare_lantern.line_of_sight.enabled.description": "光源不会放置在墙壁后方。",
+ "screen.torchmaster.feral_flare_lantern.title": "野火灯笼",
+ "screen.torchmaster.volume_gui.range": "每个方向的有效范围：§a%s§r 格",
+ "screen.torchmaster.volume_gui.title": "Torchmaster 范围显示",
+ "screen.torchmaster.volume_gui.toggle_off": "开启范围显示",
+ "screen.torchmaster.volume_gui.toggle_on": "关闭范围显示"
+}

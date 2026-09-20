@@ -1,0 +1,17 @@
+{
+ "backpack.refurbished_furniture.cabinet": "储物柜",
+ "backpack.refurbished_furniture.cabinet.unlock": "在 MrCrayfish's Furniture Mod 中打开任意储物柜以解锁此背包",
+ "container.refurbished_furniture.lightswitch": "电灯开关",
+ "gui.refurbished_furniture.default_mailbox_name": "邮箱",
+ "gui.refurbished_furniture.delivery_service.mailbox_queue_full": "所选邮箱的邮件队列已达上限",
+ "gui.refurbished_furniture.delivery_service.package_sent": "包裹已寄出！",
+ "gui.refurbished_furniture.delivery_service.undeliverable_dimension": "所选邮箱位于无法投递的维度",
+ "gui.refurbished_furniture.delivery_service.unknown_mailbox": "未知或无效的邮箱",
+ "gui.refurbished_furniture.invalid_dimension": "此维度无法放置邮箱",
+ "gui.refurbished_furniture.invalid_mailbox": "邮箱不在允许的维度中，因此已被禁用",
+ "gui.refurbished_furniture.unknown_mailbox_owner": "未知玩家",
+ "subtitle.refurbished_furniture.cabinet.close": "橱柜门关闭",
+ "subtitle.refurbished_furniture.cabinet.open": "橱柜门打开",
+ "subtitle.refurbished_furniture.microwave.fan": "微波炉嗡鸣",
+ "subtitle.refurbished_furniture.wrench_hover_link": "悬浮连接"
+}

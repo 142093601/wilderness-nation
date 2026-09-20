@@ -1,0 +1,17 @@
+{
+ "arcade.buildersaddition2.game.breakout": "打砖块",
+ "arcade.buildersaddition2.game.credits": "制作人员",
+ "arcade.buildersaddition2.game.snake": "贪吃蛇",
+ "arcade.buildersaddition2.menu.select": "使用 [UP] 和 [DOWN] 选择游戏",
+ "arcade.buildersaddition2.menu.start": "使用 [ENTER] 或 [SPACE] 开始游戏",
+ "container.buildersaddition2.arcade": "街机",
+ "container.buildersaddition2.bedside_table": "床头柜",
+ "container.buildersaddition2.bookshelf": "书架",
+ "container.buildersaddition2.cabinet": "橱柜",
+ "container.buildersaddition2.carpenter_table": "木工工作台",
+ "container.buildersaddition2.counter": "柜台",
+ "container.buildersaddition2.cupboard": "碗柜",
+ "container.buildersaddition2.shelf": "架子",
+ "recipe.buildersaddition2.carpenter.title": "木工",
+ "tab.buildersaddition2.main": "Builders Crafts & Additions 2"
+}

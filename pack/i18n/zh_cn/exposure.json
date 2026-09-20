@@ -1,0 +1,8 @@
+{
+ "exposure.configuration.force_direct_capture_default_mods": "直接捕获模组列表",
+ "exposure.configuration.loading": "正在加载",
+ "exposure.configuration.multiplayer_file_loading_only_from_game_dir": "多人游戏仅从游戏目录加载文件",
+ "exposure.configuration.multiplayer_url_loading": "多人游戏 URL 加载",
+ "exposure.configuration.multiplayer_url_loading_allowed_domains": "多人游戏 URL 加载允许的域名",
+ "exposure.configuration.multiplayer_url_loading_allowed_subdomains": "多人游戏 URL 加载允许的子域名"
+}

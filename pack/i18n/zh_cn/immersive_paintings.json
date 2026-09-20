@@ -1,0 +1,6 @@
+{
+ "config.immersive_paintings.client.cacheOtherPlayersPaintings": "缓存其他玩家的画作",
+ "config.immersive_paintings.client.cacheOtherPlayersPaintings.desc": "将下载的其他玩家画作保存到磁盘",
+ "config.immersive_paintings.client.loadPaintings": "加载画作",
+ "config.immersive_paintings.client.loadPaintings.desc": "下载并渲染画作"
+}

@@ -1,0 +1,19 @@
+{
+ "rechiseled.chiseling.chisel_all.items": "%s 个物品",
+ "rechiseled.chiseling.chisel_all.shift": "%s 应用于所有形状",
+ "rechiseled.chiseling.entry.owner": "插件：%s",
+ "rechiseled.chiseling.entry.recipe": "配方：%s",
+ "rechiseled.chiseling.filter": "筛选选项",
+ "rechiseled.chiseling.filter.clear": "右键清空",
+ "rechiseled.chiseling.filter.show_blocks": "显示方块",
+ "rechiseled.chiseling.filter.show_non_connecting": "显示非连接纹理",
+ "rechiseled.chiseling.filter.show_slabs": "显示台阶",
+ "rechiseled.chiseling.filter.show_stairs": "显示楼梯",
+ "rechiseled.chiseling.scrollbar": "滚动条",
+ "rechiseled.chiseling.select_shape": "形状：%s",
+ "rechiseled.chiseling.shape.block": "方块",
+ "rechiseled.chiseling.shape.slab": "台阶",
+ "rechiseled.chiseling.shape.stairs": "楼梯",
+ "rechiseled.recipe_category.conversion_value": "转化值：%s",
+ "rechiseled.recipe_category.title": "凿刻"
+}

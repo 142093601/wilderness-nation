@@ -1,0 +1,15 @@
+{
+ "category.siegemachines.siege_workbench_crafting": "合成",
+ "rei.category.siegemachines.siege_workbench": "攻城工作台",
+ "siegemachines.ammo": "弹药：",
+ "siegemachines.category": "中世纪攻城器械",
+ "siegemachines.ladder_climb": "开始攀爬梯子",
+ "siegemachines.machine_inventory": "打开物品栏",
+ "siegemachines.machine_use": "使用器械",
+ "siegemachines.medieval_siege_machines": "中世纪攻城器械",
+ "siegemachines.no_ammo": "没有弹药！",
+ "siegemachines.no_gunpowder": "没有火药！",
+ "siegemachines.usage": "按 %1$s 使用器械",
+ "siegemachines.uses_gunpowder": "需要火药",
+ "siegemachines.wait": "等待 %1$f 秒。"
+}

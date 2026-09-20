@@ -1,0 +1,11 @@
+{
+ "advancement.createframed.dyed_cardboard_block.description": "生产或获得一块染色纸板块\n§7（隐藏进度）",
+ "advancement.createframed.dyed_cardboard_block.title": "五彩生产",
+ "advancement.createframed.karpboard.description": "生产或获得一块锦鲤板\n§7（隐藏进度）",
+ "advancement.createframed.karpboard.title": "啪叽啪叽",
+ "advancement.createframed.pulp_block.description": "生产（也许是不小心）一块纸浆块\n§7（隐藏进度）",
+ "advancement.createframed.pulp_block.title": "化为纸浆",
+ "itemGroup.createframed.create_framed": "Create：镶框",
+ "text.createframed.mod_missing.alexs_caves": "缺少模组：Alex's Caves",
+ "text.createframed.mod_missing.dye_depot": "缺少模组：Dye Depot"
+}

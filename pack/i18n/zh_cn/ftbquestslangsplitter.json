@@ -1,0 +1,15 @@
+{
+ "ftbquestslangsplitter.commands.added_missing_lang_entries": "已向语言 %s 添加缺失条目 %s 条",
+ "ftbquestslangsplitter.commands.all_lang_file_split": "所有语言文件拆分成功",
+ "ftbquestslangsplitter.commands.file_already_exists": "%s 处的文件已存在，跳过……",
+ "ftbquestslangsplitter.commands.lang_file_split": "语言文件 %s 拆分成功",
+ "ftbquestslangsplitter.commands.lang_manager_force_saved": "语言管理器已强制保存",
+ "ftbquestslangsplitter.commands.no_missing_entries": "语言 %s 中没有缺失的条目",
+ "ftbquestslangsplitter.commands.permission_denied": "你没有权限执行此命令",
+ "ftbquestslangsplitter.commands.purged_merged_files": "已清除合并的文件",
+ "ftbquestslangsplitter.commands.unsupported_locale": "不支持语言 %s",
+ "ftbquestslangsplitter.configuration.section.ftbquestslangsplitter.common.toml": "FTB 任务语言拆分器配置",
+ "ftbquestslangsplitter.configuration.section.ftbquestslangsplitter.common.toml.title": "FTB 任务语言拆分器配置",
+ "ftbquestslangsplitter.configuration.title": "FTB 任务语言拆分器配置",
+ "ftbquestslangsplitter.split.lang_saved_reminder": "你正处于编辑模式，似乎有语言文件被保存了，记得全部完成后进行拆分！"
+}

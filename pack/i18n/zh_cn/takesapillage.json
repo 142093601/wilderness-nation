@@ -1,0 +1,21 @@
+{
+ "item_group.takesapillage.main_tab": "集群氓之力：续章",
+ "jukebox_song.takesapillage.bastille_blues": "izofar - Bastille Blues",
+ "yacl3.config.takesapillage:takesapillage": "集群氓之力：续章",
+ "yacl3.config.takesapillage:takesapillage.category.general": "常规",
+ "yacl3.config.takesapillage:takesapillage.category.general.group.pillage_siege": "掠夺围攻",
+ "yacl3.config.takesapillage:takesapillage.category.mobs": "生物",
+ "yacl3.config.takesapillage:takesapillage.category.mobs.group.archer": "弓箭手",
+ "yacl3.config.takesapillage:takesapillage.category.mobs.group.clay_golem": "黏土傀儡",
+ "yacl3.config.takesapillage:takesapillage.category.mobs.group.legioner": "军团兵",
+ "yacl3.config.takesapillage:takesapillage.category.mobs.group.skirmisher": "散兵",
+ "yacl3.config.takesapillage:takesapillage.enableArcher": "启用弓箭手",
+ "yacl3.config.takesapillage:takesapillage.enableArcherInRaids": "启用袭击中的弓箭手",
+ "yacl3.config.takesapillage:takesapillage.enableClayGolem": "启用黏土傀儡",
+ "yacl3.config.takesapillage:takesapillage.enableLegioner": "启用军团兵",
+ "yacl3.config.takesapillage:takesapillage.enableLegionerInRaids": "启用袭击中的军团兵",
+ "yacl3.config.takesapillage:takesapillage.enablePillageSieges": "启用掠夺围攻",
+ "yacl3.config.takesapillage:takesapillage.enableSkirmisher": "启用散兵",
+ "yacl3.config.takesapillage:takesapillage.enableSkirmisherInRaids": "启用袭击中的散兵",
+ "yacl3.config.takesapillage:takesapillage.replaceIronGolemsWithClayGolems": "将所有铁傀儡替换为黏土傀儡"
+}

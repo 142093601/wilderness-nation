@@ -1,0 +1,22 @@
+{
+ "readable_scroll.nights_of_nour.author": "无尽说书人",
+ "readable_scroll.nights_of_nour.title": "努尔之夜",
+ "stat.tombstone.nights_of_nour": "努尔之夜",
+ "tombstone.advancement.command_undead_servant.desc": "你用骨杖命令亡灵仆从坐下或起立",
+ "tombstone.advancement.command_undead_servant.title": "起立与坐下",
+ "tombstone.command.tbreadable.usage": "提供一份已从某个故事中获得的卷轴副本\n/tbreadable <narrative>",
+ "tombstone.compendium.flying_carpet.desc": "飞毯是一种坐骑，可让你在空中与水下穿行，并朝你注视的方向移动。\n右键点击即可召唤（按住 Shift 右键则召唤但不直接骑乘）。\n它可以通过悬停在灵魂沙上方来充能。",
+ "tombstone.item.bone_scepter": "骨杖",
+ "tombstone.item.bone_scepter.desc": "允许你强制自己的亡灵仆从保持坐下",
+ "tombstone.item.bone_scepter.use": "右键点击亡灵仆从",
+ "tombstone.item.flying_carpet": "飞毯",
+ "tombstone.item.flying_carpet.desc": "飞毯能载着你沿视线方向在空中或水下穿行",
+ "tombstone.item.flying_carpet.use": "右键点击以踏上飞毯",
+ "tombstone.item.sarheed_lamp": "萨里德之灯",
+ "tombstone.message.flight_not_allowed": "服务器不允许使用飞行坐骑",
+ "tombstone.message.no_scroll_found": "你没有找到这个故事的卷轴",
+ "tombstone.message.readable.success": "你已获得此前收集过的故事卷轴 %1$s：%2$s/%3$s",
+ "tombstone.message.unknown_narrative": "未知故事：%s",
+ "tombstone.message.watcher_knowledge_4.find_nights_of_nour": "你需要找齐《努尔之夜》的所有部分",
+ "tombstone.message.watcher_knowledge_4.unlocked": "阿什卡尔终于自由了，并留下一张飞毯以示感谢"
+}

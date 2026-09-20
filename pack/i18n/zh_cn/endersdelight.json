@@ -1,0 +1,7 @@
+{
+ "death.attack.endersdelight.watered.player": "%1$s 被 %2$s 用水浇死了",
+ "itemGroup.endersdelight": "末影乐事",
+ "tooltip.endersdelight.enderman_sight": "用刀杀死末影人获得",
+ "tooltip.endersdelight.mite_crust": "用刀杀死末影螨获得",
+ "tooltip.endersdelight.shulker_mollusk": "用刀杀死潜影贝获得"
+}

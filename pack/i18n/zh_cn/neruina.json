@@ -1,0 +1,3 @@
+{
+ "neruina.ticking.player_killed": "捕获到刻处理(tick)异常玩家，%s 已被杀死。（若要改为踢出而非杀死，请在配置中禁用 'kill_players_instead'）"
+}

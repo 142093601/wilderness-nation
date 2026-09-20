@@ -25,6 +25,7 @@
 | `treaties.json` 数据化 · 玩家侧落盘 | **有意没做**，见 `DEFERRED.md` §I（各写了触发条件） |
 | **玩家行为 → 态度**（§十二） | ✅ 已做（放置方块那条）—— 真机实测把 n1 逼到态度 −43.5 并**自行宣战**；「击杀其单位」那条等 HYW↔国家的映射 |
 | **世界会不会自己清空** | ⚠️ **实测发现过**：原参数下末代只剩 1.0 国。已按实测表调 `warScoreStep`/`absorptionWarScore`，现在末代平均 6.2 国（`NATIONS.md` 八点五）|
+| **包侧中文补全**（`DEFERRED.md` C 组） | ✅ **完成** —— 自产资源包 `pack/resourcepacks/荒野建国-中文补全.zip`（116 个命名空间 / 5288 条界面文本）；`i18n_cover.py` 实测覆盖率 **79% → 89%**、未覆盖 **11150 → 5862**、100% 覆盖的 mod **52 → 127**。剩余 5862 条全是方块/物品名（有意不做，见 `DEFERRED.md` C 组）|
 
 **当前 380 个 JUnit 全绿**（`gradlew :core:test`，命令见 §三）。
 真机验收脚本（都在 `tools/tests/`）：`sc_scheduler` · `sc_contact_letters` · `sc_player_actions` ·

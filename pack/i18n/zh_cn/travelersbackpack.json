@@ -1,0 +1,6 @@
+{
+ "screen.travelersbackpack.detach_sleeping_bag": "§7按住 <Shift>：取下睡袋",
+ "screen.travelersbackpack.lantern_upgrade": "灯笼",
+ "travelersbackpack.configuration.enableLanternUpgrade": "启用灯笼升级",
+ "travelersbackpack.configuration.enableSleepingBag": "启用睡袋"
+}

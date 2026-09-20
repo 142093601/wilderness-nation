@@ -1,0 +1,10 @@
+{
+ "particlerain.ParticleStyle.BLOCK_MODEL": "方块模型",
+ "particlerain.ParticleStyle.CUSTOM": "可自定义",
+ "particlerain.ParticleStyle.REGISTERED": "来自原版或其他模组",
+ "particlerain.blockId": "方块模型",
+ "particlerain.particleStyle": "粒子样式",
+ "particlerain.registeredParticleId": "要生成的粒子",
+ "particlerain.weatherIgnoreBlocks": "天气无视的方块",
+ "particlerain.weatherIgnoreBlocks.description": "天气可穿过这些方块在其下方生成并落下，而不会被它们阻挡。"
+}

@@ -1,0 +1,4 @@
+{
+ "gui.createrailwaysnavigator.advanced_display_settings.retain_scale_pos": "保持缩放与位置",
+ "gui.createrailwaysnavigator.advanced_display_settings.retain_scale_pos.description": "缩放与位置是否应由连接的显示器连接器更新。"
+}
