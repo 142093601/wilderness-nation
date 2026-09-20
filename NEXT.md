@@ -1,183 +1,233 @@
-# NEXT：给"重启后的新会话"的交接说明
+# NEXT：交接说明（给重启后 / 新窗口的我自己）
 
-> **为什么有这份文件**：DSH 重启（或新开会话）之后，**上一段对话的历史就没了** ——
-> 新会话只看得到仓库。所以恢复工作靠这份文件 + git + 长工程目标，不靠记忆。
-> **读到这份文件时先做三件事**：① `git log --oneline -3` 看最新提交；② 读本文件的"下一步"；
-> ③ 用 `get_goal` 看长工程目标是否还在（在的话 `update_goal` 用 `resume` 重新授权）。
+> **为什么有这份文件**：DSH 重启或新开会话之后，**上一段对话的历史就没了** —— 新会话只看得到仓库。
+> 这份文件就是"上一个我"写给"下一个我"的交接：现状、判断、坑、下一步、以及**不要做什么**。
+>
+> **读到这份文件时按顺序做四件事**：
+> 1. `git log --oneline -3` 看最新提交（本文件写于 `3b658e4`）；
+> 2. 读 §三「现在在哪 / 下一步」——那是最重要的部分；
+> 3. `get_goal` 看长工程目标在不在（在且被 disarm 就 `update_goal resume`）；
+> 4. 读 §六「硬规则」——**里面每一条都是踩出来的事故**，违反它们会伤到用户的实际游戏。
 
 ---
 
 ## 一、这是什么项目
 
-- **仓库**：`D:\project\nation-pack`（`github.com/142093601/wilderness-nation`，公开，main）
-- **两条腿**：① 整合包（`pack/`，195 mod + `CONFLICTS.md` 冲突账本）；
-  ② **自研 mod `Statecraft`（「邦交」）**，在 `mods/statecraft/`（`core` 纯 Java 零 MC 依赖 + `mod` NeoForge 薄层）
-- **设计文档**：`NATIONS.md`（mod 侧）· `DESIGN.md`（包侧）· `OPEN-DESIGN.md`（**待定设计，搁置中**）
-- **纪律**（用户明确要求）：反过度设计 · 尽量不让用户手工测试 · 结论必须有原始证据 · 记下自己的错
+- **仓库**：`D:\project\nation-pack`（`github.com/142093601/wilderness-nation`，**公开**，`main`）
+- **两条腿**：
+  1. **整合包**（`pack/`，232 个 mod，packwiz 分发）——设计文档 `DESIGN.md`，冲突账本 `CONFLICTS.md`
+  2. **自研 mod `Statecraft`（「邦交」）**（`mods/statecraft/`：`core` 纯 Java 零 MC 依赖 + `mod` NeoForge 薄层）
+     ——设计文档 `NATIONS.md`
+- **玩家**：3~7 人私人服务器，中文，合作建国 + 冒险开拓，全程约 300 小时
+- **文档地图**：`DESIGN.md`（包侧总设计）· `NATIONS.md`（mod 侧）· `PLAN-*.md`（各阶段计划）
+  · `DEFERRED.md`（押后验收清单 + 真机结论）· `INCIDENTS.md`（**我的事故档案**）
+  · `NEEDS-YOU.md`（**只有用户能做的事**）· `OPEN-DESIGN.md`（待用户拍板的 5 条设计）
+  · `TASKBOOK-300H.md`（旧任务书草稿）· `PLAN-questbook.md`（**新任务书设计，已定稿**）
+
+---
+
+## 二、当前状态（每条都有证据，不是印象）
 
 | 层 | 状态 |
 |---|---|
-| 计划 1（生成）、计划 2（存档+迁移+mod 薄层）、计划 3（结算+外交+事务日志） | ✅ 完成 |
-| **计划 4 的 core 侧（阶段 2）** | ✅ 完成 —— 数据层（places/events/buildings/staff/letters 五份 json）· 文本渲染（地名池+模板）· 周报聚合 · 国书状态机+**触发侧**（§9.4）· 图纸授权（§10.1）· 情报册三档+**接触**（§11.1）· 村民绑定（§10.3） |
-| **阶段 3（mod 薄层 + 真机）** | 🟡 **主体已通** —— 环境读数 · 建筑服务（§10.2 三条要求 + 重复自愈）· **结算调度**（§七）· **玩家侧账本 + §10.1 门禁 + 情报册命令面** · 十一组命令，都在真服务端上跑过 |
-| M2 真机 | ✅ 命令通道全通（`info` / `roundtrip=OK` / `buildings`），存档落盘+读档已证 |
-| M0（HYW 会不会打玩家） | 方案+脚本就绪（`PLAN-m0-hyw.md` / `tools/tests/m0_hyw.txt`），**未跑**，只挡计划 5 |
-| `treaties.json` 数据化 · 玩家侧落盘 | **有意没做**，见 `DEFERRED.md` §I（各写了触发条件） |
-| **玩家行为 → 态度**（§十二） | ✅ 已做（放置方块那条）—— 真机实测把 n1 逼到态度 −43.5 并**自行宣战**；「击杀其单位」那条等 HYW↔国家的映射 |
-| **世界会不会自己清空** | ⚠️ **实测发现过**：原参数下末代只剩 1.0 国。已按实测表调 `warScoreStep`/`absorptionWarScore`，现在末代平均 6.2 国（`NATIONS.md` 八点五）|
-| **包侧中文补全**（`DEFERRED.md` C 组） | ✅ **完成** —— 自产资源包 `pack/resourcepacks/荒野建国-中文补全.zip`（116 个命名空间 / 5288 条界面文本）；`i18n_cover.py` 实测覆盖率 **79% → 89%**、未覆盖 **11150 → 5862**、100% 覆盖的 mod **52 → 127**。剩余 5862 条全是方块/物品名（有意不做，见 `DEFERRED.md` C 组）|
+| Statecraft 计划 1/2/3（生成、存档+迁移+mod 薄层、结算+外交+事务日志） | ✅ 完成 |
+| **Statecraft 计划 4 的 core 侧** | ✅ **完成**。2026-09-20 强制重跑取证：`gradle :core:test --rerun-tasks --no-build-cache` → `BUILD SUCCESSFUL`；解析 JUnit XML：**28 个类 / 380 用例 / 失败 0 / 错误 0 / 跳过 0** |
+| Statecraft 阶段 3（mod 薄层 + 真机） | 🟡 主体已通：环境读数 · 建筑服务（§10.2 三条 + 重复自愈）· 结算调度（§七）· 玩家侧账本 + §10.1 门禁 · **十一组命令**真机跑过 |
+| 真机验收脚本（`tools/tests/`） | `sc_scheduler` `sc_contact_letters` `sc_player_actions` `sc_player_side` `sc_blueprint_gate` `sc_duplicates` `sc_station_and_log` `sc_upgrade` —— 全绿 |
+| M0（HYW 会不会主动打玩家） | ⬜ **未跑**。方案+脚本就绪（`PLAN-m0-hyw.md` / `tools/tests/m0_hyw.txt`）——它是**夺城（计划 5）的唯一前置**，需要真玩家当靶子 |
+| 包侧中文补全 | ✅ 完成。自产资源包 116 个命名空间 / 5288 条界面文本；`tools/i18n_cover.py` 实测覆盖率 **79%→89%**、未覆盖 **11150→5862**、100% 覆盖 mod **52→127**。剩余 5862 条全是方块/物品名（有意不做） |
+| **任务书** | 🟡 **设计已定稿**（`PLAN-questbook.md`，七段逐段与用户确认）→ **数据一个都还没写**（`config/ftbquests/quests` 在仓库和实例里都不存在） |
+| 世界自清空平衡问题 | ✅ 实测过并修好：原参数末代只剩 1.0 国；调 `warScoreStep` 12→4、`absorptionWarScore` 50→120 后末代平均 6.2 国（`NATIONS.md` §八点五） |
+| `treaties.json` 数据化 · 玩家侧落盘 | 有意没做，触发条件写在 `DEFERRED.md` §I |
 
-**当前 380 个 JUnit 全绿**（`gradlew :core:test`，命令见 §三）。
-真机验收脚本（都在 `tools/tests/`）：`sc_scheduler` · `sc_contact_letters` · `sc_player_actions` ·
-`sc_player_side` · `sc_blueprint_gate` · `sc_duplicates` —— 全绿。
+---
 
-**阶段 3 现在能用的 `/statecraft` 子命令**（都只在服务端跑，不需要客户端）：
+## 三、现在在哪 / 下一步（**最重要**）
 
-| 命令 | 干什么 |
+### 3.1 用户刚刚拍板的事
+
+用户否掉了我"批量生成 199 条任务"的做法，原话：
+
+> "任务我希望我们能够详细的设定一下，不要你一个人说 199 个就 199 个，我希望任务还是能起到很好的引导作用"
+> "一定不能让任务悬于游戏之上，任务是游戏的导向这个根本目标不能变"
+
+于是走了一轮完整的**设计对话**（职责 → 主线份量 → 架构 → 覆盖深度 → 引导载体 → 章数 → 七段设计），
+结论全部写进 **`PLAN-questbook.md`**。**下一步就是按它实施**。
+
+### 3.2 已定的关键决策（摘要，细节看文档）
+
+- **任务总数不设配额**（"199 条"是"1 任务 ≈ 1.5 小时"公式的产物，**已废**）
+- **22 章**：编年 8（序 · 落地 · 立国 · 基建 · 出关 · 御敌 · 文明 · 无尽纪元）· 邦交 1 · 技艺 5 · 类目 8
+- **主线有牙齿**：完成本时代国策主线 → 拿到"时代钥匙" → 解锁"提前推进时代"；**不做也不会被卡**（时间到照样推进）
+- **引导载体**：主线写中文说明（我写白话版，用户改碑文腔）；mod 章靠图标 + 依赖箭头；**不重复 Ponder/JEI 的教学**
+- **判据全部落在游戏事实**上；`checkmark` 只留 4 条例外（逐条写明理由）
+- **跨章只用 `quest_links` 软链接，不做硬前置**
+- **奖励克制**：大多数任务不给；只给主线节点 / 里程碑 / 终局；不发稀有物、不破坏经济
+- 已核实我们自己的 FTB Quests **2101.1.36** 可用判据 15 种、奖励 13 种（含 `command`，是钥匙的技术前提）
+
+### 3.3 紧接着要做的（按顺序）
+
+1. **进 `writing-plans`**：把 `PLAN-questbook.md` 变成实现计划（生成器 + 校验器 + 五章样板）
+2. **写 `tools/questbook.py`**：读 `tools/questbook/*.toml`（人写的任务定义）→ 产出
+   `pack/config/ftbquests/quests/chapters/*.snbt` + `lang/zh_cn/` 骨架；id 由"稳定名字+序号"哈希成 16 位十六进制
+3. **写 `tools/questbook_check.py`**：离线校验 ① 服务端加载零错误（起一次 dev server 看日志）
+   ② id 唯一且可复现 ③ 依赖无环、无悬空、link 双向可解析 ④ 判据类型在白名单内
+   ⑤ 每个任务都有 lang 键、无孤儿键 ⑥ `checkmark` 只出现在例外清单
+4. **先出五章样板**：**序 · 落地（E0）· 邦交 · 机械动力 · 防御与尸潮**
+5. **请用户开游戏看一眼**这五章的手感与腔调（这一步用户只需要"看"，不需要操作）→ 定模板
+6. 按模板铺满其余 17 章
+
+### 3.4 另外一小块 mod 侧工作（单列，不混进任务书数据）
+
+**"可被命令触发的提前推进时代"入口**（现状：`SettlementClock` 只按累计在线小时推进；
+`/statecraft advance` 是开发用小结算，不是时代推进）。默认命令名 `/statecraft accelerate`、**不取代价**。
+约束：走 core 纯逻辑 + JUnit + 真机脚本；**必须保留**"时间到自动推进"的老路径。
+
+---
+
+## 四、环境与本机事实（不知道这些会白折腾）
+
+| 事实 | 数值/位置 |
 |---|---|
-| `info` / `roundtrip` / `regen` | 建库、NBT 往返自检、重建（`info` 一行给 seed/era/seq/hours/buildings/letters/met）|
-| `scan <pos>` | §10.5 的四个环境读数 + 每座建筑的档位判定 |
-| `anchor <pos>` | 把锚点方块登记成一座建筑 |
-| `buildings` | 登记表 + 绑定健康度 + 村民名字/职业/`no_ai` + 重复数 |
-| `materialize` | 按 §10.3/§10.4 的幂等规则跑一次实体化（含清理重复村民）|
-| `advance <hours>` | 手动推进一次周期小结算（脚本靠它几分钟跑完 300 小时）|
-| `contact <pos>` | §11.1 的接触判定（走近 512 格）|
-| `build <pos>` | 报告一次「在 pos 放置方块」（§十二 的态度变化；真机无客户端时的观察口）|
-| `intel [track\|untrack\|deep <nation>]` | §11.1 三档：名单 / 追踪 / 深挖国史 |
-| `blueprint [buy <building>]` · `blueprint treasury <n>` · `blueprint reset` | §10.1 图纸授权：货架 / 买 / 喂钱 / 清账本（开发用）|
-| `upgrade <pos>` | §11.1 的"对锚点用升级件"：建筑升一档（要满足第 N 档的环境）|
-| `log [n]` | §十三 事务日志：最后 n 步（序号/触发/在线小时/**动手前的状态哈希**）|
-| `pending <hours>` | 往待结算的在线小时里注水（开发用；§J4 靠它不用等 2 小时）|
-| `diplomacy <nation> <action> [dev]` | §11.2 的六个外交动作 |
-| `letters` / `answer <id> accept\|refuse` | §9.4 的国书列表与回复 |
+| 客户端实例 | `D:\game\PCL\.minecraft\versions\1.21.1-NeoForge_21.1.250`（232 jar） |
+| 游戏版本 | MC **1.21.1** + **NeoForge 21.1.250** + **JDK 21**（`C:\Program Files\Java\jdk-21.0.10`） |
+| 专用服务端 | `D:\project\nation-pack\server`（gitignore，`user_jvm_args.txt` = `-Xmx5G`） |
+| Gradle | 本机**没装**，用缓存分发：`%USERPROFILE%\.gradle\wrapper\dists\gradle-8.11.1-bin\eac4u065zwes5phgltp5f9b9e\gradle-8.11.1\bin\gradle.bat` |
+| 内存 | 总 **15.8G**；客户端要 5~8G，服务端 3.4~5G，DSH Web（node）0.7~3G → **同时开服务端+客户端会挤爆** |
+| 客户端进世界耗时 | **约 18 分钟**（232 mod，Exposure 等还会拉远程名单超时）；`game_agent.py` 已把等待改成 1800s/600s |
+| 单机验收前提 | 服务端世界拷成单机存档后 `allowCommands=0` → 必须先跑 `tools/enable_cheats.py` |
+| 长跑测试加速 | `/statecraft pending <hours>` 往待结算在线小时注水（不用真等 2 小时） |
+| 现状残留 | 2 个 java 进程 = **我的 Gradle 守护进程**（jdk-17 daemon + jdk-21 worker），可用 `gradle --stop` 正规停掉 |
+| 汉化资源包 | 已登记进 `pack/index.toml`，但**还没进实例**（packwiz 没跑过）——本地想测就手动把 `pack/resourcepacks/荒野建国-中文补全.zip` 拷到实例 `resourcepacks/` |
 
-**真机踩坑记录**见 `DEFERRED.md` §J（实体存了没装回世界）、§K（`--cmd` 回显错位）、
-§L（门槛值与惩罚值同值 → 规则变死代码）。
+---
 
-## 三、下一步（**从这里接着干**）
+## 五、工具清单（怎么跑、验证什么）
 
-### 接下来（按优先级）
+| 工具 | 干什么 |
+|---|---|
+| `tools/server_ctl.py --setup --start` / `--stop` / `--script <文件>` | 起停开发服务端、跑 RCON 脚本。**两步以上验证一律用 `--script`**（见 §六.5） |
+| `tools/game_agent.py` | 起客户端进世界跑脚本（`--script` 需配 `--launch`；`--run` 不会自动启动游戏） |
+| `tools/autotest.py` | 单机冒烟/回归（`--seconds 45` 等） |
+| `tools/mca_probe.py` | 直接读 region / `world/entities/*.mca` 的区块 NBT —— "东西到底在不在盘上"用它 |
+| `tools/enable_cheats.py` | 翻转单机存档 `level.dat` 的 `allowCommands` |
+| `tools/pid_guard.py` + `tools/pid_guard_selftest.py` | **自有 JVM 的登记/认领**（只杀自己启动的进程）+ 回归测试 |
+| `tools/i18n_cover.py` | 汉化**真实缺口**（社区包 + 我们的包一起算）—— `lang_audit.py` 看不见资源包，别再用它下结论 |
+| `tools/i18n_verify.py` | 汉化产出独立验收（键集合/占位符/空值/疑似英文），不采信子代理自检 |
+| `tools/i18n_pack.py` | 合成汉化资源包（可评审源文件 + zip + 登记 packwiz 条目，`--index`） |
+| `tools/lang_audit.py` | 只看 jar 内部有没有 zh_cn（历史工具，**不足以判断覆盖**） |
+| `tools/wcu_probe.py` · `tools/COMPUTER-USE.md` | 电脑控制插件自检与用法（重启 DSH 后才可用） |
+| `tools/tests/sc_*.txt`、`statecraft_build.txt`、`m0_hyw.txt` | 真机验收脚本 |
+| 待写 | `tools/questbook.py`（生成器）· `tools/questbook_check.py`（校验器） |
 
-1. **带客户端验收**（`DEFERRED.md` §J + §J4 + M0）：无人在线的服务端里，实体**在盘上有、
-   在世界上没有**（`tools/mca_probe.py` 看过盘：文书都在 `world/entities/r.0.0.mca` 里、
-   标签齐全；但 `execute if entity @e` 是 0 个）。最可能是原版行为 —— 实体要区块进入
-   entity-ticking 才装，而那需要玩家在实体距离内。
-   脚本已备好：`tools/tests/statecraft_build.txt`，
-   `python tools/game_agent.py --server 127.0.0.1:25565 --script tools\tests\statecraft_build.txt`。
-   （2026-09-20 试过一次：客户端 232 mod 在等待时间内没就绪 —— 先腾内存或加长等待再试。）
-   §J4 顺带验「**有**人在线时结算真的会推进」（把 `pendingHours` 先改成 1.99 就不用等 2 小时）。
-   M0（HYW 会不会打玩家）也在这一批里 —— 它是夺城的前置，只挡计划 5。
-2. **玩家侧的界面**（§11.1 的实物形态）：情报册做成物品、情报站跟文书对话 ——
-   §10.2 说「复用原版人物交互界面，不写自定义 GUI」。**需要客户端**才能看效果，
-   所以排在 1 之后。命令面（`intel` / `blueprint` / `letters` / `diplomacy`）已经是同一套逻辑，
-   界面只是换一层皮。
-3. **自研村民实体**（§10.2）：现在用**原版 Villager + 两个持久化标签** + `setNoAi(true)`
-   （禁繁殖/锁职业/游荡限制三条已经满足，见 `BuildingService.spawnStaff` 的注释）。
-   换成自研实体换来的是**外观与对话**，不是那三条行为。
-4. **OPAC 领地接入**（§10.5 的第四个读数）：现在是 `ClaimProbe.unclaimedIsInside()` 的
-   一次性警告回退（不接的话整条链路连试都试不了）。要等 `DEFERRED.md` A4
-   （图纸 × 领地，联机验证）那一次一起做 —— 那时才知道该怎么问 OPAC。
-5. **计划 5：夺城**（§11.3）+ 把玩家侧账本接到夺城上（属地清单、资源消耗）。
-   账本已经落在 mod 层（`PlayerLedger`），接缝就在那里。
-6. **300h 的内容量重算**（`DEFERRED.md` §H1：任务书 180~220 条）—— 纯文档/内容，
-   但它是包侧关键路径，可以在等客户端批次的空隙里做。
-
-### 再往后
-
-```
-M0（HYW 会不会打玩家）· M2 命令通道补验 · v1→v2 迁移实档确认   ← 一次性批量
-计划 5：夺城 + 玩家侧账本（追踪清单 / 已购图纸 / playerLedger 落盘）
-阶段 4：City + 国力合成 + 多城（等用户拍板，见 OPEN-DESIGN.md）
-```
-
-**跑测试的命令**（本机没装 Gradle，用缓存分发）：
+**跑测试**：
 
 ```powershell
 & "$env:USERPROFILE\.gradle\wrapper\dists\gradle-8.11.1-bin\eac4u065zwes5phgltp5f9b9e\gradle-8.11.1\bin\gradle.bat" `
   -p D:\project\nation-pack\mods\statecraft :core:test :mod:build --console=plain
+# 想拿"真跑"证据（防 Gradle 用缓存糊弄）：:core:test --rerun-tasks --no-build-cache
+python tools\pid_guard_selftest.py --with-server     # 改过进程相关代码就重跑
 ```
 
-**服务端真机**（我们这个 mod 必须装进服务端 —— `tools/lists/server-mods.txt` 已含它）：
+**提交循环**：改代码 → 测试全绿 → 同步文档（`NATIONS.md`/`README`/计划文档）→ `git add -A`
+→ 用 write 工具写提交信息文件 → `git commit -F <文件>` → `git -c http.proxy= -c https.proxy= push origin main`
 
-```powershell
-python tools\server_ctl.py --setup --start
-python tools\server_ctl.py --cmd "statecraft info"
-```
+---
 
-**清场逻辑回归测试**（2026-09-20 事故之后加的，改动了 `tools/paired_check.py` /
-`autotest.py` / `server_ctl.py` 里任何与进程有关的东西就重跑）：
+## 六、硬规则（每条都是踩出来的，违反会伤到用户的机器或游戏）
 
-```powershell
-python tools\pid_guard_selftest.py                  # 快：pid 复用要拦住、无关 JVM 一个不许动
-python tools\pid_guard_selftest.py --with-server    # 慢约 1 分钟：自己的服务端要认得出来、停得掉
-```
+1. **永远不按镜像名/特征杀进程**（`taskkill /IM`、`Get-Process java | Stop-Process` 都不许）。
+   只按 `tools/pid_guard.py` 登记过的 pid 杀，杀前验"命令行含 java + 进程创建时刻一致"。
+   *事故*：`paired_check.py` 原来用 `taskkill /F /IM javaw.exe` 清场 —— 会把**用户正在玩的游戏一起杀掉**，
+   而被强杀的 JVM 不写崩溃报告，双方都被引去怀疑某个 mod（`INCIDENTS.md` 第一条）。
+2. **不许从 PowerShell 控制台读中文**。本机 `Select-String`/`Get-Content` 按 GBK 解码 UTF-8 → 乱码。
+   要读中文：用 `read` 工具，或让 python 写文件后再读，或打印 `ascii()` 转义。
+   *事故*：我从乱码里"猜"出术语「圈占」，写进分发任务书，导致 108 处返工。
+3. **写文件必须显式 `encoding="utf-8"` + `newline="\n"`，且只改自己那几行**。
+   *事故*：用 `Path.write_text` 往 `pack/index.toml` 追一行，Windows 文本模式把全文 LF 转 CRLF、
+   还吃掉空行 → 323 行文件变成 **2326 行 diff**。判据：`git diff --numstat` 行数远超实际改动就回滚重做。
+4. **一律绝对路径**。（本会话真出现过 `cd` 后相对路径找不到文件。）
+5. **两步以上的 RCON 验证必须用 `--script`**，不要用 `--cmd` 串起来 —— `--cmd` 每次重连，
+   忙时会把上一条的回显晚一拍发出，**命令与输出错位**（`DEFERRED.md` §K）。
+6. **不带 BOM 写字、不把 `.py` 写成内联 PowerShell/Python**（含中文与引号的东西写成文件再跑）。
+7. **结论必须有原始证据**：不许"我记得"、不许从乱码里读、不许用不可靠的工具口径下结论
+   （例：判断汉化覆盖率要用 `i18n_cover.py`，`lang_audit.py` 看不见资源包）。
+8. **不许留未验证的代码**：动 Java 就 `:core:test`；动工具就跑它的自检；动任务书就起 dev server 看加载日志。
 
-> 铁律：**永远不按镜像名/特征杀进程**（`taskkill /IM`、`Get-Process java | Stop-Process` 都不许）。
-> 只按自己登记过的 pid 杀（`tools/pid_guard.py`），杀前还要验命令行与进程创建时刻。
-> 原因见 `INCIDENTS.md` 2026-09-20：按名杀会把玩家正在玩的游戏一起杀掉，而被强杀的 JVM
-> 不写崩溃报告，于是双方都被引去怀疑某个 mod。
+---
 
-（下面是阶段 1 当时记的细节，留作参考）
+## 七、用户偏好（原话级，别忘）
 
-```
-mods/statecraft/core/src/main/java/com/wildernessnation/statecraft/core/env/
-    EnvironmentSnapshot.java     ✅ 已写（4 个读数；刻意没有方块/形状信息）
-    EnvironRequirement.java      ✅ 已写（一档要求 + 逐条 unmet 原因）
-    EnvironmentVerdict.java      ⬜ 待写（可用档位 + 下一个档位 + 未满足原因）
-    EnvironmentRules.java        ⬜ 待写（evaluate(tiers, snapshot)：取满足的最高档）
-mods/statecraft/core/src/test/java/.../core/env/EnvironmentRulesTest.java   ⬜ 待写
-```
+- **反过度设计**：宁可少做，不要造没人读的抽象层。
+- **尽量不让用户手工测试**（`偏好阁#4`）：能自动化的验收自己做完，只把"物理上必须人做"的留给他。
+- **结论要有可核查的原始证据**（`偏好阁#6`）。
+- **记下自己的错**（所以有 `INCIDENTS.md`）。
+- **不要语音类 mod**（`偏好阁#5`）。
+- **长任务自行持续推进，不要中途停下来问**（`偏好阁#7`）—— 但**设计类决策必须先问**（他刚亲自示范了一次）。
+- **速度稍微提一提**：少寒暄，多做实事。
 
-**测试要覆盖**：阈值边界（59.9% vs 60%、体积 11 vs 12）· 多条不满足时**全部**列出来 ·
-档位取"满足的最高档" · 档位表空/重复 id 要抛 · **以及一条结构性护栏**：
-断言 `EnvironmentSnapshot` 的 record 分量恰好是那 4 个名字（有人加"方块列表"就红）。
+---
 
-然后按 `PLAN-m1-env-idempotency.md` 的 Task 1 / 3 / 4 继续（Task 1 = `Building` + `WorldState.buildings` +
-并入 v2 迁移；Task 3 = 幂等决策；Task 4 = 实体化节流），最后 Task 5 文档 + 提交。
+## 八、只有用户能做的事（`NEEDS-YOU.md` 摘要）
 
-**跑测试的命令**（本机没装 Gradle，用缓存分发）：
+1. **启用汉化资源包**（一次性，10 秒）：进游戏 → 选项 → 资源包 → 启用「荒野建国-中文补全」并置顶。
+2. **重启一次 DSH**：让 `dsh-computer-use-win` 上线（22 个 `mcp__wincu__*` 工具）。
+   有它之后"看画面"的验收（村民外观、任务书界面、M0、§J）我能**自己截图判定**。
+3. **跑客户端批次时腾内存**（关 League / Oopz，或允许我降客户端堆到 5G）。
+4. `OPEN-DESIGN.md` 的 5 条设计（一国一城 vs 多城 · 国力合成 · 资源分类与上限 · 边镇实体 · 终局）—— 不阻塞当前工作。
+5. 任务书正文的**碑文/方志腔**（我写白话版，他改成自己的字）。
 
-```powershell
-& "$env:USERPROFILE\.gradle\wrapper\dists\gradle-8.11.1-bin\eac4u065zwes5phglpt5f9b9e\gradle-8.11.1\bin\gradle.bat" `
-  -p D:\project\nation-pack\mods\statecraft :core:test --console=plain
-```
+---
 
-**每个 Task 的循环**：写代码 → 测试全绿 → 文档同步（`NATIONS.md`/README/计划文档）→
-`git add -A` → 用 write 工具写提交信息文件 → `git commit -F <文件>` → `git -c http.proxy= -c https.proxy= push origin main`。
+## 九、我能自己做、但还没做的（离线待办）
 
-## 四、之后的工作链（已与用户确认）
+| 优先级 | 事项 | 备注 |
+|---|---|---|
+| **高** | 任务书实施（§三.3） | 用户刚拍板，是当前主线 |
+| 高 | Statecraft"提前推进时代"入口（§三.4） | 任务书钥匙的依赖 |
+| 中 | `DEFERRED.md` E1：**纯原版性能基线**（组 0） | 只起服务端，我能跑；没有它无法回答"性能组省了多少" |
+| 中 | 方块/物品名 5862 条的规则化补全 | 已有资源包流水线；触发条件写在 `DEFERRED.md` C 组 |
+| 低 | 300h 内容量复核（`DEFERRED.md` §H2/H3） | 探索 ~50h 够不够、前两时代 64h 密度 |
+| — | "免手工启用资源包"的小 mod | **必须开客户端才能验**，所以排队到客户端批次 |
 
-```
-阶段 1  M1 收尾（环境判定 + 幂等决策）            ← 现在在这
-阶段 2  计划 4 的 core 侧（数据层/文本渲染/周报/国书/图纸授权/情报册/村民绑定/占位内容）
-   ↑ 以上全部离线，不用开游戏
-阶段 3  mod 薄层 + 真机（**一次性批量**）：真实环境读数 · 占位方块/村民 · 图纸加农炮链路
-        + 顺带清掉积压：M0 · M2 命令通道补验 · v1→v2 迁移实档确认
-阶段 4  暂缓：City + 国力合成 + 多城（等用户拍板，见 OPEN-DESIGN.md）
-```
+## 十、需要客户端 / 多人的（一次性批次，别零散做）
 
-## 五、等用户拍板的事（不要自己替他定）
+- **§J 实体存了没装回世界**：盘上有（`mca_probe.py` 证实）、`execute if entity @e` 是 0 → 最可能是"没人在线时实体不装"的原版行为，要带一个客户端重跑（判据 `buildings` 的 `healthy=true` 且房里只有一个村民）
+- **§J4 有玩家在线时结算真的推进**：`/statecraft pending 1.99` + 在线 → 日志出现 `STATECRAFT_SETTLE kind=PERIODIC`
+- **M0**：HYW 单位会不会主动打玩家（**挡夺城/计划 5**）
+- **A 组联机**（含 **A4 图纸 × 领地 = 项目关键路径**）· **B 组人眼** · **F 组军事 8 条**
+- **已知阻碍**：客户端**按键送不进去**（`tap`/`chars`/`paste` 都失败、`[CHAT]` 与 `sc-probe` 都是 0，hwnd 与 `FOCUSED=1` 都对）→ 所以"看"类验收要等 §八.2 的 DSH 重启
 
-`OPEN-DESIGN.md` 里 5 条：一国一城 vs 多城（含 B-lite 方案与四层难度评估）· 国力的合成方式 ·
-城内资源分类与上限公式 · 边镇要不要有实体 · 终局。
-**都不阻塞阶段 1/2**，所以搁着继续推进。
+## 十一、等用户拍板的
 
-## 六、电脑控制插件（`dsh-computer-use-win`）
+`OPEN-DESIGN.md` 5 条（见 §八.4）；`PLAN-questbook.md` §十 的 5 条已给**默认值**
+（钥匙命令 `/statecraft accelerate` 不取代价 · 不用 `stage` 藏任务 · 全局 `progression_mode=flexible`
+· 邦交章不拆 · 类目章具体归属期 2 再定），不同意他会说。
 
-重启后模型侧应出现 **`mcp__wincu__*`** 共 22 个工具（用法见 `tools/COMPUTER-USE.md`）。
-- **自检**：`python tools\wcu_probe.py`（握手 + 列工具 + health）
-- **立刻能用上工作的三处**：
-  1. **驱动 PCL 启动器**（原生控件程序，UIA 很强）：改内存、加 `-Dfile.encoding=UTF-8`、点安装器按钮 ——
-     以前这些要用户自己去 GUI 里点；
-  2. **抓画面做证据**：`snapshot` 直接返回图片（`type:"image"`），比自建的 `win_ctl` 截图更省事；
-  3. **阶段三看游戏画面**：开世界后判读建筑/村民/情报册长什么样（MC 是自绘窗口，UIA 树是空的，
-     所以游戏里用"截图 + 坐标点击 + 按键"）。
-- 用之前先 `list_windows` 拿 `nativeWindowHandle`，后续调用都带上（焦点随时会跑）。
-- 两个坑写在 `tools/COMPUTER-USE.md`：LSP 式 `Content-Length` 分帧、Junction 路径会让入口守卫失效。
+## 十二、明确不做 / 已废的思路
 
-## 七、重启后怎么跟用户继续
+- ❌ **任务总数配额**（199 条）—— 已废，改为"由引导需要决定"
+- ❌ **左侧 40~60 章** —— 否决（"一堵墙"），定 22 章
+- ❌ **抄 ATM-10 的任务内容** —— 其 quests 目录是 **All Rights Reserved**，我们仓库公开，只能作结构参照
+- ❌ **重复 mod 自带教学**（Create Ponder、JEI/EMI）
+- ❌ **任务专属内容**、**硬门闸**（除时代钥匙）
+- ❌ 靠"加更多结构 mod"补内容（`DESIGN.md` §十五 明说）
 
-用户在等你**继续推长工程**。直接说"我从 `NEXT.md` 的第三节接着干"，然后开工；
-如果目标被 disarm 了，先 `get_goal` → `update_goal resume` 再干。
-**不要重新问一遍需求**：已定的都写在 `OPEN-DESIGN.md` 附录（时间口径 300h、不做 PvP、占领后规则、
-计划 4 用占位内容、允许魔改）。
+---
+
+## 十三、交接时的工作区状态
+
+- **HEAD = `origin/main` = `3b658e4`**（任务书设计文档），工作区干净
+- **无后台任务在跑**（本会话的汉化子代理已全部收工）
+- **进程**：2 个 Gradle 守护进程（我的，可 `gradle --stop`）；**没有**游戏/服务端在跑；空闲内存 7.3G
+- **实例侧**：`mods/statecraft-0.1.0.jar` 在；`resourcepacks/` 里**只有社区汉化包**（我们的补全包还没装，见 §四）
+- **实例里的测试残留**：`saves/scdev`（我拷的单机测试档，11MB，含 `level.dat.bak`）；`options.txt` 已还原成用户的
+- **临时文件**：已清理（本会话的 `_atm10`、`_i18n_*.py`、`_msg_*.txt` 都删了）
+
+---
+
+## 十四、重启后怎么跟用户继续
+
+直接说"我从 `NEXT.md` 第三节接着干"，然后开工 —— **不要重新问一遍需求**：
+要做什么（`PLAN-questbook.md`）、为什么（用户原话在两份文档里）、不做什么（§十二）都已经写下来了。
+如果长工程目标被 disarm，先 `get_goal` → `update_goal resume`。
