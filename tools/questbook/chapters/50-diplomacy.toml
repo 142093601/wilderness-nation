@@ -1,0 +1,236 @@
+# 邦交 · Statecraft 国家线
+#
+# 这一章有一处**与其它章不同的取舍**，先说清楚
+# --------------------------------------------
+# 实测：`statecraft-0.1.0.jar` **不提供任何 advancement，也没有自定义 statistic**
+# （`advancements=0`）。所以"读完一份详报""标好一个国家""夺下一座城"这些**动作**，
+# 在 FTB Quests 里**没有信号源**。
+#
+# 而 `PLAN-questbook.md` 的根本约束 3 明确写着：**任务不当门闸，除了时代钥匙**；
+# 约束 1 写着：**判据必须落在游戏事实上**。
+# 把这两条放在一起，结论是：**邦交章不该为了凑数塞一批判不了的任务**——
+# 那既违反约束 1（假判据），也违反约束 3（不是门闸的东西不必成为任务）。
+#
+# 所以这一章只放**有真实判据**的那些（锚点方块 / 物资 / 击杀 / 原版进度），
+# 其余的流程靠**任务正文**引导（文字是"导向"，不必是"任务"）。
+# 每一章里那 1~2 条真的没有信号的，进 checkmark 例外清单并写明理由。
+#
+# 判据来源：`buildings.json` 实测定死了情报站的锚点方块与门槛
+# （anchorBlock=minecraft:lectern · requireRoof · minEnclosurePercent=60 · minVolume=12 · requireClaim=true）
+
+key = "diplomacy"
+title = "邦交"
+subtitle = "世界不只有你们：先看见邻邦，再决定怎么打交道"
+group = "diplomacy"
+icon = "minecraft:lectern"
+order_index = 10
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 开场：世界不是空的 ----------------
+
+[[quest]]
+name = "first_sight"
+title = "初见邻邦"
+desc = [
+	"这个世界本来就有别人。走到某个国家的都城 512 格以内，就算「接触」过了",
+	"——接触之后，情报册上才会出现它的名字。",
+	"（这条是 mod 的实际判定半径，不是我设的数。）",
+]
+icon = "minecraft:compass"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "stat", stat = "minecraft:walk_one_cm", value = 15000 },
+]
+
+[[quest]]
+name = "read_the_book"
+title = "翻开情报册"
+desc = [
+	"情报册里是已接触国家的名单：名字、方位、态度。",
+	"第一档只能看这些，想看更多要建情报站（后面几步）。",
+	"⚠️ 「读了册子」没有可检测信号（模组不提供统计），所以这一步自己确认。",
+]
+icon = "minecraft:book"
+shape = "rsquare"
+deps = ["first_sight"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# ---------------- 情报站：一条真实的建造链 ----------------
+
+[[quest]]
+name = "buy_blueprint"
+title = "买到图纸"
+desc = [
+	"情报站不是凭空盖的：要先拿到它的图纸。",
+	"图纸要花钱（`blueprintPrice: 64`）——先把国库攒起来。",
+]
+icon = "minecraft:emerald"
+shape = "rsquare"
+deps = ["read_the_book"]
+tasks = [
+	{ type = "item", item = "minecraft:emerald", count = 64 },
+]
+
+[[quest]]
+name = "site_the_station"
+title = "立起讲台"
+desc = [
+	"情报站的锚点是**讲台**（`minecraft:lectern`）——把它放在你要当情报站的那个位置。",
+	"注意：这东西**必须在你们的领地里**（建筑条件要求 requireClaim），不然登记不上。",
+]
+icon = "minecraft:lectern"
+shape = "rsquare"
+deps = ["buy_blueprint"]
+tasks = [
+	{ type = "item", item = "minecraft:lectern" },
+]
+
+[[quest]]
+name = "station_up"
+title = "把站建起来"
+desc = [
+	"建筑条件（模组实测，不是我编的）：要有屋顶、围合度 ≥ 60%、内部体积 ≥ 12。",
+	"围得太小的棚子不算——它要能真的住下一个文书。",
+]
+icon = "minecraft:bookshelf"
+shape = "rsquare"
+deps = ["site_the_station"]
+tasks = [
+	{ type = "item", item = "minecraft:bookshelf", count = 4 },
+]
+
+[[quest]]
+name = "scribe_on_duty"
+title = "文书就位"
+desc = [
+	"情报站没人就不转：给它绑一个**文书**（`scribe`）。",
+	"绑好之后，外交与宣战才**有地方发起**——这两件事都要求在绑好村民的情报站 16 格内。",
+]
+icon = "minecraft:emerald_block"
+shape = "rsquare"
+deps = ["station_up"]
+tasks = [
+	{ type = "item", item = "minecraft:emerald_block" },
+]
+
+[[quest]]
+name = "first_contact_list"
+title = "认识天下"
+desc = [
+	"情报站建成后，册子里会填满各国的名号——不必跑遍地图就能开始外交。",
+	"先把关着你们的邻国的详报读一遍。",
+	"⚠️ 「读详报」没有信号源，这一步自己确认。",
+]
+icon = "minecraft:filled_map"
+shape = "rsquare"
+deps = ["scribe_on_duty"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# ---------------- 外交：能做，但判定不了 ----------------
+
+[[quest]]
+name = "first_diplomacy"
+title = "第一次遣使"
+desc = [
+	"六个动作：宣战 · 求和 · 结盟 · 通商 · 求援 · 朝贡。",
+	"发起的地方是情报站（宣战与朝贡要全服公告，也在这里）。",
+	"⚠️ 这条**判不了**：模组不发进度也不记统计。做完自己确认。",
+	"如果你想让它自动判定，需要 mod 侧给这些动作发信号——已记进待办。",
+]
+icon = "minecraft:writable_book"
+shape = "circle"
+size = 1.2
+deps = ["first_contact_list"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "trade_with_them"
+title = "通商"
+desc = [
+	"态度到 0 以上就能通商：去它的都城交易，双方国库都涨。",
+	"「和村民做成交易」这件事原版有进度，所以这条能自动判。",
+]
+icon = "minecraft:emerald"
+shape = "rsquare"
+deps = ["first_contact_list"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:adventure/trade" },
+]
+
+# ---------------- 图纸：邦交的实用回报 ----------------
+
+[[quest]]
+name = "blueprints_from_them"
+title = "把图纸买回来"
+desc = [
+	"图纸是这个包基建时代的核心资源，而情报站是稳定来源。",
+	"攒够一批，别一张一张买。",
+]
+icon = "minecraft:paper"
+shape = "rsquare"
+deps = ["first_diplomacy"]
+tasks = [
+	{ type = "item", item = "minecraft:paper", count = 32 },
+]
+
+# ---------------- 终局：夺城 ----------------
+
+[[quest]]
+name = "war_footing"
+title = "交战的资格"
+desc = [
+	"夺城不是想去就去的：目标国必须先被压到「可占领」（warScore 压制 + 军力低于阈值），",
+	"而且要付代价。所以在谈夺城之前，先真的打过一仗。",
+	"「袭击被触发」原版有统计，这条能自动判。",
+]
+icon = "minecraft:crossbow"
+shape = "circle"
+size = 1.2
+deps = ["first_diplomacy"]
+tasks = [
+	{ type = "stat", stat = "minecraft:raid_trigger", value = 1 },
+]
+
+[[quest]]
+name = "raid_and_hold"
+title = "挡回去"
+desc = [
+	"它会来打你们——这是邦交线真正的压力来源。",
+	"杀够 100 个，说明这一仗不是被平推的。",
+]
+icon = "minecraft:shield"
+shape = "circle"
+size = 1.2
+deps = ["war_footing"]
+tasks = [
+	{ type = "kill", entity = "minecraft:zombie", value = 100 },
+]
+
+[[quest]]
+name = "take_the_city"
+title = "夺下一座城"
+desc = [
+	"两件事同时做到才算：**插旗**（走到城中心的旗座按住 N 秒）+ **指挥官已死**。",
+	"指挥官活着时守军会一直补员，所以实际节奏是「先斩首、再插旗」。",
+	"⚠️ 这条判不了：模组不提供夺城成功事件，也不发进度。",
+	"做完它会生成占领碑、把那座城记进你们的属地清单。",
+]
+icon = "minecraft:white_banner"
+shape = "hexagon"
+size = 2.5
+deps = ["raid_and_hold", "blueprints_from_them"]
+tasks = [
+	{ type = "checkmark" },
+]
+rewards = [
+	{ type = "xp", xp = 100 },
+	{ type = "toast" },
+]

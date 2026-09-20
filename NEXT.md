@@ -38,7 +38,7 @@
 | M0（HYW 会不会主动打玩家） | ⬜ **未跑**（夺城/计划 5 的唯一前置，需要真玩家当靶子） |
 | 包侧中文补全 | ✅ 完成。116 命名空间 / 5288 条界面文本；覆盖率 79%→89% |
 | **任务书工具链** | ✅ **完成**（2026-09-20）：`tools/questbook.py`（生成器）+ `tools/questbook_check.py`（9 项校验）+ `tools/lint_questbook_toml.py` + `tools/build_registry.py` |
-| **任务书数据（四章样板）** | ✅ **已生成并真机验证**：序 · 落地 · 机械动力 · 防御与尸潮 = **4 章 / 46 任务**；服务端日志 `Loaded 5 chapter groups, 4 chapters, 46 quests, 0 reward tables`，**FTB Quests 零 ERROR/零 WARN**；**已装进实例**（`install_questbook.py`） |
+| **任务书数据（五章样板）** | ✅ **已生成并真机验证**：序 · 落地 · 邦交 · 机械动力 · 防御与尸潮 = **5 章 / 59 任务 / 136 个 id**；服务端日志 `Loaded 5 chapter groups, 5 chapters, 59 quests, 0 reward tables`，**FTB Quests 零 ERROR/零 WARN**；**已装进实例**（`install_questbook.py`） |
 | **时代钥匙入口（mod 侧）** | ✅ **完成**（2026-09-20）：`/statecraft accelerate`。核过 JUnit **28 类 / 385 用例 / 0 失败**（`SettlementClockTest` 15 个）。它**只把累计小时推到时代边界**，推进仍走原有的 `ERA_ADVANCE` 路径——老路径一个字没改 |
 | **C18：`quest_enhance` 硬冲突** | ✅ **已处置（移除）**。它让"按 N 打开任务书"必崩（mixin 签名不匹配）。升级/降级**都实测救不了**，详见 `CONFLICTS.md` C18 |
 | **任务书「邦交」章** | ⛔ **有意未写**——理由见 §三.4（判据没有信号源） |
@@ -86,24 +86,38 @@
 3. 用户改写碑文/方志腔：**只动 `pack/config/ftbquests/quests/lang/zh_cn/`**，结构不动
 4. 期 3：补 ATM 那套图片引导（要客户端截图，用 `dsh-computer-use-win` 可以自己截）
 
-### 3.4 「邦交」章为什么没写（**不是遗漏，是依赖**）
+### 3.4 「邦交」章的处理（**已写，但有一条判据限制必须知道**）
 
-`PLAN-questbook.md` 要求邦交章写"接触 → 情报 → 外交 → 图纸 → 夺城"。实测发现：
+`PLAN-questbook.md` 要求邦交章写"接触 → 情报 → 外交 → 图纸 → 夺城"。实测的限制：
 
-- **Statecraft 不提供任何 advancement，也没有自定义 statistic**（jar 实测：`advancements=0`）。
-- `NATIONS.md` §11.1 写的"**情报册（物品）**"在 v1 实现里其实是 **core 里的判定类
-  `IntelBook`**，玩家入口是命令/界面——**不是一个能当判据的物品**。
-- 于是"接触了某国""发起了一次外交""夺下了一座城"这些**都没有可检测信号**。
+- **Statecraft 不提供任何 advancement，也没有自定义 statistic**（jar 实测 `advancements=0`）。
+- `NATIONS.md` §11.1 写的"**情报册（物品）**"在 v1 实现里其实是 **core 里的判定类 `IntelBook`**，
+  玩家入口是命令/界面——**不是一个能当判据的物品**。
 
-**补它的两条路**（都需要先做 mod 侧或数据侧的事）：
-1. mod 侧为邦交关键动作**打一个自定义 statistic 或发一个 advancement**
-   （`/statecraft` 命令里做，用 core 已有的事件）；
-2. 或者接受这几条用 `checkmark`——但那就等于把"引导"降级成"自觉打勾"，
-   与"任务要起引导作用"冲突，**不推荐**。
+于是我把 `PLAN` 的两条根本约束放在一起读：**约束 1（判据必须落在游戏事实上）**+
+**约束 3（任务不当门闸，除时代钥匙）**。结论是：
+**这一章不该为了凑数塞一批判不了的任务**——那既违反约束 1（假判据），也违反约束 3。
 
-⚠️ 顺带记下：**The Hordes / Undead Nights 同样不提供进度或统计**
-（jar 实测 `advancements=0`），所以"守住一次大规模袭击"目前也是 `checkmark`。
-若要让这一步自动判定，需要在 mod 侧暴露"波次开始/结束"事件。
+**实际写法**：只放**有真实判据**的条目（9 个任务 / 3 条 checkmark），流程靠**任务正文**引导：
+
+| 用到的真判据 | 证据来源 |
+|---|---|
+| `walk_one_cm`（接触邻邦的距离） | 原版统计 |
+| **`minecraft:lectern` 持有量**（情报站锚点） | `buildings.json` 实测：`anchorBlock = minecraft:lectern` |
+| 绿宝石/书架/绿宝石块（图纸费 + 建材） | `buildings.json`：`blueprintPrice = 64` |
+| `adventure/trade`（通商） | 原版进度 |
+| `raid_trigger` + `kill`（交战的资格） | 原版统计 |
+
+**判不了的 3 条**（已写进 checkmark 例外清单并给理由）：翻开情报册 · 读详报 · **夺城成功**。
+
+> ⚠️ **若要让这几条自动判定，需要在 mod 侧补信号**：`/statecraft` 的
+> `contact` / `diplomacy` / 夺城成功三个点，各发一个 advancement 或自定义 statistic 即可。
+> 那是 mod 侧的事（core 已有这些事件，接线成本不高）。
+
+**同一类限制还有一处**：**The Hordes / Undead Nights 也不提供进度或统计**
+（jar 实测 `advancements=0`），所以「防御与尸潮」里的
+**「守住一次真正的大规模袭击」也是 `checkmark`**。
+要让那一步自动判定，需要在 mod 侧暴露"波次开始/结束"事件。
 
 ### 3.5 mod 侧的另一小块（**已完成**）
 

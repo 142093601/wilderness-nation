@@ -1,0 +1,285 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "diplomacy"
+	group: "8D1F7A9412EC6127"
+	icon: {
+		id: "minecraft:lectern"
+	}
+	id: "899ABFDCC287D351"
+	order_index: 10
+	quest_links: [ ]
+	quests: [
+	{
+		icon: {
+			id: "minecraft:compass"
+		}
+		id: "C047C53F2DA87A6D"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			stat: "minecraft:walk_one_cm"
+			value: 15000
+			id: "4D946033D3899342"
+			type: "stat"
+		}
+		]
+		x: 0.0d
+		y: 0.0d
+	}
+	{
+		dependencies: [
+		"C047C53F2DA87A6D"
+		]
+		icon: {
+			id: "minecraft:book"
+		}
+		id: "728A21D01FBE4C3E"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			id: "1B30F3A467B9D23B"
+			type: "checkmark"
+		}
+		]
+		x: 0.0d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"728A21D01FBE4C3E"
+		]
+		icon: {
+			id: "minecraft:emerald"
+		}
+		id: "92AC4708AF4EF13F"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:emerald"
+			count: 64
+			id: "11844F5EFAAB32BD"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"92AC4708AF4EF13F"
+		]
+		icon: {
+			id: "minecraft:lectern"
+		}
+		id: "D9E67D247A2BA923"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:lectern"
+			id: "346B09F70C90B931"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"D9E67D247A2BA923"
+		]
+		icon: {
+			id: "minecraft:bookshelf"
+		}
+		id: "584D4512C7254878"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:bookshelf"
+			count: 4
+			id: "267368A77DB1A12B"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"584D4512C7254878"
+		]
+		icon: {
+			id: "minecraft:emerald_block"
+		}
+		id: "F8CE50420DBBCD83"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:emerald_block"
+			id: "7F6C8242C5F8320D"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"F8CE50420DBBCD83"
+		]
+		icon: {
+			id: "minecraft:filled_map"
+		}
+		id: "856A17B0373BB4A1"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			id: "80699497F30366F4"
+			type: "checkmark"
+		}
+		]
+		x: 0.0d
+		y: -10.5d
+	}
+	{
+		dependencies: [
+		"856A17B0373BB4A1"
+		]
+		icon: {
+			id: "minecraft:writable_book"
+		}
+		id: "EFEC20FF57232AF9"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			id: "4986AD1EB95381C2"
+			type: "checkmark"
+		}
+		]
+		x: -1.5d
+		y: -12.25d
+	}
+	{
+		dependencies: [
+		"856A17B0373BB4A1"
+		]
+		icon: {
+			id: "minecraft:emerald"
+		}
+		id: "C52818B7F5DE9717"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			advancement: "minecraft:adventure/trade"
+			id: "A5DDB44C0C5F3A0A"
+			type: "advancement"
+		}
+		]
+		x: 1.27d
+		y: -12.25d
+	}
+	{
+		dependencies: [
+		"EFEC20FF57232AF9"
+		]
+		icon: {
+			id: "minecraft:paper"
+		}
+		id: "9135C7BE88D5F7F2"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:paper"
+			count: 32
+			id: "53847415712BA428"
+			type: "item"
+		}
+		]
+		x: -1.27d
+		y: -14.0d
+	}
+	{
+		dependencies: [
+		"EFEC20FF57232AF9"
+		]
+		icon: {
+			id: "minecraft:crossbow"
+		}
+		id: "1A27AD0319805168"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			stat: "minecraft:raid_trigger"
+			value: 1
+			id: "03AC8F2EB3F6AD7B"
+			type: "stat"
+		}
+		]
+		x: 1.5d
+		y: -14.0d
+	}
+	{
+		dependencies: [
+		"1A27AD0319805168"
+		]
+		icon: {
+			id: "minecraft:shield"
+		}
+		id: "AB42874DB9606DE8"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			entity: "minecraft:zombie"
+			value: 100
+			id: "118C7C995A323B3B"
+			type: "kill"
+		}
+		]
+		x: 0.0d
+		y: -15.75d
+	}
+	{
+		dependencies: [
+		"AB42874DB9606DE8"
+		"9135C7BE88D5F7F2"
+		]
+		icon: {
+			id: "minecraft:white_banner"
+		}
+		id: "6FCDE7FAD903194F"
+		rewards: [
+		{
+			xp: 100
+			id: "B37F004228D36672"
+			type: "xp"
+		}
+		{
+			id: "C2BCB3C6E75F32E5"
+			type: "toast"
+		}
+		]
+		shape: "hexagon"
+		size: 2.5d
+		tasks: [
+		{
+			id: "A7BE20F9B967B8A9"
+			type: "checkmark"
+		}
+		]
+		x: 0.0d
+		y: -17.5d
+	}
+	]
+}

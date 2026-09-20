@@ -13,6 +13,10 @@ file = "config/ftbquests/quests/chapters/defense.snbt"
 hash = "116cdb08539d2e158256375a59710f8d6bd9de12284fe1ae3bd7bbddbb222c58"
 
 [[files]]
+file = "config/ftbquests/quests/chapters/diplomacy.snbt"
+hash = "b3700bfaa46b2d28c51d58e226a9e1c460157854b84065e5cf262c8c7a188bb7"
+
+[[files]]
 file = "config/ftbquests/quests/chapters/landing.snbt"
 hash = "022379f1726eeb13269e402755e9199372df315fdda265d56dc0bbe7fea72f5a"
 
@@ -26,7 +30,7 @@ hash = "2c7f21b3a0e142ba080eedc253984ace91ceb3044c0b3bcf34cf04c680674bc5"
 
 [[files]]
 file = "config/ftbquests/quests/lang/zh_cn/chapter.snbt"
-hash = "9478e583b7574bcc0b278353d1662ead859bdea477477f050a918da10f2d9ece"
+hash = "e46a6e44722a0d2b969d60498a0bbaf51ada509991a89c97bc8182205b8ad238"
 
 [[files]]
 file = "config/ftbquests/quests/lang/zh_cn/chapter_group.snbt"
@@ -39,6 +43,10 @@ hash = "f6cc366644de507d6ce85fbaef8f1ffa2970996a2d3088e1c41d67a3c407e3ed"
 [[files]]
 file = "config/ftbquests/quests/lang/zh_cn/chapters/defense.snbt"
 hash = "57aaa6d50eddff92501be6d9bdf7406632d26f347f3f5f989198fc52a45fdf48"
+
+[[files]]
+file = "config/ftbquests/quests/lang/zh_cn/chapters/diplomacy.snbt"
+hash = "b3b2f279df62f82786702b31474a0351183c55e37052d515cb4b7da4f255bd62"
 
 [[files]]
 file = "config/ftbquests/quests/lang/zh_cn/chapters/landing.snbt"

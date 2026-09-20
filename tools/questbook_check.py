@@ -70,6 +70,11 @@ CHECKMARK_EXCEPTIONS = {
     "survive_first_night": "游戏不记录「天亮时你在不在附近」",
     "fence_the_camp": "原版没有「放置方块」统计，围栏是否合围判不了",
     "claim_the_land": "OPAC 未提供可检测信号（待 mod 侧补，见交接说明）",
+    # —— 邦交（Statecraft 不提供任何 advancement / statistic，见 CONFLICTS 与 NEXT.md §3.4）——
+    "read_the_book": "模组不记录「翻过情报册」；这是引导流程的一步，不是门闸",
+    "first_contact_list": "「读了详报」没有信号源（深挖动作模组不记账）",
+    "first_diplomacy": "六个外交动作模组都不发进度、不记统计（实测 advancements=0）",
+    "take_the_city": "夺城成功事件模组不提供，也不发进度",
     # —— 防御与尸潮 ——
     "first_wall": "原版没有「放置方块」统计，墙是否合围判不了",
     "hold_the_line": "The Hordes / Undead Nights 不提供进度或统计（实测），"
