@@ -38,7 +38,8 @@
 | M0（HYW 会不会主动打玩家） | ⬜ **未跑**（夺城/计划 5 的唯一前置，需要真玩家当靶子） |
 | 包侧中文补全 | ✅ 完成。116 命名空间 / 5288 条界面文本；覆盖率 79%→89% |
 | **任务书工具链** | ✅ **完成**：`tools/questbook.py`（生成器）+ `tools/questbook_check.py`（9 项校验）+ `tools/lint_questbook_toml.py` + `tools/build_registry.py` + **`tools/verify_questbook_on_server.py`（服务端真机验证，一条命令）** |
-| **任务书数据（全 22 章）** | ✅ **完成并真机验证**（2026-09-21）：**22 章 / 297 任务 / 688 个 id**。服务端 `Loaded 5 chapter groups, 22 chapters, 297 quests`；**没有任务书相关的未知注册项、FTB Quests 零 ERROR/零 WARN**。已装进实例 |
+| **任务书数据（全 22 章）** | ✅ **完成并两端验证**（2026-09-21）：**22 章 / 297 任务 / 688 个 id**。**服务端**与**客户端**日志都是 `Loaded 5 chapter groups, 22 chapters, 297 quests`；无任务书相关未知注册项、FTB Quests 零 ERROR/零 WARN。客户端侧跑了 `autotest.py` 真进世界 180 秒不崩（`scdev` 档）。已装进实例 |
+| **时代钥匙（任务书↔mod 接线）** | ✅ **完成**（2026-09-21）：六个时代的终局各带一条 `command` 奖励 `/statecraft accelerate`，生成器统一补 `permission_level = 2`。`questbook_audit_mechanics.py` 的 A 段守它 |
 | **时代钥匙入口（mod 侧）** | ✅ **完成**（2026-09-20）：`/statecraft accelerate`。核过 JUnit **28 类 / 385 用例 / 0 失败**（`SettlementClockTest` 15 个）。它**只把累计小时推到时代边界**，推进仍走原有的 `ERA_ADVANCE` 路径——老路径一个字没改 |
 | **C18：`quest_enhance` 硬冲突** | ✅ **已处置（移除）**。它让"按 N 打开任务书"必崩（mixin 签名不匹配）。升级/降级**都实测救不了**，详见 `CONFLICTS.md` C18 |
 | **任务书「邦交」章** | ✅ **已补**（2026-09-21）：13 条，其中 3 条自检（Statecraft 不发进度，理由见 §三.4） |
