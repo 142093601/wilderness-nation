@@ -1,0 +1,100 @@
+# 序 · 怎么用这本书
+#
+# 这一章不教任何 mod（PLAN-questbook.md 根本约束 4：不重复 Ponder / JEI 的教学）。
+# 它只回答一件事：**这本书怎么读**。所以本章全部用 checkmark —— 书本身没有可检测信号。
+# 这是 checkmark 例外清单第 5 条，理由写在 tools/questbook_check.py 的 CHECKMARK_EXCEPTIONS。
+
+key = "prologue"
+title = "序"
+group = "chronicle"
+icon = "minecraft:book"
+order_index = 0
+
+grid = { step = 1.5, row_h = 1.75 }
+
+[[quest]]
+name = "how_to_open"
+title = "这本书怎么翻"
+desc = [
+	"按 N 打开任务书。左边是章节，右边是任务。",
+	"整本书不设时限：任何任务都不会过期，晚做只是晚做。",
+]
+tasks = [
+	{ type = "checkmark" },
+]
+icon = "minecraft:book"
+shape = "pentagon"
+size = 2.0
+
+[[quest]]
+name = "how_to_read_arrows"
+title = "箭头是顺序，不是门"
+desc = [
+	"任务之间的连线只表示「先做这个，再做那个」。",
+	"全包只有一把钥匙会挡住你（时代钥匙），别的任务不做，游戏照样玩下去。",
+]
+tasks = [
+	{ type = "checkmark" },
+]
+icon = "minecraft:arrow"
+shape = "rsquare"
+deps = ["how_to_open"]
+
+[[quest]]
+name = "chronicle_and_craft"
+title = "四栏各管什么"
+desc = [
+	"编年：从落地到文明，六个时代的主线。",
+	"邦交：邻国、情报、外交、图纸、夺城。",
+	"技艺：几个大 mod 的独立路线（机械动力、防御与尸潮…）。",
+	"类目：按用途归拢的零散玩法（建筑、食物、储存、装备…）。",
+]
+tasks = [
+	{ type = "checkmark" },
+]
+icon = "minecraft:writable_book"
+shape = "rsquare"
+deps = ["how_to_open"]
+
+[[quest]]
+name = "eras_and_key"
+title = "时代与钥匙"
+desc = [
+	"世界按六个时代推进：落地、立国、基建、远征、御敌、文明。",
+	"时间到了会自动进入下一个时代，你们什么都不做也不会被卡住。",
+	"把某个时代的国策主线做完，可以拿到那个时代的钥匙——用它提前进入下一个时代。",
+]
+tasks = [
+	{ type = "checkmark" },
+]
+icon = "minecraft:bell"
+shape = "rsquare"
+deps = ["how_to_open"]
+
+[[quest]]
+name = "where_to_ask"
+title = "卡住了看哪里"
+desc = [
+	"每个主线任务底下都写了「为什么做」和「卡在哪」。",
+	"支线任务通常只有一个标题——指个方向，不啰嗦。",
+]
+tasks = [
+	{ type = "checkmark" },
+]
+icon = "minecraft:lantern"
+shape = "rsquare"
+deps = ["how_to_open"]
+
+[[quest]]
+name = "prologue_marker"
+title = "从这里开始"
+desc = [
+	"看完这一章，去「落地」那一章领第一件事。",
+]
+icon = "minecraft:campfire"
+shape = "hexagon"
+size = 2.5
+deps = ["how_to_read_arrows", "chronicle_and_craft", "eras_and_key", "where_to_ask"]
+tasks = [
+	{ type = "checkmark" },
+]

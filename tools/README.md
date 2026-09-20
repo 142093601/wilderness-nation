@@ -631,7 +631,60 @@ python tools/paired_check.py --group b1,b2,b3,b4,b5 --reuse-world data/b5-world 
 
 ---
 
+## 二十一、任务书工具链（`questbook.py` 等四个工具，2026-09-20）
+
+**为什么要有生成器**：FTB Quests 的 SNBT 数据里，**任务/判据/奖励三级各有 id**、
+坐标要浮点、判据有 15 种类型、文案还要与结构分离放 `lang/`。
+手写的后果很具体：**改一处会让别处 id 漂移**，依赖写错就变成"永远点不亮"。
+所以人只写**意图**（这一章有哪些任务、判据是什么、连在谁后面），其余由工具生成。
+
+| 工具 | 干什么 |
+|---|---|
+| `questbook.py` | 读 `tools/questbook/*.toml` → 写 `pack/config/ftbquests/quests/**`。id = `sha256(章key + 稳定名 + 序号)` 前 16 位大写十六进制，**跑两次字节一致** |
+| `questbook_check.py` | 独立**读回磁盘产物**（自带 SNBT 解析器）做 9 项校验：结构自洽 · id 可复现 · 依赖无环/无悬空 · 类型白名单 · 语言键无缺无孤儿 · `checkmark` 只在例外清单 · **判据 id 真实存在** · 坐标不重叠 · **已登记进 `pack/index.toml`** |
+| `lint_questbook_toml.py` | 逐个解析 TOML，一次列全所有语法错误 |
+| `build_registry.py` | 扫实例 `mods/*.jar`（lang 键 + item 模型 + blockstates + 配方引用的 id）→ `tools/registry.json` |
+
+**语法与判据速查**：`QUESTBOOK-FORMAT.md`（格式，取证过）· `QUESTBOOK-CRITERIA.md`（判据怎么挑）。
+
+### 三条实测出来的纪律
+
+1. **`item` 判据检测的是「持有/消耗」，不是「放置」。**
+   这是设计任务书时最容易踩的坑：把"放下营火"写成 `item: campfire`，
+   玩家就"拿到营火即完成"，任务退化成物品清单。
+   表达行为要用 `stat`（原版统计）或 `advancement`。
+2. **判据引用的 id 必须先在注册表里核实。**
+   写错 `create:train_controls`（真名是 `create:track_station`）这类 id，
+   游戏**不报错**——任务只是永远不亮。所以校验器有第 ⑦ 项。
+   ⚠️ 原版 assets 不在本机，`minecraft:` 的 id 只能靠"被配方引用过"这一层证明，
+   因此校验器**只对"同命名空间有其它 id 被扫到"的缺失报错**，避免假阴性。
+3. **改完必须跑一次服务端看加载日志**。这是唯一能证明"游戏真的读懂了"的证据：
+
+```
+[FTB Quests/]: Loading quests from ...\config\ftbquests\quests
+[FTB Quests/]: Loaded 5 chapter groups, 4 chapters, 46 quests, 0 reward tables
+```
+
+### 改任务书的完整循环
+
+```powershell
+python tools\lint_questbook_toml.py          # 1) TOML 能不能解析
+python tools\questbook.py                    # 2) 生成 SNBT
+cd pack; & "$env:USERPROFILE\go\bin\packwiz.exe" refresh; cd ..   # 3) 登记进索引
+python tools\questbook_check.py --reproducible                     # 4) 9 项校验 + 字节可复现
+python tools\server_ctl.py --start --wait 300                      # 5) 真机：看加载日志
+```
+
+> **`lang/zh_cn/` 归用户**：生成器默认**不覆盖已存在的 lang 文件**，只补缺失的键。
+> 用户改的是字，不是结构。要强行重写才加 `--force-lang`（会盖掉他的文案）。
+
+> ⚠️ **`packwiz refresh` 会登记 `pack/` 下的一切**（见 `INCIDENTS.md` 2026-09-20）。
+> 往里放任何东西前先问"这要分发给玩家吗"。
+
+---
+
 ## 十六、写这些脚本时的纪律（全都是踩出来的）
+
 
 | # | 纪律 | 踩过的样子 |
 |---|---|---|

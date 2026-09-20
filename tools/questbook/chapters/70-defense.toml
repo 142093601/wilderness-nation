@@ -1,0 +1,234 @@
+# 防御与尸潮（技艺章）
+#
+# 一个必须说清的限制（写这一章时实测出来的）
+# ------------------------------------------
+# 本包装了 The Hordes（`The-Hordes-1.21.1-1.6.3f.jar`）与 Undead Nights
+# （`UndeadNights-2.2.5-NeoForge-mc1.21.jar`），但**它们都不提供任何 advancement，
+# 也没有自定义 statistic**（实测：advancements=0、无 stat 注册）。
+# 也就是说：「尸潮来了」「袭击被守住了」这两个**事件**，在 FTB Quests 里没有信号源。
+#
+# 所以这一章的判据分两类，且**不假装能自动判定**：
+#   ① 可判定的**行为**用原版统计/进度/物品：击杀数、盾牌挡下伤害、箭、城墙方块；
+#      以及 takesapillage 的进度（打掉掠夺者营地/堡垒）。
+#   ② 真正"事件级"的目标（守住一次大规模袭击）用 checkmark —— 并写明理由。
+#      ⚠️ 若要自动判定，需要 mod 侧给信号（the-hordes 的波次开始/结束事件）。
+#         已经记进交接说明的待办。
+
+key = "defense"
+title = "防御与尸潮"
+subtitle = "墙要一直往上加，因为来拆墙的也在升级"
+group = "craft"
+icon = "minecraft:shield"
+order_index = 21
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 主线：工事升级树 ----------------
+
+[[quest]]
+name = "first_wall"
+title = "第一道墙"
+desc = [
+	"先合围：四面都要有，留一处能关的门。",
+	"原版**没有「放置方块」统计**，所以「墙合围了没有」只能自己确认——别自己骗自己。",
+]
+icon = "minecraft:stone_bricks"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "wall_stone"
+title = "墙要挡得住"
+desc = [
+	"木墙对第一波够用，对第二波不够。把关键段换成石砖。",
+]
+icon = "minecraft:stone_brick_wall"
+shape = "rsquare"
+deps = ["first_wall"]
+tasks = [
+	{ type = "item", item = "minecraft:stone_brick_wall", count = 32 },
+]
+
+[[quest]]
+name = "wall_iron"
+title = "石墙也有扛不住的一天"
+desc = [
+	"能拆石墙的东西出现之后，关键段必须上铁：铁栏杆、铁门。",
+]
+icon = "minecraft:iron_bars"
+shape = "rsquare"
+deps = ["wall_stone"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_bars", count = 32 },
+	{ type = "item", item = "minecraft:iron_door" },
+]
+
+[[quest]]
+name = "wall_lighting"
+title = "墙外不黑"
+desc = [
+	"黑的地方就是它们生成的地方。把墙外一圈点亮。",
+]
+icon = "minecraft:lantern"
+shape = "rsquare"
+deps = ["wall_stone"]
+tasks = [
+	{ type = "item", item = "minecraft:lantern", count = 16 },
+]
+
+# ---------------- 武装 ----------------
+
+[[quest]]
+name = "real_weapon"
+title = "不只是剑"
+desc = [
+	"远程武器是守城的主力：弓、弩、箭。先把箭的存量做起来。",
+]
+icon = "minecraft:crossbow"
+shape = "rsquare"
+deps = ["first_wall"]
+tasks = [
+	{ type = "item", item = "minecraft:arrow", count = 64 },
+	{ type = "advancement", advancement = "minecraft:adventure/shoot_arrow" },
+]
+
+[[quest]]
+name = "shield_wall"
+title = "举盾"
+desc = [
+	"盾牌挡下的伤害游戏会记账——这是「你确实站在前面」的证据。",
+]
+icon = "minecraft:shield"
+shape = "rsquare"
+deps = ["first_wall"]
+tasks = [
+	{ type = "stat", stat = "minecraft:damage_blocked_by_shield", value = 200 },
+]
+
+[[quest]]
+name = "first_blood"
+title = "第一次交火"
+desc = [
+	"杀够 20 个——不是刷，是清掉围过来的那一圈。",
+]
+icon = "minecraft:iron_sword"
+shape = "rsquare"
+deps = ["first_wall"]
+tasks = [
+	{ type = "kill", entity = "minecraft:zombie", value = 20 },
+]
+
+[[quest]]
+name = "many_kills"
+title = "清场"
+icon = "minecraft:bow"
+shape = "circle"
+size = 1.2
+deps = ["first_blood"]
+tasks = [
+	{ type = "stat", stat = "minecraft:mob_kills", value = 100 },
+]
+
+# ---------------- 设施 ----------------
+
+[[quest]]
+name = "alarm_bell"
+title = "预警钟"
+desc = [
+	"设计里「敲钟集结」是唯一的集结信号，而它**有统计可查**。",
+	"约定好：一声是集合，三声是回城。",
+]
+icon = "minecraft:bell"
+shape = "rsquare"
+deps = ["first_wall"]
+tasks = [
+	{ type = "stat", stat = "minecraft:bell_ring", value = 10 },
+]
+
+[[quest]]
+name = "arrow_tower"
+title = "箭塔"
+desc = [
+	"至少两座，能覆盖城外一段。塔上有箭箱，别让人来回跑。",
+]
+icon = "minecraft:dispenser"
+shape = "circle"
+size = 1.2
+deps = ["real_weapon"]
+tasks = [
+	{ type = "item", item = "minecraft:dispenser", count = 2 },
+]
+
+[[quest]]
+name = "traps"
+title = "门口有陷阱"
+icon = "minecraft:target"
+shape = "circle"
+size = 1.2
+deps = ["first_wall"]
+tasks = [
+	{ type = "item", item = "minecraft:target", count = 4 },
+]
+
+[[quest]]
+name = "beacon_fire"
+title = "烽火"
+desc = [
+	"三处，点火要在主城能看见。远方的据点出事时，这是唯一的信号。",
+]
+icon = "minecraft:campfire"
+shape = "rsquare"
+deps = ["alarm_bell"]
+tasks = [
+	{ type = "item", item = "minecraft:campfire", count = 3 },
+]
+
+# ---------------- 打出去 ----------------
+
+[[quest]]
+name = "raid_camp"
+title = "找到他们的营地"
+desc = [
+	"只守不打，规模只会一直涨。先找到发起方在哪。",
+]
+icon = "minecraft:white_banner"
+shape = "rsquare"
+deps = ["many_kills"]
+tasks = [
+	{ type = "advancement", advancement = "takesapillage:adventure/pillager_camp" },
+]
+
+[[quest]]
+name = "raid_stronghold"
+title = "拆掉它"
+icon = "minecraft:crossbow"
+shape = "rsquare"
+deps = ["raid_camp"]
+tasks = [
+	{ type = "advancement", advancement = "takesapillage:adventure/bastille" },
+]
+
+# ---------------- 终局 ----------------
+
+[[quest]]
+name = "hold_the_line"
+title = "守住一次真正的大规模袭击"
+desc = [
+	"全队协防、有人受伤、墙出现缺口又被补上——这一条游戏里没有信号源",
+	"（The Hordes / Undead Nights 不提供进度或统计，实测）。所以它靠自己确认。",
+	"⚠️ 想让这一步自动判定，需要 mod 侧给「波次开始/结束」事件——已记进待办。",
+]
+icon = "minecraft:shield"
+shape = "hexagon"
+size = 2.5
+deps = ["wall_iron", "wall_lighting", "arrow_tower", "traps", "beacon_fire", "shield_wall"]
+tasks = [
+	{ type = "checkmark" },
+]
+rewards = [
+	{ type = "xp", xp = 100 },
+	{ type = "toast" },
+]

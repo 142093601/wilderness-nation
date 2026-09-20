@@ -1,0 +1,57 @@
+{
+	quest.1BEC3E674A053BD3.title: "第一道墙"
+	quest.1BEC3E674A053BD3.description: [
+	"先合围：四面都要有，留一处能关的门。"
+	"原版**没有「放置方块」统计**，所以「墙合围了没有」只能自己确认——别自己骗自己。"
+	]
+	quest.263BDB419C55723E.title: "墙要挡得住"
+	quest.263BDB419C55723E.description: [
+	"木墙对第一波够用，对第二波不够。把关键段换成石砖。"
+	]
+	quest.B65FED73CDD2D68F.title: "石墙也有扛不住的一天"
+	quest.B65FED73CDD2D68F.description: [
+	"能拆石墙的东西出现之后，关键段必须上铁：铁栏杆、铁门。"
+	]
+	quest.CC02E25BA1162841.title: "墙外不黑"
+	quest.CC02E25BA1162841.description: [
+	"黑的地方就是它们生成的地方。把墙外一圈点亮。"
+	]
+	quest.33D43552CE703F2F.title: "不只是剑"
+	quest.33D43552CE703F2F.description: [
+	"远程武器是守城的主力：弓、弩、箭。先把箭的存量做起来。"
+	]
+	quest.F446626983E04C2A.title: "举盾"
+	quest.F446626983E04C2A.description: [
+	"盾牌挡下的伤害游戏会记账——这是「你确实站在前面」的证据。"
+	]
+	quest.D91E626035A3010C.title: "第一次交火"
+	quest.D91E626035A3010C.description: [
+	"杀够 20 个——不是刷，是清掉围过来的那一圈。"
+	]
+	quest.835725F3170B04D7.title: "清场"
+	quest.D3CC1E9B94C09B6B.title: "预警钟"
+	quest.D3CC1E9B94C09B6B.description: [
+	"设计里「敲钟集结」是唯一的集结信号，而它**有统计可查**。"
+	"约定好：一声是集合，三声是回城。"
+	]
+	quest.1F5A361A111CCC95.title: "箭塔"
+	quest.1F5A361A111CCC95.description: [
+	"至少两座，能覆盖城外一段。塔上有箭箱，别让人来回跑。"
+	]
+	quest.D77BB1623BE6A09D.title: "门口有陷阱"
+	quest.68355F477B94716D.title: "烽火"
+	quest.68355F477B94716D.description: [
+	"三处，点火要在主城能看见。远方的据点出事时，这是唯一的信号。"
+	]
+	quest.84721674DA6BC853.title: "找到他们的营地"
+	quest.84721674DA6BC853.description: [
+	"只守不打，规模只会一直涨。先找到发起方在哪。"
+	]
+	quest.C565DAC79FB25750.title: "拆掉它"
+	quest.4390C6960E848390.title: "守住一次真正的大规模袭击"
+	quest.4390C6960E848390.description: [
+	"全队协防、有人受伤、墙出现缺口又被补上——这一条游戏里没有信号源"
+	"（The Hordes / Undead Nights 不提供进度或统计，实测）。所以它靠自己确认。"
+	"⚠️ 想让这一步自动判定，需要 mod 侧给「波次开始/结束」事件——已记进待办。"
+	]
+}

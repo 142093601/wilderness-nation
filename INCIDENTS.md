@@ -6,6 +6,54 @@
 
 ---
 
+## 2026-09-20 汉化源文件放在 `pack/` 里，被 packwiz 当成分发物（会重复下载）
+
+### 现象
+
+第一次给任务书做 `packwiz refresh` 之后，`pack/index.toml` 多出 **124 条**而不是预期的 8 条：
+其中 **116 条是 `i18n/zh_cn/*.json`**。
+
+### 根因
+
+`tools/i18n_pack.py` 的分工本身是对的（文件头写得很清楚）：
+
+- **源文件** `pack/i18n/zh_cn/<命名空间>.json` —— 给人 diff / 评审 / 回滚用；
+- **zip** `pack/resourcepacks/荒野建国-中文补全.zip` —— packwiz 实际分发的文件。
+
+问题是**源文件放在了 `pack/` 底下**。而 `packwiz refresh` 的语义是「把 `pack/` 下的文件
+同步进索引」——它对源文件和分发物一视同仁。于是：
+
+1. 116 个源 JSON 被登记进索引，**玩家装包时会额外下载一份用不到的源文件**
+   （真正生效的是 zip，两者内容重复）；
+2. 每次 `packwiz refresh`（或 `i18n_pack.py --index`）都会重新登记它们，
+   于是 **index.toml 永远有一份 116 条的噪音 diff**，真改动被淹。
+
+### 修法
+
+把源文件移出 packwiz 的领地：
+
+```
+pack/i18n/zh_cn/*.json   →   i18n/zh_cn/*.json      （仓库根，仍进 git、仍可 diff）
+```
+
+并同步改 `tools/i18n_pack.py` 的 `SRC_DIR`。**zip 与索引条目都不受影响**
+（zip 仍在 `pack/resourcepacks/`，仍由 `--index` 登记）。
+
+### 防回归
+
+- 判据：改完之后 `packwiz refresh` 应当**只**反映真实新增/改动，不再出现
+  `i18n/` 前缀的条目。跑一次 refresh，`git diff --numstat pack/index.toml` 应为 0（幂等）。
+- 规则：**`pack/` 下只放要分发给玩家的东西。** 源文件、草稿、中间产物一律放仓库别处。
+  （对照：`pack/mods/*.pw.toml` 是分发物所以放里面；`tools/` 是工具所以放外面。）
+
+### 硬规则（新增）
+
+6. **`pack/` 是 packwiz 的领地**：往里放任何文件之前先问"这要分发给玩家吗"。
+   答不上来就放 `pack/` 外面 —— 否则它会静默进索引，既增大玩家下载量，
+   又让每次 refresh 都产生噪音 diff。
+
+---
+
 ## 2026-09-20 清场逻辑按**镜像名**杀 JVM，会连玩家正在玩的游戏一起杀
 
 ### 现象

@@ -1,0 +1,7 @@
+# 全局默认（编译成 data.snbt）
+#
+# 字段名与取值来自 QUESTBOOK-FORMAT.md §3.1（游戏自己写出的文件实测）。
+# 没有在这里出现的字段一律不写进 data.snbt —— 不用未验证的字段。
+
+progression_mode = "flexible"   # PLAN-questbook.md §十.4 默认
+detection_delay = 60

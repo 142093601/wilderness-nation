@@ -1,6 +1,54 @@
 hash-format = "sha256"
 
 [[files]]
+file = "config/ftbquests/quests/chapter_groups.snbt"
+hash = "fbbb6bf3faef245183d7435489771921a8a7fc168211efeed2ef454fa0957101"
+
+[[files]]
+file = "config/ftbquests/quests/chapters/create.snbt"
+hash = "338b18e5c9e897e634d4bd8478f2eca38846427361268963250872974b11575d"
+
+[[files]]
+file = "config/ftbquests/quests/chapters/defense.snbt"
+hash = "116cdb08539d2e158256375a59710f8d6bd9de12284fe1ae3bd7bbddbb222c58"
+
+[[files]]
+file = "config/ftbquests/quests/chapters/landing.snbt"
+hash = "022379f1726eeb13269e402755e9199372df315fdda265d56dc0bbe7fea72f5a"
+
+[[files]]
+file = "config/ftbquests/quests/chapters/prologue.snbt"
+hash = "e1efaaef3d1a3e57728cfd4efcc22bf68e661186cb2b848671508d2dcd1fc419"
+
+[[files]]
+file = "config/ftbquests/quests/data.snbt"
+hash = "2c7f21b3a0e142ba080eedc253984ace91ceb3044c0b3bcf34cf04c680674bc5"
+
+[[files]]
+file = "config/ftbquests/quests/lang/zh_cn/chapter.snbt"
+hash = "9478e583b7574bcc0b278353d1662ead859bdea477477f050a918da10f2d9ece"
+
+[[files]]
+file = "config/ftbquests/quests/lang/zh_cn/chapter_group.snbt"
+hash = "6f48011e2ec310dec46795ed2b63d8bad80ca506d7be1608ae941883cec61034"
+
+[[files]]
+file = "config/ftbquests/quests/lang/zh_cn/chapters/create.snbt"
+hash = "f6cc366644de507d6ce85fbaef8f1ffa2970996a2d3088e1c41d67a3c407e3ed"
+
+[[files]]
+file = "config/ftbquests/quests/lang/zh_cn/chapters/defense.snbt"
+hash = "57aaa6d50eddff92501be6d9bdf7406632d26f347f3f5f989198fc52a45fdf48"
+
+[[files]]
+file = "config/ftbquests/quests/lang/zh_cn/chapters/landing.snbt"
+hash = "8624b918a068b63c39ab59f48ed9e6e71d7be521e59ba983e554d31eb335fce4"
+
+[[files]]
+file = "config/ftbquests/quests/lang/zh_cn/chapters/prologue.snbt"
+hash = "7499593437679a996b9bd2c6afae556f7dddb2c376d5053138f11e7d71e1e9c0"
+
+[[files]]
 file = "mods/3dskinlayers.pw.toml"
 hash = "b3b67f83faf9dcc4985b7a13fa8affb71062461d271f80cc0958652df9f3126b"
 metafile = true

@@ -1,0 +1,56 @@
+{
+	quest.29C3777502434B67.title: "从手摇开始"
+	quest.29C3777502434B67.description: [
+	"这一章不讲机器怎么用——Create 自己带 Ponder 动画（对着方块按 W 就能看）。"
+	"这里只回答「先做哪台、为什么」。第一步：手摇曲柄 + 一个传动件，让它转起来。"
+	]
+	quest.07E8F9B0D732A0B5.title: "安山合金"
+	quest.07E8F9B0D732A0B5.description: [
+	"整套机械的动力材料都从这里开始。"
+	]
+	quest.36E73CFBDF0010C6.title: "不再靠手摇"
+	quest.36E73CFBDF0010C6.description: [
+	"水车或风车：让动力自己来。"
+	]
+	quest.FA1C138757AB1512.title: "切削"
+	quest.FA1C138757AB1512.description: [
+	"有了动力，先让机器替你切木头。"
+	]
+	quest.1FD98DE649FA479A.title: "粉碎"
+	quest.DC6F8DB5A4AD05CB.title: "压与拌"
+	quest.DC6F8DB5A4AD05CB.description: [
+	"机械压床 + 机械搅拌器：这是后面所有合成的前置。"
+	]
+	quest.9F2454C188185917.title: "风处理"
+	quest.9F2454C188185917.description: [
+	"鼓风机：批量洗涤、烟熏、冶炼——一台机器顶三条线。"
+	]
+	quest.E800BCFF9C817607.title: "第一条传送带"
+	quest.E800BCFF9C817607.description: [
+	"东西自己从 A 走到 B 的那一刻，这个包才算真正开始「自动化」。"
+	]
+	quest.973BB284BC8B716E.title: "仓储与打包"
+	quest.973BB284BC8B716E.description: [
+	"仓储管理员 + 打包机：让仓库自己管进出。"
+	"这一条做完，公共仓库才算「能支撑全队」。"
+	]
+	quest.332CF44211BA55C8.title: "黄铜时代"
+	quest.332CF44211BA55C8.description: [
+	"黄铜是精密件（机械臂、过滤器、控制器）的门槛。"
+	]
+	quest.8354069EBDB1BF05.title: "机械臂"
+	quest.98D95ADAA686F89C.title: "蒸汽机"
+	quest.98D95ADAA686F89C.description: [
+	"从「靠自然」到「自己烧出一整片动力」——这是量变到质变的那一步。"
+	]
+	quest.79D023D4CDBD2C41.title: "精密构件"
+	quest.2624A5F76F42113A.title: "铁路"
+	quest.2624A5F76F42113A.description: [
+	"两个地点之间点对点运输。设计里「交通等级扩大远征半径」就靠它。"
+	]
+	quest.09F3400D28695148.title: "全自动的一天"
+	quest.09F3400D28695148.description: [
+	"让至少三件事完全不用人管：原料进去、成品出来，中间没有人。"
+	"这一条是「基建」时代的彩排——它成立，基建时代才有东西可做。"
+	]
+}

@@ -2,8 +2,11 @@
 
 两个产物为什么都要
 ------------------
-* **源文件** `pack/i18n/zh_cn/<命名空间>.json`（就是 {键: 中文}，无外层包装）——
+* **源文件** `i18n/zh_cn/<命名空间>.json`（就是 {键: 中文}，无外层包装）——
   进 git，能 diff、能评审、能回滚。zip 是二进制，不能当唯一真相。
+  ⚠️ **放在 `pack/` 外面**：`pack/` 是 packwiz 的领地，里面的文件都会进索引、被分发；
+  源文件与 zip 内容重复，放进 `pack/` 会让玩家多下一份没用的东西，还会让每次
+  `packwiz refresh` 都产生噪音 diff（见 `INCIDENTS.md` 2026-09-20 那条）。
 * **zip** `pack/resourcepacks/荒野建国-中文补全.zip` —— 给 packwiz 分发的实际文件。
   MC 加载语言时会把多个资源包的同名 lang 文件**合并**，所以这个包里只放
   **社区包没覆盖的那些键**就够了（放全量只会让包变大，还会盖住社区后续更新）。
@@ -25,7 +28,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC_OUT = ROOT / "data" / "i18n-out"
-SRC_DIR = ROOT / "pack" / "i18n" / "zh_cn"
+SRC_DIR = ROOT / "i18n" / "zh_cn"
 ZIP_PATH = ROOT / "pack" / "resourcepacks" / "荒野建国-中文补全.zip"
 INDEX_TOML = ROOT / "pack" / "index.toml"
 # 资源包在 packwiz 里的落地路径（相对**实例根**，不是 pack/ 目录）

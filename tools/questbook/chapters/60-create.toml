@@ -1,0 +1,234 @@
+# 机械动力（技艺章 · 大件 mod 独立成章）
+#
+# 设计依据
+# --------
+# PLAN-questbook.md §2.3：技艺章「章副标题写一句这章怎么走；章内第一条是从哪开始的锚点任务；
+# 之后按**真实的机器/物品先后关系**铺树（依赖箭头就是路线图）」。
+#
+# PLAN-questbook.md 根本约束 4：**不重复 mod 自己的教学**。
+# Create 自带 Ponder（每个方块都有动画说明），所以这一章：
+#   ✗ 不讲"这台机器怎么用"
+#   ✓ 只讲"先做哪台、为什么"——判据直接用 Create 自己的进度（共 1150 条，实测）
+#
+# 判据来源：Create 的 advancement 路径（`data/create/advancement/*.json`，实测存在）。
+
+key = "create"
+title = "机械动力"
+subtitle = "从手摇开始，一路到蒸汽与列车：箭头就是路线图"
+group = "craft"
+icon = "create:cogwheel"
+order_index = 20
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 起点 ----------------
+
+[[quest]]
+name = "first_crank"
+title = "从手摇开始"
+desc = [
+	"这一章不讲机器怎么用——Create 自己带 Ponder 动画（对着方块按 W 就能看）。",
+	"这里只回答「先做哪台、为什么」。第一步：手摇曲柄 + 一个传动件，让它转起来。",
+]
+icon = "create:hand_crank"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "advancement", advancement = "create:hand_crank_000" },
+]
+
+[[quest]]
+name = "andesite_alloy"
+title = "安山合金"
+desc = [
+	"整套机械的动力材料都从这里开始。",
+]
+icon = "create:andesite_alloy"
+shape = "rsquare"
+deps = ["first_crank"]
+tasks = [
+	{ type = "advancement", advancement = "create:andesite_alloy" },
+]
+
+# ---------------- 应力与基础加工 ----------------
+
+[[quest]]
+name = "wind_or_water"
+title = "不再靠手摇"
+desc = [
+	"水车或风车：让动力自己来。",
+]
+icon = "create:water_wheel"
+shape = "rsquare"
+deps = ["andesite_alloy"]
+tasks = [
+	{ type = "item", item = "create:water_wheel" },
+]
+
+[[quest]]
+name = "and_saw"
+title = "切削"
+desc = [
+	"有了动力，先让机器替你切木头。",
+]
+icon = "create:mechanical_saw"
+shape = "circle"
+size = 1.2
+deps = ["wind_or_water"]
+tasks = [
+	{ type = "advancement", advancement = "create:saw_processing" },
+]
+
+[[quest]]
+name = "and_crush"
+title = "粉碎"
+icon = "create:crushing_wheel"
+shape = "circle"
+size = 1.2
+deps = ["wind_or_water"]
+tasks = [
+	{ type = "advancement", advancement = "create:crushing_wheel" },
+]
+
+[[quest]]
+name = "press_and_mixer"
+title = "压与拌"
+desc = [
+	"机械压床 + 机械搅拌器：这是后面所有合成的前置。",
+]
+icon = "create:mechanical_press"
+shape = "rsquare"
+deps = ["wind_or_water"]
+tasks = [
+	{ type = "advancement", advancement = "create:mechanical_press" },
+	{ type = "advancement", advancement = "create:mechanical_mixer" },
+]
+
+[[quest]]
+name = "fan_processing"
+title = "风处理"
+desc = [
+	"鼓风机：批量洗涤、烟熏、冶炼——一台机器顶三条线。",
+]
+icon = "create:encased_fan"
+shape = "circle"
+size = 1.2
+deps = ["press_and_mixer"]
+tasks = [
+	{ type = "advancement", advancement = "create:fan_processing" },
+]
+
+# ---------------- 物流 ----------------
+
+[[quest]]
+name = "belt_and_funnel"
+title = "第一条传送带"
+desc = [
+	"东西自己从 A 走到 B 的那一刻，这个包才算真正开始「自动化」。",
+]
+icon = "create:belt_connector"
+shape = "rsquare"
+deps = ["press_and_mixer"]
+tasks = [
+	{ type = "advancement", advancement = "create:belt" },
+	{ type = "advancement", advancement = "create:funnel" },
+]
+
+[[quest]]
+name = "stock_and_package"
+title = "仓储与打包"
+desc = [
+	"仓储管理员 + 打包机：让仓库自己管进出。",
+	"这一条做完，公共仓库才算「能支撑全队」。",
+]
+icon = "create:item_vault"
+shape = "rsquare"
+deps = ["belt_and_funnel"]
+tasks = [
+	{ type = "advancement", advancement = "create:packager" },
+]
+
+[[quest]]
+name = "brass"
+title = "黄铜时代"
+desc = [
+	"黄铜是精密件（机械臂、过滤器、控制器）的门槛。",
+]
+icon = "create:brass_ingot"
+shape = "rsquare"
+deps = ["press_and_mixer"]
+tasks = [
+	{ type = "advancement", advancement = "create:brass" },
+	{ type = "advancement", advancement = "create:brass_casing" },
+]
+
+[[quest]]
+name = "mechanical_arm"
+title = "机械臂"
+icon = "create:mechanical_arm"
+shape = "circle"
+size = 1.2
+deps = ["brass"]
+tasks = [
+	{ type = "advancement", advancement = "create:mechanical_arm" },
+]
+
+# ---------------- 规模化 ----------------
+
+[[quest]]
+name = "steam_engine"
+title = "蒸汽机"
+desc = [
+	"从「靠自然」到「自己烧出一整片动力」——这是量变到质变的那一步。",
+]
+icon = "create:steam_engine"
+shape = "rsquare"
+deps = ["brass"]
+tasks = [
+	{ type = "advancement", advancement = "create:steam_engine" },
+]
+
+[[quest]]
+name = "precision_mechanism"
+title = "精密构件"
+icon = "create:precision_mechanism"
+shape = "circle"
+size = 1.2
+deps = ["steam_engine"]
+tasks = [
+	{ type = "advancement", advancement = "create:precision_mechanism" },
+]
+
+# ---------------- 终局 ----------------
+
+[[quest]]
+name = "railway"
+title = "铁路"
+desc = [
+	"两个地点之间点对点运输。设计里「交通等级扩大远征半径」就靠它。",
+]
+icon = "create:track"
+shape = "rsquare"
+deps = ["steam_engine"]
+tasks = [
+	{ type = "item", item = "create:track", count = 64 },
+]
+
+[[quest]]
+name = "create_monument"
+title = "全自动的一天"
+desc = [
+	"让至少三件事完全不用人管：原料进去、成品出来，中间没有人。",
+	"这一条是「基建」时代的彩排——它成立，基建时代才有东西可做。",
+]
+icon = "create:mechanical_crafter"
+shape = "hexagon"
+size = 2.5
+deps = ["railway", "mechanical_arm", "stock_and_package", "fan_processing", "precision_mechanism"]
+tasks = [
+	{ type = "advancement", advancement = "create:mechanical_crafter" },
+]
+rewards = [
+	{ type = "xp", xp = 100 },
+	{ type = "toast" },
+]

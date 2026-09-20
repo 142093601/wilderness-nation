@@ -1,0 +1,128 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "prologue"
+	group: "83CFE1997D6DEDDC"
+	icon: {
+		id: "minecraft:book"
+	}
+	id: "9D6EA4128465C4F3"
+	order_index: 0
+	quest_links: [ ]
+	quests: [
+	{
+		icon: {
+			id: "minecraft:book"
+		}
+		id: "3F61926542EAE234"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			id: "6D898B5B2C72E590"
+			type: "checkmark"
+		}
+		]
+		x: 0.0d
+		y: 0.0d
+	}
+	{
+		dependencies: [
+		"3F61926542EAE234"
+		]
+		icon: {
+			id: "minecraft:arrow"
+		}
+		id: "B95D3788B6A24B79"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			id: "D614F1B7844AAC9A"
+			type: "checkmark"
+		}
+		]
+		x: -4.5d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"3F61926542EAE234"
+		]
+		icon: {
+			id: "minecraft:writable_book"
+		}
+		id: "6691B954C0425055"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			id: "15EE659AA171F3B3"
+			type: "checkmark"
+		}
+		]
+		x: -1.5d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"3F61926542EAE234"
+		]
+		icon: {
+			id: "minecraft:bell"
+		}
+		id: "3BE9FAE79A813A2C"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			id: "99CE52D138A099E7"
+			type: "checkmark"
+		}
+		]
+		x: 1.5d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"3F61926542EAE234"
+		]
+		icon: {
+			id: "minecraft:lantern"
+		}
+		id: "EF8F77662A04DAD6"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			id: "CF3BB002AFB4B6FF"
+			type: "checkmark"
+		}
+		]
+		x: 4.5d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"B95D3788B6A24B79"
+		"6691B954C0425055"
+		"3BE9FAE79A813A2C"
+		"EF8F77662A04DAD6"
+		]
+		icon: {
+			id: "minecraft:campfire"
+		}
+		id: "97EE6745F000FCDA"
+		shape: "hexagon"
+		size: 2.5d
+		tasks: [
+		{
+			id: "94AA1D65EDCA525F"
+			type: "checkmark"
+		}
+		]
+		x: 0.0d
+		y: -3.5d
+	}
+	]
+}

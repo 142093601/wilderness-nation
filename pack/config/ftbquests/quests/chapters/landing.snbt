@@ -1,0 +1,226 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "landing"
+	group: "83CFE1997D6DEDDC"
+	icon: {
+		id: "minecraft:campfire"
+	}
+	id: "DAEA88A7CF3C8D89"
+	order_index: 1
+	quest_links: [ ]
+	quests: [
+	{
+		icon: {
+			id: "minecraft:campfire"
+		}
+		id: "5071E4F2CB18E4A8"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			id: "7E1776FF33CB9728"
+			type: "checkmark"
+		}
+		]
+		x: 0.0d
+		y: 0.0d
+	}
+	{
+		dependencies: [
+		"5071E4F2CB18E4A8"
+		]
+		icon: {
+			id: "minecraft:white_bed"
+		}
+		id: "92BC7ECEF767E31F"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			stat: "minecraft:sleep_in_bed"
+			value: 1
+			id: "908B10328A07F182"
+			type: "stat"
+		}
+		]
+		x: 0.0d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"92BC7ECEF767E31F"
+		]
+		icon: {
+			id: "minecraft:furnace"
+		}
+		id: "D275E7F6C6B265F9"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			advancement: "minecraft:story/smelt_iron"
+			id: "ECD8E4573367CD95"
+			type: "advancement"
+		}
+		]
+		x: -3.82d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"D275E7F6C6B265F9"
+		]
+		icon: {
+			id: "minecraft:shield"
+		}
+		id: "B1F7E6B9350025F1"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			id: "D94486B78E16F881"
+			type: "checkmark"
+		}
+		]
+		x: -2.55d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"92BC7ECEF767E31F"
+		]
+		icon: {
+			id: "minecraft:water_bucket"
+		}
+		id: "E1D40D49617EAFEA"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			stat: "minecraft:fill_cauldron"
+			value: 1
+			id: "885EB8266E847220"
+			type: "stat"
+		}
+		]
+		x: -1.05d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"92BC7ECEF767E31F"
+		]
+		icon: {
+			id: "minecraft:oak_fence"
+		}
+		id: "319539F5405B3D60"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			id: "3FA9165A8A40D6A4"
+			type: "checkmark"
+		}
+		]
+		x: 1.5d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"319539F5405B3D60"
+		]
+		icon: {
+			id: "minecraft:white_banner"
+		}
+		id: "3F1D32F62F8F6602"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			id: "68228D96041FD397"
+			type: "checkmark"
+		}
+		]
+		x: 0.23d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"92BC7ECEF767E31F"
+		]
+		icon: {
+			id: "minecraft:map"
+		}
+		id: "552AE9AC00FE1F61"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			stat: "minecraft:walk_one_cm"
+			value: 50000
+			id: "889FAF4487367255"
+			type: "stat"
+		}
+		]
+		x: 4.05d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"D275E7F6C6B265F9"
+		]
+		icon: {
+			id: "minecraft:iron_sword"
+		}
+		id: "79D9FD4E9FEDCCAD"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "minecraft:story/iron_tools"
+			id: "017360A47F6F7EEF"
+			type: "advancement"
+		}
+		]
+		x: 2.77d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"B1F7E6B9350025F1"
+		"E1D40D49617EAFEA"
+		"3F1D32F62F8F6602"
+		"552AE9AC00FE1F61"
+		"79D9FD4E9FEDCCAD"
+		]
+		icon: {
+			id: "minecraft:stone_bricks"
+		}
+		id: "2A31C1DDBB640C1F"
+		rewards: [
+		{
+			xp: 50
+			id: "ADC96F2DC5FA7BB4"
+			type: "xp"
+		}
+		{
+			id: "BDE2D4DBA642B9C2"
+			type: "toast"
+		}
+		]
+		shape: "hexagon"
+		size: 2.5d
+		tasks: [
+		{
+			item: "minecraft:stone_bricks"
+			count: 16
+			id: "8A7FC2C8BA13BCDE"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -7.0d
+	}
+	]
+}

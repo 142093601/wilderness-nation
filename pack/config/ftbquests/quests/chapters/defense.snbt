@@ -1,0 +1,346 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "defense"
+	group: "21077E48D079A7CE"
+	icon: {
+		id: "minecraft:shield"
+	}
+	id: "C84F299A21D20B48"
+	order_index: 21
+	quest_links: [ ]
+	quests: [
+	{
+		icon: {
+			id: "minecraft:stone_bricks"
+		}
+		id: "1BEC3E674A053BD3"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			id: "9251A64A4347B2A1"
+			type: "checkmark"
+		}
+		]
+		x: 0.0d
+		y: 0.0d
+	}
+	{
+		dependencies: [
+		"1BEC3E674A053BD3"
+		]
+		icon: {
+			id: "minecraft:stone_brick_wall"
+		}
+		id: "263BDB419C55723E"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:stone_brick_wall"
+			count: 32
+			id: "5D08A877E88BA505"
+			type: "item"
+		}
+		]
+		x: -7.28d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"263BDB419C55723E"
+		]
+		icon: {
+			id: "minecraft:iron_bars"
+		}
+		id: "B65FED73CDD2D68F"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:iron_bars"
+			count: 32
+			id: "F987FBA7A2C7C74E"
+			type: "item"
+		}
+		{
+			item: "minecraft:iron_door"
+			id: "7F432A7BA977E484"
+			type: "item"
+		}
+		]
+		x: -5.55d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"263BDB419C55723E"
+		]
+		icon: {
+			id: "minecraft:lantern"
+		}
+		id: "CC02E25BA1162841"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:lantern"
+			count: 16
+			id: "949E223C2D646D5B"
+			type: "item"
+		}
+		]
+		x: -2.55d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"1BEC3E674A053BD3"
+		]
+		icon: {
+			id: "minecraft:crossbow"
+		}
+		id: "33D43552CE703F2F"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:arrow"
+			count: 64
+			id: "C239C7DC6DD91CE9"
+			type: "item"
+		}
+		{
+			advancement: "minecraft:adventure/shoot_arrow"
+			id: "B890D6B5A7D5BD3F"
+			type: "advancement"
+		}
+		]
+		x: -4.28d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"1BEC3E674A053BD3"
+		]
+		icon: {
+			id: "minecraft:shield"
+		}
+		id: "F446626983E04C2A"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			stat: "minecraft:damage_blocked_by_shield"
+			value: 200
+			id: "CA6A54C1053D972C"
+			type: "stat"
+		}
+		]
+		x: -1.28d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"1BEC3E674A053BD3"
+		]
+		icon: {
+			id: "minecraft:iron_sword"
+		}
+		id: "D91E626035A3010C"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			entity: "minecraft:zombie"
+			value: 20
+			id: "B188F7701DD939E7"
+			type: "kill"
+		}
+		]
+		x: 1.72d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"D91E626035A3010C"
+		]
+		icon: {
+			id: "minecraft:bow"
+		}
+		id: "835725F3170B04D7"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			stat: "minecraft:mob_kills"
+			value: 100
+			id: "7ABBEE10C94D75E1"
+			type: "stat"
+		}
+		]
+		x: 0.22d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"1BEC3E674A053BD3"
+		]
+		icon: {
+			id: "minecraft:bell"
+		}
+		id: "D3CC1E9B94C09B6B"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			stat: "minecraft:bell_ring"
+			value: 10
+			id: "6C793A3B63A8A53B"
+			type: "stat"
+		}
+		]
+		x: 4.72d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"33D43552CE703F2F"
+		]
+		icon: {
+			id: "minecraft:dispenser"
+		}
+		id: "1F5A361A111CCC95"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:dispenser"
+			count: 2
+			id: "CD7DA345A8E91EE7"
+			type: "item"
+		}
+		]
+		x: 2.77d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"1BEC3E674A053BD3"
+		]
+		icon: {
+			id: "minecraft:target"
+		}
+		id: "D77BB1623BE6A09D"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:target"
+			count: 4
+			id: "560FE0DE883487AA"
+			type: "item"
+		}
+		]
+		x: 7.5d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"D3CC1E9B94C09B6B"
+		]
+		icon: {
+			id: "minecraft:campfire"
+		}
+		id: "68355F477B94716D"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:campfire"
+			count: 3
+			id: "7E215DBBDF2DE0D2"
+			type: "item"
+		}
+		]
+		x: 5.55d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"835725F3170B04D7"
+		]
+		icon: {
+			id: "minecraft:white_banner"
+		}
+		id: "84721674DA6BC853"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			advancement: "takesapillage:adventure/pillager_camp"
+			id: "7F186A0E40E2DE0B"
+			type: "advancement"
+		}
+		]
+		x: -2.25d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"84721674DA6BC853"
+		]
+		icon: {
+			id: "minecraft:crossbow"
+		}
+		id: "C565DAC79FB25750"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			advancement: "takesapillage:adventure/bastille"
+			id: "81A25015C3054857"
+			type: "advancement"
+		}
+		]
+		x: 0.0d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"B65FED73CDD2D68F"
+		"CC02E25BA1162841"
+		"1F5A361A111CCC95"
+		"D77BB1623BE6A09D"
+		"68355F477B94716D"
+		"F446626983E04C2A"
+		]
+		icon: {
+			id: "minecraft:shield"
+		}
+		id: "4390C6960E848390"
+		rewards: [
+		{
+			xp: 100
+			id: "5D1881D7DD53CD18"
+			type: "xp"
+		}
+		{
+			id: "BA153C221D9DF348"
+			type: "toast"
+		}
+		]
+		shape: "hexagon"
+		size: 2.5d
+		tasks: [
+		{
+			id: "65358E3044D68946"
+			type: "checkmark"
+		}
+		]
+		x: 1.5d
+		y: -5.25d
+	}
+	]
+}

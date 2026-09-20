@@ -1,0 +1,21 @@
+# 任务书 · 四栏分组
+#
+# 分组只有 id（由本工具按 key 哈希生成）与标题；
+# 章归属哪个分组由章文件里的 group = "<key>" 决定。
+# 证据与写法：QUESTBOOK-FORMAT.md §3.2
+
+[[group]]
+key = "chronicle"
+title = "编年"
+
+[[group]]
+key = "diplomacy"
+title = "邦交"
+
+[[group]]
+key = "craft"
+title = "技艺"
+
+[[group]]
+key = "category"
+title = "类目"

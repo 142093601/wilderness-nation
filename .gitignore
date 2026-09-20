@@ -65,6 +65,16 @@ __pycache__/
 .venv/
 venv/
 
+# ---------- 任务书工具的本机产物 ----------
+# registry.json 是从「本机实例的 mods/」扫出来的（2 万+ 条 id），换台机器内容就不同，
+# 所以它是**产物不是真相**：真相是 build_registry.py 与它读的 jar。
+# 校验器 questbook_check.py 的第 ⑦ 项需要它；没有时会跳过该项并提示怎么生成。
+tools/registry.json
+# 一次性质的取证实测脚本与产出（_probe_*.py / _probe_*.txt / _stats_*.txt）
+tools/_probe_*
+tools/_stats_*
+tools/_javap_work/
+
 # ---------- 系统 ----------
 .DS_Store
 Thumbs.db

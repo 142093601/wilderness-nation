@@ -1,0 +1,176 @@
+# 落地（时代 0 · landing）
+#
+# 判据来源与设计意图
+# ------------------
+# DESIGN.md §17.1 给了五条「深度验收标准」；这里把它们落成**可判定的判据**。
+#
+# ⚠️ 一条关键约束（写这一章时踩出来的）：
+#    **`item` 判据检测的是「持有/消耗」，不是「放置」** —— 所以"放下营火""围起栅栏"
+#    这类**行为**用 item 判据表达不了，硬套会让任务退化成"物品清单"。
+#    能用行为判据的优先用：`stat`（原版统计）与 `advancement`（原版/模组进度）。
+#    明细见 QUESTBOOK-CRITERIA.md。
+#
+# 主线：选址 → 住处 → 火与食 → 第一夜 → 落成碑
+# 支线：水源 / 圈地 / 领地 / 探路 / 武器
+#
+# 配额已废：这一章 13 个任务是「引导需要」的结果，不是 24h÷1.5h 摊出来的。
+
+key = "landing"
+title = "落地"
+subtitle = "第一夜之前，先弄明白「我们为什么会在这里」"
+group = "chronicle"
+icon = "minecraft:campfire"
+order_index = 1
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 主线 ----------------
+
+[[quest]]
+name = "pick_ground"
+title = "设立营地"
+desc = [
+	"找一块同时满足四件事的地方：水源、可耕地、能防守、附近有旧世痕迹。",
+	"选址是集体决定，游戏里没有「大家同意了」这个信号，所以这一条自己打勾。",
+	"别跳过它——后面每个时代的碑都立在这块地上。",
+]
+icon = "minecraft:campfire"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "first_roof"
+title = "第一间避难所"
+desc = [
+	"有床、有门、有屋顶。躺下睡一觉——游戏会记下「你在这里过夜了」。",
+]
+icon = "minecraft:white_bed"
+shape = "rsquare"
+deps = ["pick_ground"]
+tasks = [
+	{ type = "stat", stat = "minecraft:sleep_in_bed", value = 1 },
+]
+
+[[quest]]
+name = "fire_and_food"
+title = "火与食"
+desc = [
+	"把熔炉点起来，炼出第一块铁。这一条游戏会自己确认。",
+]
+icon = "minecraft:furnace"
+shape = "rsquare"
+deps = ["first_roof"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:story/smelt_iron" },
+]
+
+[[quest]]
+name = "survive_first_night"
+title = "活着过第一晚"
+desc = [
+	"游戏不记录「天亮时你到底在不在附近」，所以这一条没有可靠判据。",
+	"天亮了、人还在、东西没丢，就自己打个勾。过不去，说明上面哪一条偷工减料了。",
+]
+icon = "minecraft:shield"
+shape = "rsquare"
+deps = ["fire_and_food"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# ---------------- 支线 ----------------
+
+[[quest]]
+name = "water_source"
+title = "把水固定下来"
+desc = [
+	"别每次跑半张地图打水。用水桶把炼药锅灌满，就算是有了自己的水源。",
+]
+icon = "minecraft:water_bucket"
+shape = "circle"
+size = 1.2
+deps = ["first_roof"]
+tasks = [
+	{ type = "stat", stat = "minecraft:fill_cauldron", value = 1 },
+]
+
+[[quest]]
+name = "fence_the_camp"
+title = "把营地围起来"
+desc = [
+	"栅栏围一圈，至少要有个能关上的入口。",
+	"「围起来了」这件事游戏里判不了（原版没有「放置方块」统计）。",
+]
+icon = "minecraft:oak_fence"
+shape = "circle"
+size = 1.2
+deps = ["first_roof"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "claim_the_land"
+title = "把家圈成领地"
+desc = [
+	"用认领工具把营地圈下来——这是「我们的地」第一次在游戏里成立。",
+	"之后别人的破坏、放置、开箱都会被拦。",
+	"⚠️ 圈地的判据要等 mod 侧提供可检测信号（见 NEEDS-YOU / 交接说明），现在自检。",
+]
+icon = "minecraft:white_banner"
+shape = "circle"
+size = 1.2
+deps = ["fence_the_camp"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "scout_500"
+title = "走出生点 500 格"
+desc = [
+	"带上食物和水，往任意方向走满 500 格再回来。游戏会按步数自己算。",
+	"重点不是走多远，是沿路记住：水在哪、地形怎么走、有没有旧世的痕迹。",
+]
+icon = "minecraft:map"
+shape = "circle"
+size = 1.2
+deps = ["first_roof"]
+tasks = [
+	{ type = "stat", stat = "minecraft:walk_one_cm", value = 50000 },
+]
+
+[[quest]]
+name = "a_real_sword"
+title = "一把说得过去的剑"
+icon = "minecraft:iron_sword"
+shape = "circle"
+size = 1.2
+deps = ["fire_and_food"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:story/iron_tools" },
+]
+
+# ---------------- 终局 ----------------
+
+[[quest]]
+name = "landing_monument"
+title = "落成碑"
+desc = [
+	"用石砖在营地立一块碑，刻上「元年 · 落地」和你们选址的理由。",
+	"这块碑是后面所有时代的坐标起点——以后会有人回来看它。",
+]
+icon = "minecraft:stone_bricks"
+shape = "hexagon"
+size = 2.5
+deps = ["survive_first_night", "water_source", "claim_the_land", "scout_500", "a_real_sword"]
+tasks = [
+	{ type = "item", item = "minecraft:stone_bricks", count = 16 },
+]
+rewards = [
+	{ type = "xp", xp = 50 },
+	{ type = "toast" },
+]
