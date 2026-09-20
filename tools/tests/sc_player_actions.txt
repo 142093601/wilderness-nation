@@ -1,0 +1,40 @@
+# §十二 的"玩家行为 → 态度"（在都城 64 格内放置方块）—— 在真服务端上跑一遍
+#
+# 背景：在这之前**没有任何东西会拉低国家对玩家的态度**（生成时是 0，每拍的态度回归
+# 又把它拉回 0）→ §9.1 的宣战门槛（态度 ≤ −40 且 stance ≥ +40）永远踩不到。
+#
+# ⚠️ 两条纪律（都是被真机教训出来的）：
+#   ① **可重复执行**：每个"新周期"都以一次 advance 开头，因为额度是按 seq 分桶的
+#      （§十二 的周期上限），刚推完那一拍额度必然满。不这么写，第二次跑就会误报失败。
+#   ② **目标国必须还活着**：国家之间会互相吞并/灭亡。第一次跑这个脚本用的是
+#      n1 旱海（唯一 stance ≥ +40 的），它当时确实被逼到 att=-43.5 并**对玩家宣战**了；
+#      但后来它自己灭亡了，于是"在它都城边上动土"就再也没有任何反应（实测 near=[]）。
+#      所以下面的机制验收改用 **n11 烈日**（跑这个脚本时唯一还活着、且离出生点较近的），
+#      而"被逼到宣战"那一条证据留在 commit 与 `NATIONS.md` §十二 的实现备注里。
+#
+# 目标：n11 烈日，都城 x=82 z=3099（**必须是还活着的国家** —— 见上面第 ② 条）。
+
+cmd: /statecraft info
+expect: STATECRAFT_INFO
+
+# 1) 新周期 → 第一次动土必然扣到 n0（−2）
+cmd: /statecraft advance 2.0
+cmd: /statecraft build 88 64 3099
+expect: STATECRAFT_BUILD pos=88,3099 seq=\d+ affected=\[n11\]
+
+# 2) 同一周期继续放：放到第 6 次时额度（−10）满了
+cmd: /statecraft build 88 64 3099
+cmd: /statecraft build 88 64 3099
+cmd: /statecraft build 88 64 3099
+cmd: /statecraft build 88 64 3099
+cmd: /statecraft build 88 64 3099
+expect: 这个周期的额度已经扣满
+
+# 3) 再推一拍 → 新周期 → 额度重置（证明"上限是按周期算的"，不是一次性总额）
+cmd: /statecraft advance 2.0
+cmd: /statecraft build 88 64 3099
+expect: STATECRAFT_BUILD pos=88,3099 seq=\d+ affected=\[n11\]
+
+# 4) 离得远的坐标不该有任何反应（64 格是 §十二 的门槛）
+cmd: /statecraft build 200 64 3099
+expect: near=\[\]

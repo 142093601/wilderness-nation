@@ -23,9 +23,10 @@
 | M2 真机 | ✅ 命令通道全通（`info` / `roundtrip=OK` / `buildings`），存档落盘+读档已证 |
 | M0（HYW 会不会打玩家） | 方案+脚本就绪（`PLAN-m0-hyw.md` / `tools/tests/m0_hyw.txt`），**未跑**，只挡计划 5 |
 | `treaties.json` 数据化 · 玩家侧落盘 | **有意没做**，见 `DEFERRED.md` §I（各写了触发条件） |
-| **玩家行为 → 态度**（§十二） | ❌ **还没做** —— 现在没有任何东西会拉低国家对你的态度（见下第 4 条）|
+| **玩家行为 → 态度**（§十二） | ✅ 已做（放置方块那条）—— 真机实测把 n1 逼到态度 −43.5 并**自行宣战**；「击杀其单位」那条等 HYW↔国家的映射 |
+| **世界会不会自己清空** | ⚠️ **实测发现过**：原参数下末代只剩 1.0 国。已按实测表调 `warScoreStep`/`absorptionWarScore`，现在末代平均 6.2 国（`NATIONS.md` 八点五）|
 
-**当前 366 个 JUnit 全绿**（`gradlew :core:test`，命令见 §三）。
+**当前 379 个 JUnit 全绿**（`gradlew :core:test`，命令见 §三）。
 
 **阶段 3 现在能用的 `/statecraft` 子命令**（都只在服务端跑，不需要客户端）：
 
@@ -38,6 +39,7 @@
 | `materialize` | 按 §10.3/§10.4 的幂等规则跑一次实体化（含清理重复村民）|
 | `advance <hours>` | 手动推进一次周期小结算（脚本靠它几分钟跑完 300 小时）|
 | `contact <pos>` | §11.1 的接触判定（走近 512 格）|
+| `build <pos>` | 报告一次「在 pos 放置方块」（§十二 的态度变化；真机无客户端时的观察口）|
 | `diplomacy <nation> <action> [dev]` | §11.2 的六个外交动作 |
 | `letters` / `answer <id> accept\|refuse` | §9.4 的国书列表与回复 |
 

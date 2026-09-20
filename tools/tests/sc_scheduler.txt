@@ -13,8 +13,12 @@ cmd: /statecraft advance 2.0
 expect: STATECRAFT_ADVANCE
 
 cmd: /statecraft info
-expect: hours=\d+\.\d+ buildings=\d+ letters=\d+ met=\d+
+expect: hours=\d+\.\d+
 
 # 国书会随结算被递出来（§9.4 的触发侧接上之后）
 cmd: /statecraft letters
 expect: STATECRAFT_LETTERS total=\d+ open=\d+
+
+# 计数行单独一条（短行不会被 RCON 折行）
+cmd: /statecraft info
+expect: nations=\d+ buildings=\d+ letters=\d+ met=\d+

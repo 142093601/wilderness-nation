@@ -436,13 +436,24 @@ class SettlementEngineTest {
         }
     }
 
-    /** 6 个时代，每个时代里两次小结算 + 一次时代推进。 */
+    /**
+     * 跑完 6 个时代：**每个时代按它的时长走够小结算**，最后再来一次时代推进。
+     *
+     * <p>⚠️ 2026-09-20 修正：原来是"每个时代两次小结算 + 一次时代推进"，
+     * 也就是**无论时代多长都只有 18 次结算**。实测证明这个压缩会掩盖气候级的问题 ——
+     * 12 国开局的世界在第 100 多次结算时会自己清空成 1 国，而这个 fixture 只跑 18 次，
+     * 于是"世界会不会打空"这条从来没被任何用例碰到过（真机上跑 110 小时才发现）。
+     * 现在按 {@code 时长 / periodicHours} 走够，才和真实推进一致。
+     */
     private static WorldState replay(WorldState start, SettlementConfig c, EraTable eras) {
         SettlementEngine e = new SettlementEngine(c, StatecraftConfig.defaults(), eras);
         WorldState s = start;
         for (int ordinal = 0; ordinal < eras.size(); ordinal++) {
-            s = e.settle(s, SettlementInput.periodic(c));
-            s = e.settle(s, SettlementInput.periodic(c));
+            int steps = (int) Math.max(1,
+                    Math.round(eras.byOrdinal(ordinal).durationHours() / c.periodicHours()));
+            for (int i = 0; i < steps; i++) {
+                s = e.settle(s, SettlementInput.periodic(c));
+            }
             s = e.settle(s, SettlementInput.eraAdvance(eras.byOrdinal(ordinal).durationHours()));
         }
         return s;
@@ -474,7 +485,13 @@ class SettlementEngineTest {
             assertTrue(living <= start.nations().size());
             assertTrue(end.events().size() <= WorldState.MAX_EVENTS);
             assertEquals(WorldState.CURRENT_SCHEMA_VERSION, end.schemaVersion());
-            assertEquals(eras.size() * 3L, end.seq(), "每个时代 3 次结算");
+            // 真正该钉的是"时钟真的走完了整条曲线"，而不是"跑了几次"（后者会随 fixture 变、
+            // 也正是它把"世界会不会被推平"这条盖住了 —— 见 replay() 的注释）
+            double total = eras.eras().stream().mapToDouble(Era::durationHours).sum();
+            assertTrue(end.elapsedOnlineHours() >= total,
+                    "时钟没走完整条曲线：" + end.elapsedOnlineHours() + " < " + total);
+            assertTrue(end.seq() >= (long) (total / c.periodicHours()),
+                    "结算次数偏少：" + end.seq());
         }
     }
 

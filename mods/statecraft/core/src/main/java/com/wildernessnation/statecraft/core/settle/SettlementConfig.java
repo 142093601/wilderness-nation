@@ -68,11 +68,20 @@ public record SettlementConfig(
                 2.0,      // raidScaleBase             §十二 袭击规模 = 2 + floor(military/25)
                 25.0,     // raidScaleDivisor
                 24,       // raidScaleCap              §十二 上限 24
-                12.0,     // warScoreStep              【占位】每步的战果幅度
+                4.0,      // warScoreStep              【占位】每步的战果幅度 → **2026-09-20 由 12 调到 4，实测值**
+                         //   为什么调：用 12 时，12 国开局的世界**必然自我清空** ——
+                         //   12 个 seed × 6 时代，末代平均只剩 **1.0 国**（每个 seed 都只剩 1 个），
+                         //   半程就只剩 1.0 国。而 300 小时的内容规划是以"十几个国家"为前提的，
+                         //   世界在前三分之一清空 = 后面两百小时的国家层没得玩。
+                         //   战果步长大 → 一场仗几步就分出胜负 → 强者滚雪球（吸收让它更大、
+                         //   恢复更多军力）→ 没人能翻盘。调小之后战争变成"多年拉锯"，
+                         //   强国仍会赢，但赢得慢、也留得下别人。
                 40.0,     // collapseWarScore          【占位】§八.4 "warScore 落后超阈值"
                 40.0,     // collapseMaxDevelopment    §八.4 写的是 25 —— **实测不可达**，见下方说明
                 3,        // collapseLosingStreak      §八.4 连输 ≥3 步
-                50.0,     // absorptionWarScore        【占位】§八.5 没给吸收的触发条件
+                120.0,    // absorptionWarScore        【占位】§八.5 没给吸收的触发条件 → **由 50 调到 120，实测值**
+                         //   扫过 50/70/90/100/120/140：50 时末代只剩 1.0 国，120 时 6.2 国（140 时 6.3，
+                         //   但吸收频率低到 12 seed 里一次都不发生 —— 那也是死代码，所以取 120）。
                 0.5,      // absorptionSizeFactor      §八.5 size += ceil(败者size × 0.5)
                 10,       // absorptionSizeCap         §八.5 上限 10
                 1L,       // truceCooldownSettlements  §十二 停战冷却 = 1 个结算周期

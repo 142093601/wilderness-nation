@@ -13,6 +13,7 @@ import com.wildernessnation.statecraft.core.diplomacy.DiplomacyConfig;
 import com.wildernessnation.statecraft.core.diplomacy.DiplomacyMachine;
 import com.wildernessnation.statecraft.core.diplomacy.DiplomacyRequest;
 import com.wildernessnation.statecraft.core.diplomacy.DiplomacyResult;
+import com.wildernessnation.statecraft.core.diplomacy.PlayerActions;
 import com.wildernessnation.statecraft.core.env.EnvironmentSnapshot;
 import com.wildernessnation.statecraft.core.env.EnvironmentVerdict;
 import com.wildernessnation.statecraft.core.gen.WorldGenerator;
@@ -45,9 +46,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import org.slf4j.Logger;
@@ -78,6 +81,7 @@ public final class StatecraftEvents {
     private static final String MARK_ANSWER = "STATECRAFT_ANSWER";
     private static final String MARK_DIPLO = "STATECRAFT_DIPLO";
     private static final String MARK_CONTACT = "STATECRAFT_CONTACT";
+    private static final String MARK_BUILD = "STATECRAFT_BUILD";
 
     private StatecraftEvents() {}
 
@@ -153,7 +157,12 @@ public final class StatecraftEvents {
                 .then(Commands.literal("contact")
                         .requires(source -> source.hasPermission(2))
                         .then(Commands.argument("pos", BlockPosArgument.blockPos())
-                                .executes(StatecraftEvents::contact))));
+                                .executes(StatecraftEvents::contact)))
+                // ---- 阶段 3：玩家行为 → 态度（§十二）----
+                .then(Commands.literal("build")
+                        .requires(source -> source.hasPermission(2))
+                        .then(Commands.argument("pos", BlockPosArgument.blockPos())
+                                .executes(StatecraftEvents::build))));
     }
 
     /** 外交命令单独成一个方法：嵌套的 argument/then 括号数错一次就编译不过，这样好核对。 */
@@ -563,6 +572,83 @@ public final class StatecraftEvents {
         }
     }
 
+    /**
+     * §十二 的"玩家行为 → 态度"：**玩家在谁家都城 64 格内放了方块**。
+     *
+     * <p>在这之前**没有任何东西会拉低国家对玩家的态度** —— 生成时是 0，每拍的态度回归又把它
+     * 拉回 0，于是 §9.1 的宣战门槛（≤ −40）永远踩不到、§9.4 的国书也只剩"手动宣战再求和"。
+     *
+     * <p>这一层只报告**事实**（谁在哪儿放了方块）；"落在谁家 64 格内""这个周期还能扣多少"
+     * 全在 core 的 {@link PlayerActions} 里判，所以那条周期上限能被 JUnit 钉死。
+     */
+    @SubscribeEvent
+    public static void onBlockPlaced(BlockEvent.EntityPlaceEvent event) {
+        try {
+            if (!(event.getEntity() instanceof ServerPlayer player)
+                    || !(player.level() instanceof ServerLevel level)) {
+                return;
+            }
+            StatecraftSavedData data = StatecraftSavedData.get(level.getServer().overworld());
+            WorldState state = data.state();
+            if (state == null) {
+                return;
+            }
+            BlockPos pos = event.getPos();
+            // 先做一次便宜的问句：这一带有没有谁家的都城？没有就直接走（每个方块都要过这一关）
+            if (PlayerActions.capitalsNear(state, pos.getX(), pos.getZ()).isEmpty()) {
+                return;
+            }
+            PlayerActions.Reaction reaction = PlayerActions.buildingNear(
+                    state, pos.getX(), pos.getZ(), state.seq());
+            if (!reaction.changed()) {
+                return;
+            }
+            data.set(reaction.state());
+            for (String nationId : reaction.affected()) {
+                reaction.state().nation(nationId).ifPresent(n -> player.displayClientMessage(
+                        Component.literal("你在「" + n.name() + "」都城边上动了土，"
+                                + "它对你们的态度降到 " + Math.round(n.attitudeToParty())),
+                        true));
+            }
+        } catch (RuntimeException ex) {
+            LOG.error("Statecraft：处理放置方块的态度变化出错（已忽略这一块）：{}", ex.toString());
+        }
+    }
+
+    /**
+     * `/statecraft build <pos>`：报告一次"玩家在 pos 放置了方块"（§十二）。
+     *
+     * <p>为什么要有这条命令：正常的触发是玩家真的放方块，而这台验证机**没有客户端**。
+     * 这条命令走的是**和那个事件钩子完全相同的代码路径**（同一段 core 规则），
+     * 所以它能验证"在都城边上动土会掉态度、而且有周期上限"，区别只是"谁报告的"。
+     */
+    private static int build(CommandContext<CommandSourceStack> ctx) {
+        CommandSourceStack source = ctx.getSource();
+        StatecraftSavedData data = data(source);
+        WorldState state = data.state();
+        if (state == null) {
+            source.sendSuccess(() -> Component.literal(MARK_BUILD + " EMPTY"), false);
+            return 0;
+        }
+        BlockPos pos = BlockPosArgument.getBlockPos(ctx, "pos");
+        PlayerActions.Reaction r = PlayerActions.buildingNear(
+                state, pos.getX(), pos.getZ(), state.seq());
+        data.set(r.state());
+        String detail = r.changed()
+                ? "affected=" + r.affected()
+                : "（这一带没有谁家的都城，或这个周期的额度已经扣满）";
+        // 诊断读数：把"这一带谁家的都城在范围内""这个周期已经扣了多少"一并打出来 ——
+        // 少了它们就只能靠猜（2026-09-20 排查时正是这么被卡住的）
+        String diag = String.format("near=%s already=%.1f cap=%.1f",
+                PlayerActions.capitalsNear(state, pos.getX(), pos.getZ()),
+                PlayerActions.penaltySoFar(state, "n1", state.seq()),
+                PlayerActions.BUILD_ATTITUDE_CAP);
+        source.sendSuccess(() -> Component.literal(String.format(
+                "%s pos=%d,%d seq=%d %s %s", MARK_BUILD, pos.getX(), pos.getZ(), state.seq(),
+                detail, diag)), true);
+        return r.affected().size();
+    }
+
     private static StatecraftSavedData data(CommandSourceStack source) {
         return StatecraftSavedData.get(source.getServer().overworld());
     }
@@ -576,17 +662,22 @@ public final class StatecraftEvents {
             source.sendSuccess(() -> Component.literal(message), false);
             return 0;
         }
-        String head = String.format(
-                "%s seed=%d era=%s ordinal=%d seq=%d hours=%.2f nations=%d buildings=%d "
-                        + "letters=%d met=%d",
+        // 拆成两行：RCON 的一行太长会被折行，折了之后正则就跨不过去了
+        // （2026-09-20 实测：`buildings=1\n letters=14` 把脚本断言拆散，误报成功能失败）
+        String head = String.format("%s seed=%d era=%s ordinal=%d seq=%d hours=%.2f",
                 MARK_INFO, state.seed(), state.eraId(), state.eraOrdinal(), state.seq(),
-                state.elapsedOnlineHours(), state.nations().size(), state.buildings().size(),
+                state.elapsedOnlineHours());
+        String counts = String.format("  %s nations=%d buildings=%d letters=%d met=%d",
+                MARK_INFO, state.nations().size(), state.buildings().size(),
                 state.letters().size(), IntelContact.metCount(state));
         source.sendSuccess(() -> Component.literal(head), false);
+        source.sendSuccess(() -> Component.literal(counts), false);
         for (Nation n : state.nations()) {
-            String line = String.format("  %s %s %s size=%d dev=%.1f stance=%.1f mil=%.1f x=%.0f z=%.0f",
-                    n.id(), n.name(), n.cultureId(), n.size(), n.development(), n.stance(),
-                    n.military(), n.x(), n.z());
+            String line = String.format(
+                    "  %s %s %s %s size=%d dev=%.1f stance=%.1f mil=%.1f att=%.1f party=%s "
+                            + "x=%.0f z=%.0f",
+                    n.id(), n.name(), n.cultureId(), n.status(), n.size(), n.development(),
+                    n.stance(), n.military(), n.attitudeToParty(), n.partyStatus(), n.x(), n.z());
             source.sendSuccess(() -> Component.literal(line), false);
         }
         return state.nations().size();
