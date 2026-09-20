@@ -5,6 +5,9 @@ tools/lists/*.tsv text eol=lf
 *.json text eol=lf
 *.txt text eol=lf
 *.cfg text eol=lf
+# 任务书定义（tools/questbook/*.toml）：判据与坐标都在里面，diff 要干净。
+# 本机 core.autocrlf=true，不显式锁死的话 checkout 会转 CRLF、diff 全是噪音。
+*.toml text eol=lf
 
 # packwiz 元数据必须**字节精确**：换行一变，pack/index.toml 里的哈希就全部失配，
 # 别人克隆下来 `packwiz install` 会报 hash mismatch（T16）。
