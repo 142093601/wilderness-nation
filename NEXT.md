@@ -44,6 +44,8 @@
 | `build <pos>` | 报告一次「在 pos 放置方块」（§十二 的态度变化；真机无客户端时的观察口）|
 | `intel [track\|untrack\|deep <nation>]` | §11.1 三档：名单 / 追踪 / 深挖国史 |
 | `blueprint [buy <building>]` · `blueprint treasury <n>` · `blueprint reset` | §10.1 图纸授权：货架 / 买 / 喂钱 / 清账本（开发用）|
+| `log [n]` | §十三 事务日志：最后 n 步（序号/触发/在线小时/**动手前的状态哈希**）|
+| `pending <hours>` | 往待结算的在线小时里注水（开发用；§J4 靠它不用等 2 小时）|
 | `diplomacy <nation> <action> [dev]` | §11.2 的六个外交动作 |
 | `letters` / `answer <id> accept\|refuse` | §9.4 的国书列表与回复 |
 

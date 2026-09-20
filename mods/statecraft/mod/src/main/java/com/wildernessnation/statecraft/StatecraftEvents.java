@@ -1,6 +1,7 @@
 package com.wildernessnation.statecraft;
 
 import com.mojang.brigadier.arguments.DoubleArgumentType;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
@@ -98,6 +99,9 @@ public final class StatecraftEvents {
     private static final String MARK_PENDING = "STATECRAFT_PENDING";
     private static final String MARK_LOG = "STATECRAFT_LOG";
 
+    /** "在情报站发起"的半径（§11.2 只说"在情报站发起"，【占位】取 16 格）。 */
+    private static final double STATION_RADIUS = 16.0;
+
     private StatecraftEvents() {}
 
     @SubscribeEvent
@@ -165,7 +169,11 @@ public final class StatecraftEvents {
                         .then(Commands.argument("hours", DoubleArgumentType.doubleArg(0.0))
                                 .executes(StatecraftEvents::pending)))
                 // ---- 阶段 3：事务日志（§十三）----
-                .then(Commands.literal("log").executes(ctx -> log(ctx, 8)))
+                .then(Commands.literal("log")
+                        .executes(ctx -> log(ctx, 8))
+                        .then(Commands.argument("n", IntegerArgumentType.integer(1, 64))
+                                .executes(ctx -> log(ctx,
+                                        IntegerArgumentType.getInteger(ctx, "n")))))
                 // ---- 阶段 3：国书（§9.4）的两条 ----
                 .then(Commands.literal("letters").executes(StatecraftEvents::letters))
                 .then(Commands.literal("answer")
@@ -268,6 +276,27 @@ public final class StatecraftEvents {
             return 0;
         }
         long nonce = state.seq() * 1000L + NONCE.incrementAndGet();
+        // ---- §11.2 的两道"在哪发起"的门槛（core 只管规则，位置是世界事实）----
+        // ① 宣战 / 朝贡必须**在情报站发起**（§11.2 的原话，全服公告）
+        if (action.get().needsStation()
+                && !BUILDINGS.nearBoundStation(source.getLevel(), source.getPosition().x,
+                        source.getPosition().y, source.getPosition().z,
+                        STATION_RADIUS, state)) {
+            source.sendSuccess(() -> Component.literal(String.format(
+                    "%s %s REFUSED 这个动作得在情报站发起（%s 格内，且文书要在位）",
+                    MARK_DIPLO, action.get(), Math.round(STATION_RADIUS))), false);
+            return 0;
+        }
+        // ② 其余四个动作至少要**有情报册**（§11.1 第一档），而且 declaration 得被时代解锁
+        IntelTier tier = currentTier(state);
+        boolean declaration = StatecraftData.eras().isUnlocked(IntelTier.UNLOCK_DECLARATION,
+                StatecraftData.eras().fallbackForUnknownId(state.eraId(), state.eraOrdinal()));
+        if (!tier.allows(action.get(), declaration)) {
+            source.sendSuccess(() -> Component.literal(String.format(
+                    "%s %s REFUSED 现在的情报能力做不了这个（档位 %s，declaration=%s）",
+                    MARK_DIPLO, action.get(), tier, declaration)), false);
+            return 0;
+        }
         DiplomacyMachine machine = new DiplomacyMachine(
                 DiplomacyConfig.defaults(), SettlementConfig.defaults());
         DiplomacyResult result = machine.apply(state,

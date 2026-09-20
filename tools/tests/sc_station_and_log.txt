@@ -1,0 +1,30 @@
+# §11.1/§11.2 的"在哪发起"门槛 + 事务日志（§十三）—— 真服务端验收
+#
+# §11.2 写着：**宣战与朝贡必须"在情报站发起"（全服公告）**，其余四个动作只要情报册。
+# 而"玩家此刻站在哪儿"是**世界事实** → 由 mod 层判；core 只管它那一半（时代解锁 + 动作前置）。
+#
+# 用 `/execute positioned <x y z>` 模拟"玩家站在某处"（RCON 没有玩家位置，这是唯一办法）。
+
+cmd: /statecraft info
+expect: STATECRAFT_INFO
+
+# 1) 站在**离情报站很远**的地方发起宣战 → 必须被拦下
+cmd: /execute positioned 0 100 0 run statecraft diplomacy n11 declare_war
+expect: STATECRAFT_DIPLO DECLARE_WAR REFUSED .*情报站
+
+# 2) 站到情报站旁边（锚点 103,151,103）→ 这次该走到 core 的判定
+#    （这时 n11 早已处于 WAR 或 TRUCE，所以 core 可能回"你们已经在打仗了"之类的拒绝 —— 都算通过）
+cmd: /execute positioned 103 151 103 run statecraft diplomacy n11 declare_war
+expect: STATECRAFT_DIPLO DECLARE_WAR (OK|REFUSED)
+
+# 3) 不需要情报站的动作（求和）在远处也能做 —— 但它仍然要"已接触"与前置
+cmd: /execute positioned 0 100 0 run statecraft diplomacy n11 peace 90
+expect: STATECRAFT_DIPLO SUE_FOR_PEACE
+
+# 4) 事务日志（§十三）：每一步结算都该留一条（序号 / 触发 / 在线小时 / 动手前的状态哈希）
+cmd: /statecraft advance 2.0
+expect: STATECRAFT_ADVANCE
+cmd: /statecraft log 4
+expect: STATECRAFT_LOG entries=\d+ stateSeq=\d+
+cmd: /statecraft log 4
+expect: STATECRAFT_LOG seq=\d+ trigger=PERIODIC hours=2\.00 inputHash=-?\d+

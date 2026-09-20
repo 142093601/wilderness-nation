@@ -1,5 +1,6 @@
 package com.wildernessnation.statecraft.world;
 
+import com.wildernessnation.statecraft.core.building.BuildingAbility;
 import com.wildernessnation.statecraft.core.building.BuildingDef;
 import com.wildernessnation.statecraft.core.building.IdempotencyConfig;
 import com.wildernessnation.statecraft.core.building.IdempotencyRules;
@@ -286,6 +287,47 @@ public final class BuildingService {
                 entity.getPersistentData().getString(TAG_BUILDING));
     }
 
+    /**
+     * 这座位置附近有没有**绑好村民的、带外交能力的情报站**（`NATIONS.md` §11.2）。
+     *
+     * <p>为什么这条判定在 mod 层：§11.2 写着宣战与朝贡**必须"在情报站发起"（全服公告）**，
+     * 而"玩家此刻站在哪儿"是**世界事实** —— core 没有位置读数，所以由这里判好、
+     * 再让 core 去判它那一半（时代解锁 `declaration` 与动作前置）。
+     *
+     * <p>判据是"锚点在半径内 **且** 村民绑着"：没绑村民的情报站是个空壳（§10.4 的停摆），
+     * 空壳不该能发起宣战。
+     */
+    public boolean nearBoundStation(ServerLevel level, double x, double y, double z,
+            double radius, WorldState state) {
+        for (Building b : state.buildings()) {
+            if (b.stalled()) {
+                continue;
+            }
+            Optional<BuildingDef> def = StatecraftData.buildings().byId(b.type());
+            if (def.isEmpty()
+                    || !def.get().hasAbilityAt(b.level(), BuildingAbility.DIPLOMACY)) {
+                continue;
+            }
+            BlockPos anchor = anchorPos(b);
+            if (anchor == null) {
+                continue;
+            }
+            double dx = anchor.getX() + 0.5 - x;
+            double dy = anchor.getY() + 0.5 - y;
+            double dz = anchor.getZ() + 0.5 - z;
+            if (Math.sqrt(dx * dx + dy * dy + dz * dz) <= radius) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 从世界里观察一座建筑（§10.3 的三件校验）。
+     *
+     * @deprecated 用 {@link #observeAndRebind}（它会顺手修掉过期的 UUID 缓存）。
+     */
+    @Deprecated
     public StaffObservation observe(ServerLevel level, BuildingDef def, Building building) {
         return observeAndRebind(level, def, building).observation();
     }
