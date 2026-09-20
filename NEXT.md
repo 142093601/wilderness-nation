@@ -26,7 +26,7 @@
 | **玩家行为 → 态度**（§十二） | ✅ 已做（放置方块那条）—— 真机实测把 n1 逼到态度 −43.5 并**自行宣战**；「击杀其单位」那条等 HYW↔国家的映射 |
 | **世界会不会自己清空** | ⚠️ **实测发现过**：原参数下末代只剩 1.0 国。已按实测表调 `warScoreStep`/`absorptionWarScore`，现在末代平均 6.2 国（`NATIONS.md` 八点五）|
 
-**当前 379 个 JUnit 全绿**（`gradlew :core:test`，命令见 §三）。
+**当前 380 个 JUnit 全绿**（`gradlew :core:test`，命令见 §三）。
 真机验收脚本（都在 `tools/tests/`）：`sc_scheduler` · `sc_contact_letters` · `sc_player_actions` ·
 `sc_player_side` · `sc_blueprint_gate` · `sc_duplicates` —— 全绿。
 
@@ -44,6 +44,7 @@
 | `build <pos>` | 报告一次「在 pos 放置方块」（§十二 的态度变化；真机无客户端时的观察口）|
 | `intel [track\|untrack\|deep <nation>]` | §11.1 三档：名单 / 追踪 / 深挖国史 |
 | `blueprint [buy <building>]` · `blueprint treasury <n>` · `blueprint reset` | §10.1 图纸授权：货架 / 买 / 喂钱 / 清账本（开发用）|
+| `upgrade <pos>` | §11.1 的"对锚点用升级件"：建筑升一档（要满足第 N 档的环境）|
 | `log [n]` | §十三 事务日志：最后 n 步（序号/触发/在线小时/**动手前的状态哈希**）|
 | `pending <hours>` | 往待结算的在线小时里注水（开发用；§J4 靠它不用等 2 小时）|
 | `diplomacy <nation> <action> [dev]` | §11.2 的六个外交动作 |
