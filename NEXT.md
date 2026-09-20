@@ -147,6 +147,7 @@
 | `tools/enable_cheats.py` | 翻转单机存档 `level.dat` 的 `allowCommands` |
 | `tools/pid_guard.py` + `pid_guard_selftest.py` | **自有 JVM 的登记/认领**（只杀自己启动的进程）+ 回归测试 |
 | `tools/i18n_pack.py` | 合成汉化资源包。**源文件在仓库根 `i18n/zh_cn/`**（2026-09-20 移出 `pack/`，原因见 `INCIDENTS.md`） |
+| **`tools/install_questbook.py`** | **把任务书装进客户端实例**（只碰 `config/ftbquests/`，绝不碰 saves/options；装完逐个比对字节）。`materialize_pack.py` 只管 jar，config 类数据用它 |
 | `tools/i18n_cover.py` / `i18n_verify.py` | 汉化真实缺口 / 产出独立验收 |
 | `tools/tests/sc_*.txt`、`statecraft_build.txt`、`m0_hyw.txt` | 真机验收脚本 |
 | `tools/COMPUTER-USE.md` | 电脑控制插件用法（**已上线**，22 个 `mcp__wincu__*` 工具） |
@@ -269,7 +270,9 @@ python tools\pid_guard_selftest.py --with-server     # 改过进程相关代码�
 - **HEAD = `origin/main`**（`git log --oneline -3` 看准确值）；本轮改动**尚未提交**（任务书工具链 + 四章）
 - **无后台任务在跑**；**没有**游戏/服务端在跑（验证用的服务端已退出）
 - **进程**：应无残留 JVM。若见到，先 `gradle --stop` / `tools/server_ctl.py --stop`，**不要按名字杀**
-- **实例侧**：任务书**还没进实例**（`materialize_pack.py` 没跑）；`resourcepacks/` 里只有社区汉化包
+- **实例侧**：**任务书已装进实例**（2026-09-20，`tools/install_questbook.py`，12 个文件）
+  → 位置 `<实例>/config/ftbquests/quests/`。**用户可以直接进游戏按 N 看**。
+  存档目录数安装前后一致（29），未碰 `saves/` · `options.txt` · `ftbquests-client.snbt`
 - **服务端侧（gitignore）**：`server/config/ftbquests/quests/` 有我拷进去验证用的数据；
   `server/world/` 是历史测试世界，未动
 - **实例里的测试残留**：`saves/scdev`（我拷的单机测试档）；`options.txt` 已还原成用户的
