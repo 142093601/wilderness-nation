@@ -100,4 +100,74 @@ class SettlementClockTest {
         assertFalse(p.due());
         assertTrue(SettlementClock.plan(0.0, 2.0, 3, PERIODIC, 0.0).due());
     }
+
+    // ==================================================================
+    // 提前推进时代（时代钥匙）
+    // ==================================================================
+    //
+    // 守的是一条**结构**纪律：加速**不新造旁路**，只把累计小时推到边界，
+    // 于是时代级结算（事件 / 国书 / 天下大势）仍由 ERA_ADVANCE 那条老路径完成。
+    // 下面最后一条用例把这件事钉死：推到边界之后，plan 必须判定 ERA_ADVANCE。
+
+    @Test
+    void acceleratingAsksForExactlyTheHoursLeftToTheBoundary() {
+        // 第一时代 24 小时，已经走了 10 小时 → 还差 14
+        assertEquals(14.0,
+                SettlementClock.hoursToBoundary(10.0, java.util.OptionalDouble.of(24.0)).getAsDouble(),
+                1e-9);
+    }
+
+    @Test
+    void alreadyAtOrPastTheBoundaryAsksForZeroNotNegative() {
+        assertEquals(0.0,
+                SettlementClock.hoursToBoundary(24.0, java.util.OptionalDouble.of(24.0)).getAsDouble(),
+                0.0);
+        assertEquals(0.0,
+                SettlementClock.hoursToBoundary(30.0, java.util.OptionalDouble.of(24.0)).getAsDouble(),
+                0.0);
+    }
+
+    /** 最后一个时代没有下一个边界 —— 加速必须被拒绝，而不是悄悄什么都不做。 */
+    @Test
+    void theLastEraCannotBeAccelerated() {
+        assertTrue(SettlementClock.hoursToBoundary(300.0, java.util.OptionalDouble.empty()).isEmpty());
+        assertTrue(SettlementClock.hoursToBoundary(0.0, null).isEmpty(), "null 视同没有边界");
+    }
+
+    @Test
+    void acceleratingRejectsNonsenseInputs() {
+        assertThrows(IllegalArgumentException.class,
+                () -> SettlementClock.hoursToBoundary(-1.0, java.util.OptionalDouble.of(24.0)));
+        assertThrows(IllegalArgumentException.class,
+                () -> SettlementClock.hoursToBoundary(Double.NaN, java.util.OptionalDouble.of(24.0)));
+        assertThrows(IllegalArgumentException.class,
+                () -> SettlementClock.hoursToBoundary(1.0,
+                        java.util.OptionalDouble.of(Double.POSITIVE_INFINITY)));
+    }
+
+    /**
+     * **这条是整块的支点**：把小时数推到 {@code hoursToBoundary} 给的值之后，
+     * 本来就存在的 {@link SettlementClock#plan} 必须判定为时代推进 ——
+     * 也就是说"拿到钥匙"和"时间到"走的是同一段代码，没有第二条路径。
+     */
+    @Test
+    void pushingToTheBoundaryMakesTheOrdinaryPlanDecideToAdvanceTheEra() {
+        double boundary = 24.0;
+        double elapsed = 3.0;
+        double pending = 2.5;                       // 已经攒了但还没结算的（≥ periodicHours 才会小结算）
+        double need = SettlementClock
+                .hoursToBoundary(elapsed, java.util.OptionalDouble.of(boundary)).getAsDouble();
+        assertEquals(21.0, need, 1e-9);             // 24 − 3
+
+        // 加速 = 把这 need 加进 pending（与 /statecraft pending 同一个口子）
+        SettlementClock.Plan accelerated =
+                SettlementClock.plan(elapsed, pending + need, 1, PERIODIC, boundary);
+        assertEquals(SettlementClock.Kind.ERA_ADVANCE, accelerated.kind(),
+                "推到边界后必须由**原有**的 plan 判定时代推进");
+        assertEquals(pending + need, accelerated.hoursDelta(), 1e-9);
+
+        // 对照：不加速时同一次 plan 只是周期小结算（证明上面那条不是因为别的原因）
+        assertEquals(SettlementClock.Kind.PERIODIC,
+                SettlementClock.plan(elapsed, pending, 1, PERIODIC, boundary).kind());
+    }
 }

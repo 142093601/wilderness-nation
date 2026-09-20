@@ -56,6 +56,18 @@ public final class SettlementScheduler {
     private long lastPollNanos = 0L;
     private double pendingHours = 0.0;
 
+    /**
+     * 有没有**外部**往里塞过小时数（`/statecraft accelerate` 与 `pending`）。
+     *
+     * <p>为什么要单独记它：§七 的核心规则是"**不在线不推进**"——但那条规则管的是
+     * **自然累积**（服务器空转不该烧掉全服预算）。而命令塞进来的小时数是**刻意的操作**：
+     * 「时代钥匙」本身就是玩家做完主线换来的东西，把它翻译成时间之后，再拿"你不在线"
+     * 去拒绝它，等于钥匙失效。所以这两种来源要分开算。
+     *
+     * <p>清空 pending 时它一并归零：它描述的只是"这批小时不是自然攒的"。
+     */
+    private boolean externallyInjected = false;
+
     /** 从存档里恢复调度器记到哪儿了（服务器启动时调一次）。 */
     public void restore(double pendingHours) {
         this.pendingHours = Math.max(0.0, pendingHours);
@@ -97,8 +109,11 @@ public final class SettlementScheduler {
         Era current = StatecraftData.eras().byId(state.eraId())
                 .orElseGet(() -> StatecraftData.eras().byOrdinal(state.eraOrdinal()));
         OptionalDouble boundary = StatecraftData.eras().boundaryAfter(current);
+        // 自然累积要"有人在线"；**命令塞进来的小时数不看这条**（否则钥匙在空服上等于废纸）。
+        // 详见 externallyInjected 的说明。
+        int playersForPlan = externallyInjected ? Math.max(1, players) : players;
         SettlementClock.Plan plan = SettlementClock.plan(
-                state.elapsedOnlineHours(), pendingHours, players, cfg.periodicHours(),
+                state.elapsedOnlineHours(), pendingHours, playersForPlan, cfg.periodicHours(),
                 boundary.orElse(0.0));
         if (!plan.due()) {
             return false;
@@ -118,6 +133,7 @@ public final class SettlementScheduler {
         WorldState after = engine.settle(state, input);
 
         pendingHours = 0.0;
+        externallyInjected = false;
         data.setPendingHours(0.0);
         data.set(after);
 
@@ -164,6 +180,17 @@ public final class SettlementScheduler {
     /** 给"立刻结算一次"用（命令与脚本）：把待结算的小时数直接喂进来。 */
     public void injectPendingHours(double hours) {
         pendingHours += Math.max(0.0, hours);
+        externallyInjected = true;
+    }
+
+    /**
+     * 与 {@link #injectPendingHours} 同义，但**语义上明确是"刻意注入"**（时代钥匙用它）。
+     *
+     * <p>单列一个方法是为了让调用点自解释：`accelerate` 用这条，
+     * 于是"拿到钥匙 → 推时间 → 时代推进"这条链读起来是直的。
+     */
+    public void injectForcedHours(double hours) {
+        injectPendingHours(hours);
     }
 
     /** 服务器停时把当前进度写回存档（免得丢最多 2 小时）。 */

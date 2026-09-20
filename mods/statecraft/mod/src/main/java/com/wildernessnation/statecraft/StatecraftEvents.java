@@ -35,6 +35,7 @@ import com.wildernessnation.statecraft.core.model.Building;
 import com.wildernessnation.statecraft.core.model.Event;
 import com.wildernessnation.statecraft.core.model.Nation;
 import com.wildernessnation.statecraft.core.model.WorldState;
+import com.wildernessnation.statecraft.core.settle.SettlementClock;
 import com.wildernessnation.statecraft.core.settle.SettlementConfig;
 import com.wildernessnation.statecraft.core.settle.SettlementEngine;
 import com.wildernessnation.statecraft.core.settle.SettlementInput;
@@ -98,6 +99,8 @@ public final class StatecraftEvents {
     private static final String MARK_INTEL = "STATECRAFT_INTEL";
     private static final String MARK_BLUEPRINT = "STATECRAFT_BLUEPRINT";
     private static final String MARK_PENDING = "STATECRAFT_PENDING";
+    /** 时代钥匙：`/statecraft accelerate` 的自检标记（自动化脚本按它断言）。 */
+    private static final String MARK_ACCELERATE = "STATECRAFT_ACCELERATE";
     private static final String MARK_LOG = "STATECRAFT_LOG";
     private static final String MARK_UPGRADE = "STATECRAFT_UPGRADE";
 
@@ -170,6 +173,11 @@ public final class StatecraftEvents {
                         .requires(source -> source.hasPermission(2))
                         .then(Commands.argument("hours", DoubleArgumentType.doubleArg(0.0))
                                 .executes(StatecraftEvents::pending)))
+                // **时代钥匙**（任务书的 command 奖励调它）：把时间推到当前时代的结束点，
+                // 于是"提前推进"和"时间到"走的是**同一段代码**（见 SettlementClock.hoursToBoundary）
+                .then(Commands.literal("accelerate")
+                        .requires(source -> source.hasPermission(2))
+                        .executes(StatecraftEvents::accelerate))
                 // ---- 阶段 3：事务日志（§十三）----
                 .then(Commands.literal("log")
                         .executes(ctx -> log(ctx, 8))
@@ -675,6 +683,57 @@ public final class StatecraftEvents {
         source.sendSuccess(() -> Component.literal(String.format(
                 "%s +%.2f（待结算现在 %.2f 小时；下一拍就会按 §七 结算）",
                 MARK_PENDING, hours, SCHEDULER.pendingHours())), true);
+        return 1;
+    }
+
+    /**
+     * `/statecraft accelerate`：**提前推进时代**（§七 的"时间到或主动加速，取先到者"）。
+     *
+     * <p>这是任务书里那把「时代钥匙」的落点：主线做完 → FTB Quests 发一个 {@code command}
+     * 奖励调它 → 时代提前进入下一个。
+     *
+     * <h2>它**不**另造一条推进路径</h2>
+     *
+     * <p>做法是"把累计在线小时推到当前时代的结束点"，然后由本来就存在的
+     * {@link SettlementScheduler} 下一拍判定 {@code ERA_ADVANCE}。于是：
+     *
+     * <ul>
+     *   <li><b>时间到自动推进那条老路径一个字没改</b> —— 它和加速走的是同一段代码；</li>
+     *   <li>时代推进该做的事（时代级结算、事件、国书、"天下大势"播报）**一件都不会少**；</li>
+     *   <li>"同 seed 同输入必得同结果"仍然成立：加速只改 {@code elapsedOnlineHours}，不碰随机性。</li>
+     * </ul>
+     *
+     * <p>已经是最后一个时代时**拒绝**（没有下一个时代可推），而不是悄悄什么都不做。
+     */
+    private static int accelerate(CommandContext<CommandSourceStack> ctx) {
+        CommandSourceStack source = ctx.getSource();
+        StatecraftSavedData data =
+                StatecraftSavedData.get(source.getServer().overworld());
+        WorldState state = data.state();
+        if (state == null) {
+            source.sendSuccess(() -> Component.literal(
+                    MARK_ACCELERATE + " EMPTY（还没建库，用 /statecraft regen）"), false);
+            return 0;
+        }
+        var eras = StatecraftData.eras();
+        Era current = eras.byId(state.eraId())
+                .orElseGet(() -> eras.byOrdinal(state.eraOrdinal()));
+        java.util.OptionalDouble need = SettlementClock.hoursToBoundary(
+                state.elapsedOnlineHours(), eras.boundaryAfter(current));
+        if (need.isEmpty()) {
+            source.sendSuccess(() -> Component.literal(String.format(
+                    "%s REFUSED LAST_ERA（%s 已经是最后一个时代，没有下一个可推进）",
+                    MARK_ACCELERATE, current.id())), false);
+            return 0;
+        }
+        // need 为 0 时（恰好站在边界上）不能什么也不做：plan 要求 pending > 0 才会推进。
+        double inject = Math.max(need.getAsDouble(), 1e-9);
+        SCHEDULER.injectForcedHours(inject);
+        source.sendSuccess(() -> Component.literal(String.format(
+                "%s OK era=%s 推进 %.3f 小时至边界（累计 %.3f；下一拍结算并按 §七 推进时代；"
+                        + "此路径不看是否有人在线的自然累积，因为钥匙是刻意操作）",
+                MARK_ACCELERATE, current.id(), inject,
+                state.elapsedOnlineHours() + SCHEDULER.pendingHours())), true);
         return 1;
     }
 

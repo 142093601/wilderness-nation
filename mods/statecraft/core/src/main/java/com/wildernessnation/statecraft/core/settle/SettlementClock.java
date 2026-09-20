@@ -113,6 +113,42 @@ public final class SettlementClock {
         return seconds / 3600.0;
     }
 
+    /**
+     * **提前推进时代**要用的小时数：把累计在线小时推到这个数，{@link #plan} 下一拍就会判定
+     * {@link Kind#ERA_ADVANCE}。
+     *
+     * <p>这 {@code = 当前时代的结束点 − 已经累计的小时数}（clamp 到 0）。
+     *
+     * <h2>为什么算"到边界还差多少"，而不是新加一种 trigger</h2>
+     *
+     * <p>时代推进不只换一个 eraId —— 它还要跑一次**时代级结算**（打事件、发国书、念"天下大势"），
+     * 那些都在 {@code SettlementEngine} 里、由 {@code trigger == ERA_ADVANCE} 驱动。
+     * 若为了"提前推进"另造一条旁路，就会出现"时代变了但没结算"的世界。
+     * 所以这里只回答"时间还差多少"，推进本身**仍然由 {@link #plan} 与引擎按原路完成**：
+     * <ul>
+     *   <li>时间到 → 自动推进（老路径，一个字没改）；</li>
+     *   <li>拿到时代钥匙 → 把小时数推到边界 → 走的是**同一段代码**。</li>
+     * </ul>
+     * 于是"同 seed 同输入必得同结果"仍然成立：加速改变的只是 elapsedOnlineHours，不是随机性。
+     *
+     * @param elapsedOnlineHours 已累计的在线小时（{@code WorldState.elapsedOnlineHours}）
+     * @param currentBoundary    当前时代的结束点（{@code EraTable.boundaryAfter(current)}）；
+     *                           <b>空 = 已经是最后一个时代，没有可推进的下一个时代</b>
+     * @return 要推到的小时数；空表示**没有下一个时代**（调用方应当拒绝这次加速）
+     */
+    public static java.util.OptionalDouble hoursToBoundary(
+            double elapsedOnlineHours, java.util.OptionalDouble currentBoundary) {
+        requireHours("elapsedOnlineHours", elapsedOnlineHours);
+        if (currentBoundary == null || currentBoundary.isEmpty()) {
+            return java.util.OptionalDouble.empty();
+        }
+        double boundary = currentBoundary.getAsDouble();
+        if (!Double.isFinite(boundary)) {
+            throw new IllegalArgumentException("boundary 必须是有限数：" + boundary);
+        }
+        return java.util.OptionalDouble.of(Math.max(0.0, boundary - elapsedOnlineHours));
+    }
+
     private static void requireHours(String name, double v) {
         if (!(v >= 0.0) || !Double.isFinite(v)) {
             throw new IllegalArgumentException(name + " 必须 >= 0 且有限：" + v);

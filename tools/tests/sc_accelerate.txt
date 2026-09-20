@@ -1,0 +1,36 @@
+# 时代钥匙（`/statecraft accelerate`）—— 在真服务端上验
+#
+# 这条守的是"提前推进时代"必须走**和'时间到'完全相同的那段代码**：
+#   accelerate 只把累计在线小时推到当前时代的结束点，推进本身交给原有的调度器 +
+#   SettlementEngine 的 ERA_ADVANCE 分支（时代级结算 / 事件 / 国书 / 天下大势一应俱全）。
+#
+# 判据（顺序即因果）：
+#   1. 先记下加速前的 era 与 hours；
+#   2. accelerate 必须回 OK（不是 REFUSED）；
+#   3. 等一拍（调度器 1 秒问一次）→ 日志里出现 STATECRAFT_SETTLE kind=ERA_ADVANCE；
+#   4. 时代必须真的变了。
+#
+# 注意：这条**不要求有人在线** —— "不在线不推进"管的是自然累积，
+# 而钥匙是刻意操作（见 SettlementScheduler.externallyInjected 的说明）。
+# 所以它在专用服务端上（0 人在线）也能验收。
+
+cmd: /statecraft info
+expect: STATECRAFT_INFO
+
+# 加速：把时间推到当前时代的结束点
+cmd: /statecraft accelerate
+expect: STATECRAFT_ACCELERATE OK
+
+# 调度器每秒问一次，等它跑完那一拍
+wait: 3
+
+# 时代推进的落地证据（哈希算的是动手之前的状态，这条证明结算真的跑了）
+cmd: /statecraft log 4
+expect: STATECRAFT_LOG
+
+cmd: /statecraft info
+expect: STATECRAFT_INFO
+
+# 累计小时必须已经越过刚才那个时代的边界（第一个时代 = 落地 24 小时）
+cmd: /statecraft info
+expect: hours=\d+\.\d+
