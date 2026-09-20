@@ -112,6 +112,9 @@ public final class SettlementScheduler {
         SettlementInput input = plan.kind() == SettlementClock.Kind.ERA_ADVANCE
                 ? SettlementInput.eraAdvance(plan.hoursDelta())
                 : new SettlementInput(SettlementTrigger.PERIODIC, plan.hoursDelta());
+        // §十三：**先记账再动手**。日志里的哈希算的是"动手之前"的状态，
+        // 写反了就会记住一个已经算过的状态、日志立刻报废。
+        data.setLog(data.log().append(state, input));
         WorldState after = engine.settle(state, input);
 
         pendingHours = 0.0;

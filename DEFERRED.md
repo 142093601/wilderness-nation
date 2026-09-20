@@ -109,6 +109,19 @@
 即：**区块加载了、盘上也有，就是没进世界**。已排除 `neruina.dat`
 （`tickingEntries` 是空数组 —— 它没有禁掉任何实体）。
 
+**2026-09-20 晚：客户端这条路实测到的两个硬约束**（都是环境，不是代码）
+
+| 观察 | 数值 |
+|---|---|
+| 客户端从启动到「Loaded 16472 recipes」 | **约 18 分钟**（232 个 mod；Exposure 等几个 mod 还会去拉远程名单，本机连不上、每次等到连接超时）|
+| 进世界那一刻的**可用内存** | 掉到 **1.3G**（客户端 `-Xmx8G` + `node` 3G + 系统）|
+| 把等待从 420s 放到 900s | 仍然超时（当时还在重载资源包）|
+| 现在（`WORLD_READY_SECONDS=1800` + `-Xmx6G`）| 走到 recipe 阶段 |
+
+**结论**：跑客户端批次时，**必须先把内存腾出来**（`NEEDS-YOU.md` 第一节 有清单），
+而且**要按半小时算**，不要按五分钟算。工具那侧的等待已经改成 1800s / 600s
+（`tools/game_agent.py` 里有实测注释说明为什么）。
+
 **最可能的原因**：这台验证服务端**从头到尾没有一个玩家在线**。
 1.17 之后实体存在 `<world>/entities/*.mca`，而实体是在区块进入 **entity-ticking**
 状态时才装进世界的 —— 那要求区块处在某个玩家的实体距离内。
@@ -124,7 +137,14 @@ force-load 只保证区块被加载、方块在跑，**不等于实体被装回�
       判据依旧是重启后那一行 `execute if entity @e` 的 `Test passed` / `Test failed`，
       而 `mca_probe.py` 可以随时回答"盘上到底有没有"。
 - [ ] **J3 修复后的回归**：连续重启两次，`/statecraft buildings` 稳定 `healthy=true` 且只有 1 个村民。
-- [ ] **J4 结算调度的"有人在线的"分支**：现在只实测了"0 人在线 → 一点都不推进"。
+- [ ] **J4 结算调度的「有人在线的」分支** —— **已经不需要真等 2 小时**：
+      `/statecraft pending <hours>` 往待结算的在线小时里注水，调度器下一拍就会走
+      **和真实在线完全相同**的代码路径（只是时间不是自然流逝来的）。
+      判据：日志出现 `STATECRAFT_SETTLE kind=PERIODIC`。
+      另有 `tools/enable_cheats.py`：服务端世界拷成单机存档后 `allowCommands=0`，
+      单人模式没有命令权限 → 必须先打开它，否则脚本会报一堆「未知命令」。
+      单机验收脚本：`tools/tests/sc_singleplayer.txt`（同时验 §J 与 §J4）。
+- [ ] ~~J4 旧描述~~：现在只实测了"0 人在线 → 一点都不推进"。
       带一个客户端连进来站几分钟，判据：日志出现 `STATECRAFT_SETTLE kind=PERIODIC`
       （每 2 小时累计在线）或 `kind=ERA_ADVANCE`（跨时代），且 `info` 里的 `hours` 真的在涨。
       为了不用真等 2 小时：进服前先把 `statecraft.dat` 里的 `pendingHours` 手改成 1.99

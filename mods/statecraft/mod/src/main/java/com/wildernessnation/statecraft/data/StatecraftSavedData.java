@@ -4,6 +4,8 @@ import com.wildernessnation.statecraft.core.model.WorldState;
 import com.wildernessnation.statecraft.core.persist.LoadOutcome;
 import com.wildernessnation.statecraft.core.persist.StateCodec;
 import com.wildernessnation.statecraft.core.persist.StateNode;
+import com.wildernessnation.statecraft.core.settle.SettlementLog;
+import com.wildernessnation.statecraft.core.settle.SettlementLogEntry;
 import com.wildernessnation.statecraft.world.PlayerLedger;
 import java.util.List;
 import net.minecraft.core.HolderLookup;
@@ -47,6 +49,15 @@ public final class StatecraftSavedData extends SavedData {
     private static final String KEY_LEDGER_TREASURY = "treasury";
     private static final String KEY_LEDGER_DEEP_SEQ = "lastDeepDiveSeq";
 
+    /**
+     * 结算事务日志（`NATIONS.md` §十三：结算序号 + 输入哈希 → 崩溃后能重放）。
+     *
+     * <p>为什么它**不在** {@link WorldState} 里（core 那边也是这么写的）：它记的是
+     * "操作历史"而不是"当前状态"，混进状态会让每次存档都跟着变长。所以它是同一个 `.dat`
+     * 里的另一个字段，core 只管它的内容与重放。
+     */
+    private static final String KEY_LOG = "log";
+
     private static final SavedData.Factory<StatecraftSavedData> FACTORY =
             new SavedData.Factory<>(StatecraftSavedData::new, StatecraftSavedData::load, null);
 
@@ -54,6 +65,7 @@ public final class StatecraftSavedData extends SavedData {
     private List<String> loadWarnings = List.of();
     private double pendingHours;
     private PlayerLedger ledger = PlayerLedger.empty();
+    private SettlementLog log = SettlementLog.empty();
 
     public static StatecraftSavedData get(ServerLevel level) {
         return level.getDataStorage().computeIfAbsent(FACTORY, FILE_ID);
@@ -95,6 +107,16 @@ public final class StatecraftSavedData extends SavedData {
         setDirty();
     }
 
+    /** 结算事务日志（永不返回 null）。 */
+    public SettlementLog log() {
+        return log;
+    }
+
+    public void setLog(SettlementLog v) {
+        this.log = v == null ? SettlementLog.empty() : v;
+        setDirty();
+    }
+
     @Override
     public CompoundTag save(CompoundTag tag, HolderLookup.Provider registries) {
         if (state != null) {
@@ -108,6 +130,7 @@ public final class StatecraftSavedData extends SavedData {
         ledgerTag.putDouble(KEY_LEDGER_TREASURY, ledger.treasury());
         ledgerTag.putLong(KEY_LEDGER_DEEP_SEQ, ledger.lastDeepDiveSeq());
         tag.put(KEY_LEDGER, ledgerTag);
+        tag.put(KEY_LOG, NodeNbtCodec.toNbt(log.toNode()));
         return tag;
     }
 
@@ -147,7 +170,36 @@ public final class StatecraftSavedData extends SavedData {
                 StatecraftData.migrator().load(NodeNbtCodec.fromNbt(stateTag), StatecraftData.eras());
         data.loadWarnings = outcome.warnings();
         data.state = outcome.state().orElse(null);
+
+        // 事务日志：读回来之后**必须和状态对齐**。
+        // 崩溃可能发生在"日志已写、状态还没写"之间，于是日志会比状态快一步；
+        // 那种情况下的正确做法不是重放（没有可信的基线），而是**把超前的那几步剪掉**
+        // —— 它记的本来就是"即将做的事"，没做成就不该留在日志里。
+        Tag logTag = tag.get(KEY_LOG);
+        if (logTag instanceof CompoundTag logCompound && data.state != null) {
+            data.log = SettlementLog.fromNode(NodeNbtCodec.fromNbt(logCompound));
+            long stateSeq = data.state.seq();
+            SettlementLog trimmed = trimTo(data.log, stateSeq);
+            if (trimmed.size() != data.log.size()) {
+                data.loadWarnings = new java.util.ArrayList<>(data.loadWarnings);
+                data.loadWarnings.add("事务日志比状态超前（状态在第 " + stateSeq + " 次结算，"
+                        + "日志记到第 " + data.log.lastEntry().seq() + " 步）→ 已剪掉超前的 "
+                        + (data.log.size() - trimmed.size()) + " 步");
+                data.log = trimmed;
+            }
+        }
         return data;
+    }
+
+    /** 只留结算序号不超过 {@code seq} 的日志步（日志是按序号严格递增的，所以可以顺序筛）。 */
+    private static SettlementLog trimTo(SettlementLog log, long seq) {
+        List<SettlementLogEntry> kept = new java.util.ArrayList<>();
+        for (SettlementLogEntry e : log.entries()) {
+            if (e.seq() <= seq) {
+                kept.add(e);
+            }
+        }
+        return new SettlementLog(kept);
     }
 
     /** 把当前状态原样走一遍 NBT 往返（用于游戏内自检，见 {@code /statecraft roundtrip}）。 */

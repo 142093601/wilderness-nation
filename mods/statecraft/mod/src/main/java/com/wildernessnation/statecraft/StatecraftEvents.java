@@ -36,6 +36,8 @@ import com.wildernessnation.statecraft.core.model.WorldState;
 import com.wildernessnation.statecraft.core.settle.SettlementConfig;
 import com.wildernessnation.statecraft.core.settle.SettlementEngine;
 import com.wildernessnation.statecraft.core.settle.SettlementInput;
+import com.wildernessnation.statecraft.core.settle.SettlementLog;
+import com.wildernessnation.statecraft.core.settle.SettlementLogEntry;
 import com.wildernessnation.statecraft.core.settle.SettlementTrigger;
 import com.wildernessnation.statecraft.core.staff.StaffBinding;
 import com.wildernessnation.statecraft.data.StatecraftData;
@@ -94,6 +96,7 @@ public final class StatecraftEvents {
     private static final String MARK_INTEL = "STATECRAFT_INTEL";
     private static final String MARK_BLUEPRINT = "STATECRAFT_BLUEPRINT";
     private static final String MARK_PENDING = "STATECRAFT_PENDING";
+    private static final String MARK_LOG = "STATECRAFT_LOG";
 
     private StatecraftEvents() {}
 
@@ -161,6 +164,8 @@ public final class StatecraftEvents {
                         .requires(source -> source.hasPermission(2))
                         .then(Commands.argument("hours", DoubleArgumentType.doubleArg(0.0))
                                 .executes(StatecraftEvents::pending)))
+                // ---- 阶段 3：事务日志（§十三）----
+                .then(Commands.literal("log").executes(ctx -> log(ctx, 8)))
                 // ---- 阶段 3：国书（§9.4）的两条 ----
                 .then(Commands.literal("letters").executes(StatecraftEvents::letters))
                 .then(Commands.literal("answer")
@@ -512,8 +517,10 @@ public final class StatecraftEvents {
         SettlementEngine engine = new SettlementEngine(
                 SettlementConfig.defaults(), StatecraftData.config(), StatecraftData.eras(),
                 letterMachine(), StatecraftData.letterDefaults());
-        WorldState after = engine.settle(state,
-                new SettlementInput(SettlementTrigger.PERIODIC, hours));
+        SettlementInput input = new SettlementInput(SettlementTrigger.PERIODIC, hours);
+        // §十三：手工推进也要记账（和调度器同一条纪律：先记账再动手）
+        data.setLog(data.log().append(state, input));
+        WorldState after = engine.settle(state, input);
         after = revealByStation(after);
         data.set(after);
         long open = LetterMachine.openLetters(after).size();
@@ -772,6 +779,32 @@ public final class StatecraftEvents {
         source.sendSuccess(() -> Component.literal(String.format("%s buy %s %s",
                 MARK_BLUEPRINT, verdict.allowed() ? "OK" : "REFUSED", verdict.reason())), true);
         return verdict.allowed() ? 1 : 0;
+    }
+
+    /**
+     * `/statecraft log [n]`：看结算事务日志的最后 n 步（§十三）。
+     *
+     * <p>为什么值得有一条命令：这份日志是**"从上一个完整结算重放"的唯一凭据**，
+     * 而它平时完全不可见 —— 出问题时才有用。所以把它打出来（结算序号 / 触发 / 在线小时 /
+     * **动手之前的状态哈希**），配合 core 的确定性用例就能核对"这段历史是不是重放得出来"。
+     */
+    private static int log(CommandContext<CommandSourceStack> ctx, int limit) {
+        CommandSourceStack source = ctx.getSource();
+        StatecraftSavedData data = data(source);
+        SettlementLog log = data.log();
+        source.sendSuccess(() -> Component.literal(String.format(
+                "%s entries=%d stateSeq=%d lastEntrySeq=%s",
+                MARK_LOG, log.size(), data.state() == null ? -1 : data.state().seq(),
+                log.isEmpty() ? "-" : String.valueOf(log.lastEntry().seq()))), false);
+        List<SettlementLogEntry> entries = log.entries();
+        int from = Math.max(0, entries.size() - limit);
+        for (int i = from; i < entries.size(); i++) {
+            SettlementLogEntry e = entries.get(i);
+            source.sendSuccess(() -> Component.literal(String.format(
+                    "  %s seq=%d trigger=%s hours=%.2f inputHash=%d",
+                    MARK_LOG, e.seq(), e.trigger(), e.hoursDelta(), e.inputHash())), false);
+        }
+        return log.size();
     }
 
     /** `/statecraft treasury <amount>`：设置玩家国库（计划 5 的账本还没接，先用命令喂）。 */
