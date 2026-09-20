@@ -20,6 +20,7 @@ import com.wildernessnation.statecraft.core.diplomacy.DiplomacyResult;
 import com.wildernessnation.statecraft.core.diplomacy.PlayerActions;
 import com.wildernessnation.statecraft.core.env.EnvironmentSnapshot;
 import com.wildernessnation.statecraft.core.env.EnvironmentVerdict;
+import com.wildernessnation.statecraft.core.era.Era;
 import com.wildernessnation.statecraft.core.gen.WorldGenerator;
 import com.wildernessnation.statecraft.core.intel.IntelBook;
 import com.wildernessnation.statecraft.core.intel.IntelContact;
@@ -98,6 +99,7 @@ public final class StatecraftEvents {
     private static final String MARK_BLUEPRINT = "STATECRAFT_BLUEPRINT";
     private static final String MARK_PENDING = "STATECRAFT_PENDING";
     private static final String MARK_LOG = "STATECRAFT_LOG";
+    private static final String MARK_UPGRADE = "STATECRAFT_UPGRADE";
 
     /** "在情报站发起"的半径（§11.2 只说"在情报站发起"，【占位】取 16 格）。 */
     private static final double STATION_RADIUS = 16.0;
@@ -193,6 +195,11 @@ public final class StatecraftEvents {
                         .requires(source -> source.hasPermission(2))
                         .then(Commands.argument("pos", BlockPosArgument.blockPos())
                                 .executes(StatecraftEvents::build)))
+                // ---- 阶段 3：升级建筑（§11.1 的"对锚点用升级件"）----
+                .then(Commands.literal("upgrade")
+                        .requires(source -> source.hasPermission(2))
+                        .then(Commands.argument("pos", BlockPosArgument.blockPos())
+                                .executes(StatecraftEvents::upgrade)))
                 // ---- 阶段 3：情报册（§11.1）----
                 .then(Commands.literal("intel")
                         .executes(ctx -> intel(ctx, "list", ""))
@@ -763,10 +770,36 @@ public final class StatecraftEvents {
         return 1;
     }
 
-    /** 当前的情报档位（§11.1：按 `eras.json` 的 unlocks 判定）。 */
+    /**
+     * 当前的情报档位（§11.1）。
+     *
+     * <p>**两个来源各管一段**（2026-09-20 更正，见 `IntelTier.tierFor` 的注释）：
+     * 第一档来自**时代解锁**（情报册），第二/三档来自**建筑**（绑好的情报站 / 二级情报站）。
+     * 判"有没有站"要求**村民绑着**：空壳站不是情报能力（§10.4 停摆）。
+     */
     private static IntelTier currentTier(WorldState state) {
-        return IntelTier.tierFor(StatecraftData.eras(),
-                StatecraftData.eras().fallbackForUnknownId(state.eraId(), state.eraOrdinal()));
+        Era current = StatecraftData.eras()
+                .fallbackForUnknownId(state.eraId(), state.eraOrdinal());
+        IntelTier fromEra = IntelTier.tierFor(StatecraftData.eras(), current);
+        boolean hasStation = false;
+        boolean upgraded = false;
+        for (Building b : state.buildings()) {
+            if (b.stalled()) {
+                continue;
+            }
+            Optional<BuildingDef> def = StatecraftData.buildings().byId(b.type());
+            if (def.isEmpty()
+                    || !def.get().hasAbilityAt(b.level(), BuildingAbility.DIPLOMACY)) {
+                continue;
+            }
+            hasStation = true;
+            if (def.get().hasAbilityAt(b.level(), BuildingAbility.TRACK_NATIONS)) {
+                upgraded = true;
+            }
+        }
+        boolean upgradeUnlocked = StatecraftData.eras()
+                .isUnlocked(IntelTier.UNLOCK_UPGRADE, current);
+        return fromEra.promotedBy(hasStation, upgraded, upgradeUnlocked);
     }
 
     /**
@@ -859,6 +892,43 @@ public final class StatecraftEvents {
         data.setLedger(PlayerLedger.empty());
         source.sendSuccess(() -> Component.literal(
                 MARK_BLUEPRINT + " reset OK " + data.ledger().describe()), true);
+        return 1;
+    }
+
+    /**
+     * `/statecraft upgrade <pos>`：对锚点用升级件（§11.1 第三档的入口）。
+     *
+     * <p>为什么必须有这条入口：§11.1 的第三档（追踪 / 看战争与同盟 / 每结算深挖 1 国）
+     * 全挂在"建筑等级 ≥ 2"上，而**没有任何地方能把等级升上去** —— 那三项就是死代码。
+     * 真正的形态应该是"手上有个升级件、对着锚点用"（§11.1 的原话），
+     * 升级件本身是内容（等图纸那一套做完再加），这里先把**规则与状态**接通。
+     */
+    private static int upgrade(CommandContext<CommandSourceStack> ctx) {
+        CommandSourceStack source = ctx.getSource();
+        ServerLevel level = source.getLevel();
+        StatecraftSavedData data = data(source);
+        WorldState state = data.state();
+        if (state == null) {
+            source.sendSuccess(() -> Component.literal(MARK_UPGRADE + " EMPTY"), false);
+            return 0;
+        }
+        BlockPos pos = BlockPosArgument.getBlockPos(ctx, "pos");
+        Optional<Building> found = BuildingService.findAt(state, level, pos);
+        if (found.isEmpty()) {
+            source.sendSuccess(() -> Component.literal(
+                    MARK_UPGRADE + " NOT_FOUND 这里没有登记过的建筑（先 /statecraft anchor）"),
+                    false);
+            return 0;
+        }
+        BuildingService.UpgradeResult result = BUILDINGS.upgrade(level, state, found.get());
+        if (!result.ok()) {
+            source.sendSuccess(() -> Component.literal(
+                    MARK_UPGRADE + " REFUSED " + result.message()), false);
+            return 0;
+        }
+        data.set(state.withBuilding(result.upgraded()));
+        source.sendSuccess(() -> Component.literal(String.format("%s OK %s %s",
+                MARK_UPGRADE, result.upgraded().id(), result.message())), true);
         return 1;
     }
 

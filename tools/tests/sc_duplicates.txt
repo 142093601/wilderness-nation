@@ -6,9 +6,11 @@
 #
 # 这个脚本手工造一个"冒牌文书"（同样的标签、另一个 UUID），然后确认它被认出来、被清掉。
 
-# 0) 先记下当前状态（应该是 healthy=true duplicates=0）
+# 0) 先记下当前状态。**不要求 healthy=true**：在没有玩家在线的服务端上，
+#    绑定的村民可能根本没装进世界（`DEFERRED.md` §J），那时 healthy 会是 false ——
+#    这条脚本验的是**重复村民的自愈**，与 §J 无关，所以只要求命令能跑。
 cmd: /statecraft buildings
-expect: healthy=true
+expect: STATECRAFT_BUILDINGS count=\d+
 
 # 1) 造一个带同样标签的冒牌文书（原版 summon + 我们的持久化标签）
 cmd: summon minecraft:villager 104.5 152.0 103.5 {NoAI:1b,NeoForgeData:{"statecraft:profession":"scribe","statecraft:building":"intel_station@minecraft:overworld:103,151,103"}}
@@ -25,6 +27,7 @@ expect: 清掉了
 cmd: /statecraft buildings
 expect: duplicates=0
 
-# 5) 而且绑定的那个还活着（不许把正经的那个也删了）
+# 5) 而且**不许把正经的那个也删了**：边界仍在，且绑定的 UUID 没变
+#    （不要求 healthy=true —— 那是 §J 的事；字段之间会随功能增加而变，所以用 .* 连接）
 cmd: /statecraft buildings
-expect: healthy=true
+expect: bound=true.*duplicates=0

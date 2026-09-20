@@ -288,6 +288,58 @@ public final class BuildingService {
     }
 
     /**
+     * 升级一座建筑（`NATIONS.md` §11.1 的"对锚点用升级件"）。
+     *
+     * <p>判据全在 core：`BuildingDef.canUpgradeFrom(level)`（还有没有更高档）与
+     * `tierForLevel(level+1)` 的环境要求（§10.5 的阈值）。这里只负责读世界、写状态。
+     *
+     * @return 升级结果：成了就给新建筑；没成要给**为什么**（玩家得知道差什么）
+     */
+    public UpgradeResult upgrade(ServerLevel level, WorldState state, Building building) {
+        Optional<BuildingDef> defOpt = StatecraftData.buildings().byId(building.type());
+        if (defOpt.isEmpty()) {
+            return new UpgradeResult(null, "buildings.json 里没有这座建筑：" + building.type());
+        }
+        BuildingDef def = defOpt.get();
+        if (!def.canUpgradeFrom(building.level())) {
+            return new UpgradeResult(null, "「" + def.name() + "」已经是最高档（"
+                    + building.level() + "/" + def.tierCount() + "）");
+        }
+        BlockPos anchor = anchorPos(building);
+        if (anchor == null || !level.isLoaded(anchor)) {
+            return new UpgradeResult(null, "锚点所在的区块没加载，读不到环境");
+        }
+        if (!def.anchorBlock().equals(BuiltInRegistries.BLOCK.getKey(
+                level.getBlockState(anchor).getBlock()).toString())) {
+            return new UpgradeResult(null, "锚点方块没了（建筑算被拆，§10.4）");
+        }
+        int next = building.level() + 1;
+        // §10.5：**升级也要满足更高那档的环境**（不然"升级件"就变成了无视条件的开关）
+        var unmet = def.tierForLevel(next).unmet(EnvScanner.scan(level, anchor, claims));
+        if (!unmet.isEmpty()) {
+            return new UpgradeResult(null, "还达不到第 " + next + " 档的环境："
+                    + String.join("；", unmet));
+        }
+        Building upgraded = building.withLevel(next);
+        return new UpgradeResult(upgraded, "「" + def.name() + "」升到第 " + next + " 档（"
+                + def.tierForLevel(next).tierId() + "）");
+    }
+
+    /** 升级结果：成功时给出新建筑，失败时给出**原因**（玩家要看到差什么）。 */
+    public record UpgradeResult(Building upgraded, String message) {
+
+        public UpgradeResult {
+            if (message == null || message.isBlank()) {
+                throw new IllegalArgumentException("UpgradeResult.message 不能为空");
+            }
+        }
+
+        public boolean ok() {
+            return upgraded != null;
+        }
+    }
+
+    /**
      * 这座位置附近有没有**绑好村民的、带外交能力的情报站**（`NATIONS.md` §11.2）。
      *
      * <p>为什么这条判定在 mod 层：§11.2 写着宣战与朝贡**必须"在情报站发起"（全服公告）**，

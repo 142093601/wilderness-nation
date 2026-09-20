@@ -39,36 +39,55 @@ public enum IntelTier {
     /** 情报册的解锁项（`eras.json` 里 era 0 就给了）。 */
     public static final String UNLOCK_BOOK = "intel_book";
 
-    /** 情报站的解锁项。 */
+    /**
+     * 情报站**图纸**的解锁项（= 建筑工什么时候开始卖这张图纸）。
+     *
+     * <p>注意它解锁的是"买得到图纸"，不是"档位变成情报站" —— 档位看的是**建筑本身**
+     * （见 {@link #promotedBy}）。§11.1 那张表里第二档的条件写的就是"**建筑条件成立**"。
+     */
     public static final String UNLOCK_STATION = "intel_station";
 
     /** 宣战/朝贡这类"要公告天下"的动作的解锁项（§11.2 的 {@code declaration}）。 */
     public static final String UNLOCK_DECLARATION = "declaration";
 
-    /** 情报站升级的解锁项。 */
+    /** **升级件**的解锁项（那个时代之后才有升级件可用）。 */
     public static final String UNLOCK_UPGRADE = "intel_station_2";
 
     /**
-     * 现在该按哪一档算。
+     * 时代能给你的**只有情报册**。
      *
-     * <p>**取最高的那个已解锁项**，不要求"低档也解锁"：数据里把 {@code intel_station}
-     * 单独写进某个时代是完全合法的（那样一开局就有情报站而没情报册，也能用）。
-     * 这条也顺手挡住了"era 表被改过"的情况——改数据只会改变档位的先后，不会让存档报废。
+     * <p>⚠️ 2026-09-20 更正：这一段原来会把 {@code intel_station} / {@code intel_station_2}
+     * 也当成档位来源，于是"我到底是第几档"有了**两个真相来源**（时代解锁 vs 建筑等级）：
+     * 一个二级情报站摆在早于 `intel_station_2` 的时代里，会既"建好了升级站"又"用不了追踪"。
+     * 现在按 §11.1 那张表的字面意思分开：
+     * <ul>
+     *   <li><b>第一档（情报册）</b>是**时代**给的 → 这里判；</li>
+     *   <li><b>第二/三档（情报站 / 升级站）</b>是**建筑**给的 → {@link #promotedBy} 判。</li>
+     * </ul>
      */
     public static IntelTier tierFor(EraTable eras, Era current) {
         if (eras == null || current == null) {
             return NONE;
         }
-        if (eras.isUnlocked(UNLOCK_UPGRADE, current)) {
+        return eras.isUnlocked(UNLOCK_BOOK, current) ? BOOK : NONE;
+    }
+
+    /**
+     * 建筑把档位往上推（§11.1 的第二/三档）。
+     *
+     * @param hasStation       有没有**绑好村民**的情报站（空壳不算，见 §10.4）
+     * @param stationUpgraded  那座情报站到二级了吗（对锚点用过升级件）
+     * @param upgradeUnlocked  升级件在这个时代出现了吗（`intel_station_2`）
+     */
+    public IntelTier promotedBy(boolean hasStation, boolean stationUpgraded,
+            boolean upgradeUnlocked) {
+        if (hasStation && stationUpgraded && upgradeUnlocked) {
             return UPGRADED;
         }
-        if (eras.isUnlocked(UNLOCK_STATION, current)) {
+        if (hasStation) {
             return STATION;
         }
-        if (eras.isUnlocked(UNLOCK_BOOK, current)) {
-            return BOOK;
-        }
-        return NONE;
+        return this;                 // 没站就还是原来那档（最多是第一档）
     }
 
     /** 有没有情报册（哪怕是升级过的站也给，因为它本来就包含第一档）。 */

@@ -51,7 +51,7 @@ class IntelBookTest {
     // ---- 档位门槛（§11.1）----
 
     @Test
-    void tiersUnlockByTheEraTableNotByLevel() {
+    void theEraTableGivesOnlyTheBook() {
         EraTable eras = new EraTable(List.of(
                 new Era("landing", "落地", 0, 10, 1.0, Set.of()),
                 new Era("infra", "基建", 1, 10, 1.2,
@@ -61,11 +61,31 @@ class IntelBookTest {
                         Set.of(IntelTier.UNLOCK_UPGRADE))));
 
         assertEquals(IntelTier.NONE, IntelTier.tierFor(eras, eras.byOrdinal(0)));
-        assertEquals(IntelTier.STATION, IntelTier.tierFor(eras, eras.byOrdinal(1)));
-        assertEquals(IntelTier.UPGRADED, IntelTier.tierFor(eras, eras.byOrdinal(2)),
-                "解锁是累积的：最后一个时代掌握最高档");
+        assertEquals(IntelTier.BOOK, IntelTier.tierFor(eras, eras.byOrdinal(1)));
+        assertEquals(IntelTier.BOOK, IntelTier.tierFor(eras, eras.byOrdinal(2)),
+                "时代最多只能给到情报册 —— 情报站/升级站是**建筑**给的（§11.1 那张表）");
         assertEquals(IntelTier.NONE, IntelTier.tierFor(null, eras.byOrdinal(2)));
         assertEquals(IntelTier.NONE, IntelTier.tierFor(eras, null));
+    }
+
+    /**
+     * **第二/三档由建筑推上去**（2026-09-20 更正的"两个真相来源"）。
+     *
+     * <p>原来 `tierFor` 也认 `intel_station` / `intel_station_2`，于是"我到底是第几档"
+     * 有两个答案：一个二级情报站摆在早于 `intel_station_2` 的时代里，
+     * 会既"建好了升级站"又"用不了追踪"。
+     */
+    @Test
+    void theStationAndTheUpgradeAreWhatPromoteTheTier() {
+        assertEquals(IntelTier.BOOK, IntelTier.BOOK.promotedBy(false, false, true),
+                "没站就还是第一档，哪怕升级件已经解锁");
+        assertEquals(IntelTier.STATION, IntelTier.BOOK.promotedBy(true, false, false),
+                "有绑好的站就是第二档（升级件解不解锁无关）");
+        assertEquals(IntelTier.STATION, IntelTier.BOOK.promotedBy(true, true, false),
+                "二级站但升级件还没出现 → 只能算第二档");
+        assertEquals(IntelTier.UPGRADED, IntelTier.BOOK.promotedBy(true, true, true));
+        assertEquals(IntelTier.NONE, IntelTier.NONE.promotedBy(false, false, true),
+                "连情报册都没有时不该被建筑凭空抬起来");
     }
 
     @Test

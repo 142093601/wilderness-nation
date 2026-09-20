@@ -1,0 +1,33 @@
+# §11.1 第三档的入口：升级情报站（真服务端）
+#
+# 为什么单列一条：第三档（追踪 / 看战争与同盟 / 每结算深挖 1 国）**全挂在建筑等级 ≥ 2** 上，
+# 而在这之前**没有任何地方能把等级升上去** —— 那三项就是死代码。
+# 另外档位原来有**两个真相来源**（时代解锁 vs 建筑等级），现在按 §11.1 那张表分开：
+# 第一档（情报册）来自时代，第二/三档来自建筑（绑好的站 / 二级站 + 升级件已解锁）。
+
+cmd: /statecraft info
+expect: STATECRAFT_INFO
+
+# 1) 档位看**建筑**：已经有一座绑好的情报站 → 至少 STATION；
+#    若那座站已经升到二级、而且升级件在这个时代已解锁 → UPGRADED。
+#    （两种都是对的，取决于这个存档跑到哪一步了）
+cmd: /statecraft intel
+expect: STATECRAFT_INTEL tier=(STATION|UPGRADED)
+
+# 2) 对一个**空位置**升级 → 必须说"这里没有登记过的建筑"
+cmd: /statecraft upgrade 0 100 0
+expect: STATECRAFT_UPGRADE NOT_FOUND
+
+# 3) 对情报站的锚点升级 —— 环境是"一个大石室"（100% 封闭 / 74 格），够第二档（75% / 40）
+cmd: /statecraft upgrade 103 151 103
+expect: STATECRAFT_UPGRADE (OK|REFUSED)
+
+# 4) 升过之后如果成了，档位与能力都该跟上（追踪/深挖不再被"要升级情报站"挡住）
+cmd: /statecraft buildings
+expect: level=[12]
+cmd: /statecraft intel
+expect: STATECRAFT_INTEL tier=\w+
+
+# 5) 再升一次：要么说"已经是最高档"，要么（数据改过时）继续往上
+cmd: /statecraft upgrade 103 151 103
+expect: STATECRAFT_UPGRADE

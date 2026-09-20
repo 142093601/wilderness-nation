@@ -6,9 +6,9 @@
   { "id": "infra",        "name": "基建", "ordinal": 2, "durationHours": 50,
     "coefficient": 1.30, "unlocks": ["intel_station", "declaration"] },
   { "id": "expedition",   "name": "远征", "ordinal": 3, "durationHours": 50,
-    "coefficient": 1.45, "unlocks": [] },
+    "coefficient": 1.45, "unlocks": ["intel_station_2"] },
   { "id": "defense",      "name": "御敌", "ordinal": 4, "durationHours": 60,
     "coefficient": 1.60, "unlocks": [] },
   { "id": "civilization", "name": "文明", "ordinal": 5, "durationHours": 76,
-    "coefficient": 1.75, "unlocks": ["intel_station_2"] }
+    "coefficient": 1.75, "unlocks": [] }
 ]
