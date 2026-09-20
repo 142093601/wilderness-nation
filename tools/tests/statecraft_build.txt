@@ -1,0 +1,38 @@
+# 阶段 3：建筑链路（§10）的**带客户端**验收
+#
+# 为什么必须带客户端：实体要区块进入 entity-ticking 才装进世界，而那需要玩家在实体
+# 距离内。无人在线的服务端里，实体**在盘上有、在世界上没有**（见 DEFERRED.md §J），
+# 所以那台机器上跑不出 `healthy=true`。
+#
+# 迭代纪律（都是实测踩出来的）：
+#   1. 断言只写在查询类命令上（setblock 在"设成完全相同的状态"时不回成功）；
+#   2. 用不带 run 的 `execute if block`，通过回 "Test passed" / "Test failed" 判定；
+#   3. 玩家进服后被 **tp 到锚点旁边**再查，否则区块不在实体距离内。
+
+# 0) 先确认服务端侧 mod 活着
+cmd: /statecraft info
+expect: STATECRAFT_INFO seed=-?\d+
+
+# 1) 站到情报站旁边（锚点在 103,151,103）
+cmd: /tp @s 103 152 104
+cmd: /statecraft buildings
+expect: STATECRAFT_BUILDINGS count=1
+
+# 2) 核心判据：带上客户端之后，绑定的村民必须真的在世界上
+cmd: /statecraft buildings
+expect: loaded=true bound=true healthy=true
+
+# 3) 幂等：再跑一次不许重复生成（房间里只能有一个文书）
+cmd: /statecraft materialize
+expect: SKIP
+
+# 4) 存档往返仍然 OK（带 buildings[] 的真实存档）
+cmd: /statecraft roundtrip
+expect: STATECRAFT_ROUNDTRIP=OK
+
+# 5) 环境读数（§10.5 的四个数）
+cmd: /statecraft scan 103 151 103
+expect: STATECRAFT_SCAN pos=103,151,103 roof=true
+
+# 留一张图当证据
+shot: building-chain

@@ -15,23 +15,56 @@
 - **设计文档**：`NATIONS.md`（mod 侧）· `DESIGN.md`（包侧）· `OPEN-DESIGN.md`（**待定设计，搁置中**）
 - **纪律**（用户明确要求）：反过度设计 · 尽量不让用户手工测试 · 结论必须有原始证据 · 记下自己的错
 
-## 二、当前进度（截至最后一次提交）
-
 | 层 | 状态 |
 |---|---|
-| 计划 1（生成）、计划 2（存档+迁移+mod 薄层）、计划 3（结算+外交+事务日志） | ✅ 完成，**199 个 JUnit 全绿** |
-| M2 真机 | ✅ 存档落盘/读档已证；命令通道补验待做（死亡屏那个坑） |
-| **M1 收尾（环境判定 + 幂等决策）** | 🟡 **进行中** —— 见 `PLAN-m1-env-idempotency.md` |
+| 计划 1（生成）、计划 2（存档+迁移+mod 薄层）、计划 3（结算+外交+事务日志） | ✅ 完成 |
+| **计划 4 的 core 侧（阶段 2）** | ✅ 完成 —— 数据层（places/events/buildings/staff/letters 五份 json）· 文本渲染（地名池+模板）· 周报聚合 · 国书状态机（§9.4）· 图纸授权（§10.1）· 情报册三档（§11.1）· 村民绑定（§10.3） |
+| **阶段 3 第一批（mod 薄层 + 真机）** | 🟡 **做到一半** —— 真环境读数 · 建筑服务 · 五条命令都已在真服务端上跑通；剩下的见下 |
+| M2 真机 | ✅ 命令通道全通（`info` / `roundtrip=OK` / `buildings`），存档落盘+读档已证 |
 | M0（HYW 会不会打玩家） | 方案+脚本就绪（`PLAN-m0-hyw.md` / `tools/tests/m0_hyw.txt`），**未跑**，只挡计划 5 |
-| 计划 4（建筑/村民/情报站/情报册/周报/国书） | 未开始；**core 侧全部可离线做** |
+| `treaties.json` 数据化 · 玩家侧落盘 | **有意没做**，见 `DEFERRED.md` §I（各写了触发条件） |
+
+**当前 330 个 JUnit 全绿**（`gradlew :core:test`，命令见 §三）。
 
 ## 三、下一步（**从这里接着干**）
 
-**阶段 1（M1 收尾）已完成** —— 环境判定、幂等决策、实体化节流、uildings[] 存档链路
-全部落地，**226 个 JUnit 用例全绿**。**下一步是阶段 2**（计划 4 的 core 侧）：
-数据层（places/events/buildings/staff/treaties/letters 六份 json 经 DataFiles 进 core）
-→ 文本渲染（地名池+模板→中文事件/周报/国书）→ 周报聚合 → 国书状态机 → 图纸授权
-→ 情报册数据模型 → 村民绑定 → 占位内容。
+### 阶段 3 剩下的三件事（按优先级）
+
+1. **实体验收要带客户端**（`DEFERRED.md` §J）：无人在线的服务端里，实体**在盘上有、
+   在世界上没有**（用 `tools/mca_probe.py` 看过盘：6 个文书都在 `world/entities/r.0.0.mca`
+   里、标签齐全；但 `execute if entity @e` 是 0 个）。最可能是原版行为 ——
+   实体要区块进入 entity-ticking 才装，而那需要玩家在实体距离内。
+   脚本已备好：`tools/tests/statecraft_build.txt`，
+   `python tools/game_agent.py --server 127.0.0.1:25565 --script tools\tests\statecraft_build.txt`。
+   （2026-09-20 试过一次：客户端 232 mod 起不来/没就绪，先腾内存或加长等待再试。）
+2. **自研村民实体**（§10.2）：现在用的是**原版 Villager + 两个持久化标签**
+   （`statecraft:profession` / `statecraft:building`），§10.3 的三件校验已经够用；
+   换成自研实体换来的是"禁繁殖 / 锁职业 / 游荡限制 / 不被自然清除"这些**行为**打磨。
+3. **OPAC 领地接入**（§10.5 的第四个读数）：现在是 `ClaimProbe.unclaimedIsInside()` 的
+   一次性警告回退（不接的话整条链路连试都试不了）。要等 `DEFERRED.md` A4
+   （图纸 × 领地，联机验证）那一次一起做 —— 那时才知道该怎么问 OPAC。
+
+### 再往后
+
+```
+M0（HYW 会不会打玩家）· M2 命令通道补验 · v1→v2 迁移实档确认   ← 一次性批量
+计划 5：夺城 + 玩家侧账本（追踪清单 / 已购图纸 / playerLedger 落盘）
+阶段 4：City + 国力合成 + 多城（等用户拍板，见 OPEN-DESIGN.md）
+```
+
+**跑测试的命令**（本机没装 Gradle，用缓存分发）：
+
+```powershell
+& "$env:USERPROFILE\.gradle\wrapper\dists\gradle-8.11.1-bin\eac4u065zwes5phgltp5f9b9e\gradle-8.11.1\bin\gradle.bat" `
+  -p D:\project\nation-pack\mods\statecraft :core:test :mod:build --console=plain
+```
+
+**服务端真机**（我们这个 mod 必须装进服务端 —— `tools/lists/server-mods.txt` 已含它）：
+
+```powershell
+python tools\server_ctl.py --setup --start
+python tools\server_ctl.py --cmd "statecraft info"
+```
 
 （下面是阶段 1 当时记的细节，留作参考）
 
