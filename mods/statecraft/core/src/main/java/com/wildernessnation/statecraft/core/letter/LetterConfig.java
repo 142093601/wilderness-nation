@@ -24,7 +24,12 @@ public record LetterConfig(
         double stopBuildAcceptAttitudeGain,
         long stopBuildPromiseSettlements,
         double stopBuildKeptAttitudeGain,
-        double stopBuildBreachAttitudePenalty) {
+        double stopBuildBreachAttitudePenalty,
+        double issueAttitudeThreshold,
+        long issueCooldownSettlements,
+        long maxIssuesPerSettlement,
+        double jointWarMinAttitude,
+        double jointWarTargetAttitude) {
 
     public static LetterConfig defaults() {
         return new LetterConfig(
@@ -36,7 +41,16 @@ public record LetterConfig(
                 5.0,     // stopBuildAcceptAttitudeGain        【占位】答应收敛，先给一点面子
                 6L,      // stopBuildPromiseSettlements        【占位】承诺管几个结算（2 小时/结算 → 约 12 小时）
                 10.0,    // stopBuildKeptAttitudeGain          【规格】§十二 完成国书 +10（履约了才算完成）
-                -25.0);  // stopBuildBreachAttitudePenalty     【占位】当面答应背后照建，比拒绝更伤
+                -25.0,   // stopBuildBreachAttitudePenalty     【占位】当面答应背后照建，比拒绝更伤
+                -20.0,   // issueAttitudeThreshold             【占位】态度低到这个数就递"停止建造"。
+                         //   ⚠️ 必须**明显松于**宣战惩罚（DiplomacyConfig 里是 −30）：
+                         //   2026-09-20 真机上就吃了这个亏 —— 门槛写成 −30 时，宣战完态度正好 −30，
+                         //   而同一拍里"态度回归"会把它拉回 −28/−29，于是门槛永远踩不到，
+                         //   国书一封都递不出来（和 `willDeclareWarOnPlayer` 那条边界注释同一个坑）。
+                4L,      // issueCooldownSettlements           【占位】同一个国家两次递书至少隔几个结算
+                1L,      // maxIssuesPerSettlement             【占位】一次结算最多递几封（§十二 的节流思路）
+                0.0,     // jointWarMinAttitude                【占位】不讨厌你才来拉你入伙
+                -50.0);  // jointWarTargetAttitude             【占位】恨到这个数才想找人一起打
     }
 
     public LetterConfig {
@@ -59,6 +73,23 @@ public record LetterConfig(
         if (stopBuildBreachAttitudePenalty > refusalAttitudePenalty) {
             throw new IllegalStateException("破约(" + stopBuildBreachAttitudePenalty
                     + ")不该比直接拒绝(" + refusalAttitudePenalty + ")代价更小");
+        }
+        requireFinite("issueAttitudeThreshold", issueAttitudeThreshold);
+        if (issueCooldownSettlements < 0) {
+            throw new IllegalStateException(
+                    "issueCooldownSettlements 不能为负：" + issueCooldownSettlements);
+        }
+        if (maxIssuesPerSettlement < 0) {
+            throw new IllegalStateException(
+                    "maxIssuesPerSettlement 不能为负：" + maxIssuesPerSettlement);
+        }
+        requireFinite("jointWarMinAttitude", jointWarMinAttitude);
+        requireFinite("jointWarTargetAttitude", jointWarTargetAttitude);
+        // 递书门槛必须比"接受门槛"更狠，否则会出现"刚接受就又来一封"
+        if (issueAttitudeThreshold > stopBuildAcceptAttitudeGain) {
+            throw new IllegalStateException("issueAttitudeThreshold(" + issueAttitudeThreshold
+                    + ") 不该高于 stopBuildAcceptAttitudeGain(" + stopBuildAcceptAttitudeGain
+                    + ")（否则答应一次之后还会立刻被再要一次）");
         }
     }
 

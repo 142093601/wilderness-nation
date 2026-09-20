@@ -8,6 +8,7 @@ import com.wildernessnation.statecraft.core.data.DataFiles;
 import com.wildernessnation.statecraft.core.data.LetterData;
 import com.wildernessnation.statecraft.core.data.NationData;
 import com.wildernessnation.statecraft.core.era.EraTable;
+import com.wildernessnation.statecraft.core.letter.LetterDefaults;
 import com.wildernessnation.statecraft.core.model.Culture;
 import com.wildernessnation.statecraft.core.persist.StateMigrator;
 import com.wildernessnation.statecraft.core.persist.StateMigrations;
@@ -107,6 +108,17 @@ public final class StatecraftData {
     public static LetterData letters() {
         requireLoaded();
         return letters;
+    }
+
+    /**
+     * 三种国书的**要价/半径**（`letters.json` 的 `kinds` → core 的 {@link LetterDefaults}）。
+     *
+     * <p>为什么要这一步转换：core 里不能有 JSON（零依赖），而"哪种国书要多少"是内容。
+     * 所以数据在 mod 层读、按 core 的类型递进去 —— 结算引擎就是这样拿到要价的。
+     */
+    public static LetterDefaults letterDefaults() {
+        requireLoaded();
+        return DataFiles.letterDefaults(letters);
     }
 
     /** 建筑定义表（`buildings.json`）—— 环境档位、绑定的村民职业、图纸授权都在里面。 */

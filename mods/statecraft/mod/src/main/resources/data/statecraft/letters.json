@@ -8,7 +8,12 @@
     "stopBuildAcceptAttitudeGain": 5,
     "stopBuildPromiseSettlements": 6,
     "stopBuildKeptAttitudeGain": 10,
-    "stopBuildBreachAttitudePenalty": -25
+    "stopBuildBreachAttitudePenalty": -25,
+    "issueAttitudeThreshold": -20,
+    "issueCooldownSettlements": 4,
+    "maxIssuesPerSettlement": 1,
+    "jointWarMinAttitude": 0,
+    "jointWarTargetAttitude": -50
   },
   "kinds": [
     {

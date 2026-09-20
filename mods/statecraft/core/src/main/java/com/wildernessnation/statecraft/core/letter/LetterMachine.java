@@ -65,6 +65,11 @@ public final class LetterMachine {
         return new LetterMachine(LetterConfig.defaults(), DiplomacyConfig.defaults());
     }
 
+    /** 这份配置（结算引擎要拿它问"这一拍最多递几封"）。 */
+    public LetterConfig config() {
+        return cfg;
+    }
+
     // ---- 递出 ----
 
     /**
@@ -90,9 +95,22 @@ public final class LetterMachine {
                 .withEventsAdded(List.of(letterEvent(state, letter, "letter_" + kindSuffix(kind))));
     }
 
+    /**
+     * 按**内容层的默认要价**递出一封国书（半径/资源数额来自 `letters.json`）。
+     *
+     * <p>为什么不让调用方自己从数据里取半径：那条"哪种国书要什么"的映射
+     * （只有停止建造有半径、只有朝贡有钱）是 {@link Letter} 自己的按种类校验，属于规则。
+     * 让每个调用点各写一遍，迟早有一处写成"给共同讨伐填半径"然后被构造器拒掉。
+     */
+    public WorldState propose(
+            WorldState state, String nationId, LetterKind kind, String targetNationId,
+            LetterDefaults defaults) {
+        return propose(state, nationId, kind, targetNationId,
+                defaults.radiusFor(kind), defaults.amountFor(kind));
+    }
+
     /** 递出时的参数（"它要求你做什么"），渲染模板要按这个顺序取词。 */
-    public static List<String> proposalParams(WorldState state, Letter letter) {
-        String name = state.nation(letter.fromNationId()).map(Nation::name).orElse("某国");
+    public static List<String> proposalParams(WorldState state, Letter letter) {        String name = state.nation(letter.fromNationId()).map(Nation::name).orElse("某国");
         List<String> out = new ArrayList<>(2);
         out.add(name);
         switch (letter.kind()) {

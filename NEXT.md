@@ -24,7 +24,24 @@
 | M0（HYW 会不会打玩家） | 方案+脚本就绪（`PLAN-m0-hyw.md` / `tools/tests/m0_hyw.txt`），**未跑**，只挡计划 5 |
 | `treaties.json` 数据化 · 玩家侧落盘 | **有意没做**，见 `DEFERRED.md` §I（各写了触发条件） |
 
-**当前 330 个 JUnit 全绿**（`gradlew :core:test`，命令见 §三）。
+**当前 356 个 JUnit 全绿**（`gradlew :core:test`，命令见 §三）。
+
+**阶段 3 现在能用的 `/statecraft` 子命令**（都只在服务端跑，不需要客户端）：
+
+| 命令 | 干什么 |
+|---|---|
+| `info` / `roundtrip` / `regen` | 建库、NBT 往返自检、重建 |
+| `scan <pos>` | §10.5 的四个环境读数 + 每座建筑的档位判定 |
+| `anchor <pos>` | 把锚点方块登记成一座建筑 |
+| `buildings` | 登记表 + 绑定健康度 + 村民名字/职业/`no_ai` + 重复数 |
+| `materialize` | 按 §10.3/§10.4 的幂等规则跑一次实体化（含清理重复村民）|
+| `advance <hours>` | 推进一次周期小结算（脚本靠它几分钟跑完 300 小时）|
+| `contact <pos>` | §11.1 的接触判定（走近 512 格）|
+| `diplomacy <nation> <action> [dev]` | §11.2 的六个外交动作 |
+| `letters` / `answer <id> accept\|refuse` | §9.4 的国书列表与回复 |
+
+**真机踩坑记录**见 `DEFERRED.md` §J（实体存了没装回世界）、§K（`--cmd` 回显错位）、
+§L（门槛值与惩罚值同值 → 规则变死代码）。
 
 ## 三、下一步（**从这里接着干**）
 

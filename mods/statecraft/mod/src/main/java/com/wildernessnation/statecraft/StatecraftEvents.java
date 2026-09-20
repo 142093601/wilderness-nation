@@ -1,13 +1,26 @@
 package com.wildernessnation.statecraft;
 
 import com.mojang.brigadier.arguments.DoubleArgumentType;
+import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.logging.LogUtils;
+import com.wildernessnation.statecraft.core.building.BuildingAbility;
 import com.wildernessnation.statecraft.core.building.BuildingDef;
 import com.wildernessnation.statecraft.core.building.StaffObservation;
+import com.wildernessnation.statecraft.core.diplomacy.DiplomacyAction;
+import com.wildernessnation.statecraft.core.diplomacy.DiplomacyConfig;
+import com.wildernessnation.statecraft.core.diplomacy.DiplomacyMachine;
+import com.wildernessnation.statecraft.core.diplomacy.DiplomacyRequest;
+import com.wildernessnation.statecraft.core.diplomacy.DiplomacyResult;
 import com.wildernessnation.statecraft.core.env.EnvironmentSnapshot;
 import com.wildernessnation.statecraft.core.env.EnvironmentVerdict;
 import com.wildernessnation.statecraft.core.gen.WorldGenerator;
+import com.wildernessnation.statecraft.core.intel.IntelContact;
+import com.wildernessnation.statecraft.core.letter.Letter;
+import com.wildernessnation.statecraft.core.letter.LetterMachine;
+import com.wildernessnation.statecraft.core.letter.LetterResult;
+import com.wildernessnation.statecraft.core.letter.LetterState;
 import com.wildernessnation.statecraft.core.model.Building;
 import com.wildernessnation.statecraft.core.model.Nation;
 import com.wildernessnation.statecraft.core.model.WorldState;
@@ -56,6 +69,10 @@ public final class StatecraftEvents {
     private static final String MARK_BUILDINGS = "STATECRAFT_BUILDINGS";
     private static final String MARK_MATERIALIZE = "STATECRAFT_MATERIALIZE";
     private static final String MARK_ADVANCE = "STATECRAFT_ADVANCE";
+    private static final String MARK_LETTERS = "STATECRAFT_LETTERS";
+    private static final String MARK_ANSWER = "STATECRAFT_ANSWER";
+    private static final String MARK_DIPLO = "STATECRAFT_DIPLO";
+    private static final String MARK_CONTACT = "STATECRAFT_CONTACT";
 
     private StatecraftEvents() {}
 
@@ -115,7 +132,150 @@ public final class StatecraftEvents {
                 .then(Commands.literal("advance")
                         .requires(source -> source.hasPermission(2))
                         .then(Commands.argument("hours", DoubleArgumentType.doubleArg(0.01))
-                                .executes(StatecraftEvents::advance))));
+                                .executes(StatecraftEvents::advance)))
+                // ---- 阶段 3：国书（§9.4）的两条 ----
+                .then(Commands.literal("letters").executes(StatecraftEvents::letters))
+                .then(Commands.literal("answer")
+                        .then(Commands.argument("id", StringArgumentType.word())
+                                .then(Commands.argument("decision",
+                                                StringArgumentType.word())
+                                        .executes(StatecraftEvents::answer))))
+                // ---- 阶段 3：外交（§11.2 的 6 个动作）----
+                .then(diplomacyCommand())
+                // ---- 阶段 3：接触（§11.1）----
+                .then(Commands.literal("contact")
+                        .requires(source -> source.hasPermission(2))
+                        .then(Commands.argument("pos", BlockPosArgument.blockPos())
+                                .executes(StatecraftEvents::contact))));
+    }
+
+    /** 外交命令单独成一个方法：嵌套的 argument/then 括号数错一次就编译不过，这样好核对。 */
+    private static LiteralArgumentBuilder<CommandSourceStack> diplomacyCommand() {
+        return Commands.literal("diplomacy")
+                .requires(source -> source.hasPermission(2))
+                .then(Commands.argument("nation", StringArgumentType.word())
+                        .then(Commands.argument("action", StringArgumentType.word())
+                                .executes(ctx -> diplomacy(ctx, 0.0))
+                                .then(Commands.argument("dev", DoubleArgumentType.doubleArg(0.0))
+                                        .executes(ctx -> diplomacy(ctx,
+                                                DoubleArgumentType.getDouble(ctx, "dev"))))));
+    }
+
+    /**
+     * 玩家动作的随机序号（§11.2 的"外部输入"）。
+     *
+     * <p>**这是个占位**：core 要求掷骰的动作带一个由调用方递进来、并且被事务日志记下来的 nonce
+     * （否则"同 seed 同输入必得同结果"不成立）。mod 层还没接事务日志（计划 5），
+     * 所以这里用一个自增计数器保证"同一串命令里各不相同"。
+     * 真玩家路径必须把它记进日志 —— 记在 {@code DEFERRED.md} §I2。
+     */
+    private static final java.util.concurrent.atomic.AtomicLong NONCE =
+            new java.util.concurrent.atomic.AtomicLong();
+
+    /**
+     * `/statecraft diplomacy <nation> <action> [dev]`：发起一次外交动作（§11.2）。
+     *
+     * <p>动作名用小写：{@code declare_war / peace / alliance / trade / aid / tribute}。
+     * {@code dev} 是**玩家方发展度**的占位（它属于计划 5 的玩家账本，现在没有；
+     * §11.2 的「朝贡」与求和概率都要用它，所以先用参数顶着，默认 0）。
+     */
+    private static int diplomacy(CommandContext<CommandSourceStack> ctx, double playerDevelopment) {
+        CommandSourceStack source = ctx.getSource();
+        StatecraftSavedData data = data(source);
+        WorldState state = data.state();
+        if (state == null) {
+            source.sendSuccess(() -> Component.literal(MARK_DIPLO + " EMPTY"), false);
+            return 0;
+        }
+        String nationId = StringArgumentType.getString(ctx, "nation");
+        String raw = StringArgumentType.getString(ctx, "action");
+        Optional<DiplomacyAction> action = parseAction(raw);
+        if (action.isEmpty()) {
+            source.sendSuccess(() -> Component.literal(
+                    MARK_DIPLO + " UNKNOWN_ACTION " + raw
+                            + "（可用：declare_war peace alliance trade aid tribute）"), false);
+            return 0;
+        }
+        long nonce = state.seq() * 1000L + NONCE.incrementAndGet();
+        DiplomacyMachine machine = new DiplomacyMachine(
+                DiplomacyConfig.defaults(), SettlementConfig.defaults());
+        DiplomacyResult result = machine.apply(state,
+                new DiplomacyRequest(action.get(), nationId, playerDevelopment, nonce));
+        data.set(result.state());
+        source.sendSuccess(() -> Component.literal(String.format("%s %s %s %s",
+                MARK_DIPLO, action.get(), result.outcome().accepted() ? "OK" : "REFUSED",
+                result.outcome().reason())), true);
+        return result.outcome().accepted() ? 1 : 0;
+    }
+
+    /**
+     * `/statecraft contact [radius]`：按**当前位置**算一次接触（§11.1）。
+     *
+     * <p>正常的接触是 mod 层在玩家走动时自动算的（还没有那个 tick 钩子），这条命令是
+     * **没有客户端时唯一的观察口**：给一个坐标就等价于"玩家站到了那儿"。
+     * 半径省略时用 {@link IntelContact#DEFAULT_CONTACT_RADIUS}。
+     */
+    private static int contact(CommandContext<CommandSourceStack> ctx) {
+        CommandSourceStack source = ctx.getSource();
+        StatecraftSavedData data = data(source);
+        WorldState state = data.state();
+        if (state == null) {
+            source.sendSuccess(() -> Component.literal(MARK_CONTACT + " EMPTY"), false);
+            return 0;
+        }
+        BlockPos pos = BlockPosArgument.getBlockPos(ctx, "pos");
+        double radius = IntelContact.DEFAULT_CONTACT_RADIUS;
+        IntelContact.Contact c = IntelContact.byPosition(state, pos.getX(), pos.getZ(), radius);
+        data.set(c.state());
+        source.sendSuccess(() -> Component.literal(String.format(
+                "%s pos=%d,%d radius=%.0f newly=%s met=%d/%d",
+                MARK_CONTACT, pos.getX(), pos.getZ(), radius, c.newly(),
+                IntelContact.metCount(c.state()), state.nations().size())), true);
+        return c.newly().size();
+    }
+
+    /**
+     * 情报站建成 → 天下各国的名号都进册子（§11.1 的"完整列表"）。
+     *
+     * <p>由 {@code advance}（以及将来的周期结算）顺手调用：判据是"**有一座绑好的、
+     * 带 {@code diplomacy} 能力的建筑**"——也就是情报站本身，而不是某个时代解锁项。
+     * 这条让玩家**不必跑遍地图**也能开始外交（设计上要的节奏：先立情报站，再谈天下）。
+     *
+     * @return 处理后的状态（没有情报站、或没有新接触时原样返回）
+     */
+    private static WorldState revealByStation(WorldState state) {
+        boolean hasStation = false;
+        for (Building b : state.buildings()) {
+            if (b.stalled()) {
+                continue;
+            }
+            Optional<BuildingDef> def = StatecraftData.buildings().byId(b.type());
+            if (def.isPresent() && def.get().hasAbilityAt(b.level(), BuildingAbility.DIPLOMACY)) {
+                hasStation = true;
+                break;
+            }
+        }
+        if (!hasStation) {
+            return state;
+        }
+        IntelContact.Contact c = IntelContact.revealAll(state);
+        if (c.changed()) {
+            LOG.info("Statecraft：情报站已建成，天下各国的名号都进了册子（新接触 {} 个）",
+                    c.newly().size());
+        }
+        return c.state();
+    }
+
+    private static Optional<DiplomacyAction> parseAction(String raw) {
+        return switch (raw.toLowerCase(java.util.Locale.ROOT)) {
+            case "declare_war", "war" -> Optional.of(DiplomacyAction.DECLARE_WAR);
+            case "peace", "sue_for_peace" -> Optional.of(DiplomacyAction.SUE_FOR_PEACE);
+            case "alliance" -> Optional.of(DiplomacyAction.ALLIANCE);
+            case "trade" -> Optional.of(DiplomacyAction.TRADE);
+            case "aid", "call_for_aid" -> Optional.of(DiplomacyAction.CALL_FOR_AID);
+            case "tribute" -> Optional.of(DiplomacyAction.TRIBUTE);
+            default -> Optional.empty();
+        };
     }
 
     // ---- 阶段 3：建筑链路 ----
@@ -274,15 +434,105 @@ public final class StatecraftEvents {
             return 0;
         }
         SettlementEngine engine = new SettlementEngine(
-                SettlementConfig.defaults(), StatecraftData.config(), StatecraftData.eras());
+                SettlementConfig.defaults(), StatecraftData.config(), StatecraftData.eras(),
+                letterMachine(), StatecraftData.letterDefaults());
         WorldState after = engine.settle(state,
                 new SettlementInput(SettlementTrigger.PERIODIC, hours));
+        after = revealByStation(after);
         data.set(after);
-        String line = String.format("%s hours=%.2f era=%s seq=%d events=%d letters=%d",
+        long open = LetterMachine.openLetters(after).size();
+        String line = String.format("%s hours=%.2f era=%s seq=%d events=%d letters=%d open=%d",
                 MARK_ADVANCE, after.elapsedOnlineHours(), after.eraId(), after.seq(),
-                after.events().size(), after.letters().size());
+                after.events().size(), after.letters().size(), open);
         source.sendSuccess(() -> Component.literal(line), true);
         return after.events().size();
+    }
+
+    /**
+     * 国书状态机（§9.4）：数值来自 `letters.json`，承诺长度借用 §11.2 朝贡那一个数。
+     *
+     * <p>每次新建（而不是缓存一个静态的）：`StatecraftData` 是 mod 构造时载入的，
+     * 而命令可能在数据**重载**之后才跑（§十六 的数据包热重载）。新建成本可以忽略。
+     */
+    private static LetterMachine letterMachine() {
+        return new LetterMachine(StatecraftData.letters().config(), DiplomacyConfig.defaults());
+    }
+
+    /**
+     * `/statecraft letters`：列出所有国书（待回的排前面）。
+     *
+     * <p>§9.4 说 v1 的形态是"情报册/情报站里的可回复条目"—— 这条命令就是那个列表在
+     * **没有客户端时**的观察口：国书到底有没有被递出来、递的是哪一种、期限还剩几拍。
+     */
+    private static int letters(CommandContext<CommandSourceStack> ctx) {
+        CommandSourceStack source = ctx.getSource();
+        WorldState state = data(source).state();
+        if (state == null) {
+            source.sendSuccess(() -> Component.literal(MARK_LETTERS + " EMPTY"), false);
+            return 0;
+        }
+        List<Letter> open = LetterMachine.openLetters(state);
+        source.sendSuccess(() -> Component.literal(String.format("%s total=%d open=%d seq=%d",
+                MARK_LETTERS, state.letters().size(), open.size(), state.seq())), false);
+        // 待回的排前面：情报册里最该被看见的就是它们
+        List<Letter> ordered = new ArrayList<>(open);
+        for (Letter l : state.letters()) {
+            if (l.state() != LetterState.OPEN) {
+                ordered.add(l);
+            }
+        }
+        for (Letter l : ordered) {
+            String from = state.nation(l.fromNationId()).map(Nation::name).orElse(l.fromNationId());
+            String detail = switch (l.kind()) {
+                case STOP_BUILDING -> "半径 " + trim(l.stopBuildRadius());
+                case TRIBUTE -> "要 " + trim(l.amount());
+                case JOINT_WAR -> "目标 "
+                        + state.nation(l.targetNationId()).map(Nation::name)
+                                .orElse(l.targetNationId());
+            };
+            source.sendSuccess(() -> Component.literal(String.format(
+                    "  %s %s %s from=%s %s state=%s deadline=%d iss=%d",
+                    MARK_LETTERS, l.id(), l.kind(), from, detail, l.state(),
+                    l.deadlineSeq(), l.issuedAtSeq())), false);
+        }
+        return ordered.size();
+    }
+
+    /**
+     * `/statecraft answer <id> accept|refuse`：回复一封国书（§9.4 的"接受 / 拒绝"）。
+     *
+     * <p>核心判定全在 core 的 {@link LetterMachine}：这条命令只负责把结果写回存档、
+     * 并把 core 给的中文说明转给玩家（包括"要掏多少资源"那个数）。
+     */
+    private static int answer(CommandContext<CommandSourceStack> ctx) {
+        CommandSourceStack source = ctx.getSource();
+        StatecraftSavedData data = data(source);
+        WorldState state = data.state();
+        if (state == null) {
+            source.sendSuccess(() -> Component.literal(MARK_ANSWER + " EMPTY"), false);
+            return 0;
+        }
+        String id = StringArgumentType.getString(ctx, "id");
+        boolean accept = StringArgumentType.getString(ctx, "decision").equalsIgnoreCase("accept");
+        LetterResult result = letterMachine().answer(state, id, accept);
+        if (result.accepted()) {
+            data.set(result.state());
+        }
+        source.sendSuccess(() -> Component.literal(String.format("%s %s %s",
+                MARK_ANSWER, result.accepted() ? "OK" : "REFUSED", result.message())), true);
+        if (result.playerTreasuryDelta() != 0.0) {
+            // 玩家侧账本属于计划 5（core 只报数）—— 这里把该记的数原样打出来
+            source.sendSuccess(() -> Component.literal(String.format(
+                    "  %s playerTreasuryDelta=%.1f（玩家侧账本还没落盘，见 DEFERRED §I2）",
+                    MARK_ANSWER, result.playerTreasuryDelta())), false);
+        }
+        return result.accepted() ? 1 : 0;
+    }
+
+    private static String trim(double v) {
+        return v == Math.rint(v) && Math.abs(v) < 1e15
+                ? String.valueOf((long) v)
+                : String.format(java.util.Locale.ROOT, "%.1f", v);
     }
 
     private static List<Building> concat(List<Building> existing, Building extra) {

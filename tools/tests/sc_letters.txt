@@ -1,0 +1,32 @@
+# 国书（§9.4）的完整生命周期，在真服务端上跑一遍
+#
+# 为什么走"宣战 → 求和"这条路：`LetterIssuing` 要的是"它对你态度很差、而且**不在打仗**"，
+# 而新世界里没有任何东西会拉低态度（§十二 的"玩家行为 → 态度"还没有 mod 层钩子）。
+# 宣战给 −30 态度（正好踩到 issueAttitudeThreshold），求和成功转 TRUCE（不在打仗了），
+# 于是它就有了"递一封停止建造国书"的全部条件。
+#
+# 用 n11 烈日（离出生点最近、stance 最低的一个）：x=82 z=3099
+
+cmd: /statecraft info
+expect: STATECRAFT_INFO
+
+# 1) 宣战（态度 −30，进 war）
+cmd: /statecraft diplomacy n11 declare_war
+expect: STATECRAFT_DIPLO DECLARE_WAR OK
+
+# 2) 求和（成功率受战果与态度影响；dev 给高一点让它更容易成）
+cmd: /statecraft diplomacy n11 peace 90
+expect: STATECRAFT_DIPLO SUE_FOR_PEACE
+
+# 3) 推进一拍：`issueLetters` 应该在这里递出"停止建造"
+cmd: /statecraft advance 2.0
+expect: STATECRAFT_ADVANCE
+
+# 4) 国书列表里应该有东西了
+cmd: /statecraft letters
+expect: STATECRAFT_LETTERS total=[1-9]
+
+# 5) 重复推进不会刷屏（同国冷却 + 已有待回的不再递）
+cmd: /statecraft advance 2.0
+cmd: /statecraft letters
+expect: open=[01]

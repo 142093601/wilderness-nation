@@ -384,14 +384,14 @@ class LetterMachineTest {
     @Test
     void configRejectsAPromiseThatEndsImmediately() {
         IllegalStateException e = assertThrows(IllegalStateException.class,
-                () -> new LetterConfig(3L, -5.0, -8.0, 10.0, 10.0, 5.0, 0L, 10.0, -25.0));
+                () -> new LetterConfig(3L, -5.0, -8.0, 10.0, 10.0, 5.0, 0L, 10.0, -25.0, -30.0, 4L, 1L, 0.0, -50.0));
         assertTrue(e.getMessage().contains("承诺期"), e.getMessage());
     }
 
     @Test
     void configRejectsABreachThatIsCheaperThanRefusing() {
         IllegalStateException e = assertThrows(IllegalStateException.class,
-                () -> new LetterConfig(3L, -5.0, -8.0, 10.0, 10.0, 5.0, 6L, 10.0, -1.0));
+                () -> new LetterConfig(3L, -5.0, -8.0, 10.0, 10.0, 5.0, 6L, 10.0, -1.0, -30.0, 4L, 1L, 0.0, -50.0));
         assertTrue(e.getMessage().contains("破约"), e.getMessage());
     }
 

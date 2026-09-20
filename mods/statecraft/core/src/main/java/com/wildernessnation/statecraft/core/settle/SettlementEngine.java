@@ -3,6 +3,8 @@ package com.wildernessnation.statecraft.core.settle;
 import com.wildernessnation.statecraft.core.config.StatecraftConfig;
 import com.wildernessnation.statecraft.core.era.Era;
 import com.wildernessnation.statecraft.core.era.EraTable;
+import com.wildernessnation.statecraft.core.letter.LetterDefaults;
+import com.wildernessnation.statecraft.core.letter.LetterIssuing;
 import com.wildernessnation.statecraft.core.letter.LetterMachine;
 import com.wildernessnation.statecraft.core.model.Event;
 import com.wildernessnation.statecraft.core.model.EventTypes;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * 结算引擎（`NATIONS.md` §七 / §八 / §九）。
@@ -47,22 +50,41 @@ public final class SettlementEngine {
     private final LetterMachine letters;
 
     /**
+     * 内容层的国书要价（`letters.json` 的 kinds）；没给就不递国书（只在测试里会这样）。
+     *
+     * <p>core 是**零依赖**的（连 {@code javax.annotation} 都不引入），所以这里用
+     * "可为 null + javadoc"表达可选，而不是 {@code @Nullable} 注解。
+     */
+    private final LetterDefaults defaults;
+
+    /**
      * @param cfg  结算参数（§十二）
      * @param gen  生成参数——**吸收后要按"发展度与规模反比"重算 dev**，那条公式属于生成期，
      *             所以引擎确实需要它，而不是重复写一份
      * @param eras 时代表（数据驱动，数量不写死）
      */
     public SettlementEngine(SettlementConfig cfg, StatecraftConfig gen, EraTable eras) {
-        this(cfg, gen, eras, LetterMachine.defaults());
+        this(cfg, gen, eras, LetterMachine.defaults(), null);
     }
 
     /** 显式注入国书状态机（试玩调参时用得上；默认走 {@link LetterMachine#defaults()}）。 */
     public SettlementEngine(
             SettlementConfig cfg, StatecraftConfig gen, EraTable eras, LetterMachine letters) {
+        this(cfg, gen, eras, letters, null);
+    }
+
+    /**
+     * 完整构造：既给国书状态机、又给内容层要价。
+     *
+     * @param defaults 三种国书的半径/数额（来自 `letters.json`）；给 null 则这一局不递国书
+     */
+    public SettlementEngine(SettlementConfig cfg, StatecraftConfig gen, EraTable eras,
+            LetterMachine letters, LetterDefaults defaults) {
         this.cfg = cfg.validated();
         this.gen = gen.validated();
         this.eras = eras;
         this.letters = letters;
+        this.defaults = defaults;
     }
 
     public WorldState settle(WorldState state, SettlementInput input) {
@@ -108,8 +130,48 @@ public final class SettlementEngine {
         WorldState settled = new WorldState(
                 WorldState.CURRENT_SCHEMA_VERSION, pre.seed(), pre.eraId(), pre.eraOrdinal(),
                 pre.seq(), nations, relations, pre.events(), pre.letters(), pre.buildings(),
-                pre.elapsedOnlineHours());
-        return settled.withEventsAdded(events).withClock(hours, era.id(), era.ordinal(), seq);
+                pre.elapsedOnlineHours()).withEventsAdded(events)
+                .withClock(hours, era.id(), era.ordinal(), seq);
+
+        // 国书**最后递**：它读的是这一拍刚算完的态度与战果（"打完这一仗它才来要东西"），
+        // 所以必须排在压力之后。
+        return issueLetters(settled, letters);
+    }
+
+    /**
+     * 这一拍谁要递国书（§9.4 的触发侧）。
+     *
+     * <p>{@link LetterIssuing} 只回答"它想不想递、递哪种"；"这一拍最多递几封"
+     * 是节流（§十二 的同类做法），也在这里。
+     *
+     * <p><b>顺序必须确定</b>：按 {@code nations[]} 的顺序取，所以同一个存档每次都挑中同一批国家
+     * —— 不然"同 seed 同输入必得同结果"就在这一行上破了。
+     *
+     * @param letters 已经绑定好内容层默认要价的国书状态机（半径/数额来自 `letters.json`）
+     */
+    private WorldState issueLetters(WorldState state, LetterMachine letters) {
+        if (defaults == null) {
+            return state;            // 没给内容层默认值就不递（构造器保证只在测试里发生）
+        }
+        long budget = letters.config().maxIssuesPerSettlement();
+        if (budget <= 0) {
+            return state;
+        }
+        LetterIssuing issuing = new LetterIssuing(letters.config());
+        WorldState next = state;
+        for (Nation n : state.nations()) {
+            if (budget <= 0) {
+                break;
+            }
+            Optional<LetterIssuing.Proposal> proposal = issuing.consider(next, n);
+            if (proposal.isEmpty()) {
+                continue;
+            }
+            budget--;
+            next = letters.propose(next, n.id(), proposal.get().kind(),
+                    proposal.get().targetNationId(), defaults);
+        }
+        return next;
     }
 
     // ---- §七「全体成长」 ----

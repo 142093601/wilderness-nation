@@ -1,0 +1,41 @@
+# 接触（§11.1）→ 外交（§11.2）→ 国书（§9.4）→ 到期，在真服务端上跑一遍
+#
+# 背景两个坑（都是 2026-09-20 接线时/真机上发现的）：
+#   ① `met` 生成时一律 false，而没有任何地方会把它改成 true ——
+#      情报/外交/国书整条玩家链原本是**死的**。现在两条路径：走近 + 情报站建成。
+#   ② 递书门槛原本写成 −30，与宣战惩罚同值，而同一拍里"态度回归"会把它拉回 −28/−29
+#      —— 边界永远踩不到，国书一封都递不出来。现在门槛是 −20（明显松于 −30）。
+
+cmd: /statecraft info
+expect: STATECRAFT_INFO
+
+# 1) 走近 n11 烈日（x=82 z=3099）——512 格内算接触。
+#    存档可能已经全接触过了（情报站建成时会一次全标），所以这里只要求命令能跑通。
+cmd: /statecraft contact 82 64 3099
+expect: STATECRAFT_CONTACT
+
+# 2) 情报站建成 = 完整列表（advance 里顺手做）：12 国全进册子
+cmd: /statecraft advance 2.0
+expect: STATECRAFT_ADVANCE
+cmd: /statecraft contact 82 64 3099
+expect: met=12/12
+
+# 3) 外交：宣战（态度 −30）→ 求和（转 TRUCE，不再打仗但态度很差）
+cmd: /statecraft diplomacy n11 declare_war
+expect: STATECRAFT_DIPLO DECLARE_WAR
+cmd: /statecraft diplomacy n11 peace 90
+expect: STATECRAFT_DIPLO SUE_FOR_PEACE
+
+# 4) 推进：`issueLetters` 应该递出"停止建造"（§9.4）
+cmd: /statecraft advance 2.0
+expect: STATECRAFT_ADVANCE
+cmd: /statecraft letters
+expect: STATECRAFT_LETTERS
+
+# 5) 一步步推到期限之后：忽略 = 拒绝（§9.4），状态转 EXPIRED。
+#    （收尾断言故意松：国书是随存档长的，写死 id/条数会让脚本一次就过时）
+cmd: /statecraft advance 2.0
+cmd: /statecraft advance 2.0
+cmd: /statecraft advance 2.0
+cmd: /statecraft letters
+expect: STATECRAFT_LETTERS total=\d+ open=\d+ seq=\d+

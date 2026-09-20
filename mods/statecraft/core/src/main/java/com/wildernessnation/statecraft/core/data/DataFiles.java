@@ -7,6 +7,7 @@ import com.wildernessnation.statecraft.core.env.EnvironRequirement;
 import com.wildernessnation.statecraft.core.era.Era;
 import com.wildernessnation.statecraft.core.era.EraTable;
 import com.wildernessnation.statecraft.core.letter.LetterConfig;
+import com.wildernessnation.statecraft.core.letter.LetterDefaults;
 import com.wildernessnation.statecraft.core.letter.LetterKind;
 import com.wildernessnation.statecraft.core.model.Culture;
 import com.wildernessnation.statecraft.core.persist.StateNode;
@@ -203,7 +204,22 @@ public final class DataFiles {
                 longOr(cfg, p, "stopBuildPromiseSettlements", d.stopBuildPromiseSettlements()),
                 doubleOr(cfg, p, "stopBuildKeptAttitudeGain", d.stopBuildKeptAttitudeGain()),
                 doubleOr(cfg, p, "stopBuildBreachAttitudePenalty",
-                        d.stopBuildBreachAttitudePenalty()));
+                        d.stopBuildBreachAttitudePenalty()),
+                doubleOr(cfg, p, "issueAttitudeThreshold", d.issueAttitudeThreshold()),
+                longOr(cfg, p, "issueCooldownSettlements", d.issueCooldownSettlements()),
+                longOr(cfg, p, "maxIssuesPerSettlement", d.maxIssuesPerSettlement()),
+                doubleOr(cfg, p, "jointWarMinAttitude", d.jointWarMinAttitude()),
+                doubleOr(cfg, p, "jointWarTargetAttitude", d.jointWarTargetAttitude()));
+    }
+
+    /**
+     * `letters.json` 里三种国书的**要价/半径**（`LetterDefaults` 只装"停止建造的半径"与
+     * "朝贡的数额"两项，因为只有这两种需要）。
+     */
+    public static LetterDefaults letterDefaults(LetterData data) {
+        return new LetterDefaults(
+                data.of(LetterKind.STOP_BUILDING).radius(),
+                data.of(LetterKind.TRIBUTE).amount());
     }
 
     // ---- buildings.json / staff.json ----
