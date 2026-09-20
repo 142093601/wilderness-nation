@@ -1,0 +1,34 @@
+# 单机跑同一个开发存档：验两件在服务端上验不了的事
+#
+# ① §J：**有玩家在场时，绑定的村民到底在不在世界上**
+#    服务端上（无人在线）实测：盘上有、世界里没有（`execute if entity @e` = 0）。
+#    这里的判据是 `/statecraft buildings` 报 `healthy=true`。
+# ② §J4：**有玩家在线时，结算调度真的会推进**（§七 每 2 小时累计在线一次小结算）
+#    用 `/statecraft pending 1.99` 注水，十几秒内调度器就该自己结算一次。
+#    证据要看日志里的 `STATECRAFT_SETTLE kind=PERIODIC`（跑完由外面 grep）。
+#
+# 前置：存档 `scdev`（从开发服务端世界的拷贝）+ `enable_cheats.py` 打开命令权限
+
+cmd: /statecraft info
+expect: STATECRAFT_INFO
+
+# ① 有玩家在场 → 村民该在世界上
+cmd: /statecraft buildings
+expect: loaded=true bound=true healthy=true
+
+cmd: execute if entity @e[type=minecraft:villager]
+expect: Test passed
+
+# 幂等：绑定健康时不该重刷
+cmd: /statecraft materialize
+expect: SKIP
+
+# ② 调度器：注水 1.99 小时 → 下一拍该结算
+cmd: /statecraft pending 1.99
+expect: STATECRAFT_PENDING
+
+cmd: /statecraft info
+expect: STATECRAFT_INFO
+
+# 留一张图当证据
+shot: scdev-single-player

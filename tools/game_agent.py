@@ -165,7 +165,20 @@ def clean_lines(raw: str) -> list[str]:
 
 # ── 输入就绪探针 ──────────────────────────────────────────────────────────────
 
-def wait_for_input_ready(cfg: dict, timeout: float = 420.0, gap: float = 4.0) -> bool:
+# 等"游戏真的能收按键"多久（秒）。
+#
+# ⚠️ 2026-09-20 实测：**这个包要 7 分钟以上才进世界**（232 个 mod，其中 Exposure 还会去
+# 拉 GitHub 上的 supporter 名单、连接超时又拖一截），而原来的 420 秒会在
+# "Minecraft: NeoForge Loading..." 那一屏上就超时 —— 报出来的是"未能进入世界"，
+# 看起来像客户端坏了，其实是等得不够久。
+WORLD_READY_SECONDS = 900.0
+
+# 进世界之后再等多久才开始打字（生成区块、装资源包、JEI 索引都在这一段里）。
+INPUT_READY_SECONDS = 600.0
+
+
+def wait_for_input_ready(cfg: dict, timeout: float = INPUT_READY_SECONDS,
+                         gap: float = 4.0) -> bool:
     """等"我发出去的按键真的被游戏收到了"。
 
     为什么不能只等日志里的"进世界"标记：`LoggerChunkProgressListener` / `Preparing spawn area`
@@ -370,7 +383,8 @@ def main() -> int:
                 proc = subprocess.Popen(cmd, cwd=str(version_dir), stdout=out, stderr=subprocess.STDOUT)
             # 连服务器时不会出现单机那行判据，要改等"加入游戏"的广播
             probe = re.compile(r"joined the game|Connecting to") if cfg["server"] else None
-            if not at.wait_for_in_world(log_path(cfg), proc, time.time() + 420, launched_at, probe):
+            if not at.wait_for_in_world(log_path(cfg), proc,
+                    time.time() + WORLD_READY_SECONDS, launched_at, probe):
                 print("未能进入世界")
                 return 1
             print("  已进入世界")

@@ -93,6 +93,7 @@ public final class StatecraftEvents {
     private static final String MARK_BUILD = "STATECRAFT_BUILD";
     private static final String MARK_INTEL = "STATECRAFT_INTEL";
     private static final String MARK_BLUEPRINT = "STATECRAFT_BLUEPRINT";
+    private static final String MARK_PENDING = "STATECRAFT_PENDING";
 
     private StatecraftEvents() {}
 
@@ -155,6 +156,11 @@ public final class StatecraftEvents {
                         .requires(source -> source.hasPermission(2))
                         .then(Commands.argument("hours", DoubleArgumentType.doubleArg(0.01))
                                 .executes(StatecraftEvents::advance)))
+                // 开发用：往"待结算的在线小时"里注水（§J4 的验收靠它，不然要真等 2 小时）
+                .then(Commands.literal("pending")
+                        .requires(source -> source.hasPermission(2))
+                        .then(Commands.argument("hours", DoubleArgumentType.doubleArg(0.0))
+                                .executes(StatecraftEvents::pending)))
                 // ---- 阶段 3：国书（§9.4）的两条 ----
                 .then(Commands.literal("letters").executes(StatecraftEvents::letters))
                 .then(Commands.literal("answer")
@@ -609,6 +615,24 @@ public final class StatecraftEvents {
         List<Building> out = new ArrayList<>(existing);
         out.add(extra);
         return out;
+    }
+
+    /**
+     * `/statecraft pending <hours>`：往"待结算的在线小时"里注水（**开发用**）。
+     *
+     * <p>为什么需要它：§七 的节拍是"每 2 小时累计在线一次小结算"，而验收那条
+     * "**有**人在线时调度器真的会推进"不能真等两小时。注水之后调度器**下一拍**就会
+     * 看到 `pending >= periodicHours`，于是走的是**和真实在线完全相同的代码路径**
+     * （只是时间不是自然流逝来的）。
+     */
+    private static int pending(CommandContext<CommandSourceStack> ctx) {
+        CommandSourceStack source = ctx.getSource();
+        double hours = DoubleArgumentType.getDouble(ctx, "hours");
+        SCHEDULER.injectPendingHours(hours);
+        source.sendSuccess(() -> Component.literal(String.format(
+                "%s +%.2f（待结算现在 %.2f 小时；下一拍就会按 §七 结算）",
+                MARK_PENDING, hours, SCHEDULER.pendingHours())), true);
+        return 1;
     }
 
     /**
