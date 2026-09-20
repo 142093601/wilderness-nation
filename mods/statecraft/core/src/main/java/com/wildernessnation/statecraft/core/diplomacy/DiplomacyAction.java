@@ -24,5 +24,19 @@ public enum DiplomacyAction {
     CALL_FOR_AID,
 
     /** 朝贡：支付资源换态度与"不侵犯"承诺。 */
-    TRIBUTE
+    TRIBUTE;
+
+    /**
+     * 这个动作必须在**情报站**发起吗（`NATIONS.md` §11.2 的"在情报站发起（全服公告）"）。
+     *
+     * <p>只有宣战与朝贡要：它们**公告天下**——打谁、给谁进贡，整服都得知道。
+     * 其余四个动作只是你和对方之间的往来，情报册上就能做。
+     *
+     * <p>为什么放在枚举上而不是写在 {@code IntelTier} 里：这是**动作自己的属性**
+     * （"要不要当面说"），不是档位的能力。放在档位那边的话，
+     * 以后加一个"也要公告"的新动作就得改两处，而有一处一定会被忘掉。
+     */
+    public boolean needsStation() {
+        return this == DECLARE_WAR || this == TRIBUTE;
+    }
 }

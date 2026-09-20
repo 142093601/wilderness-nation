@@ -1,15 +1,22 @@
 package com.wildernessnation.statecraft.core.data;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.wildernessnation.statecraft.core.building.BuildingAbility;
+import com.wildernessnation.statecraft.core.building.BuildingCatalog;
+import com.wildernessnation.statecraft.core.building.BuildingDef;
 import com.wildernessnation.statecraft.core.config.StatecraftConfig;
+import com.wildernessnation.statecraft.core.env.EnvironRequirement;
 import com.wildernessnation.statecraft.core.era.EraTable;
 import com.wildernessnation.statecraft.core.letter.LetterConfig;
 import com.wildernessnation.statecraft.core.letter.LetterKind;
 import com.wildernessnation.statecraft.core.model.Culture;
 import com.wildernessnation.statecraft.core.persist.StateNode;
+import com.wildernessnation.statecraft.core.staff.StaffCatalog;
+import com.wildernessnation.statecraft.core.staff.StaffDef;
 import com.wildernessnation.statecraft.core.text.PlaceNames;
 import com.wildernessnation.statecraft.core.text.TextTemplates;
 import java.util.List;
@@ -323,6 +330,171 @@ class DataFilesTest {
             f.put("amount", new StateNode.Dec(amount));
         }
         return new StateNode.Obj(f);
+    }
+
+    // ---- buildings.json（§10.1/§10.5/§11.1）----
+
+    @Test
+    void readsBuildingsWithTheirTiersAndPerTierAbilities() {
+        BuildingCatalog catalog = DataFiles.buildings(buildings());
+        assertEquals(1, catalog.size());
+        BuildingDef def = catalog.require("intel_station");
+
+        assertEquals("情报站", def.name());
+        assertEquals("minecraft:lectern", def.anchorBlock());
+        assertEquals("scribe", def.staffProfession());
+        assertEquals(64.0, def.blueprintPrice(), 0.0);
+        assertEquals(List.of("basic", "upgraded"), def.tierIds(), "档位顺序必须等于文件顺序");
+        assertEquals(Set.of(BuildingAbility.INTEL_BOOK, BuildingAbility.DIPLOMACY),
+                def.abilitiesAt(1));
+        assertEquals(Set.of(BuildingAbility.INTEL_BOOK, BuildingAbility.DIPLOMACY,
+                        BuildingAbility.DEEP_DIVE),
+                def.abilitiesAt(2),
+                "第二档写的是「这一档新增什么」，读出来是累积的（升级过的情报站当然还会外交）");
+        assertEquals(60.0, def.baseTier().minEnclosurePercent(), 0.0);
+        assertEquals(40, def.topTier().minVolume());
+    }
+
+    @Test
+    void buildingTierFieldsHaveSafeDefaults() {
+        Map<String, StateNode> tier = StateNode.fields();
+        tier.put("tierId", new StateNode.Str("basic"));
+        Map<String, StateNode> building = StateNode.fields();
+        building.put("id", new StateNode.Str("hut"));
+        building.put("anchorBlock", new StateNode.Str("minecraft:stone"));
+        building.put("staffProfession", new StateNode.Str("scribe"));
+        building.put("tiers", new StateNode.Arr(List.of(new StateNode.Obj(tier))));
+        Map<String, StateNode> root = StateNode.fields();
+        root.put("buildings", new StateNode.Arr(List.of(new StateNode.Obj(building))));
+
+        BuildingDef def = DataFiles.buildings(new StateNode.Obj(root)).require("hut");
+        assertEquals("hut", def.name(), "没写 name 就退回 id");
+        assertEquals(EnvironRequirement.defaultBasic().minEnclosurePercent(),
+                def.baseTier().minEnclosurePercent(), 0.0,
+                "没写的环境阈值必须等于 §十二 的默认档（默认值只有一个来源）");
+        assertEquals(12, def.baseTier().minVolume());
+        assertFalse(def.authorized(), "没写 requiredBlueprint = 不需要授权");
+        assertTrue(def.abilities().isEmpty(), "没写 abilities = 这个档没有能力");
+    }
+
+    @Test
+    void buildingsMissingRequiredFieldsFailWithTheFieldPath() {
+        Map<String, StateNode> building = StateNode.fields();
+        building.put("id", new StateNode.Str("hut"));
+        Map<String, StateNode> root = StateNode.fields();
+        root.put("buildings", new StateNode.Arr(List.of(new StateNode.Obj(building))));
+        IllegalStateException e = assertThrows(IllegalStateException.class,
+                () -> DataFiles.buildings(new StateNode.Obj(root)));
+        assertTrue(e.getMessage().contains("buildings.json.buildings[0].anchorBlock"),
+                "报错要指到具体字段：" + e.getMessage());
+    }
+
+    @Test
+    void duplicateBuildingIdsAreRejectedAtLoad() {
+        Map<String, StateNode> root = StateNode.fields();
+        root.put("buildings", new StateNode.Arr(List.of(
+                buildings().asObj("buildings.json").field("buildings.json", "buildings")
+                        .asArr("buildings.json.buildings").items().get(0),
+                buildings().asObj("buildings.json").field("buildings.json", "buildings")
+                        .asArr("buildings.json.buildings").items().get(0))));
+        IllegalStateException e = assertThrows(IllegalStateException.class,
+                () -> DataFiles.buildings(new StateNode.Obj(root)));
+        assertTrue(e.getMessage().contains("两次"), e.getMessage());
+    }
+
+    // ---- staff.json（§10.2）----
+
+    @Test
+    void readsStaffAndCrossChecksAgainstTheBuildings() {
+        StaffCatalog staff = DataFiles.staff(staff());
+        assertEquals(1, staff.size());
+        StaffDef scribe = staff.require("scribe");
+        assertEquals("文书", scribe.name());
+        assertEquals("intel_station", scribe.buildingType());
+        assertEquals(List.of("陈守简", "姚无咎"), scribe.names());
+        assertEquals("陈守简", scribe.nameAt(0));
+
+        List<String> problems = staff.crossCheck(DataFiles.buildings(buildings()));
+        assertTrue(problems.isEmpty(), "这两份数据必须对得上：" + problems);
+    }
+
+    @Test
+    void staffAbilitiesAndNamesAreOptionalButValidated() {
+        Map<String, StateNode> staff0 = StateNode.fields();
+        staff0.put("id", new StateNode.Str("scribe"));
+        staff0.put("buildingType", new StateNode.Str("intel_station"));
+        staff0.put("names", new StateNode.Arr(List.of(new StateNode.Str("甲"))));
+        Map<String, StateNode> root = StateNode.fields();
+        root.put("professions", new StateNode.Arr(List.of(new StateNode.Obj(staff0))));
+
+        StaffDef def = DataFiles.staff(new StateNode.Obj(root)).require("scribe");
+        assertEquals("scribe", def.name(), "没写 name 就退回 id");
+        assertEquals("……", def.greeting(), "没写问候语给一个最不打扰的默认值");
+        assertTrue(def.abilities().isEmpty());
+    }
+
+    @Test
+    void staffWithoutNamesIsRejected() {
+        Map<String, StateNode> staff0 = StateNode.fields();
+        staff0.put("id", new StateNode.Str("scribe"));
+        staff0.put("buildingType", new StateNode.Str("intel_station"));
+        staff0.put("names", new StateNode.Arr(List.of()));
+        Map<String, StateNode> root = StateNode.fields();
+        root.put("professions", new StateNode.Arr(List.of(new StateNode.Obj(staff0))));
+        assertThrows(IllegalArgumentException.class,
+                () -> DataFiles.staff(new StateNode.Obj(root)));
+    }
+
+    private static StateNode buildings() {
+        List<StateNode> tiers = new java.util.ArrayList<>();
+        tiers.add(tier("basic", 60.0, 12,
+                List.of(BuildingAbility.INTEL_BOOK, BuildingAbility.DIPLOMACY)));
+        tiers.add(tier("upgraded", 75.0, 40, List.of(BuildingAbility.DEEP_DIVE)));
+        Map<String, StateNode> def = StateNode.fields();
+        def.put("id", new StateNode.Str("intel_station"));
+        def.put("name", new StateNode.Str("情报站"));
+        def.put("anchorBlock", new StateNode.Str("minecraft:lectern"));
+        def.put("schematic", new StateNode.Str("statecraft:intel_station"));
+        def.put("staffProfession", new StateNode.Str("scribe"));
+        def.put("requiredBlueprint", new StateNode.Str("intel_station"));
+        def.put("blueprintPrice", new StateNode.Int(64));
+        def.put("tiers", new StateNode.Arr(tiers));
+        Map<String, StateNode> root = StateNode.fields();
+        root.put("buildings", new StateNode.Arr(List.of(new StateNode.Obj(def))));
+        return new StateNode.Obj(root);
+    }
+
+    private static StateNode tier(String id, double enclosure, int volume, List<String> abilities) {
+        Map<String, StateNode> f = StateNode.fields();
+        f.put("tierId", new StateNode.Str(id));
+        f.put("requireRoof", new StateNode.Bool(true));
+        f.put("minEnclosurePercent", new StateNode.Dec(enclosure));
+        f.put("minVolume", new StateNode.Int(volume));
+        f.put("requireClaim", new StateNode.Bool(true));
+        List<StateNode> abs = new java.util.ArrayList<>();
+        for (String a : abilities) {
+            abs.add(new StateNode.Str(a));
+        }
+        f.put("abilities", new StateNode.Arr(abs));
+        return new StateNode.Obj(f);
+    }
+
+    private static StateNode staff() {
+        Map<String, StateNode> scribe = StateNode.fields();
+        scribe.put("id", new StateNode.Str("scribe"));
+        scribe.put("name", new StateNode.Str("文书"));
+        scribe.put("buildingType", new StateNode.Str("intel_station"));
+        scribe.put("names", new StateNode.Arr(
+                List.of(new StateNode.Str("陈守简"), new StateNode.Str("姚无咎"))));
+        List<StateNode> abs = new java.util.ArrayList<>();
+        for (String a : List.of(BuildingAbility.INTEL_BOOK, BuildingAbility.DIPLOMACY,
+                BuildingAbility.DEEP_DIVE)) {
+            abs.add(new StateNode.Str(a));
+        }
+        scribe.put("abilities", new StateNode.Arr(abs));
+        Map<String, StateNode> root = StateNode.fields();
+        root.put("professions", new StateNode.Arr(List.of(new StateNode.Obj(scribe))));
+        return new StateNode.Obj(root);
     }
 }
 

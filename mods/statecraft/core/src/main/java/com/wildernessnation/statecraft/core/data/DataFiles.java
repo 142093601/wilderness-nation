@@ -1,12 +1,17 @@
 package com.wildernessnation.statecraft.core.data;
 
+import com.wildernessnation.statecraft.core.building.BuildingCatalog;
+import com.wildernessnation.statecraft.core.building.BuildingDef;
 import com.wildernessnation.statecraft.core.config.StatecraftConfig;
+import com.wildernessnation.statecraft.core.env.EnvironRequirement;
 import com.wildernessnation.statecraft.core.era.Era;
 import com.wildernessnation.statecraft.core.era.EraTable;
 import com.wildernessnation.statecraft.core.letter.LetterConfig;
 import com.wildernessnation.statecraft.core.letter.LetterKind;
 import com.wildernessnation.statecraft.core.model.Culture;
 import com.wildernessnation.statecraft.core.persist.StateNode;
+import com.wildernessnation.statecraft.core.staff.StaffCatalog;
+import com.wildernessnation.statecraft.core.staff.StaffDef;
 import com.wildernessnation.statecraft.core.text.PlaceNames;
 import com.wildernessnation.statecraft.core.text.TextTemplates;
 import java.util.ArrayList;
@@ -199,6 +204,118 @@ public final class DataFiles {
                 doubleOr(cfg, p, "stopBuildKeptAttitudeGain", d.stopBuildKeptAttitudeGain()),
                 doubleOr(cfg, p, "stopBuildBreachAttitudePenalty",
                         d.stopBuildBreachAttitudePenalty()));
+    }
+
+    // ---- buildings.json / staff.json ----
+
+    /**
+     * `buildings.json`：根是 `{ "buildings": [ {...} ] }`。
+     *
+     * <p>档位**按文件顺序**读（§10.5 的判定是"取最后一个被满足的档"，所以顺序就是语义）。
+     * 每个档位上还可以带一份 `abilities`，它和档位一一对应（§11.1 的第三档能力）。
+     */
+    public static BuildingCatalog buildings(StateNode root) {
+        Map<String, BuildingDef> byId = new LinkedHashMap<>();
+        List<StateNode> items = root.field("buildings.json", "buildings")
+                .asArr("buildings.json.buildings").items();
+        for (int i = 0; i < items.size(); i++) {
+            String path = StateNode.index("buildings.json.buildings", i);
+            BuildingDef def = readBuilding(items.get(i), path);
+            if (byId.put(def.id(), def) != null) {
+                throw new IllegalStateException("buildings.json 里这座建筑定义了两次：" + def.id());
+            }
+        }
+        return new BuildingCatalog(byId);
+    }
+
+    private static BuildingDef readBuilding(StateNode node, String path) {
+        String id = node.field(path, "id").asString(path + ".id");
+        String name = stringOr(node, path, "name", id);
+        String anchor = node.field(path, "anchorBlock").asString(path + ".anchorBlock");
+        String schematic = stringOr(node, path, "schematic", "");
+        String profession = node.field(path, "staffProfession")
+                .asString(path + ".staffProfession");
+        String blueprint = stringOr(node, path, "requiredBlueprint", "");
+        double price = doubleOr(node, path, "blueprintPrice", 0.0);
+
+        List<StateNode> tierNodes = node.field(path, "tiers").asArr(path + ".tiers").items();
+        List<EnvironRequirement> tiers = new ArrayList<>(tierNodes.size());
+        List<Set<String>> abilities = new ArrayList<>(tierNodes.size());
+        for (int i = 0; i < tierNodes.size(); i++) {
+            String tp = StateNode.index(path + ".tiers", i);
+            tiers.add(readTier(tierNodes.get(i), tp));
+            abilities.add(readStringSet(tierNodes.get(i), tp, "abilities"));
+        }
+        return new BuildingDef(id, name, anchor, schematic, tiers, abilities, profession,
+                blueprint, price);
+    }
+
+    private static EnvironRequirement readTier(StateNode node, String path) {
+        String tierId = stringOr(node, path, "tierId", "basic");
+        return new EnvironRequirement(
+                tierId,
+                boolOr(node, path, "requireRoof", true),
+                doubleOr(node, path, "minEnclosurePercent", 60.0),
+                intOr(node, path, "minVolume", 12),
+                boolOr(node, path, "requireClaim", true));
+    }
+
+    /** `staff.json`：根是 `{ "professions": [ {...} ] }`。 */
+    public static StaffCatalog staff(StateNode root) {
+        Map<String, StaffDef> byId = new LinkedHashMap<>();
+        List<StateNode> items = root.field("staff.json", "professions")
+                .asArr("staff.json.professions").items();
+        for (int i = 0; i < items.size(); i++) {
+            String path = StateNode.index("staff.json.professions", i);
+            StaffDef def = readStaff(items.get(i), path);
+            if (byId.put(def.id(), def) != null) {
+                throw new IllegalStateException("staff.json 里这个职业定义了两次：" + def.id());
+            }
+        }
+        return new StaffCatalog(byId);
+    }
+
+    private static StaffDef readStaff(StateNode node, String path) {
+        String id = node.field(path, "id").asString(path + ".id");
+        String name = stringOr(node, path, "name", id);
+        String building = node.field(path, "buildingType").asString(path + ".buildingType");
+        String appearance = stringOr(node, path, "appearance", "");
+        String greeting = stringOr(node, path, "greeting", "……");
+        List<StateNode> names = node.field(path, "names").asArr(path + ".names").items();
+        List<String> pool = new ArrayList<>(names.size());
+        for (int i = 0; i < names.size(); i++) {
+            pool.add(names.get(i).asString(StateNode.index(path + ".names", i)));
+        }
+        return new StaffDef(id, name, building, pool, appearance, greeting,
+                readStringSet(node, path, "abilities"));
+    }
+
+    private static Set<String> readStringSet(StateNode node, String path, String key) {
+        StateNode arr = node.optionalField(path, key);
+        if (arr == null) {
+            return Set.of();
+        }
+        List<StateNode> items = arr.asArr(path + "." + key).items();
+        Set<String> out = new LinkedHashSet<>();
+        for (int i = 0; i < items.size(); i++) {
+            out.add(items.get(i).asString(StateNode.index(path + "." + key, i)));
+        }
+        return out;
+    }
+
+    private static String stringOr(StateNode obj, String path, String key, String fallback) {
+        StateNode v = obj.optionalField(path, key);
+        return v == null ? fallback : v.asString(path + "." + key);
+    }
+
+    private static boolean boolOr(StateNode obj, String path, String key, boolean fallback) {
+        StateNode v = obj.optionalField(path, key);
+        return v == null ? fallback : v.asBool(path + "." + key);
+    }
+
+    private static int intOr(StateNode obj, String path, String key, int fallback) {
+        StateNode v = obj.optionalField(path, key);
+        return v == null ? fallback : v.asInt(path + "." + key);
     }
 
     private static double doubleOr(StateNode obj, String path, String key, double fallback) {

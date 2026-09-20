@@ -1,0 +1,34 @@
+{
+  "professions": [
+    {
+      "id": "scribe",
+      "name": "文书",
+      "buildingType": "intel_station",
+      "appearance": "statecraft:scribe",
+      "greeting": "远来的客人？天下的动静我都记着呢——要听哪一桩？",
+      "abilities": [
+        "intel_book",
+        "diplomacy",
+        "declaration",
+        "track_nations",
+        "see_wars",
+        "deep_dive",
+        "upgrade"
+      ],
+      "names": [
+        "陈守简",
+        "姚无咎",
+        "裴半卷",
+        "陆知白",
+        "钟墨",
+        "孔曳",
+        "许砚",
+        "崔长史",
+        "杜竹生",
+        "严子青",
+        "范无衣",
+        "邵温"
+      ]
+    }
+  ]
+}

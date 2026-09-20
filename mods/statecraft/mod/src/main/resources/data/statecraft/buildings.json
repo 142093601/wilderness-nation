@@ -1,0 +1,40 @@
+{
+  "buildings": [
+    {
+      "id": "intel_station",
+      "name": "情报站",
+      "anchorBlock": "minecraft:lectern",
+      "schematic": "statecraft:intel_station",
+      "staffProfession": "scribe",
+      "requiredBlueprint": "intel_station",
+      "blueprintPrice": 64,
+      "tiers": [
+        {
+          "tierId": "basic",
+          "requireRoof": true,
+          "minEnclosurePercent": 60,
+          "minVolume": 12,
+          "requireClaim": true,
+          "abilities": [
+            "intel_book",
+            "diplomacy",
+            "declaration"
+          ]
+        },
+        {
+          "tierId": "upgraded",
+          "requireRoof": true,
+          "minEnclosurePercent": 75,
+          "minVolume": 40,
+          "requireClaim": true,
+          "abilities": [
+            "track_nations",
+            "see_wars",
+            "deep_dive",
+            "upgrade"
+          ]
+        }
+      ]
+    }
+  ]
+}

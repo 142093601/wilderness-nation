@@ -2,6 +2,7 @@ package com.wildernessnation.statecraft.data;
 
 import com.google.gson.JsonParser;
 import com.mojang.logging.LogUtils;
+import com.wildernessnation.statecraft.core.building.BuildingCatalog;
 import com.wildernessnation.statecraft.core.config.StatecraftConfig;
 import com.wildernessnation.statecraft.core.data.DataFiles;
 import com.wildernessnation.statecraft.core.data.LetterData;
@@ -11,6 +12,7 @@ import com.wildernessnation.statecraft.core.model.Culture;
 import com.wildernessnation.statecraft.core.persist.StateMigrator;
 import com.wildernessnation.statecraft.core.persist.StateMigrations;
 import com.wildernessnation.statecraft.core.persist.StateNode;
+import com.wildernessnation.statecraft.core.staff.StaffCatalog;
 import com.wildernessnation.statecraft.core.text.PlaceNames;
 import com.wildernessnation.statecraft.core.text.TextTemplates;
 import java.io.IOException;
@@ -38,6 +40,8 @@ public final class StatecraftData {
     private static final String PLACES_PATH = "/data/statecraft/places.json";
     private static final String EVENTS_PATH = "/data/statecraft/events.json";
     private static final String LETTERS_PATH = "/data/statecraft/letters.json";
+    private static final String BUILDINGS_PATH = "/data/statecraft/buildings.json";
+    private static final String STAFF_PATH = "/data/statecraft/staff.json";
 
     private static EraTable eras;
     private static NationData nations;
@@ -45,6 +49,8 @@ public final class StatecraftData {
     private static PlaceNames places;
     private static TextTemplates templates;
     private static LetterData letters;
+    private static BuildingCatalog buildings;
+    private static StaffCatalog staff;
 
     private StatecraftData() {}
 
@@ -55,12 +61,18 @@ public final class StatecraftData {
         places = DataFiles.places(read(PLACES_PATH));
         templates = DataFiles.templates(read(EVENTS_PATH));
         letters = DataFiles.letters(read(LETTERS_PATH));
+        buildings = DataFiles.buildings(read(BUILDINGS_PATH));
+        // 建筑与村民是**同一件事写了两份数据**（building.staffProfession ↔ staff.buildingType），
+        // 所以载入时就把两边对齐一次：对不上是内容 bug，早报早好过"进了游戏才刷不出村民"
+        staff = DataFiles.staff(read(STAFF_PATH)).validatedAgainst(buildings);
         migrator = StateMigrations.production();
-        LOG.info("Statecraft 数据已载入：{} 个时代、{} 个文化、国名池 {} 个、国书 {} 种",
+        LOG.info("Statecraft 数据已载入：{} 个时代、{} 个文化、国名池 {} 个、国书 {} 种、{} 座建筑、{} 种村民",
                 eras.size(),
                 nations.cultures().size(),
                 nations.cultures().stream().mapToInt(c -> c.namePrefixes().size()).sum(),
-                letters.kinds().size());
+                letters.kinds().size(),
+                buildings.size(),
+                staff.size());
     }
 
     public static EraTable eras() {
@@ -95,6 +107,18 @@ public final class StatecraftData {
     public static LetterData letters() {
         requireLoaded();
         return letters;
+    }
+
+    /** 建筑定义表（`buildings.json`）—— 环境档位、绑定的村民职业、图纸授权都在里面。 */
+    public static BuildingCatalog buildings() {
+        requireLoaded();
+        return buildings;
+    }
+
+    /** 村民定义表（`staff.json`），载入时已与建筑表交叉校验过。 */
+    public static StaffCatalog staff() {
+        requireLoaded();
+        return staff;
     }
 
     public static StateMigrator migrator() {
