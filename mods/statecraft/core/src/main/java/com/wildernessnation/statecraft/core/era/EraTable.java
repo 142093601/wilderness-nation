@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalDouble;
 import java.util.Set;
 
 /**
@@ -98,6 +99,29 @@ public final class EraTable {
             }
         }
         return false;
+    }
+
+    /**
+     * 某个时代**结束时**的累计小时数（§七 的时钟口径）。
+     *
+     * <p>已经到最后一个时代了就返回空 —— "没有下一个时代"和"下一个时代在 0 小时处"是两件事，
+     * 混成 0 会让调用方以为马上要跨时代（{@link SettlementClock} 就是靠它区分这两者的）。
+     */
+    public OptionalDouble boundaryAfter(Era current) {
+        if (current == null) {
+            return OptionalDouble.empty();
+        }
+        Era normalized = byOrdinal(current.ordinal());
+        double acc = 0.0;
+        for (Era e : eras) {
+            acc += e.durationHours();
+            if (e.ordinal() == normalized.ordinal()) {
+                return e.ordinal() == eras.get(eras.size() - 1).ordinal()
+                        ? OptionalDouble.empty()          // 最后一个时代：没有下一个边界
+                        : OptionalDouble.of(acc);
+            }
+        }
+        return OptionalDouble.empty();
     }
 
     /**

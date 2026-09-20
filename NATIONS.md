@@ -234,6 +234,16 @@ presentation（薄）
 
 **时间口径**：按**累计在线时间**。**不在线不推进**；回来时看未读队列。
 
+> ✅ **调度器已落地**（2026-09-20）：`settle/SettlementClock`（纯算术，可 JUnit）+ 
+> mod 层 `world/SettlementScheduler`（每 tick 用 `System.nanoTime()` 的差值攒真实时间，
+> 而不是数 tick —— 卡顿时 tick 会掉，数 tick 会让时钟跟着变慢）。
+> 攒到一半的小时数存在 mod 层的 NBT 键里（`pendingHours`），**不进 core 的 schema**：
+> 它属于"调度器记到哪儿了"，不是世界状态。
+> 真机验证：空转 65 秒（0 人在线）后 `hours=34.00 seq=17` 一个数都没动，
+> 日志里也没有任何 `STATECRAFT_SETTLE` —— **"不在线不推进"是实测成立的**。
+> 时代推进时会用 core 的 `Narrator` 把那一封「天下大势」渲染出来广播给在线的人。
+> ⚠️ "**有**人在线时每 2 小时推进"这一段还没实测（需要一个客户端连进来，见 `DEFERRED.md` §J1）。
+
 ---
 
 ## 八、国家之间的战争、灭亡与吸收

@@ -1,0 +1,20 @@
+# 结算调度的"不在线不推进"（§七）—— 在真服务端上验
+#
+# 这条是设计里的硬要求："按累计在线时间；不在线不推进；回来时看未读队列。"
+# 判据：两次 `info` 之间隔 60 秒，`hours` 必须**一个数都不变**（没人在线）。
+#
+# 注意：`hours` 是**结算才推进**的累计在线小时，不是服务器开了多久。
+# 所以空转 60 秒后它必须和 60 秒前一模一样。
+
+cmd: /statecraft info
+expect: STATECRAFT_INFO
+
+cmd: /statecraft advance 2.0
+expect: STATECRAFT_ADVANCE
+
+cmd: /statecraft info
+expect: hours=\d+\.\d+ buildings=\d+ letters=\d+ met=\d+
+
+# 国书会随结算被递出来（§9.4 的触发侧接上之后）
+cmd: /statecraft letters
+expect: STATECRAFT_LETTERS total=\d+ open=\d+

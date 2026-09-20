@@ -34,6 +34,7 @@ import com.wildernessnation.statecraft.data.StatecraftSavedData;
 import com.wildernessnation.statecraft.world.BuildingService;
 import com.wildernessnation.statecraft.world.ClaimProbe;
 import com.wildernessnation.statecraft.world.EnvScanner;
+import com.wildernessnation.statecraft.world.SettlementScheduler;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -48,6 +49,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import org.slf4j.Logger;
 
 /**
@@ -60,6 +62,9 @@ import org.slf4j.Logger;
 public final class StatecraftEvents {
 
     private static final Logger LOG = LogUtils.getLogger();
+
+    /** 结算调度器（§七）：整进程一个。 */
+    private static final SettlementScheduler SCHEDULER = new SettlementScheduler();
 
     /** 自检用的稳定标记，方便自动化脚本断言（中文回显不可靠）。 */
     private static final String MARK_INFO = "STATECRAFT_INFO";
@@ -86,6 +91,8 @@ public final class StatecraftEvents {
         for (String warning : data.loadWarnings()) {
             LOG.warn("Statecraft 读档：{}", warning);
         }
+        // 调度器记到哪儿了（攒到一半的在线小时）也一起恢复，免得每次重启丢掉最多 2 小时
+        SCHEDULER.restore(data.pendingHours());
         if (data.state() == null) {
             WorldState generated = generate(overworld);
             data.set(generated);
@@ -541,6 +548,21 @@ public final class StatecraftEvents {
         return out;
     }
 
+    /**
+     * 结算调度（§七）：按真实时间攒"在线小时"，攒够 2 小时就跑一次周期小结算，
+     * 跨过时代边界就跑时代推进。**没有玩家在线时一点都不攒**。
+     */
+    @SubscribeEvent
+    public static void onServerTick(ServerTickEvent.Post event) {
+        try {
+            SCHEDULER.tick(event.getServer(),
+                    StatecraftSavedData.get(event.getServer().overworld()));
+        } catch (RuntimeException ex) {
+            // 调度器出问题**不能带崩服务器**：记一条、跳过这一拍，下一拍继续
+            LOG.error("Statecraft：结算调度出错（已跳过这一拍）：{}", ex.toString());
+        }
+    }
+
     private static StatecraftSavedData data(CommandSourceStack source) {
         return StatecraftSavedData.get(source.getServer().overworld());
     }
@@ -554,9 +576,12 @@ public final class StatecraftEvents {
             source.sendSuccess(() -> Component.literal(message), false);
             return 0;
         }
-        String head = String.format("%s seed=%d era=%s ordinal=%d seq=%d nations=%d",
+        String head = String.format(
+                "%s seed=%d era=%s ordinal=%d seq=%d hours=%.2f nations=%d buildings=%d "
+                        + "letters=%d met=%d",
                 MARK_INFO, state.seed(), state.eraId(), state.eraOrdinal(), state.seq(),
-                state.nations().size());
+                state.elapsedOnlineHours(), state.nations().size(), state.buildings().size(),
+                state.letters().size(), IntelContact.metCount(state));
         source.sendSuccess(() -> Component.literal(head), false);
         for (Nation n : state.nations()) {
             String line = String.format("  %s %s %s size=%d dev=%.1f stance=%.1f mil=%.1f x=%.0f z=%.0f",

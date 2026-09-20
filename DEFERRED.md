@@ -124,6 +124,11 @@ force-load 只保证区块被加载、方块在跑，**不等于实体被装回�
       判据依旧是重启后那一行 `execute if entity @e` 的 `Test passed` / `Test failed`，
       而 `mca_probe.py` 可以随时回答"盘上到底有没有"。
 - [ ] **J3 修复后的回归**：连续重启两次，`/statecraft buildings` 稳定 `healthy=true` 且只有 1 个村民。
+- [ ] **J4 结算调度的"有人在线的"分支**：现在只实测了"0 人在线 → 一点都不推进"。
+      带一个客户端连进来站几分钟，判据：日志出现 `STATECRAFT_SETTLE kind=PERIODIC`
+      （每 2 小时累计在线）或 `kind=ERA_ADVANCE`（跨时代），且 `info` 里的 `hours` 真的在涨。
+      为了不用真等 2 小时：进服前先把 `statecraft.dat` 里的 `pendingHours` 手改成 1.99
+      （**它在 mod 层，不影响 core 的 schema**），进服后 1 分钟内就该结算一次。
 
 **v1 的行为（有意如此）**：村民真没了 → 按 §10.4 走**重雇冷却（1 小时累计在线）**再雇一个。
 而"**重复生成**"那条路已经被两道闸挡住：§10.3 的"同一 seq 不重复生成"+ mod 层"按标签改认"

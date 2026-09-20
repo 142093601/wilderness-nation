@@ -23,11 +23,20 @@ public final class StatecraftSavedData extends SavedData {
 
     private static final String KEY_STATE = "state";
 
+    /**
+     * 调度器攒到一半的"在线小时"（mod 层自己记的，**不进 core 的 schema**）。
+     *
+     * <p>为什么不放进 {@link WorldState}：它不是世界状态的一部分，而是"调度器上次推到哪儿了"。
+     * 放进 core 会让每次调度器的实现变化都牵动存档格式与迁移链。
+     */
+    private static final String KEY_PENDING_HOURS = "pendingHours";
+
     private static final SavedData.Factory<StatecraftSavedData> FACTORY =
             new SavedData.Factory<>(StatecraftSavedData::new, StatecraftSavedData::load, null);
 
     private WorldState state;
     private List<String> loadWarnings = List.of();
+    private double pendingHours;
 
     public static StatecraftSavedData get(ServerLevel level) {
         return level.getDataStorage().computeIfAbsent(FACTORY, FILE_ID);
@@ -49,16 +58,28 @@ public final class StatecraftSavedData extends SavedData {
         setDirty();
     }
 
+    /** 调度器攒到一半的在线小时（默认 0）。 */
+    public double pendingHours() {
+        return pendingHours;
+    }
+
+    public void setPendingHours(double v) {
+        this.pendingHours = Math.max(0.0, v);
+        setDirty();
+    }
+
     @Override
     public CompoundTag save(CompoundTag tag, HolderLookup.Provider registries) {
         if (state != null) {
             tag.put(KEY_STATE, NodeNbtCodec.toNbt(StateCodec.write(state)));
         }
+        tag.putDouble(KEY_PENDING_HOURS, pendingHours);
         return tag;
     }
 
     private static StatecraftSavedData load(CompoundTag tag, HolderLookup.Provider registries) {
         StatecraftSavedData data = new StatecraftSavedData();
+        data.pendingHours = Math.max(0.0, tag.getDouble(KEY_PENDING_HOURS));
         Tag raw = tag.get(KEY_STATE);
         if (!(raw instanceof CompoundTag stateTag)) {
             return data;
