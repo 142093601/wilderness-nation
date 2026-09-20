@@ -381,6 +381,7 @@ def main() -> int:
             launched_at = time.time()
             with launch_log.open("wb") as out:
                 proc = subprocess.Popen(cmd, cwd=str(version_dir), stdout=out, stderr=subprocess.STDOUT)
+            at.write_client_pid(proc)
             # 连服务器时不会出现单机那行判据，要改等"加入游戏"的广播
             probe = re.compile(r"joined the game|Connecting to") if cfg["server"] else None
             if not at.wait_for_in_world(log_path(cfg), proc,
@@ -412,12 +413,15 @@ def main() -> int:
         if proc is not None and not args.attach:
             how = at.graceful_quit(proc.pid, log_path(cfg))
             print(f"退出方式: {how}")
-            for lock in (Path(cfg["version_dir"]) / "saves").glob("*/session.lock"):
+            # 只清本次世界那把锁（以前全清 saves/*/session.lock，会牵连玩家自己的存档）
+            if cfg["world"]:
                 try:
-                    lock.unlink()
-                except Exception:
+                    lock = Path(cfg["version_dir"]) / "saves" / cfg["world"] / "session.lock"
+                    lock.unlink(missing_ok=True)
+                except Exception:  # noqa: BLE001
                     pass
             at.restore_options(backup, Path(cfg["version_dir"]))
+        at.clear_client_pid()
 
 
 if __name__ == "__main__":

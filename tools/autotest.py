@@ -36,6 +36,7 @@ from typing import Any
 # 公开仓库里那等于把机器信息一起公开，而且换台机器要改 6 个文件。
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import pack_paths  # noqa: E402  同目录模块
+import pid_guard   # noqa: E402  自有 JVM 的登记/认领（只杀自己启动的，见 INCIDENTS.md）
 
 _P = pack_paths.paths()
 DEFAULTS = {
@@ -75,6 +76,20 @@ CRASH_LOG_PATTERNS = (
 # 注意它是纯日志字符串、**不跟随客户端语言**（本机 zh_cn 下实测仍是英文），
 # 而 "准备生成区域中：x%" 那行是翻译过的 —— 这也是不能用它的原因之一。
 LEVEL_LOADED_MARKER = re.compile(r"Time elapsed:")
+
+# ── 自有 JVM 的 pid 登记（2026-09-20 事故之后加的）─────────────────────────────
+# 事故：清场用的 `taskkill /F /IM javaw.exe` 是**按镜像名**杀的，会把玩家正在玩的游戏一起
+# 杀掉；被强杀的 JVM 不写崩溃报告，玩家只看到"游戏崩溃但未生成崩溃报告"。
+# 现在只登记自己的 pid，清理时也只按登记文件杀 —— 逻辑集中在 tools/pid_guard.py。
+CLIENT_PID_FILE = pid_guard.CLIENT_PID_FILE
+
+
+def write_client_pid(proc: subprocess.Popen) -> None:
+    pid_guard.write(CLIENT_PID_FILE, proc.pid)
+
+
+def clear_client_pid() -> None:
+    pid_guard.clear(CLIENT_PID_FILE)
 
 
 
@@ -475,6 +490,7 @@ def main() -> int:
         with launch_log.open("wb") as out:
             proc = subprocess.Popen(cmd, cwd=str(version_dir), stdout=out, stderr=subprocess.STDOUT)
         print(f"  pid = {proc.pid}")
+        write_client_pid(proc)
 
         deadline = time.time() + args.startup_timeout
         if not wait_for_in_world(log, proc, deadline, launched_at):
@@ -495,14 +511,18 @@ def main() -> int:
         print(f"  退出方式: {how}")
     finally:
         restore_options(backup, version_dir)
+        clear_client_pid()
 
-    # 清理可能残留的锁
-    for lock in (version_dir / "saves").glob("*/session.lock"):
-        try:
+    # 清理可能残留的锁：**只清本次世界那个**。
+    # 以前是 `saves/*/session.lock` 全清 —— 顺带会把玩家自己存档的锁删掉，
+    # 万一玩家正开着那个存档，等于给了两写同一存档的机会。
+    try:
+        lock = version_dir / "saves" / args.world / "session.lock"
+        if lock.is_file():
             lock.unlink()
-            print(f"  已清理残留锁: {lock.name}")
-        except Exception:
-            pass
+            print(f"  已清理残留锁: {args.world}/session.lock")
+    except Exception:
+        pass
 
     # 收集：复用采集器
     world_dir = version_dir / "saves" / args.world

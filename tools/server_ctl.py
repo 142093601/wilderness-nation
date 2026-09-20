@@ -34,6 +34,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import pack_paths  # noqa: E402  同目录模块：读取本机配置
+import pid_guard   # noqa: E402  自有 JVM 的登记/认领（只杀自己启动的，见 INCIDENTS.md）
 
 _P = pack_paths.paths()
 HERE = Path(__file__).resolve().parent
@@ -272,6 +273,9 @@ def start(server_dir: Path, wait: int = 420) -> int:
     proc = subprocess.Popen(cmd, cwd=str(server_dir), stdout=out, stderr=subprocess.STDOUT,
                             stdin=subprocess.DEVNULL)
     print(f"  pid = {proc.pid}（控制台输出: {out_path}）")
+    # 立刻登记（不等就绪）：万一就绪超时或中途死掉，清理时才找得到它。
+    # 两列格式（pid + 进程创建时刻）比单列 pid 安全：认领时验创建时刻，防 pid 被复用后误杀。
+    pid_guard.write(server_dir / ".server.pid", proc.pid)
     ok, tail = wait_ready(server_dir, wait, proc)
     for l in tail:
         print("  | " + l[:200])
@@ -284,7 +288,6 @@ def start(server_dir: Path, wait: int = 420) -> int:
                 pass
         return 1
     print("服务端就绪")
-    (server_dir / ".server.pid").write_text(str(proc.pid), encoding="utf-8")
     return 0
 
 
@@ -308,7 +311,7 @@ def stop(server_dir: Path) -> int:
         print(f"连不上 RCON（{exc}），退回按 pid 结束")
         pid_file = server_dir / ".server.pid"
         if pid_file.is_file():
-            subprocess.run(["taskkill", "/PID", pid_file.read_text().strip()], capture_output=True)
+            subprocess.run(["taskkill", "/PID", pid_guard.read_pid(pid_file)], capture_output=True)
     if sent:
         print("已发送 stop")
     # 等服务端把世界存完

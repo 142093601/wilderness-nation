@@ -103,6 +103,19 @@ python tools\server_ctl.py --setup --start
 python tools\server_ctl.py --cmd "statecraft info"
 ```
 
+**清场逻辑回归测试**（2026-09-20 事故之后加的，改动了 `tools/paired_check.py` /
+`autotest.py` / `server_ctl.py` 里任何与进程有关的东西就重跑）：
+
+```powershell
+python tools\pid_guard_selftest.py                  # 快：pid 复用要拦住、无关 JVM 一个不许动
+python tools\pid_guard_selftest.py --with-server    # 慢约 1 分钟：自己的服务端要认得出来、停得掉
+```
+
+> 铁律：**永远不按镜像名/特征杀进程**（`taskkill /IM`、`Get-Process java | Stop-Process` 都不许）。
+> 只按自己登记过的 pid 杀（`tools/pid_guard.py`），杀前还要验命令行与进程创建时刻。
+> 原因见 `INCIDENTS.md` 2026-09-20：按名杀会把玩家正在玩的游戏一起杀掉，而被强杀的 JVM
+> 不写崩溃报告，于是双方都被引去怀疑某个 mod。
+
 （下面是阶段 1 当时记的细节，留作参考）
 
 ```

@@ -38,6 +38,7 @@ MARKER = "Starting integrated minecraft server"
 QUARANTINE_FILE = ROOT / "tools" / "lists" / "quarantine.tsv"
 
 sys.path.insert(0, str(ROOT / "tools"))
+import pid_guard          # noqa: E402  自有 JVM 的登记/认领（只杀自己启动的，见 INCIDENTS.md）
 try:
     import depgraph as DG   # 依赖闭包：keep = 选中的批次 ∪ 它们的必需前置库
 except Exception as _e:      # noqa: BLE001
@@ -84,10 +85,19 @@ def fname(slug):
     return None
 
 
-def kill_java():
-    for im in ("java.exe", "javaw.exe"):
-        subprocess.run(["taskkill", "/F", "/T", "/IM", im], capture_output=True)
-    time.sleep(6)
+SERVER_PID_FILE = ROOT / "server" / ".server.pid"
+CLIENT_PID_FILE = ROOT / ".client.pid"
+
+
+def _own_pid(pid_file):
+    """认领 pid 文件（细节见 tools/pid_guard.py：验命令行含 java + 验启动时刻，防 pid 复用）。"""
+    return pid_guard.claim(pid_file, verbose=True)
+
+
+def stop_own_jvms():
+    """只停**我们自己启动的** JVM，绝不按镜像名杀进程（2026-09-20 事故，见 INCIDENTS.md）。"""
+    pid_guard.stop_own()
+    time.sleep(2)
 
 
 def settle(min_free_gb=4.0, timeout=180):
@@ -98,25 +108,24 @@ def settle(min_free_gb=4.0, timeout=180):
     也就是说那是**环境/资源压力**，不是 mod 冲突 —— 但会被误读成"某个 mod 有问题"。
     """
     t0 = time.time()
+    mine, free = [], 0.0
     while time.time() - t0 < timeout:
-        alive = subprocess.run(
-            ["powershell", "-NoProfile", "-Command",
-             "(Get-Process java,javaw -ErrorAction SilentlyContinue | Measure-Object).Count"],
-            capture_output=True, text=True, timeout=60)
+        # 只看**我们自己的** JVM 有没有退干净。不看全机器 java 进程数：
+        # 玩家自己的游戏/Gradle 守护进程都算 java，拿它当门槛会永远等不到 0。
+        mine = [f.name for f in (CLIENT_PID_FILE, SERVER_PID_FILE) if f.is_file() and _own_pid(f)]
         mem = subprocess.run(
             ["powershell", "-NoProfile", "-Command",
              "[math]::Round((Get-CimInstance Win32_OperatingSystem).FreePhysicalMemory/1MB,2)"],
             capture_output=True, text=True, timeout=60)
         try:
-            n_java = int((alive.stdout or "0").strip() or 0)
             free = float((mem.stdout or "0").strip() or 0)
         except ValueError:
-            n_java, free = 1, 0.0
-        if n_java == 0 and free >= min_free_gb:
-            log("  资源已就绪（java 进程 0，空闲内存 %.1f GB，等了 %.0f 秒）" % (free, time.time() - t0))
+            free = 0.0
+        if not mine and free >= min_free_gb:
+            log("  资源已就绪（自有 JVM 0，空闲内存 %.1f GB，等了 %.0f 秒）" % (free, time.time() - t0))
             return True
         time.sleep(5)
-    log("  !! settle 超时（java=%s 空闲=%.1f GB），仍继续" % (n_java, free))
+    log("  !! settle 超时（自有 JVM=%s 空闲=%.1f GB），仍继续" % (mine or "无", free))
     return False
 
 
@@ -265,7 +274,7 @@ def main():
         % (args.group, len(want), args.world_group or args.group, len(world_set),
            " 复用" if args.reuse_world else ""))
 
-    kill_java()
+    stop_own_jvms()
     qm = quarantine_jars()
     if qm:
         log("  已隔离 %d 个：%s" % (len(qm), ", ".join(sorted(set(qm)))))
@@ -310,7 +319,7 @@ def main():
                            capture_output=True, timeout=120)
         except Exception as e:  # noqa: BLE001
             log("  停服异常（忽略并强杀）：%s" % e)
-        kill_java()
+        stop_own_jvms()
         if not ok_done:
             log("  !! 服务端没到 Done（服务端侧冲突）→ 无法判定客户端")
             return 3
@@ -337,7 +346,7 @@ def main():
 
     settle()
     entered, _ = run_client_test(args.world, args.startup_timeout, args.group)
-    kill_java()
+    stop_own_jvms()
     return 0 if entered else 1
 
 
