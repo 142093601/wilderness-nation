@@ -929,11 +929,6 @@ hash = "391e5d415c0754ad210b8efa54fc9ded4f99e6ab8562d6faf960f3b65d84a66a"
 metafile = true
 
 [[files]]
-file = "mods/quest-enhance.pw.toml"
-hash = "923554028f5e6473660b80c4cfa29485a97e6211e432d8104232b1c132efae92"
-metafile = true
-
-[[files]]
 file = "mods/rechiseled-create.pw.toml"
 hash = "f7758221468760a7d22b31f97e822f5a66fa1fa21d2c8b4b3bb21ca01faff3cd"
 metafile = true

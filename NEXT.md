@@ -38,7 +38,9 @@
 | M0（HYW 会不会主动打玩家） | ⬜ **未跑**（夺城/计划 5 的唯一前置，需要真玩家当靶子） |
 | 包侧中文补全 | ✅ 完成。116 命名空间 / 5288 条界面文本；覆盖率 79%→89% |
 | **任务书工具链** | ✅ **完成**（2026-09-20）：`tools/questbook.py`（生成器）+ `tools/questbook_check.py`（9 项校验）+ `tools/lint_questbook_toml.py` + `tools/build_registry.py` |
-| **任务书数据（四章样板）** | ✅ **已生成并真机验证**：序 · 落地 · 机械动力 · 防御与尸潮 = **4 章 / 46 任务**；服务端日志 `Loaded 5 chapter groups, 4 chapters, 46 quests, 0 reward tables`，**FTB Quests 零 ERROR/零 WARN** |
+| **任务书数据（四章样板）** | ✅ **已生成并真机验证**：序 · 落地 · 机械动力 · 防御与尸潮 = **4 章 / 46 任务**；服务端日志 `Loaded 5 chapter groups, 4 chapters, 46 quests, 0 reward tables`，**FTB Quests 零 ERROR/零 WARN**；**已装进实例**（`install_questbook.py`） |
+| **时代钥匙入口（mod 侧）** | ✅ **完成**（2026-09-20）：`/statecraft accelerate`。核过 JUnit **28 类 / 385 用例 / 0 失败**（`SettlementClockTest` 15 个）。它**只把累计小时推到时代边界**，推进仍走原有的 `ERA_ADVANCE` 路径——老路径一个字没改 |
+| **C18：`quest_enhance` 硬冲突** | ✅ **已处置（移除）**。它让"按 N 打开任务书"必崩（mixin 签名不匹配）。升级/降级**都实测救不了**，详见 `CONFLICTS.md` C18 |
 | **任务书「邦交」章** | ⛔ **有意未写**——理由见 §三.4（判据没有信号源） |
 | 世界自清空平衡问题 | ✅ 实测过并修好（`NATIONS.md` §八点五） |
 | `treaties.json` 数据化 · 玩家侧落盘 | 有意没做，触发条件写在 `DEFERRED.md` §I |
@@ -103,11 +105,24 @@
 （jar 实测 `advancements=0`），所以"守住一次大规模袭击"目前也是 `checkmark`。
 若要让这一步自动判定，需要在 mod 侧暴露"波次开始/结束"事件。
 
-### 3.5 mod 侧的另一小块（单列，不混进任务书数据）
+### 3.5 mod 侧的另一小块（**已完成**）
 
-**"可被命令触发的提前推进时代"入口**（现状：`SettlementClock` 只按累计在线小时推进；
-`/statecraft advance` 是开发用小结算，不是时代推进）。默认命令名 `/statecraft accelerate`、**不取代价**。
-约束：走 core 纯逻辑 + JUnit + 真机脚本；**必须保留**"时间到自动推进"的老路径。
+**"可被命令触发的提前推进时代"入口**：`/statecraft accelerate`（2026-09-20 完成）。
+设计要点（别再重新发明）：
+
+- **不另造推进路径**：core 只加了一个纯算术函数
+  `SettlementClock.hoursToBoundary(elapsed, boundary)` → 到边界还差多少小时；
+  加速把它注进 pending，**推进本身仍由原有的 `SettlementClock.plan` + `SettlementEngine` 的
+  `ERA_ADVANCE` 分支完成**。于是时代级结算（事件 / 国书 / 天下大势）一件都不会少，
+  而且"时间到自动推进"那条老路径一个字没改。
+- **`hoursToBoundary` 返回 `OptionalDouble`**：空 = 已经是最后一个时代 → **拒绝加速**
+  （不是静默什么都不做）。
+- **一处语义决定**：`SettlementScheduler` 新增 `externallyInjected` 标记。
+  §七 的"不在线不推进"**只管自然累积**（服务器空转不该烧全服预算）；
+  而命令塞进来的小时数是**刻意操作**——时代钥匙是玩家做完主线换来的，
+  再拿"你不在线"拒绝它等于钥匙失效。所以这条路径不看在线数，
+  这也是它能在 0 人在线的专用服务端上验收的原因。
+- 真机验收脚本：`tools/tests/sc_accelerate.txt`（用 `wait:` 等调度器那一拍）。
 
 ---
 
@@ -271,8 +286,12 @@ python tools\pid_guard_selftest.py --with-server     # 改过进程相关代码�
 - **无后台任务在跑**；**没有**游戏/服务端在跑（验证用的服务端已退出）
 - **进程**：应无残留 JVM。若见到，先 `gradle --stop` / `tools/server_ctl.py --stop`，**不要按名字杀**
 - **实例侧**：**任务书已装进实例**（2026-09-20，`tools/install_questbook.py`，12 个文件）
-  → 位置 `<实例>/config/ftbquests/quests/`。**用户可以直接进游戏按 N 看**。
+  → 位置 `<实例>/config/ftbquests/quests/`。**可以直接进游戏按 N 看**。
   存档目录数安装前后一致（29），未碰 `saves/` · `options.txt` · `ftbquests-client.snbt`
+- **实例侧的 mod 变更**：`quest_enhance` 的 jar 与残留配置**已删除**（C18 处置）。
+  它**不会再被装回来**（仓库元数据也 `git rm` 了 + `packwiz refresh`）。
+- ⚠️ **实例里的 statecraft jar 还是旧的**：`/statecraft accelerate` 是新加的，
+  要让它进实例需要**重编 + 重新落盘**（`gradle :mod:build` 之后把新 jar 拷进实例 mods）。
 - **服务端侧（gitignore）**：`server/config/ftbquests/quests/` 有我拷进去验证用的数据；
   `server/world/` 是历史测试世界，未动
 - **实例里的测试残留**：`saves/scdev`（我拷的单机测试档）；`options.txt` 已还原成用户的

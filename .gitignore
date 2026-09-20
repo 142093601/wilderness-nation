@@ -74,6 +74,15 @@ tools/registry.json
 tools/_probe_*
 tools/_stats_*
 tools/_javap_work/
+# 取证类临时脚本一律以 `_` 开头（见 tools/README.md 的纪律）：
+# 2026-09-20 一次冲突排查里我用了 _conflict_* / _ftbq_* / _cmb* 等名字，逃过了上面的规则，
+# 于是它们以"未跟踪文件"的形式堆在 git status 里。这条兜底规则把它们全覆盖。
+tools/_*.py
+tools/_*.txt
+tools/_*.toml
+!tools/_selftest.py
+# 本机临时工作目录（javac 中间产物、下载来对比的 jar 等）
+data/_*
 
 # ---------- 系统 ----------
 .DS_Store

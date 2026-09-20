@@ -51,6 +51,7 @@
 | **T9** | **同一 jar 文件名被两个 slug 引用**（`yungs-api` 与 `yungs-api-neoforge` 指向同一个 jar）→ 逐个 slug 处理时互相覆盖 | 🟠 方法论 | `set_side` 改为按**文件名集合**决策 ✅ |
 | **T10** | **从 pack 移除 mod 不会删掉实例里的 jar**（`sable`/`create-aeronautics` 移除后仍在 mods 目录里 → 继续崩） | 🟠 流程 | 记入隔离清单 + 手工清理；`materialize --prune` 只管同项目换版，不管"整个 mod 被移除" ⏳ 待工具化 |
 | **T11** | `--prune` 的"按第一个数字切分"启发式把 `supermartijn642corelib` 当成 `supermartijn642configlib` 的旧版**误删**（名字里带数字） | 🔴 自伤 | 改为**按项目 id 记账**（`data/materialize-manifest.json`）✅ |
+| **C18** | **`quest_enhance` 3.9 与 FTB Quests 2101.1.36 硬冲突**：它的 `QuestButtonMixin` 要改 `ContextMenuBuilder.insertAtTop`，但期望签名 `(Collection)->Collection`、实际是 `(Collection)->ContextMenuBuilder` → **玩家一按 N 打开任务书客户端就崩**（`Scanned 0 target(s)`） | 🔴 致命（任务书打不开） | 移除 `quest_enhance` ✅ **已按证据判定：升级/降级都救不了**（见第二节 C18） |
 
 **四条硬规律**（都是这次撞出来的，见第三节）：
 **R1 世界与 mod 集必须匹配**（缺 mod 时开世界**静默失败**，没有任何报错）·
@@ -1029,4 +1030,78 @@ print(f"world   : {args.world}")          # ← 表头打印的是参数，不�
 共同点都是**断言与被断言的对象之间没有闭环**。防复发的一般做法只有一条：
 **让"实际用的值/实际发生的事"自己出现在证据里**（打印真正生效的参数、等命令自己的回显、
 核对存档里的真实字段），而不是让脚本"声明"它做了什么。
+
+---
+
+### C18 · `quest_enhance` 与 FTB Quests 硬冲突 → **一按 N 打开任务书客户端就崩**（🔴 已处置：移除）
+
+**现象**：玩家（用户）按 N 打开任务书，客户端**当场崩溃**——
+`Description: mouseReleased event handler`，崩溃报告
+`crash-2026-09-20_23.29.41-client.txt`。
+
+**原始证据（崩溃报告的 `Caused by` 链）**：
+
+```
+Caused by: org.spongepowered.asm.mixin.injection.throwables.InjectionError:
+  Critical injection failure:
+  Argument modifier method quest_enhance$add_dependency_line_to_standard_menu(Ljava/util/Collection;)Ljava/util/Collection;
+  in quest_enhance.mixins.json:QuestButtonMixin from mod quest_enhance
+  failed injection check, (0/1) succeeded. Scanned 0 target(s). No refMap loaded.
+```
+
+调用栈指向 `dev.ftb.mods.ftbquests.client.gui.quests.QuestScreen.<init>` —— 即**打开任务书 GUI** 的那一刻。
+
+**根因（签名不匹配，已用 javap 实测两侧）**：
+
+| | `ContextMenuBuilder.insertAtTop` |
+|---|---|
+| FTB Quests **2101.1.36** 实际 | `public ContextMenuBuilder insertAtTop(Collection<ContextMenuItem>)` |
+| `quest_enhance` **3.9** 期望 | `(Ljava/util/Collection;)Ljava/util/Collection;` |
+
+返回类型不同（`ContextMenuBuilder` vs `Collection`）→ mixin 找不到目标方法 →
+`Scanned 0 target(s)` → 注入失败 → 崩。这是**硬冲突**（改同一处）。
+
+**两条退路都实测过，都不通**（这一步很关键，别重复做）：
+
+1. **升级 `quest_enhance`**：CF 上 1.21.1 的版本线**最新就是 3.9**（2026-09-15，file id 8886967）；
+   作者之后的 3.10 只发 26.1.2。**没有为 1.21.1 修好的新版**。
+2. **降级 FTB Quests**（它声明 `ftbquests >= 2101.1.28`）：下载 **2101.1.28**（file id 8520042）
+   实测 `ContextMenuBuilder`，方法表与 1.36 **完全一致**（`insertAtTop` 同样返回 `ContextMenuBuilder`，
+   连类字节数都是 **4724**）→ **降级解决不了**。
+
+**问题被隔离在一个 mod 上**（所以处置范围只有它）：
+`certain_questing_additions` 的 `QuestButtonMixin` 只注入渲染相关方法（`setupDrawing` 等），
+**没有** `(Collection)->Collection` 这种签名问题（逐个字符串核对过它的常量池）。
+
+**处置：移除 `quest_enhance`**（用户拍板，理由成立）——
+它的定位是**编辑器增强**（剪贴板贴图 / 章节画布文字 / 生物模型图标 / 视频），
+即"帮人写任务书"；而本项目的任务书是**用 `tools/questbook.py` 从 TOML 生成的**
+（见 `QUESTBOOK-FORMAT.md`），不依赖 GUI 编辑器。移除后编辑器功能由生成器替代。
+
+**为什么它以前没被发现**：直到 2026-09-20 任务书里**第一次有了数据**（四章样板 46 任务），
+才有人去按 N 打开它 —— 此前 `config/ftbquests/quests/` 是空的，
+`QuestScreen` 从未在装了 `quest_enhance` 的环境里被构造过。
+**即：这不是"装了任务书才崩"，而是"有了任务书才有人去开那个界面"。**
+
+**移除前三层后果（按 `removing-mods-safely` 逐条核对，全部为零）**：
+
+| 层 | 结论 | 依据 |
+|---|---|---|
+| 启动期（依赖） | 无 | `pack/mods/*.pw.toml` 里没有任何 mod 声明依赖它 |
+| 世界期（注册项） | 无 | 它的 jar 里 **`data/` 条目 = 0** → 不注册方块/物品/实体/维度，存档不会有残留 |
+| 内容期（引用） | 无 | `pack/config/**` 的任务书数据里不出现 `quest_enhance` |
+
+**实际动作**（四处，缺一不可）：
+1. 删 `<实例>/mods/quest_enhance-1.21.1-neoforge-3.9.jar`；
+2. 删残留配置 `<实例>/config/quest_enhance-client.toml` 与 `<实例>/defaultconfigs/quest_enhance/`；
+3. `git rm pack/mods/quest-enhance.pw.toml`（否则 packwiz 会把它装回来）；
+4. `packwiz refresh`（更新 `pack/index.toml` 与 `pack.toml` 的哈希）。
+另有 `tools/lists/install-batches.tsv` 里批 1 的那条记录**待清理**（不影响安装，只影响可读性）。
+
+**防复发**：
+- 这条属于"**只有真的有人去点那个界面才会暴露**"的冲突。判据很具体：
+  **功能有数据之后，必须真的走一遍入口**。任务书这一层的入口就是"按 N 打开"——
+  所以四章样板的验收清单里，"开一次任务书"是**必做项**，不是可选项。
+- 一般的做法：`questbook_check.py` 只能证明数据能被解析（服务端已证），
+  **证明不了客户端 GUI 能开**（那是 mixin 层的事）。两层证据都要。
 
