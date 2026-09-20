@@ -92,7 +92,8 @@ public final class SettlementEngine {
         }
         WorldState settled = new WorldState(
                 WorldState.CURRENT_SCHEMA_VERSION, state.seed(), state.eraId(), state.eraOrdinal(),
-                state.seq(), nations, relations, state.events(), state.elapsedOnlineHours());
+                state.seq(), nations, relations, state.events(), state.buildings(),
+                state.elapsedOnlineHours());
         return settled.withEventsAdded(events).withClock(hours, era.id(), era.ordinal(), seq);
     }
 

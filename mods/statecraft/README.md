@@ -57,6 +57,8 @@
 | `StatecraftConfig` | ✅ 全部默认值 + 钳制校验（dev 钳进 0..100、所有 double 查 finite、薄环带在**校验期**就报出 rmin/rmax —— 原来会静默退化到布点阶段再以错误的原因抛）|
 | `Era` / `EraTable` | ✅ 时代**数据驱动**、按 era id 解锁、未知 id 归位（已知 id 优先）、表外 Era 按钳位语义（测 3/6/9 三套表）|
 | `Culture` / `Nation` / `WorldState` | ✅ 数据模型，**NaN/负军力/空文本/负序号全部拒绝**（NaN 曾能穿透范围检查）|
+| `EnvironmentRules`（`env/`） | ✅ **环境判定**（§10.5）：只吃四个读数（有屋顶/封闭度/体积/在领地内），**类型上就没有形状信息** → "不做形状检测"是结构性保证；档位取"满足的最高档"，不满足时逐条列出原因（带实际读数）|
+| `Building` + `IdempotencyRules` + `MaterializationThrottle`（`building/`） | ✅ **幂等决策**（§10.3/§10.4）：锚点先判 → 三件校验全过就 `SKIP`（幂等）→ 否则看同一 seq 与冷却；节流按 §十二（同结算最多 1 处 + 间隔 ≥5 分钟），**5 分钟换算成累计在线小时**，不用结算序号 |
 | `WorldGenerator` | ✅ 布点（最小间距 + 环带）/ 规模 / **发展度与规模反比** / 倾向（`stanceBase` 真的接上了）/ **最近国主和 = 交换位置**（无主和候选时**抛异常**而不是静默放过）/ 国名按文化优先 + 回退、全局唯一 |
 
 ### 计划 2 · 存档（core 侧已完成）
@@ -68,7 +70,7 @@
 | `StateMigration` / `StateMigrator` | ✅ 按 `schemaVersion` 选迁移链；**版本太新 / 缺迁移 / 内容损坏 → 只重置国家系统 + 中文警告，绝不让存档报废**；`eraId` 不在当前时代表里 → 归位；`eraId` 与 `eraOrdinal` 矛盾 → 以 id 为准 |
 | `StateHash` / `SettlementLog` / `ReplayResult` | ✅ 事务日志与重放（计划 3）：日志记**输入**（结算序号 + 触发 + 小时数 + 动手前状态哈希），`replay` 逐步校验、`verify` 核对最终结果；支持从快照接着重放 |
 
-**199 个 JUnit 用例全绿**（15 个测试类），全程离线、不需要开游戏。
+**226 个 JUnit 用例全绿**（17 个测试类），全程离线、不需要开游戏。
 
 > 🔒 **硬规则护栏**：`stanceAlwaysStaysInsideTheFormulaEnvelope` 保证最近国主和只能靠"交换位置"实现。
 > 2026-09-19 用变异探针验证过它有牙齿：把交换改写成"翻转该国 stance"后，**只有这条断言失败**，

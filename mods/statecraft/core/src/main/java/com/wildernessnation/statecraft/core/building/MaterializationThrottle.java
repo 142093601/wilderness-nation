@@ -1,5 +1,7 @@
 package com.wildernessnation.statecraft.core.building;
 
+import com.wildernessnation.statecraft.core.model.Building;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;

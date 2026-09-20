@@ -83,17 +83,17 @@ class SettlementEngineTest {
         return new WorldState(WorldState.CURRENT_SCHEMA_VERSION, 42L, "landing", 0, 0L,
                 List.of(a, b),
                 List.of(new Relation(a.id(), b.id(), 0.0, Relation.State.WAR, 0.0, 0L, 0)),
-                List.of(), 0.0);
+                List.of(), List.of(), 0.0);
     }
 
     private static WorldState peaceful(Nation a, Nation b) {
         return new WorldState(WorldState.CURRENT_SCHEMA_VERSION, 42L, "landing", 0, 0L,
-                List.of(a, b), List.of(Relation.peace(a.id(), b.id())), List.of(), 0.0);
+                List.of(a, b), List.of(Relation.peace(a.id(), b.id())), List.of(), List.of(), 0.0);
     }
 
     private static WorldState single(Nation n) {
         return new WorldState(WorldState.CURRENT_SCHEMA_VERSION, 7L, "landing", 0, 0L,
-                List.of(n), List.of(), List.of(), 0.0);
+                List.of(n), List.of(), List.of(), List.of(), 0.0);
     }
 
     private static long count(WorldState s, String type) {

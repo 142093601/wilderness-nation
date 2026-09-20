@@ -5,7 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.wildernessnation.statecraft.core.building.Building.Anchor;
+import com.wildernessnation.statecraft.core.model.Building;
+import com.wildernessnation.statecraft.core.model.Building.Anchor;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 

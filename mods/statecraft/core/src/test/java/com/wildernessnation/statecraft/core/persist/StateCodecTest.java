@@ -9,6 +9,7 @@ import com.wildernessnation.statecraft.core.gen.WorldGenerator;
 import com.wildernessnation.statecraft.core.model.Culture;
 import com.wildernessnation.statecraft.core.model.Event;
 import com.wildernessnation.statecraft.core.model.EventTypes;
+import com.wildernessnation.statecraft.core.model.Building;
 import com.wildernessnation.statecraft.core.model.Nation;
 import com.wildernessnation.statecraft.core.model.Relation;
 import com.wildernessnation.statecraft.core.model.WorldState;
@@ -55,7 +56,7 @@ class StateCodecTest {
         Map<String, StateNode> fields = StateCodec.write(generated(1L)).asObj("world").fields();
         assertEquals(
                 List.of("schemaVersion", "seed", "eraId", "eraOrdinal", "seq", "nations",
-                        "relations", "events", "elapsedOnlineHours"),
+                        "relations", "events", "buildings", "elapsedOnlineHours"),
                 List.copyOf(fields.keySet()),
                 "根字段名与顺序要和 NATIONS.md §五 一致（末尾的 elapsedOnlineHours 是文档没列、但 §七 需要的）");
 
@@ -129,7 +130,7 @@ class StateCodecTest {
     void emptyNationListRoundTrips() {
         WorldState empty = new WorldState(
                 WorldState.CURRENT_SCHEMA_VERSION, 5L, "landing", 0, 0L,
-                List.of(), List.of(), List.of(), 0.0);
+                List.of(), List.of(), List.of(), List.of(), 0.0);
         assertEquals(empty, StateCodec.read(StateCodec.write(empty)));
     }
 
@@ -141,7 +142,7 @@ class StateCodecTest {
                 0L, -42.5, 2.5, 3);
         WorldState state = new WorldState(
                 WorldState.CURRENT_SCHEMA_VERSION, -1L, "infra", 2, 41L,
-                List.of(n), List.of(), List.of(), 33.75);
+                List.of(n), List.of(), List.of(), List.of(), 33.75);
         assertEquals(state, StateCodec.read(StateCodec.write(state)));
     }
 
@@ -154,7 +155,7 @@ class StateCodecTest {
                 "battle", List.of("赤沙国", "石口"), true, false);
         WorldState state = new WorldState(
                 WorldState.CURRENT_SCHEMA_VERSION, 7L, "infra", 2, 41L,
-                List.of(a, b), List.of(war), List.of(event), 12.0);
+                List.of(a, b), List.of(war), List.of(event), List.of(), 12.0);
 
         WorldState back = StateCodec.read(StateCodec.write(state));
         assertEquals(state, back);
@@ -179,5 +180,26 @@ class StateCodecTest {
                 () -> StateCodec.read(new StateNode.Obj(f)));
         assertTrue(e.getMessage().contains("CRUSADE"), e.getMessage());
         assertTrue(e.getMessage().contains("ALLIANCE"), "要列出合法值：" + e.getMessage());
+    }
+
+    /** §五 的 `buildings[]` 也要原样过去 —— 包括"还没绑定村民"的那座。 */
+    @Test
+    void buildingsSurviveTheRoundTrip() {
+        Building bound = new Building("b1", "intel_station",
+                new Building.Anchor("minecraft:overworld", 100, 64, -200), 2,
+                "uuid-1", 7L, 11.5, 0L);
+        Building fresh = Building.register("b2", "warehouse",
+                new Building.Anchor("minecraft:overworld", -5, 70, 9));
+        WorldState state = new WorldState(
+                WorldState.CURRENT_SCHEMA_VERSION, 3L, "infra", 2, 7L,
+                List.of(), List.of(), List.of(), List.of(bound, fresh), 11.5);
+
+        WorldState back = StateCodec.read(StateCodec.write(state));
+        assertEquals(state, back, "带建筑的往返必须逐字段相等");
+        assertEquals(2, back.buildings().size());
+        assertEquals("uuid-1", back.buildings().get(0).staffUUID());
+        assertTrue(back.buildings().get(1).stalled(), "没绑定村民的也要能原样读回来");
+        assertEquals(11.5, back.buildings().get(0).materializedAtHours(), 0.0);
+        assertEquals(-200, back.buildings().get(0).anchor().z());
     }
 }

@@ -118,6 +118,7 @@ class StateMigratorTest {
         assertEquals(Relation.State.PEACE, only.state());
         assertEquals(0.0, only.attitude(), 0.0);
         assertEquals(0, state.events().size());
+        assertEquals(0, state.buildings().size(), "v1 没有建筑登记");
         assertEquals(0.0, state.elapsedOnlineHours(), 0.0,
                 "v1 真的没记过这个数，只能从 0 开始算（迁移里唯一一处信息损失）");
     }

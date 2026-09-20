@@ -18,7 +18,7 @@ import java.util.Set;
  * "同 seed 同输入必得同结果"悄悄变成"同 seed 同输入还得看它内部数到几"。
 
  *
- * <p>还没做的字段（`unread` / `letters` / `buildings` / `domains` / `playerLedger`）属于计划 4/5：
+ * <p>还没做的字段（`unread` / `letters` / `domains` / `playerLedger`）属于计划 4/5：
  * `unread` 由 {@link Event#read} 派生（见 {@link #unreadEvents()}），其余等有规则读它们时再加。
  *
  * <p><strong>上限在构造器里强制</strong>：事件只留最近 {@value #MAX_EVENTS} 条、
@@ -34,6 +34,7 @@ public record WorldState(
         List<Nation> nations,
         List<Relation> relations,
         List<Event> events,
+        List<Building> buildings,
         double elapsedOnlineHours) {
 
     /** 当前代码写出的存档格式版本。加字段就 +1，并在 {@code StateMigrations} 里补一级迁移。 */
@@ -68,6 +69,7 @@ public record WorldState(
         nations = List.copyOf(nations);
         relations = List.copyOf(relations == null ? List.of() : relations);
         events = List.copyOf(events == null ? List.of() : events);
+        buildings = List.copyOf(buildings == null ? List.of() : buildings);
 
         // 关系不能指向不存在的国家：灭亡的国家仍留在 nations 里（status=DEAD），所以这条恒可满足，
         // 一旦不满足就是真的写坏了。
@@ -80,6 +82,13 @@ public record WorldState(
         for (Relation r : relations) {
             if (!ids.contains(r.a()) || !ids.contains(r.b())) {
                 throw new IllegalArgumentException("关系指向了不存在的国家：" + r.a() + " ↔ " + r.b());
+            }
+        }
+
+        Set<String> buildingIds = new LinkedHashSet<>();
+        for (Building b : buildings) {
+            if (!buildingIds.add(b.id())) {
+                throw new IllegalArgumentException("建筑 id 重复：" + b.id());
             }
         }
 
@@ -150,12 +159,12 @@ public record WorldState(
     }
 
     public WorldState withNations(List<Nation> v) {
-        return new WorldState(schemaVersion, seed, eraId, eraOrdinal, seq, v, relations, events,
+        return new WorldState(schemaVersion, seed, eraId, eraOrdinal, seq, v, relations, events, buildings,
                 elapsedOnlineHours);
     }
 
     public WorldState withRelations(List<Relation> v) {
-        return new WorldState(schemaVersion, seed, eraId, eraOrdinal, seq, nations, v, events,
+        return new WorldState(schemaVersion, seed, eraId, eraOrdinal, seq, nations, v, events, buildings,
                 elapsedOnlineHours);
     }
 
@@ -164,7 +173,7 @@ public record WorldState(
         List<Event> merged = new ArrayList<>(events);
         merged.addAll(extra);
         return new WorldState(schemaVersion, seed, eraId, eraOrdinal, seq, nations, relations,
-                merged, elapsedOnlineHours);
+                merged, buildings, elapsedOnlineHours);
     }
 
     /** 全部标为已读（打开情报册时用）。 */
@@ -174,13 +183,13 @@ public record WorldState(
             out.add(e.asRead());
         }
         return new WorldState(schemaVersion, seed, eraId, eraOrdinal, seq, nations, relations,
-                out, elapsedOnlineHours);
+                out, buildings, elapsedOnlineHours);
     }
 
     /** 推进时钟与时代（引擎结算完时一次性写回）。 */
     public WorldState withClock(double hours, String newEraId, int newEraOrdinal, long newSeq) {
         return new WorldState(schemaVersion, seed, newEraId, newEraOrdinal, newSeq, nations,
-                relations, events, hours);
+                relations, events, buildings, hours);
     }
 
 }

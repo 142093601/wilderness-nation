@@ -1,5 +1,7 @@
 package com.wildernessnation.statecraft.core.building;
 
+import com.wildernessnation.statecraft.core.model.Building;
+
 /**
  * mc 层观察到的"这座建筑现在到底怎么样了"（`NATIONS.md` §10.3 的校验三件套 + §10.4 的锚点）。
  *

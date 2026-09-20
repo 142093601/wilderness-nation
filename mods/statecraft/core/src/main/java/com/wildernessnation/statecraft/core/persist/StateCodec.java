@@ -1,5 +1,6 @@
 package com.wildernessnation.statecraft.core.persist;
 
+import com.wildernessnation.statecraft.core.model.Building;
 import com.wildernessnation.statecraft.core.model.Event;
 import com.wildernessnation.statecraft.core.model.Nation;
 import com.wildernessnation.statecraft.core.model.Relation;
@@ -56,6 +57,12 @@ public final class StateCodec {
         }
         root.put("events", new StateNode.Arr(events));
 
+        List<StateNode> buildings = new ArrayList<>();
+        for (Building b : state.buildings()) {
+            buildings.add(writeBuilding(b));
+        }
+        root.put("buildings", new StateNode.Arr(buildings));
+
         root.put("elapsedOnlineHours", new StateNode.Dec(state.elapsedOnlineHours()));
         return new StateNode.Obj(root);
     }
@@ -92,6 +99,23 @@ public final class StateCodec {
         f.put("warScore", new StateNode.Dec(r.warScore()));
         f.put("truceUntilSeq", new StateNode.Int(r.truceUntilSeq()));
         f.put("losingStreak", new StateNode.Int(r.losingStreak()));
+        return new StateNode.Obj(f);
+    }
+
+    private static StateNode writeBuilding(Building b) {
+        Map<String, StateNode> f = StateNode.fields();
+        f.put("id", new StateNode.Str(b.id()));
+        f.put("type", new StateNode.Str(b.type()));
+        f.put("dimension", new StateNode.Str(b.anchor().dimension()));
+        f.put("x", new StateNode.Int(b.anchor().x()));
+        f.put("y", new StateNode.Int(b.anchor().y()));
+        f.put("z", new StateNode.Int(b.anchor().z()));
+        f.put("level", new StateNode.Int(b.level()));
+        // staffUUID 可空 → 用空串表示"还没绑定"（NBT/JSON 里 null 是最容易出错的东西）
+        f.put("staffUUID", new StateNode.Str(b.staffUUID() == null ? "" : b.staffUUID()));
+        f.put("materializedAtSeq", new StateNode.Int(b.materializedAtSeq()));
+        f.put("materializedAtHours", new StateNode.Dec(b.materializedAtHours()));
+        f.put("staffDeadAtSeq", new StateNode.Int(b.staffDeadAtSeq()));
         return new StateNode.Obj(f);
     }
 
@@ -141,9 +165,15 @@ public final class StateCodec {
             events.add(readEvent(eventNodes.get(i), StateNode.index(p + ".events", i)));
         }
 
+        List<Building> buildings = new ArrayList<>();
+        List<StateNode> buildingNodes = root.field(p, "buildings").asArr(p + ".buildings").items();
+        for (int i = 0; i < buildingNodes.size(); i++) {
+            buildings.add(readBuilding(buildingNodes.get(i), StateNode.index(p + ".buildings", i)));
+        }
+
         double hours = root.field(p, "elapsedOnlineHours").asDouble(p + ".elapsedOnlineHours");
         return new WorldState(schemaVersion, seed, eraId, eraOrdinal, seq, nations, relations,
-                events, hours);
+                events, buildings, hours);
     }
 
     static Nation readNation(StateNode node, String p) {
@@ -181,6 +211,23 @@ public final class StateCodec {
                 node.field(p, "warScore").asDouble(p + ".warScore"),
                 node.field(p, "truceUntilSeq").asLong(p + ".truceUntilSeq"),
                 node.field(p, "losingStreak").asInt(p + ".losingStreak"));
+    }
+
+    private static Building readBuilding(StateNode node, String p) {
+        String uuid = node.field(p, "staffUUID").asString(p + ".staffUUID");
+        return new Building(
+                node.field(p, "id").asString(p + ".id"),
+                node.field(p, "type").asString(p + ".type"),
+                new Building.Anchor(
+                        node.field(p, "dimension").asString(p + ".dimension"),
+                        node.field(p, "x").asInt(p + ".x"),
+                        node.field(p, "y").asInt(p + ".y"),
+                        node.field(p, "z").asInt(p + ".z")),
+                node.field(p, "level").asInt(p + ".level"),
+                uuid.isBlank() ? null : uuid,          // 空串 = 还没绑定
+                node.field(p, "materializedAtSeq").asLong(p + ".materializedAtSeq"),
+                node.field(p, "materializedAtHours").asDouble(p + ".materializedAtHours"),
+                node.field(p, "staffDeadAtSeq").asLong(p + ".staffDeadAtSeq"));
     }
 
     private static Event readEvent(StateNode node, String p) {

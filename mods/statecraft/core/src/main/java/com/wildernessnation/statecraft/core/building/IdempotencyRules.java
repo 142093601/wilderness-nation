@@ -1,5 +1,7 @@
 package com.wildernessnation.statecraft.core.building;
 
+import com.wildernessnation.statecraft.core.model.Building;
+
 /**
  * 幂等决策（`NATIONS.md` §10.3 / §10.4）。
  *

@@ -64,6 +64,7 @@ public final class StateMigrations {
         }
         fields.put("relations", new StateNode.Arr(relations));
         fields.put("events", new StateNode.Arr(List.of()));
+        fields.put("buildings", new StateNode.Arr(List.of()));
         fields.put("elapsedOnlineHours", new StateNode.Dec(0.0));
         return new StateNode.Obj(fields);
     }

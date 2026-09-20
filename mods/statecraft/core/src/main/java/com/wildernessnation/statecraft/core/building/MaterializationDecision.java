@@ -1,5 +1,7 @@
 package com.wildernessnation.statecraft.core.building;
 
+import com.wildernessnation.statecraft.core.model.Building;
+
 /**
  * 该不该为这座建筑（重新）生成村民（`NATIONS.md` §10.3 / §10.4）。
  *

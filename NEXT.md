@@ -27,7 +27,13 @@
 
 ## 三、下一步（**从这里接着干**）
 
-**第一个动作**：完成环境判定包的剩下两个文件 + 测试：
+**阶段 1（M1 收尾）已完成** —— 环境判定、幂等决策、实体化节流、uildings[] 存档链路
+全部落地，**226 个 JUnit 用例全绿**。**下一步是阶段 2**（计划 4 的 core 侧）：
+数据层（places/events/buildings/staff/treaties/letters 六份 json 经 DataFiles 进 core）
+→ 文本渲染（地名池+模板→中文事件/周报/国书）→ 周报聚合 → 国书状态机 → 图纸授权
+→ 情报册数据模型 → 村民绑定 → 占位内容。
+
+（下面是阶段 1 当时记的细节，留作参考）
 
 ```
 mods/statecraft/core/src/main/java/com/wildernessnation/statecraft/core/env/

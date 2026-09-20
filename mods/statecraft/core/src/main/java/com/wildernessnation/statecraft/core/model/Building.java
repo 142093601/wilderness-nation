@@ -1,4 +1,4 @@
-package com.wildernessnation.statecraft.core.building;
+package com.wildernessnation.statecraft.core.model;
 
 /**
  * 一座已登记的建筑（`NATIONS.md` §五 的 Building 字段表）。

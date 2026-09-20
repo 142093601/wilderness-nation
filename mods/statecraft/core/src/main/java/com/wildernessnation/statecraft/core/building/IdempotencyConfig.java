@@ -1,5 +1,7 @@
 package com.wildernessnation.statecraft.core.building;
 
+import com.wildernessnation.statecraft.core.model.Building;
+
 /**
  * 实体化节流与重雇冷却的参数（`NATIONS.md` §十二 + §10.4）。
  *

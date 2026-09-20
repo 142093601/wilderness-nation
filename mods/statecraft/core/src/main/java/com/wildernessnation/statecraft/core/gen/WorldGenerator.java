@@ -95,7 +95,8 @@ public final class WorldGenerator {
         ensureNearestIsPacific(nations, spawnX, spawnZ);
         return new WorldState(
                 WorldState.CURRENT_SCHEMA_VERSION, seed, startingEraId,
-                startingEraOrdinal, 0L, nations, initialRelations(nations), List.of(), 0.0);
+                startingEraOrdinal, 0L, nations, initialRelations(nations), List.of(), List.of(),
+                0.0);
     }
 
     /**

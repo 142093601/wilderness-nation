@@ -41,7 +41,7 @@ class DiplomacyMachineTest {
 
     private static WorldState state(Nation n) {
         return new WorldState(WorldState.CURRENT_SCHEMA_VERSION, 42L, "landing", 0, 3L,
-                List.of(n), List.of(), List.of(), 0.0);
+                List.of(n), List.of(), List.of(), List.of(), 0.0);
     }
 
     private static DiplomacyResult run(Nation n, DiplomacyAction action, long nonce) {
@@ -382,7 +382,7 @@ class DiplomacyMachineTest {
         // 换个 seed 就必须换个历史
         DiplomacyMachine m = machine();
         WorldState other = new WorldState(WorldState.CURRENT_SCHEMA_VERSION, 43L, "landing", 0, 3L,
-                List.of(atWar), List.of(), List.of(), 0.0);
+                List.of(atWar), List.of(), List.of(), List.of(), 0.0);
         boolean differs = false;
         for (long nonce = 0; nonce < 20 && !differs; nonce++) {
             boolean withSeed42 = m.apply(state(atWar),

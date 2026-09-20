@@ -84,7 +84,7 @@
 | 2 | `env/EnvironmentSnapshot` + `EnvironRequirement` + `EnvironmentRules` | 阈值边界（59.9% vs 60%、11 vs 12 格）；多条不满足时**全部**列出来；档位取"满足的最高档"；**快照里没有形状信息**（结构性保证不做形状检测） | ✅ 完成（11 条用例，含把 record 分量钉死的护栏） |
 | 3 | `building/StaffObservation` + `MaterializationDecision` + `IdempotencyRules` | §10.3/§10.4 六种情形逐条；**同一 seq 不重复生成**；冷却生效 | ✅ 完成 |
 | 4 | `MaterializationThrottle`（每次结算最多 1 处 + 5 分钟间隔，其余排队） | 排队顺序确定；同 seed 可复现 | ✅ 完成（按 id 升序；全局间隔用累计在线小时） |
-| 5 | 文档同步 | `NATIONS.md` §10.3/§10.5/§十二/§十七、README、本计划执行记录 | ⬜ 阶段收尾时一起做 |
+| 5 | 文档同步 | `NATIONS.md` §10.3/§10.5/§十二/§十七、README、本计划执行记录 | ✅ 完成（NATIONS.md §五/§10.3/§10.5/§十七、README、本文件）|
 
 ### 执行记录（Task 2/3/4 完成：用例 199 → **224 全绿**，全程离线）
 

@@ -226,7 +226,8 @@ class SettlementLogTest {
         assertNotEquals(StateHash.of(s), StateHash.of(start(8L)), "换 seed 必须换哈希");
 
         // 钉住具体值：算法一旦改了（哪怕只是标签顺序），这条会红，提醒"存档里的哈希要重新对齐"
-        assertEquals(8352801430311920762L, StateHash.of(start(7L)),
-                "哈希算法变了 —— 存档里的 inputHash 会全部失效，必须有意为之并写进迁移说明");
+        assertEquals(2479475232479818627L, StateHash.of(start(7L)),
+                "状态哈希变了：要么算法改了，要么 schema 加了字段 —— 两者都会让存档里的 "
+                        + "inputHash 全部失效，必须有意为之（换 schema 时事务日志要一起清掉）");
     }
 }
