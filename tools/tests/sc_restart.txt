@@ -1,0 +1,24 @@
+# 重启之后：村民还在不在？（§10.3 的持久性）
+#
+# 为什么要用 --script 而不是连着敲 --cmd：`server_ctl.py --cmd` 每次重连一次 RCON，
+# 而服务端在忙的时候会把上一条的回显**晚一拍**发出来 —— 连着敲会看到"错位"的输出
+# （2026-09-20 就被这个坑过：把上一条 `buildings` 的回显当成了这一条实体查询的回显，
+#  于是误判成"重启后实体全没了"）。`--script` 每条都同步等回显，是**唯一可靠**的跑法。
+
+# 区块要先加载（force-load 的票在区块加载上是异步的，实测要等几秒）
+cmd: forceload add 96 96 112 112
+wait: 6
+
+cmd: /statecraft buildings
+expect: loaded=true
+
+# 核心判据：重启之后，绑定的村民应该还在、而且是同一个
+cmd: /statecraft buildings
+expect: healthy=true
+
+cmd: execute if entity @e[type=minecraft:villager,x=103.5,y=152.0,z=103.5,distance=..16]
+expect: Test passed
+
+# 而且只有一个（不许重启一次多一个）
+cmd: /statecraft buildings
+expect: duplicates=0

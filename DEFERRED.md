@@ -97,6 +97,18 @@
 > 所以**不是存的问题，是读的问题**：区块的方块装回来了（讲台还在、`anchorIntact=true`），
 > 实体却没装回来。
 
+**2026-09-20 下午补的同步证据**（用 `--script` 而不是连着敲 `--cmd`，见 §K）：
+
+| 步骤 | 回显 |
+|---|---|
+| `forceload add` + 等 6 秒 | 区块已 force-load |
+| `/statecraft buildings` | `loaded=true`（方块、锚点都在） |
+| `execute if entity @e[type=villager,x=103.5,y=152.0,z=103.5,distance=..16]` | **`Test failed`（0 个）** |
+| `mca_probe.py --region world/entities/r.0.0.mca --chunk 6 6` | **Entities：4 个**（3 个我们 + Jaunita），文件时间 13:49:58 = 上一次关服保存 |
+
+即：**区块加载了、盘上也有，就是没进世界**。已排除 `neruina.dat`
+（`tickingEntries` 是空数组 —— 它没有禁掉任何实体）。
+
 **最可能的原因**：这台验证服务端**从头到尾没有一个玩家在线**。
 1.17 之后实体存在 `<world>/entities/*.mca`，而实体是在区块进入 **entity-ticking**
 状态时才装进世界的 —— 那要求区块处在某个玩家的实体距离内。
@@ -119,6 +131,20 @@ force-load 只保证区块被加载、方块在跑，**不等于实体被装回�
 
 **工具**：`tools/mca_probe.py`（读 region / 实体区里的区块 NBT，打印 `Entities` 清单与实体上的
 `NeoForgeData`）—— 以后凡是"东西到底在不在盘上"的问题都用它，别猜。
+
+---
+
+## K. 工具坑：连着敲 `--cmd` 会看到**错位**的回显（2026-09-20 踩）
+
+`server_ctl.py --cmd` 每次重连一次 RCON；服务端忙的时候，上一条命令的回显会**晚一拍**
+才发出来，于是下一条命令读到的是**上一条的输出**。
+
+- 这个坑真的害过我：`kill @e[...]` 后面跟一条查询，看到的 "No entity was found" 其实是
+  kill 的回显，而查询的回显跑到了再下一条 —— 于是误判成"重启后实体全没了"。
+- **纪律**：任何两步以上的验证都用 `server_ctl.py --script <文件>`（它每条都同步等回显），
+  不要用 `--cmd` 串起来。脚本里还能写 `wait: 6`（等下一条之前先睡，force-load 的区块加载是异步的）。
+- 现成的例子：`tools/tests/sc_duplicates.txt`（重复村民自愈，6/6）、
+  `tools/tests/sc_restart.txt`（重启持久性）。
 
 ---
 

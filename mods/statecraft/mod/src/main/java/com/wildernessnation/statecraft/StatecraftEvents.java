@@ -219,9 +219,13 @@ public final class StatecraftEvents {
             String detail = def.map(d -> {
                 StaffObservation obs = BUILDINGS.observe(level, d, b);
                 List<String> why = StaffBinding.describeMismatch(d, obs);
+                int duplicates = BUILDINGS.findAllStaff(level, b).size();
+                String staff = BUILDINGS.describeStaff(level, b).orElse("-");
                 return "loaded=true bound=" + !b.stalled()
                         + " healthy=" + obs.bindingHealthy()
-                        + " level=" + b.level() + " at=" + b.anchor().describe()
+                        + " level=" + b.level() + " staff=" + staff
+                        + " duplicates=" + Math.max(0, duplicates - 1)
+                        + " at=" + b.anchor().describe()
                         + (why.isEmpty() ? "" : " why=" + String.join("；", why));
             }).orElse("（buildings.json 里没有这个类型）");
             source.sendSuccess(() -> Component.literal(

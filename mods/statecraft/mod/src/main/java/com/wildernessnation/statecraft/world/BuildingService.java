@@ -13,9 +13,11 @@ import com.wildernessnation.statecraft.core.staff.StaffBinding;
 import com.wildernessnation.statecraft.core.staff.StaffDef;
 import com.wildernessnation.statecraft.data.StatecraftData;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
@@ -24,9 +26,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import org.slf4j.Logger;
+import com.mojang.logging.LogUtils;
 
 /**
  * 建筑服务：**core 的规则 + mc 的世界**之间的那层薄胶水（`NATIONS.md` §10.1/§10.3/§10.4）。
@@ -51,6 +57,8 @@ import net.minecraft.world.phys.AABB;
  * 行为打磨与自研实体一起做（记在 `DEFERRED.md` §I）。
  */
 public final class BuildingService {
+
+    private static final Logger LOG = LogUtils.getLogger();
 
     /** 村民身上记职业的键。 */
     public static final String TAG_PROFESSION = "statecraft:profession";
@@ -158,24 +166,88 @@ public final class BuildingService {
      */
     public Optional<StaffBinding.StaffIdentity> findStaff(
             ServerLevel level, BuildingDef def, Building building) {
+        List<StaffBinding.StaffIdentity> all = findAllStaff(level, building);
+        return all.isEmpty() ? Optional.empty() : Optional.of(all.get(0));
+    }
+
+    /**
+     * 找出**所有**身上记着这座建筑的村民（一台建筑理应只有一个）。
+     *
+     * <p>为什么要返回全部而不是第一个：2026-09-20 那个 bug 已经在这个世界里留下过
+     * **6 个同名文书**。只取第一个的话，多出来的那些会永远站在那儿、谁也看不见它们存在。
+     * 有了这个清单，{@code /statecraft buildings} 能报出 `duplicates=N`，
+     * {@code settle} 也能顺手把多出来的清掉（见 {@link #pruneDuplicates}）。
+     */
+    public List<StaffBinding.StaffIdentity> findAllStaff(ServerLevel level, Building building) {
         BlockPos anchor = anchorPos(building);
         if (anchor == null) {
-            return Optional.empty();
-        }
-        String uuid = building.staffUUID();
-        if (uuid != null && !uuid.isBlank()) {
-            UUID parsed = parseOrNull(uuid);   // 存档里写坏了 → null → 走第二步按标签找
-            if (parsed != null) {
-                Optional<StaffBinding.StaffIdentity> byUuid =
-                        near(level, anchor, e -> e.getUUID().equals(parsed));
-                if (byUuid.isPresent()) {
-                    return byUuid;
-                }
-            }
+            return List.of();
         }
         String buildingId = building.id();
-        return near(level, anchor, e -> buildingId.equals(
-                e.getPersistentData().getString(TAG_BUILDING)));
+        List<StaffBinding.StaffIdentity> out = new ArrayList<>();
+        // 先按 UUID 认（若它还在），再按标签补齐 —— 顺序决定 findStaff 返回谁
+        String uuid = building.staffUUID();
+        if (uuid != null && !uuid.isBlank()) {
+            UUID parsed = parseOrNull(uuid);
+            if (parsed != null) {
+                near(level, anchor, e -> e.getUUID().equals(parsed)).ifPresent(out::add);
+            }
+        }
+        for (Entity entity : level.getEntities((Entity) null,
+                new AABB(anchor).inflate(SEARCH_RADIUS),
+                e -> buildingId.equals(e.getPersistentData().getString(TAG_BUILDING)))) {
+            StaffBinding.StaffIdentity id = new StaffBinding.StaffIdentity(
+                    entity.getUUID().toString(),
+                    entity.getPersistentData().getString(TAG_PROFESSION),
+                    entity.getPersistentData().getString(TAG_BUILDING));
+            if (out.stream().noneMatch(x -> x.uuid().equals(id.uuid()))) {
+                out.add(id);
+            }
+        }
+        return List.copyOf(out);
+    }
+
+    /**
+     * 只留一个：**多出来的那些是历史 bug 的产物**（同一个 buildingId 被刷了多次），
+     * 清掉它们才是"这座建筑有一个文书"这个事实。
+     *
+     * <p>为什么敢删：判据是**我们自己的持久化标签**（`statecraft:building` == 这座建筑的 id），
+     * 不是一个模糊的"附近所有村民"。所以它不会碰到玩家的任何村民。
+     * 而且每次删除都记 WARN —— 这种事必须留痕。
+     *
+     * @return 删掉了几个
+     */
+    public int pruneDuplicates(ServerLevel level, Building building) {
+        List<StaffBinding.StaffIdentity> all = findAllStaff(level, building);
+        if (all.size() <= 1) {
+            return 0;
+        }
+        Set<String> keep = new HashSet<>();
+        String uuid = building.staffUUID();
+        if (uuid != null && !uuid.isBlank()) {
+            keep.add(uuid);
+        }
+        keep.add(all.get(0).uuid());          // 登记表里那个不在（或没登记）时，留第一个
+        int removed = 0;
+        for (StaffBinding.StaffIdentity id : all) {
+            if (keep.contains(id.uuid())) {
+                continue;
+            }
+            UUID parsed = parseOrNull(id.uuid());
+            if (parsed == null) {
+                continue;
+            }
+            Optional<Entity> entity = nearEntity(level, anchorPos(building),
+                    e -> e.getUUID().equals(parsed));
+            if (entity.isPresent() && building.id().equals(
+                    entity.get().getPersistentData().getString(TAG_BUILDING))) {
+                entity.get().discard();
+                removed++;
+                LOG.warn("Statecraft：清掉「{}」多出来的一个村民 {}（历史 bug 留下的重复）",
+                        building.id(), id.uuid());
+            }
+        }
+        return removed;
     }
 
     @Nullable
@@ -195,13 +267,23 @@ public final class BuildingService {
      */
     private static Optional<StaffBinding.StaffIdentity> near(
             ServerLevel level, BlockPos anchor, java.util.function.Predicate<Entity> match) {
+        return nearEntity(level, anchor, match).map(BuildingService::identityOf);
+    }
+
+    /** 找实体本体（诊断/清理要动它，光有身份不够）。 */
+    private static Optional<Entity> nearEntity(
+            ServerLevel level, BlockPos anchor, java.util.function.Predicate<Entity> match) {
         for (Entity entity : level.getEntities((Entity) null,
                 new AABB(anchor).inflate(SEARCH_RADIUS), match)) {
-            return Optional.of(new StaffBinding.StaffIdentity(entity.getUUID().toString(),
-                    entity.getPersistentData().getString(TAG_PROFESSION),
-                    entity.getPersistentData().getString(TAG_BUILDING)));
+            return Optional.of(entity);
         }
         return Optional.empty();
+    }
+
+    private static StaffBinding.StaffIdentity identityOf(Entity entity) {
+        return new StaffBinding.StaffIdentity(entity.getUUID().toString(),
+                entity.getPersistentData().getString(TAG_PROFESSION),
+                entity.getPersistentData().getString(TAG_BUILDING));
     }
 
     public StaffObservation observe(ServerLevel level, BuildingDef def, Building building) {
@@ -299,7 +381,49 @@ public final class BuildingService {
                     MaterializationDecision.RESPAWN, "已绑定村民 " + updated.staffUUID()
                     + "（" + def.staffProfession() + "）"));
         }
+
+        // 顺手清掉历史 bug 留下的重复（**每座建筑都查，不只这一轮动手的那几座** ——
+        // 重复的那些很可能正是"绑得好好的、所以永远轮不到它重生"的建筑身上）
+        for (Building building : next.buildings()) {
+            int removed = pruneDuplicates(level, building);
+            if (removed > 0) {
+                replace(steps, building.id(), new Step(building.id(),
+                        MaterializationDecision.SKIP,
+                        "清掉了 " + removed + " 个多出来的村民（历史 bug 的残留）"));
+            }
+        }
         return new SettleResult(next, List.copyOf(steps));
+    }
+
+    /**
+     * 一句话描述这座建筑现在的村民（{@code /statecraft buildings} 用）：
+     * 名字 / 职业 / 是不是 NoAI。
+     *
+     * <p>为什么要把 NoAI 也报出来：§10.2 的三条要求（禁繁殖/锁职业/不游荡）
+     * 就是靠它实现的，所以"它到底是不是 NoAI"是**可验收项**，不该只存在于代码里。
+     */
+    public Optional<String> describeStaff(ServerLevel level, Building building) {
+        BlockPos anchor = anchorPos(building);
+        if (anchor == null) {
+            return Optional.empty();
+        }
+        String uuid = building.staffUUID();
+        if (uuid == null || uuid.isBlank()) {
+            return Optional.empty();
+        }
+        UUID parsed = parseOrNull(uuid);
+        if (parsed == null) {
+            return Optional.of("（staffUUID 写坏了：" + uuid + "）");
+        }
+        Optional<Entity> entity = nearEntity(level, anchor, e -> e.getUUID().equals(parsed));
+        if (entity.isEmpty()) {
+            return Optional.of("（附近找不到 " + uuid + "）");
+        }
+        String name = entity.get().getCustomName() == null
+                ? "（无名）" : entity.get().getCustomName().getString();
+        boolean noAi = entity.get() instanceof Mob mob && mob.isNoAi();
+        return Optional.of(name + "/" + entity.get().getPersistentData().getString(TAG_PROFESSION)
+                + "/no_ai=" + noAi);
     }
 
     /**
@@ -341,6 +465,27 @@ public final class BuildingService {
      *
      * <p>名字从 `staff.json` 的名字池里取，下标由**建筑 id 的哈希**决定：
      * 于是同一座建筑重建之后还是同一个人名（不会每次区块重载就换人）。
+     *
+     * <h2>为什么是 {@code setNoAi(true)}（§10.2 的三条要求一次做完）</h2>
+     *
+     * <p>§10.2 要求自研实体做到"**禁繁殖、锁定职业、游荡限制在建筑半径内**"。
+     * 这三条在原版村民身上**全都是 AI 行为**：
+     * <ul>
+     *   <li>繁殖要 {@code BreedGoal}（还要床与食物）；</li>
+     *   <li>认领职业方块要 {@code VillagerGoalPackages} 里的那套目标 —— 而**我们的锚点
+     *       恰好是讲台**（`minecraft:lectern`，正是图书管理员的职业方块），
+     *       不锁的话它会当场把情报站的锚点认领成工作台；</li>
+     *   <li>游荡也是目标驱动的（`RandomStrollGoal`）。</li>
+     * </ul>
+     * NoAI 一次把三条都关掉，而且**比"加三个补丁"更可靠**：没有 AI 就没有这些行为，
+     * 不存在"某个目标被别的 mod 换掉之后补丁失效"。</p>
+     *
+     * <p>代价是它站在那儿不动（像坐在案前的文书）。§10.2 说得清楚：村民**只做人气 + 界面**，
+     * 不盖房、不生产、不搬运、不参战 —— 一个守在案前的文书比一个到处乱走的更贴题。
+     * 真想要"会动的人气"要等自研实体（那时用自定义 Brain/动画，而不是把原版 AI 放回来）。</p>
+     *
+     * <p>职业设成图书管理员纯属**外观**（文书 ≈ 图书管理员），
+     * 而且**只在 NoAI 下才安全** —— 没有 AI 就不会去认领职业方块。</p>
      */
     @Nullable
     public Building spawnStaff(ServerLevel level, BuildingDef def, Building building,
@@ -363,7 +508,10 @@ public final class BuildingService {
                 staff.get().nameAt(nameIndex(building.id(), staff.get().nameCount()))));
         villager.setCustomNameVisible(true);
         villager.setPersistenceRequired();          // §10.2：不被自然清除
-        villager.setNoAi(false);
+        villager.setNoAi(true);                     // §10.2：禁繁殖 + 锁职业 + 不游荡（见上）
+        // 外观：让它看起来像个文书。**NoAI 之下才不会去认领讲台**（那正是我们的锚点）
+        villager.setVillagerData(villager.getVillagerData()
+                .setProfession(VillagerProfession.LIBRARIAN));
         villager.getPersistentData().putString(TAG_PROFESSION, staff.get().id());
         villager.getPersistentData().putString(TAG_BUILDING, building.id());
         if (!level.addFreshEntity(villager)) {
