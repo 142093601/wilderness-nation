@@ -38,6 +38,13 @@ CH_DIR = HERE / "questbook" / "chapters"
 KEY_COMMAND = "/statecraft accelerate"
 
 # 六个「时代」对应的章（编年史里的时代章；序与无尽纪元不算）
+#
+# **为什么只有这六个要有钥匙**（免得以后被当成 bug 来"修"）：
+#   · 时代钥匙的语义是"提前推进到**下一个**时代"，所以只有存在下一个时代的章才该给。
+#   · 序（说明书）不是时代边界；无尽纪元是**开放式终局**（设计里"每 5 年一个新纪元、
+#     不设数值膨胀"），它后面没有下一个时代可推 → **不给钥匙是正确的**。
+#   · 技艺章与类目章是横向分支，不承担时代推进。
+# 若哪天要改这个判断，改这里，并在 PLAN-questbook.md 里同步写清理由。
 ERA_CHAPTERS = {
     "landing": "落地（时代 0）",
     "founding": "立国（时代 1）",
@@ -45,6 +52,11 @@ ERA_CHAPTERS = {
     "expedition": "出关（时代 3）",
     "defense_era": "御敌（时代 4）",
     "civilization": "文明（时代 5）",
+}
+# 明确**不该**有钥匙的章（有则提示，防止误加）
+NO_KEY_CHAPTERS = {
+    "prologue": "序（说明书，不是时代边界）",
+    "endless": "无尽纪元（开放式终局，后面没有下一个时代）",
 }
 
 
@@ -141,6 +153,21 @@ def main() -> int:
             print("  [FAIL] 源码里没有 accelerate")
     else:
         notes.append("找不到 StatecraftEvents.java，跳过命令名核对")
+
+    # ---- A2. 不该有钥匙的章（防止误加）----
+    print()
+    print("=== A2. 不该有时代钥匙的章（序 / 无尽纪元）===")
+    for ch_key, why in NO_KEY_CHAPTERS.items():
+        meta = chapters.get(ch_key)
+        if meta is None:
+            continue
+        quests = meta["raw"].get("quest", []) or []
+        cmds = [r for q in quests for r in rewards_of(q) if r.get("type") == "command"]
+        if cmds:
+            fails.append(f"{ch_key}（{why}）不该有 command 奖励，但有 {len(cmds)} 条")
+            print(f"  [FAIL] {ch_key:10s} — {why}：不该有钥匙，却有 {len(cmds)} 条 command")
+        else:
+            print(f"  [OK]   {ch_key:10s} — {why}：无钥匙（正确）")
 
     # ---- C. 终局唯一性 ----
     print()
