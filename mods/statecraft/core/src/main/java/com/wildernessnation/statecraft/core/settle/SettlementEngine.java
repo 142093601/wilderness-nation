@@ -3,6 +3,7 @@ package com.wildernessnation.statecraft.core.settle;
 import com.wildernessnation.statecraft.core.config.StatecraftConfig;
 import com.wildernessnation.statecraft.core.era.Era;
 import com.wildernessnation.statecraft.core.era.EraTable;
+import com.wildernessnation.statecraft.core.letter.LetterMachine;
 import com.wildernessnation.statecraft.core.model.Event;
 import com.wildernessnation.statecraft.core.model.EventTypes;
 import com.wildernessnation.statecraft.core.model.Nation;
@@ -43,6 +44,7 @@ public final class SettlementEngine {
     private final SettlementConfig cfg;
     private final StatecraftConfig gen;
     private final EraTable eras;
+    private final LetterMachine letters;
 
     /**
      * @param cfg  结算参数（§十二）
@@ -51,9 +53,16 @@ public final class SettlementEngine {
      * @param eras 时代表（数据驱动，数量不写死）
      */
     public SettlementEngine(SettlementConfig cfg, StatecraftConfig gen, EraTable eras) {
+        this(cfg, gen, eras, LetterMachine.defaults());
+    }
+
+    /** 显式注入国书状态机（试玩调参时用得上；默认走 {@link LetterMachine#defaults()}）。 */
+    public SettlementEngine(
+            SettlementConfig cfg, StatecraftConfig gen, EraTable eras, LetterMachine letters) {
         this.cfg = cfg.validated();
         this.gen = gen.validated();
         this.eras = eras;
+        this.letters = letters;
     }
 
     public WorldState settle(WorldState state, SettlementInput input) {
@@ -62,11 +71,17 @@ public final class SettlementEngine {
         boolean eraAdvance = input.trigger() == SettlementTrigger.ERA_ADVANCE;
         DeterministicRandom rng = new DeterministicRandom(state.seed());
 
+        // 国书要先算：到期与承诺了结都改态度，而"态度 → 宣战门槛"就在本拍稍后。
+        // §11.2 那句"一次结算里'承诺到期'排在'对玩家施压'之前"说的就是这件事：
+        // 期限一过它就可能立刻翻脸——买的是那段时间，不是它的态度。
+        WorldState pre = letters.expireOverdue(state, seq);
+        pre = letters.settlePledges(pre, seq);
+
         Map<String, Nation> work = new LinkedHashMap<>();
-        for (Nation n : state.nations()) {
+        for (Nation n : pre.nations()) {
             work.put(n.id(), n);
         }
-        List<Relation> relations = new ArrayList<>(state.relations());
+        List<Relation> relations = new ArrayList<>(pre.relations());
         List<Event> events = new ArrayList<>();
 
         Era era = eras.currentFor(hours);
@@ -91,9 +106,9 @@ public final class SettlementEngine {
             nations.add(work.get(original.id()));
         }
         WorldState settled = new WorldState(
-                WorldState.CURRENT_SCHEMA_VERSION, state.seed(), state.eraId(), state.eraOrdinal(),
-                state.seq(), nations, relations, state.events(), state.buildings(),
-                state.elapsedOnlineHours());
+                WorldState.CURRENT_SCHEMA_VERSION, pre.seed(), pre.eraId(), pre.eraOrdinal(),
+                pre.seq(), nations, relations, pre.events(), pre.letters(), pre.buildings(),
+                pre.elapsedOnlineHours());
         return settled.withEventsAdded(events).withClock(hours, era.id(), era.ordinal(), seq);
     }
 

@@ -27,13 +27,13 @@ class WorldStateTest {
     }
 
     private static WorldState state(List<Nation> nations) {
-        return new WorldState(V, 1L, "landing", 0, 0L, nations, List.of(), List.of(), List.of(), 0.0);
+        return new WorldState(V, 1L, "landing", 0, 0L, nations, List.of(), List.of(), List.of(), List.of(), 0.0);
     }
 
     @Test
     void acceptsAValidState() {
         WorldState s = new WorldState(V, 1L, "landing", 0, 0L, List.of(nation("n0")),
-                List.of(), List.of(), List.of(), 12.5);
+                List.of(), List.of(), List.of(), List.of(), 12.5);
         assertEquals(V, s.schemaVersion());
         assertEquals(1L, s.seed());
         assertEquals("landing", s.eraId());
@@ -45,43 +45,43 @@ class WorldStateTest {
     @Test
     void rejectsNullNationsWithIaeNotNpe() {
         assertThrows(IllegalArgumentException.class,
-                () -> new WorldState(V, 1L, "landing", 0, 0L, null, List.of(), List.of(), List.of(), 0.0));
+                () -> new WorldState(V, 1L, "landing", 0, 0L, null, List.of(), List.of(), List.of(), List.of(), 0.0));
     }
 
     @Test
     void rejectsBlankEraId() {
         assertThrows(IllegalArgumentException.class,
-                () -> new WorldState(V, 1L, null, 0, 0L, List.of(), List.of(), List.of(), List.of(), 0.0));
+                () -> new WorldState(V, 1L, null, 0, 0L, List.of(), List.of(), List.of(), List.of(), List.of(), 0.0));
         assertThrows(IllegalArgumentException.class,
-                () -> new WorldState(V, 1L, "   ", 0, 0L, List.of(), List.of(), List.of(), List.of(), 0.0));
+                () -> new WorldState(V, 1L, "   ", 0, 0L, List.of(), List.of(), List.of(), List.of(), List.of(), 0.0));
     }
 
     @Test
     void rejectsNegativeEraOrdinalOrSeq() {
         assertThrows(IllegalArgumentException.class,
-                () -> new WorldState(V, 1L, "landing", -7, 0L, List.of(), List.of(), List.of(), List.of(), 0.0));
+                () -> new WorldState(V, 1L, "landing", -7, 0L, List.of(), List.of(), List.of(), List.of(), List.of(), 0.0));
         assertThrows(IllegalArgumentException.class,
-                () -> new WorldState(V, 1L, "landing", 0, -3L, List.of(), List.of(), List.of(), List.of(), 0.0));
+                () -> new WorldState(V, 1L, "landing", 0, -3L, List.of(), List.of(), List.of(), List.of(), List.of(), 0.0));
     }
 
     /** 内存里的状态永远是"已迁到当前版本"的，所以版本号只能是 >= 1 的合法值。 */
     @Test
     void rejectsNonPositiveSchemaVersion() {
         assertThrows(IllegalArgumentException.class,
-                () -> new WorldState(0, 1L, "landing", 0, 0L, List.of(), List.of(), List.of(), List.of(), 0.0));
+                () -> new WorldState(0, 1L, "landing", 0, 0L, List.of(), List.of(), List.of(), List.of(), List.of(), 0.0));
         assertThrows(IllegalArgumentException.class,
-                () -> new WorldState(-1, 1L, "landing", 0, 0L, List.of(), List.of(), List.of(), List.of(), 0.0));
+                () -> new WorldState(-1, 1L, "landing", 0, 0L, List.of(), List.of(), List.of(), List.of(), List.of(), 0.0));
     }
 
     @Test
     void rejectsBadElapsedHours() {
         assertThrows(IllegalArgumentException.class,
-                () -> new WorldState(V, 1L, "landing", 0, 0L, List.of(), List.of(), List.of(), List.of(), -0.5));
+                () -> new WorldState(V, 1L, "landing", 0, 0L, List.of(), List.of(), List.of(), List.of(), List.of(), -0.5));
         assertThrows(IllegalArgumentException.class,
-                () -> new WorldState(V, 1L, "landing", 0, 0L, List.of(), List.of(), List.of(), List.of(),
+                () -> new WorldState(V, 1L, "landing", 0, 0L, List.of(), List.of(), List.of(), List.of(), List.of(),
                         Double.NaN));
         assertThrows(IllegalArgumentException.class,
-                () -> new WorldState(V, 1L, "landing", 0, 0L, List.of(), List.of(), List.of(), List.of(),
+                () -> new WorldState(V, 1L, "landing", 0, 0L, List.of(), List.of(), List.of(), List.of(), List.of(),
                         Double.POSITIVE_INFINITY));
     }
 
@@ -89,7 +89,7 @@ class WorldStateTest {
     void nationListIsADefensiveCopy() {
         List<Nation> mutable = new ArrayList<>();
         mutable.add(nation("n0"));
-        WorldState s = new WorldState(V, 1L, "landing", 0, 0L, mutable, List.of(), List.of(), List.of(), 0.0);
+        WorldState s = new WorldState(V, 1L, "landing", 0, 0L, mutable, List.of(), List.of(), List.of(), List.of(), 0.0);
         mutable.clear();
         assertEquals(1, s.nations().size(), "外部改动不能影响已建好的状态");
         assertThrows(UnsupportedOperationException.class, () -> s.nations().clear());
@@ -108,13 +108,13 @@ class WorldStateTest {
     @Test
     void rejectsRelationToUnknownNation() {
         assertThrows(IllegalArgumentException.class, () -> new WorldState(V, 1L, "landing", 0, 0L,
-                List.of(nation("n0")), List.of(peace("n0", "n9")), List.of(), List.of(), 0.0));
+                List.of(nation("n0")), List.of(peace("n0", "n9")), List.of(), List.of(), List.of(), 0.0));
     }
 
     @Test
     void relationSurvivesItsNationDying() {
         WorldState s = new WorldState(V, 1L, "landing", 0, 0L,
-                List.of(dead("n0"), nation("n1")), List.of(peace("n0", "n1")), List.of(), List.of(), 0.0);
+                List.of(dead("n0"), nation("n1")), List.of(peace("n0", "n1")), List.of(), List.of(), List.of(), 0.0);
         assertEquals(1, s.livingNations().size());
         assertTrue(s.relation("n1", "n0").isPresent(), "关系与顺序无关");
         assertTrue(s.nation("n0").isPresent());
@@ -128,7 +128,7 @@ class WorldStateTest {
                     List.of(), true, false));
         }
         WorldState s = new WorldState(V, 1L, "landing", 0, 0L, List.of(nation("n0")),
-                List.of(), many, List.of(), 0.0);
+                List.of(), many, List.of(), List.of(), 0.0);
         assertEquals(WorldState.MAX_EVENTS, s.events().size(), "只留最近 500 条");
         assertEquals(25L, s.events().get(0).seq(), "丢的是最旧的");
     }
@@ -142,7 +142,7 @@ class WorldStateTest {
                     List.of(), true, false));
         }
         WorldState s = new WorldState(V, 1L, "landing", 0, 0L, List.of(nation("n0")),
-                List.of(), many, List.of(), 0.0);
+                List.of(), many, List.of(), List.of(), 0.0);
         assertEquals(many.size(), s.events().size(), "归档不等于删除：条数不变");
         assertEquals(WorldState.MAX_UNREAD, s.unreadEvents().size());
         assertTrue(s.events().get(0).read(), "最旧的 30 条被标成已读");
@@ -153,7 +153,7 @@ class WorldStateTest {
     void withAllEventsReadClearsTheUnreadQueue() {
         WorldState s = new WorldState(V, 1L, "landing", 0, 0L, List.of(nation("n0")), List.of(),
                 List.of(new Event(0, EventTypes.WAR_DECLARED, List.of("n0"), "war", List.of(),
-                        true, false)), List.of(), 0.0);
+                        true, false)), List.of(), List.of(), 0.0);
         assertEquals(1, s.unreadEvents().size());
         assertEquals(0, s.withAllEventsRead().unreadEvents().size());
     }
@@ -179,10 +179,10 @@ class WorldStateTest {
         Building b = Building.register("b1", "intel_station",
                 new Building.Anchor("minecraft:overworld", 0, 64, 0));
         assertThrows(IllegalArgumentException.class, () -> new WorldState(V, 1L, "landing", 0, 0L,
-                List.of(nation("n0")), List.of(), List.of(), List.of(b, b), 0.0));
+                List.of(nation("n0")), List.of(), List.of(), List.of(), List.of(b, b), 0.0));
         // 正常情况下建筑表是能挂上的，并且不可变
         WorldState ok = new WorldState(V, 1L, "landing", 0, 0L,
-                List.of(nation("n0")), List.of(), List.of(), List.of(b), 0.0);
+                List.of(nation("n0")), List.of(), List.of(), List.of(), List.of(b), 0.0);
         assertEquals(1, ok.buildings().size());
         assertThrows(UnsupportedOperationException.class, () -> ok.buildings().clear());
     }

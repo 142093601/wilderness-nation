@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.wildernessnation.statecraft.core.config.StatecraftConfig;
 import com.wildernessnation.statecraft.core.era.EraTable;
+import com.wildernessnation.statecraft.core.letter.LetterConfig;
+import com.wildernessnation.statecraft.core.letter.LetterKind;
 import com.wildernessnation.statecraft.core.model.Culture;
 import com.wildernessnation.statecraft.core.persist.StateNode;
 import com.wildernessnation.statecraft.core.text.PlaceNames;
@@ -222,6 +224,105 @@ class DataFilesTest {
         blank.put("x", new StateNode.Str("   "));
         assertThrows(IllegalArgumentException.class,
                 () -> DataFiles.templates(new StateNode.Obj(blank)));
+    }
+
+    // ---- letters.json（§十六：国书的条件、期限、接受/拒绝后果）----
+
+    @Test
+    void readsTheThreeLetterKindsAndTheirPrices() {
+        LetterData data = DataFiles.letters(letters(null));
+        assertEquals(3, data.kinds().size());
+        assertEquals(List.of(LetterKind.STOP_BUILDING, LetterKind.JOINT_WAR,
+                        LetterKind.TRIBUTE),
+                data.ordered().stream().map(LetterKindData::kind).toList(),
+                "遍历顺序按枚举声明，不能跟着 JSON 里的顺序漂");
+        assertEquals(64.0, data.of(LetterKind.STOP_BUILDING).radius(), 0.0);
+        assertEquals(0.0, data.of(LetterKind.STOP_BUILDING).amount(), 0.0);
+        assertEquals(120.0, data.of(LetterKind.TRIBUTE).amount(), 0.0);
+        assertEquals("停止在边境建造", data.of(LetterKind.STOP_BUILDING).name());
+    }
+
+    @Test
+    void missingLetterConfigBlockMeansDefaults() {
+        assertEquals(LetterConfig.defaults(), DataFiles.letters(letters(null)).config(),
+                "配置块缺失时必须等于代码里的默认值（默认值只有一个来源）");
+    }
+
+    @Test
+    void partialLetterConfigOverridesOnlyTheFieldsItWrites() {
+        LetterConfig d = LetterConfig.defaults();
+        Map<String, StateNode> config = StateNode.fields();
+        config.put("deadlineSettlements", new StateNode.Int(5));
+        LetterData data = DataFiles.letters(letters(config));
+
+        assertEquals(5L, data.config().deadlineSettlements());
+        assertEquals(d.ignoreAttitudePenalty(), data.config().ignoreAttitudePenalty(), 0.0,
+                "没写的字段保持默认");
+        assertEquals(d.stopBuildPromiseSettlements(), data.config().stopBuildPromiseSettlements());
+    }
+
+    @Test
+    void aLetterKindMissingFromTheFileIsRejected() {
+        LetterData full = DataFiles.letters(letters(null));
+        List<StateNode> two = new java.util.ArrayList<>(
+                letters(null).asObj("letters.json").field("letters.json", "kinds")
+                        .asArr("letters.json.kinds").items().subList(0, 2));
+        Map<String, StateNode> root = StateNode.fields();
+        root.put("kinds", new StateNode.Arr(two));
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,
+                () -> DataFiles.letters(new StateNode.Obj(root)));
+        assertTrue(e.getMessage().contains("TRIBUTE"),
+                "缺哪一种要说出来，不能静默地少一种国书：" + e.getMessage());
+        assertEquals(3, full.kinds().size());
+    }
+
+    @Test
+    void unknownLetterKindNamesFailWithTheLegalValues() {
+        Map<String, StateNode> bad = StateNode.fields();
+        bad.put("kind", new StateNode.Str("CRUSADE"));
+        Map<String, StateNode> root = StateNode.fields();
+        root.put("kinds", new StateNode.Arr(List.of(new StateNode.Obj(bad))));
+        IllegalStateException e = assertThrows(IllegalStateException.class,
+                () -> DataFiles.letters(new StateNode.Obj(root)));
+        assertTrue(e.getMessage().contains("CRUSADE"), e.getMessage());
+        assertTrue(e.getMessage().contains("STOP_BUILDING"), "要列出合法值：" + e.getMessage());
+    }
+
+    /** 该要价的没要价、不该要价的要了价，都算内容写错（和 {@code Letter} 的校验对齐）。 */
+    @Test
+    void letterKindPricesMustBeCoherent() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new LetterKindData(LetterKind.STOP_BUILDING, "停止建造", 0.0, 0.0));
+        assertThrows(IllegalArgumentException.class,
+                () -> new LetterKindData(LetterKind.TRIBUTE, "朝贡", 0.0, 0.0));
+        assertThrows(IllegalArgumentException.class,
+                () -> new LetterKindData(LetterKind.JOINT_WAR, "共同讨伐", 0.0, -1.0));
+    }
+
+    private static StateNode letters(Map<String, StateNode> config) {
+        List<StateNode> kinds = new java.util.ArrayList<>();
+        kinds.add(letterKind("STOP_BUILDING", "停止在边境建造", 64.0, 0.0));
+        kinds.add(letterKind("JOINT_WAR", "共同讨伐", 0.0, 0.0));
+        kinds.add(letterKind("TRIBUTE", "朝贡换互不侵犯", 0.0, 120.0));
+        Map<String, StateNode> root = StateNode.fields();
+        root.put("kinds", new StateNode.Arr(kinds));
+        if (config != null) {
+            root.put("config", new StateNode.Obj(config));
+        }
+        return new StateNode.Obj(root);
+    }
+
+    private static StateNode letterKind(String kind, String name, double radius, double amount) {
+        Map<String, StateNode> f = StateNode.fields();
+        f.put("kind", new StateNode.Str(kind));
+        f.put("name", new StateNode.Str(name));
+        if (radius != 0.0) {
+            f.put("radius", new StateNode.Dec(radius));
+        }
+        if (amount != 0.0) {
+            f.put("amount", new StateNode.Dec(amount));
+        }
+        return new StateNode.Obj(f);
     }
 }
 

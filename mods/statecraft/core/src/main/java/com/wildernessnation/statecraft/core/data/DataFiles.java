@@ -3,13 +3,17 @@ package com.wildernessnation.statecraft.core.data;
 import com.wildernessnation.statecraft.core.config.StatecraftConfig;
 import com.wildernessnation.statecraft.core.era.Era;
 import com.wildernessnation.statecraft.core.era.EraTable;
+import com.wildernessnation.statecraft.core.letter.LetterConfig;
+import com.wildernessnation.statecraft.core.letter.LetterKind;
 import com.wildernessnation.statecraft.core.model.Culture;
 import com.wildernessnation.statecraft.core.persist.StateNode;
 import com.wildernessnation.statecraft.core.text.PlaceNames;
 import com.wildernessnation.statecraft.core.text.TextTemplates;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -131,5 +135,79 @@ public final class DataFiles {
     private static double doubleOr(StateNode obj, String key, double fallback) {
         StateNode v = obj.optionalField("nations.json.config", key);
         return v == null ? fallback : v.asDouble("nations.json.config." + key);
+    }
+
+
+    // ---- letters.json ----
+
+    /**
+     * `letters.json`：根是 `{ "config": {...}, "kinds": [ { "kind": "STOP_BUILDING", ... } ] }`。
+     *
+     * <p>三种国书**必须齐全**：缺一种不是"少个内容"，而是"那种国书永远不会出现"——
+     * 这种静默的缺失最难查，所以在读的时候就报错（{@link LetterData} 的构造器里）。
+     */
+    public static LetterData letters(StateNode root) {
+        Map<LetterKind, LetterKindData> kinds = new LinkedHashMap<>();
+        List<StateNode> items = root.field("letters.json", "kinds")
+                .asArr("letters.json.kinds").items();
+        for (int i = 0; i < items.size(); i++) {
+            String path = StateNode.index("letters.json.kinds", i);
+            LetterKindData data = readLetterKind(items.get(i), path);
+            if (kinds.put(data.kind(), data) != null) {
+                throw new IllegalStateException("letters.json 里这种国书定义了两次：" + data.kind());
+            }
+        }
+        return new LetterData(kinds, readLetterConfig(root));
+    }
+
+    private static LetterKindData readLetterKind(StateNode node, String path) {
+        String raw = node.field(path, "kind").asString(path + ".kind");
+        LetterKind kind;
+        try {
+            kind = LetterKind.valueOf(raw.trim());
+        } catch (IllegalArgumentException e) {
+            StringBuilder legal = new StringBuilder();
+            for (LetterKind k : LetterKind.values()) {
+                legal.append(legal.isEmpty() ? "" : " / ").append(k.name());
+            }
+            throw new IllegalStateException("letters.json 里有不认识的国书种类「" + raw
+                    + "」，合法值：" + legal, e);
+        }
+        StateNode nameNode = node.optionalField(path, "name");
+        String name = nameNode == null ? kind.name() : nameNode.asString(path + ".name");
+        return new LetterKindData(kind, name,
+                doubleOr(node, path, "radius", 0.0),
+                doubleOr(node, path, "amount", 0.0));
+    }
+
+    /** 配置块整个可缺省；缺省时等于 {@link LetterConfig#defaults()}。 */
+    private static LetterConfig readLetterConfig(StateNode root) {
+        StateNode cfg = root.optionalField("letters.json", "config");
+        if (cfg == null) {
+            return LetterConfig.defaults();
+        }
+        String p = "letters.json.config";
+        LetterConfig d = LetterConfig.defaults();
+        return new LetterConfig(
+                longOr(cfg, p, "deadlineSettlements", d.deadlineSettlements()),
+                doubleOr(cfg, p, "refusalAttitudePenalty", d.refusalAttitudePenalty()),
+                doubleOr(cfg, p, "ignoreAttitudePenalty", d.ignoreAttitudePenalty()),
+                doubleOr(cfg, p, "tributeAcceptAttitudeGain", d.tributeAcceptAttitudeGain()),
+                doubleOr(cfg, p, "jointWarAttitudeGain", d.jointWarAttitudeGain()),
+                doubleOr(cfg, p, "stopBuildAcceptAttitudeGain", d.stopBuildAcceptAttitudeGain()),
+                longOr(cfg, p, "stopBuildPromiseSettlements", d.stopBuildPromiseSettlements()),
+                doubleOr(cfg, p, "stopBuildKeptAttitudeGain", d.stopBuildKeptAttitudeGain()),
+                doubleOr(cfg, p, "stopBuildBreachAttitudePenalty",
+                        d.stopBuildBreachAttitudePenalty()));
+    }
+
+    private static double doubleOr(StateNode obj, String path, String key, double fallback) {
+        StateNode v = obj.optionalField(path, key);
+        return v == null ? fallback : v.asDouble(path + "." + key);
+    }
+
+    private static long longOr(StateNode obj, String path, String key, long fallback) {
+        StateNode v = obj.optionalField(path, key);
+        return v == null ? fallback : v.asLong(path + "." + key);
     }
 }

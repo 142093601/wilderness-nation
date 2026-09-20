@@ -1,6 +1,9 @@
 package com.wildernessnation.statecraft.core.persist;
 
 import com.wildernessnation.statecraft.core.model.Building;
+import com.wildernessnation.statecraft.core.letter.Letter;
+import com.wildernessnation.statecraft.core.letter.LetterKind;
+import com.wildernessnation.statecraft.core.letter.LetterState;
 import com.wildernessnation.statecraft.core.model.Event;
 import com.wildernessnation.statecraft.core.model.Nation;
 import com.wildernessnation.statecraft.core.model.Relation;
@@ -57,6 +60,12 @@ public final class StateCodec {
         }
         root.put("events", new StateNode.Arr(events));
 
+        List<StateNode> letters = new ArrayList<>();
+        for (Letter l : state.letters()) {
+            letters.add(writeLetter(l));
+        }
+        root.put("letters", new StateNode.Arr(letters));
+
         List<StateNode> buildings = new ArrayList<>();
         for (Building b : state.buildings()) {
             buildings.add(writeBuilding(b));
@@ -99,6 +108,21 @@ public final class StateCodec {
         f.put("warScore", new StateNode.Dec(r.warScore()));
         f.put("truceUntilSeq", new StateNode.Int(r.truceUntilSeq()));
         f.put("losingStreak", new StateNode.Int(r.losingStreak()));
+        return new StateNode.Obj(f);
+    }
+
+    private static StateNode writeLetter(Letter l) {
+        Map<String, StateNode> f = StateNode.fields();
+        f.put("id", new StateNode.Str(l.id()));
+        f.put("fromNationId", new StateNode.Str(l.fromNationId()));
+        f.put("kind", new StateNode.Str(l.kind().name()));
+        f.put("targetNationId", new StateNode.Str(l.targetNationId()));
+        f.put("stopBuildRadius", new StateNode.Dec(l.stopBuildRadius()));
+        f.put("amount", new StateNode.Dec(l.amount()));
+        f.put("issuedAtSeq", new StateNode.Int(l.issuedAtSeq()));
+        f.put("deadlineSeq", new StateNode.Int(l.deadlineSeq()));
+        f.put("state", new StateNode.Str(l.state().name()));
+        f.put("promiseUntilSeq", new StateNode.Int(l.promiseUntilSeq()));
         return new StateNode.Obj(f);
     }
 
@@ -165,6 +189,12 @@ public final class StateCodec {
             events.add(readEvent(eventNodes.get(i), StateNode.index(p + ".events", i)));
         }
 
+        List<Letter> letters = new ArrayList<>();
+        List<StateNode> letterNodes = root.field(p, "letters").asArr(p + ".letters").items();
+        for (int i = 0; i < letterNodes.size(); i++) {
+            letters.add(readLetter(letterNodes.get(i), StateNode.index(p + ".letters", i)));
+        }
+
         List<Building> buildings = new ArrayList<>();
         List<StateNode> buildingNodes = root.field(p, "buildings").asArr(p + ".buildings").items();
         for (int i = 0; i < buildingNodes.size(); i++) {
@@ -173,7 +203,7 @@ public final class StateCodec {
 
         double hours = root.field(p, "elapsedOnlineHours").asDouble(p + ".elapsedOnlineHours");
         return new WorldState(schemaVersion, seed, eraId, eraOrdinal, seq, nations, relations,
-                events, buildings, hours);
+                events, letters, buildings, hours);
     }
 
     static Nation readNation(StateNode node, String p) {
@@ -211,6 +241,25 @@ public final class StateCodec {
                 node.field(p, "warScore").asDouble(p + ".warScore"),
                 node.field(p, "truceUntilSeq").asLong(p + ".truceUntilSeq"),
                 node.field(p, "losingStreak").asInt(p + ".losingStreak"));
+    }
+
+    private static Letter readLetter(StateNode node, String p) {
+        return new Letter(
+                node.field(p, "id").asString(p + ".id"),
+                node.field(p, "fromNationId").asString(p + ".fromNationId"),
+                readEnum(LetterKind.class, node.field(p, "kind").asString(p + ".kind"),
+                        p + ".kind"),
+                node.field(p, "targetNationId").asString(p + ".targetNationId"),
+                node.field(p, "stopBuildRadius").asDouble(p + ".stopBuildRadius"),
+                node.field(p, "amount").asDouble(p + ".amount"),
+                node.field(p, "issuedAtSeq").asLong(p + ".issuedAtSeq"),
+                node.field(p, "deadlineSeq").asLong(p + ".deadlineSeq"),
+                readEnum(LetterState.class, node.field(p, "state").asString(p + ".state"),
+                        p + ".state"),
+                // 老档（v1 的 letters 恒为空，所以这条其实只在 v2 内部用得上）没有这个字段时按 0 读
+                node.optionalField(p, "promiseUntilSeq") == null
+                        ? 0L
+                        : node.field(p, "promiseUntilSeq").asLong(p + ".promiseUntilSeq"));
     }
 
     private static Building readBuilding(StateNode node, String p) {

@@ -1,6 +1,7 @@
 package com.wildernessnation.statecraft.core.persist;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -9,6 +10,9 @@ import com.wildernessnation.statecraft.core.gen.WorldGenerator;
 import com.wildernessnation.statecraft.core.model.Culture;
 import com.wildernessnation.statecraft.core.model.Event;
 import com.wildernessnation.statecraft.core.model.EventTypes;
+import com.wildernessnation.statecraft.core.letter.Letter;
+import com.wildernessnation.statecraft.core.letter.LetterKind;
+import com.wildernessnation.statecraft.core.letter.LetterState;
 import com.wildernessnation.statecraft.core.model.Building;
 import com.wildernessnation.statecraft.core.model.Nation;
 import com.wildernessnation.statecraft.core.model.Relation;
@@ -56,7 +60,7 @@ class StateCodecTest {
         Map<String, StateNode> fields = StateCodec.write(generated(1L)).asObj("world").fields();
         assertEquals(
                 List.of("schemaVersion", "seed", "eraId", "eraOrdinal", "seq", "nations",
-                        "relations", "events", "buildings", "elapsedOnlineHours"),
+                        "relations", "events", "letters", "buildings", "elapsedOnlineHours"),
                 List.copyOf(fields.keySet()),
                 "根字段名与顺序要和 NATIONS.md §五 一致（末尾的 elapsedOnlineHours 是文档没列、但 §七 需要的）");
 
@@ -130,7 +134,7 @@ class StateCodecTest {
     void emptyNationListRoundTrips() {
         WorldState empty = new WorldState(
                 WorldState.CURRENT_SCHEMA_VERSION, 5L, "landing", 0, 0L,
-                List.of(), List.of(), List.of(), List.of(), 0.0);
+                List.of(), List.of(), List.of(), List.of(), List.of(), 0.0);
         assertEquals(empty, StateCodec.read(StateCodec.write(empty)));
     }
 
@@ -142,7 +146,7 @@ class StateCodecTest {
                 0L, -42.5, 2.5, 3);
         WorldState state = new WorldState(
                 WorldState.CURRENT_SCHEMA_VERSION, -1L, "infra", 2, 41L,
-                List.of(n), List.of(), List.of(), List.of(), 33.75);
+                List.of(n), List.of(), List.of(), List.of(), List.of(), 33.75);
         assertEquals(state, StateCodec.read(StateCodec.write(state)));
     }
 
@@ -155,7 +159,7 @@ class StateCodecTest {
                 "battle", List.of("赤沙国", "石口"), true, false);
         WorldState state = new WorldState(
                 WorldState.CURRENT_SCHEMA_VERSION, 7L, "infra", 2, 41L,
-                List.of(a, b), List.of(war), List.of(event), List.of(), 12.0);
+                List.of(a, b), List.of(war), List.of(event), List.of(), List.of(), 12.0);
 
         WorldState back = StateCodec.read(StateCodec.write(state));
         assertEquals(state, back);
@@ -192,7 +196,7 @@ class StateCodecTest {
                 new Building.Anchor("minecraft:overworld", -5, 70, 9));
         WorldState state = new WorldState(
                 WorldState.CURRENT_SCHEMA_VERSION, 3L, "infra", 2, 7L,
-                List.of(), List.of(), List.of(), List.of(bound, fresh), 11.5);
+                List.of(), List.of(), List.of(), List.of(), List.of(bound, fresh), 11.5);
 
         WorldState back = StateCodec.read(StateCodec.write(state));
         assertEquals(state, back, "带建筑的往返必须逐字段相等");
@@ -201,5 +205,37 @@ class StateCodecTest {
         assertTrue(back.buildings().get(1).stalled(), "没绑定村民的也要能原样读回来");
         assertEquals(11.5, back.buildings().get(0).materializedAtHours(), 0.0);
         assertEquals(-200, back.buildings().get(0).anchor().z());
+    }
+
+    /** §9.4 的 `letters[]`：三种国书各一封，连"待回""已拒"和承诺期都要原样回来。 */
+    @Test
+    void lettersSurviveTheRoundTrip() {
+        Letter stop = new Letter("L1", "ash", LetterKind.STOP_BUILDING, "", 64.0, 0.0,
+                3L, 5L, LetterState.OPEN, 0L);
+        Letter joint = new Letter("L2", "ash", LetterKind.JOINT_WAR, "reed", 0.0, 0.0,
+                3L, 5L, LetterState.REFUSED, 0L);
+        Letter tribute = new Letter("L3", "reed", LetterKind.TRIBUTE, "", 0.0, 120.0,
+                4L, 6L, LetterState.ACCEPTED, 0L);
+        // 第四封：接受过的"停止建造"，带着还在走的承诺期
+        Letter promised = new Letter("L4", "ash", LetterKind.STOP_BUILDING, "", 64.0, 0.0,
+                2L, 4L, LetterState.ACCEPTED, 9L);
+        WorldState state = new WorldState(
+                WorldState.CURRENT_SCHEMA_VERSION, 3L, "infra", 2, 7L,
+                List.of(), List.of(), List.of(), List.of(stop, joint, tribute, promised),
+                List.of(), 11.5);
+
+        WorldState back = StateCodec.read(StateCodec.write(state));
+        assertEquals(state, back, "带国书的往返必须逐字段相等");
+        assertEquals(4, back.letters().size());
+        assertEquals(LetterKind.STOP_BUILDING, back.letters().get(0).kind());
+        assertEquals(64.0, back.letters().get(0).stopBuildRadius(), 0.0);
+        assertEquals("reed", back.letters().get(1).targetNationId(), "共同讨伐的目标国不能丢");
+        assertTrue(back.letters().get(0).overdueAt(9L), "OPEN 且过期要还能判出来");
+        assertEquals(120.0, back.letters().get(2).amount(), 0.0);
+        assertEquals(LetterState.ACCEPTED, back.letters().get(2).state());
+        assertEquals(9L, back.letters().get(3).promiseUntilSeq(), "承诺期不能丢");
+        assertTrue(back.letters().get(3).promiseInForceAt(8L));
+        assertFalse(back.letters().get(3).promiseInForceAt(9L), "到点就该失效");
+        assertTrue(back.letters().get(3).promiseFulfilledAt(9L));
     }
 }

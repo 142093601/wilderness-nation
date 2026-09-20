@@ -1,5 +1,6 @@
 package com.wildernessnation.statecraft.core.model;
 
+import com.wildernessnation.statecraft.core.letter.Letter;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -34,6 +35,7 @@ public record WorldState(
         List<Nation> nations,
         List<Relation> relations,
         List<Event> events,
+        List<Letter> letters,
         List<Building> buildings,
         double elapsedOnlineHours) {
 
@@ -69,6 +71,7 @@ public record WorldState(
         nations = List.copyOf(nations);
         relations = List.copyOf(relations == null ? List.of() : relations);
         events = List.copyOf(events == null ? List.of() : events);
+        letters = List.copyOf(letters == null ? List.of() : letters);
         buildings = List.copyOf(buildings == null ? List.of() : buildings);
 
         // 关系不能指向不存在的国家：灭亡的国家仍留在 nations 里（status=DEAD），所以这条恒可满足，
@@ -82,6 +85,13 @@ public record WorldState(
         for (Relation r : relations) {
             if (!ids.contains(r.a()) || !ids.contains(r.b())) {
                 throw new IllegalArgumentException("关系指向了不存在的国家：" + r.a() + " ↔ " + r.b());
+            }
+        }
+
+        Set<String> letterIds = new LinkedHashSet<>();
+        for (Letter l : letters) {
+            if (!letterIds.add(l.id())) {
+                throw new IllegalArgumentException("国书 id 重复：" + l.id());
             }
         }
 
@@ -159,12 +169,12 @@ public record WorldState(
     }
 
     public WorldState withNations(List<Nation> v) {
-        return new WorldState(schemaVersion, seed, eraId, eraOrdinal, seq, v, relations, events, buildings,
+        return new WorldState(schemaVersion, seed, eraId, eraOrdinal, seq, v, relations, events, letters, buildings,
                 elapsedOnlineHours);
     }
 
     public WorldState withRelations(List<Relation> v) {
-        return new WorldState(schemaVersion, seed, eraId, eraOrdinal, seq, nations, v, events, buildings,
+        return new WorldState(schemaVersion, seed, eraId, eraOrdinal, seq, nations, v, events, letters, buildings,
                 elapsedOnlineHours);
     }
 
@@ -172,8 +182,7 @@ public record WorldState(
     public WorldState withEventsAdded(List<Event> extra) {
         List<Event> merged = new ArrayList<>(events);
         merged.addAll(extra);
-        return new WorldState(schemaVersion, seed, eraId, eraOrdinal, seq, nations, relations,
-                merged, buildings, elapsedOnlineHours);
+        return new WorldState(schemaVersion, seed, eraId, eraOrdinal, seq, nations, relations, merged, letters, buildings, elapsedOnlineHours);
     }
 
     /** 全部标为已读（打开情报册时用）。 */
@@ -182,14 +191,41 @@ public record WorldState(
         for (Event e : events) {
             out.add(e.asRead());
         }
-        return new WorldState(schemaVersion, seed, eraId, eraOrdinal, seq, nations, relations,
-                out, buildings, elapsedOnlineHours);
+        return new WorldState(schemaVersion, seed, eraId, eraOrdinal, seq, nations, relations, out, letters, buildings, elapsedOnlineHours);
     }
 
     /** 推进时钟与时代（引擎结算完时一次性写回）。 */
     public WorldState withClock(double hours, String newEraId, int newEraOrdinal, long newSeq) {
         return new WorldState(schemaVersion, seed, newEraId, newEraOrdinal, newSeq, nations,
-                relations, events, buildings, hours);
+                relations, events, letters, buildings, hours);
+    }
+
+    public WorldState withLetters(List<Letter> v) {
+        return new WorldState(schemaVersion, seed, eraId, eraOrdinal, seq, nations,
+                relations, events, v, buildings, elapsedOnlineHours);
+    }
+
+    /** 换掉一封国书（其余原样）。 */
+    public WorldState withLetter(Letter replacement) {
+        List<Letter> out = new ArrayList<>(letters.size());
+        for (Letter l : letters) {
+            out.add(l.id().equals(replacement.id()) ? replacement : l);
+        }
+        return withLetters(out);
+    }
+
+    public WorldState withBuildings(List<Building> v) {
+        return new WorldState(schemaVersion, seed, eraId, eraOrdinal, seq, nations,
+                relations, events, letters, v, elapsedOnlineHours);
+    }
+
+    /** 换掉一座建筑（其余原样）。 */
+    public WorldState withBuilding(Building replacement) {
+        List<Building> out = new ArrayList<>(buildings.size());
+        for (Building b : buildings) {
+            out.add(b.id().equals(replacement.id()) ? replacement : b);
+        }
+        return withBuildings(out);
     }
 
 }

@@ -10,6 +10,9 @@ import com.wildernessnation.statecraft.core.config.StatecraftConfig;
 import com.wildernessnation.statecraft.core.era.Era;
 import com.wildernessnation.statecraft.core.era.EraTable;
 import com.wildernessnation.statecraft.core.gen.WorldGenerator;
+import com.wildernessnation.statecraft.core.letter.LetterKind;
+import com.wildernessnation.statecraft.core.letter.LetterMachine;
+import com.wildernessnation.statecraft.core.letter.LetterState;
 import com.wildernessnation.statecraft.core.model.Culture;
 import com.wildernessnation.statecraft.core.model.Event;
 import com.wildernessnation.statecraft.core.model.EventTypes;
@@ -83,17 +86,17 @@ class SettlementEngineTest {
         return new WorldState(WorldState.CURRENT_SCHEMA_VERSION, 42L, "landing", 0, 0L,
                 List.of(a, b),
                 List.of(new Relation(a.id(), b.id(), 0.0, Relation.State.WAR, 0.0, 0L, 0)),
-                List.of(), List.of(), 0.0);
+                List.of(), List.of(), List.of(), 0.0);
     }
 
     private static WorldState peaceful(Nation a, Nation b) {
         return new WorldState(WorldState.CURRENT_SCHEMA_VERSION, 42L, "landing", 0, 0L,
-                List.of(a, b), List.of(Relation.peace(a.id(), b.id())), List.of(), List.of(), 0.0);
+                List.of(a, b), List.of(Relation.peace(a.id(), b.id())), List.of(), List.of(), List.of(), 0.0);
     }
 
     private static WorldState single(Nation n) {
         return new WorldState(WorldState.CURRENT_SCHEMA_VERSION, 7L, "landing", 0, 0L,
-                List.of(n), List.of(), List.of(), List.of(), 0.0);
+                List.of(n), List.of(), List.of(), List.of(), List.of(), 0.0);
     }
 
     private static long count(WorldState s, String type) {
@@ -355,6 +358,63 @@ class SettlementEngineTest {
         assertEquals(2, e.raidScale(nation("n0", 1, 0.0, 0.0, 50.0)));
         assertEquals(6, e.raidScale(nation("n0", 1, 120.0, 0.0, 50.0)));
         assertEquals(24, e.raidScale(nation("n0", 1, 100000.0, 0.0, 50.0)), "上限 24");
+    }
+
+    // ---- §9.4 国书：到期与承诺要在结算里真的跑起来 ----
+
+    /**
+     * 国书到期必须由**结算**推动，而不是只能靠手调 {@code LetterMachine}。
+     *
+     * <p>这条覆盖的是"接线"：{@code expireOverdue} 用的是**推进之后**的 seq
+     * （期限 3 的国书该在把 seq 推到 4 的那一拍过期）。接错成旧 seq 的话，
+     * 国书会白白多活一格，玩家能在期限外继续回复——这里就会红。
+     */
+    @Test
+    void settlementExpiresOverdueLettersAndKeepsTheEvent() {
+        SettlementConfig c = SettlementConfig.defaults();
+        LetterMachine letters = LetterMachine.defaults();
+        WorldState s = letters.propose(single(nation("n0", 6, 0.0, 0.0, 50.0)),
+                "n0", LetterKind.TRIBUTE, "", 0.0, 120.0);
+        long deadline = s.letters().get(0).deadlineSeq();
+
+        SettlementEngine e = new SettlementEngine(c, StatecraftConfig.defaults(), sixEras(),
+                letters);
+        WorldState ticked = s;
+        while (ticked.seq() <= deadline) {
+            ticked = e.settle(ticked, SettlementInput.periodic(c));
+        }
+
+        assertEquals(LetterState.EXPIRED, ticked.letters().get(0).state(),
+                "过了期限还没回 = 拒绝（§9.4）");
+        assertTrue(ticked.events().stream().anyMatch(
+                        ev -> "letter_expired".equals(ev.textKey())),
+                "到期要留下事件，情报册才有东西可显示：" + ticked.events());
+        assertTrue(ticked.nation("n0").orElseThrow().attitudeToParty()
+                        < s.nation("n0").orElseThrow().attitudeToParty(),
+                "忽略掉的态度要比原来低");
+    }
+
+    /** 承诺在结算里自动了结（清了账就不会被反复追责）。 */
+    @Test
+    void settlementFulfilsAMaturedPromise() {
+        SettlementConfig c = SettlementConfig.defaults();
+        LetterMachine letters = LetterMachine.defaults();
+        WorldState s = letters.propose(single(nation("n0", 6, 0.0, 0.0, 50.0)),
+                "n0", LetterKind.STOP_BUILDING, "", 64.0, 0.0);
+        s = letters.answer(s, s.letters().get(0).id(), true).state();
+        long until = s.letters().get(0).promiseUntilSeq();
+
+        SettlementEngine e = new SettlementEngine(c, StatecraftConfig.defaults(), sixEras(),
+                letters);
+        WorldState ticked = s;
+        while (ticked.seq() < until) {
+            ticked = e.settle(ticked, SettlementInput.periodic(c));
+        }
+        ticked = e.settle(ticked, SettlementInput.periodic(c));
+
+        assertEquals(0L, ticked.letters().get(0).promiseUntilSeq(), "履约后要清账");
+        assertTrue(ticked.events().stream().anyMatch(ev -> "letter_kept".equals(ev.textKey())),
+                "履约要留下事件：" + ticked.events());
     }
 
     // ---- 确定性 ----

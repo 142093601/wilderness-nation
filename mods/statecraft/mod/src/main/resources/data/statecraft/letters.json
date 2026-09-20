@@ -1,0 +1,33 @@
+{
+  "config": {
+    "deadlineSettlements": 3,
+    "refusalAttitudePenalty": -5,
+    "ignoreAttitudePenalty": -8,
+    "tributeAcceptAttitudeGain": 10,
+    "jointWarAttitudeGain": 10,
+    "stopBuildAcceptAttitudeGain": 5,
+    "stopBuildPromiseSettlements": 6,
+    "stopBuildKeptAttitudeGain": 10,
+    "stopBuildBreachAttitudePenalty": -25
+  },
+  "kinds": [
+    {
+      "kind": "STOP_BUILDING",
+      "name": "停止在边境建造",
+      "radius": 64,
+      "amount": 0
+    },
+    {
+      "kind": "JOINT_WAR",
+      "name": "共同讨伐",
+      "radius": 0,
+      "amount": 0
+    },
+    {
+      "kind": "TRIBUTE",
+      "name": "朝贡换互不侵犯",
+      "radius": 0,
+      "amount": 120
+    }
+  ]
+}

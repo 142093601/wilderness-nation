@@ -4,6 +4,7 @@ import com.google.gson.JsonParser;
 import com.mojang.logging.LogUtils;
 import com.wildernessnation.statecraft.core.config.StatecraftConfig;
 import com.wildernessnation.statecraft.core.data.DataFiles;
+import com.wildernessnation.statecraft.core.data.LetterData;
 import com.wildernessnation.statecraft.core.data.NationData;
 import com.wildernessnation.statecraft.core.era.EraTable;
 import com.wildernessnation.statecraft.core.model.Culture;
@@ -36,12 +37,14 @@ public final class StatecraftData {
     private static final String NATIONS_PATH = "/data/statecraft/nations.json";
     private static final String PLACES_PATH = "/data/statecraft/places.json";
     private static final String EVENTS_PATH = "/data/statecraft/events.json";
+    private static final String LETTERS_PATH = "/data/statecraft/letters.json";
 
     private static EraTable eras;
     private static NationData nations;
     private static StateMigrator migrator;
     private static PlaceNames places;
     private static TextTemplates templates;
+    private static LetterData letters;
 
     private StatecraftData() {}
 
@@ -51,11 +54,13 @@ public final class StatecraftData {
         // 生产迁移链（core 侧）：v1 是**真的发布过**的格式，测试世界里的 .dat 就是 v1
         places = DataFiles.places(read(PLACES_PATH));
         templates = DataFiles.templates(read(EVENTS_PATH));
+        letters = DataFiles.letters(read(LETTERS_PATH));
         migrator = StateMigrations.production();
-        LOG.info("Statecraft 数据已载入：{} 个时代、{} 个文化、国名池 {} 个",
+        LOG.info("Statecraft 数据已载入：{} 个时代、{} 个文化、国名池 {} 个、国书 {} 种",
                 eras.size(),
                 nations.cultures().size(),
-                nations.cultures().stream().mapToInt(c -> c.namePrefixes().size()).sum());
+                nations.cultures().stream().mapToInt(c -> c.namePrefixes().size()).sum(),
+                letters.kinds().size());
     }
 
     public static EraTable eras() {
@@ -84,6 +89,12 @@ public final class StatecraftData {
     public static TextTemplates templates() {
         requireLoaded();
         return templates;
+    }
+
+    /** 国书的种类定义与数值（`letters.json`）。 */
+    public static LetterData letters() {
+        requireLoaded();
+        return letters;
     }
 
     public static StateMigrator migrator() {

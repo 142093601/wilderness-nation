@@ -46,7 +46,7 @@ class WeeklyReportTest {
         return new WorldState(WorldState.CURRENT_SCHEMA_VERSION, 42L, "landing", 0, 9L,
                 List.of(nation("n0", Nation.Status.ALIVE), nation("n1", Nation.Status.DEAD)),
                 List.of(new Relation("n0", "n1", 0.0, Relation.State.WAR, 10.0, 0L, 1)),
-                events, List.of(), 0.0);
+                events, List.of(), List.of(), 0.0);
     }
 
     @Test
