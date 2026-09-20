@@ -10,6 +10,8 @@ import com.wildernessnation.statecraft.core.model.Culture;
 import com.wildernessnation.statecraft.core.persist.StateMigrator;
 import com.wildernessnation.statecraft.core.persist.StateMigrations;
 import com.wildernessnation.statecraft.core.persist.StateNode;
+import com.wildernessnation.statecraft.core.text.PlaceNames;
+import com.wildernessnation.statecraft.core.text.TextTemplates;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
@@ -32,10 +34,14 @@ public final class StatecraftData {
 
     private static final String ERAS_PATH = "/data/statecraft/eras.json";
     private static final String NATIONS_PATH = "/data/statecraft/nations.json";
+    private static final String PLACES_PATH = "/data/statecraft/places.json";
+    private static final String EVENTS_PATH = "/data/statecraft/events.json";
 
     private static EraTable eras;
     private static NationData nations;
     private static StateMigrator migrator;
+    private static PlaceNames places;
+    private static TextTemplates templates;
 
     private StatecraftData() {}
 
@@ -43,6 +49,8 @@ public final class StatecraftData {
         eras = DataFiles.eras(read(ERAS_PATH));
         nations = DataFiles.nations(read(NATIONS_PATH));
         // 生产迁移链（core 侧）：v1 是**真的发布过**的格式，测试世界里的 .dat 就是 v1
+        places = DataFiles.places(read(PLACES_PATH));
+        templates = DataFiles.templates(read(EVENTS_PATH));
         migrator = StateMigrations.production();
         LOG.info("Statecraft 数据已载入：{} 个时代、{} 个文化、国名池 {} 个",
                 eras.size(),
@@ -66,6 +74,16 @@ public final class StatecraftData {
 
     public static StatecraftConfig config() {
         return nations().config();
+    }
+
+    public static PlaceNames places() {
+        requireLoaded();
+        return places;
+    }
+
+    public static TextTemplates templates() {
+        requireLoaded();
+        return templates;
     }
 
     public static StateMigrator migrator() {

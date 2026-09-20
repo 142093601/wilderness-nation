@@ -5,13 +5,15 @@ import com.wildernessnation.statecraft.core.era.Era;
 import com.wildernessnation.statecraft.core.era.EraTable;
 import com.wildernessnation.statecraft.core.model.Culture;
 import com.wildernessnation.statecraft.core.persist.StateNode;
+import com.wildernessnation.statecraft.core.text.PlaceNames;
+import com.wildernessnation.statecraft.core.text.TextTemplates;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
 /**
- * 数据文件（`eras.json` / `nations.json`）→ core 类型的读取规则。
+ * 数据文件（`eras.json` / `nations.json` / `places.json` / `events.json`）→ core 类型的读取规则。
  *
  * <p><strong>为什么读数据这一步在 core 而不是 mod 层</strong>：JSON 本身由 mod 层用 Gson 翻成
  * {@link StateNode}（那是机械翻译），而"哪个字段必填、缺了用什么默认值、算不算非法"是<strong>规则</strong>，
@@ -63,6 +65,16 @@ public final class DataFiles {
             out.add(items.get(i).asString(StateNode.index(path + ".unlocks", i)));
         }
         return out;
+    }
+
+    /** `places.json`：根是 `{ "capital": [...], "town": [...], … }`。 */
+    public static PlaceNames places(StateNode root) {
+        return PlaceNames.fromNode(root);
+    }
+
+    /** `events.json`：根是 `{ "<textKey>": "<模板>", … }`。 */
+    public static TextTemplates templates(StateNode root) {
+        return TextTemplates.fromNode(root);
     }
 
     /** `nations.json`：根是对象 `{ config?, cultures[] }`。 */

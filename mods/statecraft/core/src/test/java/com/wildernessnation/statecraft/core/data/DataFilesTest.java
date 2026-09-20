@@ -8,6 +8,8 @@ import com.wildernessnation.statecraft.core.config.StatecraftConfig;
 import com.wildernessnation.statecraft.core.era.EraTable;
 import com.wildernessnation.statecraft.core.model.Culture;
 import com.wildernessnation.statecraft.core.persist.StateNode;
+import com.wildernessnation.statecraft.core.text.PlaceNames;
+import com.wildernessnation.statecraft.core.text.TextTemplates;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -190,4 +192,36 @@ class DataFilesTest {
         List<Culture> cultures = data.cultures();
         assertEquals(24, cultures.stream().mapToInt(c -> c.namePrefixes().size()).sum());
     }
+
+    // ---- places.json / events.json（计划 4 的文案层）----
+
+    @Test
+    void readsPlacePoolsAndTemplatesFromData() {
+        java.util.Map<String, StateNode> places = StateNode.fields();
+        places.put("town", new StateNode.Arr(List.of(
+                new StateNode.Str("石口"), new StateNode.Str("枯井镇"))));
+        PlaceNames pool = DataFiles.places(new StateNode.Obj(places));
+        assertTrue(pool.has(PlaceNames.TOWN));
+        assertEquals(1, pool.kinds().size(), "这里只放了一种池子（town）");
+
+        java.util.Map<String, StateNode> events = StateNode.fields();
+        events.put("battle", new StateNode.Str("{0}攻破{1}边镇『{p:town}』"));
+        TextTemplates templates = DataFiles.templates(new StateNode.Obj(events));
+        assertTrue(templates.has("battle"));
+        assertEquals("{0}攻破{1}边镇『{p:town}』", templates.require("battle"));
+    }
+
+    @Test
+    void placePoolAndTemplateTablesRejectBadData() {
+        assertThrows(IllegalArgumentException.class,
+                () -> DataFiles.places(new StateNode.Obj(StateNode.fields())));
+        assertThrows(IllegalArgumentException.class,
+                () -> DataFiles.templates(new StateNode.Obj(StateNode.fields())));
+        // 模板内容不能是空白
+        java.util.Map<String, StateNode> blank = StateNode.fields();
+        blank.put("x", new StateNode.Str("   "));
+        assertThrows(IllegalArgumentException.class,
+                () -> DataFiles.templates(new StateNode.Obj(blank)));
+    }
 }
+
