@@ -1,0 +1,255 @@
+# 出关（时代 3 · expedition）
+#
+# 时代定义：`eras.json` → id=expedition, name=远征, durationHours=50, coefficient=1.45
+# unlocks: intel_station_2（情报站第三档的升级件在这个时代出现——与邦交章对应）
+# 主菜：**远征**（DESIGN.md §17.4）
+#
+# 判据来源：原版结构/维度/生物群系进度 + 物品 + 统计。
+# 结构 mod 大多不发进度（YUNG's / repurposed_structures 有少量），所以这一章主要靠
+# 原版进度（到过某维度/某结构）与"带回什么"这两类判据 —— 都指向真实游戏事实。
+
+key = "expedition"
+title = "出关"
+subtitle = "要建 X，就必须去 Y——远征得先有理由"
+group = "chronicle"
+icon = "minecraft:compass"
+order_index = 4
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 国策主线 ----------------
+
+[[quest]]
+name = "intel_wall"
+title = "情报墙"
+desc = [
+	"一面墙把已知的国家、据点、风险全标出来——地图、坐标、名字。",
+	"⚠️ 「标全了没有」判不了（覆盖率是主观的），这一条自检。",
+]
+icon = "minecraft:item_frame"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "roster"
+title = "远征队登记"
+desc = [
+	"出发前写清：谁去、去哪、带什么、什么时候回来。",
+	"这一条不是仪式——出事时它是唯一能让留守的人知道去哪找你们的记录。",
+	"⚠️ 名册的**内容**判不了，自检。",
+]
+icon = "minecraft:writable_book"
+shape = "rsquare"
+deps = ["intel_wall"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "first_expedition"
+title = "第一次远征归来"
+desc = [
+	"1000 格外走一趟再全员回来。指挥棒不是判据——「走出去」才是。",
+]
+icon = "minecraft:leather_boots"
+shape = "rsquare"
+deps = ["roster"]
+tasks = [
+	{ type = "stat", stat = "minecraft:walk_one_cm", value = 100000 },
+]
+
+[[quest]]
+name = "outposts"
+title = "路上有补给"
+desc = [
+	"远行链路上至少 2 个能补给的站点（驿站、仓储点、传送节点都行）。",
+]
+icon = "waystones:waystone"
+shape = "rsquare"
+deps = ["first_expedition"]
+tasks = [
+	{ type = "item", item = "waystones:waystone", count = 2 },
+]
+
+[[quest]]
+name = "gear_room"
+title = "远征装备间"
+desc = [
+	"出发前领装备的地方：食物、工具、床、船各一处，拿了就走。",
+]
+icon = "minecraft:chest"
+shape = "rsquare"
+deps = ["first_expedition"]
+tasks = [
+	{ type = "item", item = "minecraft:chest", count = 8 },
+]
+
+[[quest]]
+name = "archive"
+title = "档案馆"
+desc = [
+	"把带回来的书、地图、唱片集中收在一处——不然它们会散在每个人背包里。",
+]
+icon = "minecraft:bookshelf"
+shape = "rsquare"
+deps = ["first_expedition"]
+tasks = [
+	{ type = "item", item = "minecraft:bookshelf", count = 15 },
+]
+
+[[quest]]
+name = "nether_trip"
+title = "第一次下界远征"
+desc = [
+	"跨维度是远征的第一次质变：补给、坐标、退路全都要重新算。",
+	"这条游戏会自己判定（进入下界）。",
+]
+icon = "minecraft:flint_and_steel"
+shape = "rsquare"
+deps = ["outposts"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:story/enter_the_nether" },
+]
+
+[[quest]]
+name = "long_haul"
+title = "世界地图"
+desc = [
+	"把 5000 格范围连成图。到这一步，你们才有资格谈「天下」。",
+]
+icon = "minecraft:map"
+shape = "rsquare"
+deps = ["outposts"]
+tasks = [
+	{ type = "item", item = "minecraft:map", count = 9 },
+]
+
+# ---------------- 支线：探索具体化 ----------------
+
+[[quest]]
+name = "three_structures"
+title = "三种结构"
+desc = [
+	"三种不同来源的结构各探一处，并在地图上留标记。",
+	"结构 mod 多、进度少（实测结构类 mod 基本不发 advancement），所以判据落在「到过」上。",
+]
+icon = "minecraft:spyglass"
+shape = "circle"
+size = 1.2
+deps = ["first_expedition"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:adventure/adventuring_time" },
+]
+
+[[quest]]
+name = "ocean_trip"
+title = "海上远航"
+desc = [
+	"用船走一段真正的海路（沉船、海底遗迹都在这一层）。",
+]
+icon = "minecraft:oak_boat"
+shape = "circle"
+size = 1.2
+deps = ["outposts"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_boat" },
+	{ type = "stat", stat = "minecraft:boat_one_cm", value = 50000 },
+]
+
+[[quest]]
+name = "high_peak"
+title = "登高"
+desc = [
+	"爬到 Y≥200 的地形上——站在高处看，才知道自己走了多远。",
+]
+icon = "minecraft:goat_horn"
+shape = "circle"
+size = 1.2
+deps = ["first_expedition"]
+tasks = [
+	{ type = "item", item = "minecraft:goat_horn" },
+]
+
+[[quest]]
+name = "desert_run"
+title = "穿越沙漠"
+desc = [
+	"横穿一次沙漠，带回至少 2 种那儿的特产。",
+]
+icon = "minecraft:cactus"
+shape = "circle"
+size = 1.2
+deps = ["first_expedition"]
+tasks = [
+	{ type = "item", item = "minecraft:cactus", count = 8 },
+]
+
+[[quest]]
+name = "beacon_point"
+title = "灯塔"
+desc = [
+	"夜里从远处能看见的一处光源——它让远方有方向。",
+]
+icon = "minecraft:lantern"
+shape = "circle"
+size = 1.2
+deps = ["outposts"]
+tasks = [
+	{ type = "item", item = "minecraft:lantern", count = 16 },
+]
+
+[[quest]]
+name = "forward_post"
+title = "前哨"
+desc = [
+	"远征链路上有一座能挡袭击的小据点：墙、门、床、补给。",
+]
+icon = "minecraft:stone_bricks"
+shape = "circle"
+size = 1.2
+deps = ["outposts"]
+tasks = [
+	{ type = "item", item = "minecraft:stone_bricks", count = 32 },
+]
+
+# ---------------- 邦交线在这个时代升级 ----------------
+
+[[quest]]
+name = "tracking"
+title = "开始追踪"
+desc = [
+	"这个时代解锁情报站第三档的升级件（`eras.json` 的 `intel_station_2`）。",
+	"升级后能追踪国家、看谁在打谁、每结算深挖一国详报。",
+	"⚠️ 升级动作本身判不了（模组不发进度），自检。",
+]
+icon = "minecraft:spyglass"
+shape = "rsquare"
+deps = ["intel_wall"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# ---------------- 终局 ----------------
+
+[[quest]]
+name = "expedition_monument"
+title = "远征碑"
+desc = [
+	"刻上走过多远、去过哪些地方。",
+	"下一时代是压力时代：把远征带回来的东西变成工事。",
+]
+icon = "minecraft:stone_bricks"
+shape = "hexagon"
+size = 2.5
+deps = ["nether_trip", "long_haul", "three_structures", "ocean_trip", "high_peak",
+        "desert_run", "beacon_point", "forward_post", "gear_room", "archive", "tracking"]
+tasks = [
+	{ type = "item", item = "minecraft:stone_bricks", count = 32 },
+]
+rewards = [
+	{ type = "xp", xp = 120 },
+	{ type = "toast" },
+]

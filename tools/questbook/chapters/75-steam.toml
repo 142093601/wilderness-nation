@@ -1,0 +1,223 @@
+# 蒸汽与铁路（技艺章）
+#
+# 这一章补的是 PLAN-questbook.md §2.1 里「技艺 5 章」的第 5 章。
+# 它独立成章的理由：Create 的**蒸汽与列车**是一整套自成体系的大件——
+# 有燃料、有锅炉、有轨道与信号、有调度，玩法上与其他机器完全不同类。
+#
+# 判据来源：Create 自己的进度（实测 1150 条里有一批专属于这一块）+ 实物。
+# 相关 mod：create-steam-n-rails · create-railways-navigator · create-train-parts ·
+#          create-horse-power · create-central-kitchen（蒸汽厨房）
+
+key = "steam"
+title = "蒸汽与铁路"
+subtitle = "从烧一炉水，到让整张地图变短"
+group = "craft"
+icon = "create:steam_engine"
+order_index = 24
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 起点：蒸汽 ----------------
+
+[[quest]]
+name = "st_boiler"
+title = "先有锅炉"
+desc = [
+	"蒸汽机不是一台机器，是一整套：**锅炉 + 水 + 燃料 + 引擎**。",
+	"它和风车水车的区别在于——动力不再受地形限制，你想放哪就放哪。",
+]
+icon = "create:steam_engine"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "advancement", advancement = "create:steam_engine" },
+]
+
+[[quest]]
+name = "st_burner"
+title = "给锅炉配炉子"
+desc = [
+	"烈焰燃烧器 / 固体燃烧器：决定这一炉能烧多久。",
+]
+icon = "create:blaze_burner"
+shape = "rsquare"
+deps = ["st_boiler"]
+tasks = [
+	{ type = "advancement", advancement = "create:burner" },
+]
+
+[[quest]]
+name = "st_maxed"
+title = "把引擎拉满"
+desc = [
+	"满级蒸汽机：一台顶一片风车，这是「工业化」与「小作坊」的分界。",
+]
+icon = "create:steam_whistle"
+shape = "rsquare"
+deps = ["st_burner"]
+tasks = [
+	{ type = "advancement", advancement = "create:steam_engine_maxed" },
+]
+
+[[quest]]
+name = "st_whistle"
+title = "汽笛"
+desc = [
+	"纯粹的仪式感——但它也是「这台机器在正常工作」最直观的信号。",
+]
+icon = "create:steam_whistle"
+shape = "circle"
+size = 1.2
+deps = ["st_boiler"]
+tasks = [
+	{ type = "item", item = "create:steam_whistle" },
+]
+
+# ---------------- 轨道 ----------------
+
+[[quest]]
+name = "st_track"
+title = "铺第一段轨"
+desc = [
+	"列车跑在轨道上。先铺一段直的，把「点对点运输」这件事跑通。",
+]
+icon = "create:track"
+shape = "rsquare"
+deps = ["st_boiler"]
+tasks = [
+	{ type = "item", item = "create:track", count = 64 },
+]
+
+[[quest]]
+name = "st_station"
+title = "车站"
+desc = [
+	"车站是列车的停靠与调度点。两地各一个，线路才成立。",
+]
+icon = "create:track_station"
+shape = "rsquare"
+deps = ["st_track"]
+tasks = [
+	{ type = "item", item = "create:track_station", count = 2 },
+]
+
+[[quest]]
+name = "st_schedule"
+title = "列车时刻表"
+desc = [
+	"让列车自己按表跑——这才叫「运输线」，否则只是会动的箱子。",
+]
+icon = "create:schedule"
+shape = "rsquare"
+deps = ["st_station"]
+tasks = [
+	{ type = "item", item = "create:schedule" },
+]
+
+[[quest]]
+name = "st_long_train"
+title = "长途列车"
+desc = [
+	"挂多节车厢跑一趟长途——运量与距离同时上台阶。",
+]
+icon = "create:steam_whistle"
+shape = "circle"
+size = 1.2
+deps = ["st_schedule"]
+tasks = [
+	{ type = "advancement", advancement = "create:long_train" },
+]
+
+[[quest]]
+name = "st_long_travel"
+title = "坐车出远门"
+desc = [
+	"人也能靠它走远——设计里「交通等级扩大远征半径」指的就是这一步。",
+]
+icon = "create:controls"
+shape = "circle"
+size = 1.2
+deps = ["st_long_train"]
+tasks = [
+	{ type = "advancement", advancement = "create:long_travel" },
+]
+
+# ---------------- 信号与调度 ----------------
+
+[[quest]]
+name = "st_signal"
+title = "信号"
+desc = [
+	"两条线交叉时会撞车。信号系统是为了让列车自己让路。",
+]
+icon = "create:track_signal"
+shape = "circle"
+size = 1.2
+deps = ["st_schedule"]
+tasks = [
+	{ type = "item", item = "create:track_signal", count = 4 },
+]
+
+[[quest]]
+name = "st_display"
+title = "到站显示"
+desc = [
+	"车站显示屏 / 列车时刻牌：让「下一班什么时候到」变成看得见的事。",
+]
+icon = "createrailwaysnavigator:advanced_display"
+shape = "circle"
+size = 1.2
+deps = ["st_signal"]
+tasks = [
+	{ type = "item", item = "createrailwaysnavigator:advanced_display" },
+]
+
+[[quest]]
+name = "st_worker"
+title = "让列车自己装卸"
+desc = [
+	"货运站 + 机械臂：到站自动装、到站自动卸，人才真正从运输里解放出来。",
+]
+icon = "create:package_frogport"
+shape = "circle"
+size = 1.2
+deps = ["st_long_train"]
+tasks = [
+	{ type = "item", item = "create:package_frogport", count = 2 },
+]
+
+# ---------------- 配套 ----------------
+
+[[quest]]
+name = "st_kitchen"
+title = "列车厨房"
+desc = [
+	"Create Central Kitchen：长途运输里带上加工能力（食物、流体）。",
+	"⚠️ 这个扩展包**没有物品接口**（实测它的命名空间在注册表里为空），所以自检。",
+]
+icon = "create:track_station"
+shape = "circle"
+size = 1.2
+deps = ["st_long_train"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "st_railway_done"
+title = "地图变短了"
+desc = [
+	"两座城之间**只**靠铁路可达，而且人货都能走——这一条成立，",
+	"「远征」时代的路程成本才算真的降下来。",
+]
+icon = "create:track_station"
+shape = "hexagon"
+size = 2.5
+deps = ["st_maxed", "st_whistle", "st_long_travel", "st_display", "st_worker", "st_kitchen"]
+tasks = [
+	{ type = "item", item = "create:track", count = 16 },
+]
+rewards = [
+	{ type = "xp", xp = 120 },
+	{ type = "toast" },
+]

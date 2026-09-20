@@ -1,0 +1,211 @@
+# 类目 · 储存与物流
+#
+# 本章的 mod：Create 物流系（已在机械动力章铺过一条主线，这里补"仓储"视角）·
+#   Storage Delight · Travelers Backpack · Shulker Box Tooltip · Cupboard · Sophisticated 系
+#
+# 与其它章的分工：
+#   · 机械动力章 = 物流**原理**（带、漏斗、机械臂、打包）
+#   · 基建章     = 公共仓库**规模**（保险库 16 个、单库 5000 单位）
+#   · 本章       = **随身与就近**（背包、背包内胆、移动仓库、分类容器）
+
+key = "cat_storage"
+title = "储存与物流"
+subtitle = "随身带什么、就近放什么、什么时候该回仓库"
+group = "category"
+icon = "create:item_vault"
+order_index = 33
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 簇 1：随身 ----------------
+
+[[quest]]
+name = "s_backpack"
+title = "背包"
+desc = [
+	"Travelers Backpack：第一件真正的「随身仓库」。",
+	"它比一排潜影盒好用在于**它有内胆**——能按用途分区。",
+]
+icon = "travelersbackpack:standard"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "travelersbackpack:standard" },
+]
+
+[[quest]]
+name = "s_backpack_tank"
+title = "给背包加水箱"
+desc = [
+	"背包内胆之一：装液体。出远门带水带药，比来回跑强。",
+]
+icon = "travelersbackpack:backpack_tank"
+shape = "circle"
+size = 1.2
+deps = ["s_backpack"]
+tasks = [
+	{ type = "item", item = "travelersbackpack:backpack_tank" },
+]
+
+[[quest]]
+name = "s_sleeping_bag"
+title = "睡袋"
+desc = [
+	"背包自带睡袋：野外能睡（不必抢一张床），也方便设临时重生点。",
+]
+icon = "travelersbackpack:white_sleeping_bag"
+shape = "circle"
+size = 1.2
+deps = ["s_backpack"]
+tasks = [
+	{ type = "item", item = "travelersbackpack:white_sleeping_bag" },
+]
+
+[[quest]]
+name = "s_backpack_upgrade"
+title = "背包升级"
+desc = [
+	"容量与功能升级件：从「能装」到「装得多且不乱」。",
+]
+icon = "travelersbackpack:blank_upgrade"
+shape = "circle"
+size = 1.2
+deps = ["s_backpack"]
+tasks = [
+	{ type = "item", item = "travelersbackpack:blank_upgrade" },
+]
+
+# ---------------- 簇 2：就地分类 ----------------
+
+[[quest]]
+name = "s_cupboard"
+title = "就近收纳"
+desc = [
+	"Cupboard / Storage Delight：工作台旁边放常用料，不用每次都跑主仓。",
+]
+icon = "storagedelight:acacia_cabinet_with_glass_doors"
+shape = "rsquare"
+deps = ["s_backpack"]
+tasks = [
+	{ type = "item", item = "storagedelight:acacia_cabinet_with_glass_doors", count = 2 },
+]
+
+[[quest]]
+name = "s_labeled"
+title = "分类要有标签"
+desc = [
+	"箱子要能一眼看出装什么（牌子、物品展示框、专用容器都行）。",
+	"这一条解决的是「找东西花的时间比做东西还长」。",
+]
+icon = "minecraft:item_frame"
+shape = "circle"
+size = 1.2
+deps = ["s_cupboard"]
+tasks = [
+	{ type = "item", item = "minecraft:item_frame", count = 8 },
+	{ type = "item", item = "minecraft:oak_sign", count = 8 },
+]
+
+[[quest]]
+name = "s_shulker"
+title = "潜影盒"
+desc = [
+	"移动仓库：把一整箱东西原样搬走。远征与搬家都靠它。",
+]
+icon = "minecraft:shulker_box"
+shape = "circle"
+size = 1.2
+deps = ["s_backpack"]
+tasks = [
+	{ type = "item", item = "minecraft:shulker_box", count = 2 },
+]
+
+# ---------------- 簇 3：回仓库的那条链 ----------------
+
+[[quest]]
+name = "s_deposit"
+title = "到站自动卸货"
+desc = [
+	"从外面回来，东西不用手搬：卸货点自己分拣入库。",
+]
+icon = "create:chute"
+shape = "rsquare"
+deps = ["s_shulker"]
+tasks = [
+	{ type = "item", item = "create:chute", count = 4 },
+]
+
+[[quest]]
+name = "s_requester"
+title = "按需取货"
+desc = [
+	"领料不用翻仓库：写清单，仓库自己送。",
+]
+icon = "create:redstone_requester"
+shape = "rsquare"
+deps = ["s_deposit"]
+tasks = [
+	{ type = "item", item = "create:redstone_requester" },
+]
+
+[[quest]]
+name = "s_stock_keeper"
+title = "仓储管理员"
+desc = [
+	"让仓库自己管进出与补货——这是「公共仓库」与「一堆箱子」的分界。",
+]
+icon = "create:stock_ticker"
+shape = "circle"
+size = 1.2
+deps = ["s_requester"]
+tasks = [
+	{ type = "item", item = "create:stock_ticker" },
+]
+
+# ---------------- 簇 4：排查与容量 ----------------
+
+[[quest]]
+name = "s_threshold"
+title = "下限告警"
+desc = [
+	"关键物资（食物、箭、建材）低于下限时能看出来——别等用完了才发现。",
+]
+icon = "create:stockpile_switch"
+shape = "circle"
+size = 1.2
+deps = ["s_stock_keeper"]
+tasks = [
+	{ type = "item", item = "create:stockpile_switch", count = 3 },
+]
+
+[[quest]]
+name = "s_capacity_5000"
+title = "单库 5000 单位"
+desc = [
+	"容量到这一档，仓库才谈得上「支撑全队」。",
+]
+icon = "create:item_vault"
+shape = "rsquare"
+deps = ["s_stock_keeper"]
+tasks = [
+	{ type = "item", item = "create:item_vault", count = 32 },
+]
+
+[[quest]]
+name = "s_logistics_done"
+title = "全队不用背东西了"
+desc = [
+	"随身、就近、回仓三段都通：出门带背包，工地有就近柜，回城自动入库。",
+]
+icon = "travelersbackpack:standard"
+shape = "hexagon"
+size = 2.5
+deps = ["s_backpack_tank", "s_sleeping_bag", "s_backpack_upgrade", "s_labeled",
+        "s_threshold", "s_capacity_5000"]
+tasks = [
+	{ type = "item", item = "create:packager", count = 4 },
+]
+rewards = [
+	{ type = "xp", xp = 80 },
+	{ type = "toast" },
+]

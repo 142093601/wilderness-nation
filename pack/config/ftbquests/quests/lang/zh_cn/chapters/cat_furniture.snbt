@@ -1,0 +1,48 @@
+{
+	quest.D733059AE85E72DC.title: "座位"
+	quest.D733059AE85E72DC.description: [
+	"沙发、长凳、椅子。站着说话的议事厅不是议事厅。"
+	]
+	quest.B6237EA715068A91.title: "柜与抽屉"
+	quest.B6237EA715068A91.description: [
+	"Macaw's Furniture 的柜体：室内收纳不该全靠木箱。"
+	]
+	quest.9A6D0286088B564D.title: "像样的床"
+	quest.9A6D0286088B564D.description: [
+	"各风格床具：住得舒服是长期玩下去的一部分。"
+	]
+	quest.27D5AA91D24437AE.title: "成套厨房"
+	quest.27D5AA91D24437AE.description: [
+	"台面 + 水槽 + 抽屉：Refurbished 的厨房系列能凑出一间真厨房。"
+	]
+	quest.36DFA8F8FBBEBF7A.title: "绿植"
+	quest.36DFA8F8FBBEBF7A.description: [
+	"花盆、盆栽：最便宜也最有效的「有人住」信号。"
+	]
+	quest.FED8DD902A793233.title: "落地灯与吊灯"
+	quest.FED8DD902A793233.description: [
+	"室内照明换个层次：不再只有天花板上一排火把。"
+	]
+	quest.25B6A12B023C4D0F.title: "摆件与机械小物"
+	quest.25B6A12B023C4D0F.description: [
+	"Supplementaries 那一堆「没什么用但很好看」的东西：招牌、挂饰、机关。"
+	"这类 mod 的价值就是让细节不靠 mod 数量堆出来。"
+	]
+	quest.CD55146A6D3A33EE.title: "把照片挂起来"
+	quest.CD55146A6D3A33EE.description: [
+	"Exposure 拍照 + Immersive Paintings 上墙：把「这一局发生过什么」变成墙上的画。"
+	"这条对应设计里「国史 / 碑林」的日常化版本。"
+	]
+	quest.0974B8AEECED1DF0.title: "书架与书房"
+	quest.0974B8AEECED1DF0.description: [
+	"密集书架墙：档案、国史、闲书都该有地方放。"
+	]
+	quest.974D73838A71A4C1.title: "地面"
+	quest.974D73838A71A4C1.description: [
+	"地毯与地板：一块空地铺上东西，才算「房间」。"
+	]
+	quest.CE7EF4EFA7439DEF.title: "装完一间能住人的屋子"
+	quest.CE7EF4EFA7439DEF.description: [
+	"坐具、床、收纳、照明、绿植、上墙的画——凑齐这六样。"
+	]
+}

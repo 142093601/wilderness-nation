@@ -1,0 +1,245 @@
+# 立国（时代 1 · founding）
+#
+# 时代定义：`eras.json` → id=founding, name=立国, durationHours=40, coefficient=1.15
+# 主菜：**领地与治理**（DESIGN.md §17.2）
+#
+# 判据来源与一条实测限制
+# ----------------------
+# ⚠️ **`openpartiesandclaims`（OPAC）与 `ftbteams` 不提供任何物品**：
+#    它们的 lang 里 item/block 键数为 0，注册表里也没有它们的命名空间（实测）。
+#    所以"圈地 / 组队"这类动作**没有物品判据**，只能自检。
+#    （这跟邦交章遇到的是同一类问题：模组只提供命令/界面，不发信号。）
+# 能自动判的：Create 的物品（仓库/物流）、原版物品、原版统计。
+
+key = "founding"
+title = "立国"
+subtitle = "把「我们」变成「我们的地、我们的规矩」"
+group = "chronicle"
+icon = "minecraft:white_banner"
+order_index = 2
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 国策主线 ----------------
+
+[[quest]]
+name = "claim_the_land"
+title = "圈下国土"
+desc = [
+	"用认领工具把营地扩成国土——至少 9 个区块（3×3），别只圈一间房。",
+	"OPAC 这类模组**没有物品接口**（实测：lang 里 item 键为 0），所以圈没圈成只能自己确认。",
+	"验证方式：让一个不在队里的人试着挖一块——挖不动才算数。",
+]
+icon = "minecraft:white_banner"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "one_team"
+title = "所有人进同一个队"
+desc = [
+	"两条路（FTB Teams 或 OPAC party），**只选一条**，别两套并行。",
+	"同一类问题：队伍也没有物品判据。判据是你自己确认「所有人都能在领地里动东西」。",
+]
+icon = "minecraft:shield"
+shape = "rsquare"
+deps = ["claim_the_land"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "public_warehouse"
+title = "公共仓库开张"
+desc = [
+	"不再靠背包搬运：把物资集中到一处，谁都能取。",
+	"Create 的物品保险库是这一层的正解（一个保险库顶几十个箱子）。",
+]
+icon = "create:item_vault"
+shape = "rsquare"
+deps = ["one_team"]
+tasks = [
+	{ type = "item", item = "create:item_vault" },
+]
+
+[[quest]]
+name = "warehouse_scale"
+title = "仓库要装得下全队"
+desc = [
+	"一个保险库只是起步。攒到 16 个，才算「公共仓库」而不是「大一点的箱子」。",
+]
+icon = "create:item_vault"
+shape = "circle"
+size = 1.2
+deps = ["public_warehouse"]
+tasks = [
+	{ type = "item", item = "create:item_vault", count = 16 },
+]
+
+[[quest]]
+name = "pact_on_paper"
+title = "定下约定"
+desc = [
+	"把规矩写下来放进议事厅（告示牌或成书）——至少一条要说清「违反了会怎样」。",
+	"⚠️ 书的**内容**游戏判不了（放书架能检测，但「约定了」不能）。所以这一条自检。",
+	"别写成墙上装饰：写一条真的会被执行的。",
+]
+icon = "minecraft:writable_book"
+shape = "rsquare"
+deps = ["one_team"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "meeting_hall"
+title = "第一座地标：议事厅"
+desc = [
+	"由多人共同建成的一处公共建筑——它是这个国家第一个「不属于任何个人」的地方。",
+]
+icon = "minecraft:bell"
+shape = "rsquare"
+deps = ["pact_on_paper"]
+tasks = [
+	{ type = "item", item = "minecraft:bell" },
+]
+
+[[quest]]
+name = "seats_for_all"
+title = "议事厅坐得下所有人"
+desc = [
+	"能坐下说话才算议事厅：至少 8 个座位。",
+]
+icon = "minecraft:oak_stairs"
+shape = "circle"
+size = 1.2
+deps = ["meeting_hall"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_stairs", count = 8 },
+]
+
+# ---------------- 支线：生存与基建起步 ----------------
+
+[[quest]]
+name = "granary"
+title = "粮仓起步"
+desc = [
+	"一箱小麦 + 一箱胡萝卜或马铃薯。饿肚子守不住国。",
+]
+icon = "minecraft:bread"
+shape = "circle"
+size = 1.2
+deps = ["public_warehouse"]
+tasks = [
+	{ type = "item", item = "minecraft:bread", count = 16 },
+]
+
+[[quest]]
+name = "farm_plot"
+title = "圈一块农田"
+desc = [
+	"≥16 格耕地，全部有水源。种下去（游戏会记「你种过种子」）。",
+]
+icon = "minecraft:wheat"
+shape = "circle"
+size = 1.2
+deps = ["granary"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:husbandry/plant_seed" },
+]
+
+[[quest]]
+name = "livestock"
+title = "牧场起步"
+desc = [
+	"≥4 只同种动物圈在栏里。繁殖过一次就算成型。",
+]
+icon = "minecraft:oak_fence"
+shape = "circle"
+size = 1.2
+deps = ["granary"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:husbandry/breed_an_animal" },
+]
+
+[[quest]]
+name = "first_road"
+title = "上路"
+desc = [
+	"一条能走的路，连到最近的水源或林地。",
+]
+icon = "minecraft:gravel"
+shape = "circle"
+size = 1.2
+deps = ["one_team"]
+tasks = [
+	{ type = "item", item = "minecraft:gravel", count = 32 },
+]
+
+[[quest]]
+name = "torch_corridor"
+title = "夜里不黑"
+desc = [
+	"主路两侧点起来。黑的地方就是它们来的地方。",
+]
+icon = "minecraft:torch"
+shape = "circle"
+size = 1.2
+deps = ["first_road"]
+tasks = [
+	{ type = "item", item = "minecraft:torch", count = 32 },
+]
+
+# ---------------- 自动化起步 ----------------
+
+[[quest]]
+name = "stone_supply"
+title = "石料自给"
+desc = [
+	"一台持续产圆石的机器，替代手挖。这是第一条「不用人管」的线。",
+]
+icon = "minecraft:cobblestone"
+shape = "circle"
+size = 1.2
+deps = ["warehouse_scale"]
+tasks = [
+	{ type = "item", item = "minecraft:cobblestone", count = 256 },
+]
+
+[[quest]]
+name = "bulk_smelting"
+title = "批量烧炼"
+desc = [
+	"一次投料连续工作，不用守着加燃料。",
+]
+icon = "minecraft:furnace"
+shape = "circle"
+size = 1.2
+deps = ["stone_supply"]
+tasks = [
+	{ type = "item", item = "minecraft:furnace", count = 8 },
+]
+
+# ---------------- 终局 ----------------
+
+[[quest]]
+name = "founding_monument"
+title = "立国碑"
+desc = [
+	"刻上国号，立在议事厅前。",
+	"这一条是「基建」时代的彩排：碑立好了，接下来该往外修了。",
+]
+icon = "minecraft:stone_bricks"
+shape = "hexagon"
+size = 2.5
+deps = ["seats_for_all", "farm_plot", "livestock", "torch_corridor", "bulk_smelting"]
+tasks = [
+	{ type = "item", item = "minecraft:stone_bricks", count = 32 },
+]
+rewards = [
+	{ type = "xp", xp = 80 },
+	{ type = "toast" },
+]

@@ -1,0 +1,336 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "cat_building"
+	group: "1439886072EE757D"
+	icon: {
+		id: "minecraft:bricks"
+	}
+	id: "0AE5EAB7FD35FEF7"
+	order_index: 30
+	quest_links: [ ]
+	quests: [
+	{
+		icon: {
+			id: "mcwbridges:acacia_log_bridge_middle"
+		}
+		id: "27EF883A29B97A4A"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "mcwbridges:acacia_log_bridge_middle"
+			count: 8
+			id: "604C761A47416772"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: 0.0d
+	}
+	{
+		dependencies: [
+		"27EF883A29B97A4A"
+		]
+		icon: {
+			id: "mcwfences:acacia_hedge"
+		}
+		id: "EF5820F81D73126A"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mcwfences:acacia_hedge"
+			count: 16
+			id: "684CEEF3A01ABD8D"
+			type: "item"
+		}
+		]
+		x: -8.1d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"27EF883A29B97A4A"
+		]
+		icon: {
+			id: "mcwwindows:acacia_window"
+		}
+		id: "E3C3772A3F421871"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mcwwindows:acacia_window"
+			count: 8
+			id: "429B478D913816A5"
+			type: "item"
+		}
+		]
+		x: -5.55d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"27EF883A29B97A4A"
+		]
+		icon: {
+			id: "mcwtrpdoors:acacia_barn_trapdoor"
+		}
+		id: "17184EB1B2BCE64B"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mcwtrpdoors:acacia_barn_trapdoor"
+			count: 8
+			id: "EB387C171DF351D8"
+			type: "item"
+		}
+		]
+		x: -3.0d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"27EF883A29B97A4A"
+		]
+		icon: {
+			id: "mcwpaths:andesite_diamond_paving"
+		}
+		id: "89ECD33FD16C1A84"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mcwpaths:andesite_diamond_paving"
+			count: 16
+			id: "004E914BE62641E9"
+			type: "item"
+		}
+		]
+		x: -0.45d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"27EF883A29B97A4A"
+		]
+		icon: {
+			id: "handcrafted:acacia_couch"
+		}
+		id: "5BE6E00CACE57A49"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "handcrafted:acacia_couch"
+			count: 2
+			id: "FAA3EA2E8CDBE1DD"
+			type: "item"
+		}
+		]
+		x: 2.32d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"5BE6E00CACE57A49"
+		]
+		icon: {
+			id: "handcrafted:acacia_nightstand"
+		}
+		id: "4E6064F2596B9840"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "handcrafted:acacia_nightstand"
+			id: "F872F04AAAC022DE"
+			type: "item"
+		}
+		{
+			item: "handcrafted:acacia_drawer"
+			id: "89FBC9CC3CC75B50"
+			type: "item"
+		}
+		]
+		x: -3.82d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"5BE6E00CACE57A49"
+		]
+		icon: {
+			id: "refurbished_furniture:acacia_kitchen_cabinetry"
+		}
+		id: "323155B28A3BC8E7"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "refurbished_furniture:acacia_kitchen_cabinetry"
+			count: 4
+			id: "EBAD72D97D223986"
+			type: "item"
+		}
+		]
+		x: -1.27d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"323155B28A3BC8E7"
+		]
+		icon: {
+			id: "refurbished_furniture:acacia_table"
+		}
+		id: "6178656D15AAF82E"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "refurbished_furniture:acacia_table"
+			id: "5902E93603F78F93"
+			type: "item"
+		}
+		{
+			item: "refurbished_furniture:acacia_chair"
+			count: 4
+			id: "CA16BBC69CAB7C0E"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"27EF883A29B97A4A"
+		]
+		icon: {
+			id: "minecraft:chiseled_stone_bricks"
+		}
+		id: "24EA85F1928D6D61"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:chiseled_stone_bricks"
+			count: 16
+			id: "E096DA1A67161782"
+			type: "item"
+		}
+		{
+			item: "minecraft:stonecutter"
+			id: "1510DACA5F1A6CB6"
+			type: "item"
+		}
+		]
+		x: 5.32d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"24EA85F1928D6D61"
+		]
+		icon: {
+			id: "minecraft:glass_pane"
+		}
+		id: "E0BDDF7FBFC59437"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:glass_pane"
+			count: 32
+			id: "21B41DD0A5066BDA"
+			type: "item"
+		}
+		]
+		x: 1.27d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"27EF883A29B97A4A"
+		]
+		icon: {
+			id: "mcwlights:bell_lantern"
+		}
+		id: "B152F4A1C6D33CC4"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mcwlights:bell_lantern"
+			count: 4
+			id: "EFD9F7185C52E4BD"
+			type: "item"
+		}
+		]
+		x: 8.1d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"B152F4A1C6D33CC4"
+		]
+		icon: {
+			id: "minecraft:painting"
+		}
+		id: "E60DE7B2AD4B7B0E"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:painting"
+			count: 8
+			id: "BAC0DFD6274051DF"
+			type: "item"
+		}
+		]
+		x: 3.82d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"E3C3772A3F421871"
+		"17184EB1B2BCE64B"
+		"89ECD33FD16C1A84"
+		"4E6064F2596B9840"
+		"6178656D15AAF82E"
+		"E0BDDF7FBFC59437"
+		"E60DE7B2AD4B7B0E"
+		]
+		icon: {
+			id: "minecraft:bricks"
+		}
+		id: "A3F7D93F368B2263"
+		rewards: [
+		{
+			xp: 80
+			id: "589400505E229F4A"
+			type: "xp"
+		}
+		{
+			id: "EF03855DC042323E"
+			type: "toast"
+		}
+		]
+		shape: "hexagon"
+		size: 2.5d
+		tasks: [
+		{
+			item: "minecraft:bricks"
+			count: 64
+			id: "A6DF7501691663D9"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -7.0d
+	}
+	]
+}

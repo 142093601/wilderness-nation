@@ -1,0 +1,149 @@
+# 无尽纪元（毕业后 · endless）
+#
+# 这是「文明」之后的开方式终局（DESIGN.md §17.6 的跨时代最低标准 / §9.8）。
+# 设计口径：**每 5 年一个新纪元，不设数值膨胀**，只加横向目标：
+#   无尽工程 · 图鉴与收藏 · 建筑目录 · 国史完本。
+#
+# 判据来源：物品与收藏量（可判定）。「每个纪元结算加一块碑」是 mod 侧行为，
+# 任务书这一层只负责把横向目标摆出来。
+
+key = "endless"
+title = "无尽纪元"
+subtitle = "毕业之后：不是结束，是终于有空做想做的事"
+group = "chronicle"
+icon = "minecraft:nether_star"
+order_index = 7
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 横向目标 ----------------
+
+[[quest]]
+name = "epitaph_each_era"
+title = "每个纪元加一块碑"
+desc = [
+	"结算到新纪元就立一块——碑林越长，越舍不得走（这是设计里明确的留人手段）。",
+	"⚠️ 立碑动作没有信号源，自检。",
+]
+icon = "minecraft:chiseled_stone_bricks"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "collection_book"
+title = "图鉴与收藏"
+desc = [
+	"横向目标第一类：把「见过但没留」的东西补回来。",
+	"先做一轮全群系踏查——原版进度会给这个盖章。",
+]
+icon = "minecraft:filled_map"
+shape = "rsquare"
+deps = ["epitaph_each_era"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:adventure/adventuring_time" },
+]
+
+[[quest]]
+name = "all_foods"
+title = "吃遍世界"
+desc = [
+	"设计里「图鉴」最实在的一种：把所有能吃的东西吃一遍。",
+	"原版有这个进度（均衡饮食），而这个包的食物多得多。",
+]
+icon = "minecraft:cake"
+shape = "rsquare"
+deps = ["collection_book"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:husbandry/balanced_diet" },
+]
+
+[[quest]]
+name = "all_mobs"
+title = "屠尽怪物图鉴"
+desc = [
+	"杀过每一种怪。这是最难也最像「毕业考」的一条。",
+]
+icon = "minecraft:diamond_sword"
+shape = "rsquare"
+deps = ["collection_book"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:adventure/kill_all_mobs" },
+]
+
+[[quest]]
+name = "building_catalog"
+title = "建筑目录"
+desc = [
+	"横向目标第二类：把标准件与地标做成一份「目录」，谁都能照着复现。",
+	"图纸是这一层的载体（便携图纸 / 图案图纸都是实物）。",
+]
+icon = "portable_blueprints:blueprint"
+shape = "rsquare"
+deps = ["epitaph_each_era"]
+tasks = [
+	{ type = "item", item = "portable_blueprints:blueprint", count = 8 },
+]
+
+[[quest]]
+name = "catalog_scanner"
+title = "把图纸链用顺手"
+desc = [
+	"扫一座建筑 → 存成图纸 → 别人照着放。这一条打通之后，造城速度会变一个量级。",
+]
+icon = "portable_blueprints:scanner"
+shape = "circle"
+size = 1.2
+deps = ["building_catalog"]
+tasks = [
+	{ type = "item", item = "portable_blueprints:scanner" },
+	{ type = "item", item = "portable_blueprints:tablet" },
+]
+
+[[quest]]
+name = "pattern_schematics"
+title = "图案图纸"
+desc = [
+	"Create 系的图案图纸：适合小构件与重复纹样。",
+]
+icon = "create_pattern_schematics:pattern_schematic"
+shape = "circle"
+size = 1.2
+deps = ["building_catalog"]
+tasks = [
+	{ type = "item", item = "create_pattern_schematics:pattern_schematic" },
+]
+
+[[quest]]
+name = "chronicle_complete"
+title = "国史完本"
+desc = [
+	"横向目标第三类：把国史从「写到一半」补成完本——每个时代、每场战争、每个亡国。",
+]
+icon = "minecraft:written_book"
+shape = "rsquare"
+deps = ["epitaph_each_era"]
+tasks = [
+	{ type = "item", item = "minecraft:book", count = 32 },
+]
+
+[[quest]]
+name = "endless_engine"
+title = "无尽工程 · 其一"
+desc = [
+	"选一件「没有任何人要求你们做」的工程，然后做完它。",
+	"这一条之后没有下一块碑了——想做什么都由你们自己定。",
+]
+icon = "minecraft:beacon"
+shape = "hexagon"
+size = 2.5
+deps = ["all_foods", "all_mobs", "catalog_scanner", "pattern_schematics", "chronicle_complete"]
+tasks = [
+	{ type = "item", item = "minecraft:beacon", count = 16 },
+]
+rewards = [
+	{ type = "xp", xp = 300 },
+	{ type = "toast" },
+]

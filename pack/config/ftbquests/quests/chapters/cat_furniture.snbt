@@ -1,0 +1,267 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "cat_furniture"
+	group: "1439886072EE757D"
+	icon: {
+		id: "handcrafted:acacia_couch"
+	}
+	id: "4DCF8BEF6FD0004E"
+	order_index: 31
+	quest_links: [ ]
+	quests: [
+	{
+		icon: {
+			id: "handcrafted:acacia_couch"
+		}
+		id: "D733059AE85E72DC"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "handcrafted:acacia_couch"
+			count: 4
+			id: "50E8940A5B9332CB"
+			type: "item"
+		}
+		{
+			item: "handcrafted:acacia_dining_bench"
+			count: 4
+			id: "6FCD12BB0A9386BD"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: 0.0d
+	}
+	{
+		dependencies: [
+		"D733059AE85E72DC"
+		]
+		icon: {
+			id: "mcwfurnitures:acacia_drawer"
+		}
+		id: "B6237EA715068A91"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "mcwfurnitures:acacia_drawer"
+			count: 4
+			id: "75A0403E92D9E2D9"
+			type: "item"
+		}
+		]
+		x: -5.32d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"D733059AE85E72DC"
+		]
+		icon: {
+			id: "handcrafted:acacia_fancy_bed"
+		}
+		id: "9A6D0286088B564D"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "handcrafted:acacia_fancy_bed"
+			id: "0810339A9AF1435C"
+			type: "item"
+		}
+		]
+		x: -2.55d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"D733059AE85E72DC"
+		]
+		icon: {
+			id: "refurbished_furniture:acacia_kitchen_drawer"
+		}
+		id: "27D5AA91D24437AE"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "refurbished_furniture:acacia_kitchen_drawer"
+			count: 2
+			id: "A7533BECB684DF84"
+			type: "item"
+		}
+		{
+			item: "refurbished_furniture:acacia_kitchen_sink"
+			id: "C1D67A18CC4B094C"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"D733059AE85E72DC"
+		]
+		icon: {
+			id: "minecraft:flower_pot"
+		}
+		id: "36DFA8F8FBBEBF7A"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:flower_pot"
+			count: 8
+			id: "6AE99CCBC671BF22"
+			type: "item"
+		}
+		]
+		x: 2.78d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"D733059AE85E72DC"
+		]
+		icon: {
+			id: "another_furniture:acacia_chair"
+		}
+		id: "FED8DD902A793233"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "another_furniture:acacia_chair"
+			count: 4
+			id: "DF27B84BACB46263"
+			type: "item"
+		}
+		]
+		x: 5.55d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"36DFA8F8FBBEBF7A"
+		]
+		icon: {
+			id: "supplementaries:globe"
+		}
+		id: "25B6A12B023C4D0F"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "supplementaries:globe"
+			id: "A6FE3CE66295BDB2"
+			type: "item"
+		}
+		]
+		x: -2.55d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"25B6A12B023C4D0F"
+		]
+		icon: {
+			id: "minecraft:item_frame"
+		}
+		id: "CD55146A6D3A33EE"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:item_frame"
+			count: 8
+			id: "4D2F7FB801EFA824"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"B6237EA715068A91"
+		]
+		icon: {
+			id: "minecraft:bookshelf"
+		}
+		id: "0974B8AEECED1DF0"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:bookshelf"
+			count: 16
+			id: "79A1FD7AE38AA509"
+			type: "item"
+		}
+		]
+		x: 0.23d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"B6237EA715068A91"
+		]
+		icon: {
+			id: "minecraft:white_carpet"
+		}
+		id: "974D73838A71A4C1"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:white_carpet"
+			count: 16
+			id: "E7CE88BFA9DBFBB9"
+			type: "item"
+		}
+		]
+		x: 2.77d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"B6237EA715068A91"
+		"9A6D0286088B564D"
+		"27D5AA91D24437AE"
+		"FED8DD902A793233"
+		"CD55146A6D3A33EE"
+		"0974B8AEECED1DF0"
+		"974D73838A71A4C1"
+		]
+		icon: {
+			id: "minecraft:white_bed"
+		}
+		id: "CE7EF4EFA7439DEF"
+		rewards: [
+		{
+			xp: 60
+			id: "29F483441B5DC46A"
+			type: "xp"
+		}
+		{
+			id: "F903ED7E7E8E6FC5"
+			type: "toast"
+		}
+		]
+		shape: "hexagon"
+		size: 2.5d
+		tasks: [
+		{
+			item: "minecraft:white_bed"
+			id: "8E86B462C24C36E6"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -7.0d
+	}
+	]
+}

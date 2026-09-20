@@ -1,0 +1,300 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "cat_storage"
+	group: "1439886072EE757D"
+	icon: {
+		id: "create:item_vault"
+	}
+	id: "994C41C732487EFB"
+	order_index: 33
+	quest_links: [ ]
+	quests: [
+	{
+		icon: {
+			id: "travelersbackpack:standard"
+		}
+		id: "B1D1B314213D1A09"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "travelersbackpack:standard"
+			id: "63EC616210197E81"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: 0.0d
+	}
+	{
+		dependencies: [
+		"B1D1B314213D1A09"
+		]
+		icon: {
+			id: "travelersbackpack:backpack_tank"
+		}
+		id: "04EC0766FE818CA5"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "travelersbackpack:backpack_tank"
+			id: "B6EA253FEF83FF0F"
+			type: "item"
+		}
+		]
+		x: -5.32d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"B1D1B314213D1A09"
+		]
+		icon: {
+			id: "travelersbackpack:white_sleeping_bag"
+		}
+		id: "C929174ADB78F923"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "travelersbackpack:white_sleeping_bag"
+			id: "2C05D5B47711553E"
+			type: "item"
+		}
+		]
+		x: -2.77d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"B1D1B314213D1A09"
+		]
+		icon: {
+			id: "travelersbackpack:blank_upgrade"
+		}
+		id: "05DFBFFD5C743FCF"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "travelersbackpack:blank_upgrade"
+			id: "6A5A5A45A1361424"
+			type: "item"
+		}
+		]
+		x: -0.23d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"B1D1B314213D1A09"
+		]
+		icon: {
+			id: "storagedelight:acacia_cabinet_with_glass_doors"
+		}
+		id: "1901DD1DD7F66B0D"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "storagedelight:acacia_cabinet_with_glass_doors"
+			count: 2
+			id: "71841ADEFD9F8D73"
+			type: "item"
+		}
+		]
+		x: 2.55d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"1901DD1DD7F66B0D"
+		]
+		icon: {
+			id: "minecraft:item_frame"
+		}
+		id: "137494D224880CE7"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:item_frame"
+			count: 8
+			id: "B509D6ED32EE1F15"
+			type: "item"
+		}
+		{
+			item: "minecraft:oak_sign"
+			count: 8
+			id: "03E620A96A4B001A"
+			type: "item"
+		}
+		]
+		x: -1.5d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"B1D1B314213D1A09"
+		]
+		icon: {
+			id: "minecraft:shulker_box"
+		}
+		id: "53C3373A69CDB61A"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:shulker_box"
+			count: 2
+			id: "BFC97AD819B333AB"
+			type: "item"
+		}
+		]
+		x: 5.32d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"53C3373A69CDB61A"
+		]
+		icon: {
+			id: "create:chute"
+		}
+		id: "05B462B7B3F64B20"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "create:chute"
+			count: 4
+			id: "83AE78DCA242986F"
+			type: "item"
+		}
+		]
+		x: 1.27d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"05B462B7B3F64B20"
+		]
+		icon: {
+			id: "create:redstone_requester"
+		}
+		id: "A47618690236EAC9"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "create:redstone_requester"
+			id: "709AB55D7CEEB287"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"A47618690236EAC9"
+		]
+		icon: {
+			id: "create:stock_ticker"
+		}
+		id: "32806DAC98F84539"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "create:stock_ticker"
+			id: "CEFE759EADE0B27B"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"32806DAC98F84539"
+		]
+		icon: {
+			id: "create:stockpile_switch"
+		}
+		id: "2464A382B9FE5E3F"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "create:stockpile_switch"
+			count: 3
+			id: "E129A4BEB203AE60"
+			type: "item"
+		}
+		]
+		x: -1.5d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"32806DAC98F84539"
+		]
+		icon: {
+			id: "create:item_vault"
+		}
+		id: "DCA4F05BEC7B873C"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "create:item_vault"
+			count: 32
+			id: "81A5FA60881A0869"
+			type: "item"
+		}
+		]
+		x: 1.27d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"04EC0766FE818CA5"
+		"C929174ADB78F923"
+		"05DFBFFD5C743FCF"
+		"137494D224880CE7"
+		"2464A382B9FE5E3F"
+		"DCA4F05BEC7B873C"
+		]
+		icon: {
+			id: "travelersbackpack:standard"
+		}
+		id: "05250B2F3C50BD7F"
+		rewards: [
+		{
+			xp: 80
+			id: "C7901F78B871791A"
+			type: "xp"
+		}
+		{
+			id: "DD308660F2DB96B5"
+			type: "toast"
+		}
+		]
+		shape: "hexagon"
+		size: 2.5d
+		tasks: [
+		{
+			item: "create:packager"
+			count: 4
+			id: "646D0FEEB1E2576C"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -10.5d
+	}
+	]
+}

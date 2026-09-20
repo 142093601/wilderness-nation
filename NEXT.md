@@ -37,11 +37,11 @@
 | Statecraft 阶段 3（mod 薄层 + 真机） | 🟡 主体已通；**十一组命令**真机跑过（`NATIONS.md` §11） |
 | M0（HYW 会不会主动打玩家） | ⬜ **未跑**（夺城/计划 5 的唯一前置，需要真玩家当靶子） |
 | 包侧中文补全 | ✅ 完成。116 命名空间 / 5288 条界面文本；覆盖率 79%→89% |
-| **任务书工具链** | ✅ **完成**（2026-09-20）：`tools/questbook.py`（生成器）+ `tools/questbook_check.py`（9 项校验）+ `tools/lint_questbook_toml.py` + `tools/build_registry.py` |
-| **任务书数据（五章样板）** | ✅ **已生成并真机验证**：序 · 落地 · 邦交 · 机械动力 · 防御与尸潮 = **5 章 / 59 任务 / 136 个 id**；服务端日志 `Loaded 5 chapter groups, 5 chapters, 59 quests, 0 reward tables`，**FTB Quests 零 ERROR/零 WARN**；**已装进实例**（`install_questbook.py`） |
+| **任务书工具链** | ✅ **完成**：`tools/questbook.py`（生成器）+ `tools/questbook_check.py`（9 项校验）+ `tools/lint_questbook_toml.py` + `tools/build_registry.py` + **`tools/verify_questbook_on_server.py`（服务端真机验证，一条命令）** |
+| **任务书数据（全 22 章）** | ✅ **完成并真机验证**（2026-09-21）：**22 章 / 297 任务 / 688 个 id**。服务端 `Loaded 5 chapter groups, 22 chapters, 297 quests`；**没有任务书相关的未知注册项、FTB Quests 零 ERROR/零 WARN**。已装进实例 |
 | **时代钥匙入口（mod 侧）** | ✅ **完成**（2026-09-20）：`/statecraft accelerate`。核过 JUnit **28 类 / 385 用例 / 0 失败**（`SettlementClockTest` 15 个）。它**只把累计小时推到时代边界**，推进仍走原有的 `ERA_ADVANCE` 路径——老路径一个字没改 |
 | **C18：`quest_enhance` 硬冲突** | ✅ **已处置（移除）**。它让"按 N 打开任务书"必崩（mixin 签名不匹配）。升级/降级**都实测救不了**，详见 `CONFLICTS.md` C18 |
-| **任务书「邦交」章** | ⛔ **有意未写**——理由见 §三.4（判据没有信号源） |
+| **任务书「邦交」章** | ✅ **已补**（2026-09-21）：13 条，其中 3 条自检（Statecraft 不发进度，理由见 §三.4） |
 | 世界自清空平衡问题 | ✅ 实测过并修好（`NATIONS.md` §八点五） |
 | `treaties.json` 数据化 · 玩家侧落盘 | 有意没做，触发条件写在 `DEFERRED.md` §I |
 
@@ -78,13 +78,22 @@
 
 ### 3.3 紧接着要做的（按顺序）
 
-1. **请用户开游戏看一眼这五章的手感与腔调**（这一步用户只需要"看"，不需要操作）→ 定模板
-   - 落地在 `pack/config/ftbquests/quests/`；**要进实例才能看到**：
-     `python tools/materialize_pack.py` 之后 `python tools/autotest.py --seconds 45`
-   - 具体看：左侧栏是否"一堵墙" · 依赖箭头读不读得懂 · 图标能否一眼认出 · 正文长度是否啰嗦
-2. 按模板铺其余 17 章（22 章 − 已出 5 章）
+> ✅ **2026-09-21：22 章已全部铺完**（297 任务）。下面的 1~2 步已不再适用，保留作历史记录。
+
+1. ~~请用户开游戏看手感~~ → **等用户验收**（任务书已装进实例，按 N 就能看）
+2. ~~按模板铺其余 17 章~~ → **已完成**（22 章齐）
 3. 用户改写碑文/方志腔：**只动 `pack/config/ftbquests/quests/lang/zh_cn/`**，结构不动
 4. 期 3：补 ATM 那套图片引导（要客户端截图，用 `dsh-computer-use-win` 可以自己截）
+
+**改完任务书的标准流程**（四个工具，缺一个都别提交）：
+
+```powershell
+python tools\lint_questbook_toml.py            # 1) TOML 能不能解析
+python tools\questbook.py                      # 2) 生成 SNBT
+cd pack; & "$env:USERPROFILE\go\bin\packwiz.exe" refresh; cd ..   # 3) 登记进索引
+python tools\questbook_check.py --reproducible # 4) 9 项校验 + 字节可复现
+python tools\verify_questbook_on_server.py     # 5) 真机：章数/任务数一致 + 判据无失效
+```
 
 ### 3.4 「邦交」章的处理（**已写，但有一条判据限制必须知道**）
 

@@ -1,0 +1,48 @@
+{
+	quest.4DE6EB265FC317D8.title: "先弄到一张空图纸"
+	quest.4DE6EB265FC317D8.description: [
+	"整条链的起点。空图纸可以从探索里得到，也能自己造（配方看 JEI）。"
+	]
+	quest.EA1913D37F5B2396.title: "扫描仪"
+	quest.EA1913D37F5B2396.description: [
+	"把已经盖好的东西扫进图纸——这是从「手搓」变成「工程制」的第一步。"
+	]
+	quest.19B8E0B6D47DCAAB.title: "平板"
+	quest.19B8E0B6D47DCAAB.description: [
+	"图纸的随身载体：走到哪都能看、能选、能放。"
+	]
+	quest.83D9E4F54239B33C.title: "扫下第一座建筑"
+	quest.83D9E4F54239B33C.description: [
+	"选一座你们自己盖得最满意的建筑，把它扫成图纸。"
+	"⚠️ 「扫成功」这动作没有信号源，自检；判据落在「你已经有了那几样工具」上。"
+	]
+	quest.4ECB3D418FC7CFC4.title: "全局图纸"
+	quest.4ECB3D418FC7CFC4.description: [
+	"把常用件做成「全局」的——全队都能取用，不必人手一份。"
+	]
+	quest.401E6F73A5958036.title: "服务端图纸"
+	quest.401E6F73A5958036.description: [
+	"放进服务端的那一类：所有人共享同一份，改了就是全队改了。"
+	]
+	quest.620D533C7B483140.title: "残破图纸要修"
+	quest.620D533C7B483140.description: [
+	"探索里捡到的图纸多半是残破的：**残破 → 修复 → 可用**，这是设计里明写的一条闭环。"
+	]
+	quest.60EAF80E4C355C65.title: "图案图纸"
+	quest.60EAF80E4C355C65.description: [
+	"Create 系的图纸：适合小构件与重复纹样，和便携图纸分工不同。"
+	]
+	quest.134BCA05AABDAB48.title: "备用图纸"
+	quest.134BCA05AABDAB48.description: [
+	"多囤几张空白的：现场画比回城取快得多。"
+	]
+	quest.41366FB6A64C0C4B.title: "材料清单"
+	quest.41366FB6A64C0C4B.description: [
+	"按图纸算出要多少料，一次性备齐——这是「工程制」和「手搓」最大的区别。"
+	]
+	quest.219864363A1A025C.title: "按图纸盖出第一座公共建筑"
+	quest.219864363A1A025C.description: [
+	"不是手搓：照图纸标准件盖，尺寸与用料都由图纸定。"
+	"这一条完成之后，「建筑目录」才谈得上（见无尽纪元那一章）。"
+	]
+}

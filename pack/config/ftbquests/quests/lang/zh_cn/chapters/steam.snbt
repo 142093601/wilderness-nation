@@ -1,0 +1,61 @@
+{
+	quest.05E2D8D5369251A4.title: "先有锅炉"
+	quest.05E2D8D5369251A4.description: [
+	"蒸汽机不是一台机器，是一整套：**锅炉 + 水 + 燃料 + 引擎**。"
+	"它和风车水车的区别在于——动力不再受地形限制，你想放哪就放哪。"
+	]
+	quest.D012F9B0E17293AA.title: "给锅炉配炉子"
+	quest.D012F9B0E17293AA.description: [
+	"烈焰燃烧器 / 固体燃烧器：决定这一炉能烧多久。"
+	]
+	quest.F5B719648B183EB7.title: "把引擎拉满"
+	quest.F5B719648B183EB7.description: [
+	"满级蒸汽机：一台顶一片风车，这是「工业化」与「小作坊」的分界。"
+	]
+	quest.818E9B634008D86A.title: "汽笛"
+	quest.818E9B634008D86A.description: [
+	"纯粹的仪式感——但它也是「这台机器在正常工作」最直观的信号。"
+	]
+	quest.A5E997FDDBA54602.title: "铺第一段轨"
+	quest.A5E997FDDBA54602.description: [
+	"列车跑在轨道上。先铺一段直的，把「点对点运输」这件事跑通。"
+	]
+	quest.91926EBF5D06E716.title: "车站"
+	quest.91926EBF5D06E716.description: [
+	"车站是列车的停靠与调度点。两地各一个，线路才成立。"
+	]
+	quest.F6A503F057AF1672.title: "列车时刻表"
+	quest.F6A503F057AF1672.description: [
+	"让列车自己按表跑——这才叫「运输线」，否则只是会动的箱子。"
+	]
+	quest.EDD764875AA05E4C.title: "长途列车"
+	quest.EDD764875AA05E4C.description: [
+	"挂多节车厢跑一趟长途——运量与距离同时上台阶。"
+	]
+	quest.8CFCE7DBDF2DAAF2.title: "坐车出远门"
+	quest.8CFCE7DBDF2DAAF2.description: [
+	"人也能靠它走远——设计里「交通等级扩大远征半径」指的就是这一步。"
+	]
+	quest.51CDCCD70F005085.title: "信号"
+	quest.51CDCCD70F005085.description: [
+	"两条线交叉时会撞车。信号系统是为了让列车自己让路。"
+	]
+	quest.4C216A8DDFF1B364.title: "到站显示"
+	quest.4C216A8DDFF1B364.description: [
+	"车站显示屏 / 列车时刻牌：让「下一班什么时候到」变成看得见的事。"
+	]
+	quest.743928C4C10B8E2F.title: "让列车自己装卸"
+	quest.743928C4C10B8E2F.description: [
+	"货运站 + 机械臂：到站自动装、到站自动卸，人才真正从运输里解放出来。"
+	]
+	quest.E435FDF5CCE85E6A.title: "列车厨房"
+	quest.E435FDF5CCE85E6A.description: [
+	"Create Central Kitchen：长途运输里带上加工能力（食物、流体）。"
+	"⚠️ 这个扩展包**没有物品接口**（实测它的命名空间在注册表里为空），所以自检。"
+	]
+	quest.67A70D0A30B16320.title: "地图变短了"
+	quest.67A70D0A30B16320.description: [
+	"两座城之间**只**靠铁路可达，而且人货都能走——这一条成立，"
+	"「远征」时代的路程成本才算真的降下来。"
+	]
+}

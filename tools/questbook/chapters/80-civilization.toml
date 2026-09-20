@@ -1,0 +1,284 @@
+# 文明（时代 5 · civilization）
+#
+# 时代定义：`eras.json` → id=civilization, name=文明, durationHours=76, coefficient=1.75
+# 主菜：**公共工程**（DESIGN.md §17.6）
+#
+# 判据来源：物品 + 原版进度 + 统计。
+# 注：WorldEdit 是纯命令工具（实测注册表里 0 个物品），所以"大工程施工"这一层
+# 只能靠**工程成品**（物品）与**碑文**（自检）来判定，不能靠工具本身。
+
+key = "civilization"
+title = "文明"
+subtitle = "把打下来的东西，变成能留下来的东西"
+group = "chronicle"
+icon = "minecraft:beacon"
+order_index = 6
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 国策主线 ----------------
+
+[[quest]]
+name = "grand_project"
+title = "选定并开工一项公共工程"
+desc = [
+	"全队投一次票，选一项**会改变世界**的大工程（桥、塔、大教堂、要塞任选）。",
+	"判据不是「投票了」，而是**材料真的开始堆**——这里用海晶灯当作「开工」的信号物。",
+	"⚠️ 选了什么项目本身判不了，正文与碑文来记。",
+]
+icon = "minecraft:beacon"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "minecraft:beacon" },
+]
+
+[[quest]]
+name = "national_history"
+title = "国史成书"
+desc = [
+	"人写的，不是生成的。至少 20 页：大事、坐标、人名。",
+	"游戏里能检测「做出了一本成书」，但**写了什么**判不了——所以判据落在「书」上。",
+]
+icon = "minecraft:written_book"
+shape = "rsquare"
+deps = ["grand_project"]
+tasks = [
+	{ type = "item", item = "minecraft:writable_book", count = 4 },
+	{ type = "item", item = "minecraft:book", count = 16 },
+]
+
+[[quest]]
+name = "stele_forest"
+title = "碑林完整"
+desc = [
+	"六个时代的碑各一块，排成一列。走一遍就是这一局的编年史。",
+	"⚠️ 碑上刻了什么判不了，自检。",
+]
+icon = "minecraft:chiseled_stone_bricks"
+shape = "rsquare"
+deps = ["national_history"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "graduation"
+title = "毕业工程完工"
+desc = [
+	"那块最大的。做完它，这个世界会**因此改变**（新资源圈、物流成本下降、预警覆盖扩大）",
+	"——不能只是装饰。",
+]
+icon = "minecraft:beacon"
+shape = "rsquare"
+deps = ["stele_forest"]
+tasks = [
+	{ type = "item", item = "minecraft:beacon", count = 4 },
+]
+
+[[quest]]
+name = "districts"
+title = "主城扩到 4 个功能区"
+desc = [
+	"住、工、农、军各成片，不再混在一起。",
+]
+icon = "minecraft:stone_bricks"
+shape = "rsquare"
+deps = ["grand_project"]
+tasks = [
+	{ type = "item", item = "minecraft:stone_bricks", count = 128 },
+]
+
+[[quest]]
+name = "avenues"
+title = "大道"
+desc = [
+	"主城到 ≥2 个方向的主干道，各 ≥500 格。",
+]
+icon = "minecraft:dirt_path"
+shape = "rsquare"
+deps = ["districts"]
+tasks = [
+	{ type = "item", item = "minecraft:dirt_path", count = 128 },
+]
+
+[[quest]]
+name = "great_hall"
+title = "大会堂"
+desc = [
+	"一座要仰头看的建筑，而且里面真的能用（能开会、能住人）。",
+]
+icon = "minecraft:quartz_block"
+shape = "rsquare"
+deps = ["districts"]
+tasks = [
+	{ type = "item", item = "minecraft:quartz_block", count = 64 },
+]
+
+[[quest]]
+name = "grand_lighting"
+title = "全城照明"
+desc = [
+	"夜里主城没有黑角——这是「文明」最直观的样子。",
+]
+icon = "minecraft:lantern"
+shape = "circle"
+size = 1.2
+deps = ["districts"]
+tasks = [
+	{ type = "item", item = "minecraft:lantern", count = 64 },
+]
+
+# ---------------- 支线：文化与收藏 ----------------
+
+[[quest]]
+name = "library"
+title = "图书馆"
+desc = [
+	"≥4 面书架墙 + 阅读位。国史与档案都在这里。",
+]
+icon = "minecraft:bookshelf"
+shape = "circle"
+size = 1.2
+deps = ["national_history"]
+tasks = [
+	{ type = "item", item = "minecraft:bookshelf", count = 32 },
+]
+
+[[quest]]
+name = "museum"
+title = "展览馆"
+desc = [
+	"六个时代的代表性物品各陈列一件。",
+]
+icon = "minecraft:item_frame"
+shape = "circle"
+size = 1.2
+deps = ["national_history"]
+tasks = [
+	{ type = "item", item = "minecraft:item_frame", count = 16 },
+]
+
+[[quest]]
+name = "second_city"
+title = "第二座地标城市"
+desc = [
+	"1500 格外一处成规模的聚落——不是前哨，是能住人的地方。",
+]
+icon = "waystones:waystone"
+shape = "circle"
+size = 1.2
+deps = ["avenues"]
+tasks = [
+	{ type = "item", item = "waystones:waystone", count = 4 },
+]
+
+[[quest]]
+name = "air_corridor"
+title = "空中连廊"
+desc = [
+	"两栋建筑之间架桥，人走得过去。",
+]
+icon = "minecraft:scaffolding"
+shape = "circle"
+size = 1.2
+deps = ["districts"]
+tasks = [
+	{ type = "item", item = "minecraft:scaffolding", count = 32 },
+]
+
+[[quest]]
+name = "gardens"
+title = "公共花园"
+desc = [
+	"有花、有树、有水、有座椅，**不生产任何东西**——这一条是给「文明」留的位置。",
+]
+icon = "minecraft:flower_pot"
+shape = "circle"
+size = 1.2
+deps = ["districts"]
+tasks = [
+	{ type = "item", item = "minecraft:flower_pot", count = 16 },
+]
+
+[[quest]]
+name = "signposts"
+title = "路牌系统"
+desc = [
+	"每个路口有路牌，指向 ≥2 处地标。",
+]
+icon = "minecraft:oak_sign"
+shape = "circle"
+size = 1.2
+deps = ["avenues"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_sign", count = 16 },
+]
+
+# ---------------- 自动化收尾 ----------------
+
+[[quest]]
+name = "full_auto_storage"
+title = "全自动仓储"
+desc = [
+	"进出货不手动：入库分拣 + 出库补给。公共仓库到这一步才算成熟。",
+]
+icon = "create:packager"
+shape = "circle"
+size = 1.2
+deps = ["districts"]
+tasks = [
+	{ type = "item", item = "create:packager", count = 4 },
+]
+
+[[quest]]
+name = "control_room"
+title = "集中控制"
+desc = [
+	"一处能看到 ≥3 条产线状态的控制室。",
+]
+icon = "create:factory_gauge"
+shape = "circle"
+size = 1.2
+deps = ["full_auto_storage"]
+tasks = [
+	{ type = "item", item = "create:factory_gauge", count = 3 },
+]
+
+# ---------------- 维度级冒险 ----------------
+
+[[quest]]
+name = "dimension_quest"
+title = "一次维度级冒险"
+desc = [
+	"末地是这个包最远的「出关」。走到那一步，说明这一局的远征线真的走完了。",
+]
+icon = "minecraft:end_stone"
+shape = "rsquare"
+deps = ["graduation"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:story/enter_the_end" },
+]
+
+# ---------------- 终局 ----------------
+
+[[quest]]
+name = "civilization_monument"
+title = "大成碑"
+desc = [
+	"最后一个时代的碑。刻完它，你们就有了一个「玩完了但还想再待一会儿」的世界。",
+	"之后进入无尽纪元：每 5 年一个新纪元，不设数值膨胀，只加横向目标。",
+]
+icon = "minecraft:beacon"
+shape = "hexagon"
+size = 2.5
+deps = ["graduation", "avenues", "great_hall", "grand_lighting", "library", "museum",
+        "second_city", "air_corridor", "gardens", "signposts", "control_room",
+        "dimension_quest"]
+tasks = [
+	{ type = "item", item = "minecraft:beacon", count = 8 },
+]
+rewards = [
+	{ type = "xp", xp = 200 },
+	{ type = "toast" },
+]

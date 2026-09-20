@@ -79,6 +79,48 @@ CHECKMARK_EXCEPTIONS = {
     "first_wall": "原版没有「放置方块」统计，墙是否合围判不了",
     "hold_the_line": "The Hordes / Undead Nights 不提供进度或统计（实测），"
                      "「守住一次袭击」这个事件没有信号源；要自动判定需 mod 侧给波次事件",
+    # —— 立国（时代 1）：OPAC 与 FTB Teams **完全没有物品**（lang 里 item 键为 0，实测） ——
+    "claim_the_land": "OPAC 不提供物品/进度（它的 lang 里 item 键为 0），圈地与否判不了",
+    "one_team": "FTB Teams 同样没有物品（实测），组队与否判不了",
+    "pact_on_paper": "书的**内容**判不了（放下书架能检测，但「约定了」不能）",
+    "founding_monument": "立碑动作没有信号源（碑文内容也不可检测）",
+    # —— 基建（时代 2）——
+    "map_wall": "「地图墙覆盖完整」是主观覆盖率（有没有空洞得自己看）",
+    # —— 出关（时代 3）——
+    "intel_wall": "情报墙「标全了没有」是主观覆盖率",
+    "roster": "远征名册的**内容**判不了（写了什么无法检测）",
+    "tracking": "情报站升级动作不发进度（statecraft 实测 advancements=0）",
+    # —— 御敌（时代 4，编年）——
+    "hold_a_wave": "同 hold_the_line：波次事件没有信号源（The Hordes / Undead Nights 不记账）",
+    "under_attack": "被宣战是 mod 侧事件，不发进度也不记统计（实测）",
+    # —— 文明（时代 5）——
+    "stele_forest": "碑上刻了什么判不了（碑文不可检测）",
+    # —— 无尽纪元 ——
+    "epitaph_each_era": "立碑动作没有信号源",
+    # —— 图纸与工程 ——
+    "first_scan": "「扫描成功」是客户端/界面动作，模组不发进度（实测）",
+    # —— 领地与队伍（OPAC / FTB Teams 完全没有物品，实测）——
+    "claim_anatomy": "OPAC 无物品、无进度；边界是否画清判不了",
+    "role_split": "权限分档是界面配置，没有信号源",
+    "alley_check": "越界测试是人为验收（DEFERRED.md A1 记着它需要两个真实玩家）",
+    "shared_chest": "「共用/私有怎么分」是约定问题，不是可检测事件",
+    # —— 类目 · 地图与探索 ——
+    "e_client_tools": "Xaero's / Jade / Traveler's Titles 全是纯客户端界面 mod，"
+                      "实测零物品（命名空间在注册表里为空）→ 界面工具没有判据",
+    # —— 类目 · 战斗与军械 ——
+    # （本章已改为实物判据：钢械、攻城器械、掠夺者进度都能判）
+    # —— 类目 · 性能与信息（全章知识型：性能 mod 实测零物品）——
+    "p_optimized": "性能 mod 没有物品接口（spark/modernfix/embeddium 命名空间在注册表里为空）",
+    "p_first_question": "知识型条目：教人分辨「崩溃」与「卡顿」，没有可检测信号",
+    "p_spark": "知识型条目：spark 是命令，不是物品",
+    "p_tps": "知识型条目：/tick query 是命令",
+    "p_graphics": "知识型条目：客户端画面设置",
+    "p_lag_source": "知识型条目：经验性排查顺序",
+    "p_info_tools": "知识型条目：Jade / BetterF3 / AppleSkin 都是界面 mod，无物品",
+    "p_chunk_watch": "知识型条目：备份与预生成的操作习惯",
+    "p_done": "知识型条目：本章收尾格",
+    # —— 技艺 · 蒸汽与铁路 ——
+    "st_kitchen": "Create Central Kitchen 无物品接口（实测命名空间为空）",
 }
 
 
@@ -358,28 +400,52 @@ def check_types_and_registry(d: dict, r: Report) -> None:
 
     两者必须解耦：少了 registry 不能顺带把白名单也放过去。
     """
-    reg = {"items": set(), "blocks": set(), "referenced": set()}
+    reg = {"items": set(), "blocks": set(), "referenced": set(), "advancements": set()}
     check_registry = REGISTRY.is_file()
     if check_registry:
         raw = json.loads(REGISTRY.read_text(encoding="utf-8"))
         reg["items"] = set(raw.get("items", []))
         reg["blocks"] = set(raw.get("blocks", []))
         reg["referenced"] = set(raw.get("referenced", []))
+        reg["advancements"] = set(raw.get("advancements", []))
     else:
         r.note("registry.json 不存在 → 第 ⑦ 项（判据 id 真实性）本次跳过；"
                "生成它：python tools/build_registry.py --mods <实例>/mods")
 
     known = reg["items"] | reg["blocks"] | reg["referenced"]
+    # **真物品**：有 item model 或 blockstate 的。`referenced` 只是"在配方/进度里被提到过"，
+    # 它包含大量**不是物品**的字符串（例如背包升级的 model 名、注册名变体）。
+    # 2026-09-21 实测踩到两次：`explorerscompass:explorers_compass` 与
+    # `naturescompass:natures_compass` 都只在 referenced 里（真名多一个/少一个下划线），
+    # 而服务端加载任务数据时报 `Unknown registry key` —— 判据永远不亮。
+    real_items = reg["items"] | reg["blocks"]
+    adv_known = reg["advancements"]
     # 原版 assets 不在本机，minecraft: 的 id 只能靠「被配方引用的 id」这一层证明。
     # 所以：只有当**同命名空间**在本地被扫到过，才判定"这个 id 不存在"（否则可能是假阴性）。
     namespaces = {x.split(":", 1)[0] for x in known}
+    adv_namespaces = {x.split(":", 1)[0] for x in adv_known}
 
     def exists(iid: str) -> bool | None:
-        if iid in known:
+        """严格版：必须是**真物品**（有 model/blockstate）。
+
+        比旧版（known 含 referenced）更严，因为宽松版放过过真错。
+        """
+        if iid in real_items:
             return True
+        if iid in reg["referenced"]:
+            return False           # 只在 referenced 里 → 不是物品（明确判错，不是推断）
         ns = iid.split(":", 1)[0]
         if ns not in namespaces:
-            return None          # 该命名空间本地没有证据 → 不断言
+            return None            # 该命名空间本地没有证据 → 不断言
+        return False
+
+    def adv_exists(aid: str) -> bool | None:
+        """进度是否存在。原版（minecraft:）也扫到了——客户端 jar 里有 data/minecraft/advancement。"""
+        if aid in adv_known:
+            return True
+        ns = aid.split(":", 1)[0]
+        if ns not in adv_namespaces:
+            return None          # 这个 mod 一条进度都没有 → 不能断言（它可能本来就不发进度）
         return False
 
     for key, ch in d["chapters"].items():
@@ -397,6 +463,14 @@ def check_types_and_registry(d: dict, r: Report) -> None:
                         r.fail("⑦ 判据 id 真实性",
                                f"{where}: 判据物品 {iid} 在注册表里找不到"
                                f"（同命名空间有其它 id 被扫到，所以不是假阴性）→ 玩家永远做不完")
+                if ttype == "advancement":
+                    aid = t.get("advancement")
+                    if not aid:
+                        r.fail("④ 类型白名单", f"{where}: advancement 判据没有 advancement 字段")
+                    elif check_registry and adv_exists(str(aid)) is False:
+                        r.fail("⑦ 判据 id 真实性",
+                               f"{where}: 进度 {aid} 不存在"
+                               f"（同命名空间有其它进度被扫到）→ 任务永远不亮")
                 if ttype == "checkmark" and len(q.get("tasks", [])) > 1:
                     r.note(f"{where}: checkmark 与其它判据混用（通常是故意做「多者之一」）")
             for rw in q.get("rewards", []) or []:

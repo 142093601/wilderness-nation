@@ -4,6 +4,30 @@
 	"第一夜之前，先弄明白「我们为什么会在这里」"
 	]
 	chapter.DAEA88A7CF3C8D89.title: "落地"
+	chapter.722759E6E23CFF35.chapter_subtitle: [
+	"把「我们」变成「我们的地、我们的规矩」"
+	]
+	chapter.722759E6E23CFF35.title: "立国"
+	chapter.90424FBFBC6363AB.chapter_subtitle: [
+	"路通四邻，第一件事不用人管"
+	]
+	chapter.90424FBFBC6363AB.title: "基建"
+	chapter.3CC3734478CE9450.chapter_subtitle: [
+	"要建 X，就必须去 Y——远征得先有理由"
+	]
+	chapter.3CC3734478CE9450.title: "出关"
+	chapter.C50763FE48E477EC.chapter_subtitle: [
+	"墙要一直往上加，因为来拆墙的也在升级"
+	]
+	chapter.C50763FE48E477EC.title: "御敌"
+	chapter.BF9A19CB32D5CEBA.chapter_subtitle: [
+	"把打下来的东西，变成能留下来的东西"
+	]
+	chapter.BF9A19CB32D5CEBA.title: "文明"
+	chapter.52921E2919FA30ED.chapter_subtitle: [
+	"毕业之后：不是结束，是终于有空做想做的事"
+	]
+	chapter.52921E2919FA30ED.title: "无尽纪元"
 	chapter.899ABFDCC287D351.chapter_subtitle: [
 	"世界不只有你们：先看见邻邦，再决定怎么打交道"
 	]
@@ -16,4 +40,48 @@
 	"墙要一直往上加，因为来拆墙的也在升级"
 	]
 	chapter.C84F299A21D20B48.title: "防御与尸潮"
+	chapter.AB866F7190B1B785.chapter_subtitle: [
+	"把「盖一次」变成「盖一百次」：这条链通了，造城速度会变一个量级"
+	]
+	chapter.AB866F7190B1B785.title: "图纸与工程"
+	chapter.A463AC437DC43705.chapter_subtitle: [
+	"「我们的地」这套系统：权限、边界、以及走得回来"
+	]
+	chapter.A463AC437DC43705.title: "领地与队伍"
+	chapter.46F69955A516BEE5.chapter_subtitle: [
+	"从烧一炉水，到让整张地图变短"
+	]
+	chapter.46F69955A516BEE5.title: "蒸汽与铁路"
+	chapter.0AE5EAB7FD35FEF7.chapter_subtitle: [
+	"让「盖得像样」这件事有工具可用"
+	]
+	chapter.0AE5EAB7FD35FEF7.title: "建筑与装饰"
+	chapter.4DCF8BEF6FD0004E.chapter_subtitle: [
+	"房子盖好之后：让它住得下人"
+	]
+	chapter.4DCF8BEF6FD0004E.title: "家具与生活"
+	chapter.87F426743B008B2B.chapter_subtitle: [
+	"从「够吃」到「好吃」：这一章是全队幸福感的来源"
+	]
+	chapter.87F426743B008B2B.title: "食物与农业"
+	chapter.994C41C732487EFB.chapter_subtitle: [
+	"随身带什么、就近放什么、什么时候该回仓库"
+	]
+	chapter.994C41C732487EFB.title: "储存与物流"
+	chapter.A839569A8D6C5FF7.chapter_subtitle: [
+	"从「能打」到「打得舒服」"
+	]
+	chapter.A839569A8D6C5FF7.title: "工具与装备"
+	chapter.D265B46A0D43ECBF.chapter_subtitle: [
+	"先看见，再决定去哪：把未知变成已知"
+	]
+	chapter.D265B46A0D43ECBF.title: "地图与探索"
+	chapter.848D40BDBBE07AD6.chapter_subtitle: [
+	"从一把好剑，到一台能砸开城门的机器"
+	]
+	chapter.848D40BDBBE07AD6.title: "战斗与军械"
+	chapter.C83EFD5F7165C874.chapter_subtitle: [
+	"卡了怎么办、东西在哪看：这一章是工具箱，不是任务清单"
+	]
+	chapter.C83EFD5F7165C874.title: "性能与信息"
 }

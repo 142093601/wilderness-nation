@@ -1,0 +1,64 @@
+{
+	quest.6DC3FA505A1BF741.title: "第一把像样的剑"
+	quest.6DC3FA505A1BF741.description: [
+	"Simply Swords 提供了一整套武器类型：长剑、太刀、戟、巨斧、镰刀……"
+	"先挑一把顺手的——不同的武器对应不同的战斗风格。"
+	]
+	quest.FA0B1AAC5E5E254C.title: "重型武器"
+	quest.FA0B1AAC5E5E254C.description: [
+	"巨斧 / 巨锤：慢但一下能解决。守城时它比快剑有用。"
+	]
+	quest.4F098AB52DECB27C.title: "长杆武器"
+	quest.4F098AB52DECB27C.description: [
+	"戟 / 长枪：攻击距离更远，适合站在第二排。"
+	]
+	quest.07124DBEA65F4D4D.title: "升级到钻石档"
+	quest.07124DBEA65F4D4D.description: [
+	"同一把武器往上做一档——这条线的意义是「装备跟着国力走」。"
+	]
+	quest.EE8137719F67986C.title: "成套护甲"
+	quest.EE8137719F67986C.description: [
+	"Armor of the Ages：成套的甲比零散几件强得多（也更好看）。"
+	]
+	quest.D78D767E58013A76.title: "骑士装备"
+	quest.D78D767E58013A76.description: [
+	"Epic Knights / Magistuarmory：中世纪骑士甲与武器，配战马的整套。"
+	]
+	quest.9E72F423E23FBE94.title: "盾"
+	quest.9E72F423E23FBE94.description: [
+	"盾牌挡下的伤害游戏会记账（`damage_blocked_by_shield`）——它是「站前面」的证据。"
+	]
+	quest.D2306C73A6EF39F3.title: "铁砧与修理"
+	quest.D2306C73A6EF39F3.description: [
+	"Easy Anvils：修理不再是折磨。装备能修才能一直用。"
+	]
+	quest.69F773F6179D1219.title: "附魔"
+	quest.69F773F6179D1219.description: [
+	"原版进度会给这一条盖章。附魔是装备线的分水岭。"
+	]
+	quest.84906A833A81E953.title: "附魔灌注器"
+	quest.84906A833A81E953.description: [
+	"Enchanting Infuser：不用赌运气，直接选想要的附魔。"
+	]
+	quest.65B121989B24E120.title: "满附魔一套"
+	quest.65B121989B24E120.description: [
+	"把武器与护甲都附到位——到这一步，个人战力基本封顶，之后靠的是协同与工事。"
+	]
+	quest.25A70F2BBD859FC0.title: "挂件与饰品位"
+	quest.25A70F2BBD859FC0.description: [
+	"Curios：多出来的装备位。小东西挂在身上，不占背包。"
+	]
+	quest.54EF7448DF514423.title: "搬东西"
+	quest.54EF7448DF514423.description: [
+	"Carry On：搬箱子、搬工作台、抱动物——不用拆了再装。"
+	]
+	quest.C102F1FDC7AB6F07.title: "随身睡具"
+	quest.C102F1FDC7AB6F07.description: [
+	"Comforts 睡袋/吊床：出门也能睡，重生点跟着走。"
+	]
+	quest.6FA22477120CAB33.title: "全队装备到位"
+	quest.6FA22477120CAB33.description: [
+	"每个人都有：一件趁手武器、一套甲、一个盾、几个随身小件。"
+	"这条做完，御敌时代才有人可派。"
+	]
+}

@@ -1,0 +1,213 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "endless"
+	group: "83CFE1997D6DEDDC"
+	icon: {
+		id: "minecraft:nether_star"
+	}
+	id: "52921E2919FA30ED"
+	order_index: 7
+	quest_links: [ ]
+	quests: [
+	{
+		icon: {
+			id: "minecraft:chiseled_stone_bricks"
+		}
+		id: "FCA46EFC0F5C2834"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			id: "91B67BA47CBCAE07"
+			type: "checkmark"
+		}
+		]
+		x: 0.0d
+		y: 0.0d
+	}
+	{
+		dependencies: [
+		"FCA46EFC0F5C2834"
+		]
+		icon: {
+			id: "minecraft:filled_map"
+		}
+		id: "37B1E9FB849570E1"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			advancement: "minecraft:adventure/adventuring_time"
+			id: "F6F61C43DC36C0E2"
+			type: "advancement"
+		}
+		]
+		x: -3.0d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"37B1E9FB849570E1"
+		]
+		icon: {
+			id: "minecraft:cake"
+		}
+		id: "071B2979D10983F0"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			advancement: "minecraft:husbandry/balanced_diet"
+			id: "BF3A26B297F4195B"
+			type: "advancement"
+		}
+		]
+		x: -4.05d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"37B1E9FB849570E1"
+		]
+		icon: {
+			id: "minecraft:diamond_sword"
+		}
+		id: "E1F8A2C6645C5875"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			advancement: "minecraft:adventure/kill_all_mobs"
+			id: "37BF11CA6A41887C"
+			type: "advancement"
+		}
+		]
+		x: -1.05d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"FCA46EFC0F5C2834"
+		]
+		icon: {
+			id: "portable_blueprints:blueprint"
+		}
+		id: "68895283165294D7"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "portable_blueprints:blueprint"
+			count: 8
+			id: "519AAF5F680FD1B2"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"68895283165294D7"
+		]
+		icon: {
+			id: "portable_blueprints:scanner"
+		}
+		id: "BEEA6E30D46B2FAF"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "portable_blueprints:scanner"
+			id: "674E3853FA86D3D0"
+			type: "item"
+		}
+		{
+			item: "portable_blueprints:tablet"
+			id: "1129A8AA0D7EE0CF"
+			type: "item"
+		}
+		]
+		x: 1.72d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"68895283165294D7"
+		]
+		icon: {
+			id: "create_pattern_schematics:pattern_schematic"
+		}
+		id: "2D147B443E2296C1"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "create_pattern_schematics:pattern_schematic"
+			id: "76AD686756FFD80F"
+			type: "item"
+		}
+		]
+		x: 4.27d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"FCA46EFC0F5C2834"
+		]
+		icon: {
+			id: "minecraft:written_book"
+		}
+		id: "399025CD07715437"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:book"
+			count: 32
+			id: "7E9EC0DD9E73B2DC"
+			type: "item"
+		}
+		]
+		x: 3.0d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"071B2979D10983F0"
+		"E1F8A2C6645C5875"
+		"BEEA6E30D46B2FAF"
+		"2D147B443E2296C1"
+		"399025CD07715437"
+		]
+		icon: {
+			id: "minecraft:beacon"
+		}
+		id: "1F8821E6FD699235"
+		rewards: [
+		{
+			xp: 300
+			id: "C423637AA282B6A9"
+			type: "xp"
+		}
+		{
+			id: "51665AEF6B6F80FB"
+			type: "toast"
+		}
+		]
+		shape: "hexagon"
+		size: 2.5d
+		tasks: [
+		{
+			item: "minecraft:beacon"
+			count: 16
+			id: "3848E462B82C97ED"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -5.25d
+	}
+	]
+}

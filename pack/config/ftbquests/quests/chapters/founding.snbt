@@ -1,0 +1,331 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "founding"
+	group: "83CFE1997D6DEDDC"
+	icon: {
+		id: "minecraft:white_banner"
+	}
+	id: "722759E6E23CFF35"
+	order_index: 2
+	quest_links: [ ]
+	quests: [
+	{
+		icon: {
+			id: "minecraft:white_banner"
+		}
+		id: "E81134A89EA7314A"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			id: "5DD30E22B323815B"
+			type: "checkmark"
+		}
+		]
+		x: 0.0d
+		y: 0.0d
+	}
+	{
+		dependencies: [
+		"E81134A89EA7314A"
+		]
+		icon: {
+			id: "minecraft:shield"
+		}
+		id: "475F1C6F43EF5CD3"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			id: "ABD7D5B476A3489D"
+			type: "checkmark"
+		}
+		]
+		x: 0.0d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"475F1C6F43EF5CD3"
+		]
+		icon: {
+			id: "create:item_vault"
+		}
+		id: "DB7BA37A2FFB5A0F"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "create:item_vault"
+			id: "0D42E5B451E601B3"
+			type: "item"
+		}
+		]
+		x: -2.78d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"DB7BA37A2FFB5A0F"
+		]
+		icon: {
+			id: "create:item_vault"
+		}
+		id: "7DC50BAF62C2C391"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "create:item_vault"
+			count: 16
+			id: "32DE40060CCF580C"
+			type: "item"
+		}
+		]
+		x: -4.05d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"475F1C6F43EF5CD3"
+		]
+		icon: {
+			id: "minecraft:writable_book"
+		}
+		id: "3CBEB252F888F42C"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			id: "A977F25E1702FFA1"
+			type: "checkmark"
+		}
+		]
+		x: 0.22d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"3CBEB252F888F42C"
+		]
+		icon: {
+			id: "minecraft:bell"
+		}
+		id: "E0F5966B20480B11"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:bell"
+			id: "2CD036579041D8FB"
+			type: "item"
+		}
+		]
+		x: -1.27d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"E0F5966B20480B11"
+		]
+		icon: {
+			id: "minecraft:oak_stairs"
+		}
+		id: "8238A7F85CAEF8B1"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:oak_stairs"
+			count: 8
+			id: "D8F6AAF1571EF2AE"
+			type: "item"
+		}
+		]
+		x: -3.82d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"DB7BA37A2FFB5A0F"
+		]
+		icon: {
+			id: "minecraft:bread"
+		}
+		id: "51A59E062FC474DC"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:bread"
+			count: 16
+			id: "7A6269D7930386B4"
+			type: "item"
+		}
+		]
+		x: 1.5d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"51A59E062FC474DC"
+		]
+		icon: {
+			id: "minecraft:wheat"
+		}
+		id: "FB501FB48EDC8C67"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "minecraft:husbandry/plant_seed"
+			id: "0B4E38DB614022D4"
+			type: "advancement"
+		}
+		]
+		x: -1.27d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"51A59E062FC474DC"
+		]
+		icon: {
+			id: "minecraft:oak_fence"
+		}
+		id: "91A33DCE8F4D55D4"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "minecraft:husbandry/breed_an_animal"
+			id: "7483ADF7587B0223"
+			type: "advancement"
+		}
+		]
+		x: 1.27d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"475F1C6F43EF5CD3"
+		]
+		icon: {
+			id: "minecraft:gravel"
+		}
+		id: "0A88AE552BD9041D"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:gravel"
+			count: 32
+			id: "AF698E6ADF9F0645"
+			type: "item"
+		}
+		]
+		x: 3.0d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"0A88AE552BD9041D"
+		]
+		icon: {
+			id: "minecraft:torch"
+		}
+		id: "69D31E3C68A93F41"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:torch"
+			count: 32
+			id: "9C8CCDB3773D0AC2"
+			type: "item"
+		}
+		]
+		x: 4.05d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"7DC50BAF62C2C391"
+		]
+		icon: {
+			id: "minecraft:cobblestone"
+		}
+		id: "3284B6D76DEF7328"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:cobblestone"
+			count: 256
+			id: "919A8AD7000F249E"
+			type: "item"
+		}
+		]
+		x: 3.82d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"3284B6D76DEF7328"
+		]
+		icon: {
+			id: "minecraft:furnace"
+		}
+		id: "E9C0C90E535D93B8"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:furnace"
+			count: 8
+			id: "534A4513579E83D1"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"8238A7F85CAEF8B1"
+		"FB501FB48EDC8C67"
+		"91A33DCE8F4D55D4"
+		"69D31E3C68A93F41"
+		"E9C0C90E535D93B8"
+		]
+		icon: {
+			id: "minecraft:stone_bricks"
+		}
+		id: "23EB81CB0E119992"
+		rewards: [
+		{
+			xp: 80
+			id: "68EEFADC9AF0A390"
+			type: "xp"
+		}
+		{
+			id: "9C07AE84F7298A9A"
+			type: "toast"
+		}
+		]
+		shape: "hexagon"
+		size: 2.5d
+		tasks: [
+		{
+			item: "minecraft:stone_bricks"
+			count: 32
+			id: "93F7A1B16891E5D5"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -10.5d
+	}
+	]
+}

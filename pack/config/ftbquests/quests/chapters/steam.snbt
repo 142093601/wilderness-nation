@@ -1,0 +1,311 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "steam"
+	group: "21077E48D079A7CE"
+	icon: {
+		id: "create:steam_engine"
+	}
+	id: "46F69955A516BEE5"
+	order_index: 24
+	quest_links: [ ]
+	quests: [
+	{
+		icon: {
+			id: "create:steam_engine"
+		}
+		id: "05E2D8D5369251A4"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			advancement: "create:steam_engine"
+			id: "5F8E132DABE81902"
+			type: "advancement"
+		}
+		]
+		x: 0.0d
+		y: 0.0d
+	}
+	{
+		dependencies: [
+		"05E2D8D5369251A4"
+		]
+		icon: {
+			id: "create:blaze_burner"
+		}
+		id: "D012F9B0E17293AA"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			advancement: "create:burner"
+			id: "4A4E758DA31D6564"
+			type: "advancement"
+		}
+		]
+		x: -2.78d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"D012F9B0E17293AA"
+		]
+		icon: {
+			id: "create:steam_whistle"
+		}
+		id: "F5B719648B183EB7"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			advancement: "create:steam_engine_maxed"
+			id: "61DC1193D68BA924"
+			type: "advancement"
+		}
+		]
+		x: -1.5d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"05E2D8D5369251A4"
+		]
+		icon: {
+			id: "create:steam_whistle"
+		}
+		id: "818E9B634008D86A"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "create:steam_whistle"
+			id: "E41437E0795179CD"
+			type: "item"
+		}
+		]
+		x: -0.0d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"05E2D8D5369251A4"
+		]
+		icon: {
+			id: "create:track"
+		}
+		id: "A5E997FDDBA54602"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "create:track"
+			count: 64
+			id: "356C4562EBEF70D5"
+			type: "item"
+		}
+		]
+		x: 2.77d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"A5E997FDDBA54602"
+		]
+		icon: {
+			id: "create:track_station"
+		}
+		id: "91926EBF5D06E716"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "create:track_station"
+			count: 2
+			id: "D5A4489580BD4014"
+			type: "item"
+		}
+		]
+		x: 1.5d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"91926EBF5D06E716"
+		]
+		icon: {
+			id: "create:schedule"
+		}
+		id: "F6A503F057AF1672"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "create:schedule"
+			id: "78B98D0576E7E506"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"F6A503F057AF1672"
+		]
+		icon: {
+			id: "create:steam_whistle"
+		}
+		id: "EDD764875AA05E4C"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "create:long_train"
+			id: "891051BA8959809B"
+			type: "advancement"
+		}
+		]
+		x: -1.27d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"EDD764875AA05E4C"
+		]
+		icon: {
+			id: "create:controls"
+		}
+		id: "8CFCE7DBDF2DAAF2"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "create:long_travel"
+			id: "0DCC1E959EC51102"
+			type: "advancement"
+		}
+		]
+		x: -3.82d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"F6A503F057AF1672"
+		]
+		icon: {
+			id: "create:track_signal"
+		}
+		id: "51CDCCD70F005085"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "create:track_signal"
+			count: 4
+			id: "3EABE820433BEB45"
+			type: "item"
+		}
+		]
+		x: 1.27d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"51CDCCD70F005085"
+		]
+		icon: {
+			id: "createrailwaysnavigator:advanced_display"
+		}
+		id: "4C216A8DDFF1B364"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "createrailwaysnavigator:advanced_display"
+			id: "3E1BD49196CEED65"
+			type: "item"
+		}
+		]
+		x: -1.27d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"EDD764875AA05E4C"
+		]
+		icon: {
+			id: "create:package_frogport"
+		}
+		id: "743928C4C10B8E2F"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "create:package_frogport"
+			count: 2
+			id: "5480CFC9253B0299"
+			type: "item"
+		}
+		]
+		x: 1.27d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"EDD764875AA05E4C"
+		]
+		icon: {
+			id: "create:track_station"
+		}
+		id: "E435FDF5CCE85E6A"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			id: "5831287EC82CA9BF"
+			type: "checkmark"
+		}
+		]
+		x: 3.82d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"F5B719648B183EB7"
+		"818E9B634008D86A"
+		"8CFCE7DBDF2DAAF2"
+		"4C216A8DDFF1B364"
+		"743928C4C10B8E2F"
+		"E435FDF5CCE85E6A"
+		]
+		icon: {
+			id: "create:track_station"
+		}
+		id: "67A70D0A30B16320"
+		rewards: [
+		{
+			xp: 120
+			id: "8D872EB512B941B7"
+			type: "xp"
+		}
+		{
+			id: "A21F802C3E0D2E55"
+			type: "toast"
+		}
+		]
+		shape: "hexagon"
+		size: 2.5d
+		tasks: [
+		{
+			item: "create:track"
+			count: 16
+			id: "886B2B5E9381CA1D"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -10.5d
+	}
+	]
+}

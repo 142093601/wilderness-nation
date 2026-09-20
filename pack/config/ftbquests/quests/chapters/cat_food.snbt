@@ -1,0 +1,374 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "cat_food"
+	group: "1439886072EE757D"
+	icon: {
+		id: "farmersdelight:cooking_pot"
+	}
+	id: "87F426743B008B2B"
+	order_index: 32
+	quest_links: [ ]
+	quests: [
+	{
+		icon: {
+			id: "farmersdelight:iron_knife"
+		}
+		id: "CCB0AFD4DE255272"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			advancement: "farmersdelight:main/craft_knife"
+			id: "E686D30DD71F7390"
+			type: "advancement"
+		}
+		]
+		x: 0.0d
+		y: 0.0d
+	}
+	{
+		dependencies: [
+		"CCB0AFD4DE255272"
+		]
+		icon: {
+			id: "farmersdelight:cutting_board"
+		}
+		id: "03FB683BE6B54C4F"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			advancement: "farmersdelight:main/use_cutting_board"
+			id: "590935B5DE08E193"
+			type: "advancement"
+		}
+		]
+		x: -2.78d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"03FB683BE6B54C4F"
+		]
+		icon: {
+			id: "farmersdelight:cooking_pot"
+		}
+		id: "F4173A922D4F7741"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			advancement: "farmersdelight:main/place_cooking_pot"
+			id: "3AA1325162D38B9E"
+			type: "advancement"
+		}
+		]
+		x: -3.82d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"F4173A922D4F7741"
+		]
+		icon: {
+			id: "farmersdelight:stove"
+		}
+		id: "9C29EE9C2A49ECD9"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "farmersdelight:main/use_skillet"
+			id: "0F2451CC588DE15D"
+			type: "advancement"
+		}
+		]
+		x: -3.0d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"CCB0AFD4DE255272"
+		]
+		icon: {
+			id: "farmersdelight:rich_soil"
+		}
+		id: "852B4FC0F6322FDE"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "farmersdelight:main/get_rich_soil"
+			id: "C8C5D55C9BC58C13"
+			type: "advancement"
+		}
+		]
+		x: -0.0d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"9C29EE9C2A49ECD9"
+		]
+		icon: {
+			id: "farmersdelight:bacon_and_eggs"
+		}
+		id: "5D0B448782CB1030"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "farmersdelight:main/eat_nourishing_food"
+			id: "C95863E60CB17AC0"
+			type: "advancement"
+		}
+		]
+		x: -3.82d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"852B4FC0F6322FDE"
+		]
+		icon: {
+			id: "farmersdelight:tomato"
+		}
+		id: "B37CDD8AA8722C5E"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "farmersdelight:main/plant_all_crops"
+			id: "F12535BA01F53F2F"
+			type: "advancement"
+		}
+		]
+		x: -1.05d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"CCB0AFD4DE255272"
+		]
+		icon: {
+			id: "farm_and_charm:chicken_coop"
+		}
+		id: "C82A23CBBEEC848F"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "farm_and_charm:chicken_coop"
+			id: "4BD4001163454E7B"
+			type: "item"
+		}
+		]
+		x: 2.77d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"C82A23CBBEEC848F"
+		]
+		icon: {
+			id: "farm_and_charm:butter"
+		}
+		id: "2AC3A4AEF445D9A8"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "farm_and_charm:butter"
+			id: "C86B48F0A32E5749"
+			type: "item"
+		}
+		]
+		x: 1.5d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"F4173A922D4F7741"
+		]
+		icon: {
+			id: "vinery:fermentation_barrel"
+		}
+		id: "FE741E7B9F5D8875"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "vinery:fermentation_barrel"
+			id: "FE96E0D258693735"
+			type: "item"
+		}
+		]
+		x: -0.23d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"FE741E7B9F5D8875"
+		]
+		icon: {
+			id: "vinery:acacia_wine_rack_mid"
+		}
+		id: "BB844AAB017F1E65"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "vinery:acacia_wine_rack_mid"
+			id: "31CA491EBFC5630A"
+			type: "item"
+		}
+		]
+		x: -1.27d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"FE741E7B9F5D8875"
+		]
+		icon: {
+			id: "vinery:grapevine_stem"
+		}
+		id: "59FFC9FBC635C1DC"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "vinery:main/budding_grapes"
+			id: "D49B4318834C8413"
+			type: "advancement"
+		}
+		]
+		x: 1.27d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"59FFC9FBC635C1DC"
+		]
+		icon: {
+			id: "vinery:apple_juice"
+		}
+		id: "F358D05FDF4875D0"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "vinery:main/juice_it_up"
+			id: "B7CF1B0A6C60432D"
+			type: "advancement"
+		}
+		]
+		x: 0.0d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"F4173A922D4F7741"
+		]
+		icon: {
+			id: "storagedelight:acacia_drawer"
+		}
+		id: "3DADC237242CA928"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "storagedelight:acacia_drawer"
+			count: 4
+			id: "ABF9E9430C1CEBB3"
+			type: "item"
+		}
+		]
+		x: 2.77d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"3DADC237242CA928"
+		]
+		icon: {
+			id: "cookingforblockheads:cooking_table"
+		}
+		id: "B1A457053074F6D9"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "cookingforblockheads:cooking_table"
+			id: "5C14E41A11CD75CF"
+			type: "item"
+		}
+		]
+		x: 3.82d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"C82A23CBBEEC848F"
+		]
+		icon: {
+			id: "farmingforblockheads:market"
+		}
+		id: "31744FC4433AEAA5"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "farmingforblockheads:market"
+			id: "127924EC94DFB2CB"
+			type: "item"
+		}
+		]
+		x: 4.05d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"5D0B448782CB1030"
+		"B37CDD8AA8722C5E"
+		"2AC3A4AEF445D9A8"
+		"BB844AAB017F1E65"
+		"F358D05FDF4875D0"
+		"B1A457053074F6D9"
+		"31744FC4433AEAA5"
+		]
+		icon: {
+			id: "farmersdelight:roast_chicken_block"
+		}
+		id: "874E2D2B690469E6"
+		rewards: [
+		{
+			xp: 80
+			id: "9F71D399FF2FDD99"
+			type: "xp"
+		}
+		{
+			id: "690B554BB8125142"
+			type: "toast"
+		}
+		]
+		shape: "hexagon"
+		size: 2.5d
+		tasks: [
+		{
+			item: "farmersdelight:roast_chicken_block"
+			id: "0E2B6D683EAFDE3A"
+			type: "item"
+		}
+		{
+			item: "minecraft:cake"
+			id: "9443B733DCF7C98E"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -10.5d
+	}
+	]
+}

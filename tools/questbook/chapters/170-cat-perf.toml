@@ -1,0 +1,160 @@
+# 类目 · 性能与信息
+#
+# 这一章是**知识型**的：性能与信息类 mod **全部没有物品**
+# （实测：`spark` / `modernfix` / `embeddium` / `ferritecore` 的命名空间在注册表里都不存在）。
+#
+# 按本项目已定的原则（判不了就不硬塞），这一章不假装能判定什么，
+# 而是把**"卡了怎么办 / 信息在哪看"**写清楚 —— 这是设计里「红线处置流程」的玩家侧版本
+# （DESIGN.md §12）。全部为自检条目，理由统一写在例外清单里。
+
+key = "cat_perf"
+title = "性能与信息"
+subtitle = "卡了怎么办、东西在哪看：这一章是工具箱，不是任务清单"
+group = "category"
+icon = "minecraft:comparator"
+order_index = 37
+
+grid = { step = 1.5, row_h = 1.75 }
+
+[[quest]]
+name = "p_optimized"
+title = "这个包已经为你优化过了"
+desc = [
+	"包里内置了一整套性能 mod（渲染、内存、区块加载、实体剔除各一层），**默认全开**。",
+	"你不需要做任何事——这一条只是让你知道「慢不一定是包的错」。",
+	"⚠️ 性能 mod 没有物品接口（实测），所以这一条自检。",
+]
+icon = "minecraft:comparator"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "p_first_question"
+title = "先分清「卡」和「崩」"
+desc = [
+	"两个完全不同的问题，查法也不同：",
+	"· **崩了** → 有崩溃报告，去 `crash-reports/` 找；报错里最上面那个 mod 通常就是原因",
+	"· **卡了** → 没有崩溃报告，是性能问题；要看 TPS/MSPT，不是看日志",
+	"把这两件事混起来，会让排查方向从一开始就错。",
+]
+icon = "minecraft:redstone_torch"
+shape = "rsquare"
+deps = ["p_optimized"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "p_spark"
+title = "卡顿要看数据：spark"
+desc = [
+	"服务端卡：`/spark tps` 看 TPS、`/spark profiler start` 采一段，然后 `--stop` 出报告链接。",
+	"单人卡：客户端 F3 看帧率，或 `/spark profiler --timeout 30` 采客户端。",
+	"**不要靠感觉报「很卡」** —— 给一张 spark 报告，问题基本当场定位。",
+]
+icon = "minecraft:clock"
+shape = "rsquare"
+deps = ["p_first_question"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "p_tps"
+title = "原版也能看服务端状态"
+desc = [
+	"没装 spark 也没关系：`/tick query` 会给出 P50 / P95 / P99 的 tick 耗时。",
+	"设计里的性能预算就是 ms 级的（见 DESIGN.md §12），所以这个数字直接可比。",
+]
+icon = "minecraft:repeater"
+shape = "circle"
+size = 1.2
+deps = ["p_spark"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "p_graphics"
+title = "客户端画面设置"
+desc = [
+	"帧率低先调这三样（按收益排序）：渲染距离 → 模拟距离 → 阴影/云。",
+	"这个包用的是 Embeddium 系渲染器，视频设置里的选项比原版多。",
+]
+icon = "minecraft:painting"
+shape = "circle"
+size = 1.2
+deps = ["p_optimized"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "p_lag_source"
+title = "卡顿的常见来源"
+desc = [
+	"按经验排序：**大量掉落物** › 大量实体（动物/怪）› 区块生成尚未完成 › 红石高频 › 存储网络过大。",
+	"先怀疑前两个——它们占了大多数情况。",
+]
+icon = "minecraft:hopper"
+shape = "circle"
+size = 1.2
+deps = ["p_graphics"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "p_info_tools"
+title = "信息怎么看"
+desc = [
+	"· **Jade**：指着方块显示它是什么（自动生效）",
+	"· **BetterF3**：F3 信息更整齐，可按 F3+G 之外的方式自定义",
+	"· **AppleSkin**：饥饿值与饱和度读数（种田党的命）",
+	"· **JEI / EMI**：配方查询——本包用的是 JEI",
+	"这些都是客户端界面 mod，没有物品判据，所以这一条自检。",
+]
+icon = "minecraft:book"
+shape = "rsquare"
+deps = ["p_optimized"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "p_chunk_watch"
+title = "世界变大之后"
+desc = [
+	"玩久了之后，**磁盘与备份**会比性能更早成为问题：",
+	"· 定期备份（本包已配 Simple Backups）",
+	"· 用 Chunky 预生成远征要走的区域，避免边走边生成",
+	"· 清掉不再需要的老区域前，先确认没有人的东西在那里",
+]
+icon = "minecraft:chipped_anvil"
+shape = "circle"
+size = 1.2
+deps = ["p_lag_source"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "p_done"
+title = "把这一章记在心里就行"
+desc = [
+	"它没有奖励，也没有任务要交——出问题时回来翻一遍就够了。",
+]
+icon = "minecraft:knowledge_book"
+shape = "hexagon"
+size = 2.5
+deps = ["p_tps", "p_graphics", "p_info_tools", "p_chunk_watch"]
+tasks = [
+	{ type = "checkmark" },
+]
+rewards = [
+	{ type = "xp", xp = 40 },
+	{ type = "toast" },
+]

@@ -1,0 +1,76 @@
+{
+	quest.82FEF69806781BFF.title: "木墙换石墙"
+	quest.82FEF69806781BFF.description: [
+	"能拆木墙的东西出现之后，全线换石砖——木墙一段不留。"
+	]
+	quest.9D47FBB8DB105352.title: "关键段上铁"
+	quest.9D47FBB8DB105352.description: [
+	"石墙也有扛不住的一天。城门、转角、哨位这些关键段必须上铁。"
+	]
+	quest.B84E50C0ADFA75AF.title: "烽火网络"
+	quest.B84E50C0ADFA75AF.description: [
+	"三处烽火，点火要在主城能看见。远方的据点出事时，这是唯一的信号。"
+	]
+	quest.8E2A04639E9DACA8.title: "敲钟集结"
+	quest.8E2A04639E9DACA8.description: [
+	"设计里「敲钟集结」是唯一的集结信号，而原版**真的记这个统计**（`bell_ring`）。"
+	"约定好敲法：一声集合、三声回城。敲够 10 次，说明它真的被用起来了。"
+	]
+	quest.20CF2B658B9F86B8.title: "军械库"
+	quest.20CF2B658B9F86B8.description: [
+	"武器、护甲、箭矢各一整箱——打仗时没人有空现做装备。"
+	]
+	quest.B73016A19507A571.title: "守住一次大规模袭击"
+	quest.B73016A19507A571.description: [
+	"全队协防、有人受伤、墙出现缺口又被补上。"
+	"⚠️ **这一条游戏里没有信号源**：The Hordes / Undead Nights 不提供进度或统计（实测）。"
+	"所以它靠自己确认。要让这一步自动判定，需要 mod 侧暴露「波次开始/结束」事件。"
+	]
+	quest.148FBA890A35101D.title: "清剿一处占领区"
+	quest.148FBA890A35101D.description: [
+	"把一处据点清空并插旗——只守不打，规模只会一直涨。"
+	"「袭击被触发」原版有统计，可作为交火的证据。"
+	]
+	quest.3D5529FDDF542DF0.title: "被宣战"
+	quest.3D5529FDDF542DF0.description: [
+	"有一个国家对你们宣战——这是国策的第一次真正压力。"
+	"⚠️ 宣战是 mod 侧事件，不发进度（实测），所以这一条自检。"
+	]
+	quest.34BE03AE76C2ECAD.title: "壕沟"
+	quest.34BE03AE76C2ECAD.description: [
+	"城外一道 ≥2 格深的沟，入口配吊桥或跳板。"
+	]
+	quest.26625CB54A3ED591.title: "箭塔"
+	quest.26625CB54A3ED591.description: [
+	"≥2 座，能覆盖城外一段。塔上有箭箱。"
+	]
+	quest.56144FE43449787E.title: "陷阱区"
+	quest.56144FE43449787E.description: [
+	"入口处一片可复用的陷阱——不是一次性消耗品。"
+	]
+	quest.E724A3FEA2A40B85.title: "应急仓"
+	quest.E724A3FEA2A40B85.description: [
+	"被围时能独立支撑的食物与箭——放在城墙内侧，不在主仓。"
+	]
+	quest.4587D04733729B5E.title: "救护点"
+	quest.4587D04733729B5E.description: [
+	"床 + 药 + 一张写明流程的牌子。别让人受伤后只能等死。"
+	]
+	quest.3AABCD1DC3BF9F78.title: "地道"
+	quest.3AABCD1DC3BF9F78.description: [
+	"一条不经过正门的进出通道。城被围死时它是退路。"
+	]
+	quest.BAEC55C197CDB26C.title: "墙外不黑"
+	quest.BAEC55C197CDB26C.description: [
+	"黑的地方就是它们生成的地方。墙外一圈点亮。"
+	]
+	quest.F36B0F810FABF70C.title: "自动补箭"
+	quest.F36B0F810FABF70C.description: [
+	"一支箭的产线：木 → 箭。缺箭的守城撑不过第二波。"
+	]
+	quest.5733BAA772F1A132.title: "御敌碑"
+	quest.5733BAA772F1A132.description: [
+	"刻上守住了什么。这一块碑通常最厚——它记的是伤亡与工事。"
+	"下一时代是文明的收官：把几十年打下来的东西变成能留下来的东西。"
+	]
+}

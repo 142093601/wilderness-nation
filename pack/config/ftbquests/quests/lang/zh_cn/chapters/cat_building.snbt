@@ -1,0 +1,60 @@
+{
+	quest.27EF883A29B97A4A.title: "桥与栈道"
+	quest.27EF883A29B97A4A.description: [
+	"Macaw's Bridges：跨水、跨沟、跨谷。别再用一格宽的土路硬过。"
+	]
+	quest.EF5820F81D73126A.title: "栅栏与围墙"
+	quest.EF5820F81D73126A.description: [
+	"Macaw's Fences：比你想象的多得多的栏杆样式。"
+	]
+	quest.E3C3772A3F421871.title: "窗"
+	quest.E3C3772A3F421871.description: [
+	"Macaw's Windows：一整套窗框与玻璃组合。房子有窗才像房子。"
+	]
+	quest.17184EB1B2BCE64B.title: "活板门与门面"
+	quest.17184EB1B2BCE64B.description: [
+	"Macaw's Trapdoors：门面细节最省力的一环。"
+	]
+	quest.89ECD33FD16C1A84.title: "路面与铺装"
+	quest.89ECD33FD16C1A84.description: [
+	"Macaw's Paths：让路看起来是修的，不是走出来的。"
+	]
+	quest.5BE6E00CACE57A49.title: "能坐下的地方"
+	quest.5BE6E00CACE57A49.description: [
+	"Handcrafted 的沙发与长凳——室内第一步不是摆家具，是让人有地方坐。"
+	]
+	quest.4E6064F2596B9840.title: "卧室成套"
+	quest.4E6064F2596B9840.description: [
+	"床头柜 + 床 + 柜子。让「住的地方」和「干活的地方」分开。"
+	]
+	quest.323155B28A3BC8E7.title: "厨房柜体"
+	quest.323155B28A3BC8E7.description: [
+	"Refurbished Furniture 的厨房系列：橱柜、水槽、台面。"
+	]
+	quest.6178656D15AAF82E.title: "吃饭的地方"
+	quest.6178656D15AAF82E.description: [
+	"桌子 + 四把椅子。食堂是「聚在一起」最便宜的载体。"
+	]
+	quest.24EA85F1928D6D61.title: "同一块砖的十种样子"
+	quest.24EA85F1928D6D61.description: [
+	"Chipped / Rechiseled：把一种建材变成一堆变体。"
+	"用法是「先做基准块，再在切石机里换款」——这是「不靠加 mod 也能有细节」的关键。"
+	]
+	quest.E0BDDF7FBFC59437.title: "玻璃与装饰面"
+	quest.E0BDDF7FBFC59437.description: [
+	"彩色玻璃、图案玻璃：现代感与教堂感的差别就在这一层。"
+	]
+	quest.B152F4A1C6D33CC4.title: "灯与灯笼"
+	quest.B152F4A1C6D33CC4.description: [
+	"Macaw's Lights：照明不再只有火把和灯笼两种选择。"
+	]
+	quest.E60DE7B2AD4B7B0E.title: "画与装饰画"
+	quest.E60DE7B2AD4B7B0E.description: [
+	"Macaw's Paintings / Immersive Paintings：墙上不只是空白。"
+	]
+	quest.A3F7D93F368B2263.title: "盖出第一座「不像火柴盒」的房子"
+	quest.A3F7D93F368B2263.description: [
+	"把上面这些凑起来用一次：窗、门面、灯、室内家具、装饰面。"
+	"这一条之后，「建筑目录」才有素材可收（见无尽纪元）。"
+	]
+}

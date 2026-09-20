@@ -1,0 +1,228 @@
+# 类目 · 建筑与装饰
+#
+# 类目章的作用（PLAN-questbook.md §2.1）：**保证每个有玩法内容的 mod 都有位置**。
+# 同类 mod 各占一个**簇**，簇内 3~8 条——不按"每个 mod 2~4 条"敷衍。
+#
+# 本章的 mod：Macaw's 全家（桥/栅栏/家具/灯/画/路/活板门/窗）· Handcrafted ·
+#             Refurbished Furniture · Chipped/Rechiseled（变体建材）· Amendments
+#
+# 判据：**全是实物**——这类 mod 的价值就是"提供方块"，判据自然是持有/放下它们。
+
+key = "cat_building"
+title = "建筑与装饰"
+subtitle = "让「盖得像样」这件事有工具可用"
+group = "category"
+icon = "minecraft:bricks"
+order_index = 30
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 簇 1：结构与连接件（Macaw's） ----------------
+
+[[quest]]
+name = "b_bridge"
+title = "桥与栈道"
+desc = [
+	"Macaw's Bridges：跨水、跨沟、跨谷。别再用一格宽的土路硬过。",
+]
+icon = "mcwbridges:acacia_log_bridge_middle"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "mcwbridges:acacia_log_bridge_middle", count = 8 },
+]
+
+[[quest]]
+name = "b_fence"
+title = "栅栏与围墙"
+desc = [
+	"Macaw's Fences：比你想象的多得多的栏杆样式。",
+]
+icon = "mcwfences:acacia_hedge"
+shape = "circle"
+size = 1.2
+deps = ["b_bridge"]
+tasks = [
+	{ type = "item", item = "mcwfences:acacia_hedge", count = 16 },
+]
+
+[[quest]]
+name = "b_window"
+title = "窗"
+desc = [
+	"Macaw's Windows：一整套窗框与玻璃组合。房子有窗才像房子。",
+]
+icon = "mcwwindows:acacia_window"
+shape = "circle"
+size = 1.2
+deps = ["b_bridge"]
+tasks = [
+	{ type = "item", item = "mcwwindows:acacia_window", count = 8 },
+]
+
+[[quest]]
+name = "b_trapdoor"
+title = "活板门与门面"
+desc = [
+	"Macaw's Trapdoors：门面细节最省力的一环。",
+]
+icon = "mcwtrpdoors:acacia_barn_trapdoor"
+shape = "circle"
+size = 1.2
+deps = ["b_bridge"]
+tasks = [
+	{ type = "item", item = "mcwtrpdoors:acacia_barn_trapdoor", count = 8 },
+]
+
+[[quest]]
+name = "b_path"
+title = "路面与铺装"
+desc = [
+	"Macaw's Paths：让路看起来是修的，不是走出来的。",
+]
+icon = "mcwpaths:andesite_diamond_paving"
+shape = "circle"
+size = 1.2
+deps = ["b_bridge"]
+tasks = [
+	{ type = "item", item = "mcwpaths:andesite_diamond_paving", count = 16 },
+]
+
+# ---------------- 簇 2：室内（Handcrafted / Refurbished） ----------------
+
+[[quest]]
+name = "b_couch"
+title = "能坐下的地方"
+desc = [
+	"Handcrafted 的沙发与长凳——室内第一步不是摆家具，是让人有地方坐。",
+]
+icon = "handcrafted:acacia_couch"
+shape = "rsquare"
+deps = ["b_bridge"]
+tasks = [
+	{ type = "item", item = "handcrafted:acacia_couch", count = 2 },
+]
+
+[[quest]]
+name = "b_bedroom"
+title = "卧室成套"
+desc = [
+	"床头柜 + 床 + 柜子。让「住的地方」和「干活的地方」分开。",
+]
+icon = "handcrafted:acacia_nightstand"
+shape = "circle"
+size = 1.2
+deps = ["b_couch"]
+tasks = [
+	{ type = "item", item = "handcrafted:acacia_nightstand" },
+	{ type = "item", item = "handcrafted:acacia_drawer" },
+]
+
+[[quest]]
+name = "b_kitchen"
+title = "厨房柜体"
+desc = [
+	"Refurbished Furniture 的厨房系列：橱柜、水槽、台面。",
+]
+icon = "refurbished_furniture:acacia_kitchen_cabinetry"
+shape = "circle"
+size = 1.2
+deps = ["b_couch"]
+tasks = [
+	{ type = "item", item = "refurbished_furniture:acacia_kitchen_cabinetry", count = 4 },
+]
+
+[[quest]]
+name = "b_table"
+title = "吃饭的地方"
+desc = [
+	"桌子 + 四把椅子。食堂是「聚在一起」最便宜的载体。",
+]
+icon = "refurbished_furniture:acacia_table"
+shape = "circle"
+size = 1.2
+deps = ["b_kitchen"]
+tasks = [
+	{ type = "item", item = "refurbished_furniture:acacia_table" },
+	{ type = "item", item = "refurbished_furniture:acacia_chair", count = 4 },
+]
+
+# ---------------- 簇 3：材质变体（Chipped / Rechiseled） ----------------
+
+[[quest]]
+name = "b_variants"
+title = "同一块砖的十种样子"
+desc = [
+	"Chipped / Rechiseled：把一种建材变成一堆变体。",
+	"用法是「先做基准块，再在切石机里换款」——这是「不靠加 mod 也能有细节」的关键。",
+]
+icon = "minecraft:chiseled_stone_bricks"
+shape = "rsquare"
+deps = ["b_bridge"]
+tasks = [
+	{ type = "item", item = "minecraft:chiseled_stone_bricks", count = 16 },
+	{ type = "item", item = "minecraft:stonecutter" },
+]
+
+[[quest]]
+name = "b_glass"
+title = "玻璃与装饰面"
+desc = [
+	"彩色玻璃、图案玻璃：现代感与教堂感的差别就在这一层。",
+]
+icon = "minecraft:glass_pane"
+shape = "circle"
+size = 1.2
+deps = ["b_variants"]
+tasks = [
+	{ type = "item", item = "minecraft:glass_pane", count = 32 },
+]
+
+# ---------------- 簇 4：灯与画（氛围） ----------------
+
+[[quest]]
+name = "b_light"
+title = "灯与灯笼"
+desc = [
+	"Macaw's Lights：照明不再只有火把和灯笼两种选择。",
+]
+icon = "mcwlights:bell_lantern"
+shape = "circle"
+size = 1.2
+deps = ["b_bridge"]
+tasks = [
+	{ type = "item", item = "mcwlights:bell_lantern", count = 4 },
+]
+
+[[quest]]
+name = "b_painting"
+title = "画与装饰画"
+desc = [
+	"Macaw's Paintings / Immersive Paintings：墙上不只是空白。",
+]
+icon = "minecraft:painting"
+shape = "circle"
+size = 1.2
+deps = ["b_light"]
+tasks = [
+	{ type = "item", item = "minecraft:painting", count = 8 },
+]
+
+[[quest]]
+name = "b_building_done"
+title = "盖出第一座「不像火柴盒」的房子"
+desc = [
+	"把上面这些凑起来用一次：窗、门面、灯、室内家具、装饰面。",
+	"这一条之后，「建筑目录」才有素材可收（见无尽纪元）。",
+]
+icon = "minecraft:bricks"
+shape = "hexagon"
+size = 2.5
+deps = ["b_window", "b_trapdoor", "b_path", "b_bedroom", "b_table", "b_glass", "b_painting"]
+tasks = [
+	{ type = "item", item = "minecraft:bricks", count = 64 },
+]
+rewards = [
+	{ type = "xp", xp = 80 },
+	{ type = "toast" },
+]

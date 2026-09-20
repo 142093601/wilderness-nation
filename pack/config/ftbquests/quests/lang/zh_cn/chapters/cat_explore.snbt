@@ -1,0 +1,65 @@
+{
+	quest.C946CDB9DF287ECE.title: "先把「看」的工具备齐"
+	quest.C946CDB9DF287ECE.description: [
+	"这个包里有一整套**客户端界面 mod**，它们不占物品栏、也不会出现在 JEI 里："
+	"· Xaero's 世界地图 / 小地图：自动生效，按快捷键打开"
+	"· Jade：指着方块就显示它是什么"
+	"· Traveler's Titles：进新群系/维度时屏幕上出现区域名"
+	"· Explorer's / Nature's Compass：手里拿着才起作用（这两样是**真物品**）"
+	"⚠️ 界面类工具没有物品判据（实测：这些 mod 的 item 键数为 0），所以这一条自检。"
+	]
+	quest.9004448B5DC4C470.title: "结构罗盘"
+	quest.9004448B5DC4C470.description: [
+	"Explorer's Compass：指到最近的结构。远征找目标不再靠运气。"
+	]
+	quest.5361C6541C525E23.title: "生物群系罗盘"
+	quest.5361C6541C525E23.description: [
+	"Nature's Compass：找群系。想找某种木材或地形时它最省时间。"
+	]
+	quest.00B3D4C1CE27A7E2.title: "走遍主要群系"
+	quest.00B3D4C1CE27A7E2.description: [
+	"原版进度「探索时间」要求走遍几乎所有群系——在这一包里它自然就完成了，"
+	"但它是「你确实到处走过」最可靠的证据。"
+	]
+	quest.337CEEB0C3C2B1F0.title: "走了一百万格"
+	quest.337CEEB0C3C2B1F0.description: [
+	"一万格 ≈ 10 公里。走到这个数，你们的地图才算「有内容」。"
+	]
+	quest.C5B031F2B289B39A.title: "试炼厅"
+	quest.C5B031F2B289B39A.description: [
+	"1.21 的新结构：试炼厅与重核。原版进度能判。"
+	]
+	quest.B93891C782DB72E9.title: "深暗之域"
+	quest.B93891C782DB72E9.description: [
+	"潜行到远古城市——最危险也最值钱的一类探索（沉默与幽匿）。"
+	]
+	quest.CF3AEFF02D9CA5D5.title: "刷怪笼与地牢"
+	quest.CF3AEFF02D9CA5D5.description: [
+	"改造一个刷怪笼：把危险变成资源。这是很多自动化线的起点。"
+	]
+	quest.44CF0609ECFC72DE.title: "在草原上放一次音乐"
+	quest.44CF0609ECFC72DE.description: [
+	"看起来没用，但它是这个包「文明」气质的一部分——原版进度会给它盖章。"
+	]
+	quest.7B74DD1DBB45EAB2.title: "走遍下界"
+	quest.7B74DD1DBB45EAB2.description: [
+	"下界有五种群系，走遍它是「下界不再是采矿区」的标志。"
+	]
+	quest.38A9B962976509A1.title: "要塞与堡垒"
+	quest.38A9B962976509A1.description: [
+	"下界要塞（烈焰棒）与堡垒遗迹（猪灵）——两条独立的下界线。"
+	]
+	quest.BBD3E994F92EE44C.title: "远古残骸"
+	quest.BBD3E994F92EE44C.description: [
+	"下界合金的唯一来源。挖到它意味着你们的装备可以进下一档。"
+	]
+	quest.4ECFA357D8694C57.title: "末地城"
+	quest.4ECFA357D8694C57.description: [
+	"鞘翅与潜影盒都在这里。到这一步，你们的活动范围从「地面」变成「任意地方」。"
+	]
+	quest.7C2154777BD98881.title: "地图连成一片"
+	quest.7C2154777BD98881.description: [
+	"主城周边 + 两条远征路线 + 下界通道，都画进同一张地图。"
+	"到这一步，「情报墙」才有东西可挂（见出关章）。"
+	]
+}

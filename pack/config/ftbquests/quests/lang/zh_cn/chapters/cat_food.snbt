@@ -1,0 +1,71 @@
+{
+	quest.CCB0AFD4DE255272.title: "一把厨刀"
+	quest.CCB0AFD4DE255272.description: [
+	"农夫乐事的第一步。有了刀，割草得稻草、切菜下锅——整条食物线的起点。"
+	]
+	quest.03FB683BE6B54C4F.title: "砧板"
+	quest.03FB683BE6B54C4F.description: [
+	"切菜、剁肉都在这里。"
+	]
+	quest.F4173A922D4F7741.title: "下锅"
+	quest.F4173A922D4F7741.description: [
+	"烹饪锅：能一次做出一锅给全队吃的菜。食堂的核心设备。"
+	]
+	quest.9C29EE9C2A49ECD9.title: "灶台与平底锅"
+	quest.9C29EE9C2A49ECD9.description: [
+	"从「炖」升级到「煎」——同一份食材能做出不同的菜。"
+	]
+	quest.852B4FC0F6322FDE.title: "沃土"
+	quest.852B4FC0F6322FDE.description: [
+	"有机肥 + 沃土：不换地也能持续产出，这是农场长期化的关键。"
+	]
+	quest.5D0B448782CB1030.title: "吃顿像样的"
+	quest.5D0B448782CB1030.description: [
+	"营养餐：这个包的食物系统有「营养」概念，吃饱与吃好是两件事。"
+	]
+	quest.B37CDD8AA8722C5E.title: "把作物种全"
+	quest.B37CDD8AA8722C5E.description: [
+	"农夫乐事的作物全种一遍。这条是「农场」与「菜园」的分界线。"
+	]
+	quest.C82A23CBBEEC848F.title: "鸡舍"
+	quest.C82A23CBBEEC848F.description: [
+	"Farm & Charm 的畜舍系列：畜牧从「围一圈」升级到「有设施」。"
+	]
+	quest.2AC3A4AEF445D9A8.title: "奶与黄油"
+	quest.2AC3A4AEF445D9A8.description: [
+	"奶制品线：黄油是很多菜的前置。"
+	]
+	quest.FE741E7B9F5D8875.title: "发酵桶"
+	quest.FE741E7B9F5D8875.description: [
+	"Vinery 的酿酒线：果汁 → 发酵 → 酒。这是这个包里少见的「慢工艺」。"
+	]
+	quest.BB844AAB017F1E65.title: "酒架"
+	quest.BB844AAB017F1E65.description: [
+	"酒要存起来陈。"
+	]
+	quest.59FFC9FBC635C1DC.title: "种下第一株葡萄"
+	quest.59FFC9FBC635C1DC.description: [
+	"Vinery 有自己的进度（实测 20 条），种葡萄那条就在里面。"
+	]
+	quest.F358D05FDF4875D0.title: "榨汁"
+	quest.F358D05FDF4875D0.description: [
+	"果汁是酒的中间产物，也是一类能喝的补给。"
+	]
+	quest.3DADC237242CA928.title: "食物专用储藏"
+	quest.3DADC237242CA928.description: [
+	"Storage Delight 的橱柜/抽屉：食物要按类放，不然会烂在背包里。"
+	]
+	quest.B1A457053074F6D9.title: "厨房一体化"
+	quest.B1A457053074F6D9.description: [
+	"Cooking for Blockheads：把厨房设备连成一张操作面，不用来回跑。"
+	]
+	quest.31744FC4433AEAA5.title: "市场与种子"
+	quest.31744FC4433AEAA5.description: [
+	"Farming for Blockheads 的市场：买种子、买树苗，省掉满地图找野生的时间。"
+	]
+	quest.874E2D2B690469E6.title: "办一桌席"
+	quest.874E2D2B690469E6.description: [
+	"把这一章的东西凑成一桌：主菜、配菜、饮品、甜点各有一样。"
+	"这一条之后，「食堂」才算真的开张（基建章的食堂到了这里才有内容）。"
+	]
+}

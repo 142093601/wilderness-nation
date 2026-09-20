@@ -1,0 +1,196 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "cat_perf"
+	group: "1439886072EE757D"
+	icon: {
+		id: "minecraft:comparator"
+	}
+	id: "C83EFD5F7165C874"
+	order_index: 37
+	quest_links: [ ]
+	quests: [
+	{
+		icon: {
+			id: "minecraft:comparator"
+		}
+		id: "B88D0AE50816A894"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			id: "0F9A80B87E7A148E"
+			type: "checkmark"
+		}
+		]
+		x: 0.0d
+		y: 0.0d
+	}
+	{
+		dependencies: [
+		"B88D0AE50816A894"
+		]
+		icon: {
+			id: "minecraft:redstone_torch"
+		}
+		id: "C9597E663D98F2A6"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			id: "791A6A2C8D36F754"
+			type: "checkmark"
+		}
+		]
+		x: -2.78d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"C9597E663D98F2A6"
+		]
+		icon: {
+			id: "minecraft:clock"
+		}
+		id: "E87BAEA60C54066D"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			id: "5C66F8D76B19D098"
+			type: "checkmark"
+		}
+		]
+		x: -1.27d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"E87BAEA60C54066D"
+		]
+		icon: {
+			id: "minecraft:repeater"
+		}
+		id: "A4C259239957534F"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			id: "22B3B978562A45B9"
+			type: "checkmark"
+		}
+		]
+		x: -1.27d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"B88D0AE50816A894"
+		]
+		icon: {
+			id: "minecraft:painting"
+		}
+		id: "0DE602097BABEF6F"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			id: "07939E996A88A49D"
+			type: "checkmark"
+		}
+		]
+		x: -0.0d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"0DE602097BABEF6F"
+		]
+		icon: {
+			id: "minecraft:hopper"
+		}
+		id: "37D6A4F33C866758"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			id: "F4A6E4A06F55AED9"
+			type: "checkmark"
+		}
+		]
+		x: 1.5d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"B88D0AE50816A894"
+		]
+		icon: {
+			id: "minecraft:book"
+		}
+		id: "1D942369DE0FB9FE"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			id: "0ECB600339B0A40F"
+			type: "checkmark"
+		}
+		]
+		x: 2.77d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"37D6A4F33C866758"
+		]
+		icon: {
+			id: "minecraft:chipped_anvil"
+		}
+		id: "F1770C2C79C1C308"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			id: "BB46DC08167CE2A5"
+			type: "checkmark"
+		}
+		]
+		x: 1.27d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"A4C259239957534F"
+		"0DE602097BABEF6F"
+		"1D942369DE0FB9FE"
+		"F1770C2C79C1C308"
+		]
+		icon: {
+			id: "minecraft:knowledge_book"
+		}
+		id: "07BB4EA5ABFE1F81"
+		rewards: [
+		{
+			xp: 40
+			id: "C0A111D03917E413"
+			type: "xp"
+		}
+		{
+			id: "811572C3205F13BF"
+			type: "toast"
+		}
+		]
+		shape: "hexagon"
+		size: 2.5d
+		tasks: [
+		{
+			id: "6563D296AEB87DA3"
+			type: "checkmark"
+		}
+		]
+		x: 0.0d
+		y: -7.0d
+	}
+	]
+}

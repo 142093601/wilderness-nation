@@ -1,0 +1,337 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "cat_gear"
+	group: "1439886072EE757D"
+	icon: {
+		id: "simplyswords:iron_longsword"
+	}
+	id: "A839569A8D6C5FF7"
+	order_index: 34
+	quest_links: [ ]
+	quests: [
+	{
+		icon: {
+			id: "simplyswords:iron_longsword"
+		}
+		id: "6DC3FA505A1BF741"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "simplyswords:iron_longsword"
+			id: "7E0A7470395581E9"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: 0.0d
+	}
+	{
+		dependencies: [
+		"6DC3FA505A1BF741"
+		]
+		icon: {
+			id: "simplyswords:iron_greathammer"
+		}
+		id: "FA0B1AAC5E5E254C"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "simplyswords:iron_greathammer"
+			id: "795BADA8FAFEAF1A"
+			type: "item"
+		}
+		]
+		x: -5.55d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"6DC3FA505A1BF741"
+		]
+		icon: {
+			id: "simplyswords:iron_halberd"
+		}
+		id: "4F098AB52DECB27C"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "simplyswords:iron_halberd"
+			id: "6EAD19EBDCC83566"
+			type: "item"
+		}
+		]
+		x: -3.0d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"6DC3FA505A1BF741"
+		]
+		icon: {
+			id: "simplyswords:diamond_longsword"
+		}
+		id: "07124DBEA65F4D4D"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "simplyswords:diamond_longsword"
+			id: "365CB2BA5D41856A"
+			type: "item"
+		}
+		]
+		x: -0.45d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"6DC3FA505A1BF741"
+		]
+		icon: {
+			id: "armoroftheages:iron_plate_armor_chest"
+		}
+		id: "EE8137719F67986C"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "armoroftheages:iron_plate_armor_chest"
+			id: "2BBF8504C6007B35"
+			type: "item"
+		}
+		]
+		x: 2.33d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"EE8137719F67986C"
+		]
+		icon: {
+			id: "magistuarmory:knight_chestplate"
+		}
+		id: "D78D767E58013A76"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "magistuarmory:knight_chestplate"
+			id: "6FEF225E0AF8997E"
+			type: "item"
+		}
+		]
+		x: -6.6d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"EE8137719F67986C"
+		]
+		icon: {
+			id: "minecraft:shield"
+		}
+		id: "9E72F423E23FBE94"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:shield"
+			id: "1B36DADFA03CCA45"
+			type: "item"
+		}
+		{
+			stat: "minecraft:damage_blocked_by_shield"
+			value: 100
+			id: "002744F59A4E37C7"
+			type: "stat"
+		}
+		]
+		x: -4.05d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"6DC3FA505A1BF741"
+		]
+		icon: {
+			id: "minecraft:anvil"
+		}
+		id: "D2306C73A6EF39F3"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:anvil"
+			id: "35212D1BE5972469"
+			type: "item"
+		}
+		]
+		x: 5.33d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"D2306C73A6EF39F3"
+		]
+		icon: {
+			id: "minecraft:enchanting_table"
+		}
+		id: "69F773F6179D1219"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "minecraft:story/enchant_item"
+			id: "EA1F0176DFABF9F7"
+			type: "advancement"
+		}
+		]
+		x: -1.5d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"69F773F6179D1219"
+		]
+		icon: {
+			id: "enchantinginfuser:enchanting_infuser"
+		}
+		id: "84906A833A81E953"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "enchantinginfuser:enchanting_infuser"
+			id: "94D8A32F43D466C3"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"84906A833A81E953"
+		]
+		icon: {
+			id: "minecraft:diamond_chestplate"
+		}
+		id: "65B121989B24E120"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "minecraft:story/shiny_gear"
+			id: "CF2C449D5C3AE7DD"
+			type: "advancement"
+		}
+		]
+		x: 0.0d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"D2306C73A6EF39F3"
+		]
+		icon: {
+			id: "minecraft:golden_apple"
+		}
+		id: "25A70F2BBD859FC0"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:golden_apple"
+			id: "B44475D3357C9785"
+			type: "item"
+		}
+		]
+		x: 1.27d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"D2306C73A6EF39F3"
+		]
+		icon: {
+			id: "minecraft:chest"
+		}
+		id: "54EF7448DF514423"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:chest"
+			count: 4
+			id: "C461358B7B0DFE80"
+			type: "item"
+		}
+		]
+		x: 4.05d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"D2306C73A6EF39F3"
+		]
+		icon: {
+			id: "comforts:sleeping_bag_white"
+		}
+		id: "C102F1FDC7AB6F07"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "comforts:sleeping_bag_white"
+			id: "A2093D9908E3BB4A"
+			type: "item"
+		}
+		]
+		x: 6.6d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"FA0B1AAC5E5E254C"
+		"4F098AB52DECB27C"
+		"07124DBEA65F4D4D"
+		"D78D767E58013A76"
+		"9E72F423E23FBE94"
+		"65B121989B24E120"
+		"54EF7448DF514423"
+		"C102F1FDC7AB6F07"
+		]
+		icon: {
+			id: "simplyswords:diamond_longsword"
+		}
+		id: "6FA22477120CAB33"
+		rewards: [
+		{
+			xp: 80
+			id: "E0C8EAE470A3302F"
+			type: "xp"
+		}
+		{
+			id: "76FF3C8455C44AF9"
+			type: "toast"
+		}
+		]
+		shape: "hexagon"
+		size: 2.5d
+		tasks: [
+		{
+			item: "minecraft:diamond_chestplate"
+			count: 2
+			id: "1F9A6B40D9BBD9E2"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -8.75d
+	}
+	]
+}

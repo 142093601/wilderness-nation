@@ -1,0 +1,206 @@
+# 领地与队伍（技艺章）
+#
+# 定位：OPAC（认领）+ FTB Teams（队伍）+ 传送网络 —— 「我们的地」这套系统怎么用起来。
+#
+# ⚠️ **这一章的判据限制必须写在最前面**
+#    实测：`openpartiesandclaims` 与 `ftbteams` **完全不提供物品**（lang 里 item 键为 0）。
+#    它们只有命令与界面。所以「圈地」「组队」「改权限」这些**动作**在 FTB Quests 里
+#    **没有判据**，只能用 checkmark（并写明理由）。
+#    能自动判的是这一章里**真实物品**的部分：传送石/传送卷轴、补给站的实物。
+#
+# 与「编年 · 立国」的分工：立国章讲**什么时候做**，本章讲**怎么把它用起来**。
+
+key = "claims"
+title = "领地与队伍"
+subtitle = "「我们的地」这套系统：权限、边界、以及走得回来"
+group = "craft"
+icon = "minecraft:shield"
+order_index = 23
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 权限：从「能进」到「能管」 ----------------
+
+[[quest]]
+name = "claim_anatomy"
+title = "先把边界画清楚"
+desc = [
+	"领地的价值不在「圈了多大」，而在**边界在哪**：让谁进、谁不能拆、谁不能开箱。",
+	"⚠️ OPAC 不提供物品（实测），所以这一条自检。",
+	"验收方式：找一个不在队里的人，让他试三件事——挖、放、开箱。三件都被拦才算过。",
+]
+icon = "minecraft:white_banner"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "role_split"
+title = "分出至少两种权限"
+desc = [
+	"全员同权限等于没有权限：至少分出「能建设」与「只能住」两档。",
+	"⚠️ 权限配置同样没有判据，自检。",
+]
+icon = "minecraft:shield"
+shape = "rsquare"
+deps = ["claim_anatomy"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "alley_check"
+title = "试一次越界"
+desc = [
+	"让一个非成员去试着拿走仓库里的东西——**能拦住才算这套系统真的生效**。",
+	"这一条是设计里 A1 的验收项（`DEFERRED.md` 记着它需要两个真实玩家）。",
+	"⚠️ 自检。",
+]
+icon = "minecraft:barrel"
+shape = "rsquare"
+deps = ["role_split"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# ---------------- 传送网络（这一章有真实判据的部分） ----------------
+
+[[quest]]
+name = "first_waystone"
+title = "第一座传送石"
+desc = [
+	"把「走回来」这件事解决掉：传送石一立，远征半径才真的能扩大。",
+]
+icon = "waystones:waystone"
+shape = "rsquare"
+deps = ["claim_anatomy"]
+tasks = [
+	{ type = "item", item = "waystones:waystone" },
+]
+
+[[quest]]
+name = "waystone_network"
+title = "织成网"
+desc = [
+	"≥4 座：主城、驿站、矿场、前线各一处。",
+	"到这一步，地图上的距离第一次不再是成本。",
+]
+icon = "waystones:waystone"
+shape = "rsquare"
+deps = ["first_waystone"]
+tasks = [
+	{ type = "item", item = "waystones:waystone", count = 4 },
+]
+
+[[quest]]
+name = "portable_warp"
+title = "随身回城"
+desc = [
+	"传送卷轴：在野外也能回到已激活的传送石。这是「敢走远」的前提。",
+]
+icon = "waystones:warp_scroll"
+shape = "circle"
+size = 1.2
+deps = ["waystone_network"]
+tasks = [
+	{ type = "item", item = "waystones:warp_scroll", count = 4 },
+]
+
+[[quest]]
+name = "share_stone"
+title = "让队友也能用"
+desc = [
+	"分享石：把某座传送石开放给队友——不然它只是你自己的传送点。",
+]
+icon = "waystones:gray_sharestone"
+shape = "circle"
+size = 1.2
+deps = ["waystone_network"]
+tasks = [
+	{ type = "item", item = "waystones:gray_sharestone" },
+]
+
+[[quest]]
+name = "bound_scroll"
+title = "定向传送"
+desc = [
+	"绑定卷轴：省掉「先回城再走出去」那一半路程。",
+]
+icon = "waystones:bound_scroll"
+shape = "circle"
+size = 1.2
+deps = ["portable_warp"]
+tasks = [
+	{ type = "item", item = "waystones:bound_scroll", count = 2 },
+]
+
+# ---------------- 队伍协作 ----------------
+
+[[quest]]
+name = "shared_chest"
+title = "共享与私有的边界"
+desc = [
+	"哪些东西全队共用、哪些是私人的，**明确下来**（箱子分组、权限分档都行）。",
+	"这一条解决的是「东西不见了」这类矛盾——它不是技术问题，是约定问题。",
+	"⚠️ 自检。",
+]
+icon = "minecraft:chest"
+shape = "rsquare"
+deps = ["role_split"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "newcomer_kit"
+title = "新人进城包"
+desc = [
+	"新成员进城 1 小时内能拿到：住处、一份口粮、一把工具、一句「下一步做什么」。",
+	"这是设计里「新成员能被带入」的验收项。",
+]
+icon = "minecraft:bread"
+shape = "circle"
+size = 1.2
+deps = ["shared_chest"]
+tasks = [
+	{ type = "item", item = "minecraft:bread", count = 16 },
+	{ type = "item", item = "minecraft:stone_pickaxe" },
+]
+
+[[quest]]
+name = "claims_charter"
+title = "把领地规矩写下来"
+desc = [
+	"刻在议事厅：谁能动什么、边界在哪、违反了怎么办。",
+	"⚠️ 内容判不了，自检。",
+]
+icon = "minecraft:oak_sign"
+shape = "circle"
+size = 1.2
+deps = ["shared_chest"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_sign", count = 8 },
+]
+
+# ---------------- 终局 ----------------
+
+[[quest]]
+name = "claims_monument"
+title = "国土成型"
+desc = [
+	"把即时通讯、传送、权限三样凑齐，领地才算「国土」而不是「一块安全区」。",
+]
+icon = "minecraft:bell"
+shape = "hexagon"
+size = 2.5
+deps = ["waystone_network", "bound_scroll", "share_stone", "newcomer_kit", "claims_charter",
+        "alley_check"]
+tasks = [
+	{ type = "item", item = "minecraft:bell" },
+]
+rewards = [
+	{ type = "xp", xp = 100 },
+	{ type = "toast" },
+]

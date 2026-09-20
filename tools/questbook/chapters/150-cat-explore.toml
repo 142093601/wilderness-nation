@@ -1,0 +1,230 @@
+# 类目 · 地图与探索
+#
+# 本章的 mod：Xaero's（世界地图 / 小地图 / 增强）· Explorer's Compass · Nature's Compass ·
+#   Jade（方块信息）· Traveler's Titles（区域标题）· Distractor 类
+#
+# ⚠️ **一个重要实测**：上面这些**全是纯客户端界面 mod，零物品**
+#    （实测：`xaero*` / `jade` / `travelerstitles` 的 lang 里 item/block 键数 = 0，
+#    注册表里它们的命名空间是空的）。所以「装了小地图」这类事**没有物品判据**。
+#
+# 按本项目已定的原则处理（见邦交章与 QUESTBOOK-CRITERIA.md）：
+#   **判不了的就不硬塞成任务** —— 客户端工具用一条说明性自检带过，
+#   这一章的主体放在**真正可判定**的探索实绩上（原版进度 + 统计，都是一手信号）。
+
+key = "cat_explore"
+title = "地图与探索"
+subtitle = "先看见，再决定去哪：把未知变成已知"
+group = "category"
+icon = "minecraft:compass"
+order_index = 35
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 簇 1：客户端工具（说明性，一条带过） ----------------
+
+[[quest]]
+name = "e_client_tools"
+title = "先把「看」的工具备齐"
+desc = [
+	"这个包里有一整套**客户端界面 mod**，它们不占物品栏、也不会出现在 JEI 里：",
+	"· Xaero's 世界地图 / 小地图：自动生效，按快捷键打开",
+	"· Jade：指着方块就显示它是什么",
+	"· Traveler's Titles：进新群系/维度时屏幕上出现区域名",
+	"· Explorer's / Nature's Compass：手里拿着才起作用（这两样是**真物品**）",
+	"⚠️ 界面类工具没有物品判据（实测：这些 mod 的 item 键数为 0），所以这一条自检。",
+]
+icon = "minecraft:compass"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "e_compass_structure"
+title = "结构罗盘"
+desc = [
+	"Explorer's Compass：指到最近的结构。远征找目标不再靠运气。",
+]
+icon = "explorerscompass:explorerscompass"
+shape = "rsquare"
+deps = ["e_client_tools"]
+tasks = [
+	{ type = "item", item = "explorerscompass:explorerscompass" },
+]
+
+[[quest]]
+name = "e_compass_biome"
+title = "生物群系罗盘"
+desc = [
+	"Nature's Compass：找群系。想找某种木材或地形时它最省时间。",
+]
+icon = "naturescompass:naturescompass"
+shape = "circle"
+size = 1.2
+deps = ["e_compass_structure"]
+tasks = [
+	{ type = "item", item = "naturescompass:naturescompass" },
+]
+
+# ---------------- 簇 2：地表探索实绩（原版进度） ----------------
+
+[[quest]]
+name = "e_biomes"
+title = "走遍主要群系"
+desc = [
+	"原版进度「探索时间」要求走遍几乎所有群系——在这一包里它自然就完成了，",
+	"但它是「你确实到处走过」最可靠的证据。",
+]
+icon = "minecraft:map"
+shape = "rsquare"
+deps = ["e_compass_biome"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:adventure/adventuring_time" },
+]
+
+[[quest]]
+name = "e_long_walk"
+title = "走了一百万格"
+desc = [
+	"一万格 ≈ 10 公里。走到这个数，你们的地图才算「有内容」。",
+]
+icon = "minecraft:leather_boots"
+shape = "circle"
+size = 1.2
+deps = ["e_client_tools"]
+tasks = [
+	{ type = "stat", stat = "minecraft:walk_one_cm", value = 1000000 },
+]
+
+[[quest]]
+name = "e_trials"
+title = "试炼厅"
+desc = [
+	"1.21 的新结构：试炼厅与重核。原版进度能判。",
+]
+icon = "minecraft:heavy_core"
+shape = "rsquare"
+deps = ["e_biomes"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:adventure/minecraft_trials_edition" },
+]
+
+[[quest]]
+name = "e_ancient_city"
+title = "深暗之域"
+desc = [
+	"潜行到远古城市——最危险也最值钱的一类探索（沉默与幽匿）。",
+]
+icon = "minecraft:sculk_shrieker"
+shape = "circle"
+size = 1.2
+deps = ["e_biomes"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:adventure/avoid_vibration" },
+]
+
+[[quest]]
+name = "e_monster_room"
+title = "刷怪笼与地牢"
+desc = [
+	"改造一个刷怪笼：把危险变成资源。这是很多自动化线的起点。",
+]
+icon = "minecraft:spawner"
+shape = "circle"
+size = 1.2
+deps = ["e_biomes"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:adventure/lighten_up" },
+]
+
+[[quest]]
+name = "e_jukebox"
+title = "在草原上放一次音乐"
+desc = [
+	"看起来没用，但它是这个包「文明」气质的一部分——原版进度会给它盖章。",
+]
+icon = "minecraft:jukebox"
+shape = "circle"
+size = 1.2
+deps = ["e_biomes"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:adventure/play_jukebox_in_meadows" },
+]
+
+# ---------------- 簇 3：维度探索（下界 / 末地） ----------------
+
+[[quest]]
+name = "e_nether_explore"
+title = "走遍下界"
+desc = [
+	"下界有五种群系，走遍它是「下界不再是采矿区」的标志。",
+]
+icon = "minecraft:netherrack"
+shape = "rsquare"
+deps = ["e_biomes"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:nether/explore_nether" },
+]
+
+[[quest]]
+name = "e_fortress"
+title = "要塞与堡垒"
+desc = [
+	"下界要塞（烈焰棒）与堡垒遗迹（猪灵）——两条独立的下界线。",
+]
+icon = "minecraft:blaze_rod"
+shape = "circle"
+size = 1.2
+deps = ["e_nether_explore"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:nether/find_fortress" },
+	{ type = "advancement", advancement = "minecraft:nether/find_bastion" },
+]
+
+[[quest]]
+name = "e_ancient_debris"
+title = "远古残骸"
+desc = [
+	"下界合金的唯一来源。挖到它意味着你们的装备可以进下一档。",
+]
+icon = "minecraft:ancient_debris"
+shape = "circle"
+size = 1.2
+deps = ["e_fortress"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:nether/obtain_ancient_debris" },
+]
+
+[[quest]]
+name = "e_end_city"
+title = "末地城"
+desc = [
+	"鞘翅与潜影盒都在这里。到这一步，你们的活动范围从「地面」变成「任意地方」。",
+]
+icon = "minecraft:elytra"
+shape = "rsquare"
+deps = ["e_nether_explore"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:end/find_end_city" },
+]
+
+[[quest]]
+name = "e_explored"
+title = "地图连成一片"
+desc = [
+	"主城周边 + 两条远征路线 + 下界通道，都画进同一张地图。",
+	"到这一步，「情报墙」才有东西可挂（见出关章）。",
+]
+icon = "minecraft:filled_map"
+shape = "hexagon"
+size = 2.5
+deps = ["e_long_walk", "e_trials", "e_ancient_city", "e_monster_room", "e_jukebox",
+        "e_ancient_debris", "e_end_city"]
+tasks = [
+	{ type = "item", item = "minecraft:filled_map", count = 9 },
+]
+rewards = [
+	{ type = "xp", xp = 60 },
+	{ type = "toast" },
+]

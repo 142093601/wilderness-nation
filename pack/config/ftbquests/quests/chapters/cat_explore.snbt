@@ -1,0 +1,314 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "cat_explore"
+	group: "1439886072EE757D"
+	icon: {
+		id: "minecraft:compass"
+	}
+	id: "D265B46A0D43ECBF"
+	order_index: 35
+	quest_links: [ ]
+	quests: [
+	{
+		icon: {
+			id: "minecraft:compass"
+		}
+		id: "C946CDB9DF287ECE"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			id: "2AF8BE3021136BE4"
+			type: "checkmark"
+		}
+		]
+		x: 0.0d
+		y: 0.0d
+	}
+	{
+		dependencies: [
+		"C946CDB9DF287ECE"
+		]
+		icon: {
+			id: "explorerscompass:explorerscompass"
+		}
+		id: "9004448B5DC4C470"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "explorerscompass:explorerscompass"
+			id: "403E482F9E2C74FE"
+			type: "item"
+		}
+		]
+		x: -1.27d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"9004448B5DC4C470"
+		]
+		icon: {
+			id: "naturescompass:naturescompass"
+		}
+		id: "5361C6541C525E23"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "naturescompass:naturescompass"
+			id: "76F46725B8AB6991"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"5361C6541C525E23"
+		]
+		icon: {
+			id: "minecraft:map"
+		}
+		id: "00B3D4C1CE27A7E2"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			advancement: "minecraft:adventure/adventuring_time"
+			id: "4BBE5211183BEEE2"
+			type: "advancement"
+		}
+		]
+		x: 0.0d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"C946CDB9DF287ECE"
+		]
+		icon: {
+			id: "minecraft:leather_boots"
+		}
+		id: "337CEEB0C3C2B1F0"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			stat: "minecraft:walk_one_cm"
+			value: 1000000
+			id: "09FF330E17DF8FD7"
+			type: "stat"
+		}
+		]
+		x: 1.5d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"00B3D4C1CE27A7E2"
+		]
+		icon: {
+			id: "minecraft:heavy_core"
+		}
+		id: "C5B031F2B289B39A"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			advancement: "minecraft:adventure/minecraft_trials_edition"
+			id: "81E5D4003334A264"
+			type: "advancement"
+		}
+		]
+		x: -5.32d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"00B3D4C1CE27A7E2"
+		]
+		icon: {
+			id: "minecraft:sculk_shrieker"
+		}
+		id: "B93891C782DB72E9"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "minecraft:adventure/avoid_vibration"
+			id: "64E57138FFF54F17"
+			type: "advancement"
+		}
+		]
+		x: -2.55d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"00B3D4C1CE27A7E2"
+		]
+		icon: {
+			id: "minecraft:spawner"
+		}
+		id: "CF3AEFF02D9CA5D5"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "minecraft:adventure/lighten_up"
+			id: "A59530DAEB901122"
+			type: "advancement"
+		}
+		]
+		x: 0.0d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"00B3D4C1CE27A7E2"
+		]
+		icon: {
+			id: "minecraft:jukebox"
+		}
+		id: "44CF0609ECFC72DE"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "minecraft:adventure/play_jukebox_in_meadows"
+			id: "FB8230CDDA2BB557"
+			type: "advancement"
+		}
+		]
+		x: 2.55d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"00B3D4C1CE27A7E2"
+		]
+		icon: {
+			id: "minecraft:netherrack"
+		}
+		id: "7B74DD1DBB45EAB2"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			advancement: "minecraft:nether/explore_nether"
+			id: "428FB8C170756A53"
+			type: "advancement"
+		}
+		]
+		x: 5.33d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"7B74DD1DBB45EAB2"
+		]
+		icon: {
+			id: "minecraft:blaze_rod"
+		}
+		id: "38A9B962976509A1"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "minecraft:nether/find_fortress"
+			id: "EA4B2AD2A911CCB7"
+			type: "advancement"
+		}
+		{
+			advancement: "minecraft:nether/find_bastion"
+			id: "CBC96B7DA12F849C"
+			type: "advancement"
+		}
+		]
+		x: -1.5d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"38A9B962976509A1"
+		]
+		icon: {
+			id: "minecraft:ancient_debris"
+		}
+		id: "BBD3E994F92EE44C"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "minecraft:nether/obtain_ancient_debris"
+			id: "6D43F947BF6815D0"
+			type: "advancement"
+		}
+		]
+		x: 0.0d
+		y: -10.5d
+	}
+	{
+		dependencies: [
+		"7B74DD1DBB45EAB2"
+		]
+		icon: {
+			id: "minecraft:elytra"
+		}
+		id: "4ECFA357D8694C57"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			advancement: "minecraft:end/find_end_city"
+			id: "57D2D178B469D2D2"
+			type: "advancement"
+		}
+		]
+		x: 1.27d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"337CEEB0C3C2B1F0"
+		"C5B031F2B289B39A"
+		"B93891C782DB72E9"
+		"CF3AEFF02D9CA5D5"
+		"44CF0609ECFC72DE"
+		"BBD3E994F92EE44C"
+		"4ECFA357D8694C57"
+		]
+		icon: {
+			id: "minecraft:filled_map"
+		}
+		id: "7C2154777BD98881"
+		rewards: [
+		{
+			xp: 60
+			id: "B74E8D41098C7BE2"
+			type: "xp"
+		}
+		{
+			id: "CD0F228FA5D0FFD1"
+			type: "toast"
+		}
+		]
+		shape: "hexagon"
+		size: 2.5d
+		tasks: [
+		{
+			item: "minecraft:filled_map"
+			count: 9
+			id: "5F7C623836E8F5DB"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -12.25d
+	}
+	]
+}

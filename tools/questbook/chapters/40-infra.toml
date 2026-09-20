@@ -1,0 +1,303 @@
+# 基建（时代 2 · infra）
+#
+# 时代定义：`eras.json` → id=infra, name=基建, durationHours=50, coefficient=1.30
+# unlocks: intel_station / declaration（情报站在这个时代解锁——与邦交章对应）
+# 主菜：**自动化产线**（DESIGN.md §17.3）
+#
+# 判据来源：Create 自己的进度 + Create/原版物品 + 原版统计。
+# Create 是唯一一个"每个机器都有进度"的大 mod（实测 1150 条），所以这一章几乎全自动可判。
+
+key = "infra"
+title = "基建"
+subtitle = "路通四邻，第一件事不用人管"
+group = "chronicle"
+icon = "create:cogwheel"
+order_index = 3
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 国策主线 ----------------
+
+[[quest]]
+name = "roads_500"
+title = "路通四邻"
+desc = [
+	"主路从城里铺出去 500 格以上，连到最近的水源、林地或别人家。",
+]
+icon = "minecraft:dirt_path"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "minecraft:dirt_path", count = 64 },
+]
+
+[[quest]]
+name = "first_automation"
+title = "第一件事不用人管"
+desc = [
+	"选一件事（原木、圆石、食物、熔炼任选），做成「原料进、成品出、中间没有人」。",
+	"Create 会给你一个进度——它就是这条的判据。",
+]
+icon = "create:mechanical_mixer"
+shape = "rsquare"
+deps = ["roads_500"]
+tasks = [
+	{ type = "advancement", advancement = "create:compacting" },
+]
+
+[[quest]]
+name = "three_automated"
+title = "三件事不用人管"
+desc = [
+	"一条线不算自动化，三条才算「基建成型」。",
+	"到这一步，你们的时间才真正开始用在建造上，而不是搬东西。",
+]
+icon = "create:mechanical_crafter"
+shape = "rsquare"
+deps = ["first_automation"]
+tasks = [
+	{ type = "advancement", advancement = "create:mechanical_crafter" },
+]
+
+[[quest]]
+name = "stress_network"
+title = "通电"
+desc = [
+	"应力网络跑起来：动力从源头送到每台机器，别让某一段卡住整条线。",
+]
+icon = "create:steam_engine"
+shape = "rsquare"
+deps = ["first_automation"]
+tasks = [
+	{ type = "advancement", advancement = "create:steam_engine" },
+]
+
+[[quest]]
+name = "long_hall"
+title = "工坊分区"
+desc = [
+	"锻造、木工、缝纫各占一格，各有各的工作台——不要再一间屋子干所有事。",
+]
+icon = "minecraft:smithing_table"
+shape = "rsquare"
+deps = ["three_automated"]
+tasks = [
+	{ type = "item", item = "minecraft:smithing_table" },
+	{ type = "item", item = "minecraft:loom" },
+	{ type = "item", item = "minecraft:cartography_table" },
+]
+
+[[quest]]
+name = "canteen"
+title = "食堂开张"
+desc = [
+	"能一次喂饱全队：≥4 种食物同时摆出来。",
+	"这一条解决的是「各自吃各自的」——聚在一起吃饭是分工的开始。",
+]
+icon = "minecraft:smoker"
+shape = "rsquare"
+deps = ["three_automated"]
+tasks = [
+	{ type = "item", item = "minecraft:smoker", count = 4 },
+]
+
+[[quest]]
+name = "map_wall"
+title = "地图墙覆盖核心区"
+desc = [
+	"≥4 张地图拼起来，把国土与周边连成一张图。",
+	"⚠️ 「覆盖完整」是主观的（有没有空洞得自己看），所以这一条自检。",
+]
+icon = "minecraft:filled_map"
+shape = "rsquare"
+deps = ["roads_500"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# ---------------- 支线：自动化深入 ----------------
+
+[[quest]]
+name = "mine_machine"
+title = "采矿机"
+desc = [
+	"让它自己往下挖并把矿运回来——这是「不必人到场」的第一条矿线。",
+	"注：Create 的进度里没有「机械钻」这一条（实测），所以判据落在**粉碎轮**上",
+	"（钻头与粉碎轮是同一条产线的前后两段）。",
+]
+icon = "create:mechanical_drill"
+shape = "circle"
+size = 1.2
+deps = ["stress_network"]
+tasks = [
+	{ type = "advancement", advancement = "create:crushing_wheel" },
+	{ type = "item", item = "create:mechanical_drill" },
+]
+
+[[quest]]
+name = "smelter_array"
+title = "熔炉阵列"
+desc = [
+	"≥8 台并联，一次投料连续工作。",
+]
+icon = "minecraft:blast_furnace"
+shape = "circle"
+size = 1.2
+deps = ["stress_network"]
+tasks = [
+	{ type = "item", item = "minecraft:blast_furnace", count = 8 },
+]
+
+[[quest]]
+name = "farm_automation"
+title = "农场自动化"
+desc = [
+	"收割与补种自动，或者畜栏自动收集——总之不用人天天去收。",
+]
+icon = "minecraft:hopper"
+shape = "circle"
+size = 1.2
+deps = ["three_automated"]
+tasks = [
+	{ type = "item", item = "minecraft:hopper", count = 16 },
+]
+
+[[quest]]
+name = "vertical_transport"
+title = "物品电梯"
+desc = [
+	"把矿底的东西送到地面，别再用背包一层层搬。",
+]
+icon = "create:chute"
+shape = "circle"
+size = 1.2
+deps = ["mine_machine"]
+tasks = [
+	{ type = "item", item = "create:chute", count = 8 },
+]
+
+[[quest]]
+name = "rail_or_teleport"
+title = "列车或传送"
+desc = [
+	"两地之间点对点运输，≥300 格。设计里「交通等级扩大远征半径」从这一步开始。",
+]
+icon = "create:track"
+shape = "rsquare"
+deps = ["roads_500"]
+tasks = [
+	{ type = "item", item = "create:track", count = 128 },
+	{ type = "item", item = "create:track_station" },
+]
+
+[[quest]]
+name = "bulk_sorting"
+title = "批量分拣"
+desc = [
+	"≥4 种物品各进各的仓。用漏斗或机械臂都行，关键是**不用手摆**。",
+]
+icon = "create:brass_funnel"
+shape = "circle"
+size = 1.2
+deps = ["three_automated"]
+tasks = [
+	{ type = "item", item = "create:brass_funnel", count = 4 },
+]
+
+[[quest]]
+name = "no_clog"
+title = "产线不卡壳"
+desc = [
+	"某一条线满了或断了，不该把别的线一起拖死。",
+]
+icon = "create:stockpile_switch"
+shape = "circle"
+size = 1.2
+deps = ["bulk_sorting"]
+tasks = [
+	{ type = "item", item = "create:stockpile_switch" },
+]
+
+# ---------------- 支线：探索 ----------------
+
+[[quest]]
+name = "deep_mine"
+title = "下矿到底"
+desc = [
+	"到达深板岩层，带回至少 3 种矿物。",
+]
+icon = "minecraft:diamond"
+shape = "circle"
+size = 1.2
+deps = ["vertical_transport"]
+tasks = [
+	{ type = "item", item = "minecraft:diamond", count = 3 },
+]
+
+[[quest]]
+name = "second_site"
+title = "第二处兴趣点"
+desc = [
+	"1000 格外找一处值得再去的地方（结构、矿脉、异景），并让路能通到它。",
+]
+icon = "minecraft:compass"
+shape = "circle"
+size = 1.2
+deps = ["rail_or_teleport"]
+tasks = [
+	{ type = "item", item = "minecraft:compass" },
+]
+
+# ---------------- 防守起步 ----------------
+
+[[quest]]
+name = "perimeter"
+title = "第一道围墙"
+desc = [
+	"合围主城，门是可控的（能关得上）。",
+]
+icon = "minecraft:stone_brick_wall"
+shape = "circle"
+size = 1.2
+deps = ["three_automated"]
+tasks = [
+	{ type = "item", item = "minecraft:stone_brick_wall", count = 64 },
+]
+
+# ---------------- 邦交线开始 ----------------
+
+[[quest]]
+name = "intel_station"
+title = "情报站"
+desc = [
+	"这个时代解锁了情报站（`eras.json` 的 unlocks 里有 `intel_station`）。",
+	"详细走法见「邦交」章——这里只提示它在这一时代解锁。",
+]
+icon = "minecraft:lectern"
+shape = "rsquare"
+deps = ["three_automated"]
+tasks = [
+	{ type = "item", item = "minecraft:lectern" },
+]
+
+# ---------------- 终局 ----------------
+
+[[quest]]
+name = "infra_monument"
+title = "基建碑"
+desc = [
+	"刻上这个时代最大的那项工程。",
+	"下一时代要往外走了：把路、车、补给点先准备好。",
+]
+icon = "minecraft:stone_bricks"
+shape = "hexagon"
+size = 2.5
+deps = ["long_hall", "canteen", "map_wall", "farm_automation", "second_site", "perimeter",
+        "intel_station", "no_clog", "smelter_array", "deep_mine"]
+tasks = [
+	{ type = "item", item = "minecraft:stone_bricks", count = 32 },
+]
+rewards = [
+	{ type = "xp", xp = 120 },
+	{ type = "toast" },
+]

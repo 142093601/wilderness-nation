@@ -1,0 +1,265 @@
+# 类目 · 食物与农业
+#
+# 本章的 mod（同类中最多的一簇）：Farmer's Delight · Farm & Charm · Vinery ·
+#   Storage Delight · Nether's Delight · Enders Delight · Expanded Delight ·
+#   Ocean's/Miner's Delight · Chef's Delight · Brewin' And Chewin' · Cooking for Blockheads ·
+#   Farming for Blockheads · Rightclick Harvest · Smarter Farmers
+#
+# 判据来源：**这一簇有真进度**（实测 farmersdelight 21 条、farm_and_charm 21 条、vinery 20 条），
+# 所以这一章是类目里"能自动判最多"的一章——优先用进度，物品判据用于"备齐工具"。
+
+key = "cat_food"
+title = "食物与农业"
+subtitle = "从「够吃」到「好吃」：这一章是全队幸福感的来源"
+group = "category"
+icon = "farmersdelight:cooking_pot"
+order_index = 32
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 簇 1：厨具入门（Farmer's Delight） ----------------
+
+[[quest]]
+name = "food_knife"
+title = "一把厨刀"
+desc = [
+	"农夫乐事的第一步。有了刀，割草得稻草、切菜下锅——整条食物线的起点。",
+]
+icon = "farmersdelight:iron_knife"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "advancement", advancement = "farmersdelight:main/craft_knife" },
+]
+
+[[quest]]
+name = "food_cutting_board"
+title = "砧板"
+desc = [
+	"切菜、剁肉都在这里。",
+]
+icon = "farmersdelight:cutting_board"
+shape = "rsquare"
+deps = ["food_knife"]
+tasks = [
+	{ type = "advancement", advancement = "farmersdelight:main/use_cutting_board" },
+]
+
+[[quest]]
+name = "food_cooking_pot"
+title = "下锅"
+desc = [
+	"烹饪锅：能一次做出一锅给全队吃的菜。食堂的核心设备。",
+]
+icon = "farmersdelight:cooking_pot"
+shape = "rsquare"
+deps = ["food_cutting_board"]
+tasks = [
+	{ type = "advancement", advancement = "farmersdelight:main/place_cooking_pot" },
+]
+
+[[quest]]
+name = "food_stove"
+title = "灶台与平底锅"
+desc = [
+	"从「炖」升级到「煎」——同一份食材能做出不同的菜。",
+]
+icon = "farmersdelight:stove"
+shape = "circle"
+size = 1.2
+deps = ["food_cooking_pot"]
+tasks = [
+	{ type = "advancement", advancement = "farmersdelight:main/use_skillet" },
+]
+
+[[quest]]
+name = "food_rich_soil"
+title = "沃土"
+desc = [
+	"有机肥 + 沃土：不换地也能持续产出，这是农场长期化的关键。",
+]
+icon = "farmersdelight:rich_soil"
+shape = "circle"
+size = 1.2
+deps = ["food_knife"]
+tasks = [
+	{ type = "advancement", advancement = "farmersdelight:main/get_rich_soil" },
+]
+
+[[quest]]
+name = "food_nourishing"
+title = "吃顿像样的"
+desc = [
+	"营养餐：这个包的食物系统有「营养」概念，吃饱与吃好是两件事。",
+]
+icon = "farmersdelight:bacon_and_eggs"
+shape = "circle"
+size = 1.2
+deps = ["food_stove"]
+tasks = [
+	{ type = "advancement", advancement = "farmersdelight:main/eat_nourishing_food" },
+]
+
+[[quest]]
+name = "food_all_crops"
+title = "把作物种全"
+desc = [
+	"农夫乐事的作物全种一遍。这条是「农场」与「菜园」的分界线。",
+]
+icon = "farmersdelight:tomato"
+shape = "circle"
+size = 1.2
+deps = ["food_rich_soil"]
+tasks = [
+	{ type = "advancement", advancement = "farmersdelight:main/plant_all_crops" },
+]
+
+# ---------------- 簇 2：农场与畜牧（Farm & Charm） ----------------
+
+[[quest]]
+name = "food_coop"
+title = "鸡舍"
+desc = [
+	"Farm & Charm 的畜舍系列：畜牧从「围一圈」升级到「有设施」。",
+]
+icon = "farm_and_charm:chicken_coop"
+shape = "rsquare"
+deps = ["food_knife"]
+tasks = [
+	{ type = "item", item = "farm_and_charm:chicken_coop" },
+]
+
+[[quest]]
+name = "food_butter"
+title = "奶与黄油"
+desc = [
+	"奶制品线：黄油是很多菜的前置。",
+]
+icon = "farm_and_charm:butter"
+shape = "circle"
+size = 1.2
+deps = ["food_coop"]
+tasks = [
+	{ type = "item", item = "farm_and_charm:butter" },
+]
+
+# ---------------- 簇 3：酿造（Vinery） ----------------
+
+[[quest]]
+name = "food_ferment"
+title = "发酵桶"
+desc = [
+	"Vinery 的酿酒线：果汁 → 发酵 → 酒。这是这个包里少见的「慢工艺」。",
+]
+icon = "vinery:fermentation_barrel"
+shape = "rsquare"
+deps = ["food_cooking_pot"]
+tasks = [
+	{ type = "item", item = "vinery:fermentation_barrel" },
+]
+
+[[quest]]
+name = "food_wine_rack"
+title = "酒架"
+desc = [
+	"酒要存起来陈。",
+]
+icon = "vinery:acacia_wine_rack_mid"
+shape = "circle"
+size = 1.2
+deps = ["food_ferment"]
+tasks = [
+	{ type = "item", item = "vinery:acacia_wine_rack_mid" },
+]
+
+[[quest]]
+name = "food_grape"
+title = "种下第一株葡萄"
+desc = [
+	"Vinery 有自己的进度（实测 20 条），种葡萄那条就在里面。",
+]
+icon = "vinery:grapevine_stem"
+shape = "circle"
+size = 1.2
+deps = ["food_ferment"]
+tasks = [
+	{ type = "advancement", advancement = "vinery:main/budding_grapes" },
+]
+
+[[quest]]
+name = "food_juice"
+title = "榨汁"
+desc = [
+	"果汁是酒的中间产物，也是一类能喝的补给。",
+]
+icon = "vinery:apple_juice"
+shape = "circle"
+size = 1.2
+deps = ["food_grape"]
+tasks = [
+	{ type = "advancement", advancement = "vinery:main/juice_it_up" },
+]
+
+# ---------------- 簇 4：储藏与厨房设施 ----------------
+
+[[quest]]
+name = "food_pantry"
+title = "食物专用储藏"
+desc = [
+	"Storage Delight 的橱柜/抽屉：食物要按类放，不然会烂在背包里。",
+]
+icon = "storagedelight:acacia_drawer"
+shape = "rsquare"
+deps = ["food_cooking_pot"]
+tasks = [
+	{ type = "item", item = "storagedelight:acacia_drawer", count = 4 },
+]
+
+[[quest]]
+name = "food_kitchen_block"
+title = "厨房一体化"
+desc = [
+	"Cooking for Blockheads：把厨房设备连成一张操作面，不用来回跑。",
+]
+icon = "cookingforblockheads:cooking_table"
+shape = "circle"
+size = 1.2
+deps = ["food_pantry"]
+tasks = [
+	{ type = "item", item = "cookingforblockheads:cooking_table" },
+]
+
+[[quest]]
+name = "food_market"
+title = "市场与种子"
+desc = [
+	"Farming for Blockheads 的市场：买种子、买树苗，省掉满地图找野生的时间。",
+]
+icon = "farmingforblockheads:market"
+shape = "circle"
+size = 1.2
+deps = ["food_coop"]
+tasks = [
+	{ type = "item", item = "farmingforblockheads:market" },
+]
+
+[[quest]]
+name = "food_feast"
+title = "办一桌席"
+desc = [
+	"把这一章的东西凑成一桌：主菜、配菜、饮品、甜点各有一样。",
+	"这一条之后，「食堂」才算真的开张（基建章的食堂到了这里才有内容）。",
+]
+icon = "farmersdelight:roast_chicken_block"
+shape = "hexagon"
+size = 2.5
+deps = ["food_nourishing", "food_all_crops", "food_butter", "food_wine_rack", "food_juice",
+        "food_kitchen_block", "food_market"]
+tasks = [
+	{ type = "item", item = "farmersdelight:roast_chicken_block" },
+	{ type = "item", item = "minecraft:cake" },
+]
+rewards = [
+	{ type = "xp", xp = 80 },
+	{ type = "toast" },
+]

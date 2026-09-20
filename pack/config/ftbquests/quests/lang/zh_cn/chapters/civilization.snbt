@@ -1,0 +1,80 @@
+{
+	quest.CC34719F730D83A6.title: "选定并开工一项公共工程"
+	quest.CC34719F730D83A6.description: [
+	"全队投一次票，选一项**会改变世界**的大工程（桥、塔、大教堂、要塞任选）。"
+	"判据不是「投票了」，而是**材料真的开始堆**——这里用海晶灯当作「开工」的信号物。"
+	"⚠️ 选了什么项目本身判不了，正文与碑文来记。"
+	]
+	quest.8BCE56818361B7E8.title: "国史成书"
+	quest.8BCE56818361B7E8.description: [
+	"人写的，不是生成的。至少 20 页：大事、坐标、人名。"
+	"游戏里能检测「做出了一本成书」，但**写了什么**判不了——所以判据落在「书」上。"
+	]
+	quest.E782135734824293.title: "碑林完整"
+	quest.E782135734824293.description: [
+	"六个时代的碑各一块，排成一列。走一遍就是这一局的编年史。"
+	"⚠️ 碑上刻了什么判不了，自检。"
+	]
+	quest.3617647C04F8EAF7.title: "毕业工程完工"
+	quest.3617647C04F8EAF7.description: [
+	"那块最大的。做完它，这个世界会**因此改变**（新资源圈、物流成本下降、预警覆盖扩大）"
+	"——不能只是装饰。"
+	]
+	quest.28AEE927828BA89A.title: "主城扩到 4 个功能区"
+	quest.28AEE927828BA89A.description: [
+	"住、工、农、军各成片，不再混在一起。"
+	]
+	quest.2ED66784FD5A6AA6.title: "大道"
+	quest.2ED66784FD5A6AA6.description: [
+	"主城到 ≥2 个方向的主干道，各 ≥500 格。"
+	]
+	quest.1B8B02503BB9168F.title: "大会堂"
+	quest.1B8B02503BB9168F.description: [
+	"一座要仰头看的建筑，而且里面真的能用（能开会、能住人）。"
+	]
+	quest.1262FBFF811B3B69.title: "全城照明"
+	quest.1262FBFF811B3B69.description: [
+	"夜里主城没有黑角——这是「文明」最直观的样子。"
+	]
+	quest.D65E7FDAEC6A1500.title: "图书馆"
+	quest.D65E7FDAEC6A1500.description: [
+	"≥4 面书架墙 + 阅读位。国史与档案都在这里。"
+	]
+	quest.1DEF5DA62301AE09.title: "展览馆"
+	quest.1DEF5DA62301AE09.description: [
+	"六个时代的代表性物品各陈列一件。"
+	]
+	quest.47D9535CC8837636.title: "第二座地标城市"
+	quest.47D9535CC8837636.description: [
+	"1500 格外一处成规模的聚落——不是前哨，是能住人的地方。"
+	]
+	quest.266934599A84CCDC.title: "空中连廊"
+	quest.266934599A84CCDC.description: [
+	"两栋建筑之间架桥，人走得过去。"
+	]
+	quest.5C898AAF934F4509.title: "公共花园"
+	quest.5C898AAF934F4509.description: [
+	"有花、有树、有水、有座椅，**不生产任何东西**——这一条是给「文明」留的位置。"
+	]
+	quest.86717E96FEB10CC3.title: "路牌系统"
+	quest.86717E96FEB10CC3.description: [
+	"每个路口有路牌，指向 ≥2 处地标。"
+	]
+	quest.D4A9A544FA9FAA57.title: "全自动仓储"
+	quest.D4A9A544FA9FAA57.description: [
+	"进出货不手动：入库分拣 + 出库补给。公共仓库到这一步才算成熟。"
+	]
+	quest.7871177D3A9DECDF.title: "集中控制"
+	quest.7871177D3A9DECDF.description: [
+	"一处能看到 ≥3 条产线状态的控制室。"
+	]
+	quest.C11EC123B628E748.title: "一次维度级冒险"
+	quest.C11EC123B628E748.description: [
+	"末地是这个包最远的「出关」。走到那一步，说明这一局的远征线真的走完了。"
+	]
+	quest.C6D121FB06D14DF1.title: "大成碑"
+	quest.C6D121FB06D14DF1.description: [
+	"最后一个时代的碑。刻完它，你们就有了一个「玩完了但还想再待一会儿」的世界。"
+	"之后进入无尽纪元：每 5 年一个新纪元，不设数值膨胀，只加横向目标。"
+	]
+}

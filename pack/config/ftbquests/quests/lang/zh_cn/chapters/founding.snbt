@@ -1,0 +1,69 @@
+{
+	quest.E81134A89EA7314A.title: "圈下国土"
+	quest.E81134A89EA7314A.description: [
+	"用认领工具把营地扩成国土——至少 9 个区块（3×3），别只圈一间房。"
+	"OPAC 这类模组**没有物品接口**（实测：lang 里 item 键为 0），所以圈没圈成只能自己确认。"
+	"验证方式：让一个不在队里的人试着挖一块——挖不动才算数。"
+	]
+	quest.475F1C6F43EF5CD3.title: "所有人进同一个队"
+	quest.475F1C6F43EF5CD3.description: [
+	"两条路（FTB Teams 或 OPAC party），**只选一条**，别两套并行。"
+	"同一类问题：队伍也没有物品判据。判据是你自己确认「所有人都能在领地里动东西」。"
+	]
+	quest.DB7BA37A2FFB5A0F.title: "公共仓库开张"
+	quest.DB7BA37A2FFB5A0F.description: [
+	"不再靠背包搬运：把物资集中到一处，谁都能取。"
+	"Create 的物品保险库是这一层的正解（一个保险库顶几十个箱子）。"
+	]
+	quest.7DC50BAF62C2C391.title: "仓库要装得下全队"
+	quest.7DC50BAF62C2C391.description: [
+	"一个保险库只是起步。攒到 16 个，才算「公共仓库」而不是「大一点的箱子」。"
+	]
+	quest.3CBEB252F888F42C.title: "定下约定"
+	quest.3CBEB252F888F42C.description: [
+	"把规矩写下来放进议事厅（告示牌或成书）——至少一条要说清「违反了会怎样」。"
+	"⚠️ 书的**内容**游戏判不了（放书架能检测，但「约定了」不能）。所以这一条自检。"
+	"别写成墙上装饰：写一条真的会被执行的。"
+	]
+	quest.E0F5966B20480B11.title: "第一座地标：议事厅"
+	quest.E0F5966B20480B11.description: [
+	"由多人共同建成的一处公共建筑——它是这个国家第一个「不属于任何个人」的地方。"
+	]
+	quest.8238A7F85CAEF8B1.title: "议事厅坐得下所有人"
+	quest.8238A7F85CAEF8B1.description: [
+	"能坐下说话才算议事厅：至少 8 个座位。"
+	]
+	quest.51A59E062FC474DC.title: "粮仓起步"
+	quest.51A59E062FC474DC.description: [
+	"一箱小麦 + 一箱胡萝卜或马铃薯。饿肚子守不住国。"
+	]
+	quest.FB501FB48EDC8C67.title: "圈一块农田"
+	quest.FB501FB48EDC8C67.description: [
+	"≥16 格耕地，全部有水源。种下去（游戏会记「你种过种子」）。"
+	]
+	quest.91A33DCE8F4D55D4.title: "牧场起步"
+	quest.91A33DCE8F4D55D4.description: [
+	"≥4 只同种动物圈在栏里。繁殖过一次就算成型。"
+	]
+	quest.0A88AE552BD9041D.title: "上路"
+	quest.0A88AE552BD9041D.description: [
+	"一条能走的路，连到最近的水源或林地。"
+	]
+	quest.69D31E3C68A93F41.title: "夜里不黑"
+	quest.69D31E3C68A93F41.description: [
+	"主路两侧点起来。黑的地方就是它们来的地方。"
+	]
+	quest.3284B6D76DEF7328.title: "石料自给"
+	quest.3284B6D76DEF7328.description: [
+	"一台持续产圆石的机器，替代手挖。这是第一条「不用人管」的线。"
+	]
+	quest.E9C0C90E535D93B8.title: "批量烧炼"
+	quest.E9C0C90E535D93B8.description: [
+	"一次投料连续工作，不用守着加燃料。"
+	]
+	quest.23EB81CB0E119992.title: "立国碑"
+	quest.23EB81CB0E119992.description: [
+	"刻上国号，立在议事厅前。"
+	"这一条是「基建」时代的彩排：碑立好了，接下来该往外修了。"
+	]
+}

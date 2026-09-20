@@ -1,0 +1,240 @@
+# 类目 · 战斗与军械
+#
+# 本章的 mod：Hundred Years Warfare（军事单位）· Medieval Siege Machines（攻城器械）·
+#   It Takes a Pillage（掠夺者）· Epic Knights（武器）· Simply Swords（已在装备章铺过）·
+#   Better Combat（战斗手感）· 武器与护甲装饰类
+#
+# 与其它章的分工：
+#   · 工具与装备 = 个人装备
+#   · 御敌（编年） = 国策与达标线
+#   · 本章        = **军械与攻城**这一层：能造什么、怎么用
+#
+# 判据来源：实物。军事单位（HYW）不发进度（实测 advancements=0），所以
+# "带兵打仗"那一层只能靠**装备与器械的实物**来判定。
+
+key = "cat_warfare"
+title = "战斗与军械"
+subtitle = "从一把好剑，到一台能砸开城门的机器"
+group = "category"
+icon = "magistuarmory:steel_chestplate"
+order_index = 36
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 簇 1：个人战斗（手感与装备） ----------------
+
+[[quest]]
+name = "w_better_combat"
+title = "战斗手感"
+desc = [
+	"Better Combat：这个包的挥砍有动作与范围——同一把武器，手感完全不同。",
+	"它改变的是「怎么打」，所以判据落在最基础的战备上：一把武器 + 一套甲。",
+]
+icon = "minecraft:iron_sword"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "minecraft:iron_sword" },
+	{ type = "item", item = "minecraft:iron_chestplate" },
+]
+
+[[quest]]
+name = "w_steel"
+title = "钢制军械"
+desc = [
+	"Magistuarmory 的钢制武器系列（钢铸锭 → 各种钢武器）：比铁更耐打，",
+	"是组建常备军的前提。",
+]
+icon = "magistuarmory:steel_heavymace"
+shape = "rsquare"
+deps = ["w_better_combat"]
+tasks = [
+	{ type = "item", item = "magistuarmory:steel_heavymace" },
+	{ type = "item", item = "magistuarmory:knight_chestplate" },
+]
+
+[[quest]]
+name = "w_poleaxe"
+title = "长杆与破甲"
+desc = [
+	"戟、长枪、重锤：对付重甲单位（敌方指挥官就是这一类）必须靠它们。",
+]
+icon = "magistuarmory:steel_heavywarhammer"
+shape = "circle"
+size = 1.2
+deps = ["w_steel"]
+tasks = [
+	{ type = "item", item = "magistuarmory:steel_heavywarhammer" },
+]
+
+[[quest]]
+name = "w_crossbow"
+title = "弩与齐射"
+desc = [
+	"弩是守城与阵战的主力：整队齐射能压住一波。",
+]
+icon = "minecraft:crossbow"
+shape = "circle"
+size = 1.2
+deps = ["w_better_combat"]
+tasks = [
+	{ type = "item", item = "minecraft:crossbow", count = 4 },
+	{ type = "item", item = "minecraft:arrow", count = 128 },
+]
+
+# ---------------- 簇 2：攻城器械（Medieval Siege Machines） ----------------
+
+[[quest]]
+name = "w_trebuchet"
+title = "投石机"
+desc = [
+	"Medieval Siege Machines：这个包里唯一能把「墙」这个概念打破的东西。",
+	"它能拆对面的工事——也能让你们第一次意识到自己的墙不够厚。",
+]
+icon = "siegemachines:trebuchet"
+shape = "rsquare"
+deps = ["w_steel"]
+tasks = [
+	{ type = "item", item = "siegemachines:trebuchet" },
+]
+
+[[quest]]
+name = "w_battering_ram"
+title = "撞门器"
+desc = [
+	"攻城第一步不是爬墙，是开门。",
+]
+icon = "siegemachines:battering_ram"
+shape = "circle"
+size = 1.2
+deps = ["w_trebuchet"]
+tasks = [
+	{ type = "item", item = "siegemachines:battering_ram" },
+]
+
+[[quest]]
+name = "w_siege_workbench"
+title = "攻城工坊"
+desc = [
+	"器械不是凭空来的：先有攻城工作台，才有后面那一排机器。",
+]
+icon = "siegemachines:siege_workbench"
+shape = "circle"
+size = 1.2
+deps = ["w_steel"]
+tasks = [
+	{ type = "item", item = "siegemachines:siege_workbench" },
+]
+
+[[quest]]
+name = "w_siege_camp"
+title = "攻城营地"
+desc = [
+	"器械要有人护、要有料修：营地 = 围栏 + 补给 + 器械停放位。",
+]
+icon = "minecraft:white_banner"
+shape = "circle"
+size = 1.2
+deps = ["w_trebuchet"]
+tasks = [
+	{ type = "item", item = "minecraft:white_banner", count = 2 },
+	{ type = "item", item = "minecraft:barrel", count = 4 },
+]
+
+# ---------------- 簇 3：军事单位（HYW） ----------------
+
+[[quest]]
+name = "w_recruit"
+title = "第一支队伍"
+desc = [
+	"Hundred Years Warfare 提供中世纪军事单位（步兵/弓手/骑兵/攻城）。",
+	"⚠️ 它**不发进度也不记统计**（实测 advancements=0），所以「招到人」判不了。",
+	"验收靠实物：招募与装备军队需要的东西（甲、武器、粮）。",
+]
+icon = "minecraft:iron_helmet"
+shape = "rsquare"
+deps = ["w_steel"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_helmet", count = 8 },
+	{ type = "item", item = "minecraft:bread", count = 64 },
+]
+
+[[quest]]
+name = "w_supply_line"
+title = "军队要吃饭"
+desc = [
+	"设计里明确写过：军队**必须由国力供养**，不然会变成「暴兵推平一切」，",
+	"威胁时代与军工产线都会失去意义。所以这一条是「后勤线」而不是「兵力」。",
+]
+icon = "minecraft:hay_block"
+shape = "circle"
+size = 1.2
+deps = ["w_recruit"]
+tasks = [
+	{ type = "item", item = "minecraft:hay_block", count = 32 },
+]
+
+[[quest]]
+name = "w_armory_expand"
+title = "军械库扩容"
+desc = [
+	"武器、护甲、箭各有专箱，且有下限告警——打仗时没空翻箱。",
+]
+icon = "minecraft:iron_block"
+shape = "circle"
+size = 1.2
+deps = ["w_recruit"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_block", count = 16 },
+]
+
+# ---------------- 簇 4：掠夺者那一线 ----------------
+
+[[quest]]
+name = "w_pillager_camp"
+title = "找到掠夺者营地"
+desc = [
+	"It Takes a Pillage：掠夺者营地与堡垒是**主动出击**的目标。",
+	"只守不攻，压力只会一直涨。",
+]
+icon = "minecraft:crossbow"
+shape = "rsquare"
+deps = ["w_crossbow"]
+tasks = [
+	{ type = "advancement", advancement = "takesapillage:adventure/pillager_camp" },
+]
+
+[[quest]]
+name = "w_bastille"
+title = "拆掉堡垒"
+desc = [
+	"打掉发起方，压力才会真正下降一次。",
+]
+icon = "minecraft:iron_axe"
+shape = "circle"
+size = 1.2
+deps = ["w_pillager_camp"]
+tasks = [
+	{ type = "advancement", advancement = "takesapillage:adventure/bastille" },
+]
+
+# ---------------- 终局 ----------------
+
+[[quest]]
+name = "w_army_ready"
+title = "成建制的军队"
+desc = [
+	"装备、后勤、攻城器械、以及打出去的能力——四样齐了。",
+	"到这一步，「夺城」（邦交章最后一条）才真的可执行。",
+]
+icon = "minecraft:netherite_sword"
+shape = "hexagon"
+size = 2.5
+deps = ["w_poleaxe", "w_siege_camp", "w_supply_line", "w_armory_expand", "w_bastille"]
+tasks = [
+	{ type = "item", item = "minecraft:netherite_sword" },
+]
+rewards = [
+	{ type = "xp", xp = 100 },
+	{ type = "toast" },
+]

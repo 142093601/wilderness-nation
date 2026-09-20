@@ -1,0 +1,248 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "blueprints"
+	group: "21077E48D079A7CE"
+	icon: {
+		id: "portable_blueprints:blueprint"
+	}
+	id: "AB866F7190B1B785"
+	order_index: 22
+	quest_links: [ ]
+	quests: [
+	{
+		icon: {
+			id: "portable_blueprints:blueprint"
+		}
+		id: "4DE6EB265FC317D8"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "portable_blueprints:blueprint"
+			id: "67AAF6242DE87DD3"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: 0.0d
+	}
+	{
+		dependencies: [
+		"4DE6EB265FC317D8"
+		]
+		icon: {
+			id: "portable_blueprints:scanner"
+		}
+		id: "EA1913D37F5B2396"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "portable_blueprints:scanner"
+			id: "B0FF740CB2BF0629"
+			type: "item"
+		}
+		]
+		x: -4.5d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"4DE6EB265FC317D8"
+		]
+		icon: {
+			id: "portable_blueprints:tablet"
+		}
+		id: "19B8E0B6D47DCAAB"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "portable_blueprints:tablet"
+			id: "96FF659A26117175"
+			type: "item"
+		}
+		]
+		x: -1.5d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"EA1913D37F5B2396"
+		"19B8E0B6D47DCAAB"
+		]
+		icon: {
+			id: "portable_blueprints:blueprint"
+		}
+		id: "83D9E4F54239B33C"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			id: "BD1C64F1ED0E4FCE"
+			type: "checkmark"
+		}
+		]
+		x: -1.27d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"83D9E4F54239B33C"
+		]
+		icon: {
+			id: "portable_blueprints:global_blueprint"
+		}
+		id: "4ECB3D418FC7CFC4"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "portable_blueprints:global_blueprint"
+			id: "0AFCD044602FE09B"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"4ECB3D418FC7CFC4"
+		]
+		icon: {
+			id: "portable_blueprints:server_blueprint"
+		}
+		id: "401E6F73A5958036"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "portable_blueprints:server_blueprint"
+			id: "358865F0ABA94DE7"
+			type: "item"
+		}
+		]
+		x: -1.5d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"4DE6EB265FC317D8"
+		]
+		icon: {
+			id: "portable_blueprints:worn_blueprint"
+		}
+		id: "620D533C7B483140"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "portable_blueprints:worn_blueprint"
+			id: "49C924A49C21AA47"
+			type: "item"
+		}
+		]
+		x: 1.5d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"4DE6EB265FC317D8"
+		]
+		icon: {
+			id: "create_pattern_schematics:pattern_schematic"
+		}
+		id: "60EAF80E4C355C65"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "create_pattern_schematics:pattern_schematic"
+			id: "1909BED0086850FA"
+			type: "item"
+		}
+		]
+		x: 4.5d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"60EAF80E4C355C65"
+		]
+		icon: {
+			id: "create_pattern_schematics:empty_pattern_schematic"
+		}
+		id: "134BCA05AABDAB48"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "create_pattern_schematics:empty_pattern_schematic"
+			count: 8
+			id: "DD525DD3EE6DC51E"
+			type: "item"
+		}
+		]
+		x: 1.5d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"4ECB3D418FC7CFC4"
+		]
+		icon: {
+			id: "minecraft:paper"
+		}
+		id: "41366FB6A64C0C4B"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:paper"
+			count: 32
+			id: "58F5AAE6C54485A9"
+			type: "item"
+		}
+		]
+		x: 1.5d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"41366FB6A64C0C4B"
+		"401E6F73A5958036"
+		"620D533C7B483140"
+		"134BCA05AABDAB48"
+		]
+		icon: {
+			id: "minecraft:stone_bricks"
+		}
+		id: "219864363A1A025C"
+		rewards: [
+		{
+			xp: 100
+			id: "2066B3987830BAB1"
+			type: "xp"
+		}
+		{
+			id: "0990E4D4AE9B59BA"
+			type: "toast"
+		}
+		]
+		shape: "hexagon"
+		size: 2.5d
+		tasks: [
+		{
+			item: "minecraft:stone_bricks"
+			count: 64
+			id: "62FFB2EF9C1F22A7"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -8.75d
+	}
+	]
+}

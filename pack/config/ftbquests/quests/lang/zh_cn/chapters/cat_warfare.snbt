@@ -1,0 +1,66 @@
+{
+	quest.448E3935771817EF.title: "战斗手感"
+	quest.448E3935771817EF.description: [
+	"Better Combat：这个包的挥砍有动作与范围——同一把武器，手感完全不同。"
+	"它改变的是「怎么打」，所以判据落在最基础的战备上：一把武器 + 一套甲。"
+	]
+	quest.4608758C21548C11.title: "钢制军械"
+	quest.4608758C21548C11.description: [
+	"Magistuarmory 的钢制武器系列（钢铸锭 → 各种钢武器）：比铁更耐打，"
+	"是组建常备军的前提。"
+	]
+	quest.F64F34D17AAC647C.title: "长杆与破甲"
+	quest.F64F34D17AAC647C.description: [
+	"戟、长枪、重锤：对付重甲单位（敌方指挥官就是这一类）必须靠它们。"
+	]
+	quest.2C49452C48182BA0.title: "弩与齐射"
+	quest.2C49452C48182BA0.description: [
+	"弩是守城与阵战的主力：整队齐射能压住一波。"
+	]
+	quest.ECFD190D87FB91B2.title: "投石机"
+	quest.ECFD190D87FB91B2.description: [
+	"Medieval Siege Machines：这个包里唯一能把「墙」这个概念打破的东西。"
+	"它能拆对面的工事——也能让你们第一次意识到自己的墙不够厚。"
+	]
+	quest.C3A25B018E3751B8.title: "撞门器"
+	quest.C3A25B018E3751B8.description: [
+	"攻城第一步不是爬墙，是开门。"
+	]
+	quest.CA9611D678D36354.title: "攻城工坊"
+	quest.CA9611D678D36354.description: [
+	"器械不是凭空来的：先有攻城工作台，才有后面那一排机器。"
+	]
+	quest.899FC031DC3F6FF7.title: "攻城营地"
+	quest.899FC031DC3F6FF7.description: [
+	"器械要有人护、要有料修：营地 = 围栏 + 补给 + 器械停放位。"
+	]
+	quest.4475184900FF15F4.title: "第一支队伍"
+	quest.4475184900FF15F4.description: [
+	"Hundred Years Warfare 提供中世纪军事单位（步兵/弓手/骑兵/攻城）。"
+	"⚠️ 它**不发进度也不记统计**（实测 advancements=0），所以「招到人」判不了。"
+	"验收靠实物：招募与装备军队需要的东西（甲、武器、粮）。"
+	]
+	quest.9A940306BBCC5E62.title: "军队要吃饭"
+	quest.9A940306BBCC5E62.description: [
+	"设计里明确写过：军队**必须由国力供养**，不然会变成「暴兵推平一切」，"
+	"威胁时代与军工产线都会失去意义。所以这一条是「后勤线」而不是「兵力」。"
+	]
+	quest.824A56ABFE073F9E.title: "军械库扩容"
+	quest.824A56ABFE073F9E.description: [
+	"武器、护甲、箭各有专箱，且有下限告警——打仗时没空翻箱。"
+	]
+	quest.5F1818BF9C4171E0.title: "找到掠夺者营地"
+	quest.5F1818BF9C4171E0.description: [
+	"It Takes a Pillage：掠夺者营地与堡垒是**主动出击**的目标。"
+	"只守不攻，压力只会一直涨。"
+	]
+	quest.FC064C8563717891.title: "拆掉堡垒"
+	quest.FC064C8563717891.description: [
+	"打掉发起方，压力才会真正下降一次。"
+	]
+	quest.4074C3B5291919BA.title: "成建制的军队"
+	quest.4074C3B5291919BA.description: [
+	"装备、后勤、攻城器械、以及打出去的能力——四样齐了。"
+	"到这一步，「夺城」（邦交章最后一条）才真的可执行。"
+	]
+}

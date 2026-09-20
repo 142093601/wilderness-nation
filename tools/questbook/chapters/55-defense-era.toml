@@ -1,0 +1,274 @@
+# 御敌（时代 4 · defense）
+#
+# 时代定义：`eras.json` → id=defense, name=御敌, durationHours=60, coefficient=1.60
+# 主菜：**威胁防御**（DESIGN.md §17.5）
+#
+# 与「技艺 · 防御与尸潮」的分工（**这条很重要，免得两章重复**）
+# ------------------------------------------------------------
+#   · 本章 = **国策视角**：这个时代要做什么、达标线在哪（袭击规模、工事升级树、国力映射）
+#   · 技艺章 = **系统视角**：The Hordes / Undead Nights 这套外来威胁怎么用、判据怎么写
+#   两章用 quest_links 软链，不互相做硬前置。
+#
+# 判据来源：原版统计（bell_ring / raid_trigger / damage_blocked_by_shield / mob_kills）
+# + 原版进度 + 物品。The Hordes / Undead Nights **不提供进度与统计**（实测），
+# 所以"袭击被守住"这种事件级目标只能自检——已在正文里写明。
+
+key = "defense_era"
+title = "御敌"
+subtitle = "墙要一直往上加，因为来拆墙的也在升级"
+group = "chronicle"
+icon = "minecraft:shield"
+order_index = 5
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 国策主线 ----------------
+
+[[quest]]
+name = "wall_upgrade_1"
+title = "木墙换石墙"
+desc = [
+	"能拆木墙的东西出现之后，全线换石砖——木墙一段不留。",
+]
+icon = "minecraft:stone_brick_wall"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "minecraft:stone_brick_wall", count = 128 },
+]
+
+[[quest]]
+name = "wall_upgrade_2"
+title = "关键段上铁"
+desc = [
+	"石墙也有扛不住的一天。城门、转角、哨位这些关键段必须上铁。",
+]
+icon = "minecraft:iron_bars"
+shape = "rsquare"
+deps = ["wall_upgrade_1"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_bars", count = 64 },
+	{ type = "item", item = "minecraft:iron_door", count = 2 },
+]
+
+[[quest]]
+name = "warning_net"
+title = "烽火网络"
+desc = [
+	"三处烽火，点火要在主城能看见。远方的据点出事时，这是唯一的信号。",
+]
+icon = "minecraft:campfire"
+shape = "rsquare"
+deps = ["wall_upgrade_1"]
+tasks = [
+	{ type = "item", item = "minecraft:campfire", count = 3 },
+]
+
+[[quest]]
+name = "bell_protocol"
+title = "敲钟集结"
+desc = [
+	"设计里「敲钟集结」是唯一的集结信号，而原版**真的记这个统计**（`bell_ring`）。",
+	"约定好敲法：一声集合、三声回城。敲够 10 次，说明它真的被用起来了。",
+]
+icon = "minecraft:bell"
+shape = "rsquare"
+deps = ["wall_upgrade_1"]
+tasks = [
+	{ type = "stat", stat = "minecraft:bell_ring", value = 10 },
+]
+
+[[quest]]
+name = "armory"
+title = "军械库"
+desc = [
+	"武器、护甲、箭矢各一整箱——打仗时没人有空现做装备。",
+]
+icon = "minecraft:crossbow"
+shape = "rsquare"
+deps = ["wall_upgrade_1"]
+tasks = [
+	{ type = "item", item = "minecraft:arrow", count = 128 },
+	{ type = "item", item = "minecraft:iron_chestplate", count = 4 },
+]
+
+[[quest]]
+name = "hold_a_wave"
+title = "守住一次大规模袭击"
+desc = [
+	"全队协防、有人受伤、墙出现缺口又被补上。",
+	"⚠️ **这一条游戏里没有信号源**：The Hordes / Undead Nights 不提供进度或统计（实测）。",
+	"所以它靠自己确认。要让这一步自动判定，需要 mod 侧暴露「波次开始/结束」事件。",
+]
+icon = "minecraft:shield"
+shape = "rsquare"
+deps = ["armory", "bell_protocol"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "clear_a_zone"
+title = "清剿一处占领区"
+desc = [
+	"把一处据点清空并插旗——只守不打，规模只会一直涨。",
+	"「袭击被触发」原版有统计，可作为交火的证据。",
+]
+icon = "minecraft:white_banner"
+shape = "rsquare"
+deps = ["hold_a_wave"]
+tasks = [
+	{ type = "stat", stat = "minecraft:raid_trigger", value = 1 },
+]
+
+[[quest]]
+name = "under_attack"
+title = "被宣战"
+desc = [
+	"有一个国家对你们宣战——这是国策的第一次真正压力。",
+	"⚠️ 宣战是 mod 侧事件，不发进度（实测），所以这一条自检。",
+]
+icon = "minecraft:writable_book"
+shape = "rsquare"
+deps = ["clear_a_zone"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# ---------------- 支线：工事细节 ----------------
+
+[[quest]]
+name = "moat"
+title = "壕沟"
+desc = [
+	"城外一道 ≥2 格深的沟，入口配吊桥或跳板。",
+]
+icon = "minecraft:iron_trapdoor"
+shape = "circle"
+size = 1.2
+deps = ["wall_upgrade_1"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_trapdoor", count = 4 },
+]
+
+[[quest]]
+name = "arrow_towers"
+title = "箭塔"
+desc = [
+	"≥2 座，能覆盖城外一段。塔上有箭箱。",
+]
+icon = "minecraft:dispenser"
+shape = "circle"
+size = 1.2
+deps = ["armory"]
+tasks = [
+	{ type = "item", item = "minecraft:dispenser", count = 2 },
+]
+
+[[quest]]
+name = "trap_field"
+title = "陷阱区"
+desc = [
+	"入口处一片可复用的陷阱——不是一次性消耗品。",
+]
+icon = "minecraft:target"
+shape = "circle"
+size = 1.2
+deps = ["wall_upgrade_1"]
+tasks = [
+	{ type = "item", item = "minecraft:target", count = 4 },
+]
+
+[[quest]]
+name = "emergency_store"
+title = "应急仓"
+desc = [
+	"被围时能独立支撑的食物与箭——放在城墙内侧，不在主仓。",
+]
+icon = "minecraft:barrel"
+shape = "circle"
+size = 1.2
+deps = ["armory"]
+tasks = [
+	{ type = "item", item = "minecraft:barrel", count = 8 },
+]
+
+[[quest]]
+name = "infirmary"
+title = "救护点"
+desc = [
+	"床 + 药 + 一张写明流程的牌子。别让人受伤后只能等死。",
+]
+icon = "minecraft:white_bed"
+shape = "circle"
+size = 1.2
+deps = ["armory"]
+tasks = [
+	{ type = "item", item = "minecraft:white_bed", count = 4 },
+	{ type = "item", item = "minecraft:brewing_stand" },
+]
+
+[[quest]]
+name = "escape_tunnel"
+title = "地道"
+desc = [
+	"一条不经过正门的进出通道。城被围死时它是退路。",
+]
+icon = "minecraft:iron_pickaxe"
+shape = "circle"
+size = 1.2
+deps = ["wall_upgrade_2"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_pickaxe" },
+]
+
+[[quest]]
+name = "wall_lighting"
+title = "墙外不黑"
+desc = [
+	"黑的地方就是它们生成的地方。墙外一圈点亮。",
+]
+icon = "minecraft:lantern"
+shape = "circle"
+size = 1.2
+deps = ["wall_upgrade_1"]
+tasks = [
+	{ type = "item", item = "minecraft:lantern", count = 32 },
+]
+
+[[quest]]
+name = "auto_arrows"
+title = "自动补箭"
+desc = [
+	"一支箭的产线：木 → 箭。缺箭的守城撑不过第二波。",
+]
+icon = "minecraft:fletching_table"
+shape = "circle"
+size = 1.2
+deps = ["arrow_towers"]
+tasks = [
+	{ type = "item", item = "minecraft:fletching_table" },
+]
+
+# ---------------- 终局 ----------------
+
+[[quest]]
+name = "defense_monument"
+title = "御敌碑"
+desc = [
+	"刻上守住了什么。这一块碑通常最厚——它记的是伤亡与工事。",
+	"下一时代是文明的收官：把几十年打下来的东西变成能留下来的东西。",
+]
+icon = "minecraft:stone_bricks"
+shape = "hexagon"
+size = 2.5
+deps = ["wall_upgrade_2", "warning_net", "under_attack", "moat", "arrow_towers",
+        "trap_field", "emergency_store", "infirmary", "escape_tunnel", "wall_lighting",
+        "auto_arrows"]
+tasks = [
+	{ type = "item", item = "minecraft:stone_bricks", count = 32 },
+]
+rewards = [
+	{ type = "xp", xp = 150 },
+	{ type = "toast" },
+]

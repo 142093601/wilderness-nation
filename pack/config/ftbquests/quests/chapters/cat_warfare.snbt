@@ -1,0 +1,339 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "cat_warfare"
+	group: "1439886072EE757D"
+	icon: {
+		id: "magistuarmory:steel_chestplate"
+	}
+	id: "848D40BDBBE07AD6"
+	order_index: 36
+	quest_links: [ ]
+	quests: [
+	{
+		icon: {
+			id: "minecraft:iron_sword"
+		}
+		id: "448E3935771817EF"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "minecraft:iron_sword"
+			id: "C038FF00AFDB1338"
+			type: "item"
+		}
+		{
+			item: "minecraft:iron_chestplate"
+			id: "8B49771D89B78583"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: 0.0d
+	}
+	{
+		dependencies: [
+		"448E3935771817EF"
+		]
+		icon: {
+			id: "magistuarmory:steel_heavymace"
+		}
+		id: "4608758C21548C11"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "magistuarmory:steel_heavymace"
+			id: "DB5CA58742D4B1F5"
+			type: "item"
+		}
+		{
+			item: "magistuarmory:knight_chestplate"
+			id: "61C0BC06B178DF35"
+			type: "item"
+		}
+		]
+		x: -1.27d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"4608758C21548C11"
+		]
+		icon: {
+			id: "magistuarmory:steel_heavywarhammer"
+		}
+		id: "F64F34D17AAC647C"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "magistuarmory:steel_heavywarhammer"
+			id: "D78D0B9DA69FC6B2"
+			type: "item"
+		}
+		]
+		x: -5.78d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"448E3935771817EF"
+		]
+		icon: {
+			id: "minecraft:crossbow"
+		}
+		id: "2C49452C48182BA0"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:crossbow"
+			count: 4
+			id: "16761DD399E78CA3"
+			type: "item"
+		}
+		{
+			item: "minecraft:arrow"
+			count: 128
+			id: "AB73BCBC01A746BD"
+			type: "item"
+		}
+		]
+		x: 1.5d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"4608758C21548C11"
+		]
+		icon: {
+			id: "siegemachines:trebuchet"
+		}
+		id: "ECFD190D87FB91B2"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "siegemachines:trebuchet"
+			id: "B191650C84637DA1"
+			type: "item"
+		}
+		]
+		x: -3.0d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"ECFD190D87FB91B2"
+		]
+		icon: {
+			id: "siegemachines:battering_ram"
+		}
+		id: "C3A25B018E3751B8"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "siegemachines:battering_ram"
+			id: "58AE678DFF2CE763"
+			type: "item"
+		}
+		]
+		x: -5.1d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"4608758C21548C11"
+		]
+		icon: {
+			id: "siegemachines:siege_workbench"
+		}
+		id: "CA9611D678D36354"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "siegemachines:siege_workbench"
+			id: "C585B78CBCB06FC3"
+			type: "item"
+		}
+		]
+		x: -0.23d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"ECFD190D87FB91B2"
+		]
+		icon: {
+			id: "minecraft:white_banner"
+		}
+		id: "899FC031DC3F6FF7"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:white_banner"
+			count: 2
+			id: "83B1EB1B60212BA8"
+			type: "item"
+		}
+		{
+			item: "minecraft:barrel"
+			count: 4
+			id: "FE852481317C9408"
+			type: "item"
+		}
+		]
+		x: -2.55d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"4608758C21548C11"
+		]
+		icon: {
+			id: "minecraft:iron_helmet"
+		}
+		id: "4475184900FF15F4"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:iron_helmet"
+			count: 8
+			id: "035FB52EE28805B7"
+			type: "item"
+		}
+		{
+			item: "minecraft:bread"
+			count: 64
+			id: "0717C17747F73C0B"
+			type: "item"
+		}
+		]
+		x: 2.55d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"4475184900FF15F4"
+		]
+		icon: {
+			id: "minecraft:hay_block"
+		}
+		id: "9A940306BBCC5E62"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:hay_block"
+			count: 32
+			id: "3C71544C11D170B6"
+			type: "item"
+		}
+		]
+		x: -0.0d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"4475184900FF15F4"
+		]
+		icon: {
+			id: "minecraft:iron_block"
+		}
+		id: "824A56ABFE073F9E"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:iron_block"
+			count: 16
+			id: "16A07754B0F1392F"
+			type: "item"
+		}
+		]
+		x: 2.55d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"2C49452C48182BA0"
+		]
+		icon: {
+			id: "minecraft:crossbow"
+		}
+		id: "5F1818BF9C4171E0"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			advancement: "takesapillage:adventure/pillager_camp"
+			id: "D5A29C4FD826533A"
+			type: "advancement"
+		}
+		]
+		x: 5.55d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"5F1818BF9C4171E0"
+		]
+		icon: {
+			id: "minecraft:iron_axe"
+		}
+		id: "FC064C8563717891"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "takesapillage:adventure/bastille"
+			id: "3B09C438F60A703B"
+			type: "advancement"
+		}
+		]
+		x: 5.1d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"F64F34D17AAC647C"
+		"899FC031DC3F6FF7"
+		"9A940306BBCC5E62"
+		"824A56ABFE073F9E"
+		"FC064C8563717891"
+		]
+		icon: {
+			id: "minecraft:netherite_sword"
+		}
+		id: "4074C3B5291919BA"
+		rewards: [
+		{
+			xp: 100
+			id: "92FCB275F1F2E92F"
+			type: "xp"
+		}
+		{
+			id: "23E6E299D399354A"
+			type: "toast"
+		}
+		]
+		shape: "hexagon"
+		size: 2.5d
+		tasks: [
+		{
+			item: "minecraft:netherite_sword"
+			id: "FA870F5012DD15F2"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -7.0d
+	}
+	]
+}

@@ -1,0 +1,84 @@
+{
+	quest.A5DB0F3C70C45AE0.title: "路通四邻"
+	quest.A5DB0F3C70C45AE0.description: [
+	"主路从城里铺出去 500 格以上，连到最近的水源、林地或别人家。"
+	]
+	quest.FB8262D01AF48E73.title: "第一件事不用人管"
+	quest.FB8262D01AF48E73.description: [
+	"选一件事（原木、圆石、食物、熔炼任选），做成「原料进、成品出、中间没有人」。"
+	"Create 会给你一个进度——它就是这条的判据。"
+	]
+	quest.012C33D8C552CEF0.title: "三件事不用人管"
+	quest.012C33D8C552CEF0.description: [
+	"一条线不算自动化，三条才算「基建成型」。"
+	"到这一步，你们的时间才真正开始用在建造上，而不是搬东西。"
+	]
+	quest.C268D78E02E9E408.title: "通电"
+	quest.C268D78E02E9E408.description: [
+	"应力网络跑起来：动力从源头送到每台机器，别让某一段卡住整条线。"
+	]
+	quest.7C06E9343F0EADB2.title: "工坊分区"
+	quest.7C06E9343F0EADB2.description: [
+	"锻造、木工、缝纫各占一格，各有各的工作台——不要再一间屋子干所有事。"
+	]
+	quest.E3C7DEDEE8D14CCE.title: "食堂开张"
+	quest.E3C7DEDEE8D14CCE.description: [
+	"能一次喂饱全队：≥4 种食物同时摆出来。"
+	"这一条解决的是「各自吃各自的」——聚在一起吃饭是分工的开始。"
+	]
+	quest.2B64267939E85BB3.title: "地图墙覆盖核心区"
+	quest.2B64267939E85BB3.description: [
+	"≥4 张地图拼起来，把国土与周边连成一张图。"
+	"⚠️ 「覆盖完整」是主观的（有没有空洞得自己看），所以这一条自检。"
+	]
+	quest.C6B025CC62D08367.title: "采矿机"
+	quest.C6B025CC62D08367.description: [
+	"让它自己往下挖并把矿运回来——这是「不必人到场」的第一条矿线。"
+	]
+	quest.EA86031E9BE1465E.title: "熔炉阵列"
+	quest.EA86031E9BE1465E.description: [
+	"≥8 台并联，一次投料连续工作。"
+	]
+	quest.ACD94784ED1B0EA7.title: "农场自动化"
+	quest.ACD94784ED1B0EA7.description: [
+	"收割与补种自动，或者畜栏自动收集——总之不用人天天去收。"
+	]
+	quest.43BD1559C781622B.title: "物品电梯"
+	quest.43BD1559C781622B.description: [
+	"把矿底的东西送到地面，别再用背包一层层搬。"
+	]
+	quest.306CE9560F0230E8.title: "列车或传送"
+	quest.306CE9560F0230E8.description: [
+	"两地之间点对点运输，≥300 格。设计里「交通等级扩大远征半径」从这一步开始。"
+	]
+	quest.50906F1B2968CD26.title: "批量分拣"
+	quest.50906F1B2968CD26.description: [
+	"≥4 种物品各进各的仓。用漏斗或机械臂都行，关键是**不用手摆**。"
+	]
+	quest.47B8A9D20F062068.title: "产线不卡壳"
+	quest.47B8A9D20F062068.description: [
+	"某一条线满了或断了，不该把别的线一起拖死。"
+	]
+	quest.C7BA24CC200F2831.title: "下矿到底"
+	quest.C7BA24CC200F2831.description: [
+	"到达深板岩层，带回至少 3 种矿物。"
+	]
+	quest.7D783459FC833D03.title: "第二处兴趣点"
+	quest.7D783459FC833D03.description: [
+	"1000 格外找一处值得再去的地方（结构、矿脉、异景），并让路能通到它。"
+	]
+	quest.EEFBAE645686C7F5.title: "第一道围墙"
+	quest.EEFBAE645686C7F5.description: [
+	"合围主城，门是可控的（能关得上）。"
+	]
+	quest.42B7E62C0AFD4C62.title: "情报站"
+	quest.42B7E62C0AFD4C62.description: [
+	"这个时代解锁了情报站（`eras.json` 的 unlocks 里有 `intel_station`）。"
+	"详细走法见「邦交」章——这里只提示它在这一时代解锁。"
+	]
+	quest.7B66D80B4C4016F5.title: "基建碑"
+	quest.7B66D80B4C4016F5.description: [
+	"刻上这个时代最大的那项工程。"
+	"下一时代要往外走了：把路、车、补给点先准备好。"
+	]
+}

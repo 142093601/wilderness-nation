@@ -1,0 +1,55 @@
+{
+	quest.B88D0AE50816A894.title: "这个包已经为你优化过了"
+	quest.B88D0AE50816A894.description: [
+	"包里内置了一整套性能 mod（渲染、内存、区块加载、实体剔除各一层），**默认全开**。"
+	"你不需要做任何事——这一条只是让你知道「慢不一定是包的错」。"
+	"⚠️ 性能 mod 没有物品接口（实测），所以这一条自检。"
+	]
+	quest.C9597E663D98F2A6.title: "先分清「卡」和「崩」"
+	quest.C9597E663D98F2A6.description: [
+	"两个完全不同的问题，查法也不同："
+	"· **崩了** → 有崩溃报告，去 `crash-reports/` 找；报错里最上面那个 mod 通常就是原因"
+	"· **卡了** → 没有崩溃报告，是性能问题；要看 TPS/MSPT，不是看日志"
+	"把这两件事混起来，会让排查方向从一开始就错。"
+	]
+	quest.E87BAEA60C54066D.title: "卡顿要看数据：spark"
+	quest.E87BAEA60C54066D.description: [
+	"服务端卡：`/spark tps` 看 TPS、`/spark profiler start` 采一段，然后 `--stop` 出报告链接。"
+	"单人卡：客户端 F3 看帧率，或 `/spark profiler --timeout 30` 采客户端。"
+	"**不要靠感觉报「很卡」** —— 给一张 spark 报告，问题基本当场定位。"
+	]
+	quest.A4C259239957534F.title: "原版也能看服务端状态"
+	quest.A4C259239957534F.description: [
+	"没装 spark 也没关系：`/tick query` 会给出 P50 / P95 / P99 的 tick 耗时。"
+	"设计里的性能预算就是 ms 级的（见 DESIGN.md §12），所以这个数字直接可比。"
+	]
+	quest.0DE602097BABEF6F.title: "客户端画面设置"
+	quest.0DE602097BABEF6F.description: [
+	"帧率低先调这三样（按收益排序）：渲染距离 → 模拟距离 → 阴影/云。"
+	"这个包用的是 Embeddium 系渲染器，视频设置里的选项比原版多。"
+	]
+	quest.37D6A4F33C866758.title: "卡顿的常见来源"
+	quest.37D6A4F33C866758.description: [
+	"按经验排序：**大量掉落物** › 大量实体（动物/怪）› 区块生成尚未完成 › 红石高频 › 存储网络过大。"
+	"先怀疑前两个——它们占了大多数情况。"
+	]
+	quest.1D942369DE0FB9FE.title: "信息怎么看"
+	quest.1D942369DE0FB9FE.description: [
+	"· **Jade**：指着方块显示它是什么（自动生效）"
+	"· **BetterF3**：F3 信息更整齐，可按 F3+G 之外的方式自定义"
+	"· **AppleSkin**：饥饿值与饱和度读数（种田党的命）"
+	"· **JEI / EMI**：配方查询——本包用的是 JEI"
+	"这些都是客户端界面 mod，没有物品判据，所以这一条自检。"
+	]
+	quest.F1770C2C79C1C308.title: "世界变大之后"
+	quest.F1770C2C79C1C308.description: [
+	"玩久了之后，**磁盘与备份**会比性能更早成为问题："
+	"· 定期备份（本包已配 Simple Backups）"
+	"· 用 Chunky 预生成远征要走的区域，避免边走边生成"
+	"· 清掉不再需要的老区域前，先确认没有人的东西在那里"
+	]
+	quest.07BB4EA5ABFE1F81.title: "把这一章记在心里就行"
+	quest.07BB4EA5ABFE1F81.description: [
+	"它没有奖励，也没有任务要交——出问题时回来翻一遍就够了。"
+	]
+}

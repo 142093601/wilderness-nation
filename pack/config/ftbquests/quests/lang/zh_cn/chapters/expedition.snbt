@@ -1,0 +1,74 @@
+{
+	quest.C626FE1864C2E065.title: "情报墙"
+	quest.C626FE1864C2E065.description: [
+	"一面墙把已知的国家、据点、风险全标出来——地图、坐标、名字。"
+	"⚠️ 「标全了没有」判不了（覆盖率是主观的），这一条自检。"
+	]
+	quest.BBEE977DE690D5AD.title: "远征队登记"
+	quest.BBEE977DE690D5AD.description: [
+	"出发前写清：谁去、去哪、带什么、什么时候回来。"
+	"这一条不是仪式——出事时它是唯一能让留守的人知道去哪找你们的记录。"
+	"⚠️ 名册的**内容**判不了，自检。"
+	]
+	quest.6BFE189A86F5780A.title: "第一次远征归来"
+	quest.6BFE189A86F5780A.description: [
+	"1000 格外走一趟再全员回来。指挥棒不是判据——「走出去」才是。"
+	]
+	quest.14ECC39709D0E6DE.title: "路上有补给"
+	quest.14ECC39709D0E6DE.description: [
+	"远行链路上至少 2 个能补给的站点（驿站、仓储点、传送节点都行）。"
+	]
+	quest.FA354929A2C8AE1E.title: "远征装备间"
+	quest.FA354929A2C8AE1E.description: [
+	"出发前领装备的地方：食物、工具、床、船各一处，拿了就走。"
+	]
+	quest.5D89C94B4EB06036.title: "档案馆"
+	quest.5D89C94B4EB06036.description: [
+	"把带回来的书、地图、唱片集中收在一处——不然它们会散在每个人背包里。"
+	]
+	quest.18AEA59555CFBB5E.title: "第一次下界远征"
+	quest.18AEA59555CFBB5E.description: [
+	"跨维度是远征的第一次质变：补给、坐标、退路全都要重新算。"
+	"这条游戏会自己判定（进入下界）。"
+	]
+	quest.5D18C2C5A96839A5.title: "世界地图"
+	quest.5D18C2C5A96839A5.description: [
+	"把 5000 格范围连成图。到这一步，你们才有资格谈「天下」。"
+	]
+	quest.07D4103743410B08.title: "三种结构"
+	quest.07D4103743410B08.description: [
+	"三种不同来源的结构各探一处，并在地图上留标记。"
+	"结构 mod 多、进度少（实测结构类 mod 基本不发 advancement），所以判据落在「到过」上。"
+	]
+	quest.0B2C8385D4050199.title: "海上远航"
+	quest.0B2C8385D4050199.description: [
+	"用船走一段真正的海路（沉船、海底遗迹都在这一层）。"
+	]
+	quest.1DFCD8AEADA9D90F.title: "登高"
+	quest.1DFCD8AEADA9D90F.description: [
+	"爬到 Y≥200 的地形上——站在高处看，才知道自己走了多远。"
+	]
+	quest.E795CA68FAFF6F1E.title: "穿越沙漠"
+	quest.E795CA68FAFF6F1E.description: [
+	"横穿一次沙漠，带回至少 2 种那儿的特产。"
+	]
+	quest.429CC4982149AF91.title: "灯塔"
+	quest.429CC4982149AF91.description: [
+	"夜里从远处能看见的一处光源——它让远方有方向。"
+	]
+	quest.FE4CB4620AE3F55D.title: "前哨"
+	quest.FE4CB4620AE3F55D.description: [
+	"远征链路上有一座能挡袭击的小据点：墙、门、床、补给。"
+	]
+	quest.5C5C18A0F6293419.title: "开始追踪"
+	quest.5C5C18A0F6293419.description: [
+	"这个时代解锁情报站第三档的升级件（`eras.json` 的 `intel_station_2`）。"
+	"升级后能追踪国家、看谁在打谁、每结算深挖一国详报。"
+	"⚠️ 升级动作本身判不了（模组不发进度），自检。"
+	]
+	quest.FAF2D6F95D0D6573.title: "远征碑"
+	quest.FAF2D6F95D0D6573.description: [
+	"刻上走过多远、去过哪些地方。"
+	"下一时代是压力时代：把远征带回来的东西变成工事。"
+	]
+}

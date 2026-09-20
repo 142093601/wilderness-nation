@@ -1,0 +1,239 @@
+# 类目 · 工具与装备
+#
+# 本章的 mod：Simply Swords · Armor of the Ages · Epic Knights · Magistuarmory ·
+#   Enchanting Infuser · Enchantment Descriptions · Curios · Easy Anvils · Crafting Tweaks ·
+#   Carry On · Comforts（睡袋）· TrashSlot · Item Highlighter
+#
+# 判据来源：**全是实物**（这类 mod 就是提供装备）。
+# 进度很少（实测只有 simplyswords 有 57 条），所以本章以物品判据为主。
+
+key = "cat_gear"
+title = "工具与装备"
+subtitle = "从「能打」到「打得舒服」"
+group = "category"
+icon = "simplyswords:iron_longsword"
+order_index = 34
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 簇 1：武器（Simply Swords） ----------------
+
+[[quest]]
+name = "g_first_sword"
+title = "第一把像样的剑"
+desc = [
+	"Simply Swords 提供了一整套武器类型：长剑、太刀、戟、巨斧、镰刀……",
+	"先挑一把顺手的——不同的武器对应不同的战斗风格。",
+]
+icon = "simplyswords:iron_longsword"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "simplyswords:iron_longsword" },
+]
+
+[[quest]]
+name = "g_heavy"
+title = "重型武器"
+desc = [
+	"巨斧 / 巨锤：慢但一下能解决。守城时它比快剑有用。",
+]
+icon = "simplyswords:iron_greathammer"
+shape = "circle"
+size = 1.2
+deps = ["g_first_sword"]
+tasks = [
+	{ type = "item", item = "simplyswords:iron_greathammer" },
+]
+
+[[quest]]
+name = "g_reach"
+title = "长杆武器"
+desc = [
+	"戟 / 长枪：攻击距离更远，适合站在第二排。",
+]
+icon = "simplyswords:iron_halberd"
+shape = "circle"
+size = 1.2
+deps = ["g_first_sword"]
+tasks = [
+	{ type = "item", item = "simplyswords:iron_halberd" },
+]
+
+[[quest]]
+name = "g_diamond_weapon"
+title = "升级到钻石档"
+desc = [
+	"同一把武器往上做一档——这条线的意义是「装备跟着国力走」。",
+]
+icon = "simplyswords:diamond_longsword"
+shape = "circle"
+size = 1.2
+deps = ["g_first_sword"]
+tasks = [
+	{ type = "item", item = "simplyswords:diamond_longsword" },
+]
+
+# ---------------- 簇 2：护甲（Armor of the Ages / Epic Knights / Magistuarmory） ----------------
+
+[[quest]]
+name = "g_armor_set"
+title = "成套护甲"
+desc = [
+	"Armor of the Ages：成套的甲比零散几件强得多（也更好看）。",
+]
+icon = "armoroftheages:iron_plate_armor_chest"
+shape = "rsquare"
+deps = ["g_first_sword"]
+tasks = [
+	{ type = "item", item = "armoroftheages:iron_plate_armor_chest" },
+]
+
+[[quest]]
+name = "g_knight"
+title = "骑士装备"
+desc = [
+	"Epic Knights / Magistuarmory：中世纪骑士甲与武器，配战马的整套。",
+]
+icon = "magistuarmory:knight_chestplate"
+shape = "circle"
+size = 1.2
+deps = ["g_armor_set"]
+tasks = [
+	{ type = "item", item = "magistuarmory:knight_chestplate" },
+]
+
+[[quest]]
+name = "g_shield"
+title = "盾"
+desc = [
+	"盾牌挡下的伤害游戏会记账（`damage_blocked_by_shield`）——它是「站前面」的证据。",
+]
+icon = "minecraft:shield"
+shape = "circle"
+size = 1.2
+deps = ["g_armor_set"]
+tasks = [
+	{ type = "item", item = "minecraft:shield" },
+	{ type = "stat", stat = "minecraft:damage_blocked_by_shield", value = 100 },
+]
+
+# ---------------- 簇 3：附魔与强化 ----------------
+
+[[quest]]
+name = "g_anvil"
+title = "铁砧与修理"
+desc = [
+	"Easy Anvils：修理不再是折磨。装备能修才能一直用。",
+]
+icon = "minecraft:anvil"
+shape = "rsquare"
+deps = ["g_first_sword"]
+tasks = [
+	{ type = "item", item = "minecraft:anvil" },
+]
+
+[[quest]]
+name = "g_enchant"
+title = "附魔"
+desc = [
+	"原版进度会给这一条盖章。附魔是装备线的分水岭。",
+]
+icon = "minecraft:enchanting_table"
+shape = "circle"
+size = 1.2
+deps = ["g_anvil"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:story/enchant_item" },
+]
+
+[[quest]]
+name = "g_infuser"
+title = "附魔灌注器"
+desc = [
+	"Enchanting Infuser：不用赌运气，直接选想要的附魔。",
+]
+icon = "enchantinginfuser:enchanting_infuser"
+shape = "circle"
+size = 1.2
+deps = ["g_enchant"]
+tasks = [
+	{ type = "item", item = "enchantinginfuser:enchanting_infuser" },
+]
+
+[[quest]]
+name = "g_full_enchant"
+title = "满附魔一套"
+desc = [
+	"把武器与护甲都附到位——到这一步，个人战力基本封顶，之后靠的是协同与工事。",
+]
+icon = "minecraft:diamond_chestplate"
+shape = "circle"
+size = 1.2
+deps = ["g_infuser"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:story/shiny_gear" },
+]
+
+# ---------------- 簇 4：随身小工具 ----------------
+
+[[quest]]
+name = "g_backpack_curio"
+title = "挂件与饰品位"
+desc = [
+	"Curios：多出来的装备位。小东西挂在身上，不占背包。",
+]
+icon = "minecraft:golden_apple"
+shape = "rsquare"
+deps = ["g_anvil"]
+tasks = [
+	{ type = "item", item = "minecraft:golden_apple" },
+]
+
+[[quest]]
+name = "g_carryon"
+title = "搬东西"
+desc = [
+	"Carry On：搬箱子、搬工作台、抱动物——不用拆了再装。",
+]
+icon = "minecraft:chest"
+shape = "circle"
+size = 1.2
+deps = ["g_anvil"]
+tasks = [
+	{ type = "item", item = "minecraft:chest", count = 4 },
+]
+
+[[quest]]
+name = "g_comforts"
+title = "随身睡具"
+desc = [
+	"Comforts 睡袋/吊床：出门也能睡，重生点跟着走。",
+]
+icon = "comforts:sleeping_bag_white"
+shape = "circle"
+size = 1.2
+deps = ["g_anvil"]
+tasks = [
+	{ type = "item", item = "comforts:sleeping_bag_white" },
+]
+
+[[quest]]
+name = "g_ready"
+title = "全队装备到位"
+desc = [
+	"每个人都有：一件趁手武器、一套甲、一个盾、几个随身小件。",
+	"这条做完，御敌时代才有人可派。",
+]
+icon = "simplyswords:diamond_longsword"
+shape = "hexagon"
+size = 2.5
+deps = ["g_heavy", "g_reach", "g_diamond_weapon", "g_knight", "g_shield", "g_full_enchant",
+        "g_carryon", "g_comforts"]
+tasks = [
+	{ type = "item", item = "minecraft:diamond_chestplate", count = 2 },
+]
+rewards = [
+	{ type = "xp", xp = 80 },
+	{ type = "toast" },
+]

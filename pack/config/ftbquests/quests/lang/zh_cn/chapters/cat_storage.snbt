@@ -1,0 +1,56 @@
+{
+	quest.B1D1B314213D1A09.title: "背包"
+	quest.B1D1B314213D1A09.description: [
+	"Travelers Backpack：第一件真正的「随身仓库」。"
+	"它比一排潜影盒好用在于**它有内胆**——能按用途分区。"
+	]
+	quest.04EC0766FE818CA5.title: "给背包加水箱"
+	quest.04EC0766FE818CA5.description: [
+	"背包内胆之一：装液体。出远门带水带药，比来回跑强。"
+	]
+	quest.C929174ADB78F923.title: "睡袋"
+	quest.C929174ADB78F923.description: [
+	"背包自带睡袋：野外能睡（不必抢一张床），也方便设临时重生点。"
+	]
+	quest.05DFBFFD5C743FCF.title: "背包升级"
+	quest.05DFBFFD5C743FCF.description: [
+	"容量与功能升级件：从「能装」到「装得多且不乱」。"
+	]
+	quest.1901DD1DD7F66B0D.title: "就近收纳"
+	quest.1901DD1DD7F66B0D.description: [
+	"Cupboard / Storage Delight：工作台旁边放常用料，不用每次都跑主仓。"
+	]
+	quest.137494D224880CE7.title: "分类要有标签"
+	quest.137494D224880CE7.description: [
+	"箱子要能一眼看出装什么（牌子、物品展示框、专用容器都行）。"
+	"这一条解决的是「找东西花的时间比做东西还长」。"
+	]
+	quest.53C3373A69CDB61A.title: "潜影盒"
+	quest.53C3373A69CDB61A.description: [
+	"移动仓库：把一整箱东西原样搬走。远征与搬家都靠它。"
+	]
+	quest.05B462B7B3F64B20.title: "到站自动卸货"
+	quest.05B462B7B3F64B20.description: [
+	"从外面回来，东西不用手搬：卸货点自己分拣入库。"
+	]
+	quest.A47618690236EAC9.title: "按需取货"
+	quest.A47618690236EAC9.description: [
+	"领料不用翻仓库：写清单，仓库自己送。"
+	]
+	quest.32806DAC98F84539.title: "仓储管理员"
+	quest.32806DAC98F84539.description: [
+	"让仓库自己管进出与补货——这是「公共仓库」与「一堆箱子」的分界。"
+	]
+	quest.2464A382B9FE5E3F.title: "下限告警"
+	quest.2464A382B9FE5E3F.description: [
+	"关键物资（食物、箭、建材）低于下限时能看出来——别等用完了才发现。"
+	]
+	quest.DCA4F05BEC7B873C.title: "单库 5000 单位"
+	quest.DCA4F05BEC7B873C.description: [
+	"容量到这一档，仓库才谈得上「支撑全队」。"
+	]
+	quest.05250B2F3C50BD7F.title: "全队不用背东西了"
+	quest.05250B2F3C50BD7F.description: [
+	"随身、就近、回仓三段都通：出门带背包，工地有就近柜，回城自动入库。"
+	]
+}

@@ -1,0 +1,178 @@
+# 图纸与工程（技艺章）
+#
+# 定位（PLAN-questbook.md §2.3 的技艺章）：大件系统独立成章、按**真实的先后关系**铺树。
+#
+# 这一章覆盖「把建造变成可复制」的那条链：
+#   便携图纸（scan / blueprint / tablet）· 图案图纸 · WorldEdit（op 工具）
+# 它是 DESIGN.md「工程制：把贴图纸变成多人玩法」的落点。
+#
+# 判据来源：**实物**（这些 mod 提供了真实物品，实测注册表里有）。
+# 注：WorldEdit 是纯命令工具（注册表里 0 个物品），所以它的部分只能自检。
+
+key = "blueprints"
+title = "图纸与工程"
+subtitle = "把「盖一次」变成「盖一百次」：这条链通了，造城速度会变一个量级"
+group = "craft"
+icon = "portable_blueprints:blueprint"
+order_index = 22
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 起点：先有一张纸 ----------------
+
+[[quest]]
+name = "blank_blueprint"
+title = "先弄到一张空图纸"
+desc = [
+	"整条链的起点。空图纸可以从探索里得到，也能自己造（配方看 JEI）。",
+]
+icon = "portable_blueprints:blueprint"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "portable_blueprints:blueprint" },
+]
+
+[[quest]]
+name = "get_scanner"
+title = "扫描仪"
+desc = [
+	"把已经盖好的东西扫进图纸——这是从「手搓」变成「工程制」的第一步。",
+]
+icon = "portable_blueprints:scanner"
+shape = "rsquare"
+deps = ["blank_blueprint"]
+tasks = [
+	{ type = "item", item = "portable_blueprints:scanner" },
+]
+
+[[quest]]
+name = "get_tablet"
+title = "平板"
+desc = [
+	"图纸的随身载体：走到哪都能看、能选、能放。",
+]
+icon = "portable_blueprints:tablet"
+shape = "rsquare"
+deps = ["blank_blueprint"]
+tasks = [
+	{ type = "item", item = "portable_blueprints:tablet" },
+]
+
+[[quest]]
+name = "first_scan"
+title = "扫下第一座建筑"
+desc = [
+	"选一座你们自己盖得最满意的建筑，把它扫成图纸。",
+	"⚠️ 「扫成功」这动作没有信号源，自检；判据落在「你已经有了那几样工具」上。",
+]
+icon = "portable_blueprints:blueprint"
+shape = "rsquare"
+deps = ["get_scanner", "get_tablet"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# ---------------- 让图纸流通 ----------------
+
+[[quest]]
+name = "global_blueprint"
+title = "全局图纸"
+desc = [
+	"把常用件做成「全局」的——全队都能取用，不必人手一份。",
+]
+icon = "portable_blueprints:global_blueprint"
+shape = "rsquare"
+deps = ["first_scan"]
+tasks = [
+	{ type = "item", item = "portable_blueprints:global_blueprint" },
+]
+
+[[quest]]
+name = "server_side"
+title = "服务端图纸"
+desc = [
+	"放进服务端的那一类：所有人共享同一份，改了就是全队改了。",
+]
+icon = "portable_blueprints:server_blueprint"
+shape = "rsquare"
+deps = ["global_blueprint"]
+tasks = [
+	{ type = "item", item = "portable_blueprints:server_blueprint" },
+]
+
+[[quest]]
+name = "worn_repair"
+title = "残破图纸要修"
+desc = [
+	"探索里捡到的图纸多半是残破的：**残破 → 修复 → 可用**，这是设计里明写的一条闭环。",
+]
+icon = "portable_blueprints:worn_blueprint"
+shape = "rsquare"
+deps = ["blank_blueprint"]
+tasks = [
+	{ type = "item", item = "portable_blueprints:worn_blueprint" },
+]
+
+# ---------------- 图案图纸（Create 系） ----------------
+
+[[quest]]
+name = "pattern_basic"
+title = "图案图纸"
+desc = [
+	"Create 系的图纸：适合小构件与重复纹样，和便携图纸分工不同。",
+]
+icon = "create_pattern_schematics:pattern_schematic"
+shape = "rsquare"
+deps = ["blank_blueprint"]
+tasks = [
+	{ type = "item", item = "create_pattern_schematics:pattern_schematic" },
+]
+
+[[quest]]
+name = "pattern_empty"
+title = "备用图纸"
+desc = [
+	"多囤几张空白的：现场画比回城取快得多。",
+]
+icon = "create_pattern_schematics:empty_pattern_schematic"
+shape = "circle"
+size = 1.2
+deps = ["pattern_basic"]
+tasks = [
+	{ type = "item", item = "create_pattern_schematics:empty_pattern_schematic", count = 8 },
+]
+
+# ---------------- 材料与施工 ----------------
+
+[[quest]]
+name = "material_list"
+title = "材料清单"
+desc = [
+	"按图纸算出要多少料，一次性备齐——这是「工程制」和「手搓」最大的区别。",
+]
+icon = "minecraft:paper"
+shape = "rsquare"
+deps = ["global_blueprint"]
+tasks = [
+	{ type = "item", item = "minecraft:paper", count = 32 },
+]
+
+[[quest]]
+name = "build_by_blueprint"
+title = "按图纸盖出第一座公共建筑"
+desc = [
+	"不是手搓：照图纸标准件盖，尺寸与用料都由图纸定。",
+	"这一条完成之后，「建筑目录」才谈得上（见无尽纪元那一章）。",
+]
+icon = "minecraft:stone_bricks"
+shape = "hexagon"
+size = 2.5
+deps = ["material_list", "server_side", "worn_repair", "pattern_empty"]
+tasks = [
+	{ type = "item", item = "minecraft:stone_bricks", count = 64 },
+]
+rewards = [
+	{ type = "xp", xp = 100 },
+	{ type = "toast" },
+]
