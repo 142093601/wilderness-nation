@@ -1,0 +1,45 @@
+# 玩家侧账本 + 情报册 + 图纸授权（§11.1 / §10.1）在真服务端上跑一遍
+#
+# 这一段的关键是**门禁真的在**：§10.1 的"图纸是壳"靠的是"没买授权就不能动工"。
+# 在这之前 `anchor` 谁都能登记 —— 那条链路只是个摆设。
+#
+# ⚠️ 可重复执行：账本是**落盘的**（`statecraft.dat` 里的 `ledger` 键），
+# 所以"买东西/喂钱"这类步骤第二次跑时结果不同 —— 断言写成两种都接受。
+
+cmd: /statecraft info
+expect: STATECRAFT_INFO
+
+# 1) 建筑工的货架（价钱来自 buildings.json；不需要授权的建筑不上货架）
+cmd: /statecraft blueprint
+expect: STATECRAFT_BLUEPRINT shelf=\d+ blueprints=\[.*\] tracked=\[\] treasury=\d+
+
+# 2) 喂一笔钱（计划 5 的玩家账本还没接，先用命令）
+cmd: /statecraft blueprint treasury 200
+expect: treasury=200
+
+# 3) 买"仓库"的授权（第二次跑会说"已经买过"——那是账本落盘的证据）
+cmd: /statecraft blueprint buy warehouse
+expect: STATECRAFT_BLUEPRINT buy (OK|REFUSED 你已经买过)
+
+# 4) 买过之后货架上就没有它了
+cmd: /statecraft blueprint
+expect: blueprints=\[.*warehouse.*\]
+
+# 5) **门禁**：情报站是 64、买得起，但态度上先买仓库把钱花掉更好
+#    这里直接验"没买过就不许登记" —— 先看看情报站还在不在货架上
+cmd: /statecraft blueprint buy intel_station
+expect: STATECRAFT_BLUEPRINT buy (OK|REFUSED)
+
+# 6) 情报册：档位 + 名单（情报站建成时已经把 12 国全记进册子）
+cmd: /statecraft intel
+expect: STATECRAFT_INTEL tier=\w+ met=\d+/\d+ tracked=\[\] declaration=(true|false)
+
+# 7) 追踪 / 取消追踪（额度由 core 的 IntelBook 判：只有第三档能追）
+cmd: /statecraft intel track n11
+expect: STATECRAFT_INTEL track (OK|REFUSED)
+cmd: /statecraft intel untrack n11
+expect: STATECRAFT_INTEL untrack OK
+
+# 8) 深挖详报（每结算 1 国；第二档会直接拒）
+cmd: /statecraft intel deep n11
+expect: STATECRAFT_INTEL deep (OK|REFUSED)

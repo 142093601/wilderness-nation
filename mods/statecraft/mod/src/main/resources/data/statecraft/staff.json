@@ -29,6 +29,22 @@
         "范无衣",
         "邵温"
       ]
+    },
+    {
+      "id": "quartermaster",
+      "name": "仓库管事",
+      "buildingType": "warehouse",
+      "appearance": "statecraft:quartermaster",
+      "greeting": "货都在这儿了，单子给我看看？",
+      "abilities": [],
+      "names": [
+        "关仓",
+        "田大有",
+        "贺半斗",
+        "毕长庚",
+        "鲁守拙",
+        "常有余"
+      ]
     }
   ]
 }

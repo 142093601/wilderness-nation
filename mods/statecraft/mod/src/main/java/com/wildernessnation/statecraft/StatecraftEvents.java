@@ -6,8 +6,11 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.logging.LogUtils;
 import com.wildernessnation.statecraft.core.building.BuildingAbility;
+import com.wildernessnation.statecraft.core.building.BuildingCatalog;
 import com.wildernessnation.statecraft.core.building.BuildingDef;
 import com.wildernessnation.statecraft.core.building.StaffObservation;
+import com.wildernessnation.statecraft.core.blueprint.BlueprintRules;
+import com.wildernessnation.statecraft.core.blueprint.BlueprintVerdict;
 import com.wildernessnation.statecraft.core.diplomacy.DiplomacyAction;
 import com.wildernessnation.statecraft.core.diplomacy.DiplomacyConfig;
 import com.wildernessnation.statecraft.core.diplomacy.DiplomacyMachine;
@@ -17,12 +20,17 @@ import com.wildernessnation.statecraft.core.diplomacy.PlayerActions;
 import com.wildernessnation.statecraft.core.env.EnvironmentSnapshot;
 import com.wildernessnation.statecraft.core.env.EnvironmentVerdict;
 import com.wildernessnation.statecraft.core.gen.WorldGenerator;
+import com.wildernessnation.statecraft.core.intel.IntelBook;
 import com.wildernessnation.statecraft.core.intel.IntelContact;
+import com.wildernessnation.statecraft.core.intel.IntelTier;
+import com.wildernessnation.statecraft.core.intel.IntelVerdict;
+import com.wildernessnation.statecraft.core.intel.NationBrief;
 import com.wildernessnation.statecraft.core.letter.Letter;
 import com.wildernessnation.statecraft.core.letter.LetterMachine;
 import com.wildernessnation.statecraft.core.letter.LetterResult;
 import com.wildernessnation.statecraft.core.letter.LetterState;
 import com.wildernessnation.statecraft.core.model.Building;
+import com.wildernessnation.statecraft.core.model.Event;
 import com.wildernessnation.statecraft.core.model.Nation;
 import com.wildernessnation.statecraft.core.model.WorldState;
 import com.wildernessnation.statecraft.core.settle.SettlementConfig;
@@ -35,6 +43,7 @@ import com.wildernessnation.statecraft.data.StatecraftSavedData;
 import com.wildernessnation.statecraft.world.BuildingService;
 import com.wildernessnation.statecraft.world.ClaimProbe;
 import com.wildernessnation.statecraft.world.EnvScanner;
+import com.wildernessnation.statecraft.world.PlayerLedger;
 import com.wildernessnation.statecraft.world.SettlementScheduler;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +91,8 @@ public final class StatecraftEvents {
     private static final String MARK_DIPLO = "STATECRAFT_DIPLO";
     private static final String MARK_CONTACT = "STATECRAFT_CONTACT";
     private static final String MARK_BUILD = "STATECRAFT_BUILD";
+    private static final String MARK_INTEL = "STATECRAFT_INTEL";
+    private static final String MARK_BLUEPRINT = "STATECRAFT_BLUEPRINT";
 
     private StatecraftEvents() {}
 
@@ -162,7 +173,40 @@ public final class StatecraftEvents {
                 .then(Commands.literal("build")
                         .requires(source -> source.hasPermission(2))
                         .then(Commands.argument("pos", BlockPosArgument.blockPos())
-                                .executes(StatecraftEvents::build))));
+                                .executes(StatecraftEvents::build)))
+                // ---- 阶段 3：情报册（§11.1）----
+                .then(Commands.literal("intel")
+                        .executes(ctx -> intel(ctx, "list", ""))
+                        .then(Commands.literal("track")
+                                .then(Commands.argument("nation", StringArgumentType.word())
+                                        .executes(ctx -> intel(ctx, "track",
+                                                StringArgumentType.getString(ctx, "nation")))))
+                        .then(Commands.literal("untrack")
+                                .then(Commands.argument("nation", StringArgumentType.word())
+                                        .executes(ctx -> intel(ctx, "untrack",
+                                                StringArgumentType.getString(ctx, "nation")))))
+                        .then(Commands.literal("deep")
+                                .then(Commands.argument("nation", StringArgumentType.word())
+                                        .executes(ctx -> intel(ctx, "deep",
+                                                StringArgumentType.getString(ctx, "nation"))))))
+                // ---- 阶段 3：图纸授权（§10.1）----
+                .then(Commands.literal("blueprint")
+                        .executes(ctx -> blueprint(ctx, ""))
+                        .then(Commands.literal("buy")
+                                .then(Commands.argument("building", StringArgumentType.word())
+                                        .executes(ctx -> blueprint(ctx,
+                                                StringArgumentType.getString(ctx, "building")))))
+                        .then(Commands.literal("treasury")
+                                .requires(source -> source.hasPermission(2))
+                                .then(Commands.argument("amount",
+                                                DoubleArgumentType.doubleArg(0.0))
+                                        .executes(ctx -> treasury(ctx,
+                                                DoubleArgumentType.getDouble(ctx, "amount")))))
+                        // 开发用：清空账本。存在的唯一理由是**让"没买授权就不许登记"这条门禁
+                        // 可被验收**（买过之后就没法再观察它了）
+                        .then(Commands.literal("reset")
+                                .requires(source -> source.hasPermission(2))
+                                .executes(StatecraftEvents::blueprintReset))));
     }
 
     /** 外交命令单独成一个方法：嵌套的 argument/then 括号数错一次就编译不过，这样好核对。 */
@@ -351,6 +395,16 @@ public final class StatecraftEvents {
                     .toString();
             source.sendSuccess(() -> Component.literal(
                     MARK_ANCHOR + " NOT_ANCHOR " + id + "（不是任何建筑的锚点方块）"), false);
+            return 0;
+        }
+        // §10.1 的门禁：**没买图纸授权就别想动工**。
+        // 这条检查必须在这里（而不是材料化时）：玩家拿加农炮打出壳、锚点就位才轮到我们看见，
+        // 那时候再拒就等于"砖白放了"。所以登记的入口就是门禁。
+        BlueprintVerdict allowed = BlueprintRules.canBuild(def.get(),
+                data.ledger().ownsBlueprint(def.get().requiredBlueprint()));
+        if (!allowed.allowed()) {
+            source.sendSuccess(() -> Component.literal(
+                    MARK_ANCHOR + " NO_BLUEPRINT " + allowed.reason()), false);
             return 0;
         }
         Optional<Building> created = BUILDINGS.register(state, def.get(), level, pos);
@@ -570,6 +624,156 @@ public final class StatecraftEvents {
             // 调度器出问题**不能带崩服务器**：记一条、跳过这一拍，下一拍继续
             LOG.error("Statecraft：结算调度出错（已跳过这一拍）：{}", ex.toString());
         }
+    }
+
+    /**
+     * `/statecraft intel [track|deep|history] [nationId]`：情报册的三种读法（§11.1 的三档）。
+     *
+     * <p>档位按 `eras.json` 的 unlocks 判定；**全部判定都在 core 的 {@code IntelBook} 里**，
+     * 这里只负责"把账本里的事实递进去、把结果打出来"。没有客户端时这就是情报册。
+     */
+    private static int intel(CommandContext<CommandSourceStack> ctx, String mode, String nationId) {
+        CommandSourceStack source = ctx.getSource();
+        StatecraftSavedData data = data(source);
+        WorldState state = data.state();
+        if (state == null) {
+            source.sendSuccess(() -> Component.literal(MARK_INTEL + " EMPTY"), false);
+            return 0;
+        }
+        PlayerLedger ledger = data.ledger();
+        IntelTier tier = currentTier(state);
+        boolean declaration = StatecraftData.eras().isUnlocked(
+                IntelTier.UNLOCK_DECLARATION, StatecraftData.eras()
+                        .fallbackForUnknownId(state.eraId(), state.eraOrdinal()));
+
+        switch (mode) {
+            case "track" -> {
+                IntelVerdict v = IntelBook.track(tier, ledger.trackedNations(), nationId);
+                if (v.allowed()) {
+                    data.setLedger(ledger.withTrackedAdded(nationId));
+                }
+                source.sendSuccess(() -> Component.literal(
+                        MARK_INTEL + " track " + (v.allowed() ? "OK " : "REFUSED ") + v.reason()),
+                        false);
+            }
+            case "untrack" -> {
+                data.setLedger(ledger.withTrackedRemoved(nationId));
+                source.sendSuccess(() -> Component.literal(
+                        MARK_INTEL + " untrack OK 不再追踪 " + nationId), false);
+            }
+            case "deep" -> {
+                // 每结算限 1 国（§11.1 第三档）。计数不另存：**看这一拍的结算序号**
+                // （上一次深挖存的就是 seq，seq 一变就等于额度重置）
+                int used = ledger.lastDeepDiveSeq() == state.seq() ? 1 : 0;
+                IntelVerdict v = IntelBook.deepDive(tier, used);
+                if (!v.allowed()) {
+                    source.sendSuccess(() -> Component.literal(
+                            MARK_INTEL + " deep REFUSED " + v.reason()), false);
+                    return 0;
+                }
+                data.setLedger(ledger.withDeepDive(state.seq()));
+                for (Event e : IntelBook.history(state, nationId, 12)) {
+                    String line = "  " + MARK_INTEL + " history seq=" + e.seq() + " "
+                            + e.textKey() + " " + e.params();
+                    source.sendSuccess(() -> Component.literal(line), false);
+                }
+                source.sendSuccess(() -> Component.literal(
+                        MARK_INTEL + " deep OK " + nationId + "（每结算 1 国）"), false);
+            }
+            default -> {
+                List<NationBrief> listing = IntelBook.listing(
+                        state, tier, declaration, ledger.trackedNations());
+                source.sendSuccess(() -> Component.literal(String.format(
+                        "%s tier=%s met=%d/%d tracked=%s declaration=%s",
+                        MARK_INTEL, tier, listing.size(), state.nations().size(),
+                        ledger.trackedNations(), declaration)), false);
+                for (NationBrief b : listing) {
+                    String line = "  " + MARK_INTEL + " " + b.id() + " " + b.name()
+                            + " size=" + b.size() + " att=" + Math.round(b.attitude())
+                            + " dev=" + b.development().map(d -> String.valueOf(Math.round(d)))
+                                    .orElse("-")
+                            + " mil=" + b.military().map(d -> String.valueOf(Math.round(d)))
+                                    .orElse("-")
+                            + " war=" + b.atWarWith() + " ally=" + b.alliedWith()
+                            + (b.tracked() ? " TRACKED" : "");
+                    source.sendSuccess(() -> Component.literal(line), false);
+                }
+            }
+        }
+        return 1;
+    }
+
+    /** 当前的情报档位（§11.1：按 `eras.json` 的 unlocks 判定）。 */
+    private static IntelTier currentTier(WorldState state) {
+        return IntelTier.tierFor(StatecraftData.eras(),
+                StatecraftData.eras().fallbackForUnknownId(state.eraId(), state.eraOrdinal()));
+    }
+
+    /**
+     * `/statecraft blueprint [buy <buildingId>]`：建筑工的货架 / 买一份图纸授权（§10.1）。
+     *
+     * <p>价钱与"要不要授权"全在 `buildings.json` 里；能不能买得起由 core 的
+     * {@code BlueprintRules.buy} 判，账本（已购 + 国库）在 mod 层。
+     */
+    private static int blueprint(CommandContext<CommandSourceStack> ctx, String buildingId) {
+        CommandSourceStack source = ctx.getSource();
+        StatecraftSavedData data = data(source);
+        PlayerLedger ledger = data.ledger();
+        BuildingCatalog catalog = StatecraftData.buildings();
+
+        if (buildingId == null || buildingId.isBlank()) {
+            List<BuildingDef> shelf = BlueprintRules.shelf(catalog, ledger.grantedBlueprints());
+            source.sendSuccess(() -> Component.literal(String.format(
+                    "%s shelf=%d %s", MARK_BLUEPRINT, shelf.size(), ledger.describe())), false);
+            for (BuildingDef def : shelf) {
+                String line = "  " + MARK_BLUEPRINT + " " + def.id() + " " + def.name()
+                        + " price=" + Math.round(def.blueprintPrice())
+                        + " blueprint=" + def.requiredBlueprint();
+                source.sendSuccess(() -> Component.literal(line), false);
+            }
+            return shelf.size();
+        }
+
+        Optional<BuildingDef> def = catalog.byId(buildingId);
+        if (def.isEmpty()) {
+            source.sendSuccess(() -> Component.literal(
+                    MARK_BLUEPRINT + " UNKNOWN " + buildingId), false);
+            return 0;
+        }
+        BlueprintVerdict verdict = BlueprintRules.buy(def.get(),
+                ledger.ownsBlueprint(def.get().requiredBlueprint()), ledger.treasury());
+        if (verdict.allowed()) {
+            data.setLedger(ledger.withPurchase(def.get(), def.get().blueprintPrice()));
+        }
+        source.sendSuccess(() -> Component.literal(String.format("%s buy %s %s",
+                MARK_BLUEPRINT, verdict.allowed() ? "OK" : "REFUSED", verdict.reason())), true);
+        return verdict.allowed() ? 1 : 0;
+    }
+
+    /** `/statecraft treasury <amount>`：设置玩家国库（计划 5 的账本还没接，先用命令喂）。 */
+    private static int treasury(CommandContext<CommandSourceStack> ctx, double amount) {
+        CommandSourceStack source = ctx.getSource();
+        StatecraftSavedData data = data(source);
+        data.setLedger(data.ledger().withTreasury(amount));
+        source.sendSuccess(() -> Component.literal(
+                MARK_BLUEPRINT + " treasury=" + Math.round(amount)), true);
+        return 1;
+    }
+
+    /**
+     * `/statecraft blueprint reset`：清空玩家侧账本（**开发用**）。
+     *
+     * <p>为什么要有它：门禁（"没买授权就不许登记"）只在**没买过**的时候才看得见，
+     * 而账本是落盘的 —— 验收一次之后就再也观察不到那条分支了。
+     * 没有这条命令，"门禁真的在"就只能靠读代码相信。
+     */
+    private static int blueprintReset(CommandContext<CommandSourceStack> ctx) {
+        CommandSourceStack source = ctx.getSource();
+        StatecraftSavedData data = data(source);
+        data.setLedger(PlayerLedger.empty());
+        source.sendSuccess(() -> Component.literal(
+                MARK_BLUEPRINT + " reset OK " + data.ledger().describe()), true);
+        return 1;
     }
 
     /**

@@ -1,0 +1,37 @@
+# §10.1 的**门禁**：没买图纸授权就不许登记（真服务端）
+#
+# 为什么单独一条：门禁只在"没买过"的时候才看得见，而账本是落盘的 ——
+# 验收一次之后就再也观察不到那条分支。所以这里先用 `blueprint reset` 把账本清空，
+# 再拿一座**没买授权的建筑**（仓库 / 锚点方块是 barrel）去试登记。
+
+cmd: /statecraft info
+expect: STATECRAFT_INFO
+
+# 1) 清空账本（开发命令，存在的理由就是这条验收）
+cmd: /statecraft blueprint reset
+expect: STATECRAFT_BLUEPRINT reset OK blueprints=\[\] tracked=\[\] treasury=0
+
+# 2) 在世界里放一个 barrel 当仓库的锚点（房间里已有一块空地）
+cmd: setblock 101 151 101 minecraft:barrel
+
+# 3) 没买授权 → 登记必须被门禁拦下
+cmd: /statecraft anchor 101 151 101
+expect: STATECRAFT_ANCHOR NO_BLUEPRINT
+
+# 4) 喂钱、买仓库的授权（32）
+cmd: /statecraft blueprint treasury 100
+expect: treasury=100
+cmd: /statecraft blueprint buy warehouse
+expect: STATECRAFT_BLUEPRINT buy OK
+
+# 5) 再登记 → 这次该成功，而且是**第二座**建筑
+cmd: /statecraft anchor 101 151 101
+expect: STATECRAFT_ANCHOR (REGISTERED|ALREADY) warehouse@minecraft:overworld:101,151,101
+
+# 6) 两座建筑都在登记表里
+cmd: /statecraft buildings
+expect: STATECRAFT_BUILDINGS count=2
+
+# 7) 账本里现在只有仓库（reset 把情报站那份也清了）—— 顺便确认货架上又出现了情报站
+cmd: /statecraft blueprint
+expect: shelf=1 blueprints=\[warehouse\]

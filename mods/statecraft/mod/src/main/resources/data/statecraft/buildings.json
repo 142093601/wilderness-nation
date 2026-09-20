@@ -35,6 +35,25 @@
           ]
         }
       ]
+    },
+    {
+      "id": "warehouse",
+      "name": "仓库",
+      "anchorBlock": "minecraft:barrel",
+      "schematic": "statecraft:warehouse",
+      "staffProfession": "quartermaster",
+      "requiredBlueprint": "warehouse",
+      "blueprintPrice": 32,
+      "tiers": [
+        {
+          "tierId": "basic",
+          "requireRoof": true,
+          "minEnclosurePercent": 50,
+          "minVolume": 16,
+          "requireClaim": true,
+          "abilities": []
+        }
+      ]
     }
   ]
 }

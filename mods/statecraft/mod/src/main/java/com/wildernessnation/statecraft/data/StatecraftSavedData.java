@@ -4,6 +4,7 @@ import com.wildernessnation.statecraft.core.model.WorldState;
 import com.wildernessnation.statecraft.core.persist.LoadOutcome;
 import com.wildernessnation.statecraft.core.persist.StateCodec;
 import com.wildernessnation.statecraft.core.persist.StateNode;
+import com.wildernessnation.statecraft.world.PlayerLedger;
 import java.util.List;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -31,12 +32,28 @@ public final class StatecraftSavedData extends SavedData {
      */
     private static final String KEY_PENDING_HOURS = "pendingHours";
 
+    /**
+     * 玩家侧账本（已购图纸授权 / 追踪清单 / 国库）。
+     *
+     * <p><b>为什么不进 core 的 schema</b>：core 只做"收事实 → 给判定"，
+     * 而"你买过什么、追着谁"是玩家侧状态。放进去会让"同 seed 同输入必得同结果"
+     * 变成"还得看它内部数到几"。见 {@link PlayerLedger} 的注释。
+     */
+    private static final String KEY_LEDGER = "ledger";
+
+    /** 账本里的三个字段（都是 mod 层自己的键）。 */
+    private static final String KEY_LEDGER_BLUEPRINTS = "blueprints";
+    private static final String KEY_LEDGER_TRACKED = "tracked";
+    private static final String KEY_LEDGER_TREASURY = "treasury";
+    private static final String KEY_LEDGER_DEEP_SEQ = "lastDeepDiveSeq";
+
     private static final SavedData.Factory<StatecraftSavedData> FACTORY =
             new SavedData.Factory<>(StatecraftSavedData::new, StatecraftSavedData::load, null);
 
     private WorldState state;
     private List<String> loadWarnings = List.of();
     private double pendingHours;
+    private PlayerLedger ledger = PlayerLedger.empty();
 
     public static StatecraftSavedData get(ServerLevel level) {
         return level.getDataStorage().computeIfAbsent(FACTORY, FILE_ID);
@@ -68,18 +85,60 @@ public final class StatecraftSavedData extends SavedData {
         setDirty();
     }
 
+    /** 玩家侧账本（永不返回 null；没买过东西时是空账本）。 */
+    public PlayerLedger ledger() {
+        return ledger;
+    }
+
+    public void setLedger(PlayerLedger v) {
+        this.ledger = v == null ? PlayerLedger.empty() : v;
+        setDirty();
+    }
+
     @Override
     public CompoundTag save(CompoundTag tag, HolderLookup.Provider registries) {
         if (state != null) {
             tag.put(KEY_STATE, NodeNbtCodec.toNbt(StateCodec.write(state)));
         }
         tag.putDouble(KEY_PENDING_HOURS, pendingHours);
+        CompoundTag ledgerTag = new CompoundTag();
+        ledgerTag.put(KEY_LEDGER_BLUEPRINTS,
+                stringList(PlayerLedger.toList(ledger.grantedBlueprints())));
+        ledgerTag.put(KEY_LEDGER_TRACKED, stringList(PlayerLedger.toList(ledger.trackedNations())));
+        ledgerTag.putDouble(KEY_LEDGER_TREASURY, ledger.treasury());
+        ledgerTag.putLong(KEY_LEDGER_DEEP_SEQ, ledger.lastDeepDiveSeq());
+        tag.put(KEY_LEDGER, ledgerTag);
         return tag;
+    }
+
+    /** 字符串集合 → NBT 列表（NBT 的 ListTag 只能放同类型，所以统一用 StringTag）。 */
+    private static net.minecraft.nbt.ListTag stringList(List<String> values) {
+        net.minecraft.nbt.ListTag out = new net.minecraft.nbt.ListTag();
+        for (String v : values) {
+            out.add(net.minecraft.nbt.StringTag.valueOf(v));
+        }
+        return out;
+    }
+
+    private static List<String> readStringList(CompoundTag tag, String key) {
+        List<String> out = new java.util.ArrayList<>();
+        for (Tag t : tag.getList(key, net.minecraft.nbt.Tag.TAG_STRING)) {
+            out.add(t.getAsString());
+        }
+        return out;
     }
 
     private static StatecraftSavedData load(CompoundTag tag, HolderLookup.Provider registries) {
         StatecraftSavedData data = new StatecraftSavedData();
         data.pendingHours = Math.max(0.0, tag.getDouble(KEY_PENDING_HOURS));
+        CompoundTag ledgerTag = tag.getCompound(KEY_LEDGER);
+        data.ledger = new PlayerLedger(
+                PlayerLedger.toSet(readStringList(ledgerTag, KEY_LEDGER_BLUEPRINTS)),
+                PlayerLedger.toSet(readStringList(ledgerTag, KEY_LEDGER_TRACKED)),
+                Math.max(0.0, ledgerTag.getDouble(KEY_LEDGER_TREASURY)),
+                // 老档没有这个键 → getLong 给 0，而 0 是**合法序号**（不是"从未"）
+                ledgerTag.contains(KEY_LEDGER_DEEP_SEQ)
+                        ? ledgerTag.getLong(KEY_LEDGER_DEEP_SEQ) : -1L);
         Tag raw = tag.get(KEY_STATE);
         if (!(raw instanceof CompoundTag stateTag)) {
             return data;
