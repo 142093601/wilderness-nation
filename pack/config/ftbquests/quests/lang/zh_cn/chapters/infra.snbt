@@ -83,4 +83,152 @@
 	"刻上这个时代最大的那项工程。"
 	"下一时代要往外走了：把路、车、补给点先准备好。"
 	]
+	quest.11875898F0862C88.title: "水塔"
+	quest.11875898F0862C88.description: [
+	"主城要有稳定的取水点，不能靠人一桶桶拎。"
+	"泵 + 储罐 + 管道，把水从水源送到用水处——这是后面所有流体产线的样板。"
+	]
+	quest.3AB5B8E562CEDFC4.title: "灌溉渠"
+	quest.3AB5B8E562CEDFC4.description: [
+	"田地要能自己浇上水。耕地离水源远的时候，这一条决定农场能不能扩。"
+	]
+	quest.4E1FABCBDD04417E.title: "排水"
+	quest.4E1FABCBDD04417E.description: [
+	"积水会淹掉矿道与地下室。排水做一遍，比每次被淹了再救省事。"
+	]
+	quest.93622208681F9DFD.title: "路灯成网"
+	quest.93622208681F9DFD.description: [
+	"主路与街巷夜里不刷怪，靠的是连续照明而不是零散几盏。"
+	"这个时代最常见的损失是「回家路上被摸黑打一顿」——路灯直接解决它。"
+	]
+	quest.9BA0FFB7F76C982C.title: "矿道照明"
+	quest.9BA0FFB7F76C982C.description: [
+	"矿道黑一处就等于埋一个雷。照明铺满，掉落与迷路都会少。"
+	]
+	quest.E253DFB73190A6FF.title: "防火隔离"
+	quest.E253DFB73190A6FF.description: [
+	"木构区之间留出石质隔断。这是全包唯一防「一把火烧掉半个城」的手段。"
+	]
+	quest.5F9B091390C9CE12.title: "圈栏与门"
+	quest.5F9B091390C9CE12.description: [
+	"牲畜与农作物要拦住，城门要能控。围栏是城市与野地的实际边界。"
+	]
+	quest.F9E3450496E7962A.title: "瞭望位"
+	quest.F9E3450496E7962A.description: [
+	"视野高于城墙才看得远。发现得早，比打得好更重要。"
+	]
+	quest.C8A37DC682115636.title: "宿舍"
+	quest.C8A37DC682115636.description: [
+	"每人都有一张自己的床（而不是挤在一起）。重生点分散，才不会一锅端。"
+	]
+	quest.AD0C9002D7C1607F.title: "广场"
+	quest.AD0C9002D7C1607F.description: [
+	"集合点要有明确的中心。以后发号施令、分派任务都从这里开始。"
+	]
+	quest.5BFC98166D00E41F.title: "分区仓库"
+	quest.5BFC98166D00E41F.description: [
+	"每个工坊旁边一个小仓，不要所有东西都往总仓跑。"
+	"这一步省的是「来回走路」，它比任何自动化都先见效。"
+	]
+	quest.1681123594D42BFD.title: "修理台"
+	quest.1681123594D42BFD.description: [
+	"工具要有地方修。附魔与耐久管理的落脚点在这里。"
+	]
+	quest.D86302E03CFB2898.title: "林木场"
+	quest.D86302E03CFB2898.description: [
+	"原木是最耗的原料。有计划地种与砍，比每次缺了才出去伐一片强。"
+	]
+	quest.E82C15BBCE5763B4.title: "石料场"
+	quest.E82C15BBCE5763B4.description: [
+	"建城的石头要成规模地来。一台钻机配一条传送带，就是一个石料场。"
+	]
+	quest.F33E6F0E75CD1091.title: "矿石处理线"
+	quest.F33E6F0E75CD1091.description: [
+	"矿石进来、粉碎、进熔炉——整条线一个人都不用站。"
+	"这是「基建」这个时代最典型的产物。"
+	]
+	quest.6FD93447844D5A76.title: "批量烧炼"
+	quest.6FD93447844D5A76.description: [
+	"鼓风机吹熔岩做批量烧炼，比一排熔炉省燃料也省地方。"
+	]
+	quest.4F56997EC674B4BE.title: "混凝土与建材"
+	quest.4F56997EC674B4BE.description: [
+	"建材要能成批出。混凝土让「大体积建筑」变得现实。"
+	]
+	quest.1F30845A116606AF.title: "砖窑"
+	quest.1F30845A116606AF.description: [
+	"砖是城里最常见的墙面材料。有了砖窑，建筑不再受「手上有什么」限制。"
+	]
+	quest.AC7F2C94C5F50E11.title: "石砖线"
+	quest.AC7F2C94C5F50E11.description: [
+	"石砖是城墙、道路、广场的通用件。批量产出，才有资格谈规模。"
+	]
+	quest.F8C0C9F7B1FF49D0.title: "锯木场"
+	quest.F8C0C9F7B1FF49D0.description: [
+	"原木进来、木板出去。把「砍」和「加工」放在同一处，省一趟运输。"
+	]
+	quest.26ADC35A2CA0B3A6.title: "石作场"
+	quest.26ADC35A2CA0B3A6.description: [
+	"石阶、石砖、磨制石料集中在一处加工。"
+	"同一种原料的多种形态放在一起，找起来才不费劲。"
+	]
+	quest.FFE2ED9656922065.title: "羊毛场"
+	quest.FFE2ED9656922065.description: [
+	"羊毛是床、地毯、旗帜的原料，也是最早能自动化的畜产。"
+	]
+	quest.668625570B5D23BE.title: "染料线"
+	quest.668625570B5D23BE.description: [
+	"有颜色才有区分度：队伍标识、建筑分区、地图标记都靠它。"
+	]
+	quest.7E423EA24AA40836.title: "造纸线"
+	quest.7E423EA24AA40836.description: [
+	"纸是地图、书、图纸的前置。地图墙那一章要的纸从这里来。"
+	]
+	quest.75DFEB9C40F9FBC3.title: "玻璃线"
+	quest.75DFEB9C40F9FBC3.description: [
+	"窗、温室、观察孔都要玻璃。用鼓风机批量烧，比一炉一炉快得多。"
+	]
+	quest.786D1545AFBDCF71.title: "炭窑"
+	quest.786D1545AFBDCF71.description: [
+	"燃料要提前备。炭比原木耐烧，也免了跟煤抢产量。"
+	]
+	quest.993F5DBB86D7FD03.title: "桥"
+	quest.993F5DBB86D7FD03.description: [
+	"路遇到水就断了。桥是把路网连成网的关键一件。"
+	]
+	quest.49ACCAF3D5A94B07.title: "隧道"
+	quest.49ACCAF3D5A94B07.description: [
+	"穿山比绕山省时间。隧道打通一次，之后每次都省。"
+	]
+	quest.DCC982E7823FBB5F.title: "区域路牌"
+	quest.DCC982E7823FBB5F.description: [
+	"每个岔口有牌子指向目的地。多人一起玩时，这一条省的是所有人的问路时间。"
+	]
+	quest.36F190164EE15610.title: "补给点"
+	quest.36F190164EE15610.description: [
+	"远路上要有补给：食物、工具、备用装备。"
+	"有补给点，远征半径才真的能扩大。"
+	]
+	quest.8426F12D15F228D6.title: "邮包分拣"
+	quest.8426F12D15F228D6.description: [
+	"远距离点对点送东西，不用人跑。"
+	"配合铁路/传送，这是「人不动、货能动」的开始。"
+	]
+	quest.B62EEA3E007AEE91.title: "大宗储备"
+	quest.B62EEA3E007AEE91.description: [
+	"常用建材要有安全库存，不要每次现凑。"
+	"多人建造最怕「材料不够、全员停工」——储备就是解决它。"
+	]
+	quest.6CD7F5AB7DF4943E.title: "工位与工具墙"
+	quest.6CD7F5AB7DF4943E.description: [
+	"每个工坊有自己的工具位与备用工具。找工具的时间也是成本。"
+	]
+	quest.882CA8C303153C95.title: "燃料储备"
+	quest.882CA8C303153C95.description: [
+	"熔炉、蒸汽机、列车都吃燃料。储备见底时整座城会一起停摆。"
+	]
+	quest.69CFAD8435DF0EAA.title: "粮食储备"
+	quest.69CFAD8435DF0EAA.description: [
+	"闹饥荒的代价远大于囤粮占的地方。这一条是「能撑过意外」的底线。"
+	]
 }

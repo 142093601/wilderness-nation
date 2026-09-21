@@ -78,7 +78,7 @@ hash = "b42a5ef3e3bae8eb9d0230d153f63215bbf6e9f2de7e662997bd5475f4ae3030"
 
 [[files]]
 file = "config/ftbquests/quests/chapters/infra.snbt"
-hash = "d60f0b3f783e9860c4a702e41310ab9670e7eba9d9805173bd72853b10c6f9d4"
+hash = "d4c2f45a9afda551b5e4d934b28b18411df053a7cb14da437dbfc5ed0cf7d152"
 
 [[files]]
 file = "config/ftbquests/quests/chapters/landing.snbt"
@@ -178,7 +178,7 @@ hash = "71ca71fe24602dad8a7ba3d7cb465c55f4c3292cb15031f2b7be26539b547ebc"
 
 [[files]]
 file = "config/ftbquests/quests/lang/zh_cn/chapters/infra.snbt"
-hash = "f04fda1e7d6886dc94becbdfaa00965883ebe5c86d61981b0c41ab347b7da94a"
+hash = "2e7f00816bb20e6a60ab350f9681d324df76403a925390b49ceacbb60e4fe275"
 
 [[files]]
 file = "config/ftbquests/quests/lang/zh_cn/chapters/landing.snbt"
