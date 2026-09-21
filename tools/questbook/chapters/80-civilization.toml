@@ -283,3 +283,474 @@ rewards = [
 	{ type = "xp", xp = 200 },
 	{ type = "toast" },
 ]
+
+# ================= 追加：公共建筑与市政（2026-09-22）=================
+# 原章讲的是「时代里程碑」（大工程/国史/毕业/分区/图书馆/第二城/终局碑），
+# 这次补的是它们之间的公共设施与社会性内容。
+# 判据只用已核验过的 vanilla 物品与确定存在的 Create 物品 —— 不凭空造 mod id。
+
+[[quest]]
+name = "rail_network"
+title = "轨道成网"
+desc = [
+	"两座城之间要有固定班次，而不是想起才走一趟。",
+	"轨道成网之后，「距离」这个成本才第一次真正下降。",
+]
+icon = "create:track"
+shape = "circle"
+size = 1.2
+deps = ["second_city"]
+tasks = [
+	{ type = "item", item = "create:track", count = 256 },
+	{ type = "item", item = "create:track_station", count = 2 },
+]
+
+[[quest]]
+name = "aqueduct"
+title = "引水渠"
+desc = [
+	"把水从远处引到城里，而不是城里迁就水源。",
+	"有引水渠，城市选址才不再被水绑住。",
+]
+icon = "minecraft:water_bucket"
+shape = "circle"
+size = 1.2
+deps = ["avenues"]
+tasks = [
+	{ type = "item", item = "minecraft:water_bucket", count = 8 },
+	{ type = "item", item = "minecraft:stone_bricks", count = 64 },
+]
+
+[[quest]]
+name = "central_plaza"
+title = "中央广场"
+desc = [
+	"全城的人能聚在一处。集合、公告、庆典都需要一个中心。",
+]
+icon = "minecraft:bell"
+shape = "circle"
+size = 1.2
+deps = ["avenues"]
+tasks = [
+	{ type = "item", item = "minecraft:bell", count = 2 },
+]
+
+[[quest]]
+name = "public_transport"
+title = "城内公共交通"
+desc = [
+	"城里大到走路嫌远时，就该有代步。这一条决定城市还能不能继续扩。",
+]
+icon = "minecraft:rail"
+shape = "circle"
+size = 1.2
+deps = ["central_plaza"]
+tasks = [
+	{ type = "item", item = "minecraft:rail", count = 128 },
+	{ type = "item", item = "minecraft:minecart", count = 4 },
+]
+
+[[quest]]
+name = "harbor"
+title = "码头"
+desc = [
+	"临水的城市，水运比陆运便宜。码头是另一条交通线。",
+]
+icon = "minecraft:oak_boat"
+shape = "circle"
+size = 1.2
+deps = ["aqueduct"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_boat", count = 2 },
+	{ type = "item", item = "minecraft:barrel", count = 8 },
+]
+
+[[quest]]
+name = "town_hall"
+title = "市政厅"
+desc = [
+	"议事、存档、发公告固定在一处。国策与档案要有实体落点。",
+]
+icon = "minecraft:lectern"
+shape = "circle"
+size = 1.2
+deps = ["great_hall"]
+tasks = [
+	{ type = "item", item = "minecraft:lectern", count = 4 },
+	{ type = "item", item = "minecraft:bookshelf", count = 8 },
+]
+
+[[quest]]
+name = "post_office"
+title = "邮驿"
+desc = [
+	"信件与包裹有固定收发的点。人不在时东西也不会丢在路边。",
+]
+icon = "minecraft:barrel"
+shape = "circle"
+size = 1.2
+deps = ["signposts"]
+tasks = [
+	{ type = "item", item = "minecraft:barrel", count = 8 },
+]
+
+[[quest]]
+name = "fire_brigade"
+title = "消防站"
+desc = [
+	"木构城市最大的风险是火。常备水源与取水点，比事后重建便宜。",
+]
+icon = "minecraft:water_bucket"
+shape = "circle"
+size = 1.2
+deps = ["districts"]
+tasks = [
+	{ type = "item", item = "minecraft:water_bucket", count = 16 },
+	{ type = "item", item = "minecraft:cauldron", count = 4 },
+]
+
+[[quest]]
+name = "clinic"
+title = "医馆"
+desc = [
+	"药水与急救集中在一处。多人一起玩时，这一条省的是所有人的死亡成本。",
+]
+icon = "minecraft:brewing_stand"
+shape = "circle"
+size = 1.2
+deps = ["districts"]
+tasks = [
+	{ type = "item", item = "minecraft:brewing_stand", count = 1 },
+	{ type = "item", item = "minecraft:cauldron", count = 2 },
+]
+
+[[quest]]
+name = "census"
+title = "户籍与登记"
+desc = [
+	"谁住在哪、负责什么，写下来。人一多，口头分工就开始失效。",
+]
+icon = "minecraft:writable_book"
+shape = "circle"
+size = 1.2
+deps = ["town_hall"]
+tasks = [
+	{ type = "item", item = "minecraft:writable_book", count = 4 },
+	{ type = "item", item = "minecraft:book", count = 16 },
+]
+
+[[quest]]
+name = "public_kitchen"
+title = "公共食堂升级"
+desc = [
+	"从「能吃饱」到「有选择」。这一条影响的是长期留人。",
+]
+icon = "minecraft:campfire"
+shape = "circle"
+size = 1.2
+deps = ["districts"]
+tasks = [
+	{ type = "item", item = "minecraft:campfire", count = 8 },
+	{ type = "item", item = "minecraft:smoker", count = 4 },
+]
+
+[[quest]]
+name = "statues"
+title = "雕像与纪念碑"
+desc = [
+	"把重要的人与事做成看得见的东西。城市与营地的区别在这里。",
+]
+icon = "minecraft:chiseled_stone_bricks"
+shape = "circle"
+size = 1.2
+deps = ["avenues"]
+tasks = [
+	{ type = "item", item = "minecraft:chiseled_stone_bricks", count = 32 },
+]
+
+[[quest]]
+name = "theater"
+title = "剧场"
+desc = [
+	"有个专门给娱乐的地方。这一条是「有余力之后」的第一个信号。",
+]
+icon = "minecraft:note_block"
+shape = "circle"
+size = 1.2
+deps = ["central_plaza"]
+tasks = [
+	{ type = "item", item = "minecraft:note_block", count = 16 },
+	{ type = "item", item = "minecraft:jukebox", count = 1 },
+]
+
+[[quest]]
+name = "arena"
+title = "竞技场"
+desc = [
+	"比试与演练的场地。军事训练与节日活动可以共用同一处。",
+]
+icon = "minecraft:stone_brick_stairs"
+shape = "circle"
+size = 1.2
+deps = ["central_plaza"]
+tasks = [
+	{ type = "item", item = "minecraft:stone_brick_stairs", count = 64 },
+]
+
+[[quest]]
+name = "fountain"
+title = "喷泉与园林"
+desc = [
+	"纯装饰，但它决定城市给人的第一印象。",
+]
+icon = "minecraft:prismarine_bricks"
+shape = "circle"
+size = 1.2
+deps = ["central_plaza"]
+tasks = [
+	{ type = "item", item = "minecraft:prismarine_bricks", count = 32 },
+	{ type = "item", item = "minecraft:lantern", count = 16 },
+]
+
+[[quest]]
+name = "banners"
+title = "旗帜与徽记"
+desc = [
+	"统一的旗帜与配色，让队伍在远处也认得出自己人。",
+]
+icon = "minecraft:white_banner"
+shape = "circle"
+size = 1.2
+deps = ["statues"]
+tasks = [
+	{ type = "item", item = "minecraft:white_banner", count = 8 },
+	{ type = "item", item = "minecraft:white_dye", count = 16 },
+]
+
+[[quest]]
+name = "school"
+title = "学堂"
+desc = [
+	"把已知的东西教给后来的人。新人上手快慢直接取决于这一条。",
+]
+icon = "minecraft:bookshelf"
+shape = "circle"
+size = 1.2
+deps = ["library"]
+tasks = [
+	{ type = "item", item = "minecraft:bookshelf", count = 16 },
+	{ type = "item", item = "minecraft:lectern", count = 4 },
+]
+
+[[quest]]
+name = "observatory"
+title = "观星台"
+desc = [
+	"观测昼夜与天象，也是全城最高的视野点。",
+]
+icon = "minecraft:spyglass"
+shape = "circle"
+size = 1.2
+deps = ["library"]
+tasks = [
+	{ type = "item", item = "minecraft:spyglass", count = 1 },
+	{ type = "item", item = "minecraft:daylight_detector", count = 2 },
+]
+
+[[quest]]
+name = "archive"
+title = "档案库"
+desc = [
+	"国史、条约、图纸分门别类存放。找得到，才算留下来。",
+]
+icon = "minecraft:chest"
+shape = "circle"
+size = 1.2
+deps = ["national_history"]
+tasks = [
+	{ type = "item", item = "minecraft:chest", count = 16 },
+	{ type = "item", item = "minecraft:barrel", count = 8 },
+]
+
+[[quest]]
+name = "map_room"
+title = "舆图室"
+desc = [
+	"地图集中管理并持续更新。远征与外交都从这里取资料。",
+]
+icon = "minecraft:cartography_table"
+shape = "circle"
+size = 1.2
+deps = ["signposts"]
+tasks = [
+	{ type = "item", item = "minecraft:cartography_table", count = 2 },
+	{ type = "item", item = "minecraft:filled_map", count = 8 },
+]
+
+[[quest]]
+name = "printing"
+title = "印刷"
+desc = [
+	"让书与告示能成批出。知识传播的成本降下来，城市才算有文化。",
+]
+icon = "minecraft:paper"
+shape = "circle"
+size = 1.2
+deps = ["school"]
+tasks = [
+	{ type = "item", item = "minecraft:paper", count = 64 },
+	{ type = "item", item = "minecraft:book", count = 16 },
+]
+
+[[quest]]
+name = "wall_upgrade"
+title = "城墙升级"
+desc = [
+	"主城墙体换成石质并加高。文明时代的城市不该再用土墙。",
+]
+icon = "minecraft:stone_bricks"
+shape = "circle"
+size = 1.2
+deps = ["districts"]
+tasks = [
+	{ type = "item", item = "minecraft:stone_bricks", count = 256 },
+]
+
+[[quest]]
+name = "watch_towers"
+title = "烽燧体系"
+desc = [
+	"边域到主城的视觉信号链。发现敌情到全城反应之间的时间靠它压缩。",
+]
+icon = "minecraft:campfire"
+shape = "circle"
+size = 1.2
+deps = ["wall_upgrade"]
+tasks = [
+	{ type = "item", item = "minecraft:campfire", count = 8 },
+	{ type = "item", item = "minecraft:scaffolding", count = 16 },
+]
+
+[[quest]]
+name = "armory"
+title = "武库"
+desc = [
+	"装备集中存放与维护。临时找装备是最常见的失手原因。",
+]
+icon = "minecraft:barrel"
+shape = "circle"
+size = 1.2
+deps = ["wall_upgrade"]
+tasks = [
+	{ type = "item", item = "minecraft:barrel", count = 16 },
+	{ type = "item", item = "minecraft:anvil", count = 2 },
+]
+
+[[quest]]
+name = "embassy"
+title = "使馆"
+desc = [
+	"专门接待外邦的地方。外交要有实体场所，才不像临时串门。",
+]
+icon = "minecraft:oak_sign"
+shape = "circle"
+size = 1.2
+deps = ["town_hall"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_sign", count = 8 },
+	{ type = "item", item = "minecraft:lectern", count = 2 },
+]
+
+[[quest]]
+name = "border_markers"
+title = "界碑"
+desc = [
+	"国土边界要有可见的标记。争议往往起源于「这里算谁的」不清楚。",
+]
+icon = "minecraft:chiseled_stone_bricks"
+shape = "circle"
+size = 1.2
+deps = ["embassy"]
+tasks = [
+	{ type = "item", item = "minecraft:chiseled_stone_bricks", count = 16 },
+]
+
+[[quest]]
+name = "wonder"
+title = "奇观"
+desc = [
+	"全城最费工的那一件。它不解决任何生产问题，只回答「我们做到了什么」。",
+	"文明时代的意义在这里——不是为了活下去而建。",
+]
+icon = "minecraft:beacon"
+shape = "circle"
+size = 1.2
+deps = ["grand_lighting", "gardens"]
+tasks = [
+	{ type = "item", item = "minecraft:beacon", count = 1 },
+	{ type = "item", item = "minecraft:nether_star", count = 1 },
+]
+
+[[quest]]
+name = "air_dock"
+title = "空港"
+desc = [
+	"垂直方向的交通枢纽：接飞行器、飞艇或高空轨道。",
+	"城市往上长之后，这一层迟早要有。",
+]
+icon = "create:track_station"
+shape = "circle"
+size = 1.2
+deps = ["rail_network"]
+tasks = [
+	{ type = "item", item = "create:track_station", count = 2 },
+	{ type = "item", item = "minecraft:scaffolding", count = 32 },
+]
+
+[[quest]]
+name = "central_exchange"
+title = "总仓与调配中心"
+desc = [
+	"全城物资的总入口与总出口，产能与消耗在这里对账。",
+]
+icon = "create:item_vault"
+shape = "circle"
+size = 1.2
+deps = ["full_auto_storage"]
+tasks = [
+	{ type = "item", item = "create:item_vault", count = 16 },
+	{ type = "item", item = "create:stock_ticker", count = 1 },
+]
+
+[[quest]]
+name = "night_city"
+title = "不夜城"
+desc = [
+	"夜间全城无死角照明。它是「文明」最直观的样子——",
+	"从远处看，一座亮着的城和一片营地完全不同。",
+]
+icon = "minecraft:lantern"
+shape = "circle"
+size = 1.2
+deps = ["grand_lighting"]
+tasks = [
+	{ type = "item", item = "minecraft:lantern", count = 64 },
+	{ type = "item", item = "minecraft:sea_lantern", count = 32 },
+]
+
+[[quest]]
+name = "monorail_cross"
+title = "城际干线"
+desc = [
+	"多城之间的主干线，固定班次、双向运行。",
+	"到这一步，「国家」在交通上才真的连成一体。",
+]
+icon = "create:track"
+shape = "circle"
+size = 1.2
+deps = ["rail_network", "air_dock"]
+tasks = [
+	{ type = "item", item = "create:track", count = 256 },
+	{ type = "item", item = "create:track_signal", count = 4 },
+]
+

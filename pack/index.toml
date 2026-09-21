@@ -42,7 +42,7 @@ hash = "1303f296fdede56ea2cee858a5e8b109cbd8cdea189bc612234d4ba98d4632c2"
 
 [[files]]
 file = "config/ftbquests/quests/chapters/civilization.snbt"
-hash = "5a98da2be7c5b7d22c9bef25c38dc24612325ee7a4addd3e1d257bf846375e9d"
+hash = "dd95038b8717ffe4ad5d879cac29a11a778a60135377301442583418a37ab929"
 
 [[files]]
 file = "config/ftbquests/quests/chapters/claims.snbt"
@@ -142,7 +142,7 @@ hash = "686307bf9f9b400405cdc2038ef9820ff676c1df0afa66785aeb8269f836b608"
 
 [[files]]
 file = "config/ftbquests/quests/lang/zh_cn/chapters/civilization.snbt"
-hash = "b46dc8435b7389a88ea8dc54bdd6d84ce3c7fed5bcd08909e98fe368fb0da40a"
+hash = "2949915f3588c33cbc96ca63963374272d98364ec415910337b701c6ef57bdbc"
 
 [[files]]
 file = "config/ftbquests/quests/lang/zh_cn/chapters/claims.snbt"

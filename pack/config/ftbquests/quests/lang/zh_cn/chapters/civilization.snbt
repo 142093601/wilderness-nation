@@ -77,4 +77,134 @@
 	"最后一个时代的碑。刻完它，你们就有了一个「玩完了但还想再待一会儿」的世界。"
 	"之后进入无尽纪元：每 5 年一个新纪元，不设数值膨胀，只加横向目标。"
 	]
+	quest.997B94B09C1E6DEC.title: "轨道成网"
+	quest.997B94B09C1E6DEC.description: [
+	"两座城之间要有固定班次，而不是想起才走一趟。"
+	"轨道成网之后，「距离」这个成本才第一次真正下降。"
+	]
+	quest.4693FD9882C5E5FE.title: "引水渠"
+	quest.4693FD9882C5E5FE.description: [
+	"把水从远处引到城里，而不是城里迁就水源。"
+	"有引水渠，城市选址才不再被水绑住。"
+	]
+	quest.5DF0B0361DC527B0.title: "中央广场"
+	quest.5DF0B0361DC527B0.description: [
+	"全城的人能聚在一处。集合、公告、庆典都需要一个中心。"
+	]
+	quest.2593DB6D03790981.title: "城内公共交通"
+	quest.2593DB6D03790981.description: [
+	"城里大到走路嫌远时，就该有代步。这一条决定城市还能不能继续扩。"
+	]
+	quest.E928944C01D980E4.title: "码头"
+	quest.E928944C01D980E4.description: [
+	"临水的城市，水运比陆运便宜。码头是另一条交通线。"
+	]
+	quest.C16DA4B6E76291E4.title: "市政厅"
+	quest.C16DA4B6E76291E4.description: [
+	"议事、存档、发公告固定在一处。国策与档案要有实体落点。"
+	]
+	quest.745B5127AC6C527C.title: "邮驿"
+	quest.745B5127AC6C527C.description: [
+	"信件与包裹有固定收发的点。人不在时东西也不会丢在路边。"
+	]
+	quest.51DAACD36A7BFE0D.title: "消防站"
+	quest.51DAACD36A7BFE0D.description: [
+	"木构城市最大的风险是火。常备水源与取水点，比事后重建便宜。"
+	]
+	quest.A33D507682D80752.title: "医馆"
+	quest.A33D507682D80752.description: [
+	"药水与急救集中在一处。多人一起玩时，这一条省的是所有人的死亡成本。"
+	]
+	quest.1D75E0E63FA16A11.title: "户籍与登记"
+	quest.1D75E0E63FA16A11.description: [
+	"谁住在哪、负责什么，写下来。人一多，口头分工就开始失效。"
+	]
+	quest.62A253470CA10A86.title: "公共食堂升级"
+	quest.62A253470CA10A86.description: [
+	"从「能吃饱」到「有选择」。这一条影响的是长期留人。"
+	]
+	quest.1A76E6F4AA256193.title: "雕像与纪念碑"
+	quest.1A76E6F4AA256193.description: [
+	"把重要的人与事做成看得见的东西。城市与营地的区别在这里。"
+	]
+	quest.D096DE9A1F548BEB.title: "剧场"
+	quest.D096DE9A1F548BEB.description: [
+	"有个专门给娱乐的地方。这一条是「有余力之后」的第一个信号。"
+	]
+	quest.7EBB4E43A92644B3.title: "竞技场"
+	quest.7EBB4E43A92644B3.description: [
+	"比试与演练的场地。军事训练与节日活动可以共用同一处。"
+	]
+	quest.4CBB324884B7C5F7.title: "喷泉与园林"
+	quest.4CBB324884B7C5F7.description: [
+	"纯装饰，但它决定城市给人的第一印象。"
+	]
+	quest.62B7C3114E2F2AC8.title: "旗帜与徽记"
+	quest.62B7C3114E2F2AC8.description: [
+	"统一的旗帜与配色，让队伍在远处也认得出自己人。"
+	]
+	quest.7EE981A85927A858.title: "学堂"
+	quest.7EE981A85927A858.description: [
+	"把已知的东西教给后来的人。新人上手快慢直接取决于这一条。"
+	]
+	quest.F7EF0BAC35A9DB1F.title: "观星台"
+	quest.F7EF0BAC35A9DB1F.description: [
+	"观测昼夜与天象，也是全城最高的视野点。"
+	]
+	quest.A1AAF21EF4E5AB36.title: "档案库"
+	quest.A1AAF21EF4E5AB36.description: [
+	"国史、条约、图纸分门别类存放。找得到，才算留下来。"
+	]
+	quest.031B800D0E040846.title: "舆图室"
+	quest.031B800D0E040846.description: [
+	"地图集中管理并持续更新。远征与外交都从这里取资料。"
+	]
+	quest.73D065E64BE06504.title: "印刷"
+	quest.73D065E64BE06504.description: [
+	"让书与告示能成批出。知识传播的成本降下来，城市才算有文化。"
+	]
+	quest.CC4DD7A0AD18C7B1.title: "城墙升级"
+	quest.CC4DD7A0AD18C7B1.description: [
+	"主城墙体换成石质并加高。文明时代的城市不该再用土墙。"
+	]
+	quest.46DD6C76D4966FFC.title: "烽燧体系"
+	quest.46DD6C76D4966FFC.description: [
+	"边域到主城的视觉信号链。发现敌情到全城反应之间的时间靠它压缩。"
+	]
+	quest.CD0EF529ED449196.title: "武库"
+	quest.CD0EF529ED449196.description: [
+	"装备集中存放与维护。临时找装备是最常见的失手原因。"
+	]
+	quest.728C837671478C5A.title: "使馆"
+	quest.728C837671478C5A.description: [
+	"专门接待外邦的地方。外交要有实体场所，才不像临时串门。"
+	]
+	quest.97275EBF713D9B98.title: "界碑"
+	quest.97275EBF713D9B98.description: [
+	"国土边界要有可见的标记。争议往往起源于「这里算谁的」不清楚。"
+	]
+	quest.7EE143E6B5A05854.title: "奇观"
+	quest.7EE143E6B5A05854.description: [
+	"全城最费工的那一件。它不解决任何生产问题，只回答「我们做到了什么」。"
+	"文明时代的意义在这里——不是为了活下去而建。"
+	]
+	quest.546F5606DB552237.title: "空港"
+	quest.546F5606DB552237.description: [
+	"垂直方向的交通枢纽：接飞行器、飞艇或高空轨道。"
+	"城市往上长之后，这一层迟早要有。"
+	]
+	quest.CCE74A94AC6E9130.title: "总仓与调配中心"
+	quest.CCE74A94AC6E9130.description: [
+	"全城物资的总入口与总出口，产能与消耗在这里对账。"
+	]
+	quest.DBF0EAA65F56581E.title: "不夜城"
+	quest.DBF0EAA65F56581E.description: [
+	"夜间全城无死角照明。它是「文明」最直观的样子——"
+	"从远处看，一座亮着的城和一片营地完全不同。"
+	]
+	quest.F11E8B5178568FC2.title: "城际干线"
+	quest.F11E8B5178568FC2.description: [
+	"多城之间的主干线，固定班次、双向运行。"
+	"到这一步，「国家」在交通上才真的连成一体。"
+	]
 }
