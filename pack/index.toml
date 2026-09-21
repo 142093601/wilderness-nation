@@ -50,7 +50,7 @@ hash = "b952ba45a917cc67d914f0b27796646e3706bfc0a0ead173ca1016d6d11f29bb"
 
 [[files]]
 file = "config/ftbquests/quests/chapters/create.snbt"
-hash = "338b18e5c9e897e634d4bd8478f2eca38846427361268963250872974b11575d"
+hash = "c150da4f70e6f95973cf7bf0319a58b79d8187fe3df3676e2d170ec50cd8b59b"
 
 [[files]]
 file = "config/ftbquests/quests/chapters/defense.snbt"
@@ -150,11 +150,11 @@ hash = "fecfec0148c0c4075723900330d21399cd1f632563b3146f5542dbbb3a6ed9ac"
 
 [[files]]
 file = "config/ftbquests/quests/lang/zh_cn/chapters/create.snbt"
-hash = "24a45699ba18f3cd7eadcc8c7e7cde11579a63e7c50db120bbdc45cf0d51a5fe"
+hash = "dc61f0bb7c8065150d4f2d35bde8cb7c764c8141532d9478d4cd3f8d3c93e0ba"
 
 [[files]]
 file = "config/ftbquests/quests/lang/zh_cn/chapters/defense.snbt"
-hash = "caf2f38fc09635f0867a31dfd8419efb6b84cafbedf2b46cbe98067f1fa029bc"
+hash = "80286e6dd63764516c7bfa7a01a6a241ff4f66e831951d27cf8b3b1c6a84b205"
 
 [[files]]
 file = "config/ftbquests/quests/lang/zh_cn/chapters/defense_era.snbt"
@@ -178,15 +178,15 @@ hash = "71ca71fe24602dad8a7ba3d7cb465c55f4c3292cb15031f2b7be26539b547ebc"
 
 [[files]]
 file = "config/ftbquests/quests/lang/zh_cn/chapters/infra.snbt"
-hash = "932c44254c229c15a2e016fb9d140dc08ed9af6db294e80a3acffe41f7950eaa"
+hash = "f04fda1e7d6886dc94becbdfaa00965883ebe5c86d61981b0c41ab347b7da94a"
 
 [[files]]
 file = "config/ftbquests/quests/lang/zh_cn/chapters/landing.snbt"
-hash = "d8a238382477f8960a0c62fe34270b64ce6d094eb7e53584cc3dfa2b46638d52"
+hash = "5946ada2f1b357e891c5ddb13ba6f414b5573a0ee5419fd7780dbfd2a68eefd1"
 
 [[files]]
 file = "config/ftbquests/quests/lang/zh_cn/chapters/prologue.snbt"
-hash = "7499593437679a996b9bd2c6afae556f7dddb2c376d5053138f11e7d71e1e9c0"
+hash = "f19ff40ea3ed5c8d58521e963bcff948dd7e297a2a4589a3521cf4347bbeb3d8"
 
 [[files]]
 file = "config/ftbquests/quests/lang/zh_cn/chapters/steam.snbt"

@@ -7,10 +7,17 @@
 #
 # PLAN-questbook.md 根本约束 4：**不重复 mod 自己的教学**。
 # Create 自带 Ponder（每个方块都有动画说明），所以这一章：
-#   ✗ 不讲"这台机器怎么用"
-#   ✓ 只讲"先做哪台、为什么"——判据直接用 Create 自己的进度（共 1150 条，实测）
+#   ✗ 不讲"这台机器怎么用"（那是 Ponder 的活）
+#   ✓ 只讲"先做哪台、为什么、它在流程里的位置"
 #
-# 判据来源：Create 的 advancement 路径（`data/create/advancement/*.json`，实测存在）。
+# 判据来源（均已实测）：
+#   · Create 的真实 advancement（`create:hand_crank_000` 等，共 1150 条，其中
+#     `create:recipes/*` 是配方解锁、不是游戏内进度，**不能当判据**）
+#   · 没有对应进度的条目一律用 `item`（与 ATM10 的写法一致）
+#
+# 布局：手工紧凑网格（列宽 2.0 / 行高 2.0）。ATM10 的 Create 章 90 任务只占
+# 16.5×19 的坐标范围，而我们原来 15 个任务就散到 5.8×12.3 —— 稀疏。
+# 自动布局会把几乎每条都放到新的一行，任务一多就变成一堵高墙，所以这里显式给 x/y。
 
 key = "create"
 title = "机械动力"
@@ -21,76 +28,349 @@ order_index = 20
 
 grid = { step = 1.5, row_h = 1.75 }
 
-# ---------------- 起点 ----------------
 
 [[quest]]
 name = "first_crank"
 title = "从手摇开始"
 desc = [
-	"这一章不讲机器怎么用——Create 自己带 Ponder 动画（对着方块按 W 就能看）。",
+	"这一章不讲机器怎么用——Create 自带 Ponder 动画（对着方块按 W 就能看）。",
 	"这里只回答「先做哪台、为什么」。第一步：手摇曲柄 + 一个传动件，让它转起来。",
 ]
 icon = "create:hand_crank"
 shape = "pentagon"
 size = 2.0
+x = -6.0
+y = 6.0
 tasks = [
 	{ type = "advancement", advancement = "create:hand_crank_000" },
+]
+
+[[quest]]
+name = "wrench"
+title = "扳手"
+desc = [
+	"整包最该先做的一件东西。它不只是工具：旋转方块、拆下方块、改机器朝向、",
+	"设置漏斗与管道的过滤，全靠它。没有它，后面每一步都要绕路。",
+]
+icon = "create:wrench"
+shape = "rsquare"
+size = 1.5
+deps = ["first_crank"]
+x = -4.0
+y = 4.0
+tasks = [
+	{ type = "item", item = "create:wrench", count = 1 },
+]
+
+[[quest]]
+name = "goggles"
+title = "工程师护目镜"
+desc = [
+	"戴上它才能「看见」应力：哪个机器超载、整条线还剩多少余量。",
+	"机械动力里最常见的故障是应力打满，而护目镜是唯一能直接看出这件事的手段。",
+]
+icon = "create:goggles"
+shape = "rsquare"
+size = 1.5
+deps = ["first_crank"]
+x = -6.0
+y = 2.0
+tasks = [
+	{ type = "item", item = "create:goggles", count = 1 },
+]
+
+[[quest]]
+name = "wind_or_water"
+title = "第一台水车"
+desc = [
+	"手摇只能应急。水车是最便宜的自持动力源：只要旁边有流水，它就一直转。",
+	"选址要求不高，适合做第一条真正能连续运转的产线。",
+]
+icon = "create:water_wheel"
+shape = "rsquare"
+size = 1.5
+deps = ["first_crank"]
+x = -2.0
+y = 4.0
+tasks = [
+	{ type = "item", item = "create:water_wheel", count = 1 },
+]
+
+[[quest]]
+name = "large_water_wheel"
+title = "大水车"
+desc = [
+	"同面积下转速更低、应力更高。要拖大机器、又不想铺一长排小水车时用它。",
+]
+icon = "create:large_water_wheel"
+shape = "circle"
+size = 1.2
+deps = ["wind_or_water"]
+x = 0.0
+y = 4.0
+tasks = [
+	{ type = "item", item = "create:large_water_wheel", count = 1 },
+]
+
+[[quest]]
+name = "windmill"
+title = "风车"
+desc = [
+	"水车受地形限制，风车不受：装在高处就能出动力。代价是占地大、叶片要多。",
+	"它是从「靠地形」走向「自己造动力」的中间一步。",
+]
+icon = "create:windmill_bearing"
+shape = "rsquare"
+size = 1.5
+deps = ["wind_or_water"]
+x = -2.0
+y = 2.0
+tasks = [
+	{ type = "advancement", advancement = "create:windmill" },
+	{ type = "item", item = "create:sail_frame", count = 1 },
+]
+
+[[quest]]
+name = "windmill_maxed"
+title = "把风车拉满"
+desc = [
+	"满叶片的风车能顶好几台水车。做到这一步，前期动力基本不用再操心。",
+]
+icon = "create:white_sail"
+shape = "circle"
+size = 1.2
+deps = ["windmill"]
+x = 0.0
+y = 2.0
+tasks = [
+	{ type = "advancement", advancement = "create:windmill_maxed" },
+]
+
+[[quest]]
+name = "shaft"
+title = "传动杆"
+desc = [
+	"动力的「电线」。所有旋转都要靠它从一个地方送到另一个地方。",
+	"先囤一把：后面每加一台机器都要用。",
+]
+icon = "create:shaft"
+shape = "rsquare"
+size = 1.5
+deps = ["first_crank"]
+x = -6.0
+y = 0.0
+tasks = [
+	{ type = "item", item = "create:shaft", count = 8 },
+]
+
+[[quest]]
+name = "cogwheel"
+title = "小齿轮"
+desc = [
+	"两个齿轮咬在一起 = 换向 + 换速。它是传动链里最基本的连接件。",
+]
+icon = "create:cogwheel"
+shape = "circle"
+size = 1.2
+deps = ["shaft"]
+x = -4.0
+y = 0.0
+tasks = [
+	{ type = "item", item = "create:cogwheel", count = 4 },
+]
+
+[[quest]]
+name = "large_cogwheel"
+title = "大齿轮"
+desc = [
+	"大带小时转速升高、应力降低；小带大相反。",
+	"需要「转得更快」的机器（比如锯）就得靠它。",
+]
+icon = "create:large_cogwheel"
+shape = "circle"
+size = 1.2
+deps = ["cogwheel"]
+x = -2.0
+y = 0.0
+tasks = [
+	{ type = "item", item = "create:large_cogwheel", count = 2 },
+]
+
+[[quest]]
+name = "gearbox"
+title = "十字齿轮箱"
+desc = [
+	"在一个方块里完成换向，省掉一排齿轮。空间紧张时首选。",
+]
+icon = "create:gearbox"
+shape = "circle"
+size = 1.2
+deps = ["cogwheel"]
+x = 0.0
+y = 0.0
+tasks = [
+	{ type = "item", item = "create:gearbox", count = 1 },
+]
+
+[[quest]]
+name = "vertical_gearbox"
+title = "竖直齿轮箱"
+desc = [
+	"把动力从水平转到垂直。往楼上送动力、做垂直流水线时用。",
+]
+icon = "create:vertical_gearbox"
+shape = "circle"
+size = 1.2
+deps = ["gearbox"]
+x = 2.0
+y = 0.0
+tasks = [
+	{ type = "item", item = "create:vertical_gearbox", count = 1 },
+]
+
+[[quest]]
+name = "clutch"
+title = "离合器"
+desc = [
+	"红石信号一到就切断动力。这是「按需启停」的第一步——",
+	"让机器不用一直转，省应力也省磨损。",
+]
+icon = "create:clutch"
+shape = "circle"
+size = 1.2
+deps = ["cogwheel"]
+x = -6.0
+y = -2.0
+tasks = [
+	{ type = "item", item = "create:clutch", count = 1 },
+]
+
+[[quest]]
+name = "gearshift"
+title = "反转齿轮箱"
+desc = [
+	"红石控制正反转。凡是「来回运动」的装置（门、闸、升降）都要它。",
+]
+icon = "create:gearshift"
+shape = "circle"
+size = 1.2
+deps = ["clutch"]
+x = -4.0
+y = -2.0
+tasks = [
+	{ type = "item", item = "create:gearshift", count = 1 },
+]
+
+[[quest]]
+name = "encased_chain_drive"
+title = "链式传动箱"
+desc = [
+	"隔空传动力，不用铺一长排传动杆。两处距离远、中间又不想占地方时用它。",
+]
+icon = "create:encased_chain_drive"
+shape = "circle"
+size = 1.2
+deps = ["cogwheel"]
+x = -2.0
+y = -2.0
+tasks = [
+	{ type = "item", item = "create:encased_chain_drive", count = 1 },
+]
+
+[[quest]]
+name = "rotation_speed_controller"
+title = "转速控制器"
+desc = [
+	"集中调一条线的转速。生产速度要按需调整时，比到处换齿轮方便得多。",
+]
+icon = "create:rotation_speed_controller"
+shape = "rsquare"
+size = 1.5
+deps = ["gearbox"]
+x = 0.0
+y = -2.0
+tasks = [
+	{ type = "item", item = "create:rotation_speed_controller", count = 1 },
+]
+
+[[quest]]
+name = "stressometer"
+title = "应力计"
+desc = [
+	"护目镜看的是「你自己」，应力计看的是「这一条网络」。",
+	"产线一大就需要它来定位是哪一段吃满了应力。",
+]
+icon = "create:stressometer"
+shape = "circle"
+size = 1.2
+deps = ["goggles"]
+x = -4.0
+y = 2.0
+tasks = [
+	{ type = "item", item = "create:stressometer", count = 1 },
 ]
 
 [[quest]]
 name = "andesite_alloy"
 title = "安山合金"
 desc = [
-	"整套机械的动力材料都从这里开始。",
+	"整套机械的动力材料都从这里开始。安山岩 + 铁粒/锌粒，成本低、用量大。",
 ]
 icon = "create:andesite_alloy"
 shape = "rsquare"
+size = 1.5
 deps = ["first_crank"]
+x = 2.0
+y = 4.0
 tasks = [
 	{ type = "advancement", advancement = "create:andesite_alloy" },
 ]
 
-# ---------------- 应力与基础加工 ----------------
-
 [[quest]]
-name = "wind_or_water"
-title = "不再靠手摇"
+name = "andesite_casing"
+title = "安山机壳"
 desc = [
-	"手摇曲柄只能应急。水车与风车让动力自己来，机器才开始连续运转。",
-	"挑位置是这一步的真实成本：水车要水流，风车要高处，两者都不便宜。",
+	"大多数基础机器的外壳。剥皮原木 + 安山合金，做一批放着。",
 ]
-icon = "create:water_wheel"
-shape = "rsquare"
-deps = ["andesite_alloy"]
-tasks = [
-	{ type = "item", item = "create:water_wheel" },
-]
-
-[[quest]]
-name = "and_saw"
-title = "切削"
-desc = [
-	"有了动力，先让机器替你切木头。",
-]
-icon = "create:mechanical_saw"
+icon = "create:andesite_casing"
 shape = "circle"
 size = 1.2
-deps = ["wind_or_water"]
+deps = ["andesite_alloy"]
+x = 4.0
+y = 4.0
 tasks = [
-	{ type = "advancement", advancement = "create:saw_processing" },
+	{ type = "advancement", advancement = "create:andesite_casing" },
+]
+
+[[quest]]
+name = "millstone"
+title = "石磨"
+desc = [
+	"不用手推的第一台加工机器。磨面粉、磨一些基础材料都靠它。",
+]
+icon = "create:millstone"
+shape = "circle"
+size = 1.2
+deps = ["wind_or_water", "windmill"]
+x = 2.0
+y = 2.0
+tasks = [
+	{ type = "advancement", advancement = "create:millstone" },
 ]
 
 [[quest]]
 name = "and_crush"
-title = "粉碎"
+title = "粉碎轮"
 desc = [
-	"粉碎轮把原料磨成更细的东西，矿石、建材都从这里过一道。",
+	"一对轮子把原料磨成更细的东西，矿石、建材都从这里过一道。",
 	"它是整条产线的第一道工序，也是后面所有配方的入口。",
 ]
 icon = "create:crushing_wheel"
-shape = "circle"
-size = 1.2
-deps = ["wind_or_water"]
+shape = "rsquare"
+size = 1.5
+deps = ["wind_or_water", "windmill"]
+x = 4.0
+y = 2.0
 tasks = [
 	{ type = "advancement", advancement = "create:crushing_wheel" },
 ]
@@ -100,13 +380,82 @@ name = "press_and_mixer"
 title = "压与拌"
 desc = [
 	"机械压床 + 机械搅拌器：这是后面所有合成的前置。",
+	"压床把锭变成板，搅拌器在动力盆里混合——两者缺一不可。",
 ]
 icon = "create:mechanical_press"
 shape = "rsquare"
-deps = ["wind_or_water"]
+size = 1.5
+deps = ["wind_or_water", "windmill"]
+x = 2.0
+y = -2.0
 tasks = [
 	{ type = "advancement", advancement = "create:mechanical_press" },
 	{ type = "advancement", advancement = "create:mechanical_mixer" },
+]
+
+[[quest]]
+name = "basin"
+title = "动力盆"
+desc = [
+	"混合、压制、酿造都在盆里进行。搅拌器必须配它才有产出。",
+]
+icon = "create:basin"
+shape = "circle"
+size = 1.2
+deps = ["press_and_mixer"]
+x = 4.0
+y = -2.0
+tasks = [
+	{ type = "item", item = "create:basin", count = 1 },
+]
+
+[[quest]]
+name = "blaze_burner"
+title = "烈焰人燃烧室"
+desc = [
+	"需要「加热」的配方都要它，而加热强度直接决定产能。",
+	"喂烈焰蛋糕才能到最高档——这是后面蒸汽机的关键前置。",
+]
+icon = "create:blaze_burner"
+shape = "rsquare"
+size = 1.5
+deps = ["basin"]
+x = 6.0
+y = -2.0
+tasks = [
+	{ type = "item", item = "create:blaze_burner", count = 1 },
+]
+
+[[quest]]
+name = "and_saw"
+title = "动力锯"
+desc = [
+	"有了动力，先让机器替你切木头。省下的是重复劳动。",
+]
+icon = "create:mechanical_saw"
+shape = "circle"
+size = 1.2
+deps = ["wind_or_water", "windmill"]
+x = 6.0
+y = 2.0
+tasks = [
+	{ type = "item", item = "create:mechanical_saw", count = 1 },
+]
+
+[[quest]]
+name = "mechanical_drill"
+title = "动力钻头"
+desc = [
+	"自动挖前方的方块。装在动态结构上就是一台移动挖掘机。",
+]
+icon = "create:mechanical_drill"
+shape = "circle"
+size = 1.2
+deps = ["and_saw"]
+x = 8.0
+y = 2.0
+tasks = [
+	{ type = "item", item = "create:mechanical_drill", count = 1 },
 ]
 
 [[quest]]
@@ -114,29 +463,149 @@ name = "fan_processing"
 title = "风处理"
 desc = [
 	"鼓风机：批量洗涤、烟熏、冶炼——一台机器顶三条线。",
+	"前面放熔岩、火或水，同一台机器就有三种完全不同的用途。",
 ]
 icon = "create:encased_fan"
+shape = "rsquare"
+size = 1.5
+deps = ["press_and_mixer"]
+x = 4.0
+y = 0.0
+tasks = [
+	{ type = "advancement", advancement = "create:encased_fan" },
+]
+
+[[quest]]
+name = "spout"
+title = "注液器"
+desc = [
+	"往物品里灌流体：装桶、灌药水、做食物都在这里。这是流体线的出口。",
+]
+icon = "create:spout"
 shape = "circle"
 size = 1.2
 deps = ["press_and_mixer"]
+x = 6.0
+y = 0.0
 tasks = [
-	{ type = "advancement", advancement = "create:fan_processing" },
+	{ type = "item", item = "create:spout", count = 1 },
 ]
 
-# ---------------- 物流 ----------------
+[[quest]]
+name = "deployer"
+title = "机械手"
+desc = [
+	"模拟「玩家右键」这个动作：使用工具、给铜打蜡、剪羊毛、点按钮。",
+	"很多东西只有机械手能自动化。",
+]
+icon = "create:deployer"
+shape = "circle"
+size = 1.2
+deps = ["brass"]
+x = 8.0
+y = -4.0
+tasks = [
+	{ type = "advancement", advancement = "create:deployer" },
+]
 
 [[quest]]
 name = "belt_and_funnel"
 title = "第一条传送带"
 desc = [
 	"东西自己从 A 走到 B 的那一刻，这个包才算真正开始「自动化」。",
+	"传送带负责运，漏斗负责取放——它们是一对。",
 ]
 icon = "create:belt_connector"
 shape = "rsquare"
+size = 1.5
 deps = ["press_and_mixer"]
+x = -6.0
+y = -6.0
 tasks = [
 	{ type = "advancement", advancement = "create:belt" },
 	{ type = "advancement", advancement = "create:funnel" },
+]
+
+[[quest]]
+name = "chute"
+title = "溜槽"
+desc = [
+	"垂直搬运的廉价方案：从上层直接落到下层，不耗动力。",
+]
+icon = "create:chute"
+shape = "circle"
+size = 1.2
+deps = ["belt_and_funnel"]
+x = -4.0
+y = -6.0
+tasks = [
+	{ type = "advancement", advancement = "create:chute" },
+]
+
+[[quest]]
+name = "depot"
+title = "置物台"
+desc = [
+	"让机器有地方「对着」加工。压床、机械手、注液器都需要它当工作台。",
+]
+icon = "create:depot"
+shape = "circle"
+size = 1.2
+deps = ["belt_and_funnel"]
+x = -2.0
+y = -6.0
+tasks = [
+	{ type = "item", item = "create:depot", count = 2 },
+]
+
+[[quest]]
+name = "brass_funnel"
+title = "黄铜漏斗"
+desc = [
+	"带过滤的漏斗：只让指定的东西进或出。",
+	"分类和「只喂对的料」全靠它，是物流从能用变成好用的分界。",
+]
+icon = "create:brass_funnel"
+shape = "rsquare"
+size = 1.5
+deps = ["brass", "belt_and_funnel"]
+x = 0.0
+y = -6.0
+tasks = [
+	{ type = "item", item = "create:brass_funnel", count = 2 },
+]
+
+[[quest]]
+name = "smart_chute"
+title = "智能溜槽"
+desc = [
+	"带过滤的溜槽。垂直线上也要分类时用它。",
+]
+icon = "create:smart_chute"
+shape = "circle"
+size = 1.2
+deps = ["brass_funnel"]
+x = 2.0
+y = -6.0
+tasks = [
+	{ type = "item", item = "create:smart_chute", count = 1 },
+]
+
+[[quest]]
+name = "item_vault"
+title = "物品保险库"
+desc = [
+	"比箱子能装、还能相邻合并成一个大仓。",
+	"公共仓库的地基——放成 2x2 或 3x3 就是一个大容量库房。",
+]
+icon = "create:item_vault"
+shape = "rsquare"
+size = 1.5
+deps = ["belt_and_funnel"]
+x = 4.0
+y = -6.0
+tasks = [
+	{ type = "item", item = "create:item_vault", count = 4 },
 ]
 
 [[quest]]
@@ -146,11 +615,127 @@ desc = [
 	"仓储管理员 + 打包机：让仓库自己管进出。",
 	"这一条做完，公共仓库才算「能支撑全队」。",
 ]
-icon = "create:item_vault"
+icon = "create:packager"
 shape = "rsquare"
-deps = ["belt_and_funnel"]
+size = 2.0
+deps = ["item_vault", "brass_funnel"]
+x = 6.0
+y = -6.0
 tasks = [
 	{ type = "advancement", advancement = "create:packager" },
+]
+
+[[quest]]
+name = "stock_ticker"
+title = "库存清单"
+desc = [
+	"把仓库里有什么、剩多少显示出来。多人共仓时，这是唯一不用问人的办法。",
+]
+icon = "create:stock_ticker"
+shape = "circle"
+size = 1.2
+deps = ["stock_and_package"]
+x = 8.0
+y = -6.0
+tasks = [
+	{ type = "item", item = "create:stock_ticker", count = 1 },
+]
+
+[[quest]]
+name = "package_frogport"
+title = "蛙口包站"
+desc = [
+	"包裹的收发口。一条传送带 + 两个包站，就把两个仓库连起来了。",
+]
+icon = "create:package_frogport"
+shape = "circle"
+size = 1.2
+deps = ["stock_and_package"]
+x = 10.0
+y = -6.0
+tasks = [
+	{ type = "item", item = "create:package_frogport", count = 2 },
+]
+
+[[quest]]
+name = "fluid_pipe"
+title = "流体管道"
+desc = [
+	"流体的「电线」。先铺管道，才有后面整套液体产线。",
+]
+icon = "create:fluid_pipe"
+shape = "rsquare"
+size = 1.5
+deps = ["press_and_mixer"]
+x = -6.0
+y = -10.0
+tasks = [
+	{ type = "advancement", advancement = "create:glass_pipe" },
+]
+
+[[quest]]
+name = "mechanical_pump"
+title = "动力泵"
+desc = [
+	"管道自己不会流，要泵来推。转速决定流量。",
+]
+icon = "create:mechanical_pump"
+shape = "rsquare"
+size = 1.5
+deps = ["fluid_pipe"]
+x = -4.0
+y = -10.0
+tasks = [
+	{ type = "advancement", advancement = "create:mechanical_pump_0" },
+]
+
+[[quest]]
+name = "fluid_tank"
+title = "流体储罐"
+desc = [
+	"存液体，也当缓冲。相邻放置能合并容量——做大库存时靠这个。",
+]
+icon = "create:fluid_tank"
+shape = "rsquare"
+size = 1.5
+deps = ["mechanical_pump"]
+x = -2.0
+y = -10.0
+tasks = [
+	{ type = "item", item = "create:fluid_tank", count = 2 },
+]
+
+[[quest]]
+name = "smart_fluid_pipe"
+title = "智能流体管道"
+desc = [
+	"带过滤的流体管道。只让一种液体通过，是流体分类的关键件。",
+]
+icon = "create:smart_fluid_pipe"
+shape = "circle"
+size = 1.2
+deps = ["fluid_tank"]
+x = 0.0
+y = -10.0
+tasks = [
+	{ type = "item", item = "create:smart_fluid_pipe", count = 1 },
+]
+
+[[quest]]
+name = "hose_pulley"
+title = "软管卷筒"
+desc = [
+	"从水池、岩浆湖就地抽液体，不用人工搬桶。",
+	"把「找水源」这件事从劳动变成基建。",
+]
+icon = "create:hose_pulley"
+shape = "rsquare"
+size = 1.5
+deps = ["fluid_tank"]
+x = 2.0
+y = -10.0
+tasks = [
+	{ type = "advancement", advancement = "create:hose_pulley" },
 ]
 
 [[quest]]
@@ -162,41 +747,13 @@ desc = [
 ]
 icon = "create:brass_ingot"
 shape = "rsquare"
+size = 2.0
 deps = ["press_and_mixer"]
+x = 2.0
+y = -4.0
 tasks = [
 	{ type = "advancement", advancement = "create:brass" },
 	{ type = "advancement", advancement = "create:brass_casing" },
-]
-
-[[quest]]
-name = "mechanical_arm"
-title = "机械臂"
-desc = [
-	"前面几步都要人守着。机械臂替你取放物品，箱子与机器之间才算真的连起来。",
-	"它是第一条不需要人站在旁边的产线——从这里开始可以谈「自动化」了。",
-]
-icon = "create:mechanical_arm"
-shape = "circle"
-size = 1.2
-deps = ["brass"]
-tasks = [
-	{ type = "advancement", advancement = "create:mechanical_arm" },
-]
-
-# ---------------- 规模化 ----------------
-
-[[quest]]
-name = "steam_engine"
-title = "蒸汽机"
-desc = [
-	"从「靠自然」到「自己烧出一整片动力」——这是量变到质变的那一步。",
-	"搭一台蒸汽机并让它转起来：燃料自己加，动力不再看天。",
-]
-icon = "create:steam_engine"
-shape = "rsquare"
-deps = ["brass"]
-tasks = [
-	{ type = "advancement", advancement = "create:steam_engine" },
 ]
 
 [[quest]]
@@ -207,14 +764,274 @@ desc = [
 	"能做它，说明你的动力与产能已经撑得住后面那些大件了。",
 ]
 icon = "create:precision_mechanism"
-shape = "circle"
-size = 1.2
-deps = ["steam_engine"]
+shape = "rsquare"
+size = 2.0
+deps = ["brass", "mechanical_arm"]
+x = 10.0
+y = -4.0
 tasks = [
 	{ type = "advancement", advancement = "create:precision_mechanism" },
 ]
 
-# ---------------- 终局 ----------------
+[[quest]]
+name = "mechanical_arm"
+title = "机械臂"
+desc = [
+	"前面几步都要人守着。机械臂替你取放物品，箱子与机器之间才算真的连起来。",
+	"它是第一条不需要人站在旁边的产线——从这里开始可以谈「自动化」了。",
+]
+icon = "create:mechanical_arm"
+shape = "rsquare"
+size = 2.0
+deps = ["brass"]
+x = 6.0
+y = -4.0
+tasks = [
+	{ type = "advancement", advancement = "create:mechanical_arm" },
+]
+
+[[quest]]
+name = "redstone_link"
+title = "无线红石"
+desc = [
+	"隔空传红石信号，不用拉一长条线。跨建筑控制时省事得多。",
+]
+icon = "create:redstone_link"
+shape = "rsquare"
+size = 1.5
+deps = ["brass"]
+x = -6.0
+y = -14.0
+tasks = [
+	{ type = "item", item = "create:redstone_link", count = 2 },
+]
+
+[[quest]]
+name = "powered_latch"
+title = "锁存器"
+desc = [
+	"把「按一下」变成「保持打开/关闭」。自动化里最常见的状态需求。",
+]
+icon = "create:powered_latch"
+shape = "circle"
+size = 1.2
+deps = ["redstone_link"]
+x = -4.0
+y = -14.0
+tasks = [
+	{ type = "item", item = "create:powered_latch", count = 1 },
+]
+
+[[quest]]
+name = "pulse_extender"
+title = "脉冲延长器"
+desc = [
+	"短信号变长信号。很多机器需要持续几秒的红石才动作。",
+]
+icon = "create:pulse_extender"
+shape = "circle"
+size = 1.2
+deps = ["redstone_link"]
+x = -2.0
+y = -14.0
+tasks = [
+	{ type = "item", item = "create:pulse_extender", count = 1 },
+]
+
+[[quest]]
+name = "sequenced_gearshift"
+title = "可编程齿轮箱"
+desc = [
+	"按步骤执行一连串旋转动作，每步的角度与速度都能写。",
+	"凡是「按顺序动几下」的机构，用它一次就能省掉一堆红石。",
+]
+icon = "create:sequenced_gearshift"
+shape = "rsquare"
+size = 1.5
+deps = ["brass"]
+x = 0.0
+y = -14.0
+tasks = [
+	{ type = "item", item = "create:sequenced_gearshift", count = 1 },
+]
+
+[[quest]]
+name = "factory_gauge"
+title = "工厂仪表"
+desc = [
+	"看一条线现在在做什么、卡在哪。产线一多，没有它就只能靠猜。",
+]
+icon = "create:factory_gauge"
+shape = "rsquare"
+size = 1.5
+deps = ["brass"]
+x = 2.0
+y = -14.0
+tasks = [
+	{ type = "item", item = "create:factory_gauge", count = 1 },
+]
+
+[[quest]]
+name = "super_glue"
+title = "强力胶"
+desc = [
+	"把方块粘成一个整体，好让它们一起动。所有会动的机械都从这一步开始。",
+]
+icon = "create:super_glue"
+shape = "rsquare"
+size = 1.5
+deps = ["cogwheel"]
+x = -6.0
+y = -18.0
+tasks = [
+	{ type = "advancement", advancement = "create:super_glue" },
+]
+
+[[quest]]
+name = "mechanical_bearing"
+title = "动力轴承"
+desc = [
+	"让一整块结构旋转——风车的核心，也是旋转门、旋转平台的实现方式。",
+]
+icon = "create:mechanical_bearing"
+shape = "rsquare"
+size = 1.5
+deps = ["super_glue"]
+x = -4.0
+y = -18.0
+tasks = [
+	{ type = "item", item = "create:mechanical_bearing", count = 1 },
+]
+
+[[quest]]
+name = "rope_pulley"
+title = "绳索滑轮"
+desc = [
+	"升降平台与吊桥。楼层之间搬人搬货，比铺楼梯省地方。",
+]
+icon = "create:rope_pulley"
+shape = "rsquare"
+size = 1.5
+deps = ["super_glue"]
+x = -2.0
+y = -18.0
+tasks = [
+	{ type = "item", item = "create:rope_pulley", count = 1 },
+]
+
+[[quest]]
+name = "mechanical_piston"
+title = "动力活塞"
+desc = [
+	"把结构整体推出去或拉回来。可移动的桥、伸缩的门都用它。",
+]
+icon = "create:mechanical_piston"
+shape = "circle"
+size = 1.2
+deps = ["super_glue"]
+x = 0.0
+y = -18.0
+tasks = [
+	{ type = "item", item = "create:mechanical_piston", count = 1 },
+]
+
+[[quest]]
+name = "gantry_carriage"
+title = "起重机"
+desc = [
+	"沿轨道平移一整块结构。大型吊装和跨区间搬运靠它。",
+]
+icon = "create:gantry_carriage"
+shape = "rsquare"
+size = 1.5
+deps = ["mechanical_piston"]
+x = 2.0
+y = -18.0
+tasks = [
+	{ type = "item", item = "create:gantry_carriage", count = 1 },
+]
+
+[[quest]]
+name = "contraption_controls"
+title = "动态结构控制器"
+desc = [
+	"站上去就能开动你造的那台机器。这是「能开的东西」和「能造的东西」的分界。",
+]
+icon = "create:contraption_controls"
+shape = "circle"
+size = 1.2
+deps = ["mechanical_bearing"]
+x = -4.0
+y = -20.0
+tasks = [
+	{ type = "item", item = "create:contraption_controls", count = 1 },
+]
+
+[[quest]]
+name = "sticker"
+title = "粘性方块"
+desc = [
+	"抓取并搬动单个方块或实体——机械臂够不到的地方用它。",
+]
+icon = "create:sticker"
+shape = "circle"
+size = 1.2
+deps = ["super_glue"]
+x = 4.0
+y = -18.0
+tasks = [
+	{ type = "item", item = "create:sticker", count = 2 },
+]
+
+[[quest]]
+name = "steam_engine"
+title = "蒸汽机"
+desc = [
+	"从「靠自然」到「自己烧出一整片动力」——这是量变到质变的那一步。",
+	"搭一台蒸汽机并让它转起来：燃料自己加，动力不再看天。",
+]
+icon = "create:steam_engine"
+shape = "rsquare"
+size = 2.0
+deps = ["brass", "blaze_burner"]
+x = 6.0
+y = -8.0
+tasks = [
+	{ type = "advancement", advancement = "create:steam_engine" },
+]
+
+[[quest]]
+name = "steam_whistle"
+title = "汽笛"
+desc = [
+	"纯粹的仪式感——但它也是「这台机器在正常工作」最直观的信号。",
+]
+icon = "create:steam_whistle"
+shape = "circle"
+size = 1.2
+deps = ["steam_engine"]
+x = 8.0
+y = -8.0
+tasks = [
+	{ type = "advancement", advancement = "create:steam_whistle" },
+]
+
+[[quest]]
+name = "copper_backtank"
+title = "铜制背罐"
+desc = [
+	"背着走的压缩空气罐，让手持工具也能用动力。",
+	"从「机器在工厂里」到「工具跟着人走」。",
+]
+icon = "create:copper_backtank"
+shape = "rsquare"
+size = 1.5
+deps = ["steam_engine"]
+x = 4.0
+y = -8.0
+tasks = [
+	{ type = "advancement", advancement = "create:backtank" },
+]
 
 [[quest]]
 name = "railway"
@@ -224,9 +1041,93 @@ desc = [
 ]
 icon = "create:track"
 shape = "rsquare"
+size = 2.0
 deps = ["steam_engine"]
+x = -6.0
+y = -24.0
 tasks = [
-	{ type = "item", item = "create:track", count = 64 },
+	{ type = "advancement", advancement = "create:track_0" },
+]
+
+[[quest]]
+name = "track_station"
+title = "车站"
+desc = [
+	"列车停靠与装卸的地点。有站才有「线路」，不然只是一段轨道。",
+]
+icon = "create:track_station"
+shape = "rsquare"
+size = 1.5
+deps = ["railway"]
+x = -4.0
+y = -24.0
+tasks = [
+	{ type = "item", item = "create:track_station", count = 2 },
+]
+
+[[quest]]
+name = "track_signal"
+title = "信号灯"
+desc = [
+	"多列车共用一段轨道时防止相撞。线路一复杂就必须有它。",
+]
+icon = "create:track_signal"
+shape = "circle"
+size = 1.2
+deps = ["track_station"]
+x = -2.0
+y = -24.0
+tasks = [
+	{ type = "advancement", advancement = "create:track_signal" },
+]
+
+[[quest]]
+name = "conductor"
+title = "列车长"
+desc = [
+	"让列车按时刻表自动跑，不用人开。",
+	"这一条成立，运输才算「基建」而不是「劳动」。",
+]
+icon = "create:schedule"
+shape = "rsquare"
+size = 1.5
+deps = ["track_station"]
+x = 0.0
+y = -24.0
+tasks = [
+	{ type = "advancement", advancement = "create:conductor" },
+]
+
+[[quest]]
+name = "long_train"
+title = "编组列车"
+desc = [
+	"一次拉更多货。单趟运力上去，铁路才值得铺到远处。",
+]
+icon = "create:train_door"
+shape = "circle"
+size = 1.2
+deps = ["conductor"]
+x = 2.0
+y = -24.0
+tasks = [
+	{ type = "advancement", advancement = "create:long_train" },
+]
+
+[[quest]]
+name = "train_portal"
+title = "列车过传送门"
+desc = [
+	"让铁路跨维度。这是铁路能服务「远征」时代的前提。",
+]
+icon = "create:train_door"
+shape = "circle"
+size = 1.2
+deps = ["long_train"]
+x = 4.0
+y = -24.0
+tasks = [
+	{ type = "advancement", advancement = "create:train_portal" },
 ]
 
 [[quest]]
@@ -240,10 +1141,8 @@ icon = "create:mechanical_crafter"
 shape = "hexagon"
 size = 2.5
 deps = ["railway", "mechanical_arm", "stock_and_package", "fan_processing", "precision_mechanism"]
+x = 0.0
+y = -28.0
 tasks = [
 	{ type = "advancement", advancement = "create:mechanical_crafter" },
-]
-rewards = [
-	{ type = "xp", xp = 100 },
-	{ type = "toast" },
 ]

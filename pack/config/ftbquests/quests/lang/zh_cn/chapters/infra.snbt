@@ -34,6 +34,8 @@
 	quest.C6B025CC62D08367.title: "采矿机"
 	quest.C6B025CC62D08367.description: [
 	"让它自己往下挖并把矿运回来——这是「不必人到场」的第一条矿线。"
+	"注：Create 的进度里没有「机械钻」这一条（实测），所以判据落在**粉碎轮**上"
+	"（钻头与粉碎轮是同一条产线的前后两段）。"
 	]
 	quest.EA86031E9BE1465E.title: "熔炉阵列"
 	quest.EA86031E9BE1465E.description: [

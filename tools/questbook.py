@@ -232,20 +232,41 @@ def snbt(value, indent: int = 0) -> str:
 # ======================================================================
 
 class IdAllocator:
-    """由稳定名字派生 16 位大写十六进制 id；保证全局唯一（冲突则加盐重试）。"""
+    """由稳定名字派生 16 位大写十六进制 id —— **纯函数，结果与调用顺序无关**。
+
+    ⚠️ **为什么不能有任何"冲突加盐"兜底**（2026-09-22 事故，两条一起犯的）：
+
+    旧实现：`while h in self.used: salt += 1; 重新哈希`，且 `self.used` **跨章共享**。
+    它制造了两个独立的破坏：
+
+      1. **插入任务会全局位移 id**：在 create 章中间插入 53 个任务后，
+         该章后面所有任务的 id 全变，`lang/` 里 355 个文案键变成孤儿、3 条依赖悬空。
+      2. **前向引用会拿到两个不同 id**：`compile_chapter` 遇到"依赖先出现、任务后出现"
+         时并地算一次 id（`id_map.setdefault`），但轮到该任务自己时**又调了一次 `make`**；
+         两次之间 `used` 集合已变，加盐兜底给出**不同**结果 ——
+         `brass` / `mechanical_arm` 就是这样变成悬空依赖的。
+
+    ⇒ 结论：**任何"看情况加盐"的逻辑都会让 id 依赖调用顺序**，而 id 必须在
+    "加任务 / 改顺序 / 前向引用"三种情况下都不变。
+
+    现在的实现：id = sha256(片段用 `|` 连接) 的前 16 位，**没有兜底、没有状态**。
+    撞车概率：64 位截断，本项目 ~400 个 id 时约 1e-15（生日界），实际不可能发生。
+    真撞了就 `raise` —— 那时候应该换更长截断或改名字，而不是悄悄加盐。
+    """
 
     def __init__(self) -> None:
-        self.used: set[str] = set()
+        self.seen: dict[str, str] = {}   # id -> 生成它的 base（仅用于撞车时报错）
 
     def make(self, *parts: str) -> str:
-        salt = 0
-        while True:
-            raw = "|".join(parts) + (f"#{salt}" if salt else "")
-            h = hashlib.sha256(raw.encode("utf-8")).hexdigest()[:16].upper()
-            if h not in self.used:
-                self.used.add(h)
-                return h
-            salt += 1
+        base = "|".join(parts)
+        h = hashlib.sha256(base.encode("utf-8")).hexdigest()[:16].upper()
+        prev = self.seen.get(h)
+        if prev is not None and prev != base:
+            raise RuntimeError(
+                f"id 撞车：{h}\n  已有：{prev}\n  冲突：{base}\n"
+                f"（64 位截断撞车极罕见；请改任务名或改用更长截断，不要加盐）")
+        self.seen[h] = base
+        return h
 
 
 # ======================================================================
