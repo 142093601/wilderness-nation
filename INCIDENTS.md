@@ -225,4 +225,37 @@ Get-ChildItem tools -Filter '_*.py' | Where-Object { $keep -notcontains $_.Name 
 7. **`.gitignore` 里的 `!` 例外 = 该目录下的正式文件清单**。
    动 `tools/` 下任何东西之前，先看这份例外里有没有它。
 
+### ⚠️ 同一天第二次踩同一个坑（说明规则本身不够）
+
+<!-- 补记：写规则不能防止复犯 -->
+
+写完上面两条硬规则的**同一次会话里**，我又用同样的模式删了同样的文件，
+再次误删 `tools/_selftest.py`，再次靠 `git checkout --` 恢复。
+
+**根因不是"我忘了规则"，是"规则不是可执行动作"。**
+文字规则依赖我在动手那一刻想起来；而那一刻我的注意力在"要达成什么"上，不在"要检查什么"上。
+同类错误出现两次 = 这个防线的形式错了。
+
+### 修法（把规则变成工具）
+
+新增 `tools/cleanup_temp.py`，把三步检查固化成代码：
+
+1. 默认以**脚本自身所在仓库**为操作对象 —— 不是 `cwd`。
+   （踩到的第二个坑：pwsh 的默认 cwd 是 `D:\project`，而 `D:\project` **自己也是一个 git 仓库**，
+   「向上找 `.git`」会就近命中它，于是脚本静默地去搜 `D:\project\tools\`。锚在脚本位置才不会找错目标。）
+2. `git ls-files` 判定所有权，**被跟踪的一律排除**并在输出里标 `[PROTECTED]`。
+3. 默认**干跑**；检测到被跟踪文件混在批次里就 `exit 2`，即使加了 `--delete` 也不删它们；
+   真删之后**复核** `git status`，若出现被跟踪文件丢失则 `exit 1` 并打印恢复命令。
+
+用法：
+
+```
+python tools/cleanup_temp.py            # 干跑，看清单
+python tools/cleanup_temp.py --delete   # 真删
+```
+
+**判据**：从 `D:\project`、`nation-pack\`、`nation-pack\tools\` 三个不同 cwd 运行，
+都必须报 `仓库根: D:\project\nation-pack`、`[PROTECTED] tools/_selftest.py`、`exit 2`。
+
+
 
