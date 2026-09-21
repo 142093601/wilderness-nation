@@ -319,3 +319,88 @@ force-load 只保证区块被加载、方块在跑，**不等于实体被装回�
       不要假装它是战略层。
 - [ ] **F8 攻城的性能与体验**：军队 + 攻城器械 + 据点守军同时在场时的实体数与 MSPT
       （这是全包**单点实体数最高**的场景，比袭击波次更高）；以及攻城是否需要**服务端手工布置占领区**（op 工作量的现实评估）。
+
+---
+
+## N. voxy 超远视距（2026-09-22 起，**已暂停；jar 已从实例移除**）
+
+> **为什么整组后置**：voxy 需要**人眼看画面**验收，而且它是**唯一一个不在 packwiz 清单里、
+> 只存在于本机实例的 mod**（授权 ARR、不可分发）。它还会污染其它验证的结论（见 N0）。
+> 详细设计与全部证据：`DESIGN-VISTA.md`、`DESIGN-PREGEN.md`、`DESIGN-LOD-SERVER.md`。
+
+### N0. 为什么必须先移除它（**这不是猜测**）
+
+1. **它改 Embeddium 的渲染类**：日志里 `Embeddium-MixinTaintDetector: Mod(s) [voxy] are
+   modifying Embeddium class ... This instance is now tainted`。只要 voxy 在场，
+   任何与 Embeddium/渲染相关的验证结论都不可信（例如 `CONFLICTS.md` C10 那条 Sodium 对比）。
+2. **它挂钩进世界必经路径**：`LevelRenderer.createRenderer` → `voxy$reloadVoxyRenderer`。
+   任何"世界加载/渲染"的验证都会多一个变量。
+3. **它不在清单里**：packwiz 无法复现它，所以"整合包状态"的验证本来就不该带着它。
+   ⇒ **移除后，后续验证跑在干净、可复现的包状态上。**
+
+### N1. 已完成的部分（有据可查，可续做）
+
+- [x] **自己编出了 NeoForge 1.21.1 版 voxy**（j-shelfwood `embeddium-compat` 分支）
+      —— 用 Embeddium，**不需要换渲染器**。工具链：`tools/fetch_voxy_deps.py`（多线程下依赖到本地
+      Maven 仓库，绕开本机到境外源仅 13-20 KB/s）+ `tools/build_voxy.py`（编排与打补丁），
+      说明见 `tools/README-voxy-build.md`。
+- [x] **修掉"进世界必崩"的根因**：移植版把纹理循环上界写成 16，而 MC 1.21.1 的
+      `GlStateManager.TEXTURE_COUNT = 12` ⇒ `Index 12 out of bounds for length 12`。
+      上游一律写 `i < 12`，**是移植引入的 bug**。已在构建脚本里打补丁（只改含 `_bindTexture`
+      的 2 处），并经**字节码级验证**（`bipush 12`）。
+- [x] **冒烟通过**：232 mod、**10G 堆**，`已进入世界，停留 120 秒 → graceful`，旧崩溃签名消失。
+
+> ⚠️ **测试内存：至少 10G，不要按 5G 跑**（2026-09-22 用户指出）。
+> 我一度用 `--xmx 5G` 跑，效果是"没能确认进入世界"——**那是我给少了，不是包的问题**。
+> 这个包 231 个 mod 且**尚未做优化环节**，正常验证要给 10G 以上。
+> 以后跑 `autotest.py` 一律 `--xmx 10G`（并确认机器有足够空闲内存）。
+- [x] **在用户世界里确认过工作**：`新的世界 (5)` 里 voxy 数据库 1.98 MB
+      （RocksDB + ZSTD），日志有 `Voxy render system created` 与 `[VoxyDiag] ingestAttempts`。
+
+### N2. 未完成 / 待办
+
+- [ ] **N2.1 远景是否真的达到预期**（人眼看画面）：进世界后远处能否看到 LOD 地形。
+      **需要用户**。voxy 的 LOD 是边玩边长的，刚进世界远处是空的，要站一会儿或走一段。
+- [ ] **N2.2 `serviceThreads` 调优有没有效果**：已把 `config/voxy-client.toml` 从 2 改成 6
+      （机制：`serviceThreads` 是 voxy + Embeddium 的**总预算**，`target - builderThreads`，
+      默认下 voxy 实得 **1 个线程**）。**改完没实测**。
+- [ ] **N2.3 预生成范围与提速**：实测 ingest 吞吐约 **13 区块/秒**，而满视距需要 **105 万区块**
+      ⇒ 整片预生成 22 小时起步，不现实。范围/耗时表见 `DESIGN-PREGEN.md` §5.1。
+- [ ] **N2.4 服务端 LOD 分发**（**多人的正解**）：`LOD Server Support`（MIT，有 1.21.1/NeoForge）。
+      已核实：**服务端不需要装 voxy**；客户端网络层是它自己的；与 voxy 靠反射对接
+      （它解析的 6 个 voxy 类在我们移植版里全部存在）。
+      **未验证**：LSS 官方测的是 Roxy + 原版 Fabric voxy + **Sodium**，我们走的是自编
+      Embeddium 移植版 ⇒ 需实测 `/lss diag`。见 `DESIGN-LOD-SERVER.md`。
+- [ ] **N2.5 授权边界**：voxy 是 **ARR / "Do not redistribute"**。
+      **只在本地自用，不得对外分发**（整合包、公开下载都不行）。这一条不解决就不能进 `pack/`。
+
+### N3. 怎么把它装回来（jar 已留档，一条命令）
+
+产物与脚本都还在（`data/` 被 gitignore，不进仓库）：
+
+```powershell
+# 产物
+D:\project\nation-pack\data\_voxyjar\voxy-0.2.9-alpha-embeddium-neoforge-1.21.1.jar   # 71.6 MB
+
+# 重新装进实例
+Copy-Item "D:\project\nation-pack\data\_voxyjar\voxy-0.2.9-alpha-embeddium-neoforge-1.21.1.jar" `
+          "D:\game\PCL\.minecraft\versions\1.21.1-NeoForge_21.1.250\mods\"
+
+# 要从源码重建（会重下依赖，约 85 MB）
+python tools\fetch_voxy_deps.py --jobs 8
+python tools\build_voxy.py
+
+# 冒烟验证（用我的测试世界，**不要用用户的存档**）
+# ⚠️ 至少 10G —— 231 个 mod 且未做优化，5G 会进不去世界
+python tools\autotest.py --world scdev --xmx 10G --seconds 120
+```
+
+### N4. 硬规则（续做时必须遵守）
+
+1. **不要把它放进 `pack/`** —— ARR 不可分发。它只能待在本机实例的 `mods/`。
+2. **带它跑出来的验证结论要标注**（Embeddium 被 taint、渲染路径被挂钩）。
+3. **冒烟测试一律用 `--world scdev`** —— `autotest.py` 的默认世界是用户的 `新的世界`，
+   **绝不能用默认值**。
+4. **内存一律 `--xmx 10G` 起** —— 231 个 mod 且未做优化环节，5G 会进不去世界
+   （2026-09-22 我为此浪费了一轮，用户指出）。
+
