@@ -15,7 +15,7 @@
 
 key = "defense_era"
 title = "御敌"
-subtitle = "墙要一直往上加，因为来拆墙的也在升级"
+subtitle = "御敌：这个时代的达标线在哪——袭击规模会长，工事就得跟着长"
 group = "chronicle"
 icon = "minecraft:shield"
 order_index = 5

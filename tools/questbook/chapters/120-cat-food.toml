@@ -36,7 +36,8 @@ tasks = [
 name = "food_cutting_board"
 title = "砧板"
 desc = [
-	"切菜、剁肉都在这里。",
+	"锅里能放什么，先由砧板决定：切菜、剁肉、剔骨都在这里做完。",
+	"它是烹饪的前置——没有它，很多菜谱根本进不了锅。",
 ]
 icon = "farmersdelight:cutting_board"
 shape = "rsquare"
@@ -162,7 +163,8 @@ tasks = [
 name = "food_wine_rack"
 title = "酒架"
 desc = [
-	"酒要存起来陈。",
+	"酒酿好之后要有个地方陈着，不然只能堆在箱子里占位置。",
+	"架子本身也是陈设——食堂里摆一排，比一排箱子像样。",
 ]
 icon = "vinery:acacia_wine_rack_mid"
 shape = "circle"

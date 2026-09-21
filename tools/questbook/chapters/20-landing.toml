@@ -146,6 +146,10 @@ tasks = [
 [[quest]]
 name = "a_real_sword"
 title = "一把说得过去的剑"
+desc = [
+	"石器只能应急。铁制工具做出来，采集与战斗才算真正开始。",
+	"从这一步起，你们才有余力想「留下点什么」——落成碑要等到它能立得稳。",
+]
 icon = "minecraft:iron_sword"
 shape = "circle"
 size = 1.2

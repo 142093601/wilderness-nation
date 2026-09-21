@@ -98,7 +98,7 @@ hash = "2c7f21b3a0e142ba080eedc253984ace91ceb3044c0b3bcf34cf04c680674bc5"
 
 [[files]]
 file = "config/ftbquests/quests/lang/zh_cn/chapter.snbt"
-hash = "53e6a3fd0f36715786c51c2ecfc861720fbb40b66b3c91696d902f885cfd1e21"
+hash = "1e9db2cb4433cad8e6dfdfdb4a921039fea3b74604c8053f4da0ec54c9cd6465"
 
 [[files]]
 file = "config/ftbquests/quests/lang/zh_cn/chapter_group.snbt"
@@ -118,7 +118,7 @@ hash = "4eeab578517493f983c18b66b7e78ee2ee0da611116d14f84bd4857519dad030"
 
 [[files]]
 file = "config/ftbquests/quests/lang/zh_cn/chapters/cat_food.snbt"
-hash = "4986cc53c96013ae8c08e2b8475e0ce62fc0624f773945c9ab1f5cd77eaee045"
+hash = "304397f0b8a913addb5c7341d7919f1072e88a74959beb70f12b47ad657f57c6"
 
 [[files]]
 file = "config/ftbquests/quests/lang/zh_cn/chapters/cat_furniture.snbt"
@@ -138,7 +138,7 @@ hash = "e0f07a022697466b1b388cd8e013006963ea5e154f2d61909b56477464a1524f"
 
 [[files]]
 file = "config/ftbquests/quests/lang/zh_cn/chapters/cat_warfare.snbt"
-hash = "bb023a50f801989bc665792fddb94daf2c4b173edced044899f2930f94313c43"
+hash = "686307bf9f9b400405cdc2038ef9820ff676c1df0afa66785aeb8269f836b608"
 
 [[files]]
 file = "config/ftbquests/quests/lang/zh_cn/chapters/civilization.snbt"
@@ -150,11 +150,11 @@ hash = "fecfec0148c0c4075723900330d21399cd1f632563b3146f5542dbbb3a6ed9ac"
 
 [[files]]
 file = "config/ftbquests/quests/lang/zh_cn/chapters/create.snbt"
-hash = "f6cc366644de507d6ce85fbaef8f1ffa2970996a2d3088e1c41d67a3c407e3ed"
+hash = "24a45699ba18f3cd7eadcc8c7e7cde11579a63e7c50db120bbdc45cf0d51a5fe"
 
 [[files]]
 file = "config/ftbquests/quests/lang/zh_cn/chapters/defense.snbt"
-hash = "57aaa6d50eddff92501be6d9bdf7406632d26f347f3f5f989198fc52a45fdf48"
+hash = "caf2f38fc09635f0867a31dfd8419efb6b84cafbedf2b46cbe98067f1fa029bc"
 
 [[files]]
 file = "config/ftbquests/quests/lang/zh_cn/chapters/defense_era.snbt"
@@ -182,7 +182,7 @@ hash = "932c44254c229c15a2e016fb9d140dc08ed9af6db294e80a3acffe41f7950eaa"
 
 [[files]]
 file = "config/ftbquests/quests/lang/zh_cn/chapters/landing.snbt"
-hash = "8624b918a068b63c39ab59f48ed9e6e71d7be521e59ba983e554d31eb335fce4"
+hash = "d8a238382477f8960a0c62fe34270b64ce6d094eb7e53584cc3dfa2b46638d52"
 
 [[files]]
 file = "config/ftbquests/quests/lang/zh_cn/chapters/prologue.snbt"

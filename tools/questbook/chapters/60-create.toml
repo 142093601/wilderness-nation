@@ -56,7 +56,8 @@ tasks = [
 name = "wind_or_water"
 title = "不再靠手摇"
 desc = [
-	"水车或风车：让动力自己来。",
+	"手摇曲柄只能应急。水车与风车让动力自己来，机器才开始连续运转。",
+	"挑位置是这一步的真实成本：水车要水流，风车要高处，两者都不便宜。",
 ]
 icon = "create:water_wheel"
 shape = "rsquare"
@@ -82,6 +83,10 @@ tasks = [
 [[quest]]
 name = "and_crush"
 title = "粉碎"
+desc = [
+	"粉碎轮把原料磨成更细的东西，矿石、建材都从这里过一道。",
+	"它是整条产线的第一道工序，也是后面所有配方的入口。",
+]
 icon = "create:crushing_wheel"
 shape = "circle"
 size = 1.2
@@ -153,6 +158,7 @@ name = "brass"
 title = "黄铜时代"
 desc = [
 	"黄铜是精密件（机械臂、过滤器、控制器）的门槛。",
+	"先把黄铜锭与黄铜机壳各做一份出来——后面每一台高阶机器都要它们。",
 ]
 icon = "create:brass_ingot"
 shape = "rsquare"
@@ -165,6 +171,10 @@ tasks = [
 [[quest]]
 name = "mechanical_arm"
 title = "机械臂"
+desc = [
+	"前面几步都要人守着。机械臂替你取放物品，箱子与机器之间才算真的连起来。",
+	"它是第一条不需要人站在旁边的产线——从这里开始可以谈「自动化」了。",
+]
 icon = "create:mechanical_arm"
 shape = "circle"
 size = 1.2
@@ -180,6 +190,7 @@ name = "steam_engine"
 title = "蒸汽机"
 desc = [
 	"从「靠自然」到「自己烧出一整片动力」——这是量变到质变的那一步。",
+	"搭一台蒸汽机并让它转起来：燃料自己加，动力不再看天。",
 ]
 icon = "create:steam_engine"
 shape = "rsquare"
@@ -191,6 +202,10 @@ tasks = [
 [[quest]]
 name = "precision_mechanism"
 title = "精密构件"
+desc = [
+	"构件本身不直接用在建筑上，它是高阶机器的原料。",
+	"能做它，说明你的动力与产能已经撑得住后面那些大件了。",
+]
 icon = "create:precision_mechanism"
 shape = "circle"
 size = 1.2

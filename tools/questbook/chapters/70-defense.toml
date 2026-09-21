@@ -16,7 +16,7 @@
 
 key = "defense"
 title = "防御与尸潮"
-subtitle = "墙要一直往上加，因为来拆墙的也在升级"
+subtitle = "御敌：来犯的怎么运作、怎么挡；有些结果判不了，得自己打勾"
 group = "craft"
 icon = "minecraft:shield"
 order_index = 21
@@ -124,6 +124,10 @@ tasks = [
 [[quest]]
 name = "many_kills"
 title = "清场"
+desc = [
+	"外围总要有人清。累计一百个，说明这件事已经成了常态，不是偶然。",
+	"清场做得越多，守城时正面压力越小——这是「打出去」的前提。",
+]
 icon = "minecraft:bow"
 shape = "circle"
 size = 1.2
@@ -165,6 +169,10 @@ tasks = [
 [[quest]]
 name = "traps"
 title = "门口有陷阱"
+desc = [
+	"门口那一段是敌人排队进来的地方，也是最省力的杀伤位置。",
+	"靶子本身不致命，它的用处是把注意力引到你想让它去的位置。",
+]
 icon = "minecraft:target"
 shape = "circle"
 size = 1.2
@@ -204,6 +212,10 @@ tasks = [
 [[quest]]
 name = "raid_stronghold"
 title = "拆掉它"
+desc = [
+	"找到营地只是知道对手在哪；打掉它才算把这一轮攻势的根拔了。",
+	"据点没了，下一波的规模会小一截——这是防守第一次真正变成反击。",
+]
 icon = "minecraft:crossbow"
 shape = "rsquare"
 deps = ["raid_camp"]

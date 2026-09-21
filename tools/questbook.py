@@ -566,36 +566,72 @@ def write_file(path: Path, text: str, *, protect: bool = False) -> str:
     return "written"
 
 
+def _parse_snbt_blocks(text: str):
+    """把 `{ \n key: value \n ... }` 形状的 SNBT 拆成 (头, 尾, [(key, 该键的整块行)])。
+
+    **为什么不能按行合并**（真事故，2026-09-22）：
+    原实现把每个键当成一行，判断"这一行有没有冒号"。但 description 是**多行数组**：
+
+        quest.XXXX.description: [
+            "第一段"
+            "第二段"
+        ]
+
+    第一行含冒号但值只开了个 `[`，被当成新键收录；后续 `"第一段"` 行**不含冒号**，
+    被丢掉。结果写出 `description: [` 后面直接 `}` —— **数组内容整段丢失**。
+    实测丢了 7 条（landing / create / defense）。所以必须**按块**处理：
+    一个键的块 = 从 `key:` 那行起，到括号配平为止。
+    """
+    ls = text.split("\n")
+    head, blocks, tail = [], [], []
+    i, n = 0, len(ls)
+
+    while i < n and ls[i].strip() in ("", "{"):
+        head.append(ls[i])
+        i += 1
+
+    while i < n:
+        raw = ls[i]
+        s = raw.strip()
+        if s == "}":
+            tail = ls[i:]
+            break
+        if not s or ":" not in s:
+            head.append(raw)      # 不该出现的散行：收着，别丢
+            i += 1
+            continue
+        key = s.split(":", 1)[0].strip()
+        block = [raw]
+        depth = raw.count("[") + raw.count("{") - raw.count("]") - raw.count("}")
+        i += 1
+        while depth > 0 and i < n:
+            block.append(ls[i])
+            depth += (ls[i].count("[") + ls[i].count("{")
+                      - ls[i].count("]") - ls[i].count("}"))
+            i += 1
+        blocks.append((key, block))
+
+    if not tail:
+        tail = ["}"]
+    return head, tail, blocks
+
+
 def merge_lang(old: str, new: str) -> str:
     """把新骨架里**缺失的键**补进旧文件；已存在的键保持旧值（那是用户的字）。
 
-    两边都是我们自己的 SNBT 形状：外层 { 一行一个 `key: value` }。
+    按**块**合并 —— 见 `_parse_snbt_blocks` 里记的事故，按行合并会丢多行数组的内容。
     """
-    old_lines = [ln for ln in old.split("\n") if ln.strip()]
-    old_keys = set()
-    for ln in old_lines:
-        s = ln.strip()
-        if s in ("{", "}") or ":" not in s:
-            continue
-        old_keys.add(s.split(":", 1)[0].strip())
+    head, _tail, old_blocks = _parse_snbt_blocks(old)
+    _h2, _t2, new_blocks = _parse_snbt_blocks(new)
+    old_keys = {k for k, _ in old_blocks}
 
-    new_lines = [ln for ln in new.split("\n") if ln.strip()]
-    added: list[str] = []
-    for ln in new_lines:
-        s = ln.strip()
-        if s in ("{", "}") or ":" not in s:
-            continue
-        if s.split(":", 1)[0].strip() not in old_keys:
-            added.append("\t" + s)
+    added = [b for key, blk in new_blocks if key not in old_keys for b in blk]
+    body = [b for _k, blk in old_blocks for b in blk]
 
-    if not added:
-        return old.rstrip("\n") + "\n"
-
-    # 插到最后一个 "}" 之前
-    out = old.rstrip("\n")
-    assert out.endswith("}"), "lang 文件形状不是预期的复合结构"
-    body = out[:-1].rstrip("\n")
-    return body + "\n" + "\n".join(added) + "\n}\n"
+    text = "\n".join(head + body + added + ["}"])
+    while "\n\n}" in text:
+        text = text.replace("\n\n}", "\n}")
+    return text if text.endswith("\n") else text + "\n"
 
 
 # ======================================================================
