@@ -81,12 +81,19 @@ tools/registry.json
 tools/_probe_*
 tools/_stats_*
 tools/_javap_work/
-# 取证类临时脚本一律以 `_` 开头（见 tools/README.md 的纪律）：
-# 2026-09-20 一次冲突排查里我用了 _conflict_* / _ftbq_* / _cmb* 等名字，逃过了上面的规则，
-# 于是它们以"未跟踪文件"的形式堆在 git status 里。这条兜底规则把它们全覆盖。
-tools/_*.py
-tools/_*.txt
-tools/_*.toml
+# 临时脚本的命名口径（见 tools/README.md 与 INCIDENTS.md 2026-09-21 第 3 次事故）：
+# 我自己的临时脚本一律叫 `_probe_*` 或 `_scratch_*`，**不再用宽口径的 `_*`**。
+#
+# 为什么删掉了原来的裸 `tools/_*.py` / `_*.txt` / `_*.toml`：
+#   那条规则会连带忽略 **被跟踪的正式文件** `tools/_selftest.py`，
+#   于是全局只剩一条 `!tools/_selftest.py` 例外在挡着；而我在批量删除时
+#   反复用 `tools/_*.py` 这个"看起来等于临时文件"的通配，**三次误删 `_selftest.py`**。
+#   规则本身没错，是它**诱导了一个会扫到正式文件的删除模式**。
+#   收紧后：`_probe_*` / `_scratch_*` 两条具体规则覆盖同样的需求，
+#   而 `tools/_*.py` 这种通配再也没有存在理由。
+tools/_scratch_*
+tools/_probe_*.txt
+tools/_scratch_*.txt
 !tools/_selftest.py
 # 本机临时工作目录（javac 中间产物、下载来对比的 jar 等）
 data/_*

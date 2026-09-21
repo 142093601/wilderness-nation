@@ -73,10 +73,107 @@ lod-server-support-neoforge-...jar 0.15.1   MIT   displayName="LOD Server Suppor
 | # | 卡点 | 依据 |
 |---|---|---|
 | **1（致命）** | **voxy 客户端不能随包分发** | voxy-neoforge README 原文：*"Due to Voxy's ARR license, **compiled JARs are not distributed. You must build from source**."* → packwiz 发不出去，**每个玩家得自己 `./gradlew build`**。多人服务器上这不是"麻烦"，是**不可行**。 |
-| **2（硬冲突）** | **必须用 Sodium 换掉 Embeddium** | 我读了包里 `embeddium-1.0.15+mc1.21.1.jar` 的 `neoforge.mods.toml`：<br>`modId = "sodium"` / `type = "incompatible"` / *"Embeddium cannot be used if Sodium is present."*<br>而 voxy-neoforge 要求 `Sodium mc1.21.1-0.6.13-neoforge`。<br>→ **两者不可能共存**，这条路等于**换渲染器**（违反反目标 2）。 |
-| **3（额外负担）** | **多一层 Fabric 兼容层** | voxy-neoforge 依赖 **Forgified Fabric API `0.116.7+2.2.0+1.21.1`**（1.21.1 上已到 `0.116.15+2.3.5+1.21.1`）。我们包里没有任何 FFAPI / Connector —— 等于为了一个 Alpha 渲染器，往 231 mod 的 NeoForge 包里塞一整套 Fabric 模拟层。 |
+| **2（看分支）** | 换不换渲染器**取决于用哪个分支** | 见下方 §〇之补二：`neoforge-1.21.1` 分支要求 Sodium；但 **`embeddium-compat` 分支专门为 Embeddium 改写**，不需要换。**这一条我先前写错了，已修正。** |
+| **3（部分分支）** | **多一层 Fabric 兼容层** | 只有走 Sodium 的那条路才需要 **Forgified Fabric API**（yarnobachmann fork 的 `mods.toml` 里 `fabric_api` 是 `required`，`versionRange="[0.102.0,)"`）。`embeddium-compat` 分支**不需要** FFAPI。 |
 
-### 还有两个应当记下的矛盾（实施前必须解，本轮不解）
+---
+
+## 〇之补二 · 我实测了 j-shelfwood 的 `embeddium-compat` 分支（需求方追问后）
+
+需求方问 *"这个能行吗 github.com/j-shelfwood/voxy-neoforge"*。这个仓有 **2 个分支**：
+
+```
+embeddium-compat     c9644c1  (2026-08-27)   ← HEAD 是 "wip: snapshot of uncommitted local changes"
+neoforge-1.21.1      89636aa  (2026-01-05)
+```
+
+**`embeddium-compat` 是一个真正的 Embeddium 分支，不是换皮 Sodium。** 我拉了它的 `build.gradle` 与 `mods.toml`：
+
+```groovy
+// Embeddium (Sodium fork for NeoForge)
+embeddium_version=1.0.15+mc1.21.1        // ← 正是我们包里那个版本
+minecraft_version=1.21.1
+neoforge_version=21.1.115
+mod_version = 0.2.9-alpha
+// Sodium integrations removed for Embeddium-only branch
+exclude 'me/cortex/voxy/client/compat/SodiumCompat.java'
+exclude 'me/cortex/voxy/client/mixin/sodium/**'
+```
+
+`mods.toml` 里 **`embeddium` 是 `type="optional"`**（不是 required）：
+
+```toml
+[[dependencies.voxy]]
+modId="embeddium"
+type="optional"
+versionRange="[1.0.0,)"
+side="CLIENT"
+```
+
+### 我静态核对了它的 mixin 注入点 vs 我们装的 Embeddium 1.0.15（**全部通过**）
+
+这是"能不能装上"最硬的证据 —— 用 `javap` 逐个验，不是读文档推断：
+
+| voxy 的注入点 | Embeddium 1.0.15 实际签名 | 结论 |
+|---|---|---|
+| `RenderSectionManager.<init>` | `RenderSectionManager(ClientLevel,int,CommandList)` | ✅ |
+| `RenderSectionManager.onChunkAdded/Removed` | 两个都在，`public void (int,int)` | ✅ |
+| `RenderSectionManager.updateSectionInfo` | `private void (RenderSection, BuiltSectionInfo)` | ✅ |
+| `DefaultChunkRenderer.render` | `public void render(ChunkRenderMatrices,CommandList,ChunkRenderListIterable,TerrainRenderPass,CameraTransform)` | ✅ |
+| `EmbeddiumWorldRenderer.initRenderer` | `private void initRenderer(CommandList)` | ✅ |
+| `ChunkJobQueue.<init>` redirect `new Semaphore(I)` | 字节码 `invokespecial #18 // Method java/util/concurrent/Semaphore."<init>":(I)V` | ✅ **精确匹配** |
+| `ChunkJobQueue.shutdown` | `public Collection<ChunkJob> shutdown()` | ✅ |
+| `ShaderChunkRenderer.end` | `protected void end(TerrainRenderPass)` | ✅ |
+
+**没有 Iris 会不会崩？不会。** 它的 mixin 配置里虽有 12 个 Iris + 2 个 Monocle mixin，
+但走自定义 plugin `VoxyMixinPlugin.shouldApplyMixin()` 按**类是否在场**决定：
+
+```java
+if (mixinClassName.contains(".mixin.iris."))    return isLoadedOrPresent("iris", IRIS_CLASS, IRIS_API_CLASS);
+if (mixinClassName.contains(".mixin.monocle.")) return isLoadedOrPresent("iris", IRIS_CLASS, IRIS_API_CLASS);
+```
+
+我们**没装 Iris/Monocle** ⇒ 这 14 个 mixin **全部跳过**；`.mixin.embeddium.` 因为有 Embeddium 而应用。
+**⇒ 技术上这条分支与我们的包是兼容的，不需要 Iris，也不需要换渲染器。**
+
+`CLAUDE.md` 里记录的那个"没 Iris 时 LOD 完全不渲染"的 shadow gate bug，
+**在这个分支已修**（`VoxyRenderSystem.java:651` 起明确放行 `NormalRenderPipeline`）。
+
+### 但卡点 1 完全没变，而且是决定性的
+
+该分支的 `LICENSE.md`（**与上游逐字相同**）：
+
+```
+# Copyright 2025 MCRcortex
+All rights reserved.
+Do not redistribute.
+```
+
+**"Do not redistribute" 是 ARR 的核心条款。** 这个 fork 不能发行编译好的 jar
+（它的 README 也照抄了 *"compiled JARs are not distributed. You must build from source"*）。
+
+### 顺带查到的另外两条路（都不解决问题）
+
+| 路 | 预编译 jar | 要求 | 结果 |
+|---|---|---|---|
+| **yarnobachmann/Voxy-Neoforge.-1.21.1** | ✅ GitHub Releases 有（`v0.2.12-alpha`，2026-06-28，比 j-shelfwood 的 0.2.9 还新） | **Sodium required** + **Forgified Fabric API required** | 要换渲染器 + 加 Fabric 兼容层；且同样是 ARR 派生 |
+| **voxy-auto-lod**（Modrinth，MIT，1.21.1/neoforge） | ✅ 有 | 依赖 **Sodium + FFAPI + voxy 本身** | 不绕开 voxy，等于给 voxy 加个自动预生成 |
+
+**注意 yarnobachmann 那条**：它**有预编译 jar 可下**，看起来解决了"要自己编译"。
+但代价是 **① 换 Sodium + ② 必须加 FFAPI + ③ 仍然是 ARR 派生品** ——
+比自己编译那条路更重，只是把"编译"换成了"换渲染器 + 加兼容层"。
+
+### 这一轮的裁决
+
+> **技术上：`embeddium-compat` 分支与我们的包兼容（mixin 注入点全部核对通过、不需 Iris、不换渲染器）。
+> 工程上：它不能随包分发（ARR "Do not redistribute"），而多人包里每个玩家都需要它。
+> ⇒ 结论不变，但理由收窄成一条，而且是最硬的一条：授权，不是技术。**
+
+**唯一能让它成立的前提**是需求方接受以下之一：
+① 每个玩家自行编译（多人下不现实）；
+② 自行承担授权风险去分发编译产物（我不建议，且这不是我能替他决定的）。
+
+**DH 没有这个问题**：`LGPL-3.0-only`、可自由分发、两边共用一个 jar、无依赖。
 
 1. **Sodium 版本打架**：voxy-neoforge 文档写需要 **0.6.13**，
    而 Sodium 在 1.21.1/NeoForge 上的最新 release 已是 **`mc1.21.1-0.8.13-neoforge`**。
@@ -84,11 +181,11 @@ lod-server-support-neoforge-...jar 0.15.1   MIT   displayName="LOD Server Suppor
    说明作者在处理 0.6↔0.8 的差异，但**"voxy 移植针对 0.6.13 写的、能不能跑在 0.8.13 上"没有证据**。
 2. **`lss` 的 mixin 直接改 Sodium** → 与本包"换渲染器"的历史教训（`CONFLICTS.md` **C10**）正面相撞。
 
-### 裁决
+### 小结（本节结论，§〇之补二 修正了其中一处）
 
 > **DH 与 voxy 都能达成"服务端下发 LOD、玩家不探索就能看到远景"这个目标。
-> 但 DH 是：两边各装一个 jar（Fabric/NeoForge 共用、`client_or_server_prefers_both`、无依赖声明、无授权问题）。
-> voxy 是：换渲染器 + 加 Fabric 兼容层 + 每个玩家自行编译 ARR 源码。
+> 但 DH 是：两边各装一个 jar（Fabric/NeoForge 共用、`client_or_server_prefers_both`、无依赖声明、LGPL 可分发）。
+> voxy 是：**每个玩家自行编译 ARR 源码**（换不换渲染器取决于选哪个分支，见 §〇之补二）。
 > → 同一收益下，DH 的代价是 voxy 的零头。选 DH。**
 
 **并且 LSS/VSS 这条路反而证明了 DH 的一个优势**：
@@ -97,9 +194,11 @@ DH 的服务端 LOD 下发是**内置**的，不需要再装第三方桥接 mod 
 
 ### 如果需求方坚持走 voxy（我会照做，但先摆代价）
 
-必须同时接受：**① 玩家自行编译** 或 **② 自建分发（需评估授权）**；
-**③ Embeddium → Sodium 替换**（必须重跑 `CONFLICTS.md` C10 那一整轮）；
-**④ 接受 voxy-neoforge 的 Alpha 状态**。这四项都不是我能替需求方承担的，
+必须同时接受：**① 玩家自行编译**（或自建分发，需评估 ARR 授权）；
+**② 若走 Sodium 分支则要 Embeddium → Sodium 替换**（必须重跑 `CONFLICTS.md` C10 那一整轮；
+走 `embeddium-compat` 分支则不需要换渲染器，但那条**没有预编译 jar**）；
+**③ 接受 voxy-neoforge 的 Alpha / WIP 状态**（`embeddium-compat` 的 HEAD 本身就是一条
+"未提交改动快照"）。这些都不是我能替需求方承担的，
 所以**这是一次需要明确点头的转向，不是一次 mod 安装**。
 **我目前的建议是不走**，理由如上。
 

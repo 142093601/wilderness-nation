@@ -257,5 +257,46 @@ python tools/cleanup_temp.py --delete   # 真删
 **判据**：从 `D:\project`、`nation-pack\`、`nation-pack\tools\` 三个不同 cwd 运行，
 都必须报 `仓库根: D:\project\nation-pack`、`[PROTECTED] tools/_selftest.py`、`exit 2`。
 
+### ⚠️⚠️ 第三次踩同一个坑 —— 就在建完工具之后（这才是真正的教训）
+
+同一次会话里、**建好 `cleanup_temp.py` 并验证通过之后**，我又误删了同一个 `tools/_selftest.py`。
+
+经过：那次我是在收尾时顺手清掉一批一次性探查脚本，用的是
+
+```powershell
+Get-ChildItem tools -Filter '_*.py' | Where-Object { $keep -notcontains $_.Name } | Remove-Item -Force
+```
+
+—— **裸 `Remove-Item`，根本没调用我刚写好的 `cleanup_temp.py`。**
+
+**所以第三次的根因和第二次不同，必须分清：**
+
+| 次 | 根因 | 防线演进 |
+|---|---|---|
+| 第 1 次 | 不知道存在被跟踪的 `_selftest.py` | 写了两条文字硬规则 |
+| 第 2 次 | 文字规则在"动手那一刻"想不起来 | 把规则做成工具 `cleanup_temp.py` |
+| **第 3 次** | **有工具却不用** —— 裸命令更顺手，工具需要我主动想起来调用 | **见下方** |
+
+**结论：一个"需要我记得去用"的工具，和一条"需要我记得去看"的规则，防线强度是一样的。**
+两者都依赖我在收尾那一刻的注意力，而那一刻正是注意力最松的时候（活干完了，
+只想赶紧清理干净）。**真正的修法只有两个方向：让正确做法成为唯一做法，或让错误做法失败。**
+
+### 修法（第三次，做减法而不是加法）
+
+1. **立即 `git checkout -- tools/_selftest.py` 恢复**（7380 字节，`git status` 回到只有 `M DESIGN-VISTA.md`）；
+2. **改掉命名口径，让"临时文件"和"正式文件"在名字上不再混淆**：
+   本项目此后**不再用 `_` 前缀存自己的临时脚本**。临时脚本一律叫
+   `_probe_*.py` / `_scratch_*.py`（`.gitignore` 已有 `tools/_probe_*` `tools/_stats_*` 规则，
+   必要时补 `tools/_scratch_*`），
+   这样 `tools/_*.py` 这个宽口径通配就**再也不需要**用了 —— 我不再有任何理由写
+   `tools/_*.py` 这种会扫到正式文件的模式。
+3. **保留但降级 `cleanup_temp.py` 的角色**：它仍是干跑核对工具，但**不再是主要防线**；
+   主要防线是第 2 条 —— **不给自己留下"会扫到正式文件"的删除模式**。
+
+**判据**：此后任何一次批量清理，用的通配必须是 `tools/_probe_*.py` 或 `tools/_scratch_*.py`，
+**不允许再出现 `tools/_*.py`**。这一条可以机械检查：
+`git grep -n "tools/_\*\.py"` 在文档/脚本里只应出现在说明"不要这样用"的地方。
+
+
 
 
