@@ -59,7 +59,19 @@ LOCAL_JARS = {
 
 
 def log(msg: str) -> None:
-    print(msg, flush=True)
+    """打印。强制走 UTF-8，避免 Windows 控制台 GBK 编码把中文/替换字符搞崩。
+
+    踩过的坑：gradle 输出里有非法字节（解码成 U+FFFD），我自己的 print 撞上
+    "UnicodeEncodeError: 'gbk' codec can't encode character '\\ufffd'" —— 于是
+    **构建其实成功了，脚本却在打印阶段崩了**，产物看起来像"失败"。
+    处理子进程输出时想到了 UTF-8，却没处理自己的 print，这是不一致。
+    """
+    try:
+        print(msg, flush=True)
+    except UnicodeEncodeError:
+        enc = sys.stdout.encoding or "utf-8"
+        sys.stdout.buffer.write(msg.encode(enc, errors="replace") + b"\n")
+        sys.stdout.flush()
 
 
 def stage_sources(src: Path) -> Path:
@@ -227,15 +239,87 @@ def patch_build_gradle(tree: Path, jars: dict[str, Path]) -> None:
     # 顺带解决的实际问题：jedis 会拖进 org.json / slf4j / gson，commons-pool2 的 POM
     # 又要求 parent `org.apache.commons:commons-parent:62`，离线模式全部解析不了。
     # 去掉这三项后，闭包只剩 rocksdbjni + lwjgl，全部已在本地仓库里。
-    t8 = bg2.read_text(encoding="utf-8")
-    _ = t8  # 保留：下面不再裁剪依赖，见下方注释
-    # ⚠️ 我一度在这里裁掉 jedis / xz / sqlite-jdbc，理由是"单服务端 / 不用 DH 导入"。
-    # **那是错的**：voxy 的**源码本身就 import 它们**
-    #   common/config/storage/redis/RedisStorageBackend.java → redis.clients.jedis
-    #   commonImpl/importers/DHImporter.java                 → org.tukaani.xz
-    # 删掉依赖后编译报 19 个 "程序包 redis.clients.jedis 不存在 / org.tukaani.xz 不存在"。
-    # 它们是**编译期必需**，不是可有可无的可选功能。教训：判断"能不能删"要看源码 import，
-    # 不能看功能描述。（改用 tools/fetch_voxy_deps.py 把依赖闭包解全。）
+    # ⚠️ 移除内嵌的 sqlite-jdbc —— 这是**硬冲突**的修法，不是优化。
+    #
+    # 实测崩溃（首次装机冒烟，客户端在类加载阶段就退出）：
+    #   java.lang.module.ResolutionException: Modules grieflogger and org.xerial.sqlitejdbc
+    #   export package org.sqlite.date to module supplementaries
+    # 根因：本包已装的 `grieflogger-1.2.10` **直接内嵌** org/sqlite/ 39 个类；
+    # 而 voxy 的 jarJar 又内嵌 `sqlite-jdbc-3.49.1.0.jar`（同样 39 个类）。
+    # 两个模块导出同一个包 ⇒ Java 模块系统在**类加载阶段**（早于 mixin）拒绝启动。
+    # 我扫过实例里全部 232 个 jar（含递归内嵌），提供 org/sqlite/date/ 的**只有这两个**。
+    #
+    # 为什么删掉是安全的：voxy 源码里 sqlite **只有一处用途**，而且自带优雅降级：
+    #   DHImporter.java:470  Class.forName("org.sqlite.JDBC");
+    #   DHImporter.java:475  Logger.warn("Unable to load sqlite JDBC or lzma decompressor,
+    #                                     DHImporting wont be available", e);
+    # 即"没有 sqlite = 不能导入 Distant Horizons 数据库"，不崩、不影响渲染。
+    # voxy 的默认存储后端是 RocksDB，sqlite 是**备选**后端。
+    # 我们本来也不用 DH 导入（正在放弃 DH 那套），代价近似为零。
+    t_sql = bg2.read_text(encoding="utf-8")
+    lines_sql = t_sql.splitlines(keepends=True)
+    out_sql: list[str] = []
+    skip = 0
+    removed_sqlite = False
+    for ln in lines_sql:
+        if skip > 0:
+            skip += ln.count("{") - ln.count("}")
+            if skip <= 0:
+                skip = 0
+            continue
+        if "jarJar(implementation(" in ln and "sqlite-jdbc" in ln:
+            out_sql.append(
+                "    // [build_voxy.py] 移除内嵌 sqlite-jdbc：与 grieflogger 内嵌的 org.sqlite.* 包冲突，\n"
+                "    // 导致 java.lang.module.ResolutionException（Modules grieflogger and org.xerial.sqlitejdbc\n"
+                "    // export package org.sqlite.date）。voxy 只有 DH 导入用它，缺了会自己 warn 并降级。\n"
+            )
+            skip = 1
+            removed_sqlite = True
+            continue
+        out_sql.append(ln)
+    if removed_sqlite:
+        bg2.write_text("".join(out_sql), encoding="utf-8", newline="\n")
+        log("[3/5] 已移除内嵌 sqlite-jdbc（修 grieflogger 的模块包冲突）")
+    else:
+        log("[3/5] sqlite-jdbc 已不在依赖里（跳过）")
+
+    # ── 修 j-shelfwood 移植版引入的纹理单元越界 bug（100% 崩在"进世界"）──
+    #
+    # 实测证据（crash-reports + debug.log 双份）：
+    #   me.cortex.voxy.client.LoadException: Force crashing due to exception during on game join
+    #   Caused by: java.lang.ArrayIndexOutOfBoundsException: Index 12 out of bounds for length 12
+    #     at com.mojang.blaze3d.platform.GlStateManager._bindTexture(GlStateManager.java:547)
+    #     at me.cortex.voxy.client.core.VoxyRenderSystem.<init>(VoxyRenderSystem.java:318)
+    #     at net.minecraft.client.renderer.LevelRenderer.createRenderer
+    #     at voxy$reloadVoxyRenderer → LevelRenderer.setLevel   ← 进世界时
+    #
+    # 根因：MC 1.21.1 的 `GlStateManager.TEXTURE_COUNT = 12`（javap 字节码 `bipush 12`），
+    # `_bindTexture(0)` 拿 `activeTexture` 索引那张长度 12 的数组：
+    #     4: getstatic TEXTURES:[Lcom/mojang/blaze3d/platform/GlStateManager$l;
+    #     7: getstatic activeTexture
+    #    10: aaload                  ← i>=12 时越界
+    # 移植版循环上界写成 16，于是 i=12 必崩。
+    #
+    # 上游写的是 `i < 12`（核对了 MCRcortex/voxy 的 12111 / dev / mc12110 / mc_1217 四个
+    # 分支，VoxyRenderSystem 里一律 `i < 12`）⇒ **移植引入，不是上游的**。
+    #
+    # 只改**含 `_bindTexture` 的循环**：另有 2 处 `for(i<16) glBindBufferBase(...)`
+    # 是 SSBO 槽位、与纹理单元无关，**不能动**。用公开常量 TEXTURE_COUNT 而非魔数 12。
+    trs = tree / "src/main/java/me/cortex/voxy/client/core/VoxyRenderSystem.java"
+    if trs.is_file():
+        ls = trs.read_text(encoding="utf-8").splitlines(keepends=True)
+        n_fixed = 0
+        for i, ln in enumerate(ls):
+            if re.search(r"for \(int i = 0; i < 16; i\+\+\)", ln) and "_bindTexture" in "".join(ls[i:i + 6]):
+                ls[i] = ln.replace("i < 16", "i < GlStateManager.TEXTURE_COUNT")
+                n_fixed += 1
+        if n_fixed:
+            trs.write_text("".join(ls), encoding="utf-8", newline="\n")
+            log(f"[3/5] 修纹理单元越界：{n_fixed} 处 i<16 -> i<GlStateManager.TEXTURE_COUNT(=12)")
+        else:
+            log("[3/5] 无需修 _bindTexture 循环（可能已打过补丁）")
+    else:
+        log(f"[warn] 找不到 VoxyRenderSystem.java，纹理越界 bug 未修 —— 进世界会崩")
 
 
 def write_init_gradle(tree: Path) -> Path:
@@ -308,6 +392,36 @@ def main() -> int:
     log(f"退出码: {p.returncode}")
     log("\n--- 输出尾部 ---")
     log("\n".join(out.splitlines()[-40:]))
+
+    # 产物结构校验：不能只看 "BUILD SUCCESSFUL"。
+    # 尤其要确认 sqlite 已从内嵌库里消失（否则会和 grieflogger 的 org.sqlite.* 撞包、
+    # 客户端在类加载阶段就退出 —— 这是我实测踩到的崩溃）。
+    libs = tree / "build" / "libs"
+    jars = sorted(libs.glob("voxy*.jar")) if libs.is_dir() else []
+    if jars:
+        import zipfile
+        jar = jars[-1]
+        log(f"\n--- 产物校验: {jar.name} ({jar.stat().st_size/1024/1024:.2f} MB) ---")
+        with zipfile.ZipFile(jar) as z:
+            names = z.namelist()
+            embedded = [n for n in names if n.startswith("META-INF/jarjar/") and n.endswith(".jar")]
+            log(f"  内嵌 jar: {[n.split('/')[-1] for n in embedded]}")
+            bad = [n for n in embedded if "sqlite" in n.lower()]
+            conflict = [n for n in names if n.startswith("org/sqlite/")]
+            if bad or conflict:
+                log("  [FAIL] 产物里仍有 sqlite —— 会和 grieflogger 撞 org.sqlite.date，客户端起不来")
+                log(f"         内嵌: {bad}  顶层类: {len(conflict)}")
+                return 3
+            log("  [OK] 无 sqlite（grieflogger 的包冲突已避开）")
+            sod = [n for n in names if n.startswith("me/cortex/voxy/client/mixin/sodium/")]
+            emb = [n for n in names if n.startswith("me/cortex/voxy/client/mixin/embeddium/")]
+            log(f"  [{'OK' if not sod else 'WARN'}] sodium mixin: {len(sod)}（应为 0）  embeddium mixin: {len(emb)}")
+            toml = [n for n in names if n.endswith("neoforge.mods.toml")]
+            if toml:
+                cfg = re.findall(r'config="([^"]+)"', z.read(toml[0]).decode("utf-8", "replace"))
+                log(f"  mixin 配置: {cfg}（不应含 iris 配置）")
+            nats = [n for n in names if n.endswith((".dll", ".so"))]
+            log(f"  原生库: {nats}")
     return p.returncode
 
 
