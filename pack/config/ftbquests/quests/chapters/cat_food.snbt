@@ -886,14 +886,14 @@
 		"9CE7D3C148C5E154"
 		]
 		icon: {
-			id: "endersdelight:crushed_voidpepper"
+			id: "endersdelight:voidpepper"
 		}
 		id: "BC253B9B9A7F3536"
 		shape: "circle"
 		size: 1.2d
 		tasks: [
 		{
-			item: "endersdelight:crushed_voidpepper"
+			item: "endersdelight:voidpepper"
 			id: "876125801FFAB37B"
 			type: "item"
 		}
@@ -906,14 +906,14 @@
 		"F4173A922D4F7741"
 		]
 		icon: {
-			id: "mynethersdelight:nether_stove"
+			id: "mynethersdelight:nether_bricks_stove"
 		}
 		id: "10AF811BED8B99DC"
 		shape: "pentagon"
 		size: 2.0d
 		tasks: [
 		{
-			item: "mynethersdelight:nether_stove"
+			item: "mynethersdelight:nether_bricks_stove"
 			id: "D2897E77DD83FF57"
 			type: "item"
 		}
@@ -926,14 +926,14 @@
 		"10AF811BED8B99DC"
 		]
 		icon: {
-			id: "mynethersdelight:stuffed_hoglin"
+			id: "mynethersdelight:roast_stuffed_hoglin"
 		}
 		id: "0DD0A7B2F1868C48"
 		shape: "circle"
 		size: 1.2d
 		tasks: [
 		{
-			item: "mynethersdelight:stuffed_hoglin"
+			item: "mynethersdelight:roast_stuffed_hoglin"
 			id: "4D320453936F9BD6"
 			type: "item"
 		}
@@ -1006,14 +1006,14 @@
 		"2F604EC3FF4722ED"
 		]
 		icon: {
-			id: "miners_delight:rock_soup_cup"
+			id: "minecraft:rabbit_stew"
 		}
 		id: "822124A587CAC57E"
 		shape: "circle"
 		size: 1.2d
 		tasks: [
 		{
-			item: "miners_delight:rock_soup_cup"
+			item: "minecraft:rabbit_stew"
 			id: "BA2B7ED0690C80E1"
 			type: "item"
 		}

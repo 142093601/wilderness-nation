@@ -440,7 +440,7 @@
 		"C96238EAF2CF8FF7"
 		]
 		icon: {
-			id: "smallships:oak_rowboat"
+			id: "smallships:oak_cog"
 		}
 		id: "C118459326F2C2CE"
 		rewards: [
@@ -458,7 +458,7 @@
 		size: 2.0d
 		tasks: [
 		{
-			item: "smallships:oak_rowboat"
+			item: "smallships:oak_cog"
 			id: "3F18D589A0382951"
 			type: "item"
 		}
@@ -578,14 +578,14 @@
 		"E791EFED08FE4113"
 		]
 		icon: {
-			id: "seaworthyboats:shipyard"
+			id: "smallships:sail"
 		}
 		id: "33AF39731313EBBA"
 		shape: "rsquare"
 		size: 1.75d
 		tasks: [
 		{
-			item: "seaworthyboats:shipyard"
+			item: "smallships:sail"
 			id: "EF5025BEFEACEED4"
 			type: "item"
 		}
@@ -647,7 +647,7 @@
 		"33AF39731313EBBA"
 		]
 		icon: {
-			id: "smallships:oak_war_galley"
+			id: "smallships:oak_galley"
 		}
 		id: "0A38D45B517F1A1B"
 		rewards: [
@@ -665,7 +665,7 @@
 		size: 1.75d
 		tasks: [
 		{
-			item: "smallships:oak_war_galley"
+			item: "smallships:oak_galley"
 			id: "9FD66EEC3768F318"
 			type: "item"
 		}
@@ -684,7 +684,7 @@
 		"0A38D45B517F1A1B"
 		]
 		icon: {
-			id: "tombstone:tombstone"
+			id: "tombstone:decorative_tombstone"
 		}
 		id: "3F2FDCA473E81BE9"
 		rewards: [
@@ -702,7 +702,7 @@
 		size: 2.0d
 		tasks: [
 		{
-			item: "tombstone:tombstone"
+			item: "tombstone:decorative_tombstone"
 			id: "6F51501D37BAA5CF"
 			type: "item"
 		}
@@ -727,7 +727,7 @@
 			type: "item"
 		}
 		{
-			item: "tombstone:engraved_grave_plate"
+			item: "tombstone:grave_plate"
 			id: "52A206D44AC44802"
 			type: "item"
 		}
@@ -801,19 +801,19 @@
 		"5C181490927C07C9"
 		]
 		icon: {
-			id: "tombstone:grave_normal"
+			id: "tombstone:grave_plate"
 		}
 		id: "35E4744D670B0635"
 		shape: "circle"
 		size: 1.2d
 		tasks: [
 		{
-			item: "tombstone:grave_normal"
+			item: "tombstone:grave_plate"
 			id: "F298B9A2D7AC8BA7"
 			type: "item"
 		}
 		{
-			item: "tombstone:grave_cross"
+			item: "tombstone:decorative_grave_cross"
 			id: "ED6BD95B8EEEC59A"
 			type: "item"
 		}
@@ -881,7 +881,7 @@
 		"E7E9075394D09432"
 		]
 		icon: {
-			id: "tombstone:tombstone"
+			id: "tombstone:decorative_tombstone"
 		}
 		id: "A035AAA342E146A8"
 		rewards: [
@@ -899,7 +899,7 @@
 		size: 2.5d
 		tasks: [
 		{
-			item: "tombstone:tombstone"
+			item: "tombstone:decorative_tombstone"
 			id: "EFD2BE5292D9D462"
 			type: "item"
 		}
@@ -933,20 +933,20 @@
 		"0A38D45B517F1A1B"
 		]
 		icon: {
-			id: "letsparkour:fast_parkour_slab"
+			id: "minecraft:slime_block"
 		}
 		id: "4A378D7CBF504010"
 		shape: "circle"
 		size: 1.2d
 		tasks: [
 		{
-			item: "letsparkour:fast_parkour_slab"
+			item: "minecraft:slime_block"
 			count: 4
 			id: "CD5F24E57869CDCA"
 			type: "item"
 		}
 		{
-			item: "letsparkour:jump_parkour_slab"
+			item: "minecraft:packed_ice"
 			count: 4
 			id: "3C381E373DC2D15C"
 			type: "item"

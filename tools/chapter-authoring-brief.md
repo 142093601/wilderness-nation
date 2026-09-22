@@ -147,8 +147,26 @@ grid = { step = 1.5, row_h = 1.75 }   # 坐标是自动排的，照抄这行即�
 
 ---
 
-## 6. 覆盖纪律（类目章特有）
+## 5.5 跨章软链接 `[[link]]`（**指路，不是前置**）
 
+编年/技艺章里想把人指到**别的章**去做某件事时，用软链接，**不要**用跨章 `deps`
+（生成器直接禁止跨章依赖）。
+
+```toml
+[[link]]
+to_chapter = "create"      # 目标**章**的 key（看 ROSTER 或文件名）
+to_quest = "first_crank"   # 目标章里那条任务的**稳定 name**（不是标题）
+x = -12.0                  # 可选，缺省排在画布左侧
+y = -1.75
+```
+
+- 生成物是章级的 `quest_links`，在游戏里表现为一个**独立小格**，点了能跳过去。
+- **不构成解锁条件**：它不做，你这边照样继续。
+- `to_quest` 写错**生成器会报错**（因为它必须解析成真实的任务 id）；
+  目标 name 要自己去那一章的 TOML 里查（产物 SNBT 里只有 id，看不出 name）。
+- 一条软链接只指一个任务；同一个目标章最多挂 1~2 条，别把画布铺满。
+
+## 6. 覆盖纪律（类目章特有）
 **类目章的存在意义 = 覆盖**。ROSTER 里列出的 mod，**每一个都必须在章里至少出现一条**。
 写完对着 ROSTER 的 mod 清单逐个数一遍，并在提交说明里写"覆盖 N/N"。
 
@@ -166,8 +184,14 @@ Framework / JamLib / Collective / CoroUtil / Bookshelf / ExtraLib / Mejer 等。
 cd D:\project\nation-pack
 python tools/lint_questbook_toml.py            # 期望：0 个解析失败
 python tools/item_index.py --verify-toml       # 期望：missing 0
+python tools/runtime_deny.py --check           # 期望：命中 0（真机拒绝过的 id）
+python tools/questbook_name_guard.py           # 期望：没有 name 消失/重复/空名
 python tools/questbook.py --check-only         # 期望：exit 0，无 error
 ```
+
+`questbook_name_guard.py` 是**扩写已有章时最重要的一条**：任务 id 是
+`sha256("quest|<章 key>|<name>")`，name 一消失，语言键成孤儿、玩家进度回退，
+而且**都不会报错**。它会把"相对 git HEAD 消失了的 name"直接列出来。
 
 还要自己数一遍：
 - [ ] 条数 ≥ ROSTER 里的目标
@@ -178,3 +202,14 @@ python tools/questbook.py --check-only         # 期望：exit 0，无 error
 - [ ] ROSTER 里列的 mod 全部覆盖
 - [ ] 没有"怎么做"式的 desc（不重复 mod 教学）
 - [ ] 文案里没有 咱们/咱/整一个/搞起来/贼/宿命/永恒/觉醒 这类词
+
+---
+
+## 8. 两个"看不见的"陷阱（2026-09-22 实测，各踩过一次）
+
+1. **写文件不要用 PowerShell 的 `Out-File -Encoding UTF8`**（Windows PowerShell 5.1
+   会加 **BOM**）。带 BOM 的候选 id 清单会被 `--verify-toml` 把**首行误报成 missing**
+   （`minecraft:paper` 被冤枉过一次）。要用就 `strip_bom.py`，或者直接用 editor/write 工具。
+2. **不要用裸 `str.replace` 批量改 id**。`create:package` 是 `create:packager` 的**前缀**，
+   一次全局替换把 25 处好 id 改成了不存在的（`create:cardboard_package_12x12r`）。
+   要替换就用 `tools/runtime_deny_fix.py`（它按整词边界匹配）。

@@ -43,6 +43,7 @@ SRC = ROOT / "pack" / "config" / "ftbquests"
 SRV = ROOT / "server" / "config" / "ftbquests"
 SRV_LOG = ROOT / "server" / "logs" / "latest.log"
 CONSOLE = ROOT / "data" / "server-console.log"
+CHAPTERS_SRC = HERE / "questbook" / "chapters"
 
 # 与任务书无关的 Unknown registry key 噪声（其它 mod 自己的 datagen 残留，实测存在）
 NOISE_NS = ("dndecor", "railways", "everycomp", "framedblocks")
@@ -87,6 +88,29 @@ def main() -> int:
     if not chapters:
         print("  产物为空，先跑 tools/questbook.py")
         return 1
+
+    # ---- 0.5 前置：**产物必须比 TOML 新** ----
+    #
+    # 为什么必须查这个（2026-09-22 我亲自踩到，白跑了两轮真机验证）
+    # ------------------------------------------------------------
+    # 我改完 `tools/questbook/chapters/*.toml` 之后直接跑了本脚本，
+    # 但**忘了先跑 `tools/questbook.py`** —— 于是：
+    #   · `runtime_deny.py --check`（读 TOML）说"命中 0"，我以为是好的
+    #   · 本脚本把**旧的** SNBT 拷进服务端，照旧报 42 条 Unknown registry key
+    # 表现是"修了但没用"，最容易误导人往"修法不对"的方向查。
+    # 真相只有一个：**TOML 是源，SNBT 是产物，产物不会自己更新。**
+    toml_files = sorted(CHAPTERS_SRC.glob("*.toml"))
+    if toml_files:
+        newest_toml = max(p.stat().st_mtime for p in toml_files)
+        oldest_snbt = min(p.stat().st_mtime for p in chapters)
+        if newest_toml > oldest_snbt:
+            import datetime as _dt
+            print(f"  [FAIL] 产物比 TOML 旧：最新 TOML "
+                  f"{_dt.datetime.fromtimestamp(newest_toml):%H:%M:%S} > "
+                  f"最早 SNBT {_dt.datetime.fromtimestamp(oldest_snbt):%H:%M:%S}")
+            print("         先跑：python tools/questbook.py   （改了 TOML 必须重新生成）")
+            return 1
+        print("  [OK] 产物比所有 TOML 新（不会验到旧数据）")
 
     # ---- 1. 停掉自己登记的服务端 ----
     step("1. 停掉先前登记的服务端（只停自己起的）")
@@ -163,6 +187,13 @@ def main() -> int:
         print(f"  [FAIL] Unknown registry key x{len(bad_items)}：")
         for b in bad_items[:8]:
             print("     " + b)
+        # ⚠️ 这一项**只能靠真机发现**：离线校验（registry.json）证明的是
+        # "某个 jar 提到过这个 id"，不等于"游戏注册了它"。
+        # 2026-09-22 实测：离线报 missing 0，真机报 37 条。
+        # 所以失败时直接把"沉淀进黑名单"的命令打出来，别让人再想一遍。
+        print("     —— 这些 id 离线校验查不出来，请把它们沉淀成黑名单并修掉：")
+        print("        python tools/runtime_deny.py --scan server/logs/latest.log")
+        print("        python tools/runtime_deny.py --check")
     else:
         print("  [OK] 没有与任务书相关的 Unknown registry key")
 

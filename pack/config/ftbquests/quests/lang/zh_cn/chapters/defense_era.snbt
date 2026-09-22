@@ -73,4 +73,153 @@
 	"刻上守住了什么。这一块碑通常最厚——它记的是伤亡与工事。"
 	"下一时代是文明的收官：把几十年打下来的东西变成能留下来的东西。"
 	]
+	quest.B740816337D4DF1F.title: "民兵名册"
+	quest.B740816337D4DF1F.description: [
+	"名册要写清三件事：谁能上墙、谁只做后勤、谁在城外的据点。"
+	"没有名册的动员，第一夜会先花时间找人，再谈防守。"
+	]
+	quest.E399F78904627AAC.title: "制式装备"
+	quest.E399F78904627AAC.description: [
+	"护甲在这里不只是防御值：hordes 的护甲表按甲种给抗感染率——皮革 0.05、铁 0.10、钻石 0.15、下界合金 0.20。"
+	"「制式」的意思就是同一档的甲要够一队人穿。"
+	]
+	quest.7609F004EB2DA17C.title: "弩手班"
+	quest.7609F004EB2DA17C.description: [
+	"守城的主力是齐射，不是个人勇武。"
+	"一队人的弩与箭按同一口径备，才不会有人打完三轮就空手。"
+	]
+	quest.C5D259FEA6ACD8D0.title: "后备役"
+	quest.C5D259FEA6ACD8D0.description: [
+	"后备役不配铁：皮革甲的抗感染率是 0.05，仍然比空手强。"
+	]
+	quest.641C740368D1EFEA.title: "狼群哨"
+	quest.641C740368D1EFEA.description: [
+	"hordes 的护甲表里，狼铠的感染减免是 1.0——那张表上唯一满值的一项。"
+	"所以狼是唯一不会被感染的哨兵，值得单独编一队。"
+	]
+	quest.E29BC5366A5C8C31.title: "战时动员令"
+	quest.E29BC5366A5C8C31.description: [
+	"动员令只回答三件事：谁上前、谁留守、谁管后勤。"
+	]
+	quest.000869D7521C2A73.title: "分段队旗"
+	quest.000869D7521C2A73.description: [
+	"每段墙、每个门洞挂一面旗，出事时报的是「哪面旗」，不是模糊的方向。"
+	]
+	quest.3AA01B151C22ECE4.title: "平民安置"
+	quest.3AA01B151C22ECE4.description: [
+	"村民被咬会变成僵尸村民（hordes 的感染转换表里，村民与掠夺者的抗性都只有 0.15）。"
+	"所以平民安置不是后勤问题，是防御问题。"
+	]
+	quest.435AA05A5B20A66C.title: "与属地的联防"
+	quest.435AA05A5B20A66C.description: [
+	"联防要落到三个数字上：谁能来、多久能到、来了吃什么。"
+	"写在纸上才算数，口头约定在围城时找不到人。"
+	]
+	quest.DAED295AD73F23E5.title: "值守轮班表"
+	quest.DAED295AD73F23E5.description: [
+	"尸潮从午夜开始（The Hordes 的 hordeStartTime = 18000），而且尸潮期间不能睡（canSleepDuringHorde = false）。"
+	"所以轮班表不是排班偏好，是硬约束。"
+	]
+	quest.98BB1A5A46B783A9.title: "哨位与瞭望台"
+	quest.98BB1A5A46B783A9.description: [
+	"哨位要能互相看见：看不见的哨位等于没有哨位。"
+	]
+	quest.1FF5B2E87BCA1EF3.title: "夜班加岗"
+	quest.1FF5B2E87BCA1EF3.description: [
+	"白天不刷的只有原版僵尸；尸潮僵尸白天照样站着（hordeZombiesBurnInTheSun = false）。"
+	"但它们的波次从午夜来，所以夜班必须比白班厚。"
+	]
+	quest.B45032F3A8D8D7DA.title: "巡逻路线"
+	quest.B45032F3A8D8D7DA.description: [
+	"巡逻没有专门统计，只有里程可查——所以这一条看的是走出来的距离，不是排过的班。"
+	]
+	quest.3C78BFA59EFCC082.title: "疏散演练"
+	quest.3C78BFA59EFCC082.description: [
+	"疏散信号就是钟。演练到三十次，它才算条件反射，而不是纸面流程。"
+	]
+	quest.3E642BFCC1A3841B.title: "消防水缸"
+	quest.3E642BFCC1A3841B.description: [
+	"游戏不记「灭过火」，所以这一步的判据落在设施上：水缸与水桶放在墙根，不是仓库深处。"
+	]
+	quest.E5A5A60A96839058.title: "围城演练"
+	quest.E5A5A60A96839058.description: [
+	"标靶击中有原版统计（target_hit），是少数能机械判定的演练动作。"
+	]
+	quest.E681472FDFDC8FCF.title: "三级戒备"
+	quest.E681472FDFDC8FCF.description: [
+	"三级要各有各的信号：常态是火，加强是钟，临战是烟花。"
+	"三档混用等于没有预警——喊同一句话，没人知道该拿武器还是该撤。"
+	]
+	quest.631C9B264FE2693C.title: "烟花信号弹"
+	quest.631C9B264FE2693C.description: [
+	"烟花是唯一白天也能看见的信号，射高就是它的射程。"
+	]
+	quest.566B1DA3E4875DBC.title: "斥候与情报分级"
+	quest.566B1DA3E4875DBC.description: [
+	"斥候报回来的东西要分档：看见了、看见了几个、几个正朝这里来。"
+	]
+	quest.8739CF08013E513A.title: "驿传与信使"
+	quest.8739CF08013E513A.description: [
+	"属地的报信要在半天内到主城——靠人送情报，驿站与坐骑就是预警系统的一部分。"
+	]
+	quest.3B8ED2F391332BFE.title: "灯火管制"
+	quest.3B8ED2F391332BFE.description: [
+	"灯火管制的用处不在躲，而在读：灯灭即临战，城里所有人一眼就知道现在是什么状态。"
+	]
+	quest.5A048CEC8893F5C3.title: "墙高规格"
+	quest.5A048CEC8893F5C3.description: [
+	"尸潮会叠着往上爬（undeadnights 的 hordeMobsCanClimbEachOther = true）。"
+	"所以墙的高度与墙顶外挑是硬指标，不是审美。"
+	]
+	quest.095E76CB121C32CB.title: "墙厚规格"
+	quest.095E76CB121C32CB.description: [
+	"爆破僵尸带 TNT（horde_mobs 配置里 extraSpawnInfo = tnt:5），厚墙是唯一不需要人维护的对策。"
+	]
+	quest.0514A3B88B3EBDFA.title: "马面与射界"
+	quest.0514A3B88B3EBDFA.description: [
+	"直墙有一段打不到的死角，凸出去的马面就是为了消掉它。"
+	]
+	quest.0516503270349339.title: "箭矢基数"
+	quest.0516503270349339.description: [
+	"基数 = 打光一整个尸潮夜也不会见底的数量。"
+	]
+	quest.1C159E5313D576FA.title: "免疫储备"
+	quest.1C159E5313D576FA.description: [
+	"hordes 的免疫清单上只有附魔金苹果（150 tick）；感染会死人，也会把死人变成僵尸玩家。"
+	"这是唯一挡得住感染的东西，所以按人头备，不按箱备。"
+	]
+	quest.7EE2497FCD29C160.title: "药剂储备"
+	quest.7EE2497FCD29C160.description: [
+	"药剂按用途分箱：治疗、迅捷、抗火。牛奶桶留一组应急。"
+	]
+	quest.9E1B041095C77105.title: "战备粮"
+	quest.9E1B041095C77105.description: [
+	"被围时最先见底的往往是食物，不是箭。"
+	]
+	quest.5C0E6E2D7EBFABFF.title: "伤亡名册"
+	quest.5C0E6E2D7EBFABFF.description: [
+	"伤亡要记下来：谁在哪个位置倒下、当时是几级戒备。"
+	"下一次布防靠这份记录，而不是靠印象。"
+	]
+	quest.536D7DC9FE45C84C.title: "阵亡者墓园"
+	quest.536D7DC9FE45C84C.description: [
+	"墓园划在城外一侧，碑上刻名字与日期——这是方志的第一手材料。"
+	]
+	quest.EAD57DA45CB8C814.title: "遗物收殓"
+	quest.EAD57DA45CB8C814.description: [
+	"死于感染的队友会变成 hordes:zombie_player，而且带走了自己的东西（zombiePlayersStoreItems = true）。"
+	"把东西拿回来，才算收殓完。"
+	]
+	quest.FAD441B992F47006.title: "抚恤"
+	quest.FAD441B992F47006.description: [
+	"抚恤要从国库出，不能靠同队的人自己凑——这是国家行为与义气的分界。"
+	]
+	quest.53E456DE6295DA27.title: "战后复盘"
+	quest.53E456DE6295DA27.description: [
+	"复盘只问三句：哪一段先破、哪一步慢了、下次改什么。"
+	]
+	quest.440CE04FCC48C170.title: "写进史册"
+	quest.440CE04FCC48C170.description: [
+	"复盘要落到能翻回去的文本上——这个时代记的是伤亡与工事。"
+	]
 }

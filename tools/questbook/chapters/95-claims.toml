@@ -3,12 +3,37 @@
 # 定位：OPAC（认领）+ FTB Teams（队伍）+ 传送网络 —— 「我们的地」这套系统怎么用起来。
 #
 # ⚠️ **这一章的判据限制必须写在最前面**
-#    实测：`openpartiesandclaims` 与 `ftbteams` **完全不提供物品**（lang 里 item 键为 0）。
+#    实测：`openpartiesandclaims` 与 `ftbteams` **完全不提供物品**
+#    （`python tools/item_index.py --ns openpartiesandclaims` → hits 0；
+#      `--ns ftbteams` → hits 0；两个命名空间的 advancement 也是 0 条）。
 #    它们只有命令与界面。所以「圈地」「组队」「改权限」这些**动作**在 FTB Quests 里
-#    **没有判据**，只能用 checkmark（并写明理由）。
-#    能自动判的是这一章里**真实物品**的部分：传送石/传送卷轴、补给站的实物。
+#    **没有判据**，只能用 checkmark 并列明理由。
+#    能自动判的是这一章里**真实物品**的部分：传送石 / 共享石碑 / 传送石座 / 卷轴 /
+#    传送粉 / 共鸣碎片 / 智能过滤器 / 原版的界桩与告示牌。
 #
-# 与「编年 · 立国」的分工：立国章讲**什么时候做**，本章讲**怎么把它用起来**。
+# 覆盖的命名空间与条数（全部核过）：
+#   · `waystones`（63 个 id，**本章铺满条数的主力**，用到 31 个）：各色 waystone ·
+#     sharestone 全 16 色 · portstone 全 16 色 · warp_stone / warp_plate / warp_dust ·
+#     warp_scroll(+bound) / bound_scroll / return_scroll / blank_scroll / portal_scroll ·
+#     attuned_shard / dormant_shard / crumbling_attuned_shard / deepslate_shard ·
+#     warp_portal · epitaph / fleeting_memorial / twinbound_feather
+#   · `ftbfiltersystem`（1 个 id：smart_filter）——「谁能拿什么」的实物落点
+#   · `openpartiesandclaims`（无物品 → 见上，全部走 checkmark 并写明理由）
+#   · `ftbteams`（无物品、无进度 → 只有命令，同样走 checkmark 并写明理由）
+#   · `minecraft`：旗帜 / 木牌 / 告示牌 / 钟 / 望远镜 / 铁栏杆 / 橡木栅栏（界桩与规矩的载体）
+#   · `createrailwaysnavigator:navigator`：驿站名册的载体（跨 mod 复用一件实物）
+#
+# 与「编年 · 立国」和「编年 · 立约」的分工：
+#   那两章讲**什么时候做**（什么时候划界、什么时候立约）；本章讲**怎么把它用起来**。
+#
+# checkmark 清单（7 条，逐条给理由）：
+#   · claim_anatomy —— 圈地动作，OPAC 无物品无进度
+#   · boundary_rules —— 文本约定，游戏里没有信号源
+#   · role_split —— 权限档位，OPAC 无物品无进度
+#   · alley_check —— 需要第二个真实玩家配合（DEFERRED.md 记着它）
+#   · shared_chest —— 约定，不是技术动作
+#   · claims_charter —— 文本，且写在不同载体上
+#   · conflict_protocol —— 处置流程，同样没有信号源
 
 key = "claims"
 title = "领地与队伍"
@@ -18,14 +43,14 @@ icon = "minecraft:shield"
 order_index = 36
 grid = { step = 1.5, row_h = 1.75 }
 
-# ---------------- 权限：从「能进」到「能管」 ----------------
+# ---------------- 簇 1：边界 ----------------
 
 [[quest]]
 name = "claim_anatomy"
 title = "先把边界画清楚"
 desc = [
 	"领地的价值不在「圈了多大」，而在**边界在哪**：让谁进、谁不能拆、谁不能开箱。",
-	"⚠️ OPAC 不提供物品（实测），所以这一条自检。",
+	"⚠️ OPAC 不提供物品（实测 hits 0），所以这一条自检。",
 	"验收方式：找一个不在队里的人，让他试三件事——挖、放、开箱。三件都被拦才算过。",
 ]
 icon = "minecraft:white_banner"
@@ -36,15 +61,45 @@ tasks = [
 ]
 
 [[quest]]
+name = "boundary_post"
+title = "界桩"
+desc = [
+	"线上看不见的边界，地上得看得见：四角立界桩，进出挂木牌。",
+	"界桩是给**自己人**看的——不然新成员根本不知道哪里能挖。",
+]
+icon = "minecraft:oak_sign"
+shape = "rsquare"
+deps = ["claim_anatomy"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_sign", count = 8 },
+	{ type = "item", item = "minecraft:oak_fence", count = 32 },
+]
+
+[[quest]]
+name = "boundary_rules"
+title = "边界规矩写下来"
+desc = [
+	"边界不是一次画完的：路要延伸、田要扩建、矿口要外移。",
+	"把「怎么改边界、谁来批」写成条文挂在议事厅，后面就不会为一条路吵三次。",
+	"⚠️ 文本约定，游戏里没有信号源，自检。",
+]
+icon = "minecraft:book"
+shape = "rsquare"
+deps = ["claim_anatomy"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
 name = "role_split"
 title = "分出至少两种权限"
 desc = [
 	"全员同权限等于没有权限：至少分出「能建设」与「只能住」两档。",
-	"⚠️ 权限配置同样没有判据，自检。",
+	"⚠️ 权限配置没有物品也没有进度，实测 OPAC / FTB Teams 两个命名空间都是空的，自检。",
 ]
 icon = "minecraft:shield"
 shape = "rsquare"
-deps = ["claim_anatomy"]
+deps = ["boundary_post"]
 tasks = [
 	{ type = "checkmark" },
 ]
@@ -59,83 +114,102 @@ desc = [
 ]
 icon = "minecraft:barrel"
 shape = "rsquare"
-deps = ["role_split"]
+deps = ["role_split", "boundary_rules"]
 tasks = [
 	{ type = "checkmark" },
 ]
 
-# ---------------- 传送网络（这一章有真实判据的部分） ----------------
+[[quest]]
+name = "boundary_material"
+title = "围墙材料"
+desc = [
+	"线上拦得住，线下也别让人一眼就跨过去：铁栏杆划硬边，栅栏划软边。",
+	"围墙不是防怪物用的，是让「这里有人管」这件事变得看得见。",
+]
+icon = "minecraft:iron_bars"
+shape = "circle"
+size = 1.2
+deps = ["boundary_post"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_bars", count = 32 },
+	{ type = "item", item = "minecraft:oak_fence", count = 32 },
+]
+
+# ---------------- 簇 2：队伍 ----------------
 
 [[quest]]
-name = "first_waystone"
-title = "第一座传送石"
+name = "team_basics"
+title = "组一支队"
 desc = [
-	"把「走回来」这件事解决掉：传送石一立，远征半径才真的能扩大。",
+	"FTB Teams：领地、传送、权限都挂在队伍上——先有队，才有「我们的」。",
+	"⚠️ FTB Teams 不提供物品（实测 hits 0），组队只能靠命令，自检。",
 ]
-icon = "waystones:waystone"
-shape = "rsquare"
+icon = "minecraft:shield"
+shape = "pentagon"
+size = 2.0
 deps = ["claim_anatomy"]
 tasks = [
-	{ type = "item", item = "waystones:waystone" },
+	{ type = "checkmark" },
 ]
 
 [[quest]]
-name = "waystone_network"
-title = "织成网"
+name = "team_roster"
+title = "队伍名册"
 desc = [
-	"≥4 座：主城、驿站、矿场、前线各一处。",
-	"到这一步，地图上的距离第一次不再是成本。",
+	"队伍一多，就得知道谁在哪支队、各队负责哪一片地。",
+	"名册挂在驿站或者议事厅，比在聊天里问一遍快得多。",
 ]
-icon = "waystones:waystone"
+icon = "createrailwaysnavigator:navigator"
 shape = "rsquare"
-deps = ["first_waystone"]
+deps = ["team_basics"]
 tasks = [
-	{ type = "item", item = "waystones:waystone", count = 4 },
+	{ type = "item", item = "createrailwaysnavigator:navigator" },
+	{ type = "item", item = "minecraft:oak_hanging_sign", count = 4 },
 ]
 
 [[quest]]
-name = "portable_warp"
-title = "随身回城"
+name = "team_invite"
+title = "带一个人进队"
 desc = [
-	"传送卷轴：在野外也能回到已激活的传送石。这是「敢走远」的前提。",
+	"新成员进队的那一分钟，是他对这套规则的第一印象。",
+	"⚠️ 邀请动作只有命令，没有判据，自检。",
 ]
-icon = "waystones:warp_scroll"
-shape = "circle"
-size = 1.2
-deps = ["waystone_network"]
+icon = "minecraft:bell"
+shape = "rsquare"
+deps = ["team_roster"]
 tasks = [
-	{ type = "item", item = "waystones:warp_scroll", count = 4 },
+	{ type = "checkmark" },
 ]
 
 [[quest]]
-name = "share_stone"
-title = "让队友也能用"
+name = "team_second"
+title = "第二支队"
 desc = [
-	"分享石：把某座传送石开放给队友——不然它只是你自己的传送点。",
+	"第二支队出现的时候，「一个国家」才变成一个**多队协作**的结构。",
+	"从这一步起，权限要开始分层——不能让每支队都能改全城。",
 ]
-icon = "waystones:gray_sharestone"
-shape = "circle"
-size = 1.2
-deps = ["waystone_network"]
+icon = "minecraft:white_banner"
+shape = "rsquare"
+deps = ["team_invite"]
 tasks = [
-	{ type = "item", item = "waystones:gray_sharestone" },
+	{ type = "item", item = "minecraft:white_banner", count = 2 },
 ]
 
 [[quest]]
-name = "bound_scroll"
-title = "定向传送"
+name = "team_roles"
+title = "角色与职责"
 desc = [
-	"绑定卷轴：省掉「先回城再走出去」那一半路程。",
+	"队长、建设、仓储、外交——每支队至少要有一个人对每件事负责。",
+	"职责写清楚之前，「这事该问谁」每次都要重新吵。",
 ]
-icon = "waystones:bound_scroll"
+icon = "minecraft:writable_book"
 shape = "circle"
 size = 1.2
-deps = ["portable_warp"]
+deps = ["team_second"]
 tasks = [
-	{ type = "item", item = "waystones:bound_scroll", count = 2 },
+	{ type = "item", item = "minecraft:writable_book" },
+	{ type = "item", item = "minecraft:book", count = 4 },
 ]
-
-# ---------------- 队伍协作 ----------------
 
 [[quest]]
 name = "shared_chest"
@@ -147,9 +221,24 @@ desc = [
 ]
 icon = "minecraft:chest"
 shape = "rsquare"
-deps = ["role_split"]
+deps = ["team_roles"]
 tasks = [
 	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "filter_public"
+title = "只收该收的"
+desc = [
+	"公共箱子最容易被塞满杂物。智能过滤器把「该收什么」变成一件可以设的机器——",
+	"定好过滤条件，公共仓储的账才不会越记越乱。",
+]
+icon = "ftbfiltersystem:smart_filter"
+shape = "circle"
+size = 1.2
+deps = ["shared_chest"]
+tasks = [
+	{ type = "item", item = "ftbfiltersystem:smart_filter", count = 2 },
 ]
 
 [[quest]]
@@ -173,17 +262,413 @@ name = "claims_charter"
 title = "把领地规矩写下来"
 desc = [
 	"刻在议事厅：谁能动什么、边界在哪、违反了怎么办。",
-	"⚠️ 内容判不了，自检。",
+	"写在牌子上之后，规矩就不再靠人反复念——新成员自己看得见。",
+	"⚠️ 条文内容判不了，自检；判据落在木牌与挂签这两个载体上。",
 ]
 icon = "minecraft:oak_sign"
 shape = "circle"
 size = 1.2
-deps = ["shared_chest"]
+deps = ["newcomer_kit", "filter_public"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_sign", count = 8 },
+	{ type = "item", item = "minecraft:oak_hanging_sign", count = 2 },
+]
+
+# ---------------- 簇 3：传送网络 ----------------
+
+[[quest]]
+name = "warp_stone_prep"
+title = "传送石的前置材料"
+desc = [
+	"做传送石之前，先备基础料——传送网络是一整套工具，不是一块石头。",
+	"备料这一步的意义是：你开始为**网络**准备，而不是为一个点准备。",
+]
+icon = "minecraft:amethyst_shard"
+shape = "pentagon"
+size = 2.0
+deps = ["team_basics"]
+tasks = [
+	{ type = "item", item = "minecraft:amethyst_shard", count = 4 },
+	{ type = "item", item = "minecraft:ender_pearl" },
+]
+
+[[quest]]
+name = "first_waystone"
+title = "第一座传送石"
+desc = [
+	"把「走回来」这件事解决掉：传送石一立，远征半径才真的能扩大。",
+]
+icon = "waystones:waystone"
+shape = "rsquare"
+deps = ["warp_stone_prep"]
+tasks = [
+	{ type = "item", item = "waystones:waystone" },
+]
+
+[[quest]]
+name = "warp_dust"
+title = "传送粉"
+desc = [
+	"传送粉是把「传送」从一次性道具变成可维护系统的材料。",
+]
+icon = "waystones:warp_dust"
+shape = "rsquare"
+deps = ["first_waystone"]
+tasks = [
+	{ type = "item", item = "waystones:warp_dust", count = 8 },
+]
+
+[[quest]]
+name = "warp_plate"
+title = "传送石盘"
+desc = [
+	"石盘是踩上去就走的入口：门厅、驿站、矿口最需要它。",
+	"它把「传送」变成一个不需要手持道具的公共设施。",
+]
+icon = "waystones:warp_plate"
+shape = "rsquare"
+deps = ["warp_dust"]
+tasks = [
+	{ type = "item", item = "waystones:warp_plate", count = 2 },
+]
+
+[[quest]]
+name = "warp_scroll"
+title = "传送卷轴"
+desc = [
+	"卷轴是消耗品那一档：用一次少一张，换的是「不用回城」。",
+]
+icon = "waystones:warp_scroll"
+shape = "circle"
+size = 1.2
+deps = ["warp_dust"]
+tasks = [
+	{ type = "item", item = "waystones:warp_scroll", count = 4 },
+]
+
+[[quest]]
+name = "warp_scroll_bound"
+title = "绑定的传送卷轴"
+desc = [
+	"绑定之后，卷轴指向的是**某一座**石，而不是「随便哪一座」。",
+	"分工明确的车队，靠的就是绑定卷轴把路线固定下来。",
+]
+icon = "waystones:warp_scroll"
+shape = "circle"
+size = 1.2
+deps = ["warp_scroll"]
+tasks = [
+	{ type = "item", item = "waystones:warp_scroll" },
+]
+
+[[quest]]
+name = "return_scroll"
+title = "返回卷轴"
+desc = [
+	"返回卷轴只回最后一座：它是「迷路了怎么办」最直接的答案。",
+]
+icon = "waystones:return_scroll"
+shape = "circle"
+size = 1.2
+deps = ["warp_scroll"]
+tasks = [
+	{ type = "item", item = "waystones:return_scroll", count = 2 },
+]
+
+[[quest]]
+name = "blank_scroll"
+title = "空白卷轴"
+desc = [
+	"空白卷轴是自制的起点：从「捡到就用」变成「自己造」。",
+]
+icon = "waystones:blank_scroll"
+shape = "circle"
+size = 1.2
+deps = ["warp_scroll"]
+tasks = [
+	{ type = "item", item = "waystones:blank_scroll", count = 4 },
+]
+
+[[quest]]
+name = "waystone_network"
+title = "织成网"
+desc = [
+	"≥4 座：主城、驿站、矿场、前线各一处。",
+	"到这一步，地图上的距离第一次不再是成本。",
+]
+icon = "waystones:waystone"
+shape = "rsquare"
+deps = ["warp_scroll_bound"]
+tasks = [
+	{ type = "item", item = "waystones:waystone", count = 4 },
+]
+
+[[quest]]
+name = "portable_warp"
+title = "随身回城"
+desc = [
+	"传送卷轴：在野外也能回到已激活的传送石。这是「敢走远」的前提。",
+]
+icon = "waystones:warp_scroll"
+shape = "circle"
+size = 1.2
+deps = ["waystone_network"]
+tasks = [
+	{ type = "item", item = "waystones:warp_scroll", count = 4 },
+]
+
+[[quest]]
+name = "waystone_layers"
+title = "分档立石"
+desc = [
+	"苔石、砂岩、黑石、深板岩——外观不同的传送石正好用来区分档次：",
+	"村口一座、城区一座、前线一座，一眼就知道自己在哪一级。",
+]
+icon = "waystones:mossy_waystone"
+shape = "rsquare"
+deps = ["waystone_network"]
+tasks = [
+	{ type = "item", item = "waystones:mossy_waystone" },
+	{ type = "item", item = "waystones:sandy_waystone" },
+	{ type = "item", item = "waystones:blackstone_waystone" },
+]
+
+[[quest]]
+name = "waystone_layers_deep"
+title = "进阶传送石"
+desc = [
+	"深板岩、末地石、海晶石、紫珀——越难拿的材料，越适合当「只给核心成员开」的那一档。",
+]
+icon = "waystones:deepslate_waystone"
+shape = "circle"
+size = 1.2
+deps = ["waystone_layers"]
+tasks = [
+	{ type = "item", item = "waystones:deepslate_waystone" },
+	{ type = "item", item = "waystones:prismarine_waystone" },
+	{ type = "item", item = "waystones:purpur_waystone" },
+]
+
+[[quest]]
+name = "shard_dormant"
+title = "沉眠碎片"
+desc = [
+	"沉眠碎片是共鸣碎片的前一档：先有沉睡的，才有能用的。",
+]
+icon = "waystones:dormant_shard"
+shape = "circle"
+size = 1.2
+deps = ["waystone_network"]
+tasks = [
+	{ type = "item", item = "waystones:dormant_shard" },
+]
+
+[[quest]]
+name = "shard_attuned"
+title = "共鸣碎片"
+desc = [
+	"共鸣碎片是这套网络里最贵的一档材料：它决定了哪些石能互相看见。",
+]
+icon = "waystones:attuned_shard"
+shape = "rsquare"
+deps = ["shard_dormant"]
+tasks = [
+	{ type = "item", item = "waystones:attuned_shard" },
+]
+
+[[quest]]
+name = "shard_crumbling"
+title = "碎裂的共鸣碎片"
+desc = [
+	"碎掉的共鸣碎片：网络不是一次建成的，废料也是过程的一部分。",
+	"（它也是「重新校准」这件事在游戏里的实物形态。）",
+]
+icon = "waystones:crumbling_attuned_shard"
+shape = "circle"
+size = 1.2
+deps = ["shard_attuned"]
+tasks = [
+	{ type = "item", item = "waystones:crumbling_attuned_shard" },
+]
+
+[[quest]]
+name = "shard_deepslate"
+title = "深板岩碎片"
+desc = [
+	"深板岩碎片：挖到深层的凭证，也是更高级传送石的门槛。",
+]
+icon = "waystones:deepslate_shard"
+shape = "circle"
+size = 1.2
+deps = ["shard_attuned"]
+tasks = [
+	{ type = "item", item = "waystones:deepslate_shard", count = 2 },
+]
+
+[[quest]]
+name = "share_stone"
+title = "让队友也能用"
+desc = [
+	"分享石：把某座传送石开放给队友——不然它只是你自己的传送点。",
+	"16 种颜色正好用来给各支队分配：谁的石，什么颜色，一眼分明。",
+]
+icon = "waystones:gray_sharestone"
+shape = "rsquare"
+deps = ["warp_plate"]
+tasks = [
+	{ type = "item", item = "waystones:gray_sharestone" },
+]
+
+[[quest]]
+name = "share_stone_public"
+title = "公共传送石"
+desc = [
+	"公共那一座，颜色要选得跟私人的不一样——这是最省事的「权限可视化」。",
+]
+icon = "waystones:black_sharestone"
+shape = "circle"
+size = 1.2
+deps = ["share_stone"]
+tasks = [
+	{ type = "item", item = "waystones:black_sharestone" },
+]
+
+[[quest]]
+name = "share_stone_colored"
+title = "四色共享石"
+desc = [
+	"把共享石按用途分色：一色一处，谁的石一眼分明。",
+	"颜色分完之后，「这块石是谁开的、谁能用」就不再需要口头说明。",
+]
+icon = "waystones:green_sharestone"
+shape = "circle"
+size = 1.2
+deps = ["share_stone"]
+tasks = [
+	{ type = "item", item = "waystones:blue_sharestone" },
+	{ type = "item", item = "waystones:green_sharestone" },
+	{ type = "item", item = "waystones:orange_sharestone" },
+	{ type = "item", item = "waystones:purple_sharestone" },
+]
+
+[[quest]]
+name = "portstone"
+title = "传送石座"
+desc = [
+	"石座是另一档：外观不同、摆放位置不同，适合放在「只准进、不准出」的地方。",
+]
+icon = "waystones:white_portstone"
+shape = "rsquare"
+deps = ["share_stone_public"]
+tasks = [
+	{ type = "item", item = "waystones:white_portstone" },
+	{ type = "item", item = "waystones:white_portstone" },
+]
+
+[[quest]]
+name = "portstone_colored"
+title = "石座分色"
+desc = [
+	"石座也分 16 色：一座驿站一种颜色，比在门口挂牌子直观。",
+]
+icon = "waystones:blue_portstone"
+shape = "circle"
+size = 1.2
+deps = ["portstone"]
+tasks = [
+	{ type = "item", item = "waystones:blue_portstone" },
+	{ type = "item", item = "waystones:red_sharestone" },
+]
+
+[[quest]]
+name = "bound_scroll"
+title = "定向传送"
+desc = [
+	"绑定卷轴：省掉「先回城再走出去」那一半路程。",
+]
+icon = "waystones:bound_scroll"
+shape = "circle"
+size = 1.2
+deps = ["portable_warp"]
+tasks = [
+	{ type = "item", item = "waystones:bound_scroll", count = 2 },
+]
+
+[[quest]]
+name = "portal_scroll"
+title = "跨维度卷轴"
+desc = [
+	"门卷轴把网络伸到别的维度：下界、末地的前哨也能挂在自己这张网上。",
+]
+icon = "waystones:portal_scroll"
+shape = "circle"
+size = 1.2
+deps = ["waystone_layers_deep"]
+tasks = [
+	{ type = "item", item = "waystones:portal_scroll" },
+]
+
+[[quest]]
+name = "warp_portal"
+title = "传送门"
+desc = [
+	"传送门是永久设施那一档：不用道具、不用卷轴，走进去就走。",
+	"网络建到这一步，才算真的「基础设施」。",
+]
+icon = "waystones:warp_plate"
+shape = "rsquare"
+deps = ["portal_scroll", "shard_deepslate", "portstone_colored"]
+tasks = [
+	{ type = "item", item = "waystones:warp_plate" },
+]
+
+[[quest]]
+name = "waypoint_markers"
+title = "驿站名册"
+desc = [
+	"每座石挂一块告示牌：名字、归属、开放对象。",
+	"没有名字的传送石，在列表里就是一串坐标。",
+]
+icon = "minecraft:oak_sign"
+shape = "circle"
+size = 1.2
+deps = ["waystone_network"]
 tasks = [
 	{ type = "item", item = "minecraft:oak_sign", count = 8 },
 ]
 
-# ---------------- 终局 ----------------
+[[quest]]
+name = "waystone_loss"
+title = "石被拆了怎么办"
+desc = [
+	"网络最怕的不是没建，是**建好了被人拆掉**：谁有权拆、拆了怎么补，要事先说清。",
+	"墓地铭牌与瞬忆碑是这套系统里跟「失去」有关的实物：",
+	"它们提醒所有人，传送点是资产，不是地砖。",
+]
+icon = "waystones:epitaph"
+shape = "circle"
+size = 1.2
+deps = ["waystone_network"]
+tasks = [
+	{ type = "item", item = "waystones:epitaph" },
+	{ type = "item", item = "waystones:epitaph" },
+]
+
+[[quest]]
+name = "twinbound_feather"
+title = "双生羽毛"
+desc = [
+	"双生羽毛是「两个人共用一条线」的实物：它把同行这件事做成了一个道具。",
+]
+icon = "waystones:twinbound_feather"
+shape = "circle"
+size = 1.2
+deps = ["warp_portal"]
+tasks = [
+	{ type = "item", item = "waystones:twinbound_feather" },
+]
+
+# ---------------- 簇 4：冲突与规矩 ----------------
 
 [[quest]]
 name = "claims_monument"
@@ -192,14 +677,109 @@ desc = [
 	"把即时通讯、传送、权限三样凑齐，领地才算「国土」而不是「一块安全区」。",
 ]
 icon = "minecraft:bell"
-shape = "hexagon"
-size = 2.5
-deps = ["waystone_network", "bound_scroll", "share_stone", "newcomer_kit", "claims_charter",
-        "alley_check"]
+shape = "pentagon"
+size = 2.0
+deps = ["claims_charter", "warp_portal", "twinbound_feather", "waypoint_markers",
+        "waystone_loss"]
 tasks = [
 	{ type = "item", item = "minecraft:bell" },
 ]
 rewards = [
-	{ type = "xp", xp = 100 },
+	{ type = "xp", xp = 80 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "conflict_protocol"
+title = "冲突处置"
+desc = [
+	"越界、拆错、拿错——事先写清「谁受理、怎么判、怎么补」。",
+	"公告牌是这套流程的载体：判罚要贴在所有人看得见的地方。",
+	"⚠️ 流程本身没有信号源，自检。",
+]
+icon = "minecraft:bell"
+shape = "rsquare"
+deps = ["claims_monument"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "conflict_evidence"
+title = "取证"
+desc = [
+	"望远镜是这套系统里唯一能用来「先看清楚再说话」的工具。",
+	"有取证工具，冲突才不会全变成嗓门大小的比较。",
+]
+icon = "minecraft:spyglass"
+shape = "circle"
+size = 1.2
+deps = ["conflict_protocol"]
+tasks = [
+	{ type = "item", item = "minecraft:spyglass" },
+]
+
+[[quest]]
+name = "eviction"
+title = "外人处置"
+desc = [
+	"来了个不在队里的人：先拦住、再讲规矩、最后才是处理。",
+	"顺序不能反——先动手的队伍，规矩就立不住了。",
+]
+icon = "minecraft:iron_bars"
+shape = "circle"
+size = 1.2
+deps = ["conflict_evidence"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_bars", count = 16 },
+	{ type = "item", item = "minecraft:chain", count = 8 },
+]
+
+[[quest]]
+name = "public_amenities"
+title = "领地内的公共设施"
+desc = [
+	"一块地只有仓库和城墙，那只是工地。",
+	"把钟、灯笼、告示牌摆进来，领地里才有「住」这件事。",
+]
+icon = "minecraft:lantern"
+shape = "rsquare"
+deps = ["eviction"]
+tasks = [
+	{ type = "item", item = "minecraft:lantern", count = 8 },
+	{ type = "item", item = "minecraft:bell" },
+]
+
+[[quest]]
+name = "public_rules"
+title = "把规矩写下来"
+desc = [
+	"告示牌挂到每一个路口：这里能不能挖、能不能盖、能不能过夜。",
+	"条文一旦写在牌子上，就不需要每次由人复述一遍。",
+]
+icon = "minecraft:oak_sign"
+shape = "rsquare"
+deps = ["public_amenities"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_sign", count = 8 },
+]
+
+[[quest]]
+name = "territory_done"
+title = "这块地是「我们的」"
+desc = [
+	"边界清楚、队伍分层、传送成网、规矩上榜——**四样齐了**才叫领地。",
+	"到这个阶段，新成员进来不需要人带：界桩告诉他范围，站牌告诉他规矩，",
+	"传送石告诉他怎么走。制度开始替人干活了。",
+]
+icon = "minecraft:beacon"
+shape = "hexagon"
+size = 2.5
+deps = ["public_rules", "public_amenities"]
+tasks = [
+	{ type = "item", item = "minecraft:beacon" },
+]
+rewards = [
+	{ type = "xp", xp = 120 },
 	{ type = "toast" },
 ]

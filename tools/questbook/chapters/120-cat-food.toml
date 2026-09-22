@@ -580,34 +580,34 @@ tasks = [
 [[quest]]
 name = "food_end_pepper"
 title = "虚空胡椒"
-icon = "endersdelight:crushed_voidpepper"
+icon = "endersdelight:voidpepper"
 shape = "circle"
 size = 1.2
 deps = ["food_end_shulker"]
 tasks = [
-	{ type = "item", item = "endersdelight:crushed_voidpepper" },
+	{ type = "item", item = "endersdelight:voidpepper" },
 ]
 
 [[quest]]
 name = "food_nether_stove"
 title = "下界炉灶"
-icon = "mynethersdelight:nether_stove"
+icon = "mynethersdelight:nether_bricks_stove"
 shape = "pentagon"
 size = 2.0
 deps = ["food_cooking_pot"]
 tasks = [
-	{ type = "item", item = "mynethersdelight:nether_stove" },
+	{ type = "item", item = "mynethersdelight:nether_bricks_stove" },
 ]
 
 [[quest]]
 name = "food_nether_hoglin"
 title = "填馅疣猪兽"
-icon = "mynethersdelight:stuffed_hoglin"
+icon = "mynethersdelight:roast_stuffed_hoglin"
 shape = "circle"
 size = 1.2
 deps = ["food_nether_stove"]
 tasks = [
-	{ type = "item", item = "mynethersdelight:stuffed_hoglin" },
+	{ type = "item", item = "mynethersdelight:roast_stuffed_hoglin" },
 ]
 
 [[quest]]
@@ -646,12 +646,12 @@ tasks = [
 [[quest]]
 name = "food_miner_cup"
 title = "杯装汤"
-icon = "miners_delight:rock_soup_cup"
+icon = "minecraft:rabbit_stew"
 shape = "circle"
 size = 1.2
 deps = ["food_miner_pot"]
 tasks = [
-	{ type = "item", item = "miners_delight:rock_soup_cup" },
+	{ type = "item", item = "minecraft:rabbit_stew" },
 ]
 
 [[quest]]

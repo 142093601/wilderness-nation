@@ -65,6 +65,14 @@ CHECKMARK_EXCEPTIONS = {
     "eras_and_key": "说明书：理解时代与钥匙机制不是游戏行为",
     "where_to_ask": "说明书：知道去哪查不是游戏行为",
     "prologue_marker": "说明书：序章的收尾格",
+    # —— 序章 2026-09-22 加厚的 7 条（全是"读懂这本书"，不是游戏行为）——
+    "shape_legend": "说明书：理解形状语义不是游戏行为",
+    "three_kinds_of_quest": "说明书：区分主轴/支线/知识型不是游戏行为",
+    "cross_chapter_links": "说明书：理解软链接是提示而非前置，不是游戏行为",
+    "rewards_policy": "说明书：知道这本书不发成品，不是游戏行为",
+    "pack_size_expectation": "说明书：对包的体量有预期，不是游戏行为",
+    "multiplayer_first": "说明书：知道这是多人包，不是游戏行为",
+    "first_hour_plan": "说明书：头一小时的路线图，具体步骤在「生存第一课」判",
     # —— 落地 ——
     "pick_ground": "选址是集体决策，游戏里没有「大家同意了」这个信号",
     "survive_first_night": "游戏不记录「天亮时你在不在附近」",
@@ -124,6 +132,17 @@ CHECKMARK_EXCEPTIONS = {
     # —— 编年 · 国库与营建 ——
     "t_first_budget": "「有没有把预算写下来」不可检测（政府账目没有 mod 支持，"
                       "成书的内容读不到）；替代判据是同时持有的纸与账本",
+    # —— 2026-09-22 加厚时新增（决策的「内容」判不了，实物已另有判据）——
+    "l_site_decision": "选址**理由**写在书上，书的内容不可检测；替代判据是地图与告示牌",
+    "f_state_name": "国号的**内容**判不了；替代判据是旗帜与染料（做出来了才算定了）",
+    "f_meeting_rule": "议事规则的**内容**判不了；替代判据是讲台/书与笔（真的写在纸上了）",
+    "f_neighbor_relation": "「定性」是一句话，判不了；替代判据是旗帜/地图/望远镜",
+    "f_succession": "继承规则的**内容**判不了；替代判据是成书与讲台",
+    # —— 领地与队伍：OPAC 与 FTB Teams **完全没有物品**（实测 lang 里 item 键为 0）——
+    "boundary_rules": "OPAC 无物品无进度，且「规矩」的内容不可检测",
+    "team_basics": "FTB Teams 无物品（实测），组队与否没有信号源",
+    "team_invite": "同上：邀请入队是命令，不是可检测事件",
+    "conflict_protocol": "「处置流程」是约定，不是可检测事件",
 }
 
 # checkmark **整章批量例外**：按章给一次理由，覆盖该章所有 checkmark 条目。
@@ -594,25 +613,84 @@ def check_checkmark(d: dict, r: Report) -> None:
         return
     import tomllib
     offenders: list[str] = []
+    total_cm = 0          # **实际**用了 checkmark 的任务数
+    bulk_cm = 0           # 其中靠"整章批量例外"放过的
     for p in sorted(CHAPTERS_SRC.glob("*.toml")):
         with p.open("rb") as fh:
             raw = tomllib.load(fh)
+        bulk = raw.get("key") in CHECKMARK_CHAPTER_EXCEPTIONS
         for q in raw.get("quest", []) or []:
             has_cm = any((t.get("type") == "checkmark") for t in (q.get("tasks") or []))
             if not has_cm:
                 continue
+            total_cm += 1
             name = q.get("name")
             if name in CHECKMARK_EXCEPTIONS:
                 continue
             # 整章批量例外（只对登记过的那几章生效，见 CHECKMARK_CHAPTER_EXCEPTIONS 的说明）
-            if raw.get("key") in CHECKMARK_CHAPTER_EXCEPTIONS:
+            if bulk:
+                bulk_cm += 1
                 continue
             offenders.append(f"{raw.get('key')}/{name}")
     if offenders:
         r.fail("⑥ checkmark 例外清单",
                f"以下任务用了 checkmark 但不在例外清单里（要么改判据，要么写进清单并给理由）：{offenders}")
+    # 这里报**真实条数**，不是清单长度。
+    # 旧版写的是 `len(CHECKMARK_EXCEPTIONS)` —— 那是"清单里有多少条理由"，
+    # 在引入整章批量例外之后它连量级都不对了（清单 45 条 vs 实际 101 条）。
+    # 一个只会误导人的计数比没有计数更糟，所以拆成三个数报出来。
+    r.counts["checkmark_tasks"] = total_cm
+    r.counts["checkmark_bulk_exempt"] = bulk_cm
+
+
+def check_runtime_deny(d: dict, r: Report) -> None:
+    """第 ⑩ 项：任务书有没有用到「**真机拒绝过**的物品 id」。
+
+    为什么单独一项（2026-09-22 实测，代价是整轮服务端验证作废）
+    ------------------------------------------------------
+    `registry.json` 证明的是"某个 jar **提到过**这个 id"（语言键 / 模型 / blockstates /
+    配方引用），**不等于**"游戏运行时注册了这个物品"。实测：1181 条任务
+    `--verify-toml` 报 missing 0，服务端却报 **37 条** `Unknown registry key ... item`。
+
+    所以第 ⑦ 项（registry 真实性）**不够**，必须再叠一层**真机证据**：
+    `tools/registry_runtime_deny.txt` 是历次服务端验证里被拒绝的 id 沉淀，
+    由 `tools/runtime_deny.py --scan <日志>` 生成。
+
+    两边都过了，才能说"这些 id 是活的"。
+    """
+    deny_file = HERE / "registry_runtime_deny.txt"
+    if not deny_file.is_file():
+        r.note("registry_runtime_deny.txt 不存在 → 第 ⑩ 项（真机拒绝过的 id）本次跳过；"
+               "生成它：python tools/runtime_deny.py --scan server/logs/latest.log")
+        return
+    deny = set()
+    for ln in deny_file.read_text(encoding="utf-8").splitlines():
+        ln = ln.split("#", 1)[0].strip()
+        if ln and ":" in ln:
+            deny.add(ln)
+    hits: list[str] = []
+    for key, ch in d["chapters"].items():
+        for q in ch.get("quests", []) or []:
+            ids = []
+            ic = q.get("icon")
+            if isinstance(ic, dict) and isinstance(ic.get("id"), str):
+                ids.append(ic["id"])
+            elif isinstance(ic, str):
+                ids.append(ic)
+            for t in q.get("tasks", []) or []:
+                v = t.get("item")
+                if isinstance(v, str):
+                    ids.append(v)
+                elif isinstance(v, dict) and isinstance(v.get("id"), str):
+                    ids.append(v["id"])
+            for iid in ids:
+                if iid in deny:
+                    hits.append(f"chapters/{key}.snbt:{q.get('id')} -> {iid}")
+    if hits:
+        r.fail("⑩ 真机拒绝过的 id",
+               f"以下 {len(hits)} 处用了**服务端实测拒绝过**的 id（玩家永远做不完）：{hits[:8]}")
     else:
-        r.counts["checkmark_tasks"] = len(CHECKMARK_EXCEPTIONS)
+        r.counts["runtime_deny_ids"] = len(deny)
 
 
 def check_layout(d: dict, r: Report) -> None:
@@ -698,6 +776,7 @@ def main() -> int:
     check_checkmark(d, r)
     check_layout(d, r)
     check_index(d, r)
+    check_runtime_deny(d, r)
     if args.reproducible:
         check_reproducible(r)
 

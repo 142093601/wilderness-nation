@@ -1,0 +1,130 @@
+{
+	quest.A2E126E620454F8A.title: "矿井：YUNG's 版"
+	quest.A2E126E620454F8A.description: [
+	"YUNG's Better Mineshafts 换掉了原版矿井的骨架，它是这一章里最容易撞见的一处。"
+	"先把它当成「地下第一站」：从这里起，地下才不只是挖矿的通道。"
+	]
+	quest.263E9BEB0BED8975.title: "矿井的四种地貌版本"
+	quest.263E9BEB0BED8975.description: [
+	"同一套矿井按群系换了材料与结构；走满几种，才知道这个 mod 到底改了多少。"
+	]
+	quest.2B7945FA7836130D.title: "洞穴系统：Better Caves"
+	quest.2B7945FA7836130D.description: [
+	"YUNG's Better Caves 只做一件事：把地下的空洞换成更连贯的洞穴系统。"
+	"它没有方块也没有进度，所以这条用**只有深洞才拿得到的东西**来判："
+	"深板岩、繁茂洞穴的苔藓与发光浆果、溶洞的滴水石、紫水晶洞的晶簇。"
+	]
+	quest.EBA96C7626736C35.title: "小型地牢：Better Dungeons"
+	quest.EBA96C7626736C35.description: [
+	"YUNG's Better Dungeons 的五种地牢各有自己的进度，先认第一种。"
+	]
+	quest.EF906C82DC3BD057.title: "三种主题地牢"
+	quest.C1942DD724C7C8D7.title: "五种地牢走全"
+	quest.D1B202AE69AA3D73.title: "要塞：Better Strongholds"
+	quest.D1B202AE69AA3D73.description: [
+	"末地传送门所在的那座要塞也被重做了。这里同时是「地下」这一簇的收束点。"
+	]
+	quest.9416DEB11FCA5552.title: "改版村庄：CTOV"
+	quest.9416DEB11FCA5552.description: [
+	"ChoiceTheorem's Overhauled Village 把村庄拆成大小三档、再按群系换皮（78 个版本）。"
+	"它是地表这一簇的起点：从这里开始，村庄不再是「几间房子加一块田」。"
+	]
+	quest.6D721BC0589E85C1.title: "村庄：Towns and Towers"
+	quest.6D721BC0589E85C1.description: [
+	"60 个版本：村庄按群系换风格，塔与前哨按群系换阵型。"
+	]
+	quest.4703B96F1EBB180D.title: "村庄：Repurposed Structures"
+	quest.6E4A0ED85FA3B6D2.title: "神殿与金字塔：Repurposed Structures"
+	quest.51AFD9942A4C0E04.title: "中世纪建筑：堡垒、塔、船与民居"
+	quest.51AFD9942A4C0E04.description: [
+	"Medieval Buildings 只有五个结构，胜在体量与做工：一座堡垒就是一整场攻坚战。"
+	]
+	quest.C326DC942F2BD7E4.title: "失落城堡：Grim Kingdoms"
+	quest.C326DC942F2BD7E4.description: [
+	"北欧风的一整套：城堡、塔、哨所、船只残骸，共 65 处，大半长在寒冷群系。"
+	"往北走一趟就能一次看全这一家的手艺。"
+	]
+	quest.DF2EE7FBBCB2C0F8.title: "大地上的废墟：Additional Structures"
+	quest.DF2EE7FBBCB2C0F8.description: [
+	"198 个结构，是这一章里数量最大的一家：神庙、石阵、营地、地陷、废弃小屋。"
+	"它不做大工程，做的是「走到哪都能撞见点什么」。"
+	]
+	quest.68822F2EBE74088D.title: "法师塔与尖塔：Terralith"
+	quest.68822F2EBE74088D.description: [
+	"Terralith 以群系闻名，但它也带 28 处结构：法师塔、尖塔、要塞村庄、地下小屋。"
+	"找一座法师塔进去看，是了解这一家除群系之外最直接的一站。"
+	]
+	quest.D3417FDAB74A199A.title: "酒馆：Dungeons and Taverns"
+	quest.D3417FDAB74A199A.description: [
+	"这一家的数据在 `nova_structures` 命名空间下，96 处结构配 34 条进度。"
+	"酒馆是最容易先撞见的一处，也是它整套「路上有落脚点」思路的开头。"
+	]
+	quest.C96AA2ACD0073DE5.title: "试炼神龛与灾厄庄园"
+	quest.89D1B28A6DE012F2.title: "下界要塞：Better Nether Fortresses"
+	quest.89D1B28A6DE012F2.description: [
+	"YUNG's 版要塞重排了烈焰人刷怪区与走廊，是下界这一簇的主链起点。"
+	]
+	quest.D43DEFF8220BCD5B.title: "丛林要塞与下界之城：Repurposed Structures"
+	quest.204F2DF973D4B866.title: "下界建筑：Nether Edition"
+	quest.4F04AB0642F87F51.title: "下界遗迹：Additional Structures"
+	quest.7AAE1F03E2E27CC9.title: "下界前哨：Dungeons and Taverns"
+	quest.231ADA7F5FB3E885.title: "猪灵要塞"
+	quest.0AF8F5095D77EFF1.title: "末地主岛：Better End Island"
+	quest.0AF8F5095D77EFF1.description: [
+	"这个 mod 没有进度也没有方块，它重写的是**末地主岛本身**（黑曜石柱、出生平台、折返门）。"
+	"踏上主岛就等于走过它 —— 所以这条用「到过末地」判，这是它唯一的真实信号。"
+	]
+	quest.19FB33623C1A9B09.title: "末地建筑：End Edition"
+	quest.5A157206AD88AB6D.title: "末地城堡与灯塔"
+	quest.F33258467DFF6AFE.title: "末地要塞与远古城市：Repurposed Structures"
+	quest.A69A7A84B50656EE.title: "末地遗迹：Additional Structures"
+	quest.3D292EF71D6C4EAA.title: "海底神殿：Better Ocean Monuments"
+	quest.3D292EF71D6C4EAA.description: [
+	"YUNG's 版海底神殿重排了内部房间与守卫者分布。"
+	"它是「远方」这一簇的起点：从这里起，值得去的地方开始离主城很远。"
+	]
+	quest.913021B80B955A10.title: "沙漠神殿与海洋前哨：Repurposed Structures"
+	quest.94CEE0561195E34F.title: "海上村庄：Tidal Towns"
+	quest.94CEE0561195E34F.description: [
+	"这一家的命名空间是作者名 `joshie`（不是 `tidaltowns`），全 mod 只有一处结构：海上村庄。"
+	"要走海路才看得到它，也是「远方」这一簇里最偏远的一处落脚点。"
+	]
+	quest.90BB795AFA15481E.title: "远洋残骸：Towns and Towers"
+	quest.4520155312DCEE55.title: "丛林神庙：Better Jungle Temples"
+	quest.056026294FF995E0.title: "灾厄要塞：When Dungeons Arise"
+	quest.056026294FF995E0.description: [
+	"40 处大型结构、39 条进度，是本章里单体体量最大的一家。"
+	"它的结构普遍偏难，建议先把这一簇前几条的补给线铺好再来。"
+	]
+	quest.0236FDCE5D5E736C.title: "凯拉要塞"
+	quest.26CC68296D8BD771.title: "设拉子宫殿与盗匪塔"
+	quest.C14EECF5E1243806.title: "考古工作台：Better Archeology"
+	quest.C14EECF5E1243806.description: [
+	"考古这一簇只剩一件事：**从遗迹里把东西挖出来**。"
+	"这张桌子是它的入口，也是本章唯一一条完整「勘察 → 鉴定 → 收藏」的线。"
+	]
+	quest.E5087FC8486D3E6A.title: "三档刷子"
+	quest.A79163AF927BF75D.title: "挖到第一具化石"
+	quest.6C32675ACECC4695.title: "化石收齐"
+	quest.6C32675ACECC4695.description: [
+	"八种化石各有出处，收齐它们等于把 25 处考古遗迹跑了一遍。"
+	]
+	quest.7BB23A25AEF61F2C.title: "打碎古代花瓶"
+	quest.2981E8D31D9FFB76.title: "鉴定神器"
+	quest.F9382F654FABB47A.title: "每人一份：饰纹陶罐"
+	quest.F9382F654FABB47A.description: [
+	"Lootr 让遗迹里的容器对**每个玩家各算一份**。考古现场从此可以分头挖，不必排队。"
+	]
+	quest.5DB9B21EDCBF54CB.title: "每人一份：考古与陷阱箱"
+	quest.F40B9EE87C45D38F.title: "遗迹钥匙"
+	quest.F40B9EE87C45D38F.description: [
+	"这一家的物品在 `dnt` 命名空间下（数据却在 `nova_structures`），都是结构内部才拿得到的钥匙。"
+	]
+	quest.B2A5DA3D07CA2974.title: "远古城市的三种变体：Repurposed Structures"
+	quest.1A38E0D4F12E9A88.title: "遗迹清单立住了"
+	quest.1A38E0D4F12E9A88.description: [
+	"五个家族的「第一条遗迹」进度握在手里：YUNG's、Dungeons and Taverns、"
+	"Repurposed Structures、When Dungeons Arise、Lootr —— 五家都真的踏进去过。"
+	"到这一步，出关章要的情报墙才有内容可挂。"
+	]
+}

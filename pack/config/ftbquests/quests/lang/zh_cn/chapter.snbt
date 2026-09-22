@@ -64,22 +64,22 @@
 	"从手摇开始，一路到蒸汽与列车：箭头就是路线图"
 	]
 	chapter.F9293635781D1E8D.title: "机械动力"
+	chapter.2934ECB7A855E2BE.chapter_subtitle: [
+	"物料在机器之间怎么走，以及这条线每小时能过多少件"
+	]
+	chapter.2934ECB7A855E2BE.title: "机械动力·物流"
+	chapter.737D86AAEE84A911.chapter_subtitle: [
+	"把厂房、管线和栈桥做成同一套东西"
+	]
+	chapter.737D86AAEE84A911.title: "机械动力·建材与装饰"
 	chapter.46F69955A516BEE5.chapter_subtitle: [
 	"从烧一炉水，到让整张地图变短"
 	]
 	chapter.46F69955A516BEE5.title: "蒸汽与铁路"
-	chapter.D265B46A0D43ECBF.chapter_subtitle: [
-	"先看见，再决定去哪：把未知变成已知"
-	]
-	chapter.D265B46A0D43ECBF.title: "地图与探索"
 	chapter.AB866F7190B1B785.chapter_subtitle: [
 	"把「盖一次」变成「盖一百次」：这条链通了，造城速度会变一个量级"
 	]
 	chapter.AB866F7190B1B785.title: "图纸与工程"
-	chapter.848D40BDBBE07AD6.chapter_subtitle: [
-	"从一把好剑，到一台能砸开城门的机器"
-	]
-	chapter.848D40BDBBE07AD6.title: "战斗与军械"
 	chapter.A463AC437DC43705.chapter_subtitle: [
 	"「我们的地」这套系统：权限、边界、以及走得回来"
 	]
@@ -128,6 +128,22 @@
 	"不推主线，但缺了天天别扭"
 	]
 	chapter.D0C74967FD0CEDCE.title: "实用与奇物"
+	chapter.D265B46A0D43ECBF.chapter_subtitle: [
+	"先看见，再决定去哪：把未知变成已知"
+	]
+	chapter.D265B46A0D43ECBF.title: "地图与导航"
+	chapter.A95E50E5B58686AF.chapter_subtitle: [
+	"地下的、地上的、别的维度的：值得专程去一趟的地方"
+	]
+	chapter.A95E50E5B58686AF.title: "结构与遗迹"
+	chapter.848D40BDBBE07AD6.chapter_subtitle: [
+	"从一把好剑，到一台能砸开城门的机器"
+	]
+	chapter.848D40BDBBE07AD6.title: "战斗与军械"
+	chapter.0E85F3EB3E52FA47.chapter_subtitle: [
+	"夜里的规则、天象、成群来的东西，以及天亮之后"
+	]
+	chapter.0E85F3EB3E52FA47.title: "尸潮与夜袭"
 	chapter.C83EFD5F7165C874.chapter_subtitle: [
 	"跑得动才有后面：性能预算的玩家侧操作面"
 	]

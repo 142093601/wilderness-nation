@@ -146,3 +146,524 @@ rewards = [
 	{ type = "xp", xp = 300 },
 	{ type = "toast" },
 ]
+
+# ================= 追加：无尽纪元能做的更大的事（2026-09-22）=================
+# 本章的定位是「毕业之后还能做什么更大的事」，所以这一整段都挂在
+# `endless_engine`（无尽工程 · 其一）之后 —— 它不是新的终点，是终点之后的路。
+#
+# **与 `88-legacy` 的硬边界**（用户明说：85 讲「还能做什么更大的事」，
+# 88 讲「怎么记住和交接」）：本段**不写**碑林、史册、名人堂、归档、交接文档。
+# 这些内容一律留在 `88-legacy`。原章里既有的 `epitaph_each_era` 与
+# `chronicle_complete` 属于历史遗留，本轮不动它们。
+#
+# 判据用到的 mod（逐个核过 id）：
+#   · `create`：机械动力合成器 / 打包机 / 仓储链接站 / 工厂仪表 / 展示板 / 动力臂。
+#   · `create_hypertube`：超级管道（点对点高速通道）。
+#   · `railways`：列车轨道（下界干线的实物）。
+#   · `waystones`：传送石与传送门（据点之间的回程）。
+#   · `undeadnights`：尸潮僵尸的掉落物（尸潮夜真的打过一场的证据）。
+#   · 原版进度：11 条收集类进度（家畜 / 猫 / 狼 / 药水 / 效果 / 锻纹 / 陶片 / 蛙明灯 / 满配信标）。
+
+# ---------------- 簇 2：终局彩排 ----------------
+
+[[quest]]
+name = "el_dress_rehearsal"
+title = "终局彩排"
+desc = [
+	"当着所有人把「从原木到信标」整条链空跑一遍，中间不许手补料。",
+	"哪一段先卡住，那一处就是下一个纪元要先修的地方。",
+]
+icon = "create:mechanical_crafter"
+shape = "pentagon"
+size = 2.0
+deps = ["endless_engine"]
+tasks = [
+	{ type = "item", item = "create:mechanical_crafter", count = 8 },
+	{ type = "item", item = "create:packager", count = 4 },
+]
+rewards = [
+	{ type = "xp", xp = 60 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "el_zero_stock"
+title = "零库存演练"
+desc = [
+	"把仓库清到只留一天用量，看哪条线先断。",
+	"断点才是真瓶颈，平时满仓的时候看不出来。",
+]
+icon = "create:stockpile_switch"
+shape = "rsquare"
+size = 1.75
+deps = ["el_dress_rehearsal"]
+tasks = [
+	{ type = "item", item = "create:stockpile_switch", count = 4 },
+	{ type = "item", item = "create:content_observer", count = 8 },
+]
+
+# ---------------- 簇 3：巨构（其二 / 其三 / 其四） ----------------
+
+[[quest]]
+name = "el_mega_2"
+title = "巨构 · 其二"
+desc = [
+	"第二件没人要求你们做的工程，规模要比第一件大一档。",
+	"材料里要有下界合金，才算真的把两个维度都动用上了。",
+]
+icon = "minecraft:netherite_block"
+shape = "octagon"
+size = 1.75
+deps = ["endless_engine"]
+tasks = [
+	{ type = "item", item = "minecraft:netherite_block", count = 16 },
+	{ type = "item", item = "minecraft:ancient_debris", count = 32 },
+]
+
+[[quest]]
+name = "el_mega_3"
+title = "巨构 · 其三"
+desc = [
+	"第三件先往水下或海上走：海晶石与潮涌核心都得从海里来。",
+]
+icon = "minecraft:conduit"
+shape = "octagon"
+size = 1.75
+deps = ["el_mega_2"]
+tasks = [
+	{ type = "item", item = "minecraft:conduit", count = 4 },
+	{ type = "item", item = "minecraft:prismarine_bricks", count = 256 },
+	{ type = "item", item = "minecraft:dark_prismarine", count = 128 },
+]
+
+[[quest]]
+name = "el_mega_4"
+title = "巨构 · 其四"
+desc = [
+	"第四件用末地的料：这是唯一能证明远征线真的通了的建材。",
+]
+icon = "minecraft:end_stone_bricks"
+shape = "octagon"
+size = 1.75
+deps = ["el_mega_3"]
+tasks = [
+	{ type = "item", item = "minecraft:end_stone_bricks", count = 256 },
+	{ type = "item", item = "minecraft:purpur_block", count = 128 },
+]
+
+[[quest]]
+name = "el_sky_city"
+title = "天空城"
+desc = [
+	"在云层高度建一座能住人的城：结构、供水与上下交通都要独立。",
+]
+icon = "minecraft:glass"
+shape = "rsquare"
+size = 1.75
+deps = ["el_mega_2"]
+tasks = [
+	{ type = "item", item = "minecraft:glass", count = 256 },
+	{ type = "item", item = "minecraft:scaffolding", count = 64 },
+	{ type = "item", item = "minecraft:sea_lantern", count = 32 },
+]
+
+[[quest]]
+name = "el_land_reclaim"
+title = "填海造陆"
+desc = [
+	"先圈出边界再把水面填成陆地：边缘要能挡潮、能排水。",
+]
+icon = "minecraft:sponge"
+shape = "circle"
+size = 1.2
+deps = ["el_mega_2"]
+tasks = [
+	{ type = "item", item = "minecraft:sponge", count = 16 },
+	{ type = "item", item = "minecraft:sand", count = 256 },
+	{ type = "item", item = "minecraft:gravel", count = 256 },
+]
+
+[[quest]]
+name = "el_mountain"
+title = "造山"
+desc = [
+	"反过来做：先把平地堆成山，用来当屏障、观景台，或者只当一处从天上看才成形的作品。",
+]
+icon = "minecraft:grass_block"
+shape = "circle"
+size = 1.2
+deps = ["el_mega_2"]
+tasks = [
+	{ type = "item", item = "minecraft:grass_block", count = 256 },
+	{ type = "item", item = "minecraft:stone", count = 512 },
+]
+
+# ---------------- 簇 4：全自动化闭环 ----------------
+
+[[quest]]
+name = "el_closed_loop"
+title = "无人产线闭环"
+desc = [
+	"从原料进厂到成品入库，中间没有任何一个环节需要人到场。",
+	"到这一步，「生产」这件事才从日程表上划掉。",
+]
+icon = "create:stock_ticker"
+shape = "pentagon"
+size = 2.0
+deps = ["endless_engine"]
+tasks = [
+	{ type = "item", item = "create:stock_ticker", count = 4 },
+	{ type = "item", item = "create:stock_link", count = 8 },
+	{ type = "item", item = "create:factory_gauge", count = 8 },
+]
+rewards = [
+	{ type = "xp", xp = 60 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "el_raw_to_product"
+title = "原料进、成品出"
+desc = [
+	"指一个成品，然后只往线头投原料：产出必须连续不断。",
+]
+icon = "create:item_vault"
+shape = "rsquare"
+size = 1.75
+deps = ["el_closed_loop"]
+tasks = [
+	{ type = "item", item = "create:item_vault", count = 32 },
+]
+
+[[quest]]
+name = "el_dashboard"
+title = "全厂看板"
+desc = [
+	"一处能同时看到所有产线状态的地方，异常不用巡厂才发现。",
+]
+icon = "create:display_board"
+shape = "rsquare"
+size = 1.75
+deps = ["el_closed_loop"]
+tasks = [
+	{ type = "item", item = "create:display_board", count = 8 },
+	{ type = "item", item = "create:nixie_tube", count = 16 },
+	{ type = "item", item = "create:factory_gauge", count = 8 },
+]
+
+[[quest]]
+name = "el_self_maintain"
+title = "自维护"
+desc = [
+	"磨损件与耗材要能自动补齐：维护靠人跑，就不算全自动。",
+]
+icon = "create:mechanical_arm"
+shape = "rsquare"
+size = 1.75
+deps = ["el_dashboard"]
+tasks = [
+	{ type = "item", item = "create:mechanical_arm", count = 8 },
+	{ type = "item", item = "create:redstone_requester", count = 4 },
+	{ type = "item", item = "create:stockpile_switch", count = 4 },
+]
+
+# ---------------- 簇 5：跨维度据点与交通 ----------------
+
+[[quest]]
+name = "el_nether_base"
+title = "下界据点"
+desc = [
+	"在下界有一处能重生、能存货、能补给的地方，往返才敢频繁。",
+]
+icon = "minecraft:respawn_anchor"
+shape = "pentagon"
+size = 2.0
+deps = ["el_closed_loop"]
+tasks = [
+	{ type = "item", item = "minecraft:respawn_anchor", count = 4 },
+	{ type = "item", item = "minecraft:crying_obsidian", count = 16 },
+	{ type = "item", item = "minecraft:obsidian", count = 64 },
+]
+rewards = [
+	{ type = "xp", xp = 60 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "el_nether_road"
+title = "下界干线"
+desc = [
+	"下界一格顶主世界八格，干线铺好之后远征成本直接降一个量级。",
+]
+icon = "minecraft:lodestone"
+shape = "rsquare"
+size = 1.75
+deps = ["el_nether_base"]
+tasks = [
+	{ type = "item", item = "minecraft:lodestone", count = 4 },
+	{ type = "item", item = "railways:track_oak", count = 256 },
+]
+
+[[quest]]
+name = "el_end_base"
+title = "末地据点"
+desc = [
+	"末地是最远的一站：先建一处据点，否则只能空手来回，带不走东西。",
+]
+icon = "minecraft:end_stone"
+shape = "rsquare"
+size = 1.75
+deps = ["el_nether_base"]
+tasks = [
+	{ type = "item", item = "minecraft:end_stone", count = 128 },
+	{ type = "item", item = "minecraft:end_crystal", count = 4 },
+	{ type = "item", item = "minecraft:elytra", count = 1 },
+]
+
+[[quest]]
+name = "el_hyper_tube"
+title = "超级管道"
+desc = [
+	"点对点的高速通道：适合把两处固定据点接起来，不适合当路网。",
+]
+icon = "create_hypertube:hypertube_entrance"
+shape = "circle"
+size = 1.2
+deps = ["el_nether_road"]
+tasks = [
+	{ type = "item", item = "create_hypertube:hypertube_entrance", count = 4 },
+	{ type = "item", item = "create_hypertube:hypertube_accelerator", count = 8 },
+	{ type = "item", item = "create_hypertube:hypertube", count = 64 },
+]
+
+[[quest]]
+name = "el_warp_network"
+title = "传送网络"
+desc = [
+	"先把走过的地方串成网，回程就不再占掉整晚时间。",
+]
+icon = "waystones:warp_stone"
+shape = "circle"
+size = 1.2
+deps = ["el_end_base"]
+tasks = [
+	{ type = "item", item = "waystones:warp_stone", count = 8 },
+	{ type = "item", item = "waystones:warp_plate", count = 2 },
+]
+
+# ---------------- 簇 6：收集完备 ----------------
+
+[[quest]]
+name = "el_all_animals"
+title = "养遍家畜"
+desc = [
+	"图鉴里最基础的一页：所有能繁殖的家畜都养过一遍。",
+]
+icon = "minecraft:wheat"
+shape = "pentagon"
+size = 2.0
+deps = ["collection_book"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:husbandry/bred_all_animals" },
+]
+rewards = [
+	{ type = "xp", xp = 60 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "el_all_cats"
+title = "十一种猫"
+desc = [
+	"猫的变种随群系走，要全收就得把这些群系都找一个遍。",
+]
+icon = "minecraft:lead"
+shape = "circle"
+size = 1.2
+deps = ["el_all_animals"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:husbandry/complete_catalogue" },
+]
+
+[[quest]]
+name = "el_all_wolves"
+title = "狼的全谱"
+desc = [
+	"八种狼要跑遍对应群系才凑得齐，收全之后狼甲才有意义。",
+]
+icon = "minecraft:wolf_armor"
+shape = "circle"
+size = 1.2
+deps = ["el_all_animals"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:husbandry/whole_pack" },
+]
+
+[[quest]]
+name = "el_all_potions"
+title = "药水全谱"
+desc = [
+	"所有药水效果同时挂上过，是下界材料用得最狠的一次。",
+]
+icon = "minecraft:potion"
+shape = "circle"
+size = 1.2
+deps = ["collection_book"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:nether/all_potions" },
+]
+
+[[quest]]
+name = "el_all_effects"
+title = "效果全开"
+desc = [
+	"比药水更狠：把信标与食物能给的也算进来，全部做成一次同时生效。",
+]
+icon = "minecraft:beacon"
+shape = "circle"
+size = 1.2
+deps = ["el_all_potions"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:nether/all_effects" },
+]
+
+[[quest]]
+name = "el_armor_trims"
+title = "锻纹全收"
+desc = [
+	"每种盔甲纹样各打一件，收全之后全队的装备才有身份感。",
+]
+icon = "minecraft:netherite_upgrade_smithing_template"
+shape = "circle"
+size = 1.2
+deps = ["collection_book"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:adventure/trim_with_all_exclusive_armor_patterns" },
+]
+
+[[quest]]
+name = "el_all_sherds"
+title = "陶片全收"
+desc = [
+	"只用陶片拼出一只完整的饰纹陶罐——它是考古线的收尾。",
+]
+icon = "minecraft:decorated_pot"
+shape = "circle"
+size = 1.2
+deps = ["collection_book"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:adventure/craft_decorated_pot_using_only_sherds" },
+]
+
+[[quest]]
+name = "el_all_discs"
+title = "唱片全收"
+desc = [
+	"最难拿的几张唱片各有来源：遗迹、考古与试炼。收全等于把三条线都走完。",
+]
+icon = "minecraft:jukebox"
+shape = "circle"
+size = 1.2
+deps = ["el_all_cats"]
+tasks = [
+	{ type = "item", item = "minecraft:music_disc_pigstep", count = 1 },
+	{ type = "item", item = "minecraft:music_disc_relic", count = 1 },
+	{ type = "item", item = "minecraft:music_disc_creator", count = 1 },
+	{ type = "item", item = "minecraft:music_disc_precipice", count = 1 },
+]
+
+[[quest]]
+name = "el_frog_lights"
+title = "三种蛙明灯"
+desc = [
+	"蛙明灯是少数要靠生物行为才拿得到的收集品，也是唯一按群系分色的照明。",
+]
+icon = "minecraft:ochre_froglight"
+shape = "circle"
+size = 1.2
+deps = ["collection_book"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:husbandry/froglights" },
+]
+
+[[quest]]
+name = "el_full_beacon"
+title = "满配信标"
+desc = [
+	"信标要四面满配才给最高档效果，做齐它是最费矿的一件收集品。",
+]
+icon = "minecraft:beacon"
+shape = "circle"
+size = 1.2
+deps = ["collection_book"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:nether/create_full_beacon" },
+]
+
+# ---------------- 簇 7：极限挑战 ----------------
+
+[[quest]]
+name = "el_horde_night"
+title = "尸潮夜不停产"
+desc = [
+	"尸潮来的那一夜不许停线：防线顶住，产线照跑。",
+	"这一条考的不是打得过，而是「打着的时候别的照常」。",
+]
+icon = "undeadnights:slimy_rotten_flesh"
+shape = "pentagon"
+size = 2.0
+deps = ["el_self_maintain"]
+tasks = [
+	{ type = "item", item = "undeadnights:slimy_rotten_flesh", count = 16 },
+	{ type = "item", item = "minecraft:arrow", count = 256 },
+]
+rewards = [
+	{ type = "xp", xp = 60 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "el_blood_moon"
+title = "血月夜"
+desc = [
+	"血月把怪物的强度与数量一起抬上去。把这一夜的照明与通道先补满。",
+]
+icon = "minecraft:red_concrete"
+shape = "circle"
+size = 1.2
+deps = ["el_horde_night"]
+tasks = [
+	{ type = "item", item = "minecraft:red_concrete", count = 32 },
+	{ type = "item", item = "minecraft:lantern", count = 64 },
+]
+
+[[quest]]
+name = "el_kill_thousand"
+title = "累计清场一千"
+desc = [
+	"累计打满四位数击杀，才谈得上「守得住」而不是「躲得过」。",
+]
+icon = "minecraft:iron_sword"
+shape = "circle"
+size = 1.2
+deps = ["el_horde_night"]
+tasks = [
+	{ type = "stat", stat = "minecraft:mob_kills", value = 1000 },
+]
+
+[[quest]]
+name = "el_collection_complete"
+title = "图鉴满页"
+desc = [
+	"图鉴这一栏收满：动物、药水、纹样、陶片、唱片、信标都各有一页。",
+	"收满之后，剩下的横向目标就只剩「造」这一类了。",
+]
+icon = "minecraft:enchanted_book"
+shape = "octagon"
+size = 1.75
+deps = ["el_all_cats", "el_all_wolves", "el_all_effects", "el_armor_trims",
+        "el_all_sherds", "el_all_discs", "el_frog_lights", "el_full_beacon"]
+tasks = [
+	{ type = "item", item = "minecraft:enchanted_book", count = 4 },
+	{ type = "item", item = "minecraft:book", count = 32 },
+]

@@ -108,7 +108,7 @@ size = 1.2
 deps = ["d_rope"]
 tasks = [
 	{ type = "item", item = "supplementaries:planter", count = 4 },
-	{ type = "item", item = "supplementaries:planter_rich", count = 1 },
+	{ type = "item", item = "minecraft:flower_pot", count = 1 },
 ]
 
 [[quest]]

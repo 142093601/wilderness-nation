@@ -126,7 +126,7 @@
 			type: "item"
 		}
 		{
-			item: "supplementaries:planter_rich"
+			item: "minecraft:flower_pot"
 			count: 1
 			id: "933DDC64FA173A25"
 			type: "item"

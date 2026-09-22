@@ -7,7 +7,7 @@
 		id: "magistuarmory:steel_chainmail"
 	}
 	id: "848D40BDBBE07AD6"
-	order_index: 36
+	order_index: 62
 	quest_links: [ ]
 	quests: [
 	{
@@ -54,7 +54,7 @@
 			type: "item"
 		}
 		]
-		x: -1.27d
+		x: -2.78d
 		y: -1.75d
 	}
 	{
@@ -74,7 +74,7 @@
 			type: "item"
 		}
 		]
-		x: -5.78d
+		x: -7.28d
 		y: -3.5d
 	}
 	{
@@ -101,7 +101,7 @@
 			type: "item"
 		}
 		]
-		x: 1.5d
+		x: -0.0d
 		y: -1.75d
 	}
 	{
@@ -109,86 +109,202 @@
 		"4608758C21548C11"
 		]
 		icon: {
-			id: "siegemachines:trebuchet"
+			id: "magistuarmory:steel_estoc"
 		}
-		id: "ECFD190D87FB91B2"
+		id: "830D34A284D2100F"
 		shape: "rsquare"
 		size: 1.5d
 		tasks: [
 		{
-			item: "siegemachines:trebuchet"
-			id: "B191650C84637DA1"
+			item: "magistuarmory:steel_estoc"
+			count: 8
+			id: "E7ABD74BBFDBF02D"
+			type: "item"
+		}
+		{
+			item: "magistuarmory:steel_kiteshield"
+			count: 8
+			id: "830620CE1966AA01"
 			type: "item"
 		}
 		]
-		x: -3.0d
+		x: -4.5d
 		y: -3.5d
 	}
 	{
 		dependencies: [
-		"ECFD190D87FB91B2"
+		"830D34A284D2100F"
 		]
 		icon: {
-			id: "siegemachines:battering_ram"
+			id: "magistuarmory:steel_ellipticalshield"
 		}
-		id: "C3A25B018E3751B8"
-		shape: "circle"
-		size: 1.2d
+		id: "BE7BD4D7B47503F8"
+		shape: "rsquare"
+		size: 1.5d
 		tasks: [
 		{
-			item: "siegemachines:battering_ram"
-			id: "58AE678DFF2CE763"
+			item: "magistuarmory:steel_kiteshield"
+			id: "86B94DDEC56FE5B4"
+			type: "item"
+		}
+		{
+			item: "magistuarmory:steel_roundshield"
+			id: "9F698A1A54702BD6"
+			type: "item"
+		}
+		{
+			item: "magistuarmory:steel_heatershield"
+			id: "00E897FE2FB24D99"
+			type: "item"
+		}
+		{
+			item: "magistuarmory:steel_ellipticalshield"
+			id: "F55470AD07760EC5"
 			type: "item"
 		}
 		]
-		x: -5.1d
+		x: -17.17d
 		y: -5.25d
 	}
 	{
 		dependencies: [
-		"4608758C21548C11"
+		"830D34A284D2100F"
 		]
 		icon: {
-			id: "siegemachines:siege_workbench"
+			id: "magistuarmory:steel_pike"
 		}
-		id: "CA9611D678D36354"
-		shape: "circle"
-		size: 1.2d
+		id: "BC82E10B03F261A3"
+		shape: "rsquare"
+		size: 1.5d
 		tasks: [
 		{
-			item: "siegemachines:siege_workbench"
-			id: "C585B78CBCB06FC3"
+			item: "magistuarmory:wood_pike"
+			count: 8
+			id: "2E76132C251C4B8A"
+			type: "item"
+		}
+		{
+			item: "magistuarmory:iron_pike"
+			count: 8
+			id: "1771D7FE15F32795"
+			type: "item"
+		}
+		{
+			item: "magistuarmory:steel_pike"
+			count: 8
+			id: "03463A86A3FB7467"
 			type: "item"
 		}
 		]
-		x: -0.23d
-		y: -3.5d
+		x: -14.17d
+		y: -5.25d
 	}
 	{
 		dependencies: [
-		"ECFD190D87FB91B2"
+		"830D34A284D2100F"
 		]
 		icon: {
-			id: "minecraft:white_banner"
+			id: "magistuarmory:iron_chivalrylance"
 		}
-		id: "899FC031DC3F6FF7"
+		id: "2798D2514EE9316D"
 		shape: "circle"
 		size: 1.2d
 		tasks: [
 		{
-			item: "minecraft:white_banner"
-			count: 2
-			id: "83B1EB1B60212BA8"
+			item: "magistuarmory:iron_chivalrylance"
+			id: "E2489FBFACDC49C6"
 			type: "item"
 		}
 		{
-			item: "minecraft:barrel"
-			count: 4
-			id: "FE852481317C9408"
+			item: "magistuarmory:diamond_chivalrylance"
+			id: "3675F7201F54A91A"
 			type: "item"
 		}
 		]
-		x: -2.55d
+		x: -11.4d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"2798D2514EE9316D"
+		]
+		icon: {
+			id: "magistuarmory:chainmail_horse_armor"
+		}
+		id: "417FE343CE4B4839"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "magistuarmory:chainmail_horse_armor"
+			id: "E95535776D7E040B"
+			type: "item"
+		}
+		]
+		x: -14.55d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"448E3935771817EF"
+		]
+		icon: {
+			id: "minecraft:target"
+		}
+		id: "1E871723282E0EB9"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:target"
+			count: 8
+			id: "D19FC7D17F5DA88E"
+			type: "item"
+		}
+		{
+			item: "minecraft:armor_stand"
+			count: 4
+			id: "6ECD2E542D4BADE1"
+			type: "item"
+		}
+		{
+			stat: "minecraft:target_hit"
+			value: 100
+			id: "AF8ED8D85E1A3BBF"
+			type: "stat"
+		}
+		]
+		x: 2.77d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"830D34A284D2100F"
+		]
+		icon: {
+			id: "magistuarmory:horse_pattern"
+		}
+		id: "ACF7DB2F1662915F"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "magistuarmory:horse_pattern"
+			id: "E964A0746D443A05"
+			type: "item"
+		}
+		{
+			item: "magistuarmory:horse_decoration"
+			id: "4F03118466DEC9F7"
+			type: "item"
+		}
+		{
+			item: "magistuarmory:spike_decoration"
+			id: "E204B6E4667CD0A9"
+			type: "item"
+		}
+		]
+		x: -8.62d
 		y: -5.25d
 	}
 	{
@@ -215,7 +331,7 @@
 			type: "item"
 		}
 		]
-		x: 2.55d
+		x: -1.5d
 		y: -3.5d
 	}
 	{
@@ -236,7 +352,7 @@
 			type: "item"
 		}
 		]
-		x: -0.0d
+		x: -5.85d
 		y: -5.25d
 	}
 	{
@@ -257,7 +373,730 @@
 			type: "item"
 		}
 		]
-		x: 2.55d
+		x: -3.3d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"4475184900FF15F4"
+		]
+		icon: {
+			id: "hundred_years_war:scroll_militia"
+		}
+		id: "BC57EE9C9E952FC5"
+		rewards: [
+		{
+			xp: 30
+			id: "74D0525EC7C3FFF9"
+			type: "xp"
+		}
+		{
+			id: "D7CBEBDC67FF212E"
+			type: "toast"
+		}
+		]
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "hundred_years_war:scroll_militia"
+			id: "5E2B2E74134AFAD5"
+			type: "item"
+		}
+		{
+			item: "hundred_years_war:scroll_militia_1"
+			id: "94C58AF13C998210"
+			type: "item"
+		}
+		]
+		x: -0.15d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"BC57EE9C9E952FC5"
+		]
+		icon: {
+			id: "hundred_years_war:scroll_militia_3"
+		}
+		id: "C1622E828B72ABC5"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "hundred_years_war:scroll_militia_2"
+			id: "1B8EB52FC8F16344"
+			type: "item"
+		}
+		{
+			item: "hundred_years_war:scroll_militia_3"
+			id: "28B0165AF43516EC"
+			type: "item"
+		}
+		]
+		x: -11.78d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"C1622E828B72ABC5"
+		]
+		icon: {
+			id: "hundred_years_war:scroll_archer"
+		}
+		id: "AA2FB0458393DF4D"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "hundred_years_war:scroll_archer"
+			id: "67D8BE3EBDF78BCA"
+			type: "item"
+		}
+		{
+			item: "hundred_years_war:scroll_mounted_archer"
+			id: "D7AF28654A70B6DE"
+			type: "item"
+		}
+		]
+		x: -9.38d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"C1622E828B72ABC5"
+		]
+		icon: {
+			id: "hundred_years_war:scroll_crossbowman"
+		}
+		id: "EFFDDF6FB523C38B"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "hundred_years_war:scroll_crossbowman"
+			id: "CE81940EDA35EF6B"
+			type: "item"
+		}
+		{
+			item: "hundred_years_war:scroll_spear_man"
+			id: "97DA70C8B90B1BE4"
+			type: "item"
+		}
+		]
+		x: -6.83d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"C1622E828B72ABC5"
+		]
+		icon: {
+			id: "hundred_years_war:scroll_shieldman"
+		}
+		id: "48FE09F73DBDE0F4"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "hundred_years_war:scroll_shieldman"
+			id: "A4B10C1E11349A08"
+			type: "item"
+		}
+		{
+			item: "hundred_years_war:scroll_warrior"
+			id: "5080221400EC8ACD"
+			type: "item"
+		}
+		]
+		x: -4.28d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"C1622E828B72ABC5"
+		]
+		icon: {
+			id: "hundred_years_war:scroll_mounted_lancer"
+		}
+		id: "E98507FA42A0220A"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "hundred_years_war:scroll_horse"
+			id: "222A6AA6842B8815"
+			type: "item"
+		}
+		{
+			item: "hundred_years_war:scroll_horse"
+			id: "6ECD23949D94ADEA"
+			type: "item"
+		}
+		{
+			item: "hundred_years_war:scroll_mounted_lancer"
+			id: "5EFFD168D5542084"
+			type: "item"
+		}
+		]
+		x: -1.5d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"C1622E828B72ABC5"
+		]
+		icon: {
+			id: "hundred_years_war:scroll_siege_engineer"
+		}
+		id: "2972CE51B3F3B720"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "hundred_years_war:scroll_siege_engineer"
+			id: "3F5C93B50AB1F9A4"
+			type: "item"
+		}
+		{
+			item: "hundred_years_war:scroll_siege_engineer_1"
+			id: "AB5BE4542773B026"
+			type: "item"
+		}
+		]
+		x: 1.27d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"BC57EE9C9E952FC5"
+		]
+		icon: {
+			id: "hundred_years_war:command_staff"
+		}
+		id: "FCC13D9C7E7642D0"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "hundred_years_war:command_staff"
+			id: "AB64A2EDB1AF6FAA"
+			type: "item"
+		}
+		]
+		x: -8.78d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"AA2FB0458393DF4D"
+		"EFFDDF6FB523C38B"
+		"48FE09F73DBDE0F4"
+		"E98507FA42A0220A"
+		"FCC13D9C7E7642D0"
+		"9A940306BBCC5E62"
+		"824A56ABFE073F9E"
+		]
+		icon: {
+			id: "hundred_years_war:conquerors_staff"
+		}
+		id: "DC003A28291A568B"
+		shape: "octagon"
+		size: 1.75d
+		tasks: [
+		{
+			item: "hundred_years_war:conquerors_staff"
+			id: "C0B3EBB9225B9373"
+			type: "item"
+		}
+		{
+			item: "hundred_years_war:conquerors_manual"
+			id: "6A41F4CC3F625521"
+			type: "item"
+		}
+		]
+		x: -3.38d
+		y: -10.5d
+	}
+	{
+		dependencies: [
+		"4608758C21548C11"
+		]
+		icon: {
+			id: "siegemachines:trebuchet"
+		}
+		id: "ECFD190D87FB91B2"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "siegemachines:trebuchet"
+			id: "B191650C84637DA1"
+			type: "item"
+		}
+		]
+		x: 1.5d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"ECFD190D87FB91B2"
+		]
+		icon: {
+			id: "siegemachines:battering_ram"
+		}
+		id: "C3A25B018E3751B8"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "siegemachines:battering_ram"
+			id: "58AE678DFF2CE763"
+			type: "item"
+		}
+		]
+		x: 3.0d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"4608758C21548C11"
+		]
+		icon: {
+			id: "siegemachines:siege_workbench"
+		}
+		id: "CA9611D678D36354"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "siegemachines:siege_workbench"
+			id: "C585B78CBCB06FC3"
+			type: "item"
+		}
+		]
+		x: 4.27d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"ECFD190D87FB91B2"
+		]
+		icon: {
+			id: "minecraft:white_banner"
+		}
+		id: "899FC031DC3F6FF7"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:white_banner"
+			count: 2
+			id: "83B1EB1B60212BA8"
+			type: "item"
+		}
+		{
+			item: "minecraft:barrel"
+			count: 4
+			id: "FE852481317C9408"
+			type: "item"
+		}
+		]
+		x: 5.55d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"ECFD190D87FB91B2"
+		]
+		icon: {
+			id: "hundred_years_war:springald"
+		}
+		id: "8AEBA09E852BD696"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "hundred_years_war:springald"
+			id: "DFB36183AC3BD2E5"
+			type: "item"
+		}
+		]
+		x: 8.33d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"8AEBA09E852BD696"
+		]
+		icon: {
+			id: "hundred_years_war:mangonels"
+		}
+		id: "6B07AE37F61EAB01"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "hundred_years_war:mangonels"
+			id: "C36D5E97C626D21C"
+			type: "item"
+		}
+		]
+		x: -6.0d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"8AEBA09E852BD696"
+		]
+		icon: {
+			id: "hundred_years_war:siege_tower"
+		}
+		id: "C72DD0CA611DB45D"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "hundred_years_war:siege_tower"
+			id: "A1A6CA1AE5AE4BD5"
+			type: "item"
+		}
+		]
+		x: -3.23d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"8AEBA09E852BD696"
+		]
+		icon: {
+			id: "hundred_years_war:bombard"
+		}
+		id: "43C36445B82F922E"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "hundred_years_war:bombard"
+			id: "94065DDB1CDF2FC0"
+			type: "item"
+		}
+		{
+			item: "hundred_years_war:bullet"
+			count: 32
+			id: "402940AE083A70EB"
+			type: "item"
+		}
+		{
+			item: "minecraft:gunpowder"
+			count: 64
+			id: "DB862FA0B4C0291B"
+			type: "item"
+		}
+		]
+		x: -0.23d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"4475184900FF15F4"
+		]
+		icon: {
+			id: "hundred_years_war:supply_point"
+		}
+		id: "87F94AB0B467D980"
+		rewards: [
+		{
+			xp: 30
+			id: "75C7E179F97ABA1B"
+			type: "xp"
+		}
+		{
+			id: "E8342E7471B76992"
+			type: "toast"
+		}
+		]
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "hundred_years_war:supply_point"
+			count: 2
+			id: "915E73C4E79F7149"
+			type: "item"
+		}
+		]
+		x: 11.7d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"87F94AB0B467D980"
+		]
+		icon: {
+			id: "hundred_years_war:spawn_point"
+		}
+		id: "C0F5EB0456F64B65"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "hundred_years_war:spawn_point"
+			count: 2
+			id: "24D51663E108792F"
+			type: "item"
+		}
+		]
+		x: 2.77d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"87F94AB0B467D980"
+		]
+		icon: {
+			id: "hundred_years_war:warehouse_control"
+		}
+		id: "D4656D29C3A95900"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "hundred_years_war:warehouse_control"
+			id: "48933F45871F0BF0"
+			type: "item"
+		}
+		{
+			item: "hundred_years_war:warehouse_storage"
+			count: 4
+			id: "56B621A853B3EAAD"
+			type: "item"
+		}
+		]
+		x: 5.77d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"D4656D29C3A95900"
+		]
+		icon: {
+			id: "hundred_years_war:transport_order"
+		}
+		id: "C9457DB83B779D11"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "hundred_years_war:transport_order"
+			count: 4
+			id: "18BC51F4AA299629"
+			type: "item"
+		}
+		]
+		x: 3.82d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"87F94AB0B467D980"
+		]
+		icon: {
+			id: "hundred_years_war:crafting_workstation"
+		}
+		id: "21FB29B28C55F68B"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "hundred_years_war:crafting_workstation"
+			id: "A5412FE64EE7CD02"
+			type: "item"
+		}
+		{
+			item: "hundred_years_war:mining_workstation"
+			id: "261316FC0130D54C"
+			type: "item"
+		}
+		{
+			item: "hundred_years_war:lumber_workstation"
+			id: "71F37E37BE8E1F04"
+			type: "item"
+		}
+		{
+			item: "hundred_years_war:farming_workstation"
+			id: "1AE2614DD22240CF"
+			type: "item"
+		}
+		{
+			item: "hundred_years_war:fishing_workstation"
+			id: "DA5B8EC3D53E4C96"
+			type: "item"
+		}
+		{
+			item: "hundred_years_war:breeding_workstation"
+			id: "E7C660C5190C4667"
+			type: "item"
+		}
+		]
+		x: 8.77d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"21FB29B28C55F68B"
+		]
+		icon: {
+			id: "hundred_years_war:scroll_porter"
+		}
+		id: "A32E9AFC4B6417A0"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "hundred_years_war:scroll_porter"
+			id: "172ADCA123752883"
+			type: "item"
+		}
+		{
+			item: "hundred_years_war:scroll_crafter"
+			id: "D916F4E544A7DBAD"
+			type: "item"
+		}
+		]
+		x: 6.37d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"C0F5EB0456F64B65"
+		"C9457DB83B779D11"
+		"21FB29B28C55F68B"
+		"A32E9AFC4B6417A0"
+		]
+		icon: {
+			id: "hundred_years_war:warehouse_storage"
+		}
+		id: "64D75C3D6D275CC5"
+		shape: "octagon"
+		size: 1.75d
+		tasks: [
+		{
+			item: "hundred_years_war:supply_point"
+			count: 4
+			id: "F0A1451621354D18"
+			type: "item"
+		}
+		{
+			item: "hundred_years_war:warehouse_control"
+			count: 2
+			id: "4838B5A635548CF7"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -10.5d
+	}
+	{
+		dependencies: [
+		"C72DD0CA611DB45D"
+		]
+		icon: {
+			id: "siegemachines:siege_ladder"
+		}
+		id: "18B5A075ECD84AD4"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "siegemachines:siege_ladder"
+			id: "799835452B37BA83"
+			type: "item"
+		}
+		{
+			item: "minecraft:water_bucket"
+			count: 2
+			id: "90504BF353214B49"
+			type: "item"
+		}
+		]
+		x: 9.15d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"C3A25B018E3751B8"
+		]
+		icon: {
+			id: "siegemachines:battering_ram"
+		}
+		id: "D11D7DB18B72F874"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "siegemachines:battering_ram"
+			id: "0E8D0BBE77DD5BF3"
+			type: "item"
+		}
+		{
+			item: "minecraft:iron_trapdoor"
+			count: 8
+			id: "E6114C6C08F94326"
+			type: "item"
+		}
+		]
+		x: 11.77d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"18B5A075ECD84AD4"
+		"D11D7DB18B72F874"
+		"B3F4756BDF1D2C7A"
+		]
+		icon: {
+			id: "siegemachines:siege_ladder"
+		}
+		id: "619EDA35F7242356"
+		shape: "octagon"
+		size: 1.75d
+		tasks: [
+		{
+			item: "siegemachines:siege_ladder"
+			count: 2
+			id: "F0306B48B8FE135C"
+			type: "item"
+		}
+		{
+			item: "siegemachines:battering_ram"
+			count: 2
+			id: "5F9B3611756BB841"
+			type: "item"
+		}
+		]
+		x: 3.38d
+		y: -10.5d
+	}
+	{
+		dependencies: [
+		"5F1818BF9C4171E0"
+		]
+		icon: {
+			id: "minecraft:iron_axe"
+		}
+		id: "B3F4756BDF1D2C7A"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			entity: "minecraft:pillager"
+			value: 10
+			id: "C3E227A496C9DEB5"
+			type: "kill"
+		}
+		]
+		x: 14.85d
 		y: -5.25d
 	}
 	{
@@ -277,7 +1116,7 @@
 			type: "advancement"
 		}
 		]
-		x: 5.55d
+		x: 7.05d
 		y: -3.5d
 	}
 	{
@@ -297,8 +1136,35 @@
 			type: "advancement"
 		}
 		]
-		x: 5.1d
+		x: 17.4d
 		y: -5.25d
+	}
+	{
+		dependencies: [
+		"FC064C8563717891"
+		]
+		icon: {
+			id: "minecraft:ominous_bottle"
+		}
+		id: "A7C1EEF9C8793454"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:ominous_bottle"
+			count: 2
+			id: "8132749C6FD97738"
+			type: "item"
+		}
+		{
+			item: "minecraft:item_frame"
+			count: 8
+			id: "82B696D9999599A3"
+			type: "item"
+		}
+		]
+		x: 14.55d
+		y: -7.0d
 	}
 	{
 		dependencies: [
@@ -307,6 +1173,9 @@
 		"9A940306BBCC5E62"
 		"824A56ABFE073F9E"
 		"FC064C8563717891"
+		"DC003A28291A568B"
+		"64D75C3D6D275CC5"
+		"619EDA35F7242356"
 		]
 		icon: {
 			id: "minecraft:netherite_sword"
@@ -333,7 +1202,7 @@
 		}
 		]
 		x: 0.0d
-		y: -7.0d
+		y: -12.25d
 	}
 	]
 }

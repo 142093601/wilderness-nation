@@ -13,7 +13,19 @@
 # 主线：选址 → 住处 → 火与食 → 第一夜 → 落成碑
 # 支线：水源 / 圈地 / 领地 / 探路 / 武器
 #
-# 配额已废：这一章 13 个任务是「引导需要」的结果，不是 24h÷1.5h 摊出来的。
+# 配额已废：这一章不是 24h÷1.5h 摊出来的，是「引导需要」的结果。
+#
+# 与其它章的分工（边界写清楚，免得写重）：
+#   · 生存第一课 (`15-survival`) = **个人**活到能动手（木→石→铁→一张床）
+#   · 本章                      = **集体决定在这块地上住下**：选点、定水、分区、围栏、
+#                                 攒料、起名、留扩建区、立碑 —— 全是"决定"，不是"操作"
+#   · 立国       (`30-founding`) = **正式立国**：国号、四至、权限、议事、公示
+#   · 基建       (`40-infra`)    = 路网、桥、照明、供水、能源的**规模**
+#   · 领地与队伍 (`95-claims`)   = 圈地系统的**技术细节**（权限档、越界测试）
+#
+# checkmark 用量：5 条（设立营地 / 过第一晚 / 围栏 / 圈地，以及「选址理由写下来了」）。
+# 这几件事游戏里都没有信号；新增的 39 条里只有最后那一条用到 checkmark，
+# 且它同时带一个实物判据（written_book）兜底 —— 其余全部是实物、统计或原版进度判据。
 
 key = "landing"
 title = "落地"
@@ -157,6 +169,606 @@ tasks = [
 	{ type = "advancement", advancement = "minecraft:story/iron_tools" },
 ]
 
+# ---------------- 簇 1：选址评估（决定「住不住这儿」） ----------------
+
+[[quest]]
+name = "l_site_survey"
+title = "画一张营地草图"
+desc = [
+	"落地第一步不是盖房子，是**把这块地看清楚**。",
+	"一张地图加一路标记：哪边是水、哪边是林子、哪边会淹、哪边能通行。",
+	"这张草图决定后面所有分区怎么摆 —— 摆错了，改起来的代价是拆房。",
+]
+icon = "minecraft:map"
+shape = "pentagon"
+size = 2.0
+deps = ["pick_ground"]
+tasks = [
+	{ type = "item", item = "minecraft:map", count = 2 },
+	{ type = "item", item = "minecraft:item_frame", count = 4 },
+]
+
+[[quest]]
+name = "l_terrain"
+title = "地势要看清"
+desc = [
+	"营地要同时有平地与坡地：平地盖房种田，坡地排水、防守、瞭望。",
+	"记下最低点在哪 —— 下雨和灌溉都要靠这个判断。",
+]
+icon = "minecraft:spyglass"
+shape = "rsquare"
+deps = ["l_site_survey"]
+tasks = [
+	{ type = "item", item = "minecraft:spyglass" },
+]
+
+[[quest]]
+name = "l_water_check"
+title = "先确认水够不够"
+desc = [
+	"一处不够：至少两处独立水源（河、湖、泉各算一处），旱季与堵塞都不至于断水。",
+	"水源离营地超过两百格，选址就该重新考虑。",
+]
+icon = "minecraft:water_bucket"
+shape = "rsquare"
+deps = ["l_site_survey"]
+tasks = [
+	{ type = "item", item = "minecraft:water_bucket", count = 2 },
+]
+
+[[quest]]
+name = "l_forest_check"
+title = "近处要有林子"
+desc = [
+	"木料是最先耗尽的东西：盖房、烧炭、做工具全要它。",
+	"把最近的一片林子标下来，并且**只从这里取木**，别四面乱砍。",
+]
+icon = "minecraft:oak_log"
+shape = "rsquare"
+deps = ["l_site_survey"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_log", count = 64 },
+]
+
+[[quest]]
+name = "l_ore_check"
+title = "浅层矿口"
+desc = [
+	"落地阶段只要两种矿：煤与铁。它们在浅层就够了，不必往下深挖。",
+	"找到就记坐标 —— 第一个矿井的位置由它决定。",
+]
+icon = "minecraft:raw_iron"
+shape = "rsquare"
+deps = ["l_site_survey"]
+tasks = [
+	{ type = "item", item = "minecraft:raw_iron", count = 8 },
+	{ type = "item", item = "minecraft:coal", count = 16 },
+]
+
+[[quest]]
+name = "l_neighbor_scout"
+title = "邻国有多远"
+desc = [
+	"这块地上不只你们：最近的村庄、据点、甚至别人的营地都在算距离之内。",
+	"记下方位与距离，落地决议里要写清「和他们是什么关系」。",
+]
+icon = "minecraft:spyglass"
+shape = "circle"
+size = 1.2
+deps = ["l_terrain"]
+tasks = [
+	{ type = "item", item = "minecraft:spyglass" },
+	{ type = "item", item = "minecraft:map", count = 2 },
+]
+
+[[quest]]
+name = "l_site_decision"
+title = "把选址理由记下来"
+desc = [
+	"写成一页成书，至少三行：为什么是这里、放弃过哪里、这块地缺什么。",
+	"⚠️ 书里**写了什么**游戏判不了（written_book 只证明「有一本成书」），",
+	"所以这一条在实物判据之外补一个 checkmark：确认理由是**真的写下来**的。",
+	"这一页后面会在落成碑上重写一遍 —— 现在写的是草稿，也是唯一的证据。",
+]
+icon = "minecraft:written_book"
+shape = "rsquare"
+deps = ["l_neighbor_scout", "l_ore_check", "l_forest_check", "l_water_check"]
+tasks = [
+	{ type = "item", item = "minecraft:written_book" },
+	{ type = "checkmark" },
+]
+
+# ---------------- 簇 2：第一口井与排污 ----------------
+
+[[quest]]
+name = "l_well"
+title = "第一口井"
+desc = [
+	"井不只是取水点，它是**营地的中心**：所有分区从此按「离井多远」来摆。",
+	"石砖围一圈，加炼药锅与栅栏盖，免得有人掉进去。",
+]
+icon = "minecraft:stone_bricks"
+shape = "pentagon"
+size = 2.0
+deps = ["l_water_check"]
+tasks = [
+	{ type = "item", item = "minecraft:stone_bricks", count = 24 },
+	{ type = "item", item = "minecraft:cauldron" },
+	{ type = "item", item = "minecraft:water_bucket", count = 2 },
+]
+
+[[quest]]
+name = "l_cistern"
+title = "蓄水缸"
+desc = [
+	"井会被占、河会走远：一排炼药锅就是营地的短期储备。",
+	"灭火、洗涤、配药都从这里取，不必每次跑井边。",
+]
+icon = "minecraft:cauldron"
+shape = "square"
+deps = ["l_well"]
+tasks = [
+	{ type = "item", item = "minecraft:cauldron", count = 4 },
+]
+
+[[quest]]
+name = "l_waste_pit"
+title = "垃圾与排污点"
+desc = [
+	"落地阶段第一个真正的「公共问题」不是粮食，是**往哪儿扔东西**。",
+	"定一个固定的坑：岩浆处理可燃与腐坏物，远处一格专门堆建材废料。",
+	"有了这个点，「营地里到处是随手丢的箱子」这件事才会停。",
+]
+icon = "minecraft:lava_bucket"
+shape = "rsquare"
+deps = ["l_well"]
+tasks = [
+	{ type = "item", item = "minecraft:lava_bucket" },
+	{ type = "item", item = "minecraft:stone_bricks", count = 16 },
+]
+
+[[quest]]
+name = "l_compost"
+title = "沤肥坑"
+desc = [
+	"厨余、落叶、烂作物都有去处：堆肥桶产骨粉，骨粉催苗。",
+	"排污点不必只是「扔掉」，它可以是第一块田的肥料来源。",
+]
+icon = "minecraft:composter"
+shape = "circle"
+size = 1.2
+deps = ["l_waste_pit"]
+tasks = [
+	{ type = "item", item = "minecraft:composter", count = 4 },
+]
+
+# ---------------- 簇 3：储物棚与工作棚 ----------------
+
+[[quest]]
+name = "l_store_shed"
+title = "储物棚"
+desc = [
+	"把散落各人背包里的东西集中到一间棚：箱子排开，通道留够，能走进去找。",
+	"这一间棚是后面「公共仓库」的雏形 —— 先有地方，再谈规矩。",
+]
+icon = "minecraft:chest"
+shape = "pentagon"
+size = 2.0
+deps = ["l_well"]
+tasks = [
+	{ type = "item", item = "minecraft:chest", count = 12 },
+	{ type = "item", item = "minecraft:barrel", count = 8 },
+]
+
+[[quest]]
+name = "l_work_shed"
+title = "工作棚"
+desc = [
+	"工作台、熔炉、箱子分开放：合成、烧炼、存货三条动线互不挡路。",
+	"合成区要留出**站着不打架**的宽度 —— 多人同时用工作台是常态。",
+]
+icon = "minecraft:crafting_table"
+shape = "rsquare"
+deps = ["l_store_shed"]
+tasks = [
+	{ type = "item", item = "minecraft:crafting_table", count = 4 },
+	{ type = "item", item = "minecraft:furnace", count = 4 },
+]
+
+[[quest]]
+name = "l_zone_signs"
+title = "每间棚挂一块牌"
+desc = [
+	"落地期的秩序全靠牌子：哪间放什么、哪格归谁，写在门口。",
+	"牌子不解决管理问题，但它让**新来的人不必问人**。",
+]
+icon = "minecraft:oak_sign"
+shape = "square"
+deps = ["l_work_shed"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_sign", count = 12 },
+]
+
+# ---------------- 簇 4：围栏、门与照明 ----------------
+
+[[quest]]
+name = "l_fence_line"
+title = "围栏与门"
+desc = [
+	"围栏要围出**一条完整的线**，并且只有一到两个入口 —— 入口越多，夜里的防线越薄。",
+	"木栅栏够用；石墙留给后面「御敌」章。",
+]
+icon = "minecraft:oak_fence_gate"
+shape = "pentagon"
+size = 2.0
+deps = ["pick_ground"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_fence", count = 64 },
+	{ type = "item", item = "minecraft:oak_fence_gate", count = 2 },
+	{ type = "item", item = "minecraft:oak_door", count = 4 },
+]
+
+[[quest]]
+name = "l_gate_control"
+title = "入口能关上"
+desc = [
+	"每个入口配一套可开合的闸：木栅栏门、铁门、活板门都行，关键是**能关**。",
+	"关不上的入口等于没有围栏。",
+]
+icon = "minecraft:oak_trapdoor"
+shape = "circle"
+size = 1.2
+deps = ["l_fence_line"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_trapdoor", count = 8 },
+]
+
+[[quest]]
+name = "l_camp_light"
+title = "夜里看得见路"
+desc = [
+	"灯不是装饰：围栏内侧走一圈全点亮，巡逻的人才知道自己走到哪一格。",
+	"用灯笼而不是火把 —— 灯笼挂得住、淋不灭，围墙上更好摆。",
+]
+icon = "minecraft:lantern"
+shape = "rsquare"
+deps = ["l_fence_line"]
+tasks = [
+	{ type = "item", item = "minecraft:lantern", count = 24 },
+]
+
+# ---------------- 簇 5：燃料与第一笔储备 ----------------
+
+[[quest]]
+name = "l_fuel_first"
+title = "先备一批煤"
+desc = [
+	"燃料是这个阶段**唯一不可替代的消耗品**：熔炉、火把、篝火全靠它。",
+	"落地期就要按「一组煤 = 一天」来估，别等熔炉停了才去挖。",
+]
+icon = "minecraft:coal"
+shape = "pentagon"
+size = 2.0
+deps = ["l_ore_check"]
+tasks = [
+	{ type = "item", item = "minecraft:coal", count = 64 },
+]
+
+[[quest]]
+name = "l_charcoal_line"
+title = "烧炭备用"
+desc = [
+	"煤脉会挖空，木炭不会：只要还有林子，火就不会断。",
+	"这是落地期的**燃料保险**，也是后面烧砖烧玻璃的底料。",
+]
+icon = "minecraft:charcoal"
+shape = "rsquare"
+deps = ["l_fuel_first"]
+tasks = [
+	{ type = "item", item = "minecraft:charcoal", count = 32 },
+]
+
+[[quest]]
+name = "l_fuel_store"
+title = "燃料单独一间"
+desc = [
+	"燃料与建材分开存：混着放的后果是「烧着烧着发现把要用的木头烧了」。",
+	"单独立一间或单独立一排桶，数量一眼能数。",
+]
+icon = "minecraft:campfire"
+shape = "circle"
+size = 1.2
+deps = ["l_charcoal_line"]
+tasks = [
+	{ type = "item", item = "minecraft:campfire", count = 4 },
+	{ type = "item", item = "minecraft:barrel", count = 4 },
+]
+
+[[quest]]
+name = "l_wood_yard"
+title = "木料堆场"
+desc = [
+	"原木、木板、木棍分区码放，并且**离熔炉远一点**。",
+	"堆场是后面所有工程的第一道料场，位置定错了会一直被绕路。",
+]
+icon = "minecraft:oak_planks"
+shape = "square"
+deps = ["l_store_shed"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_planks", count = 64 },
+	{ type = "item", item = "minecraft:stick", count = 32 },
+]
+
+# ---------------- 簇 6：第一批粮食（集体口粮） ----------------
+
+[[quest]]
+name = "l_first_field"
+title = "第一块田"
+desc = [
+	"全队的口粮不能只靠打猎。挑离井最近的一块地，全部格都要有水。",
+	"田的位置一旦定下来，后面灌溉与仓储都会围着它长。",
+]
+icon = "minecraft:stone_hoe"
+shape = "pentagon"
+size = 2.0
+deps = ["l_well"]
+tasks = [
+	{ type = "item", item = "minecraft:stone_hoe", count = 2 },
+	{ type = "item", item = "minecraft:wheat_seeds", count = 12 },
+]
+
+[[quest]]
+name = "l_irrigate"
+title = "田里自己带水"
+desc = [
+	"在田中间挖一条水渠：一格水源能润四格耕地，摆对之后就不必每天提桶浇。",
+	"这是落地期最便宜的一次「自动化」——一次摆对，永久省事。",
+]
+icon = "minecraft:water_bucket"
+shape = "rsquare"
+deps = ["l_first_field"]
+tasks = [
+	{ type = "item", item = "minecraft:water_bucket", count = 2 },
+]
+
+[[quest]]
+name = "l_seed_plot"
+title = "先把种子留出来"
+desc = [
+	"好吃的东西要留种：小麦、胡萝卜、马铃薯各留一批不入口。",
+	"种粮比收粮重要 —— 断种就等于从头来过。",
+]
+icon = "minecraft:wheat_seeds"
+shape = "square"
+deps = ["l_irrigate"]
+tasks = [
+	{ type = "item", item = "minecraft:wheat_seeds", count = 24 },
+	{ type = "item", item = "minecraft:carrot", count = 12 },
+]
+
+[[quest]]
+name = "l_livestock_pen"
+title = "第一批畜栏"
+desc = [
+	"用小麦把牛羊引回来：两只起步（能繁殖），围栏单独隔一间。",
+	"畜栏与田要分开 —— 混在一块会把耕地踩掉。",
+]
+icon = "minecraft:lead"
+shape = "rsquare"
+deps = ["l_first_field"]
+tasks = [
+	{ type = "item", item = "minecraft:lead", count = 2 },
+	{ type = "item", item = "minecraft:wheat", count = 12 },
+]
+
+[[quest]]
+name = "l_feed_reserve"
+title = "饲料与口粮分开"
+desc = [
+	"喂牲口的麦子与给人吃的口粮必须是两笔账 —— 混着放，灾年就得杀牲口。",
+	"干草块是最省地方的饲料形态。",
+]
+icon = "minecraft:hay_block"
+shape = "circle"
+size = 1.2
+deps = ["l_livestock_pen"]
+tasks = [
+	{ type = "item", item = "minecraft:hay_block", count = 8 },
+]
+
+# ---------------- 簇 7：床与重生点 ----------------
+
+[[quest]]
+name = "l_bed_for_all"
+title = "每人一张床"
+desc = [
+	"床把重生点固定在营地里 —— 这是「落地」两个字最实际的含义。",
+	"床位不够时先把床补齐，再谈盖房：先能活，再住得好。",
+]
+icon = "minecraft:white_bed"
+shape = "pentagon"
+size = 2.0
+deps = ["first_roof"]
+tasks = [
+	{ type = "item", item = "minecraft:white_bed", count = 4 },
+]
+
+[[quest]]
+name = "l_rest_zone"
+title = "生活区圈出来"
+desc = [
+	"卧室集中在一处，离工作棚远一点：夜里熔炉还在响，睡不踏实。",
+	"生活区与作业区分开之后，营地第一次有了「街」的概念。",
+]
+icon = "minecraft:oak_door"
+shape = "rsquare"
+deps = ["l_bed_for_all"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_door", count = 6 },
+]
+
+[[quest]]
+name = "l_travel_bed"
+title = "出工也带睡袋"
+desc = [
+	"外出砍柴、探路、跑远活时带一张睡袋：就地睡一觉，不必赶回营地。",
+	"它不替换营地的床，只是把「回不回得去」这件事的压力降下来。",
+]
+icon = "comforts:sleeping_bag_white"
+shape = "circle"
+size = 1.2
+deps = ["l_bed_for_all"]
+tasks = [
+	{ type = "item", item = "comforts:sleeping_bag_white", count = 2 },
+]
+
+[[quest]]
+name = "l_anchor_point"
+title = "营地锚点"
+desc = [
+	"一块磁石加一个重生点标记：从外面回来时，不必先找地图就知道家在哪个方向。",
+	"落地期的「回家」还只是方向问题；到出关章，它会变成补给与通讯问题。",
+]
+icon = "minecraft:recovery_compass"
+shape = "circle"
+size = 1.2
+deps = ["l_rest_zone"]
+tasks = [
+	{ type = "item", item = "minecraft:recovery_compass" },
+]
+
+# ---------------- 簇 8：给营地起名挂牌 ----------------
+
+[[quest]]
+name = "l_camp_name"
+title = "给营地起个名"
+desc = [
+	"没名字的地方不能叫「家」，只能叫「附近」。",
+	"名字要能刻在牌上、写进书里、挂在旗上 —— 取之前先想清楚它好不好念。",
+	"⚠️ 名字本身游戏判不了，但牌子与旗是实物判据。",
+]
+icon = "minecraft:oak_sign"
+shape = "pentagon"
+size = 2.0
+deps = ["l_zone_signs"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_sign", count = 2 },
+	{ type = "item", item = "minecraft:white_banner" },
+	{ type = "item", item = "minecraft:item_frame", count = 2 },
+]
+
+[[quest]]
+name = "l_welcome_board"
+title = "入口挂牌"
+desc = [
+	"在营地入口挂一块牌：写名字、写落成年月、写谁立的。",
+	"这是全包第一块「公共文字」—— 立国章那块公示牌是它的正式版。",
+]
+icon = "minecraft:oak_hanging_sign"
+shape = "rsquare"
+deps = ["l_camp_name"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_sign", count = 4 },
+	{ type = "item", item = "minecraft:lantern", count = 4 },
+]
+
+[[quest]]
+name = "l_camp_bell"
+title = "营地的钟"
+desc = [
+	"在广场上放一口钟：站在这块地上敲一下，所有人知道该回哪儿。",
+	"它同时是「这块地已经有人管」最省事的信号 —— 不必等旗杆立起来。",
+]
+icon = "minecraft:bell"
+shape = "rsquare"
+deps = ["l_welcome_board"]
+tasks = [
+	{ type = "item", item = "minecraft:bell" },
+]
+
+# ---------------- 簇 9：通往水与林的两条路 ----------------
+
+[[quest]]
+name = "l_road_water"
+title = "去水源的路"
+desc = [
+	"营地到井/河之间铺一条**能推车**的路：碎石或木板均可，关键是宽度一致、不绕路。",
+	"这条路以后会被当作全城路网的基线，别随手铺。",
+]
+icon = "minecraft:gravel"
+shape = "pentagon"
+size = 2.0
+deps = ["l_well"]
+tasks = [
+	{ type = "item", item = "minecraft:gravel", count = 64 },
+]
+
+[[quest]]
+name = "l_road_forest"
+title = "去林场的路"
+desc = [
+	"第二条路通往木料来源。两条路不要在营地正中交叉 —— 交汇点会变成事实上的广场。",
+	"路上每隔一段放一盏灯，天黑也能走。",
+]
+icon = "minecraft:dirt_path"
+shape = "rsquare"
+deps = ["l_road_water"]
+tasks = [
+	{ type = "item", item = "minecraft:dirt_path", count = 32 },
+	{ type = "item", item = "minecraft:torch", count = 16 },
+]
+
+# ---------------- 簇 10：留白与扩建 ----------------
+
+[[quest]]
+name = "l_reserve_zone"
+title = "预留扩建区"
+desc = [
+	"**故意空出一块地**不盖东西：以后的仓库、议事厅、纪念碑都要地方。",
+	"落地期最贵的错误是把好地皮用棚子填满 —— 后面每一间房都得拆。",
+]
+icon = "minecraft:stone_bricks"
+shape = "pentagon"
+size = 2.0
+deps = ["l_zone_signs"]
+tasks = [
+	{ type = "item", item = "minecraft:stone_bricks", count = 16 },
+	{ type = "item", item = "minecraft:oak_sign", count = 4 },
+]
+
+[[quest]]
+name = "l_mark_boundary"
+title = "先把四角标出来"
+desc = [
+	"在预留区的四个角各放一根柱子或一块石砖，标出这块地**已经有人认领**。",
+	"这是立国章「四至与界碑」的草稿：正式界碑要有编号，这里只要一根柱子。",
+]
+icon = "minecraft:stripped_oak_log"
+shape = "circle"
+size = 1.2
+deps = ["l_reserve_zone"]
+tasks = [
+	{ type = "item", item = "minecraft:stripped_oak_log", count = 4 },
+]
+
+# ---------------- 簇 11：落成 ----------------
+
+[[quest]]
+name = "l_founding_kit"
+title = "落成仪式的料"
+desc = [
+	"碑、旗、灯三样先备齐：石碑刻字、旗帜挂名、灯笼通宵点着。",
+	"这些东西本身不难做，难的是**在搬进去之前就把它们准备好**。",
+]
+icon = "minecraft:chiseled_stone_bricks"
+shape = "rsquare"
+deps = ["l_camp_bell", "l_road_forest"]
+tasks = [
+	{ type = "item", item = "minecraft:chiseled_stone_bricks", count = 8 },
+	{ type = "item", item = "minecraft:white_banner", count = 2 },
+	{ type = "item", item = "minecraft:lantern", count = 8 },
+]
+
 # ---------------- 终局 ----------------
 
 [[quest]]
@@ -169,7 +781,10 @@ desc = [
 icon = "minecraft:stone_bricks"
 shape = "hexagon"
 size = 2.5
-deps = ["survive_first_night", "water_source", "claim_the_land", "scout_500", "a_real_sword"]
+deps = ["survive_first_night", "water_source", "claim_the_land", "scout_500", "a_real_sword",
+        "l_site_decision", "l_waste_pit", "l_cistern", "l_fuel_store", "l_wood_yard",
+        "l_seed_plot", "l_feed_reserve", "l_anchor_point", "l_mark_boundary",
+        "l_founding_kit"]
 tasks = [
 	{ type = "item", item = "minecraft:stone_bricks", count = 16 },
 ]

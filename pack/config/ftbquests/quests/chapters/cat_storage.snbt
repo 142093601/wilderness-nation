@@ -380,14 +380,14 @@
 		"29D3596A7654DF43"
 		]
 		icon: {
-			id: "storagedelight:oak_pantry_cabinet"
+			id: "storagedelight:oak_single_door_cabinet"
 		}
 		id: "7F952FF2E934E4B0"
 		shape: "circle"
 		size: 1.2d
 		tasks: [
 		{
-			item: "storagedelight:oak_pantry_cabinet"
+			item: "storagedelight:oak_single_door_cabinet"
 			count: 2
 			id: "3F7DDED57E450BC6"
 			type: "item"
@@ -776,7 +776,7 @@
 			type: "item"
 		}
 		{
-			item: "create:package"
+			item: "create:cardboard_package_12x12"
 			count: 4
 			id: "54F449856AB85182"
 			type: "item"

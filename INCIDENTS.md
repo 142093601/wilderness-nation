@@ -522,3 +522,137 @@ qid = self.ids.make("quest", ch.key, name)                  # 轮到它时又算
 
 
 
+
+---
+
+## 2026-09-22 重建 registry.json 时漏了 `--game-root`，把**原版物品全丢了**（211 条假报警）
+
+### 现象
+
+`tools/item_index.py --verify-toml` 从 **missing 0** 变成 **missing 211**，
+而且缺的全是 `minecraft:anvil` / `minecraft:barrel` / `minecraft:stone_bricks` 这种
+**最普通的原版物品**。第一反应是"agent 们写了一堆错 id"。
+
+### 根因
+
+我为了"让注册表反映真实装机状态"重建了 registry.json，但只传了 `--mods`：
+
+    python tools/build_registry.py --mods <实例>/mods        # ← 少了 --game-root
+
+而**原版 assets 不在 mods 目录里**，它来自 `<game_root>/libraries/net/minecraft/client/…-extra.jar`。
+少了这一层，注册表就只剩 mod 的物品 → 所有原版 id 都判"不存在"。
+
+正确的调用（`--game-root` 指的是 **`.minecraft` 那一级**，不是 `versions/<版本>` 那一级）：
+
+    python tools/build_registry.py \
+      --mods "D:\game\PCL\.minecraft\versions\1.21.1-NeoForge_21.1.250\mods" \
+      --game-root "D:\game\PCL\.minecraft"
+
+### 教训（比这次的具体错误更值钱）
+
+- **校验器的红/绿只等于它读的那份注册表**。注册表本身错了，它会一本正经地
+  报 211 条假 FAIL —— 而假 FAIL 会诱使我去"修"一堆本来正确的文案。
+  **看到大批量、集中在最常见物品上的 FAIL，先怀疑工具与数据，不怀疑内容。**
+- `build_registry.py` 的输出里有 `jars=nnn` 这一行：**改完必须回头看它**。
+  少了原版 jar 时 `jars` 会比"mod 数 + 1"小 —— 这次的 231 vs 应有的 232 就是线索。
+- 这条与"陈旧产物"是同一族问题：**产物不是真相，产生它的输入才是。**
+
+### 硬规则（新增）
+
+13. **重建任何"可查 id 的注册表"之后，第一件事是跑 `--verify-toml` 并核对
+    `jars=` 是否等于「mod 数 + 1（原版）」**；数字不对就不要拿它的结论去改内容。
+
+---
+
+## 2026-09-22 大规模并行派 agent：15 个里 9 个中途失败，但**失败者已经写了文件**
+
+### 现象
+
+为了把任务书从 437 条铺到 1400 条量级，我一次派了 8 个 agent（随后又派 6 个）。
+回报是：第一批 8 个成功 4 个、失败 4 个；第二批 6 个**全失败**，且失败者的
+closing message 是空的。
+
+### 根因（推断，有证据的部分我标出来）
+
+- **有证据**：失败 agent 的**文件已经写进去了** —— `100-cat-building.toml` 已经 56 条、
+  `140-cat-gear.toml` 已经 52 条，只是它们停在"写到一半、还没跑自检"的状态，
+  留下 2 个 `Unclosed array` 的文件。
+- **有证据**：并发 8 个时成功率约 50%，而在已有 7 个在跑时再派 6 个 → 全灭。
+  同一时段**每个 agent 都要跑 python 自检**，本机只有 4 核。
+- **推断**：失败更像**总负载/预算**问题，而不是单个 agent 的任务太难
+  —— 因为失败者写出来的内容质量与成功者没有差别。
+
+### 处置
+
+1. **失败 ≠ 什么都没做**：立刻用 `tools/_probe_roots.py` 逐个文件列出条数，
+   再跑 lint / `--check-only`，把"写到一半"的文件补完 —— 而不是重新派人重写。
+2. 失败留下的两类硬伤是**机械可修的**，已做成工具：
+   `tools/toml_quote_fix.py --write --commas`（补多行数组的行尾逗号 + 换引号），
+   一次修好了 2 个文件 / 5 处。
+3. **并发上限压到 3~5 个**，并且**每批之间要等前一批真正落地**再派下一批。
+
+### 硬规则（新增）
+
+14. **派出去的 agent 失败时，先盘点它留下的文件，再决定是"补"还是"重做"。**
+    重做会覆盖已经写好的部分，是最贵的错误处置方式。
+---
+
+## 2026-09-22 我用**子串替换**修 id，把一批合法 id 也改坏了（25 处）
+
+### 现象
+
+服务端报 37 条 `Unknown registry key`（真机拒绝的 id），我写了个替换脚本按
+"坏 id → 好 id" 全量 `str.replace`。替换本身生效了，但紧接着离线校验器报了**新的**
+一批不存在 id：
+
+    create:package_filter    -> create:cardboard_package_12x12_filter     ← 不存在
+    create:package_frogport  -> create:cardboard_package_12x12_frogport   ← 不存在
+    create:packager          -> create:cardboard_package_12x12r           ← 不存在
+    create_dragons_plus:white_dye_bucket -> ..._bucket_bucket              ← 不存在
+
+### 根因
+
+`str.replace("create:package", "create:cardboard_package_12x12")` 会命中
+**更长 id 的前缀**。而这几个"更长 id"恰恰是**正确**的（`create:package_filter`、
+`create:packager` 都是真实注册项）。等价地：**坏 id 是好 id 的前缀**时，
+一次朴素替换就把好 id 变成垃圾。
+
+更糟的是第二层：`white_dye` → `white_dye_bucket` 这条，在文件里本来就是
+`white_dye_bucket` 的地方又拼了一次后缀，得到 `..._bucket_bucket`。
+
+### 修法
+
+1. 立刻写了一支只做还原的脚本（`_probe_fix_damage.py`），把 25 处改回来；
+2. 纪律：**替换注册名一律按整词匹配** —— 用
+   `re.sub(r'(?<![\w:])' + re.escape(bad) + r'(?![\w])', good, text)`，
+   或者先按 `"` 引号切出完整 id 再比较，**绝不裸 replace**。
+
+### 硬规则（新增）
+
+15. **批量改 id 前先数一遍"这个字符串是不是别的 id 的前缀"**。
+    `create:package` 是 `create:packager` 的前缀 —— 这类前缀关系在 mod 里很常见
+    （`x` / `x_filter` / `x_slab` / `x_block`）。批量替换后**必须**再跑
+    `item_index.py --verify-toml`，因为它就是抓这个的。
+
+---
+
+## 2026-09-22 在 agent 还在写文件的时候去改同一批文件
+
+### 现象
+
+离线校验过了、真机也过了，我又在**若干 agent 仍在编辑**同一批
+`tools/questbook/chapters/*.toml` 的时候，用脚本做了 90 处 id 替换。
+
+### 风险（当时没有立刻暴露，但确实存在）
+
+agent 的写入是"整文件重写自己缓冲区里的内容"。我在它写之前改的，会被它下一次
+写入**覆盖掉** —— 于是"我修好了"与"它又写回来了"会互相抵消，
+而两边的自检都可能是绿的（各自跑的时机不同）。
+
+### 处置与纪律
+
+- 所有跨文件的批量修改**放到 agent 全部落地之后**做（这一轮的最终验证就是这么排的）。
+- 若不得不在中途改，就把那次修改当作**可能被回滚**，最后一轮必须**重跑**：
+  `lint → verify-toml → runtime_deny --check → check-only → 服务端真机`。
+- 判断"agent 是否还在写"不要靠感觉：`git status --short` 的文件 mtime + 自己那轮的
+  文件清单对比，是唯一可核对的证据。

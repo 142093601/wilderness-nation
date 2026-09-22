@@ -289,7 +289,7 @@
 			type: "item"
 		}
 		{
-			item: "another_furniture:oak_small_shelf"
+			item: "another_furniture:oak_table"
 			id: "783B1B2FBA1B79EB"
 			type: "item"
 		}
@@ -620,7 +620,7 @@
 			type: "item"
 		}
 		{
-			item: "another_furniture:oak_grandfather_clock"
+			item: "another_furniture:oak_drawer"
 			id: "D61719C9A2F2455A"
 			type: "item"
 		}
@@ -723,7 +723,7 @@
 			type: "item"
 		}
 		{
-			item: "refurbished_furniture:light_freezer"
+			item: "refurbished_furniture:light_fridge"
 			id: "1F460DCB6AE24054"
 			type: "item"
 		}
@@ -907,7 +907,7 @@
 			type: "item"
 		}
 		{
-			item: "another_furniture:red_awning"
+			item: "another_furniture:red_sofa"
 			count: 2
 			id: "02B9344D56191C06"
 			type: "item"
@@ -986,7 +986,7 @@
 			type: "item"
 		}
 		{
-			item: "another_furniture:lamp_connector"
+			item: "another_furniture:white_lamp"
 			count: 2
 			id: "6886A721F5B6831E"
 			type: "item"
@@ -1123,14 +1123,14 @@
 		"D0B0C04BB879A5C4"
 		]
 		icon: {
-			id: "another_furniture:oak_grandfather_clock"
+			id: "another_furniture:oak_drawer"
 		}
 		id: "E18B62EE790C7F81"
 		shape: "circle"
 		size: 1.2d
 		tasks: [
 		{
-			item: "another_furniture:oak_grandfather_clock"
+			item: "another_furniture:oak_drawer"
 			id: "0E825DFA53D154EE"
 			type: "item"
 		}

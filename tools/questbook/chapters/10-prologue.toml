@@ -40,6 +40,70 @@ shape = "rsquare"
 deps = ["how_to_open"]
 
 [[quest]]
+name = "shape_legend"
+title = "形状是分类，不是难度"
+desc = [
+	"五边形 = 一类事情的开头（簇头）。",
+	"圆角方块 = 主线上的必经一步；方块 = 要做够数量的那一步。",
+	"菱形 = 从这里开始分岔；圆圈 = 支线或变体。",
+	"八角 = 章内的阶段里程碑；六边形 = 这一章的最后一件大事。",
+	"齿轮 = 这一步是自动化产线。形状只说明它是什么角色，不说明难不难。",
+]
+tasks = [
+	{ type = "checkmark" },
+]
+icon = "minecraft:item_frame"
+shape = "rsquare"
+deps = ["how_to_open"]
+
+[[quest]]
+name = "three_kinds_of_quest"
+title = "任务有三种，别一视同仁"
+desc = [
+	"必做的主轴（圆角方块 / 五边形）：它们串起一个时代的骨架，卡住时先看它们。",
+	"支线（圆圈）：同一个东西的变体、可选升级，做不做都不影响后面。",
+	"知识型条目（多在性能 / 界面 / 氛围那几章）：没有可检测的判据，",
+	"它们的作用是告诉你这个 mod 解决什么问题，看完自己打勾即可。",
+]
+tasks = [
+	{ type = "checkmark" },
+]
+icon = "minecraft:knowledge_book"
+shape = "rsquare"
+deps = ["shape_legend"]
+
+[[quest]]
+name = "cross_chapter_links"
+title = "独立小格是跨章指路"
+desc = [
+	"有的章里会出现指向**别的章**的独立小格（不连在主线上）。",
+	"那表示「主线走到这里时，那一章会帮上忙」—— 是提示，不是前置。",
+	"看到就去看一眼，不需要为了它停下手里的事。",
+]
+tasks = [
+	{ type = "checkmark" },
+]
+icon = "minecraft:comparator"
+shape = "rsquare"
+deps = ["shape_legend"]
+
+[[quest]]
+name = "rewards_policy"
+title = "奖励很少，这是故意的"
+desc = [
+	"这本书**不给成品机器，也不给成批物资** —— 给了就等于跳过了造它的那一章。",
+	"奖励只有三种：经验、一句世界内的提示（toast）、以及极少数命令（时代钥匙）。",
+	"所以别把任务当成刷奖励的路子，把它当成路线图。",
+]
+tasks = [
+	{ type = "checkmark" },
+]
+icon = "minecraft:experience_bottle"
+shape = "circle"
+size = 1.2
+deps = ["how_to_open"]
+
+[[quest]]
 name = "chronicle_and_craft"
 title = "四栏各管什么"
 desc = [
@@ -85,15 +149,88 @@ shape = "rsquare"
 deps = ["how_to_open"]
 
 [[quest]]
+name = "pack_size_expectation"
+title = "这个包有多大"
+desc = [
+	"两百多个 mod，四个栏位，四十个章节。没有人能一次看完。",
+	"正常节奏是：主线推一个时代，卡住了去类目章找工具，再回来继续。",
+]
+tasks = [
+	{ type = "checkmark" },
+]
+icon = "minecraft:bookshelf"
+shape = "circle"
+size = 1.2
+deps = ["chronicle_and_craft"]
+
+[[quest]]
+name = "multiplayer_first"
+title = "这个包是按多人设计的"
+desc = [
+	"分工、国库、议事、防御、外交 —— 这些一个人也能做，但会很慢。",
+	"不必一个人把四十章推完；先把公共设施那几条做掉，后面会轻松很多。",
+]
+tasks = [
+	{ type = "checkmark" },
+]
+icon = "minecraft:shield"
+shape = "rsquare"
+deps = ["pack_size_expectation"]
+
+[[quest]]
+name = "first_hour_plan"
+title = "头一小时做什么"
+desc = [
+	"顺序就三件事：砍树 → 石制工具 → 铁。",
+	"细节在「生存第一课」那一章，不必回来看这里。",
+]
+tasks = [
+	{ type = "checkmark" },
+]
+icon = "minecraft:wooden_pickaxe"
+shape = "rsquare"
+deps = ["how_to_open"]
+
+[[quest]]
 name = "prologue_marker"
 title = "从这里开始"
 desc = [
-	"看完这一章，去「落地」那一章领第一件事。",
+	"看完这一章，去「生存第一课」把工具链做出来，再去「落地」选地方。",
 ]
 icon = "minecraft:campfire"
 shape = "hexagon"
 size = 2.5
-deps = ["how_to_read_arrows", "chronicle_and_craft", "eras_and_key", "where_to_ask"]
+deps = ["how_to_read_arrows", "three_kinds_of_quest", "cross_chapter_links", "rewards_policy",
+        "eras_and_key", "where_to_ask", "multiplayer_first", "first_hour_plan"]
 tasks = [
 	{ type = "checkmark" },
 ]
+
+# ---------------- 跨章软链接：序章直接把人指到三个入口 ----------------
+#
+# 这是本项目第一次真正用 `quest_links`（`PLAN-questbook.md` §4.4：跨章只用软链接，
+# **不做硬前置**）。它们以独立小格的形式出现在本章画布左侧，点一下能跳到目标章的
+# 那条任务 —— 但**不构成任何解锁条件**，也不影响任何任务的可见性。
+#
+# 结构（实测自天空蜂巢的 chapter 文件）：
+#   { id: "<链接自己的 id>"  linked_quest: "<目标任务 id>"  x: …d  y: …d }
+# 由 tools/questbook.py 的 apply_links() 在**所有章都编译完之后**解析
+# （因为目标任务的 id 要等那一章编译出来才知道）。
+
+[[link]]
+to_chapter = "survival"
+to_quest = "sv_wood"
+x = -12.0
+y = 0.0
+
+[[link]]
+to_chapter = "landing"
+to_quest = "pick_ground"
+x = -12.0
+y = -1.75
+
+[[link]]
+to_chapter = "create"
+to_quest = "first_crank"
+x = -12.0
+y = -3.5

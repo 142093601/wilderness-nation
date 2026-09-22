@@ -58,4 +58,364 @@
 	"两座城之间**只**靠铁路可达，而且人货都能走——这一条成立，"
 	"「远征」时代的路程成本才算真的降下来。"
 	]
+	quest.DD3DB3417F200F5E.title: "长笛"
+	quest.DD3DB3417F200F5E.description: [
+	"汽笛加长段：同一个汽笛接上它，声音传得更远。"
+	"对一列要穿过整座城的车来说，能被提前听见就是安全余量。"
+	]
+	quest.941097247B33894D.title: "机车燃料箱"
+	quest.941097247B33894D.description: [
+	"把燃料从「随手丢进炉子」变成「一箱跑多远」：燃料箱是续航的度量单位。"
+	]
+	quest.9785DE76CD1923F5.title: "移动式燃料接口"
+	quest.9785DE76CD1923F5.description: [
+	"装在车上的加油口：整备的时候不用把燃料箱拆下来。"
+	]
+	quest.959271B9E3C36D5D.title: "司机室通风口"
+	quest.959271B9E3C36D5D.description: [
+	"锅炉旁边是要待人的。通风口是「这台车能不能长时间开」的细节之一。"
+	]
+	quest.F97CC918AC16E5E3.title: "燃煤烟囱"
+	quest.F97CC918AC16E5E3.description: [
+	"烟囱是机车的外形，也是它的工况表：烧煤的烟最浓，代价是得有人一直添。"
+	]
+	quest.084E13A1590862F9.title: "燃油烟囱"
+	quest.084E13A1590862F9.description: [
+	"柴油烟囱：一炉烧得更久，烟也淡——换成液体燃料，整备次数就降下来了。"
+	]
+	quest.E93DF1A5B546951B.title: "流线烟囱"
+	quest.E93DF1A5B546951B.description: [
+	"流线型烟囱：把烟导到车顶之后，司机的视野才算空出来。"
+	"跑长途的车，视野就是安全。"
+	]
+	quest.627FD32D92938D75.title: "燃木烟囱"
+	quest.627FD32D92938D75.description: [
+	"烧木头的烟囱：在没有煤的早期线路上，这是唯一能烧的东西。"
+	]
+	quest.17B0EA0444D1135E.title: "列车长帽"
+	quest.17B0EA0444D1135E.description: [
+	"行车的人得有身份标记：一顶帽子，站台上远远就能认出谁在负责这列车。"
+	]
+	quest.DBF7F2CAA623BEE2.title: "帽子的半成品"
+	quest.DBF7F2CAA623BEE2.description: [
+	"帽子先做成半成品，再染色定编组色——所以它天然适合当「车队标识」。"
+	]
+	quest.6875D42F7C51A787.title: "行车哨"
+	quest.6875D42F7C51A787.description: [
+	"车长挂在身上的哨子：发车、停车、退行，靠它给信号。"
+	"它把「喊话」变成了车组内部能听懂的短码。"
+	]
+	quest.010CCAB92A9CEB74.title: "动力段定型"
+	quest.010CCAB92A9CEB74.description: [
+	"燃料、炉子、烟囱、司机室四件凑齐，这台车才算「能连续开」。"
+	"从这一步往下，讨论的就不再是机器，而是线路。"
+	]
+	quest.2DE95B3D9761F3D2.title: "窄轨"
+	quest.2DE95B3D9761F3D2.description: [
+	"窄轨转弯半径小、造价低，适合矿区和山里的短支线。"
+	"但它跑不快、装不多——轨距一旦定下来，这条线的上限就定了。"
+	]
+	quest.72C10A4CC68AC386.title: "宽轨"
+	quest.72C10A4CC68AC386.description: [
+	"宽轨更稳、载重更大，是干线的选择。"
+	"同一座城里同时铺两种轨距并不矛盾——**换装站**本来就要存在。"
+	]
+	quest.F674B0AF9D2132A8.title: "道岔"
+	quest.F674B0AF9D2132A8.description: [
+	"两条线要接起来，靠的是道岔：一个岔口，决定了列车往哪边走。"
+	]
+	quest.3AAF694C3DCB6E7A.title: "安山道岔"
+	quest.3AAF694C3DCB6E7A.description: [
+	"安山道岔是早期版本：便宜、够用，适合先把线网接起来，之后再换。"
+	]
+	quest.5033C7638857298E.title: "车钩轨"
+	quest.5033C7638857298E.description: [
+	"带车钩的轨道段：列车过这里能自动挂上、自动摘开。"
+	"**调车**这件事，从这条轨开始才不需要人工拆挂。"
+	]
+	quest.3C1C6A3E1B1A840E.title: "无枕道床"
+	quest.3C1C6A3E1B1A840E.description: [
+	"去掉枕木的道床：更平、更快，适合高架与长直段。"
+	"它是要在「铺得起」之后才谈得上的一种线路等级。"
+	]
+	quest.2A7488C3ECE106D0.title: "无枕窄轨"
+	quest.2A7488C3ECE106D0.description: [
+	"无枕 + 窄轨：矿洞里那种弯多、坡陡、跑不快的支线正好用它。"
+	]
+	quest.680276D02C29234B.title: "无枕宽轨"
+	quest.680276D02C29234B.description: [
+	"无枕 + 宽轨：干线长途的标准组合，速度与载重同时要。"
+	]
+	quest.D0656459D9F7DFE7.title: "单轨"
+	quest.D0656459D9F7DFE7.description: [
+	"单轨只需要一根梁，跨河、跨谷、穿城都省地方。"
+	"代价是它对道岔与信号的要求更高——单轨的错车靠调度，不靠岔口。"
+	]
+	quest.CC18075CA07C4FB6.title: "末地石轨"
+	quest.CC18075CA07C4FB6.description: [
+	"末地石轨是跨维度那一段用的材料——它出现的时候，线路已经不止在一个世界之内。"
+	]
+	quest.B534B52B2A95AA31.title: "幻影轨"
+	quest.B534B52B2A95AA31.description: [
+	"幻影轨：一种成型之前要先做半成品的特殊轨型。"
+	"把它铺出来，等于给线网留了一条「以后升级」的口子。"
+	]
+	quest.8D1AD73DB7C39053.title: "给线上色"
+	quest.8D1AD73DB7C39053.description: [
+	"颜料壶与颜料刷：轨枕、护轨、警示块都能改成自己这一路的颜色。"
+	"一条线一个颜色，站台上的乘客不用看牌子就知道该上哪列车。"
+	]
+	quest.59309C090177CB2E.title: "线路标牌"
+	quest.59309C090177CB2E.description: [
+	"地图上的轨道标记：给线路做个看得见的注记。"
+	"线路一多，没有标牌的线网就只能靠记忆维护。"
+	]
+	quest.4FB88A2FC422CA0A.title: "臂板信号机"
+	quest.4FB88A2FC422CA0A.description: [
+	"臂板信号机是老式线路的信号：一块板子抬起或落下，就代表能不能进区间。"
+	"它比灯更耐看，也更适合当「这一段是单线」的提示。"
+	]
+	quest.31867B30B2E8E6F1.title: "远程瞭望"
+	quest.31867B30B2E8E6F1.description: [
+	"远程镜头装在岔口和高架前面：人在站里也能看见前面那一段有没有车。"
+	"闭塞系统缺的从来不是灯，是**看得见的距离**。"
+	]
+	quest.8CC956DCB9E012F4.title: "线路成型"
+	quest.8CC956DCB9E012F4.description: [
+	"从一段直轨走到有轨距、有岔口、有信号、有标牌的线网——"
+	"这一条线才算「按规则跑」，而不是「司机互相看着办」。"
+	]
+	quest.40EB359B9EAD27FD.title: "月台"
+	quest.40EB359B9EAD27FD.description: [
+	"月台的第一件事不是好看，是**够不够上下车**——踏板要与车厢门对齐。"
+	]
+	quest.846F5A295F8F5AB5.title: "伸缩踏板"
+	quest.846F5A295F8F5AB5.description: [
+	"车厢与月台之间总有缝。伸缩踏板补的就是这条缝，也是这条缝决定了装卸快慢。"
+	]
+	quest.E7EFFBFDE8AED55B.title: "黄铜踏板"
+	quest.E7EFFBFDE8AED55B.description: [
+	"黄铜伸缩踏板：站房做得体面之后，月台件也该跟着换一档。"
+	]
+	quest.064CEE8B7404804F.title: "雨棚与月台窗"
+	quest.064CEE8B7404804F.description: [
+	"月台上方要有遮的：一趟车等下来，日晒和下雨都是消耗。"
+	]
+	quest.F939D6DC26ED96ED.title: "道口闸门"
+	quest.F939D6DC26ED96ED.description: [
+	"线路与道路平交的地方必须有闸门——它拦的不是车，是**人**。"
+	]
+	quest.D50ADF63A9F0091C.title: "道闸延长杆"
+	quest.D50ADF63A9F0091C.description: [
+	"闸门只有一格宽的时候，加一根延长杆才拦得住整条路。"
+	]
+	quest.8B8710FA03628A56.title: "给蒸汽车加水"
+	quest.8B8710FA03628A56.description: [
+	"蒸汽机是要喝水的。站台上的水柱决定了这条线**单程能跑多远**。"
+	"补一次水要停多久，直接写进时刻表里。"
+	]
+	quest.103B28E24F668CEC.title: "站钟"
+	quest.103B28E24F668CEC.description: [
+	"站钟是这套系统里少数「给乘客看」的东西：它把时刻表变成了可信的事。"
+	]
+	quest.9902795DA98A745F.title: "候车室"
+	quest.9902795DA98A745F.description: [
+	"一张长椅、一盏灯、一块站牌——候车室是「等车」这件事第一次被当成正经事。"
+	]
+	quest.5FA1B273691E4BEB.title: "站房的办公件"
+	quest.5FA1B273691E4BEB.description: [
+	"告示牌、讲台、工具箱：站务要交接、要公示、要放得下工具。"
+	"车站从「一个月台」变成「一个岗位」，就是靠这几样。"
+	]
+	quest.FD1F0717983A0A5C.title: "站房启用"
+	quest.FD1F0717983A0A5C.description: [
+	"月台、雨棚、闸门、水柱、站钟、候车室都到位，车站才不只是「一段轨上的一个点」。"
+	"从这一步起，站房本身就是一座公共建筑。"
+	]
+	quest.473305B420FB3D61.title: "转向架"
+	quest.473305B420FB3D61.description: [
+	"车厢座在转向架上。Blocks & Bogies 给的不是一台机器，而是一整套**样式与轴数**。"
+	"⚠️ 这个 mod 只有方块、没有对应物品（实测它 31 个方块的战利品表全掉 列车机壳），"
+	"所以这里判的是铁壳，图标才是它自己的方块。"
+	]
+	quest.9A8245C8523AA10E.title: "小型转向架"
+	quest.9A8245C8523AA10E.description: [
+	"小型转向架装短车、机车的前导轮——同一列车里轴数本来就是不一样的。"
+	]
+	quest.991E98D7013B2D81.title: "从动转向架"
+	quest.991E98D7013B2D81.description: [
+	"从轮不驱动，只负责把车重分散到轨上。煤水车与长大货车全靠它。"
+	]
+	quest.BB852527D938B1BE.title: "大型转向架"
+	quest.BB852527D938B1BE.description: [
+	"轴数往上加：0-6-0、0-8-0 这些编号说的就是「几根动轮、几根从轮」。"
+	]
+	quest.A59C8F90577810F7.title: "超大转向架"
+	quest.A59C8F90577810F7.description: [
+	"0-10-0 那一档：十根动轮的车是重载干线的答案。"
+	]
+	quest.50BF7F339D101DFD.title: "阀动装置"
+	quest.50BF7F339D101DFD.description: [
+	"华氏阀、南方阀、止转轭、无连杆——它们不只是外形："
+	"换成哪一套，等于决定了这台车的**速度区间**。"
+	]
+	quest.7BEBDE9202262C61.title: "无连杆机车"
+	quest.7BEBDE9202262C61.description: [
+	"把连杆去掉的那一档：结构更简单，维护更省事。"
+	]
+	quest.EDD915DF78AD9AC4.title: "机车外壳"
+	quest.EDD915DF78AD9AC4.description: [
+	"机车锅炉、烟箱、飞轮：车头那一段的外观件，决定了这台车像哪一年的车。"
+	"它不影响能拉多少，但影响「这条线是什么档次」。"
+	]
+	quest.4EA19DD5EADD7EC6.title: "镶板式锅炉"
+	quest.4EA19DD5EADD7EC6.description: [
+	"镶黄铜 / 镶铜 / 镶铁的锅炉壳：同一种结构，三种气质。"
+	]
+	quest.26420D2C00100655.title: "司机室门窗"
+	quest.26420D2C00100655.description: [
+	"平开门、推拉门、折叠门，加上单格 / 双格 / 十字 / 圆框窗——"
+	"司机室是**唯一**要既看得清外面、又挡得住风的地方。"
+	]
+	quest.F59BCBD2B5C3BD50.title: "机车爬梯"
+	quest.F59BCBD2B5C3BD50.description: [
+	"爬梯和检修口：车头不是给人爬的，但检修的人总得上去。"
+	]
+	quest.1D3B3663F07443A3.title: "铆接与镶板"
+	quest.1D3B3663F07443A3.description: [
+	"铆接、镶板、刮削、平滑——同一种机车铁块的四种做法。"
+	"车队涂装从这里开始统一。"
+	]
+	quest.69FABFAE7039CAE8.title: "平板车"
+	quest.69FABFAE7039CAE8.description: [
+	"平板车最朴素，也最能装：建材、机械、集装箱，什么都能往上放。"
+	]
+	quest.BBC060787AC4ED49.title: "棚车"
+	quest.BBC060787AC4ED49.description: [
+	"棚车挡雨：粮食、布匹、火药这类怕水的货，只有它能拉。"
+	]
+	quest.5B000484301E632C.title: "漏斗车"
+	quest.5B000484301E632C.description: [
+	"漏斗车是给散料用的：矿、砂、混凝土，从底下放，不用一箱箱搬。"
+	]
+	quest.C8FD26C8C0E43714.title: "罐车"
+	quest.C8FD26C8C0E43714.description: [
+	"罐车走液体：水、岩浆、原油。有了它，整条线才谈得上「液体干线」。"
+	]
+	quest.10F4885D16EBD24E.title: "守车与制动"
+	quest.10F4885D16EBD24E.description: [
+	"车尾那一段要有人：制动、瞭望、押运。"
+	"守车也是**长大列车**能不能安全下坡的前提。"
+	]
+	quest.73EC4AA466BCC7C2.title: "詹式车钩"
+	quest.73EC4AA466BCC7C2.description: [
+	"詹式车钩：一撞就锁上，是目前挂车最快的一种。"
+	"车钩的选择会一路影响到调车场的效率。"
+	]
+	quest.3F3DF3E04EEB14A6.title: "链式车钩"
+	quest.3F3DF3E04EEB14A6.description: [
+	"链式车钩：要人工挂，但容差大，早期车与老货车之间全靠它。"
+	]
+	quest.CE1D8D86BBE734E9.title: "分离式詹氏钩"
+	quest.CE1D8D86BBE734E9.description: [
+	"分离式詹氏车钩：把「锁」和「缓冲」拆成两件，坏一个不用换整套。"
+	]
+	quest.26F7C6388E5A14DD.title: "无销车钩"
+	quest.26F7C6388E5A14DD.description: [
+	"无销车钩：少了那根销子，也就少了一处会掉的东西。"
+	]
+	quest.4BD3A94DB9D1386F.title: "车头端梁"
+	quest.4BD3A94DB9D1386F.description: [
+	"端梁是车厢两端的那块板：车钩、缓冲器都装在它上面。"
+	"木端梁与伪装端梁的区别，只在于这列车想不想让人看出它是拼的。"
+	]
+	quest.10FC4AC76699F621.title: "缓冲器端梁"
+	quest.10FC4AC76699F621.description: [
+	"带缓冲器的端梁：冲击先被弹簧吃掉，货才不会被撞坏。"
+	]
+	quest.2DD9708D52240816.title: "挡车器"
+	quest.2DD9708D52240816.description: [
+	"线路尽头必须有个东西拦着——挡车器是「这条线到此为止」的物理表达。"
+	]
+	quest.20E7475C1B9CB5C0.title: "编组"
+	quest.20E7475C1B9CB5C0.description: [
+	"把机车、煤水车、货厢按顺序接成一列车——这一步做完，前面所有零件才合成一件东西。"
+	"编组表定下来之后，同一列车每次都能按同样的顺序装出来。"
+	]
+	quest.F725FB5A8D1AED5B.title: "行车职责"
+	quest.F725FB5A8D1AED5B.description: [
+	"开车的人、发信号的人、押运的人——一列车至少要有人对这三件事负责。"
+	]
+	quest.54365762A7B585C0.title: "轨道工程车"
+	quest.54365762A7B585C0.description: [
+	"工作台矿车与唱片机矿车看着是玩具，其实是**轨道维护车**的雏形："
+	"线路上总要有一节车是给干活的人用的。"
+	]
+	quest.2761F35749BEB9A9.title: "一列完整的车"
+	quest.2761F35749BEB9A9.description: [
+	"转向架 → 车架 → 车钩 → 车厢 → 编组，五段都走完。"
+	"从这一刻起，你们的车队是「造出来的」，不是「凑出来的」。"
+	]
+	quest.9F1F504828BAE83C.title: "列车导航仪"
+	quest.9F1F504828BAE83C.description: [
+	"导航仪是司机的手持终端：这一趟跑哪条线、下一站是哪，都在它上面。"
+	]
+	quest.2D8CBCEFCCB52BD2.title: "导航仪表座"
+	quest.2D8CBCEFCCB52BD2.description: [
+	"把导航仪架上讲台：站务台、调度室各一座，谁值班谁看。"
+	]
+	quest.BCB73074ED5021DA.title: "高级显示面板"
+	quest.BCB73074ED5021DA.description: [
+	"面板、半面板、斜面、小屏、台阶——同一套显示件的五种装法。"
+	"大站挂大的，小站挂小的，信息是同一套。"
+	]
+	quest.3F612FB64CA04E1F.title: "显示墙"
+	quest.3F612FB64CA04E1F.description: [
+	"把几块面板拼起来，一次显示好几趟车——这才是调度室该有的样子。"
+	]
+	quest.8FF8A7610AAC2805.title: "调度室"
+	quest.8FF8A7610AAC2805.description: [
+	"导航仪、时刻表、显示墙放在同一间屋子里，线网才有「指挥」这一层。"
+	"没有调度室的长线网，遇到晚点就只能靠现场商量。"
+	]
+	quest.1E104787ABC0A061.title: "货运月台"
+	quest.1E104787ABC0A061.description: [
+	"货运月台要比客运月台高一档：装卸口的宽度、承重、以及有没有顶棚。"
+	]
+	quest.C2790EE71B96D728.title: "自动装卸线"
+	quest.C2790EE71B96D728.description: [
+	"到站自动装、到站自动卸：装卸这一环从人手里交出去，长交路才有意义。"
+	]
+	quest.503B951530ABA6E9.title: "隧道"
+	quest.503B951530ABA6E9.description: [
+	"穿山的那一段要算净空：车顶到拱顶之间得留出余量。"
+	"隧道是铁路与地形第一次真正谈判。"
+	]
+	quest.540125E2BD6338D0.title: "桥梁"
+	quest.540125E2BD6338D0.description: [
+	"跨河、跨谷要架桥：桥决定了坡度，坡度决定了这条线能拉多少。"
+	]
+	quest.703168020FBC8302.title: "长大列车"
+	quest.703168020FBC8302.description: [
+	"车拉长了，坡就成了问题：牵引吨位不够，就得加补机或改线。"
+	"这一步是「能跑」与「能干活」之间的分界。"
+	]
+	quest.DDD12587684253EC.title: "车库"
+	quest.DDD12587684253EC.description: [
+	"车不能一直停在月台上：车库要有检修位、有整备线、有顶。"
+	]
+	quest.EFC836B0DA0C612B.title: "检修件"
+	quest.EFC836B0DA0C612B.description: [
+	"端梯、爬梯、通风口——检修要上去、要下来、要通气。"
+	]
+	quest.9B3395346F86566B.title: "集装箱与涂装"
+	quest.9B3395346F86566B.description: [
+	"纸板、纸板块、砂纸：把货打包成一个标准件，再贴上自己这一路的标记。"
+	"标准件是**跨线联运**的前提——换了车、换了线，箱子还是那个箱子。"
+	]
+	quest.6541A748F1B7EC3D.title: "长途运营"
+	quest.6541A748F1B7EC3D.description: [
+	"线路、站房、车队、调度室、装卸线、车库都齐了，铁路才从「一条轨」变成一张网。"
+	"这张网跑起来之后，两座城之间的时间成本第一次由时刻表决定，而不是由腿决定。"
+	]
 }

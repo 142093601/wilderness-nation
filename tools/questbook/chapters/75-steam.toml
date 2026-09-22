@@ -4,9 +4,27 @@
 # 它独立成章的理由：Create 的**蒸汽与列车**是一整套自成体系的大件——
 # 有燃料、有锅炉、有轨道与信号、有调度，玩法上与其他机器完全不同类。
 #
-# 判据来源：Create 自己的进度（实测 1150 条里有一批专属于这一块）+ 实物。
-# 相关 mod：create-steam-n-rails · create-railways-navigator · create-train-parts ·
-#          create-horse-power · create-central-kitchen（蒸汽厨房）
+# 判据来源：**实物**（全部用 `python tools/item_index.py --ns <ns>` 核过）。
+# 覆盖的命名空间：
+#   · `railways`（Steam 'n' Rails，1951 个 id，本章主力）：轨距与轨道类型 · 道岔与交叉 ·
+#     车钩与缓冲 · 转向架与车架部件 · 烟囱与阀动装置 · 列车长帽与行车哨
+#   · `createrailwaysnavigator`（10 个 id）：导航仪 · 站钟 · 高级显示面板族
+#   · `create_train_parts`（16 个 id）：伸缩踏板 · 列车台阶 · 滑动窗 · 道口闸门 · 延长杆
+#   · `create_bb`（Blocks & Bogies，31 个 id）：转向架样式与轴数。该 mod **只有方块、
+#     没有对应物品**——实测它 31 个方块的战利品表全部掉 `create:railway_casing`，
+#     所以这一簇的判据落在铁壳上，图标才用它自己的方块。
+#   · `create`：轨道 / 站点 / 信号机 / 列车门与活板门（本体机制归 `60-create`，
+#     本章只取它们作为「铁路系统的骨架件」）
+#
+# 与 `60-create` 的分工（**避免重复讲同一件事**）：
+#   60 章已经写过 `steam_engine` / `steam_whistle` / `railway` / `track_station` /
+#   `track_signal` / `conductor` / `long_train` / `train_portal` / `track_observer` /
+#   `schedule` 这十条**入门动作**（第一次点火、第一段轨、第一座站、第一张时刻表）。
+#   本章不复述那十条，只写**接着往下走的那一层**：轨距体系、道岔与闭塞、
+#   车钩与编组、转向架与阀动装置、月台与站房、装卸与检修、长大交路。
+#
+# 与 `62-logistics` 的分工：那一章讲产线吞吐（打包机与蛙口港）；本章的「装卸」只讲
+# 车站月台上的那一套（货运月台、道口、机车牵引），不重复打包机的机制。
 
 key = "steam"
 title = "蒸汽与铁路"
@@ -16,7 +34,7 @@ icon = "create:steam_engine"
 order_index = 34
 grid = { step = 1.5, row_h = 1.75 }
 
-# ---------------- 起点：蒸汽 ----------------
+# ---------------- 簇 1：动力 ----------------
 
 [[quest]]
 name = "st_boiler"
@@ -72,7 +90,182 @@ tasks = [
 	{ type = "item", item = "create:steam_whistle" },
 ]
 
-# ---------------- 轨道 ----------------
+[[quest]]
+name = "st_long_whistle"
+title = "长笛"
+desc = [
+	"汽笛加长段：同一个汽笛接上它，声音传得更远。",
+	"对一列要穿过整座城的车来说，能被提前听见就是安全余量。",
+]
+icon = "create:steam_whistle"
+shape = "circle"
+size = 1.2
+deps = ["st_whistle"]
+tasks = [
+	{ type = "item", item = "create:steam_whistle" },
+]
+
+[[quest]]
+name = "st_fuel_tank"
+title = "机车燃料箱"
+desc = [
+	"把燃料从「随手丢进炉子」变成「一箱跑多远」：燃料箱是续航的度量单位。",
+]
+icon = "railways:fuel_tank"
+shape = "rsquare"
+deps = ["st_burner"]
+tasks = [
+	{ type = "item", item = "railways:fuel_tank" },
+]
+
+[[quest]]
+name = "st_fuel_interface"
+title = "移动式燃料接口"
+desc = [
+	"装在车上的加油口：整备的时候不用把燃料箱拆下来。",
+]
+icon = "railways:portable_fuel_interface"
+shape = "circle"
+size = 1.2
+deps = ["st_fuel_tank"]
+tasks = [
+	{ type = "item", item = "railways:portable_fuel_interface" },
+]
+
+[[quest]]
+name = "st_cab_vent"
+title = "司机室通风口"
+desc = [
+	"锅炉旁边是要待人的。通风口是「这台车能不能长时间开」的细节之一。",
+]
+icon = "railways:conductor_vent"
+shape = "circle"
+size = 1.2
+deps = ["st_boiler"]
+tasks = [
+	{ type = "item", item = "railways:conductor_vent" },
+]
+
+[[quest]]
+name = "st_stack_coal"
+title = "燃煤烟囱"
+desc = [
+	"烟囱是机车的外形，也是它的工况表：烧煤的烟最浓，代价是得有人一直添。",
+]
+icon = "railways:smokestack_coalburner_iron_cap_steel"
+shape = "circle"
+size = 1.2
+deps = ["st_boiler"]
+tasks = [
+	{ type = "item", item = "railways:smokestack_coalburner_iron_cap_steel" },
+]
+
+[[quest]]
+name = "st_stack_oil"
+title = "燃油烟囱"
+desc = [
+	"柴油烟囱：一炉烧得更久，烟也淡——换成液体燃料，整备次数就降下来了。",
+]
+icon = "railways:smokestack_oilburner_brass_cap_steel"
+shape = "circle"
+size = 1.2
+deps = ["st_stack_coal"]
+tasks = [
+	{ type = "item", item = "railways:smokestack_oilburner_brass_cap_steel" },
+]
+
+[[quest]]
+name = "st_stack_streamlined"
+title = "流线烟囱"
+desc = [
+	"流线型烟囱：把烟导到车顶之后，司机的视野才算空出来。",
+	"跑长途的车，视野就是安全。",
+]
+icon = "railways:smokestack_streamlined_copper"
+shape = "circle"
+size = 1.2
+deps = ["st_stack_coal"]
+tasks = [
+	{ type = "item", item = "railways:smokestack_streamlined_copper" },
+]
+
+[[quest]]
+name = "st_stack_wood"
+title = "燃木烟囱"
+desc = [
+	"烧木头的烟囱：在没有煤的早期线路上，这是唯一能烧的东西。",
+]
+icon = "railways:smokestack_woodburner_copper"
+shape = "circle"
+size = 1.2
+deps = ["st_stack_coal"]
+tasks = [
+	{ type = "item", item = "railways:smokestack_woodburner_copper" },
+]
+
+[[quest]]
+name = "st_conductor_cap"
+title = "列车长帽"
+desc = [
+	"行车的人得有身份标记：一顶帽子，站台上远远就能认出谁在负责这列车。",
+]
+icon = "railways:black_conductor_cap"
+shape = "circle"
+size = 1.2
+deps = ["st_boiler"]
+tasks = [
+	{ type = "item", item = "railways:black_conductor_cap" },
+]
+
+[[quest]]
+name = "st_cap_blank"
+title = "帽子的半成品"
+desc = [
+	"帽子先做成半成品，再染色定编组色——所以它天然适合当「车队标识」。",
+]
+icon = "railways:incomplete_conductor_cap"
+shape = "circle"
+size = 1.2
+deps = ["st_conductor_cap"]
+tasks = [
+	{ type = "item", item = "railways:incomplete_conductor_cap" },
+]
+
+[[quest]]
+name = "st_conductor_whistle"
+title = "行车哨"
+desc = [
+	"车长挂在身上的哨子：发车、停车、退行，靠它给信号。",
+	"它把「喊话」变成了车组内部能听懂的短码。",
+]
+icon = "railways:conductor_whistle"
+shape = "rsquare"
+deps = ["st_conductor_cap"]
+tasks = [
+	{ type = "item", item = "railways:conductor_whistle" },
+]
+
+[[quest]]
+name = "st_power_done"
+title = "动力段定型"
+desc = [
+	"燃料、炉子、烟囱、司机室四件凑齐，这台车才算「能连续开」。",
+	"从这一步往下，讨论的就不再是机器，而是线路。",
+]
+icon = "create:steam_engine"
+shape = "octagon"
+size = 1.75
+deps = ["st_maxed", "st_long_whistle", "st_fuel_interface", "st_cab_vent",
+        "st_stack_oil", "st_stack_streamlined", "st_stack_wood", "st_conductor_whistle"]
+tasks = [
+	{ type = "item", item = "create:steam_engine" },
+]
+rewards = [
+	{ type = "xp", xp = 60 },
+	{ type = "toast" },
+]
+
+# ---------------- 簇 2：线路 ----------------
 
 [[quest]]
 name = "st_track"
@@ -82,10 +275,262 @@ desc = [
 ]
 icon = "create:track"
 shape = "rsquare"
-deps = ["st_boiler"]
+deps = ["st_power_done"]
 tasks = [
 	{ type = "item", item = "create:track", count = 64 },
 ]
+
+[[quest]]
+name = "gauge_narrow"
+title = "窄轨"
+desc = [
+	"窄轨转弯半径小、造价低，适合矿区和山里的短支线。",
+	"但它跑不快、装不多——轨距一旦定下来，这条线的上限就定了。",
+]
+icon = "railways:track_oak_narrow"
+shape = "rsquare"
+deps = ["st_track"]
+tasks = [
+	{ type = "item", item = "railways:track_oak_narrow", count = 32 },
+]
+
+[[quest]]
+name = "gauge_wide"
+title = "宽轨"
+desc = [
+	"宽轨更稳、载重更大，是干线的选择。",
+	"同一座城里同时铺两种轨距并不矛盾——**换装站**本来就要存在。",
+]
+icon = "railways:track_oak_wide"
+shape = "rsquare"
+deps = ["st_track"]
+tasks = [
+	{ type = "item", item = "railways:track_oak_wide", count = 32 },
+]
+
+[[quest]]
+name = "track_switch"
+title = "道岔"
+desc = [
+	"两条线要接起来，靠的是道岔：一个岔口，决定了列车往哪边走。",
+]
+icon = "railways:track_switch_brass"
+shape = "rsquare"
+deps = ["st_track"]
+tasks = [
+	{ type = "item", item = "railways:track_switch_brass" },
+]
+
+[[quest]]
+name = "track_switch_andesite"
+title = "安山道岔"
+desc = [
+	"安山道岔是早期版本：便宜、够用，适合先把线网接起来，之后再换。",
+]
+icon = "railways:track_switch_andesite"
+shape = "circle"
+size = 1.2
+deps = ["track_switch"]
+tasks = [
+	{ type = "item", item = "railways:track_switch_andesite" },
+]
+
+[[quest]]
+name = "track_coupler"
+title = "车钩轨"
+desc = [
+	"带车钩的轨道段：列车过这里能自动挂上、自动摘开。",
+	"**调车**这件事，从这条轨开始才不需要人工拆挂。",
+]
+icon = "railways:track_coupler"
+shape = "rsquare"
+deps = ["st_track"]
+tasks = [
+	{ type = "item", item = "railways:track_coupler" },
+]
+
+[[quest]]
+name = "track_tieless"
+title = "无枕道床"
+desc = [
+	"去掉枕木的道床：更平、更快，适合高架与长直段。",
+	"它是要在「铺得起」之后才谈得上的一种线路等级。",
+]
+icon = "railways:track_tieless"
+shape = "circle"
+size = 1.2
+deps = ["st_track"]
+tasks = [
+	{ type = "item", item = "railways:track_tieless", count = 32 },
+]
+
+[[quest]]
+name = "track_tieless_narrow"
+title = "无枕窄轨"
+desc = [
+	"无枕 + 窄轨：矿洞里那种弯多、坡陡、跑不快的支线正好用它。",
+]
+icon = "railways:track_tieless_narrow"
+shape = "circle"
+size = 1.2
+deps = ["track_tieless", "gauge_narrow"]
+tasks = [
+	{ type = "item", item = "railways:track_tieless_narrow", count = 32 },
+]
+
+[[quest]]
+name = "track_tieless_wide"
+title = "无枕宽轨"
+desc = [
+	"无枕 + 宽轨：干线长途的标准组合，速度与载重同时要。",
+]
+icon = "railways:track_tieless_wide"
+shape = "circle"
+size = 1.2
+deps = ["track_tieless", "gauge_wide"]
+tasks = [
+	{ type = "item", item = "railways:track_tieless_wide", count = 32 },
+]
+
+[[quest]]
+name = "track_monorail"
+title = "单轨"
+desc = [
+	"单轨只需要一根梁，跨河、跨谷、穿城都省地方。",
+	"代价是它对道岔与信号的要求更高——单轨的错车靠调度，不靠岔口。",
+]
+icon = "railways:track_monorail"
+shape = "diamond"
+size = 1.5
+deps = ["st_track"]
+tasks = [
+	{ type = "item", item = "railways:track_monorail", count = 32 },
+]
+
+[[quest]]
+name = "track_ender"
+title = "末地石轨"
+desc = [
+	"末地石轨是跨维度那一段用的材料——它出现的时候，线路已经不止在一个世界之内。",
+]
+icon = "railways:track_ender"
+shape = "circle"
+size = 1.2
+deps = ["track_monorail"]
+tasks = [
+	{ type = "item", item = "railways:track_ender", count = 16 },
+]
+
+[[quest]]
+name = "track_phantom"
+title = "幻影轨"
+desc = [
+	"幻影轨：一种成型之前要先做半成品的特殊轨型。",
+	"把它铺出来，等于给线网留了一条「以后升级」的口子。",
+]
+icon = "railways:track_phantom"
+shape = "circle"
+size = 1.2
+deps = ["st_track"]
+tasks = [
+	{ type = "item", item = "railways:track_phantom", count = 16 },
+]
+
+[[quest]]
+name = "track_livery"
+title = "给线上色"
+desc = [
+	"颜料壶与颜料刷：轨枕、护轨、警示块都能改成自己这一路的颜色。",
+	"一条线一个颜色，站台上的乘客不用看牌子就知道该上哪列车。",
+]
+icon = "railways:paint_brush"
+shape = "circle"
+size = 1.2
+deps = ["st_track"]
+tasks = [
+	{ type = "item", item = "railways:paint_brush" },
+	{ type = "item", item = "railways:empty_paint_pitcher" },
+]
+
+[[quest]]
+name = "track_signage"
+title = "线路标牌"
+desc = [
+	"地图上的轨道标记：给线路做个看得见的注记。",
+	"线路一多，没有标牌的线网就只能靠记忆维护。",
+]
+icon = "create:track"
+shape = "circle"
+size = 1.2
+deps = ["st_track"]
+tasks = [
+	{ type = "item", item = "create:track", count = 8 },
+]
+
+[[quest]]
+name = "st_signal"
+title = "信号"
+desc = [
+	"两条线交叉时会撞车。信号系统是为了让列车自己让路。",
+]
+icon = "create:track_signal"
+shape = "rsquare"
+deps = ["track_switch"]
+tasks = [
+	{ type = "item", item = "create:track_signal", count = 4 },
+]
+
+[[quest]]
+name = "signal_semaphore"
+title = "臂板信号机"
+desc = [
+	"臂板信号机是老式线路的信号：一块板子抬起或落下，就代表能不能进区间。",
+	"它比灯更耐看，也更适合当「这一段是单线」的提示。",
+]
+icon = "railways:semaphore"
+shape = "rsquare"
+deps = ["st_signal"]
+tasks = [
+	{ type = "item", item = "railways:semaphore", count = 4 },
+]
+
+[[quest]]
+name = "signal_remote"
+title = "远程瞭望"
+desc = [
+	"远程镜头装在岔口和高架前面：人在站里也能看见前面那一段有没有车。",
+	"闭塞系统缺的从来不是灯，是**看得见的距离**。",
+]
+icon = "railways:remote_lens"
+shape = "circle"
+size = 1.2
+deps = ["signal_semaphore"]
+tasks = [
+	{ type = "item", item = "railways:remote_lens" },
+]
+
+[[quest]]
+name = "line_done"
+title = "线路成型"
+desc = [
+	"从一段直轨走到有轨距、有岔口、有信号、有标牌的线网——",
+	"这一条线才算「按规则跑」，而不是「司机互相看着办」。",
+]
+icon = "railways:track_switch_brass"
+shape = "octagon"
+size = 1.75
+deps = ["gauge_narrow", "gauge_wide", "track_switch_andesite", "track_coupler",
+        "track_tieless_narrow", "track_tieless_wide", "track_ender", "track_phantom",
+        "track_livery", "track_signage", "signal_remote"]
+tasks = [
+	{ type = "item", item = "railways:track_switch_brass", count = 2 },
+]
+rewards = [
+	{ type = "xp", xp = 80 },
+	{ type = "toast" },
+]
+
+# ---------------- 簇 3：车站 ----------------
 
 [[quest]]
 name = "st_station"
@@ -95,10 +540,589 @@ desc = [
 ]
 icon = "create:track_station"
 shape = "rsquare"
-deps = ["st_track"]
+deps = ["st_signal"]
 tasks = [
 	{ type = "item", item = "create:track_station", count = 2 },
 ]
+
+[[quest]]
+name = "station_platform"
+title = "月台"
+desc = [
+	"月台的第一件事不是好看，是**够不够上下车**——踏板要与车厢门对齐。",
+]
+icon = "create_train_parts:train_step_train"
+shape = "rsquare"
+deps = ["st_station"]
+tasks = [
+	{ type = "item", item = "create_train_parts:train_step_train", count = 4 },
+]
+
+[[quest]]
+name = "station_slide"
+title = "伸缩踏板"
+desc = [
+	"车厢与月台之间总有缝。伸缩踏板补的就是这条缝，也是这条缝决定了装卸快慢。",
+]
+icon = "create_train_parts:train_slide_train"
+shape = "circle"
+size = 1.2
+deps = ["station_platform"]
+tasks = [
+	{ type = "item", item = "create_train_parts:train_slide_train", count = 2 },
+]
+
+[[quest]]
+name = "station_slide_brass"
+title = "黄铜踏板"
+desc = [
+	"黄铜伸缩踏板：站房做得体面之后，月台件也该跟着换一档。",
+]
+icon = "create_train_parts:train_slide_brass"
+shape = "circle"
+size = 1.2
+deps = ["station_slide"]
+tasks = [
+	{ type = "item", item = "create_train_parts:train_slide_brass" },
+]
+
+[[quest]]
+name = "station_canopy"
+title = "雨棚与月台窗"
+desc = [
+	"月台上方要有遮的：一趟车等下来，日晒和下雨都是消耗。",
+]
+icon = "create_train_parts:andesite_sliding_window"
+shape = "rsquare"
+deps = ["station_platform"]
+tasks = [
+	{ type = "item", item = "create_train_parts:andesite_sliding_window", count = 4 },
+	{ type = "item", item = "create_train_parts:glass_sliding_window", count = 4 },
+]
+
+[[quest]]
+name = "station_gate"
+title = "道口闸门"
+desc = [
+	"线路与道路平交的地方必须有闸门——它拦的不是车，是**人**。",
+]
+icon = "create_train_parts:crossing"
+shape = "circle"
+size = 1.2
+deps = ["station_platform"]
+tasks = [
+	{ type = "item", item = "create_train_parts:crossing", count = 2 },
+]
+
+[[quest]]
+name = "station_gate_arm"
+title = "道闸延长杆"
+desc = [
+	"闸门只有一格宽的时候，加一根延长杆才拦得住整条路。",
+]
+icon = "create_train_parts:arm_extender"
+shape = "circle"
+size = 1.2
+deps = ["station_gate"]
+tasks = [
+	{ type = "item", item = "create_train_parts:arm_extender", count = 2 },
+]
+
+[[quest]]
+name = "station_water"
+title = "给蒸汽车加水"
+desc = [
+	"蒸汽机是要喝水的。站台上的水柱决定了这条线**单程能跑多远**。",
+	"补一次水要停多久，直接写进时刻表里。",
+]
+icon = "minecraft:cauldron"
+shape = "rsquare"
+deps = ["st_station"]
+tasks = [
+	{ type = "item", item = "minecraft:water_bucket" },
+	{ type = "item", item = "minecraft:cauldron" },
+]
+
+[[quest]]
+name = "station_clock"
+title = "站钟"
+desc = [
+	"站钟是这套系统里少数「给乘客看」的东西：它把时刻表变成了可信的事。",
+]
+icon = "createrailwaysnavigator:train_station_clock"
+shape = "circle"
+size = 1.2
+deps = ["st_station"]
+tasks = [
+	{ type = "item", item = "createrailwaysnavigator:train_station_clock" },
+]
+
+[[quest]]
+name = "station_lounge"
+title = "候车室"
+desc = [
+	"一张长椅、一盏灯、一块站牌——候车室是「等车」这件事第一次被当成正经事。",
+]
+icon = "minecraft:oak_hanging_sign"
+shape = "circle"
+size = 1.2
+deps = ["st_station"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_sign", count = 4 },
+	{ type = "item", item = "minecraft:lantern", count = 4 },
+]
+
+[[quest]]
+name = "station_office"
+title = "站房的办公件"
+desc = [
+	"告示牌、讲台、工具箱：站务要交接、要公示、要放得下工具。",
+	"车站从「一个月台」变成「一个岗位」，就是靠这几样。",
+]
+icon = "create:controls"
+shape = "circle"
+size = 1.2
+deps = ["st_station"]
+tasks = [
+	{ type = "item", item = "create:controls" },
+	{ type = "item", item = "minecraft:oak_sign", count = 2 },
+]
+
+[[quest]]
+name = "station_done"
+title = "站房启用"
+desc = [
+	"月台、雨棚、闸门、水柱、站钟、候车室都到位，车站才不只是「一段轨上的一个点」。",
+	"从这一步起，站房本身就是一座公共建筑。",
+]
+icon = "createrailwaysnavigator:train_station_clock"
+shape = "octagon"
+size = 1.75
+deps = ["station_slide_brass", "station_canopy", "station_gate_arm", "station_water",
+        "station_clock", "station_lounge", "station_office"]
+tasks = [
+	{ type = "item", item = "create_train_parts:train_step_train", count = 8 },
+]
+rewards = [
+	{ type = "xp", xp = 80 },
+	{ type = "toast" },
+]
+
+# ---------------- 簇 4：列车与编组 ----------------
+
+[[quest]]
+name = "bogie_standard"
+title = "转向架"
+desc = [
+	"车厢座在转向架上。Blocks & Bogies 给的不是一台机器，而是一整套**样式与轴数**。",
+	"⚠️ 这个 mod 只有方块、没有对应物品（实测它 31 个方块的战利品表全掉 列车机壳），",
+	"所以这里判的是铁壳，图标才是它自己的方块。",
+]
+icon = "create_bb:s_0100_standard"
+shape = "pentagon"
+size = 2.0
+deps = ["st_track"]
+tasks = [
+	{ type = "item", item = "create:railway_casing", count = 4 },
+]
+
+[[quest]]
+name = "bogie_small"
+title = "小型转向架"
+desc = [
+	"小型转向架装短车、机车的前导轮——同一列车里轴数本来就是不一样的。",
+]
+icon = "create_bb:s_020_standard"
+shape = "circle"
+size = 1.2
+deps = ["bogie_standard"]
+tasks = [
+	{ type = "item", item = "create:railway_casing", count = 2 },
+]
+
+[[quest]]
+name = "bogie_trailing"
+title = "从动转向架"
+desc = [
+	"从轮不驱动，只负责把车重分散到轨上。煤水车与长大货车全靠它。",
+]
+icon = "create_bb:s_040_trailing"
+shape = "circle"
+size = 1.2
+deps = ["bogie_standard"]
+tasks = [
+	{ type = "item", item = "create:railway_casing", count = 2 },
+]
+
+[[quest]]
+name = "bogie_large"
+title = "大型转向架"
+desc = [
+	"轴数往上加：0-6-0、0-8-0 这些编号说的就是「几根动轮、几根从轮」。",
+]
+icon = "create_bb:l_060"
+shape = "rsquare"
+deps = ["bogie_standard"]
+tasks = [
+	{ type = "item", item = "create:railway_casing", count = 4 },
+]
+
+[[quest]]
+name = "bogie_xl"
+title = "超大转向架"
+desc = [
+	"0-10-0 那一档：十根动轮的车是重载干线的答案。",
+]
+icon = "create_bb:xl_0100"
+shape = "circle"
+size = 1.2
+deps = ["bogie_large"]
+tasks = [
+	{ type = "item", item = "create:railway_casing", count = 6 },
+]
+
+[[quest]]
+name = "valve_gear"
+title = "阀动装置"
+desc = [
+	"华氏阀、南方阀、止转轭、无连杆——它们不只是外形：",
+	"换成哪一套，等于决定了这台车的**速度区间**。",
+]
+icon = "create_bb:l_0100"
+shape = "rsquare"
+deps = ["bogie_large"]
+tasks = [
+	{ type = "item", item = "create:railway_casing", count = 4 },
+]
+
+[[quest]]
+name = "loco_rodless"
+title = "无连杆机车"
+desc = [
+	"把连杆去掉的那一档：结构更简单，维护更省事。",
+]
+icon = "create_bb:l_0100_rot"
+shape = "circle"
+size = 1.2
+deps = ["valve_gear"]
+tasks = [
+	{ type = "item", item = "create:railway_casing", count = 2 },
+]
+
+[[quest]]
+name = "loco_boiler_shell"
+title = "机车外壳"
+desc = [
+	"机车锅炉、烟箱、飞轮：车头那一段的外观件，决定了这台车像哪一年的车。",
+	"它不影响能拉多少，但影响「这条线是什么档次」。",
+]
+icon = "railways:locometal_boiler"
+shape = "rsquare"
+deps = ["bogie_standard"]
+tasks = [
+	{ type = "item", item = "railways:locometal_boiler" },
+	{ type = "item", item = "railways:locometal_smokebox" },
+	{ type = "item", item = "railways:locometal_flywheel" },
+]
+
+[[quest]]
+name = "loco_boiler_wrapped"
+title = "镶板式锅炉"
+desc = [
+	"镶黄铜 / 镶铜 / 镶铁的锅炉壳：同一种结构，三种气质。",
+]
+icon = "railways:brass_wrapped_locometal_boiler"
+shape = "circle"
+size = 1.2
+deps = ["loco_boiler_shell"]
+tasks = [
+	{ type = "item", item = "railways:brass_wrapped_locometal_boiler" },
+]
+
+[[quest]]
+name = "loco_cab"
+title = "司机室门窗"
+desc = [
+	"平开门、推拉门、折叠门，加上单格 / 双格 / 十字 / 圆框窗——",
+	"司机室是**唯一**要既看得清外面、又挡得住风的地方。",
+]
+icon = "railways:sliding_locometal_door"
+shape = "rsquare"
+deps = ["bogie_standard"]
+tasks = [
+	{ type = "item", item = "railways:sliding_locometal_door" },
+	{ type = "item", item = "railways:single_pane_locometal_window" },
+	{ type = "item", item = "railways:two_pane_locometal_window" },
+]
+
+[[quest]]
+name = "loco_cab_ladder"
+title = "机车爬梯"
+desc = [
+	"爬梯和检修口：车头不是给人爬的，但检修的人总得上去。",
+]
+icon = "railways:locometal_rung_ladder"
+shape = "circle"
+size = 1.2
+deps = ["loco_cab"]
+tasks = [
+	{ type = "item", item = "railways:locometal_rung_ladder" },
+	{ type = "item", item = "railways:locometal_vent", count = 2 },
+]
+
+[[quest]]
+name = "loco_plating"
+title = "铆接与镶板"
+desc = [
+	"铆接、镶板、刮削、平滑——同一种机车铁块的四种做法。",
+	"车队涂装从这里开始统一。",
+]
+icon = "railways:riveted_locometal"
+shape = "circle"
+size = 1.2
+deps = ["loco_boiler_shell"]
+tasks = [
+	{ type = "item", item = "railways:riveted_locometal" },
+	{ type = "item", item = "railways:plated_locometal" },
+	{ type = "item", item = "railways:slashed_locometal" },
+]
+
+[[quest]]
+name = "wagon_flat"
+title = "平板车"
+desc = [
+	"平板车最朴素，也最能装：建材、机械、集装箱，什么都能往上放。",
+]
+icon = "minecraft:minecart"
+shape = "rsquare"
+deps = ["bogie_standard"]
+tasks = [
+	{ type = "item", item = "minecraft:minecart" },
+	{ type = "item", item = "minecraft:rail", count = 16 },
+]
+
+[[quest]]
+name = "wagon_box"
+title = "棚车"
+desc = [
+	"棚车挡雨：粮食、布匹、火药这类怕水的货，只有它能拉。",
+]
+icon = "minecraft:chest_minecart"
+shape = "rsquare"
+deps = ["wagon_flat"]
+tasks = [
+	{ type = "item", item = "minecraft:chest_minecart" },
+]
+
+[[quest]]
+name = "wagon_hopper"
+title = "漏斗车"
+desc = [
+	"漏斗车是给散料用的：矿、砂、混凝土，从底下放，不用一箱箱搬。",
+]
+icon = "minecraft:hopper_minecart"
+shape = "circle"
+size = 1.2
+deps = ["wagon_flat"]
+tasks = [
+	{ type = "item", item = "minecraft:hopper_minecart" },
+]
+
+[[quest]]
+name = "wagon_tank"
+title = "罐车"
+desc = [
+	"罐车走液体：水、岩浆、原油。有了它，整条线才谈得上「液体干线」。",
+]
+icon = "railways:fuel_tank"
+shape = "circle"
+size = 1.2
+deps = ["wagon_flat"]
+tasks = [
+	{ type = "item", item = "railways:fuel_tank", count = 2 },
+]
+
+[[quest]]
+name = "wagon_brake"
+title = "守车与制动"
+desc = [
+	"车尾那一段要有人：制动、瞭望、押运。",
+	"守车也是**长大列车**能不能安全下坡的前提。",
+]
+icon = "minecraft:trapped_chest"
+shape = "circle"
+size = 1.2
+deps = ["wagon_box"]
+tasks = [
+	{ type = "item", item = "minecraft:trapped_chest" },
+	{ type = "item", item = "minecraft:detector_rail", count = 8 },
+]
+
+[[quest]]
+name = "coupler_knuckle"
+title = "詹式车钩"
+desc = [
+	"詹式车钩：一撞就锁上，是目前挂车最快的一种。",
+	"车钩的选择会一路影响到调车场的效率。",
+]
+icon = "railways:knuckle_coupler"
+shape = "rsquare"
+deps = ["track_coupler"]
+tasks = [
+	{ type = "item", item = "railways:knuckle_coupler" },
+]
+
+[[quest]]
+name = "coupler_screwlink"
+title = "链式车钩"
+desc = [
+	"链式车钩：要人工挂，但容差大，早期车与老货车之间全靠它。",
+]
+icon = "railways:screwlink_coupler"
+shape = "circle"
+size = 1.2
+deps = ["coupler_knuckle"]
+tasks = [
+	{ type = "item", item = "railways:screwlink_coupler" },
+]
+
+[[quest]]
+name = "coupler_split"
+title = "分离式詹氏钩"
+desc = [
+	"分离式詹氏车钩：把「锁」和「缓冲」拆成两件，坏一个不用换整套。",
+]
+icon = "railways:split_knuckle_coupler"
+shape = "circle"
+size = 1.2
+deps = ["coupler_knuckle"]
+tasks = [
+	{ type = "item", item = "railways:split_knuckle_coupler" },
+]
+
+[[quest]]
+name = "coupler_linkless"
+title = "无销车钩"
+desc = [
+	"无销车钩：少了那根销子，也就少了一处会掉的东西。",
+]
+icon = "railways:link_and_pin_linkless"
+shape = "circle"
+size = 1.2
+deps = ["coupler_knuckle"]
+tasks = [
+	{ type = "item", item = "railways:link_and_pin_linkless" },
+]
+
+[[quest]]
+name = "headstock"
+title = "车头端梁"
+desc = [
+	"端梁是车厢两端的那块板：车钩、缓冲器都装在它上面。",
+	"木端梁与伪装端梁的区别，只在于这列车想不想让人看出它是拼的。",
+]
+icon = "railways:wooden_headstock"
+shape = "rsquare"
+deps = ["coupler_knuckle"]
+tasks = [
+	{ type = "item", item = "railways:wooden_headstock" },
+]
+
+[[quest]]
+name = "headstock_buffer"
+title = "缓冲器端梁"
+desc = [
+	"带缓冲器的端梁：冲击先被弹簧吃掉，货才不会被撞坏。",
+]
+icon = "railways:wooden_headstock_buffer"
+shape = "circle"
+size = 1.2
+deps = ["headstock"]
+tasks = [
+	{ type = "item", item = "railways:wooden_headstock_buffer" },
+]
+
+[[quest]]
+name = "buffer_stop"
+title = "挡车器"
+desc = [
+	"线路尽头必须有个东西拦着——挡车器是「这条线到此为止」的物理表达。",
+]
+icon = "railways:buffer"
+shape = "circle"
+size = 1.2
+deps = ["headstock"]
+tasks = [
+	{ type = "item", item = "railways:buffer" },
+	{ type = "item", item = "railways:big_buffer" },
+]
+
+[[quest]]
+name = "form_train"
+title = "编组"
+desc = [
+	"把机车、煤水车、货厢按顺序接成一列车——这一步做完，前面所有零件才合成一件东西。",
+	"编组表定下来之后，同一列车每次都能按同样的顺序装出来。",
+]
+icon = "railways:handcar"
+shape = "rsquare"
+deps = ["wagon_brake", "wagon_hopper", "wagon_tank", "coupler_split", "coupler_linkless",
+        "coupler_screwlink", "headstock_buffer", "buffer_stop"]
+tasks = [
+	{ type = "item", item = "railways:track_coupler" },
+]
+
+[[quest]]
+name = "conductor_duties"
+title = "行车职责"
+desc = [
+	"开车的人、发信号的人、押运的人——一列车至少要有人对这三件事负责。",
+]
+icon = "railways:white_conductor_cap"
+shape = "circle"
+size = 1.2
+deps = ["form_train"]
+tasks = [
+	{ type = "item", item = "railways:white_conductor_cap" },
+]
+
+[[quest]]
+name = "work_train"
+title = "轨道工程车"
+desc = [
+	"工作台矿车与唱片机矿车看着是玩具，其实是**轨道维护车**的雏形：",
+	"线路上总要有一节车是给干活的人用的。",
+]
+icon = "railways:benchcart"
+shape = "circle"
+size = 1.2
+deps = ["form_train"]
+tasks = [
+	{ type = "item", item = "railways:benchcart" },
+	{ type = "item", item = "railways:jukeboxcart" },
+]
+
+[[quest]]
+name = "consist_done"
+title = "一列完整的车"
+desc = [
+	"转向架 → 车架 → 车钩 → 车厢 → 编组，五段都走完。",
+	"从这一刻起，你们的车队是「造出来的」，不是「凑出来的」。",
+]
+icon = "create:railway_casing"
+shape = "octagon"
+size = 1.75
+deps = ["loco_rodless", "loco_boiler_wrapped", "loco_cab_ladder", "loco_plating",
+        "bogie_small", "bogie_trailing", "bogie_xl", "conductor_duties", "work_train"]
+tasks = [
+	{ type = "item", item = "create:railway_casing", count = 8 },
+]
+rewards = [
+	{ type = "xp", xp = 100 },
+	{ type = "toast" },
+]
+
+# ---------------- 簇 5：长途运营 ----------------
 
 [[quest]]
 name = "st_schedule"
@@ -111,6 +1135,20 @@ shape = "rsquare"
 deps = ["st_station"]
 tasks = [
 	{ type = "item", item = "create:schedule" },
+]
+
+[[quest]]
+name = "st_worker"
+title = "让列车自己装卸"
+desc = [
+	"货运站 + 机械臂：到站自动装、到站自动卸，人才真正从运输里解放出来。",
+]
+icon = "create:package_frogport"
+shape = "circle"
+size = 1.2
+deps = ["st_station"]
+tasks = [
+	{ type = "item", item = "create:package_frogport", count = 2 },
 ]
 
 [[quest]]
@@ -141,22 +1179,6 @@ tasks = [
 	{ type = "advancement", advancement = "create:long_travel" },
 ]
 
-# ---------------- 信号与调度 ----------------
-
-[[quest]]
-name = "st_signal"
-title = "信号"
-desc = [
-	"两条线交叉时会撞车。信号系统是为了让列车自己让路。",
-]
-icon = "create:track_signal"
-shape = "circle"
-size = 1.2
-deps = ["st_schedule"]
-tasks = [
-	{ type = "item", item = "create:track_signal", count = 4 },
-]
-
 [[quest]]
 name = "st_display"
 title = "到站显示"
@@ -166,26 +1188,10 @@ desc = [
 icon = "createrailwaysnavigator:advanced_display"
 shape = "circle"
 size = 1.2
-deps = ["st_signal"]
+deps = ["st_schedule"]
 tasks = [
 	{ type = "item", item = "createrailwaysnavigator:advanced_display" },
 ]
-
-[[quest]]
-name = "st_worker"
-title = "让列车自己装卸"
-desc = [
-	"货运站 + 机械臂：到站自动装、到站自动卸，人才真正从运输里解放出来。",
-]
-icon = "create:package_frogport"
-shape = "circle"
-size = 1.2
-deps = ["st_long_train"]
-tasks = [
-	{ type = "item", item = "create:package_frogport", count = 2 },
-]
-
-# ---------------- 配套 ----------------
 
 [[quest]]
 name = "st_kitchen"
@@ -203,6 +1209,78 @@ tasks = [
 ]
 
 [[quest]]
+name = "nav_device"
+title = "列车导航仪"
+desc = [
+	"导航仪是司机的手持终端：这一趟跑哪条线、下一站是哪，都在它上面。",
+]
+icon = "createrailwaysnavigator:navigator"
+shape = "pentagon"
+size = 2.0
+deps = ["st_schedule"]
+tasks = [
+	{ type = "item", item = "createrailwaysnavigator:navigator" },
+]
+
+[[quest]]
+name = "nav_lectern"
+title = "导航仪表座"
+desc = [
+	"把导航仪架上讲台：站务台、调度室各一座，谁值班谁看。",
+]
+icon = "createrailwaysnavigator:navigator"
+shape = "circle"
+size = 1.2
+deps = ["nav_device"]
+tasks = [
+	{ type = "item", item = "createrailwaysnavigator:navigator" },
+]
+
+[[quest]]
+name = "nav_display"
+title = "高级显示面板"
+desc = [
+	"面板、半面板、斜面、小屏、台阶——同一套显示件的五种装法。",
+	"大站挂大的，小站挂小的，信息是同一套。",
+]
+icon = "createrailwaysnavigator:advanced_display_panel"
+shape = "rsquare"
+deps = ["nav_lectern"]
+tasks = [
+	{ type = "item", item = "createrailwaysnavigator:advanced_display_panel" },
+	{ type = "item", item = "createrailwaysnavigator:advanced_display_small" },
+]
+
+[[quest]]
+name = "nav_display_wall"
+title = "显示墙"
+desc = [
+	"把几块面板拼起来，一次显示好几趟车——这才是调度室该有的样子。",
+]
+icon = "createrailwaysnavigator:advanced_display_half_panel"
+shape = "circle"
+size = 1.2
+deps = ["nav_display"]
+tasks = [
+	{ type = "item", item = "createrailwaysnavigator:advanced_display_half_panel", count = 2 },
+	{ type = "item", item = "createrailwaysnavigator:advanced_display_sloped" },
+]
+
+[[quest]]
+name = "dispatch_room"
+title = "调度室"
+desc = [
+	"导航仪、时刻表、显示墙放在同一间屋子里，线网才有「指挥」这一层。",
+	"没有调度室的长线网，遇到晚点就只能靠现场商量。",
+]
+icon = "create:schedule"
+shape = "rsquare"
+deps = ["nav_display_wall"]
+tasks = [
+	{ type = "item", item = "create:schedule", count = 2 },
+]
+
+[[quest]]
 name = "st_railway_done"
 title = "地图变短了"
 desc = [
@@ -210,13 +1288,146 @@ desc = [
 	"「远征」时代的路程成本才算真的降下来。",
 ]
 icon = "create:track_station"
-shape = "hexagon"
-size = 2.5
-deps = ["st_maxed", "st_whistle", "st_long_travel", "st_display", "st_worker", "st_kitchen"]
+shape = "circle"
+size = 1.2
+deps = ["st_long_travel", "st_display"]
 tasks = [
 	{ type = "item", item = "create:track", count = 16 },
 ]
+
+[[quest]]
+name = "freight_platform"
+title = "货运月台"
+desc = [
+	"货运月台要比客运月台高一档：装卸口的宽度、承重、以及有没有顶棚。",
+]
+icon = "minecraft:barrel"
+shape = "rsquare"
+deps = ["st_worker"]
+tasks = [
+	{ type = "item", item = "minecraft:barrel", count = 8 },
+]
+
+[[quest]]
+name = "freight_loading"
+title = "自动装卸线"
+desc = [
+	"到站自动装、到站自动卸：装卸这一环从人手里交出去，长交路才有意义。",
+]
+icon = "minecraft:hopper"
+shape = "gear"
+size = 1.75
+deps = ["freight_platform"]
+tasks = [
+	{ type = "item", item = "minecraft:hopper", count = 4 },
+	{ type = "item", item = "minecraft:dispenser", count = 2 },
+]
+
+[[quest]]
+name = "tunnel"
+title = "隧道"
+desc = [
+	"穿山的那一段要算净空：车顶到拱顶之间得留出余量。",
+	"隧道是铁路与地形第一次真正谈判。",
+]
+icon = "minecraft:stone_brick_wall"
+shape = "rsquare"
+deps = ["line_done"]
+tasks = [
+	{ type = "item", item = "minecraft:stone_bricks", count = 64 },
+	{ type = "item", item = "minecraft:stone_brick_wall", count = 16 },
+]
+
+[[quest]]
+name = "bridge"
+title = "桥梁"
+desc = [
+	"跨河、跨谷要架桥：桥决定了坡度，坡度决定了这条线能拉多少。",
+]
+icon = "minecraft:iron_bars"
+shape = "rsquare"
+deps = ["tunnel"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_bars", count = 32 },
+	{ type = "item", item = "minecraft:stone_brick_stairs", count = 16 },
+]
+
+[[quest]]
+name = "traction_upgrade"
+title = "长大列车"
+desc = [
+	"车拉长了，坡就成了问题：牵引吨位不够，就得加补机或改线。",
+	"这一步是「能跑」与「能干活」之间的分界。",
+]
+icon = "railways:locometal_flywheel"
+shape = "rsquare"
+deps = ["bridge", "consist_done"]
+tasks = [
+	{ type = "item", item = "railways:locometal_flywheel", count = 2 },
+]
+
+[[quest]]
+name = "depot"
+title = "车库"
+desc = [
+	"车不能一直停在月台上：车库要有检修位、有整备线、有顶。",
+]
+icon = "railways:locometal_pillar"
+shape = "rsquare"
+deps = ["consist_done"]
+tasks = [
+	{ type = "item", item = "railways:locometal_pillar", count = 4 },
+	{ type = "item", item = "railways:locometal_trapdoor", count = 2 },
+]
+
+[[quest]]
+name = "depot_parts"
+title = "检修件"
+desc = [
+	"端梯、爬梯、通风口——检修要上去、要下来、要通气。",
+]
+icon = "railways:locometal_end_ladder"
+shape = "circle"
+size = 1.2
+deps = ["depot"]
+tasks = [
+	{ type = "item", item = "railways:locometal_end_ladder" },
+	{ type = "item", item = "railways:locometal_vent", count = 2 },
+]
+
+[[quest]]
+name = "wagon_custom"
+title = "集装箱与涂装"
+desc = [
+	"纸板、纸板块、砂纸：把货打包成一个标准件，再贴上自己这一路的标记。",
+	"标准件是**跨线联运**的前提——换了车、换了线，箱子还是那个箱子。",
+]
+icon = "create:cardboard_block"
+shape = "circle"
+size = 1.2
+deps = ["freight_loading"]
+tasks = [
+	{ type = "item", item = "create:cardboard_block", count = 4 },
+	{ type = "item", item = "create:sand_paper" },
+]
+
+[[quest]]
+name = "steam_done"
+title = "长途运营"
+desc = [
+	"线路、站房、车队、调度室、装卸线、车库都齐了，铁路才从「一条轨」变成一张网。",
+	"这张网跑起来之后，两座城之间的时间成本第一次由时刻表决定，而不是由腿决定。",
+]
+icon = "createrailwaysnavigator:navigator"
+shape = "hexagon"
+size = 2.5
+deps = ["track_signage", "line_done", "station_done", "consist_done",
+        "dispatch_room", "freight_loading", "traction_upgrade", "depot_parts",
+        "wagon_custom", "st_railway_done"]
+tasks = [
+	{ type = "item", item = "create:track", count = 64 },
+]
 rewards = [
-	{ type = "xp", xp = 120 },
+	{ type = "xp", xp = 150 },
 	{ type = "toast" },
 ]

@@ -120,6 +120,8 @@ def main() -> int:
     ap.add_argument("--verify", help="核对一个文件里的 id（一行一个，# 注释）")
     ap.add_argument("--verify-toml", action="store_true",
                     help="核对 tools/questbook/chapters/*.toml 里所有 item/icon id")
+    ap.add_argument("--coverage", action="store_true",
+                    help="找出「条数>=8 但引导里从没出现过」的命名空间（覆盖缺口）")
     args = ap.parse_args()
 
     reg = load_registry()
@@ -163,6 +165,65 @@ def main() -> int:
         write_lines(p, lines)
         print(f"namespaces {len(counts)} -> {p}")
         return 0
+
+    # ---- 覆盖率检查模式 ----
+    #
+    # `QUESTBOOK-ROSTER.md` 写着一条规则：「条数 ≥ 8 的命名空间，必须至少有一条任务引用它」。
+    # 但在此之前**没有任何工具能验证它** —— 规则写在文档里而没人执行，等于没有规则。
+    # 这个模式就是那条规则的执行者：找出"装了但引导里从没出现过"的 mod。
+    if args.coverage:
+        # **查证过、确实不该有任务**的命名空间（每条都写了理由，不许往里塞"我懒得写"的）
+        no_cover = {
+            # 数据/标签命名空间：只有数据，没有物品
+            "modifiers": "纯数据命名空间（护甲槽位 modifiers:chest/feet/…），不是物品",
+            "custom_spawn_eggs": "其它 mod 生成的刷怪蛋集合命名空间，玩家不直接获取",
+            # 源码里查不到对应 jar（见下），大概率是别的 mod 的**联动配方残留**
+            "spookyjams": "本机 231 个 jar 里没有任何一个提供 assets/spookyjams/，"
+                          "只剩别的 mod 的联动配方引用 → 游戏里拿不到",
+            # patchouli：guide_book 是"所有 mod 手册的公共父物品"，本体不可合成；
+            # 每个 mod 的手册是它自己的物品。写 patchouli:guide_book 会变成永远做不完的任务。
+            "patchouli": "guide_book 是公共父物品（不可合成），各 mod 手册是各自的物品；"
+                         "写它 = 永远做不完",
+            # 2026-09-22 服务端真机实测：这两个命名空间的物品**全部**被拒
+            "dnt": "Dungeons and Taverns 的物品全是**遗迹钥匙与药水变体**，"
+                   "服务端实测 `dnt:citadel_key` 等 3 个 id 报 Unknown registry key；"
+                   "该 mod 的价值是结构（用 `structure` 判据覆盖在 154-cat-structures）",
+            "letsparkour": "9 个 `*_parkour_slab` **全部**被服务端拒绝"
+                           "（`jelly_parkour_slab` / `slippery_parkour_slab` / `fast_…` 实测），"
+                           "它们不是可持有的物品；跑酷玩法用原版方块代指（黏液块 / 浮冰）",
+        }
+        # 库 mod：别的 mod 的依赖，**不该**有任务
+        libs = {
+            "architectury", "balm", "clothconfig", "cloth_config", "kotlinforforge", "kotlin",
+            "geckolib", "moonlight", "puzzleslib", "resourcefullib", "cristellib", "dragonlib",
+            "fzzyconfig", "supermartijn642configlib", "supermartijn642corelib", "yungsapi",
+            "creativecore", "iceberg", "prism", "athena", "framework", "jamlib", "collective",
+            "coroutil", "bookshelf", "extralib", "lodestonelib", "modelfix", "mezzconfig",
+            "smoothswapping", "yacl", "fabric_api", "playeranimator", "corgilib", "dataanchor",
+            "resourcefulconfig", "searchables", "prickle", "configurable", "cupboard",
+            "lithostitched", "terrablender", "glitchcore", "midnightlib", "cycletiles",
+            "ftblibrary", "ftbteams", "ftbquests", "ftbfiltersystem", "jei", "jade", "jeresources",
+            "almostunified", "polymorph", "craftingtweaks", "mousetweaks", "controlling",
+            "legendarytooltips", "itemhighlighter", "betteradvancements", "chatheads",
+            "colorfulhearts", "skinlayers3d", "pingwheel", "appleskin", "betterf3",
+        }
+        # TOML 里引用过的所有命名空间
+        pat = re.compile(r'"([a-z0-9_]+):[a-z0-9_/]+"')
+        used: set[str] = set()
+        for f in sorted((HERE / "questbook" / "chapters").glob("*.toml")):
+            used.update(pat.findall(f.read_text(encoding="utf-8")))
+        counts: dict[str, int] = {}
+        for iid in known:
+            ns = iid.split(":", 1)[0]
+            counts[ns] = counts.get(ns, 0) + 1
+        gaps = [(n, c) for n, c in counts.items()
+                if c >= 8 and n not in used and n not in libs and n not in no_cover]
+        gaps.sort(key=lambda kv: -kv[1])
+        p = Path(args.out) if args.out else OUT_DIR / "coverage_gaps.txt"
+        write_lines(p, [f"{c:6d}  {n}" for n, c in gaps] or ["(无缺口：条数≥8 的命名空间都至少被引用过一次)"])
+        print(f"命名空间 {len(counts)} · 被任务引用 {len(used)} · 条数>=8 但零引用的 {len(gaps)}")
+        print(f"-> {p}")
+        return 1 if gaps else 0
 
     # ---- 查询模式 ----
     if not args.ns and not args.grep:

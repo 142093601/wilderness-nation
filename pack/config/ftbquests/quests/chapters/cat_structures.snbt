@@ -1,0 +1,1227 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "cat_structures"
+	group: "1439886072EE757D"
+	icon: {
+		id: "minecraft:mossy_stone_bricks"
+	}
+	id: "A95E50E5B58686AF"
+	order_index: 61
+	quest_links: [ ]
+	quests: [
+	{
+		icon: {
+			id: "minecraft:rail"
+		}
+		id: "A2E126E620454F8A"
+		rewards: [
+		{
+			xp: 30
+			id: "38315D324E1D3075"
+			type: "xp"
+		}
+		{
+			id: "40DB39EDB2A891A9"
+			type: "toast"
+		}
+		]
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			structure: "bettermineshafts:mineshaft_oak"
+			id: "7D266569037DB2F2"
+			type: "structure"
+		}
+		]
+		x: 0.0d
+		y: 0.0d
+	}
+	{
+		dependencies: [
+		"A2E126E620454F8A"
+		]
+		icon: {
+			id: "minecraft:ice"
+		}
+		id: "263E9BEB0BED8975"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			structure: "bettermineshafts:mineshaft_ice"
+			id: "DDD9E6EE66C96470"
+			type: "structure"
+		}
+		{
+			structure: "bettermineshafts:mineshaft_desert"
+			id: "CFB2086C376626FD"
+			type: "structure"
+		}
+		{
+			structure: "bettermineshafts:mineshaft_mesa"
+			id: "82335AAE58B02B0D"
+			type: "structure"
+		}
+		{
+			structure: "repurposed_structures:mineshaft_birch"
+			id: "C80ADB61123249C7"
+			type: "structure"
+		}
+		]
+		x: -3.38d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"A2E126E620454F8A"
+		]
+		icon: {
+			id: "minecraft:cobbled_deepslate"
+		}
+		id: "2B7945FA7836130D"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:cobbled_deepslate"
+			count: 64
+			id: "FB7D2DCEBC25EED7"
+			type: "item"
+		}
+		{
+			item: "minecraft:moss_block"
+			count: 16
+			id: "343C19FDE15CCB9C"
+			type: "item"
+		}
+		{
+			item: "minecraft:glow_berries"
+			count: 8
+			id: "8F696F9F4D778069"
+			type: "item"
+		}
+		{
+			item: "minecraft:pointed_dripstone"
+			count: 8
+			id: "4B87BD5117982639"
+			type: "item"
+		}
+		{
+			item: "minecraft:amethyst_shard"
+			count: 4
+			id: "9AAD4A666C161189"
+			type: "item"
+		}
+		]
+		x: -0.6d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"A2E126E620454F8A"
+		]
+		icon: {
+			id: "minecraft:mossy_cobblestone"
+		}
+		id: "EBA96C7626736C35"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			advancement: "betterdungeons:small_dungeon"
+			id: "0AD41D30EFEC7A98"
+			type: "advancement"
+		}
+		]
+		x: 2.77d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"EBA96C7626736C35"
+		]
+		icon: {
+			id: "minecraft:skeleton_skull"
+		}
+		id: "EF906C82DC3BD057"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "betterdungeons:skeleton_dungeon"
+			id: "B14F1DA90B87B546"
+			type: "advancement"
+		}
+		{
+			advancement: "betterdungeons:spider_dungeon"
+			id: "C030CC42F7211115"
+			type: "advancement"
+		}
+		{
+			advancement: "betterdungeons:zombie_dungeon"
+			id: "702E6C817A4B649B"
+			type: "advancement"
+		}
+		]
+		x: 0.0d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"EF906C82DC3BD057"
+		]
+		icon: {
+			id: "minecraft:spawner"
+		}
+		id: "C1942DD724C7C8D7"
+		shape: "octagon"
+		size: 1.75d
+		tasks: [
+		{
+			advancement: "betterdungeons:all_dungeons"
+			id: "FCD9217DF589E48A"
+			type: "advancement"
+		}
+		]
+		x: 0.0d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"C1942DD724C7C8D7"
+		]
+		icon: {
+			id: "minecraft:end_portal_frame"
+		}
+		id: "D1B202AE69AA3D73"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			structure: "betterstrongholds:stronghold"
+			id: "BA32BF82B53838F0"
+			type: "structure"
+		}
+		]
+		x: 0.0d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"D1B202AE69AA3D73"
+		]
+		icon: {
+			id: "minecraft:bell"
+		}
+		id: "9416DEB11FCA5552"
+		rewards: [
+		{
+			xp: 30
+			id: "398B2D3A6A7B889B"
+			type: "xp"
+		}
+		{
+			id: "42CFC02090458B7D"
+			type: "toast"
+		}
+		]
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			structure: "ctov:large/village_plains"
+			id: "1F2184200819AABA"
+			type: "structure"
+		}
+		{
+			structure: "ctov:pillager_outpost_plains"
+			id: "B3524A8EA8299C19"
+			type: "structure"
+		}
+		]
+		x: -7.5d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"D1B202AE69AA3D73"
+		]
+		icon: {
+			id: "minecraft:jungle_planks"
+		}
+		id: "6D721BC0589E85C1"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			structure: "towns_and_towers:village_jungle"
+			id: "97AFED9F6F09DC41"
+			type: "structure"
+		}
+		{
+			structure: "towns_and_towers:pillager_outpost_snowy_taiga"
+			id: "B6D98F30DF5E0552"
+			type: "structure"
+		}
+		]
+		x: -3.75d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"6D721BC0589E85C1"
+		]
+		icon: {
+			id: "minecraft:brown_mushroom"
+		}
+		id: "4703B96F1EBB180D"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			structure: "repurposed_structures:village_mushroom"
+			id: "A96D195CA51E6262"
+			type: "structure"
+		}
+		]
+		x: -3.38d
+		y: -10.5d
+	}
+	{
+		dependencies: [
+		"4703B96F1EBB180D"
+		]
+		icon: {
+			id: "minecraft:chiseled_sandstone"
+		}
+		id: "6E4A0ED85FA3B6D2"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			structure: "repurposed_structures:pyramid_jungle"
+			id: "C070715BC6B6A8D3"
+			type: "structure"
+		}
+		{
+			structure: "repurposed_structures:temple_taiga"
+			id: "291A7056B39B6380"
+			type: "structure"
+		}
+		]
+		x: -1.27d
+		y: -12.25d
+	}
+	{
+		dependencies: [
+		"D1B202AE69AA3D73"
+		]
+		icon: {
+			id: "minecraft:stone_bricks"
+		}
+		id: "51AFD9942A4C0E04"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			structure: "medieval_buildings:fort"
+			id: "64F959AC2EFE3379"
+			type: "structure"
+		}
+		{
+			structure: "medieval_buildings:tower"
+			id: "4D011B82B9645C98"
+			type: "structure"
+		}
+		{
+			structure: "medieval_buildings:ship"
+			id: "A222B6A65B7F1F10"
+			type: "structure"
+		}
+		{
+			structure: "medieval_buildings:house_1"
+			id: "BB0D9F7DC3B22FF9"
+			type: "structure"
+		}
+		]
+		x: 0.0d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"D1B202AE69AA3D73"
+		]
+		icon: {
+			id: "minecraft:cracked_stone_bricks"
+		}
+		id: "C326DC942F2BD7E4"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			structure: "grim_kingdoms:winterhold_citadel"
+			id: "36722E6EE274A59D"
+			type: "structure"
+		}
+		{
+			structure: "grim_kingdoms:gnome_tall_tower"
+			id: "B7F85DA52B642D42"
+			type: "structure"
+		}
+		{
+			structure: "grim_kingdoms:old_timber_watch"
+			id: "280BED27065265A5"
+			type: "structure"
+		}
+		]
+		x: 3.75d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"D1B202AE69AA3D73"
+		]
+		icon: {
+			id: "minecraft:mossy_stone_bricks"
+		}
+		id: "DF2EE7FBBCB2C0F8"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			structure: "additionalstructures:temple_1"
+			id: "168002533A6F09C1"
+			type: "structure"
+		}
+		{
+			structure: "additionalstructures:stone_circle_1"
+			id: "3EF21A3C12FBC7DB"
+			type: "structure"
+		}
+		{
+			structure: "additionalstructures:camp_1"
+			id: "8D844E047A9AF1FA"
+			type: "structure"
+		}
+		{
+			structure: "additionalstructures:villager_house_1"
+			id: "A970BA2561923B50"
+			type: "structure"
+		}
+		]
+		x: 7.5d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"DF2EE7FBBCB2C0F8"
+		]
+		icon: {
+			id: "minecraft:enchanting_table"
+		}
+		id: "68822F2EBE74088D"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			structure: "terralith:mage_tower"
+			id: "735240C9BD6D37A2"
+			type: "structure"
+		}
+		{
+			structure: "terralith:spire"
+			id: "F4DB594C41F51802"
+			type: "structure"
+		}
+		{
+			structure: "terralith:fortified_village"
+			id: "A1AFC45A28D22C60"
+			type: "structure"
+		}
+		]
+		x: -0.6d
+		y: -10.5d
+	}
+	{
+		dependencies: [
+		"6D721BC0589E85C1"
+		]
+		icon: {
+			id: "minecraft:barrel"
+		}
+		id: "D3417FDAB74A199A"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			advancement: "nova_structures:adventure/find_tavern"
+			id: "4E102CB583214C8D"
+			type: "advancement"
+		}
+		]
+		x: 2.77d
+		y: -10.5d
+	}
+	{
+		dependencies: [
+		"D3417FDAB74A199A"
+		]
+		icon: {
+			id: "minecraft:trial_key"
+		}
+		id: "C96AA2ACD0073DE5"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "nova_structures:adventure/find_shrine"
+			id: "54BE4890962D828F"
+			type: "advancement"
+		}
+		{
+			advancement: "nova_structures:adventure/find_illager_manor"
+			id: "B37EAF647874442D"
+			type: "advancement"
+		}
+		]
+		x: 1.27d
+		y: -12.25d
+	}
+	{
+		dependencies: [
+		"C96AA2ACD0073DE5"
+		]
+		icon: {
+			id: "minecraft:nether_bricks"
+		}
+		id: "89D1B28A6DE012F2"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			structure: "betterfortresses:fortress"
+			id: "0C5750C3D6FE73EF"
+			type: "structure"
+		}
+		]
+		x: 0.0d
+		y: -14.0d
+	}
+	{
+		dependencies: [
+		"89D1B28A6DE012F2"
+		]
+		icon: {
+			id: "minecraft:polished_blackstone_bricks"
+		}
+		id: "D43DEFF8220BCD5B"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			structure: "repurposed_structures:fortress_jungle"
+			id: "94726F6B1B82F6B9"
+			type: "structure"
+		}
+		{
+			structure: "repurposed_structures:city_nether"
+			id: "FE794ED657E15409"
+			type: "structure"
+		}
+		]
+		x: -3.38d
+		y: -15.75d
+	}
+	{
+		dependencies: [
+		"89D1B28A6DE012F2"
+		]
+		icon: {
+			id: "minecraft:blackstone"
+		}
+		id: "204F2DF973D4B866"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			structure: "medieval_nether:castle"
+			id: "1A45B893F0A5EBDF"
+			type: "structure"
+		}
+		{
+			structure: "medieval_nether:shrine"
+			id: "7228E003C71AF439"
+			type: "structure"
+		}
+		]
+		x: -0.6d
+		y: -15.75d
+	}
+	{
+		dependencies: [
+		"204F2DF973D4B866"
+		]
+		icon: {
+			id: "minecraft:netherrack"
+		}
+		id: "4F04AB0642F87F51"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			structure: "additionalstructures:nether_dungeon_1"
+			id: "7810C24458DBFD6B"
+			type: "structure"
+		}
+		{
+			structure: "additionalstructures:nether_building_1"
+			id: "A3F26362C460EE65"
+			type: "structure"
+		}
+		]
+		x: -1.27d
+		y: -17.5d
+	}
+	{
+		dependencies: [
+		"89D1B28A6DE012F2"
+		]
+		icon: {
+			id: "minecraft:gilded_blackstone"
+		}
+		id: "7AAE1F03E2E27CC9"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			advancement: "nova_structures:nether/find_piglin_outpost"
+			id: "8D688FE3DCB441CC"
+			type: "advancement"
+		}
+		]
+		x: 2.77d
+		y: -15.75d
+	}
+	{
+		dependencies: [
+		"7AAE1F03E2E27CC9"
+		]
+		icon: {
+			id: "minecraft:gold_block"
+		}
+		id: "231ADA7F5FB3E885"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "nova_structures:nether/find_donjon"
+			id: "420D4FC065AEC104"
+			type: "advancement"
+		}
+		]
+		x: 1.27d
+		y: -17.5d
+	}
+	{
+		dependencies: [
+		"231ADA7F5FB3E885"
+		]
+		icon: {
+			id: "minecraft:end_stone"
+		}
+		id: "0AF8F5095D77EFF1"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			dimension: "minecraft:the_end"
+			id: "1F4EE5AFA9CBA7A9"
+			type: "dimension"
+		}
+		]
+		x: 0.0d
+		y: -19.25d
+	}
+	{
+		dependencies: [
+		"0AF8F5095D77EFF1"
+		]
+		icon: {
+			id: "minecraft:purpur_block"
+		}
+		id: "19FB33623C1A9B09"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			structure: "medievalend:castle"
+			id: "4316DB868CA287FD"
+			type: "structure"
+		}
+		{
+			structure: "medievalend:shrine"
+			id: "A460696FF93A5B93"
+			type: "structure"
+		}
+		]
+		x: -3.82d
+		y: -21.0d
+	}
+	{
+		dependencies: [
+		"0AF8F5095D77EFF1"
+		]
+		icon: {
+			id: "minecraft:end_stone_bricks"
+		}
+		id: "5A157206AD88AB6D"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "nova_structures:end/find_end_castle"
+			id: "CB431EB1354CBB6E"
+			type: "advancement"
+		}
+		]
+		x: -1.27d
+		y: -21.0d
+	}
+	{
+		dependencies: [
+		"0AF8F5095D77EFF1"
+		]
+		icon: {
+			id: "minecraft:end_crystal"
+		}
+		id: "F33258467DFF6AFE"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			structure: "repurposed_structures:stronghold_end"
+			id: "7CECF168708ABE2D"
+			type: "structure"
+		}
+		{
+			structure: "repurposed_structures:ancient_city_end"
+			id: "38104E50AAE687B2"
+			type: "structure"
+		}
+		]
+		x: 1.27d
+		y: -21.0d
+	}
+	{
+		dependencies: [
+		"0AF8F5095D77EFF1"
+		]
+		icon: {
+			id: "minecraft:end_rod"
+		}
+		id: "A69A7A84B50656EE"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			structure: "additionalstructures:end_dungeon_1"
+			id: "3F81D29EE0797C5E"
+			type: "structure"
+		}
+		{
+			structure: "additionalstructures:end_tower_1"
+			id: "5B693F166CDC7262"
+			type: "structure"
+		}
+		]
+		x: 3.82d
+		y: -21.0d
+	}
+	{
+		dependencies: [
+		"A69A7A84B50656EE"
+		]
+		icon: {
+			id: "minecraft:prismarine_bricks"
+		}
+		id: "3D292EF71D6C4EAA"
+		rewards: [
+		{
+			xp: 30
+			id: "C09F432221995CEB"
+			type: "xp"
+		}
+		{
+			id: "0FC484F4EEEB4AE8"
+			type: "toast"
+		}
+		]
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			structure: "betteroceanmonuments:ocean_monument"
+			id: "2414525A6D3D9B5C"
+			type: "structure"
+		}
+		]
+		x: 0.0d
+		y: -22.75d
+	}
+	{
+		dependencies: [
+		"3D292EF71D6C4EAA"
+		]
+		icon: {
+			id: "minecraft:cut_sandstone"
+		}
+		id: "913021B80B955A10"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			structure: "repurposed_structures:monument_desert"
+			id: "7C452C474AB6F1EA"
+			type: "structure"
+		}
+		{
+			structure: "repurposed_structures:outpost_ocean"
+			id: "BD1D3F75133348D9"
+			type: "structure"
+		}
+		]
+		x: -3.38d
+		y: -24.5d
+	}
+	{
+		dependencies: [
+		"3D292EF71D6C4EAA"
+		]
+		icon: {
+			id: "minecraft:heart_of_the_sea"
+		}
+		id: "94CEE0561195E34F"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			structure: "joshie:village_ocean"
+			id: "FF06BA347986C788"
+			type: "structure"
+		}
+		]
+		x: -0.23d
+		y: -24.5d
+	}
+	{
+		dependencies: [
+		"94CEE0561195E34F"
+		]
+		icon: {
+			id: "minecraft:nautilus_shell"
+		}
+		id: "90BB795AFA15481E"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			structure: "towns_and_towers:wreckage_ocean"
+			id: "AC50BAE5883C8554"
+			type: "structure"
+		}
+		]
+		x: -1.88d
+		y: -26.25d
+	}
+	{
+		dependencies: [
+		"3D292EF71D6C4EAA"
+		]
+		icon: {
+			id: "minecraft:bamboo"
+		}
+		id: "4520155312DCEE55"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			structure: "betterjungletemples:jungle_temple"
+			id: "7E83E554BFE964FD"
+			type: "structure"
+		}
+		]
+		x: 3.15d
+		y: -24.5d
+	}
+	{
+		dependencies: [
+		"4520155312DCEE55"
+		]
+		icon: {
+			id: "minecraft:iron_bars"
+		}
+		id: "056026294FF995E0"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			advancement: "dungeons_arise:find_illager_fort"
+			id: "4E249BB75160DED9"
+			type: "advancement"
+		}
+		]
+		x: 1.27d
+		y: -26.25d
+	}
+	{
+		dependencies: [
+		"056026294FF995E0"
+		]
+		icon: {
+			id: "minecraft:chiseled_stone_bricks"
+		}
+		id: "0236FDCE5D5E736C"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "dungeons_arise:find_keep_kayra"
+			id: "CA777A7A71C5DA1E"
+			type: "advancement"
+		}
+		]
+		x: -1.27d
+		y: -28.0d
+	}
+	{
+		dependencies: [
+		"056026294FF995E0"
+		]
+		icon: {
+			id: "minecraft:scaffolding"
+		}
+		id: "26CC68296D8BD771"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "dungeons_arise:find_shiraz_palace"
+			id: "7DCD536511C4920B"
+			type: "advancement"
+		}
+		{
+			advancement: "dungeons_arise:find_bandit_towers"
+			id: "96EEE5AE7492DCA5"
+			type: "advancement"
+		}
+		{
+			advancement: "dungeons_arise:find_heavenly_conqueror"
+			id: "EE53DDB5B14A4386"
+			type: "advancement"
+		}
+		]
+		x: 1.27d
+		y: -28.0d
+	}
+	{
+		dependencies: [
+		"26CC68296D8BD771"
+		]
+		icon: {
+			id: "betterarcheology:archeology_table"
+		}
+		id: "C14EECF5E1243806"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "betterarcheology:archeology_table"
+			id: "194A3245F3ED4FA2"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -29.75d
+	}
+	{
+		dependencies: [
+		"C14EECF5E1243806"
+		]
+		icon: {
+			id: "betterarcheology:iron_brush"
+		}
+		id: "E5087FC8486D3E6A"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "betterarcheology:iron_brush"
+			id: "3C46BC70CB14A920"
+			type: "item"
+		}
+		{
+			item: "betterarcheology:diamond_brush"
+			id: "397B59819EEDC109"
+			type: "item"
+		}
+		{
+			item: "betterarcheology:netherite_brush"
+			id: "386C9EB491143F7F"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -31.5d
+	}
+	{
+		dependencies: [
+		"E5087FC8486D3E6A"
+		]
+		icon: {
+			id: "betterarcheology:chicken_fossil"
+		}
+		id: "A79163AF927BF75D"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			advancement: "betterarcheology:fossil_found"
+			id: "F1F70147C0C7AF6B"
+			type: "advancement"
+		}
+		]
+		x: -1.27d
+		y: -33.25d
+	}
+	{
+		dependencies: [
+		"A79163AF927BF75D"
+		]
+		icon: {
+			id: "betterarcheology:wolf_fossil"
+		}
+		id: "6C32675ACECC4695"
+		shape: "octagon"
+		size: 1.75d
+		tasks: [
+		{
+			advancement: "betterarcheology:all_fossils_found"
+			id: "DD0F93FAFC03E930"
+			type: "advancement"
+		}
+		]
+		x: -1.27d
+		y: -35.0d
+	}
+	{
+		dependencies: [
+		"E5087FC8486D3E6A"
+		]
+		icon: {
+			id: "betterarcheology:loot_vase"
+		}
+		id: "7BB23A25AEF61F2C"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "betterarcheology:loot_vase_broken"
+			id: "D9BE5E338E2F400A"
+			type: "advancement"
+		}
+		]
+		x: 1.5d
+		y: -33.25d
+	}
+	{
+		dependencies: [
+		"7BB23A25AEF61F2C"
+		]
+		icon: {
+			id: "betterarcheology:unidentified_artifact"
+		}
+		id: "2981E8D31D9FFB76"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "betterarcheology:unidentified_artifact"
+			id: "3836F1442EACB1A2"
+			type: "advancement"
+		}
+		]
+		x: 1.69d
+		y: -35.0d
+	}
+	{
+		dependencies: [
+		"2981E8D31D9FFB76"
+		]
+		icon: {
+			id: "lootr:decorated_pot"
+		}
+		id: "F9382F654FABB47A"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "lootr:pot_opened"
+			id: "EAF6733A3D80B483"
+			type: "advancement"
+		}
+		]
+		x: 0.0d
+		y: -36.75d
+	}
+	{
+		dependencies: [
+		"F9382F654FABB47A"
+		]
+		icon: {
+			id: "lootr:suspicious_gravel"
+		}
+		id: "5DB9B21EDCBF54CB"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "lootr:archaeologist"
+			id: "285C2470321D81B6"
+			type: "advancement"
+		}
+		{
+			advancement: "lootr:all_gravel"
+			id: "56905DC0CA014578"
+			type: "advancement"
+		}
+		{
+			advancement: "lootr:trapped_chest"
+			id: "BAD038DF63F6B7DF"
+			type: "advancement"
+		}
+		{
+			advancement: "lootr:25loot"
+			id: "F088680CA35DE622"
+			type: "advancement"
+		}
+		]
+		x: 0.0d
+		y: -38.5d
+	}
+	{
+		dependencies: [
+		"5DB9B21EDCBF54CB"
+		]
+		icon: {
+			id: "minecraft:trial_key"
+		}
+		id: "F40B9EE87C45D38F"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:trial_key"
+			id: "3066733D51FEF993"
+			type: "item"
+		}
+		{
+			item: "minecraft:ominous_trial_key"
+			id: "1133C458739648A7"
+			type: "item"
+		}
+		{
+			item: "minecraft:ancient_debris"
+			id: "51A1E22C020B9D88"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -40.25d
+	}
+	{
+		dependencies: [
+		"F40B9EE87C45D38F"
+		]
+		icon: {
+			id: "minecraft:sculk"
+		}
+		id: "B2A5DA3D07CA2974"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "repurposed_structures:ancient_cities"
+			id: "8CDD0EF46BBCC937"
+			type: "advancement"
+		}
+		]
+		x: 0.0d
+		y: -42.0d
+	}
+	{
+		dependencies: [
+		"6C32675ACECC4695"
+		"B2A5DA3D07CA2974"
+		"0236FDCE5D5E736C"
+		"90BB795AFA15481E"
+		"68822F2EBE74088D"
+		"51AFD9942A4C0E04"
+		"C326DC942F2BD7E4"
+		"C96AA2ACD0073DE5"
+		"5A157206AD88AB6D"
+		"F33258467DFF6AFE"
+		"A69A7A84B50656EE"
+		"94CEE0561195E34F"
+		"26CC68296D8BD771"
+		]
+		icon: {
+			id: "minecraft:recovery_compass"
+		}
+		id: "1A38E0D4F12E9A88"
+		rewards: [
+		{
+			xp: 80
+			id: "DBA5FA560D27720F"
+			type: "xp"
+		}
+		{
+			id: "490AABEAEA5DB10F"
+			type: "toast"
+		}
+		]
+		shape: "hexagon"
+		size: 2.5d
+		tasks: [
+		{
+			advancement: "repurposed_structures:root"
+			id: "415C31235B2E3822"
+			type: "advancement"
+		}
+		{
+			advancement: "betterdungeons:root"
+			id: "A05D509CBDE2A57F"
+			type: "advancement"
+		}
+		{
+			advancement: "lootr:root"
+			id: "F357287AC711BD7C"
+			type: "advancement"
+		}
+		{
+			advancement: "nova_structures:root"
+			id: "21B184AEE1C305E8"
+			type: "advancement"
+		}
+		{
+			advancement: "dungeons_arise:wda_root"
+			id: "06196FBD2B226805"
+			type: "advancement"
+		}
+		]
+		x: 0.0d
+		y: -43.75d
+	}
+	]
+}

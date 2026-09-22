@@ -197,7 +197,7 @@ size = 1.2
 deps = ["f_desk_study"]
 tasks = [
 	{ type = "item", item = "another_furniture:oak_table" },
-	{ type = "item", item = "another_furniture:oak_small_shelf" },
+	{ type = "item", item = "another_furniture:oak_table" },
 ]
 
 [[quest]]
@@ -381,7 +381,7 @@ tasks = [
 	{ type = "item", item = "mcwfurnitures:oak_table" },
 	{ type = "item", item = "handcrafted:oak_fancy_bed" },
 	{ type = "item", item = "another_furniture:white_sofa" },
-	{ type = "item", item = "another_furniture:oak_grandfather_clock" },
+	{ type = "item", item = "another_furniture:oak_drawer" },
 ]
 rewards = [
 	{ type = "xp", xp = 90 },
@@ -450,7 +450,7 @@ size = 1.75
 deps = ["f_microwave"]
 tasks = [
 	{ type = "item", item = "refurbished_furniture:light_fridge" },
-	{ type = "item", item = "refurbished_furniture:light_freezer" },
+	{ type = "item", item = "refurbished_furniture:light_fridge" },
 ]
 
 [[quest]]
@@ -557,7 +557,7 @@ deps = ["f_mailbox"]
 tasks = [
 	{ type = "item", item = "refurbished_furniture:red_sofa" },
 	{ type = "item", item = "another_furniture:red_sofa" },
-	{ type = "item", item = "another_furniture:red_awning", count = 2 },
+	{ type = "item", item = "another_furniture:red_sofa", count = 2 },
 ]
 
 [[quest]]
@@ -604,7 +604,7 @@ size = 1.2
 deps = ["f_console_tables"]
 tasks = [
 	{ type = "item", item = "another_furniture:white_lamp", count = 4 },
-	{ type = "item", item = "another_furniture:lamp_connector", count = 2 },
+	{ type = "item", item = "another_furniture:white_lamp", count = 2 },
 ]
 
 [[quest]]
@@ -688,12 +688,12 @@ title = "计时与作息"
 desc = [
 	"钟、服务铃、墙面装饰：一间屋子开始有自己的节奏。",
 ]
-icon = "another_furniture:oak_grandfather_clock"
+icon = "another_furniture:oak_drawer"
 shape = "circle"
 size = 1.2
 deps = ["f_television"]
 tasks = [
-	{ type = "item", item = "another_furniture:oak_grandfather_clock" },
+	{ type = "item", item = "another_furniture:oak_drawer" },
 	{ type = "item", item = "another_furniture:service_bell" },
 ]
 

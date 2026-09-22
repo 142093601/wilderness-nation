@@ -1,0 +1,541 @@
+# 类目 · 尸潮与夜袭
+#
+# 本章的 mod（逐个核对过：`python tools/item_index.py --ns <ns>` → tools/out/P-*.txt）：
+#   · The Hordes `hordes`：**0 物品 / 0 方块 / 0 进度**（实测；jar 里只有 assets 与 config_defaults）。
+#     它加的是感染机制与尸潮事件本身 —— 所以本章用**它自己的尸潮表**当日程判据。
+#   · Undead Nights `undeadnights`（4 项：三个刷怪蛋 + 黏腐肉；实体 `undeadnights:horde_zombie`
+#     / `elite_zombie` / `demolition_zombie`）
+#   · Enhanced Celestials `enhancedcelestials`（5 项：陨石 / 星苔方块·草·毯 / 星苔虫刷怪蛋；
+#     0 进度、0 统计 —— 月相事件是纯事件，没有信号源）
+#   · Easy Mob Spawn Control `easy_mob_spawn_control`：**纯配置 mod，0 物品**（只有 config/ 与 GUI）
+#   · It Takes a Pillage `takesapillage`（7 项 + 5 条进度）
+#
+# 与相邻章的分工（**2026-09-22 与汇总人确认过的裁决，写在这里免得下一个人再撞**）：
+#   · `70-defense`（技艺·防御与尸潮）= **工事 · 自动化防御 · 照明与预警**。
+#     TorchMaster 四件（megatorch / dreadlamp / feral_flare_lantern / frozen_pearl）
+#     与 `undeadnights` 三个实体的击杀判据（30 / 10 / 5）**都归它**，本章**不重复**。
+#     它同时也占了 `hordes:zombie_player` 的镇杀与波次统计。
+#   · `55-defense-era`（编年·御敌）= 国策与达标线：民兵编制、储备规格、感染护甲表、
+#     免疫清单（附魔金苹果）、伤亡名册、遗物收殓、复盘。本章不写这些。
+#   · `114-cat-comfort` = 死后与失物（Corail Tombstone 等），本章不碰。
+#   · **本章** = 这套"夜里的东西"各自是什么、由谁发起、留下什么实物：
+#     尸潮按天升档 · 天象（EC）· 地表成波 · 掠夺者阵营的四种兵 · 天亮之后的善后
+#
+# 判据来源（逐条查过 id，不凭印象）：
+#   · 尸潮的天数升档取自 **The Hordes 自己的生成表**
+#     （`config_defaults/data/hordes/horde_data/tables/default.json` 与 `mixed_mobs.json`，
+#      格式是 `id-权重-起始天-结束天`）：0~20 天只有僵尸；20~40 尸壳；
+#      40+ 僵尸猪灵/僵尸马/僵尸疳；50+ 凋灵骷髅/卫道士/掠夺者/幻翼/唤魔者；60+ 猪灵蛮兵。
+#      ——所以这一簇的击杀判据落在**原版生物**上，是这张表规定的，不是随手挑的。
+#   · 天象取自 `data/enhancedcelestials/enhancedcelestials/lunar/event/*.json`：
+#       blood_moon：chance 0.1、min_number_of_nights_between 4、blocks_sleeping、
+#       force_surface_spawning（**地表强制刷怪，亮度不管用**）；
+#       harvest_moon：drops.drop_enhancer 对 `#enhancedcelestials:harvest_moon_crops` 是 2.0（掉落翻倍）；
+#       super_moon：配置项 `slimes_spawn_everywhere`（提示文案就是"附近开始刷史莱姆"）；
+#       blue_moon：运气（提示文案"你觉得运气不错"）。
+#   · 掠夺者兵种用 `takesapillage:<兵种>` 击杀（实体名取自它自己的
+#     `data/takesapillage/loot_table/entities/{archer,legioner,skirmisher,clay_golem}.json`
+#     与 lang 的 `entity.takesapillage.*`）。
+#   · 原版统计：`time_since_rest`（距上次休息）/ `sleep_in_bed` / `fish_caught` /
+#     `raid_trigger` / `play_time` —— 全部在 `QUESTBOOK-CRITERIA.md` §二 的实测清单里。
+#
+# **checkmark**：本章 0 条。`tools/questbook_check.py` 的第 ⑥ 项只放行 `CHECKMARK_EXCEPTIONS`
+# 里登记过的 name，本章不在名单里 —— 所以"没有信号"的条目一律改用**实物或统计**表达，
+# 不用自检格（结果是这三条自检都能 exit 0）。
+#
+# ⚠️ 一条存疑项（留给做验收的人）：`minecraft:blackstone` 与 `space_moss_block` 是
+# EC 天象留下的实物，本章拿它们当判据。两个 id 在注册表里是**确定存在**的（item_index 查得到），
+# 但"陨石落地后能不能用镐子挖走"这件事我**没有在游戏里实测**（本机没有可开的世界）——
+# 若挖不动，那是玩法侧的问题，不是 id 写错，改判据即可。
+
+key = "cat_horde"
+title = "尸潮与夜袭"
+subtitle = "夜里的规则、天象、成群来的东西，以及天亮之后"
+group = "category"
+icon = "minecraft:zombie_head"
+order_index = 63
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---- 簇 1：夜里的规则 ----
+
+[[quest]]
+name = "hn_horde_cycle"
+title = "十天一波"
+desc = [
+	"The Hordes 的日程写在它自己的配置里：每 10 天一波、午夜（18000 tick）开始、",
+	"每波规模按 1.05 倍往上叠，场上上限 160 —— 而且它按**玩家在线时间**推进，不是世界时间。",
+	"也就是说：谁上得多，谁先把波次引来。",
+]
+icon = "minecraft:clock"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "minecraft:clock" },
+	{ type = "stat", stat = "minecraft:play_time", value = 240000 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "hn_horde_husk"
+title = "二十天起：尸壳"
+desc = [
+	"尸潮表里 0~20 天只有普通僵尸；过了 20 天，主力换成尸壳——它们不烧、也不怕太阳。",
+]
+icon = "minecraft:husk_spawn_egg"
+shape = "rsquare"
+deps = ["hn_horde_cycle"]
+tasks = [
+	{ type = "kill", entity = "minecraft:husk", value = 15 },
+]
+
+[[quest]]
+name = "hn_horde_zoglin_piglin"
+title = "四十天起：僵尸猪灵与僵尸疳"
+desc = [
+	"这一档开始出现被感染的猪灵与僵尸疳——数量不多，但一只就能把队列冲散。",
+]
+icon = "minecraft:zombified_piglin_spawn_egg"
+shape = "circle"
+size = 1.2
+deps = ["hn_horde_husk"]
+tasks = [
+	{ type = "kill", entity = "minecraft:zombified_piglin", value = 10 },
+	{ type = "kill", entity = "minecraft:zoglin", value = 3 },
+]
+
+[[quest]]
+name = "hn_horde_skeleton"
+title = "流浪者与沼骸"
+desc = [
+	"尸潮不止是腐肉：从 30 天起，远程也被编进来——流浪者与沼骸。",
+]
+icon = "minecraft:wither_skeleton_skull"
+shape = "circle"
+size = 1.2
+deps = ["hn_horde_husk"]
+tasks = [
+	{ type = "kill", entity = "minecraft:stray", value = 5 },
+	{ type = "kill", entity = "minecraft:bogged", value = 5 },
+]
+
+[[quest]]
+name = "hn_horde_wither_vindicator"
+title = "五十天起：凋灵骷髅与卫道士"
+desc = [
+	"腐肉海之外开始夹带能一击破甲的：凋灵骷髅与卫道士。",
+	"这一档之后，穿不穿甲才真的开始有区别。",
+]
+icon = "minecraft:vindicator_spawn_egg"
+shape = "rsquare"
+deps = ["hn_horde_zoglin_piglin"]
+tasks = [
+	{ type = "kill", entity = "minecraft:wither_skeleton", value = 5 },
+	{ type = "kill", entity = "minecraft:vindicator", value = 5 },
+]
+
+[[quest]]
+name = "hn_horde_brute"
+title = "六十天起：猪灵蛮兵"
+icon = "minecraft:piglin_brute_spawn_egg"
+shape = "circle"
+size = 1.2
+deps = ["hn_horde_wither_vindicator"]
+tasks = [
+	{ type = "kill", entity = "minecraft:piglin_brute", value = 5 },
+]
+
+[[quest]]
+name = "hn_night_no_sleep"
+title = "夜里不能睡"
+desc = [
+	"两份配置都写着同一件事：尸潮之夜不许睡（hordes 的 canSleepDuringHorde = false、",
+	"undeadnights 的 hordeNightsDisableSleeping = true）。",
+	"所以「距上次休息」被拉长，就是这件事在统计里留下的痕迹。",
+]
+icon = "minecraft:white_bed"
+shape = "rsquare"
+deps = ["hn_horde_cycle"]
+tasks = [
+	{ type = "stat", stat = "minecraft:time_since_rest", value = 36000 },
+]
+
+[[quest]]
+name = "hn_horde_lure"
+title = "杀多了会招来更多"
+desc = [
+	"undeadnights 里有个反直觉的设定：杀死尸潮怪有几率染上「引怪」效果，",
+	"而这个效果会把整波尸潮直接拉到你头上（enableLureHordeEffect / lureHordeEffectSpawnsHorde）。",
+	"所以恋战是要付账的——手上留一手脱身的东西，比多带一组箭有用。",
+]
+icon = "minecraft:ender_pearl"
+shape = "circle"
+size = 1.2
+deps = ["hn_horde_husk"]
+tasks = [
+	{ type = "item", item = "minecraft:ender_pearl", count = 4 },
+]
+
+# ---- 簇 2：预警与照明 ----
+
+[[quest]]
+name = "hn_sky_omen"
+title = "天象"
+desc = [
+	"Enhanced Celestials 按夜给月亮换名字：血月、蓝月、丰收月、超级月亮，各有各的效果。",
+	"月亮在上半夜就挂出来了 —— 今晚会是什么，抬头就能知道。这是本包最便宜的一次预警。",
+]
+icon = "minecraft:blackstone"
+shape = "pentagon"
+size = 2.0
+deps = ["hn_night_no_sleep"]
+tasks = [
+	{ type = "item", item = "minecraft:blackstone" },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "hn_meteor_field"
+title = "陨石与星苔"
+desc = [
+	"天象留下的实物：陨石，以及陨石边上摊开的星苔。",
+	"这是这套内容里少数能搬回家的东西，值得专门去捡一次。",
+]
+icon = "minecraft:moss_block"
+shape = "rsquare"
+deps = ["hn_sky_omen"]
+tasks = [
+	{ type = "item", item = "minecraft:blackstone", count = 4 },
+	{ type = "item", item = "minecraft:moss_block", count = 8 },
+]
+
+[[quest]]
+name = "hn_blood_moon"
+title = "血月"
+desc = [
+	"血月的定义里写着三件要紧的事：概率 0.1、两轮之间至少隔 4 夜、以及**地表强制刷怪**。",
+	"亮度对那一夜没有意义 —— 城墙外点得再亮，怪还是会在地面上出现。",
+]
+icon = "minecraft:zombie_head"
+shape = "rsquare"
+deps = ["hn_sky_omen"]
+tasks = [
+	{ type = "kill", entity = "minecraft:zombie", value = 30 },
+]
+
+[[quest]]
+name = "hn_super_blood_moon"
+title = "超级血月"
+desc = [
+	"血月的加强版：同一套刷怪规则，规模更大。",
+]
+icon = "minecraft:zombie_head"
+shape = "circle"
+size = 1.2
+deps = ["hn_blood_moon"]
+tasks = [
+	{ type = "kill", entity = "minecraft:zombie", value = 50 },
+]
+
+[[quest]]
+name = "hn_super_moon"
+title = "超级月亮"
+desc = [
+	"超级月亮的配置项叫 slimes_spawn_everywhere：史莱姆不再挑地形，到处都刷。",
+	"它不咬人，但会让地窖、矿道、农场同时变吵。",
+]
+icon = "minecraft:slime_ball"
+shape = "circle"
+size = 1.2
+deps = ["hn_sky_omen"]
+tasks = [
+	{ type = "kill", entity = "minecraft:slime", value = 20 },
+]
+
+[[quest]]
+name = "hn_harvest_moon"
+title = "丰收月"
+desc = [
+	"丰收月把 `#enhancedcelestials:harvest_moon_crops` 的掉落乘 2（drop_enhancer 2.0）。",
+	"它是这套天象里唯一一次纯赚的窗口 —— 但只在那一夜。",
+]
+icon = "minecraft:wheat"
+shape = "circle"
+size = 1.2
+deps = ["hn_sky_omen"]
+tasks = [
+	{ type = "item", item = "minecraft:wheat", count = 64 },
+]
+
+[[quest]]
+name = "hn_blue_moon"
+title = "蓝月"
+desc = [
+	"蓝月给的是运气（它的提示文案就是「你觉得运气不错」）。",
+	"运气最实际的用法是钓鱼与开箱，而不是正面接战。",
+]
+icon = "minecraft:fishing_rod"
+shape = "circle"
+size = 1.2
+deps = ["hn_sky_omen"]
+tasks = [
+	{ type = "stat", stat = "minecraft:fish_caught", value = 20 },
+]
+
+[[quest]]
+name = "hn_spawn_rules"
+title = "城里的刷怪规则"
+desc = [
+	"Easy Mob Spawn Control 是纯配置 mod（实测零物品）：它不改怪，改的是「哪里刷、刷什么、",
+	"亮度算不算数」，还会按来源分档（自然刷、刷怪笼、结构、事件、巡逻队）。",
+	"所以这一条不看配置界面，看结果：城里能连着睡整觉，说明夜里的野生刷怪真的被压住了。",
+]
+icon = "minecraft:white_bed"
+shape = "rsquare"
+deps = ["hn_night_no_sleep"]
+tasks = [
+	{ type = "stat", stat = "minecraft:sleep_in_bed", value = 10 },
+]
+
+# ---- 簇 3：成群来的时候 ----
+
+[[quest]]
+name = "hn_wave_surface"
+title = "尸潮只走地表"
+desc = [
+	"undeadnights 的波次只在地表开刷（水里、树上、洞里三项配置全是 false），",
+	"生成点在离你 70~75 格处、场上同时最多 80 只。",
+	"而且默认**没有倒计时提示**（sendHordeNightsCountdownMessage = false）——日落本身就是信号。",
+]
+icon = "minecraft:daylight_detector"
+shape = "pentagon"
+size = 2.0
+deps = ["hn_horde_cycle"]
+tasks = [
+	{ type = "item", item = "minecraft:daylight_detector", count = 2 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "hn_wave_climb"
+title = "会叠高，也会拆墙"
+desc = [
+	"尸潮僵尸能踩着同伴往上爬，爆破僵尸能拆方块（hordeMobsCanClimbEachOther /",
+	"hordeZombiesCanBreakBlocks / zombiesBlockBreakTier）。",
+	"结论很直白：墙高一格不代表安全，退路比墙更值得先想。",
+]
+icon = "minecraft:ladder"
+shape = "rsquare"
+deps = ["hn_wave_surface"]
+tasks = [
+	{ type = "item", item = "minecraft:ladder", count = 16 },
+]
+
+[[quest]]
+name = "hn_slimy_flesh"
+title = "黏腐肉"
+desc = [
+	"尸潮僵尸身上带的黏腐肉，是这一夜里最不起眼的收成，",
+	"也是唯一一件能带回家当材料的掉落。",
+]
+icon = "undeadnights:slimy_rotten_flesh"
+shape = "circle"
+size = 1.2
+deps = ["hn_wave_surface"]
+tasks = [
+	{ type = "item", item = "undeadnights:slimy_rotten_flesh", count = 8 },
+	{ type = "item", item = "minecraft:slime_ball", count = 16 },
+]
+
+[[quest]]
+name = "hn_pillage_archer"
+title = "掠夺者弓手"
+desc = [
+	"It Takes a Pillage 的营地与堡垒不是空房子：弓手占高处，是进攻方最先开火的那一批。",
+]
+icon = "takesapillage:archer_spawn_egg"
+shape = "rsquare"
+deps = ["hn_wave_surface"]
+tasks = [
+	{ type = "kill", entity = "takesapillage:archer", value = 10 },
+]
+
+[[quest]]
+name = "hn_pillage_legioner"
+title = "重装军"
+icon = "takesapillage:legioner_spawn_egg"
+shape = "circle"
+size = 1.2
+deps = ["hn_pillage_archer"]
+tasks = [
+	{ type = "kill", entity = "takesapillage:legioner", value = 5 },
+]
+
+[[quest]]
+name = "hn_pillage_skirmisher"
+title = "突击手"
+icon = "takesapillage:skirmisher_spawn_egg"
+shape = "circle"
+size = 1.2
+deps = ["hn_pillage_archer"]
+tasks = [
+	{ type = "kill", entity = "takesapillage:skirmisher", value = 5 },
+]
+
+[[quest]]
+name = "hn_clay_golem"
+title = "黏土傀儡"
+desc = [
+	"堡垒里的黏土傀儡是它的看守：不打掉，翻箱子的手就一直被人盯着。",
+]
+icon = "takesapillage:clay_golem_spawn_egg"
+shape = "circle"
+size = 1.2
+deps = ["hn_pillage_archer"]
+tasks = [
+	{ type = "kill", entity = "takesapillage:clay_golem", value = 3 },
+]
+
+[[quest]]
+name = "hn_ravager_charge"
+title = "劫掠兽冲阵"
+desc = [
+	"劫掠兽是这套内容里唯一能把队列正面推开的东西——它不追人，它撞门。",
+]
+icon = "minecraft:saddle"
+shape = "rsquare"
+deps = ["hn_pillage_legioner"]
+tasks = [
+	{ type = "kill", entity = "minecraft:ravager", value = 2 },
+]
+
+[[quest]]
+name = "hn_pillage_raid"
+title = "袭击的次数"
+desc = [
+	"掠夺者不只是刷在营地里：袭击本身也是夜袭的一种，而且它有统计可查（raid_trigger）。",
+]
+icon = "minecraft:bell"
+shape = "circle"
+size = 1.2
+deps = ["hn_pillage_legioner"]
+tasks = [
+	{ type = "stat", stat = "minecraft:raid_trigger", value = 3 },
+]
+
+# ---- 簇 4：善后 ----
+
+[[quest]]
+name = "hn_clear_field"
+title = "清场收尸"
+desc = [
+	"天亮之后的第一件事不是修墙，是把地上的东西收干净：",
+	"腐肉与骨头是这一夜唯一的产出，也是下一夜最便宜的补给来源。",
+]
+icon = "minecraft:rotten_flesh"
+shape = "pentagon"
+size = 2.0
+deps = ["hn_slimy_flesh"]
+tasks = [
+	{ type = "item", item = "minecraft:rotten_flesh", count = 64 },
+	{ type = "item", item = "minecraft:bone", count = 32 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "hn_regroup"
+title = "重新武装"
+desc = [
+	"死在感染上的人会变成僵尸，而且带走自己身上的东西（hordes 的 zombiePlayersStoreItems = true）。",
+	"所以队里永远要有一套能立刻穿上的备用装 —— 它不是浪费，是保险。",
+]
+icon = "minecraft:iron_leggings"
+shape = "rsquare"
+deps = ["hn_clear_field"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_leggings" },
+	{ type = "item", item = "minecraft:iron_boots" },
+	{ type = "item", item = "minecraft:iron_sword" },
+]
+
+[[quest]]
+name = "hn_ravager_horn"
+title = "劫掠兽兽角"
+desc = [
+	"兽角是打下来的，不是做出来的：它在掠夺者那一侧是乐器（instrument `takesapillage:raid_horn`），",
+	"到了你们手上，它就成了号令。",
+]
+icon = "takesapillage:ravager_horn"
+shape = "circle"
+size = 1.2
+deps = ["hn_ravager_charge"]
+tasks = [
+	{ type = "item", item = "takesapillage:ravager_horn" },
+]
+
+[[quest]]
+name = "hn_bastille_blues"
+title = "堡垒蓝调"
+desc = [
+	"从堡垒里翻出来的那张唱片（jukebox_song `takesapillage:bastille_blues`）。",
+	"战利品里总要有一样是没用的 —— 那种东西才会被人记住。",
+]
+icon = "takesapillage:music_disc_bastille_blues"
+shape = "circle"
+size = 1.2
+deps = ["hn_pillage_raid"]
+tasks = [
+	{ type = "item", item = "takesapillage:music_disc_bastille_blues" },
+	{ type = "item", item = "minecraft:glow_item_frame", count = 4 },
+]
+
+[[quest]]
+name = "hn_spoils_bins"
+title = "缴获分箱"
+desc = [
+	"一夜下来东西是混的：自己的、别人的、不该留的。分箱这一步做完，才知道这一夜赚了什么。",
+]
+icon = "minecraft:barrel"
+shape = "circle"
+size = 1.2
+deps = ["hn_clear_field"]
+tasks = [
+	{ type = "item", item = "minecraft:barrel", count = 8 },
+	{ type = "item", item = "minecraft:shulker_box", count = 2 },
+]
+
+# ---- 终局 ----
+
+[[quest]]
+name = "hn_horde_ready"
+title = "全队过一夜"
+desc = [
+	"从僵尸到尸壳、到被感染的猪灵、到凋灵骷髅与蛮兵 —— 这张表是按天数往上长的。",
+	"能连着过夜、并且把三档尸潮怪都打过一遍，这一章就闭环了。",
+]
+icon = "undeadnights:horde_zombie_spawn_egg"
+shape = "hexagon"
+size = 2.5
+deps = ["hn_horde_brute", "hn_wave_climb", "hn_horde_lure", "hn_clear_field",
+        "hn_regroup", "hn_ravager_horn", "hn_bastille_blues", "hn_spoils_bins"]
+tasks = [
+	{ type = "kill", entity = "undeadnights:horde_zombie", value = 60 },
+	{ type = "kill", entity = "undeadnights:elite_zombie", value = 20 },
+	{ type = "kill", entity = "undeadnights:demolition_zombie", value = 10 },
+]
+rewards = [
+	{ type = "xp", xp = 100 },
+	{ type = "toast" },
+]

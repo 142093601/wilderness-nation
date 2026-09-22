@@ -1,18 +1,46 @@
-# 防御与尸潮（技艺章）
+# 技艺 · 防御与尸潮
 #
-# 一个必须说清的限制（写这一章时实测出来的）
-# ------------------------------------------
-# 本包装了 The Hordes（`The-Hordes-1.21.1-1.6.3f.jar`）与 Undead Nights
-# （`UndeadNights-2.2.5-NeoForge-mc1.21.jar`），但**它们都不提供任何 advancement，
-# 也没有自定义 statistic**（实测：advancements=0、无 stat 注册）。
-# 也就是说：「尸潮来了」「袭击被守住了」这两个**事件**，在 FTB Quests 里没有信号源。
+# 本章的定位（**与相邻章的分工，先看这一段**）
+# ------------------------------------------------------------
+#   · **本章 = 系统性**：防御是一套**可建造、可自动化、可维护**的设施
+#     （工事 · 自动化 · 照明与预警 · 多道防线 · 维护与预案）
+#   · `55-defense-era`（编年）= 国策与达标线：为什么要有国防、编制与标准在哪
+#     → 本章**不写**「为什么要有国防」，也不写编制表
+#   · `164-cat-horde`（类目）= mod 家族：The Hordes / Undead Nights 各自是什么
+#     → 本章**不介绍**这两个 mod 的家族，只用它们的配置数字定工事规格
+#   · `54-conquest`（邦交）= 攻城器械怎么造、怎么夺城
+#     → 本章只用 `siegemachines` 的**守城**用法：炮座固定、器械架在墙上
+#   · `takesapillage` 这个 mod **三章各用一半**（裁决结果）：`160-cat-warfare` 用它的两条
+#     进度（`adventure/pillager_camp`、`adventure/bastille`）；`164-cat-horde` 用它的四种兵
+#     击杀与实物（ravager_horn / bastille_blues）；本章只用它的**两处结构**
+#     （`takesapillage:pillager_camp`、`takesapillage:bastille`）—— 同一个判据在两章出现，
+#     两个任务会在游戏里同时亮
+#   · `enhancedcelestials`（天象）**不在本章**：归 `164-cat-horde`（同一份裁决）
+#   · `torchmaster` 归本章（`164-cat-horde` 已退让，不再写它）
 #
-# 所以这一章的判据分两类，且**不假装能自动判定**：
-#   ① 可判定的**行为**用原版统计/进度/物品：击杀数、盾牌挡下伤害、箭、城墙方块；
-#      以及 takesapillage 的进度（打掉掠夺者营地/堡垒）。
-#   ② 真正"事件级"的目标（守住一次大规模袭击）用 checkmark —— 并写明理由。
-#      ⚠️ 若要自动判定，需要 mod 侧给信号（the-hordes 的波次开始/结束事件）。
-#         已经记进交接说明的待办。
+# 判据依据（逐条取过证，不凭印象）
+# ------------------------------------------------------------
+#   · `server/logs/hordes.log`：注册名 `hordes:zombie_player`（感染概率 0.75）、
+#     `hordes:husk_player`（0.8）、`hordes:drowned_player`（0.7）
+#   · 尸潮的波次表（同一份日志）：`minecraft:phantom` 第 50 天起、
+#     `minecraft:ravager` 第 50-50 天、`minecraft:evoker` 第 50-50 天——**规模是会长大的**
+#   · `server/config/undeadnights-server.toml`：五日一次尸潮夜、场上上限 80、
+#     尸潮僵尸不烧（hordeZombiesBurnInTheSun=false）、
+#     `blockLightLevelsInfluenceMonsterSpawns=false` → **光照拦不住尸潮波次**
+#   · `undeadnights_difficulty_config.json`：`hordeMobsCanClimbEachOther=true`（叠罗汉爬墙）、
+#     `blockBreaking=false`（当前关着，但档位表到 4 = 黑曜石）、
+#     `chanceForAdditionalWave=7`（每 45 秒有 7% 概率再来一波）
+#   · `undeadnights_horde_mobs_config.json`：maxWaveSize=15、
+#     精英僵尸 spawnChance=3、爆破僵尸 spawnChance=6 且 `extraSpawnInfo=tnt:5`
+#   · `server/config/torchmaster.toml`：megaTorchRadius=64（立方）、
+#     blockOnlyNaturalSpawns=true（只挡自然刷怪）、blockVillageSieges=true、
+#     feralFlareRadius=16、feralFlareMinLightLevel=10、feralFlareLanternLightCountHardcap=255、
+#     frozenPearlDurability=1024
+#   · `hordes-common.toml`：`zombiesBurn=false`（原版僵尸白天也不烧）
+#
+# ⚠️ 真正「事件级」的目标（守住一次大规模袭击）在这一章里只有一条，用 checkmark ——
+#    理由写在 `hold_the_line` 的注释里，且它已在 `tools/questbook_check.py` 的例外清单上。
+#    本章新增的条目一律用 kill / stat / 实物判据，**不新增自检格**。
 
 key = "defense"
 title = "防御与尸潮"
@@ -22,8 +50,10 @@ icon = "minecraft:shield"
 order_index = 37
 grid = { step = 1.5, row_h = 1.75 }
 
-# ---------------- 主线：工事升级树 ----------------
+# ---- 簇 1：工事 ----
 
+# 判据理由：原版没有「放置方块」统计，墙合围了没有只能自己确认
+# （`first_wall` 已在 questbook_check.py 的 CHECKMARK_EXCEPTIONS 里登记）
 [[quest]]
 name = "first_wall"
 title = "第一道墙"
@@ -66,19 +96,96 @@ tasks = [
 ]
 
 [[quest]]
-name = "wall_lighting"
-title = "墙外不黑"
+name = "bastion"
+title = "马面与转角"
 desc = [
-	"黑的地方就是它们生成的地方。把墙外一圈点亮。",
+	"直墙的贴墙根是打不到的死角；凸出去的马面就是为了消掉它。",
+	"转角处理得不好，墙越高越像个陷阱——上面的人反而打不到下面的人。",
 ]
-icon = "minecraft:lantern"
+icon = "minecraft:stone_bricks"
 shape = "rsquare"
 deps = ["wall_stone"]
 tasks = [
-	{ type = "item", item = "minecraft:lantern", count = 16 },
+	{ type = "item", item = "minecraft:stone_bricks", count = 128 },
+	{ type = "item", item = "minecraft:stone_brick_wall", count = 64 },
 ]
 
-# ---------------- 武装 ----------------
+[[quest]]
+name = "moat_water"
+title = "注水护城河"
+desc = [
+	"干沟只是绊一下。放上水之后，它们要么绕路，要么在水里挨打。",
+]
+icon = "minecraft:water_bucket"
+shape = "rsquare"
+deps = ["wall_stone"]
+tasks = [
+	{ type = "item", item = "minecraft:water_bucket", count = 8 },
+	{ type = "item", item = "minecraft:sand", count = 32 },
+]
+
+[[quest]]
+name = "spike_pit"
+title = "陷坑与尖刺"
+desc = [
+	"滴水石锥会对落到它上面的东西造成伤害，所以坑底铺它比铺石头划算。",
+	"坑口用活板门盖着：自己人过路没事，追兵踩上去就掉。",
+]
+icon = "minecraft:pointed_dripstone"
+shape = "rsquare"
+deps = ["moat_water"]
+tasks = [
+	{ type = "item", item = "minecraft:pointed_dripstone", count = 64 },
+	{ type = "item", item = "minecraft:oak_trapdoor", count = 16 },
+]
+
+[[quest]]
+name = "barricade"
+title = "拒马"
+desc = [
+	"拒马的作用不是挡住，是**减慢**：让它们在射界里多待几秒。",
+]
+icon = "minecraft:oak_fence"
+shape = "circle"
+size = 1.2
+deps = ["wall_stone"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_fence", count = 64 },
+	{ type = "item", item = "minecraft:iron_bars", count = 16 },
+]
+
+[[quest]]
+name = "cactus_hedge"
+title = "仙人掌篱"
+desc = [
+	"仙人掌不用铁也不用维护，碰上去就掉血——最便宜的一层外围。",
+]
+icon = "minecraft:cactus"
+shape = "circle"
+size = 1.2
+deps = ["barricade"]
+tasks = [
+	{ type = "item", item = "minecraft:cactus", count = 32 },
+	{ type = "item", item = "minecraft:sand", count = 64 },
+]
+
+[[quest]]
+name = "lava_trench"
+title = "岩浆沟"
+desc = [
+	"岩浆是最省事的一道沟：不需要人守，代价是自己也不能直接过去。",
+	"所以它只放在最外圈，且必须留出可关闭的通过口。",
+]
+icon = "minecraft:lava_bucket"
+shape = "circle"
+size = 1.2
+deps = ["moat_water"]
+tasks = [
+	{ type = "item", item = "minecraft:lava_bucket", count = 4 },
+	{ type = "item", item = "minecraft:magma_block", count = 16 },
+]
+
+# ---- 簇 2：自动化防御 ----
 
 [[quest]]
 name = "real_weapon"
@@ -93,6 +200,445 @@ tasks = [
 	{ type = "item", item = "minecraft:arrow", count = 64 },
 	{ type = "advancement", advancement = "minecraft:adventure/shoot_arrow" },
 ]
+
+[[quest]]
+name = "arrow_tower"
+title = "箭塔"
+desc = [
+	"至少两座，能覆盖城外一段。塔上有箭箱，别让人来回跑。",
+]
+icon = "minecraft:dispenser"
+shape = "circle"
+size = 1.2
+deps = ["real_weapon"]
+tasks = [
+	{ type = "item", item = "minecraft:dispenser", count = 2 },
+]
+
+[[quest]]
+name = "dispenser_array"
+title = "发射器阵列"
+desc = [
+	"一台发射器是玩具，一排发射器才是一段火力。",
+	"阵列的价值在于它不需要人在场——尸潮的波次是每 45 秒判一次（chanceForAdditionalWave = 7），人盯不住。",
+]
+icon = "minecraft:dispenser"
+shape = "pentagon"
+size = 2.0
+deps = ["arrow_tower"]
+tasks = [
+	{ type = "item", item = "minecraft:dispenser", count = 8 },
+	{ type = "item", item = "minecraft:redstone", count = 32 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "trigger_wiring"
+title = "触发线路"
+desc = [
+	"阵列要有人拉第一下。压力板与侦测器是两种最省心的触发：一个等脚踩，一个等东西经过。",
+]
+icon = "minecraft:observer"
+shape = "rsquare"
+deps = ["dispenser_array"]
+tasks = [
+	{ type = "item", item = "minecraft:observer", count = 8 },
+	{ type = "item", item = "minecraft:stone_pressure_plate", count = 8 },
+]
+
+[[quest]]
+name = "auto_reload"
+title = "机械臂补弹"
+desc = [
+	"发射器空了不会自己满。机械臂负责把箭从箱子里递进去。",
+]
+icon = "create:mechanical_arm"
+shape = "rsquare"
+deps = ["dispenser_array"]
+tasks = [
+	{ type = "item", item = "create:mechanical_arm", count = 2 },
+	{ type = "item", item = "create:andesite_funnel", count = 4 },
+]
+
+[[quest]]
+name = "ammo_belt"
+title = "传送带供弹"
+desc = [
+	"把补弹这一段做成一条带：箱子 → 带 → 机械臂 → 发射器。",
+	"到这一步，箭的存量才真正等于火力，而不是等于箱子里有多少。",
+]
+icon = "create:belt_connector"
+shape = "rsquare"
+deps = ["auto_reload"]
+tasks = [
+	{ type = "item", item = "create:belt_connector", count = 8 },
+	{ type = "item", item = "create:andesite_funnel", count = 4 },
+]
+
+[[quest]]
+name = "ammo_meter"
+title = "弹药下限告警"
+desc = [
+	"存量转信器与智能侦测器合起来读的是「还剩多少」，而不是「有没有」。",
+	"告警要挂在墙上看得见的位置——不然它只是又一个要查的箱子。",
+]
+icon = "create:stockpile_switch"
+shape = "circle"
+size = 1.2
+deps = ["dispenser_array"]
+tasks = [
+	{ type = "item", item = "create:stockpile_switch", count = 2 },
+	{ type = "item", item = "create:content_observer", count = 2 },
+]
+
+[[quest]]
+name = "drawbridge"
+title = "机械闸门"
+desc = [
+	"动力轴承 + 强力胶：把一段墙做成会抬起来的门。",
+	"它的用处是「需要时打开」——被围时城门不该是唯一能出去的地方。",
+]
+icon = "create:mechanical_bearing"
+shape = "rsquare"
+deps = ["wall_iron"]
+tasks = [
+	{ type = "item", item = "create:mechanical_bearing" },
+	{ type = "item", item = "create:super_glue", count = 4 },
+	{ type = "item", item = "create:linear_chassis", count = 2 },
+]
+
+[[quest]]
+name = "potato_cannon"
+title = "土豆炮"
+desc = [
+	"铜背罐供气，土豆炮负责把东西打上天——第 50 天之后的波次表里是有幻翼的。",
+	"它也是唯一能对着墙头以上开火的便携武器。",
+]
+icon = "create:potato_cannon"
+shape = "circle"
+size = 1.2
+deps = ["dispenser_array"]
+tasks = [
+	{ type = "item", item = "create:potato_cannon" },
+	{ type = "item", item = "create:copper_backtank" },
+]
+
+# ---- 簇 3：照明与预警 ----
+
+[[quest]]
+name = "wall_lighting"
+title = "墙外不黑"
+desc = [
+	"黑的地方就是它们生成的地方。把墙外一圈点亮。",
+]
+icon = "minecraft:lantern"
+shape = "rsquare"
+deps = ["wall_stone"]
+tasks = [
+	{ type = "item", item = "minecraft:lantern", count = 16 },
+]
+
+[[quest]]
+name = "alarm_bell"
+title = "预警钟"
+desc = [
+	"设计里「敲钟集结」是唯一的集结信号，而它**有统计可查**。",
+	"约定好：一声是集合，三声是回城。",
+]
+icon = "minecraft:bell"
+shape = "rsquare"
+deps = ["first_wall"]
+tasks = [
+	{ type = "stat", stat = "minecraft:bell_ring", value = 10 },
+]
+
+[[quest]]
+name = "beacon_fire"
+title = "烽火"
+desc = [
+	"三处，点火要在主城能看见。远方的据点出事时，这是唯一的信号。",
+]
+icon = "minecraft:campfire"
+shape = "rsquare"
+deps = ["alarm_bell"]
+tasks = [
+	{ type = "item", item = "minecraft:campfire", count = 3 },
+]
+
+[[quest]]
+name = "mega_torch"
+title = "巨型火把"
+desc = [
+	"64 格立方范围内不再自然刷怪（torchmaster.toml：megaTorchRadius = 64）。",
+	"它顺带挡住僵尸围村（blockVillageSieges = true），但挡的是自然刷怪。",
+	"尸潮波次不受光照影响，别把灯当防线——这一条值得写进告示。",
+]
+icon = "torchmaster:megatorch"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "torchmaster:megatorch", count = 4 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "dread_lamp"
+title = "恐惧灯"
+desc = [
+	"它管的是**非敌对**生物（鱿鱼、蝙蝠、豹猫），半径也是 64 格。",
+	"它不防怪；它让城外水面与洞里安静下来，夜间值守才听得见真动静。",
+]
+icon = "torchmaster:dreadlamp"
+shape = "circle"
+size = 1.2
+deps = ["mega_torch"]
+tasks = [
+	{ type = "item", item = "torchmaster:dreadlamp", count = 2 },
+]
+
+[[quest]]
+name = "feral_flare"
+title = "野火灯笼"
+desc = [
+	"16 格内自动铺光（feralFlareRadius = 16，最低光照 10），上限 255 盏。",
+	"铺完要用霜冻珍珠回收（1024 耐久）——不回收，这些无形光会一直堆着。",
+]
+icon = "torchmaster:feral_flare_lantern"
+shape = "circle"
+size = 1.2
+deps = ["mega_torch"]
+tasks = [
+	{ type = "item", item = "torchmaster:feral_flare_lantern", count = 2 },
+	{ type = "item", item = "torchmaster:frozen_pearl" },
+]
+
+[[quest]]
+name = "light_grid"
+title = "灯笼网"
+desc = [
+	"沿墙顶每八格一盏灯，一路铺到看不见断口——这是最便宜的「不留黑角」。",
+]
+icon = "minecraft:lantern"
+shape = "rsquare"
+deps = ["mega_torch"]
+tasks = [
+	{ type = "item", item = "minecraft:lantern", count = 48 },
+	{ type = "item", item = "minecraft:soul_lantern", count = 16 },
+]
+
+[[quest]]
+name = "note_alarm"
+title = "音符盒编码"
+desc = [
+	"不同音高代表不同区段——比喊话清楚，而且原版真的记这个统计（play_noteblock）。",
+]
+icon = "minecraft:note_block"
+shape = "rsquare"
+deps = ["alarm_bell"]
+tasks = [
+	{ type = "item", item = "minecraft:note_block", count = 8 },
+	{ type = "stat", stat = "minecraft:play_noteblock", value = 20 },
+]
+
+[[quest]]
+name = "tripwire_alarm"
+title = "绊线报警"
+desc = [
+	"线要横在**看不见**的地方（草丛、门口、马面脚下），看得见的线不会有人踩。",
+]
+icon = "minecraft:tripwire_hook"
+shape = "circle"
+size = 1.2
+deps = ["alarm_bell"]
+tasks = [
+	{ type = "item", item = "minecraft:tripwire_hook", count = 8 },
+	{ type = "item", item = "minecraft:string", count = 32 },
+]
+
+[[quest]]
+name = "firework_alarm"
+title = "烟花报警"
+desc = [
+	"烟花是白天也能看见的信号，射高就是它的通信距离。",
+]
+icon = "minecraft:firework_rocket"
+shape = "circle"
+size = 1.2
+deps = ["alarm_bell"]
+tasks = [
+	{ type = "item", item = "minecraft:firework_rocket", count = 24 },
+	{ type = "item", item = "minecraft:gunpowder", count = 16 },
+]
+
+# 注：Enhanced Celestials（天象）不写在本章 —— 按 `164-cat-horde` 文件头记录的裁决，
+# 「天象（EC）」与它的实物判据（meteor / space_moss_block）归那一章；
+# 本章只做对它的**反应**（夜班与灯火），不重复同一批实物判据。
+
+# ---- 簇 4：多道防线 ----
+
+[[quest]]
+name = "traps"
+title = "门口有陷阱"
+desc = [
+	"门口那一段是敌人排队进来的地方，也是最省力的杀伤位置。",
+	"靶子本身不致命，它的用处是把注意力引到你想让它去的位置。",
+]
+icon = "minecraft:target"
+shape = "circle"
+size = 1.2
+deps = ["first_wall"]
+tasks = [
+	{ type = "item", item = "minecraft:target", count = 4 },
+]
+
+[[quest]]
+name = "line_outer"
+title = "外围警戒线"
+desc = [
+	"第一层不在墙上，在墙外：拒马、仙人掌、绊线与灯围一圈。",
+	"它的任务只有一个——**让它们在路上被看见**，而不是在墙根被听见。",
+]
+icon = "minecraft:oak_fence"
+shape = "pentagon"
+size = 2.0
+deps = ["traps"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_fence", count = 128 },
+	{ type = "item", item = "minecraft:torch", count = 64 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "line_main"
+title = "主墙达标"
+desc = [
+	"石砖打底、关键段上铁、转角有马面——这一层是真正要扛住的那一层。",
+	"墙顶要走得通：走不通的墙，上面的人只能站着看。",
+]
+icon = "minecraft:stone_bricks"
+shape = "rsquare"
+deps = ["line_outer"]
+tasks = [
+	{ type = "item", item = "minecraft:stone_bricks", count = 256 },
+	{ type = "item", item = "minecraft:iron_bars", count = 64 },
+]
+
+[[quest]]
+name = "wall_ballista"
+title = "墙头弩炮"
+desc = [
+	"弩炮架在墙顶：直射、精度高，弹药是巨型弩箭。",
+	"（攻城视角在 `54-conquest`；这里只用它的守城用法——**固定在墙上**，不推着走。）",
+]
+icon = "siegemachines:ballista"
+shape = "rsquare"
+deps = ["line_main"]
+tasks = [
+	{ type = "item", item = "siegemachines:ballista" },
+	{ type = "item", item = "siegemachines:giant_arrow", count = 16 },
+]
+
+[[quest]]
+name = "fixed_turret"
+title = "墙头炮座"
+desc = [
+	"把器械固定下来，它就不会累、不会下线——守城时这比多两个人有用。",
+]
+icon = "siegemachines:turret_base"
+shape = "rsquare"
+deps = ["wall_ballista"]
+tasks = [
+	{ type = "item", item = "siegemachines:turret_base", count = 2 },
+	{ type = "item", item = "siegemachines:cannonball", count = 16 },
+]
+
+[[quest]]
+name = "line_air"
+title = "防空层"
+desc = [
+	"尸潮的波次表会随时间加料：幻翼第 50 天起出现，骷髅马从第 60 天起常驻。",
+	"所以墙上要有对空的一层：瞭望、弩、以及能打到墙头以上的武器。",
+]
+icon = "minecraft:spyglass"
+shape = "circle"
+size = 1.2
+deps = ["line_main"]
+tasks = [
+	{ type = "item", item = "minecraft:spyglass", count = 4 },
+	{ type = "item", item = "minecraft:crossbow", count = 4 },
+	{ type = "item", item = "minecraft:arrow", count = 64 },
+]
+
+[[quest]]
+name = "golem_iron"
+title = "铁傀儡驻军"
+desc = [
+	"铁傀儡不要工资、不会下线，是驻军里最便宜的一档。",
+]
+icon = "minecraft:carved_pumpkin"
+shape = "circle"
+size = 1.2
+deps = ["line_main"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_block", count = 16 },
+	{ type = "item", item = "minecraft:carved_pumpkin", count = 4 },
+]
+
+[[quest]]
+name = "golem_snow"
+title = "雪傀儡哨"
+desc = [
+	"雪傀儡造不成伤害，但雪球有击退，能把爬上墙头的东西推下去。",
+	"它怕雨——只放在有顶棚的墙段。",
+]
+icon = "minecraft:snow_block"
+shape = "circle"
+size = 1.2
+deps = ["golem_iron"]
+tasks = [
+	{ type = "item", item = "minecraft:snow_block", count = 8 },
+]
+
+[[quest]]
+name = "line_inner"
+title = "内城第二道"
+desc = [
+	"外圈被撕开是迟早的事——undeadnights 的等级表里，破块档位最高到黑曜石（tier 4）。",
+	"所以内城要有第二道门与街垒，把战场限制在两条街里。",
+]
+icon = "minecraft:iron_door"
+shape = "rsquare"
+deps = ["line_main"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_door", count = 4 },
+	{ type = "item", item = "minecraft:cobblestone_wall", count = 64 },
+]
+
+[[quest]]
+name = "line_core"
+title = "核心库地堡"
+desc = [
+	"最后一道防线是**物资**：库房搬到地下，外壳用黑曜石，门只有一道。",
+	"守不住城的时候，守得住库——这一层决定的是「输一次」还是「输掉」。",
+]
+icon = "create:item_vault"
+shape = "rsquare"
+deps = ["line_inner"]
+tasks = [
+	{ type = "item", item = "create:item_vault", count = 4 },
+	{ type = "item", item = "minecraft:obsidian", count = 8 },
+]
+
+# ---- 簇 5：维护与预案 ----
 
 [[quest]]
 name = "shield_wall"
@@ -135,66 +681,13 @@ tasks = [
 	{ type = "stat", stat = "minecraft:mob_kills", value = 100 },
 ]
 
-# ---------------- 设施 ----------------
-
-[[quest]]
-name = "alarm_bell"
-title = "预警钟"
-desc = [
-	"设计里「敲钟集结」是唯一的集结信号，而它**有统计可查**。",
-	"约定好：一声是集合，三声是回城。",
-]
-icon = "minecraft:bell"
-shape = "rsquare"
-deps = ["first_wall"]
-tasks = [
-	{ type = "stat", stat = "minecraft:bell_ring", value = 10 },
-]
-
-[[quest]]
-name = "arrow_tower"
-title = "箭塔"
-desc = [
-	"至少两座，能覆盖城外一段。塔上有箭箱，别让人来回跑。",
-]
-icon = "minecraft:dispenser"
-shape = "circle"
-size = 1.2
-deps = ["real_weapon"]
-tasks = [
-	{ type = "item", item = "minecraft:dispenser", count = 2 },
-]
-
-[[quest]]
-name = "traps"
-title = "门口有陷阱"
-desc = [
-	"门口那一段是敌人排队进来的地方，也是最省力的杀伤位置。",
-	"靶子本身不致命，它的用处是把注意力引到你想让它去的位置。",
-]
-icon = "minecraft:target"
-shape = "circle"
-size = 1.2
-deps = ["first_wall"]
-tasks = [
-	{ type = "item", item = "minecraft:target", count = 4 },
-]
-
-[[quest]]
-name = "beacon_fire"
-title = "烽火"
-desc = [
-	"三处，点火要在主城能看见。远方的据点出事时，这是唯一的信号。",
-]
-icon = "minecraft:campfire"
-shape = "rsquare"
-deps = ["alarm_bell"]
-tasks = [
-	{ type = "item", item = "minecraft:campfire", count = 3 },
-]
-
-# ---------------- 打出去 ----------------
-
+# 下面两条原先用 `takesapillage` 的两条进度（pillager_camp / bastille）当判据，
+# 但那两条进度已经被 `160-cat-warfare` 的 `w_pillager_camp` / `w_bastille` 占用，
+# 同一个进度会让两个任务在游戏里同时亮（跨章重复内容）。
+# 改后只用**这两处结构本身**当判据（id 取自 jar 的
+# `data/takesapillage/worldgen/structure/{pillager_camp,bastille}.json`），
+# 不碰 `164-cat-horde` 的四种兵击杀与实物（ravager_horn / bastille_blues 都归它）。
+# 结构判据 = 进到里面；游戏不记「拆掉结构」这个动作，所以第二条配一份破门物资。
 [[quest]]
 name = "raid_camp"
 title = "找到他们的营地"
@@ -205,7 +698,7 @@ icon = "minecraft:white_banner"
 shape = "rsquare"
 deps = ["many_kills"]
 tasks = [
-	{ type = "advancement", advancement = "takesapillage:adventure/pillager_camp" },
+	{ type = "structure", structure = "takesapillage:pillager_camp" },
 ]
 
 [[quest]]
@@ -214,16 +707,190 @@ title = "拆掉它"
 desc = [
 	"找到营地只是知道对手在哪；打掉它才算把这一轮攻势的根拔了。",
 	"据点没了，下一波的规模会小一截——这是防守第一次真正变成反击。",
+	"判据落在「进到堡垒里」加「带着破门的东西」：游戏没有「拆掉一座结构」这种统计。",
 ]
 icon = "minecraft:crossbow"
 shape = "rsquare"
 deps = ["raid_camp"]
 tasks = [
-	{ type = "advancement", advancement = "takesapillage:adventure/bastille" },
+	{ type = "structure", structure = "takesapillage:bastille" },
+	{ type = "item", item = "minecraft:tnt", count = 4 },
 ]
 
-# ---------------- 终局 ----------------
+[[quest]]
+name = "maintenance_round"
+title = "定期检修"
+desc = [
+	"工事会坏：门被拆、栏杆缺一段、发射器空着。所以要有固定的检修动作与修具。",
+	"检修的判据只能是「修具到位」——原版不记「修过墙」。",
+]
+icon = "minecraft:anvil"
+shape = "pentagon"
+size = 2.0
+deps = ["line_main"]
+tasks = [
+	{ type = "item", item = "minecraft:anvil" },
+	{ type = "item", item = "minecraft:grindstone" },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
 
+[[quest]]
+name = "parts_store"
+title = "备件库"
+desc = [
+	"备件要按「坏一次要换什么」来备，不是按种类堆满。",
+]
+icon = "create:item_vault"
+shape = "rsquare"
+deps = ["maintenance_round"]
+tasks = [
+	{ type = "item", item = "create:item_vault", count = 2 },
+	{ type = "item", item = "minecraft:iron_ingot", count = 64 },
+]
+
+[[quest]]
+name = "ammo_types"
+title = "三种弹药"
+desc = [
+	"普通箭是消耗品，光灵箭用来标记，药箭用来处理成群的。",
+	"只备一种，遇到特殊情况就没有牌可打。",
+]
+icon = "minecraft:spectral_arrow"
+shape = "rsquare"
+deps = ["maintenance_round"]
+tasks = [
+	{ type = "item", item = "minecraft:arrow", count = 128 },
+	{ type = "item", item = "minecraft:spectral_arrow", count = 32 },
+	{ type = "item", item = "minecraft:tipped_arrow", count = 32 },
+]
+
+# 以下四条用 kill 落判据：尸潮的生物由 mod 生成，但**击杀是可统计的事实**，
+# 不需要 mod 侧给事件（这也是这一章不新增 checkmark 的原因）。
+[[quest]]
+name = "kill_horde"
+title = "击杀尸潮僵尸"
+desc = [
+	"尸潮僵尸有 40 点血（undeadnights-server.toml），白天也不烧（hordeZombiesBurnInTheSun = false），",
+	"一波最多同时在场 15 只。所以三十个是「真的挡住过几波」的量级，不是刷怪数。",
+]
+icon = "undeadnights:slimy_rotten_flesh"
+shape = "rsquare"
+deps = ["maintenance_round"]
+tasks = [
+	{ type = "kill", entity = "undeadnights:horde_zombie", value = 30 },
+]
+
+[[quest]]
+name = "kill_elite"
+title = "击杀精英僵尸"
+desc = [
+	"精英僵尸在波次里的出现权重是 3（horde_mobs 配置），血更厚——它通常在最前面。",
+]
+icon = "undeadnights:elite_zombie_spawn_egg"
+shape = "circle"
+size = 1.2
+deps = ["kill_horde"]
+tasks = [
+	{ type = "kill", entity = "undeadnights:elite_zombie", value = 10 },
+]
+
+[[quest]]
+name = "kill_demo"
+title = "优先打爆破僵尸"
+desc = [
+	"爆破僵尸带五份 TNT（extraSpawnInfo = tnt:5），是唯一会主动拆工事的品种。",
+	"守城时它优先级最高：墙塌一段，后面就顾不上队形了。",
+]
+icon = "undeadnights:demolition_zombie_spawn_egg"
+shape = "rsquare"
+deps = ["kill_horde"]
+tasks = [
+	{ type = "kill", entity = "undeadnights:demolition_zombie", value = 5 },
+]
+
+[[quest]]
+name = "kill_zombie_player"
+title = "镇杀阵亡者的化身"
+desc = [
+	"死于感染的队友会变成 `hordes:zombie_player`（感染概率 0.75），而且会带走自己身上的东西。",
+	"杀掉它，东西才拿得回来；这件事本身就是应急预案的一部分。",
+]
+icon = "minecraft:rotten_flesh"
+shape = "rsquare"
+deps = ["kill_horde"]
+tasks = [
+	{ type = "kill", entity = "hordes:zombie_player", value = 1 },
+]
+
+[[quest]]
+name = "evac_plan"
+title = "撤离预案"
+desc = [
+	"撤离要有终点：一个写在纸上、全队都知道的集合点。",
+]
+icon = "minecraft:written_book"
+shape = "rsquare"
+deps = ["maintenance_round"]
+tasks = [
+	{ type = "item", item = "minecraft:written_book", count = 2 },
+	{ type = "item", item = "minecraft:white_bed", count = 4 },
+]
+
+[[quest]]
+name = "bunker_food"
+title = "地堡物资"
+desc = [
+	"地堡里备的是**不用火**也能吃的东西，以及够全队撑过几天的量。",
+]
+icon = "minecraft:bread"
+shape = "rsquare"
+deps = ["evac_plan"]
+tasks = [
+	{ type = "item", item = "minecraft:bread", count = 64 },
+	{ type = "item", item = "minecraft:dried_kelp_block", count = 16 },
+]
+
+[[quest]]
+name = "fire_suppress"
+title = "消防水路"
+desc = [
+	"木构与麻袋都怕火。软管滑轮 + 动力泵 + 储罐，是一条能直接拉到墙根的灭火线。",
+	"它也是唯一能扑灭 TNT 引燃的工事的手段。",
+]
+icon = "create:hose_pulley"
+shape = "rsquare"
+deps = ["maintenance_round"]
+tasks = [
+	{ type = "item", item = "create:hose_pulley" },
+	{ type = "item", item = "create:mechanical_pump" },
+	{ type = "item", item = "create:fluid_tank", count = 2 },
+]
+
+[[quest]]
+name = "wave_tally"
+title = "击退波次统计"
+desc = [
+	"复盘要有数字：这一夜来了几波、在哪一段破的、箭打掉多少。",
+	"累计三百个击杀之后，这一套设施才算被实战检验过。",
+]
+icon = "minecraft:lectern"
+shape = "rsquare"
+deps = ["kill_horde", "kill_zombie_player"]
+tasks = [
+	{ type = "stat", stat = "minecraft:mob_kills", value = 300 },
+	{ type = "item", item = "minecraft:written_book" },
+]
+
+# ---- 终局 ----
+
+# 判据理由（这一条**只能**用 checkmark）：
+#   The Hordes / Undead Nights 都不发 advancement、也不注册自定义 statistic（实测），
+#   「守住一次大规模袭击」这个**事件**在 FTB Quests 里没有信号源；
+#   要自动判定需要 mod 侧提供「波次开始/结束」事件。
+#   （`hold_the_line` 已在 questbook_check.py 的 CHECKMARK_EXCEPTIONS 里登记）
 [[quest]]
 name = "hold_the_line"
 title = "守住一次真正的大规模袭击"

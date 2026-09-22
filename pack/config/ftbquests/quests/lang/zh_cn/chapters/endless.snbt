@@ -40,4 +40,134 @@
 	"选一件「没有任何人要求你们做」的工程，然后做完它。"
 	"这一条之后没有下一块碑了——想做什么都由你们自己定。"
 	]
+	quest.E00B692AE2E89645.title: "终局彩排"
+	quest.E00B692AE2E89645.description: [
+	"当着所有人把「从原木到信标」整条链空跑一遍，中间不许手补料。"
+	"哪一段先卡住，那一处就是下一个纪元要先修的地方。"
+	]
+	quest.54125D129AD5AF9B.title: "零库存演练"
+	quest.54125D129AD5AF9B.description: [
+	"把仓库清到只留一天用量，看哪条线先断。"
+	"断点才是真瓶颈，平时满仓的时候看不出来。"
+	]
+	quest.2215B6DA88D6089E.title: "巨构 · 其二"
+	quest.2215B6DA88D6089E.description: [
+	"第二件没人要求你们做的工程，规模要比第一件大一档。"
+	"材料里要有下界合金，才算真的把两个维度都动用上了。"
+	]
+	quest.CAE196A9341B0EE8.title: "巨构 · 其三"
+	quest.CAE196A9341B0EE8.description: [
+	"第三件先往水下或海上走：海晶石与潮涌核心都得从海里来。"
+	]
+	quest.9AEE52682094F937.title: "巨构 · 其四"
+	quest.9AEE52682094F937.description: [
+	"第四件用末地的料：这是唯一能证明远征线真的通了的建材。"
+	]
+	quest.B64D76513C70AEB8.title: "天空城"
+	quest.B64D76513C70AEB8.description: [
+	"在云层高度建一座能住人的城：结构、供水与上下交通都要独立。"
+	]
+	quest.8BD8AE7E30A6AF16.title: "填海造陆"
+	quest.8BD8AE7E30A6AF16.description: [
+	"先圈出边界再把水面填成陆地：边缘要能挡潮、能排水。"
+	]
+	quest.9E50D00FD89D1506.title: "造山"
+	quest.9E50D00FD89D1506.description: [
+	"反过来做：先把平地堆成山，用来当屏障、观景台，或者只当一处从天上看才成形的作品。"
+	]
+	quest.5A5C22E19C4A82D5.title: "无人产线闭环"
+	quest.5A5C22E19C4A82D5.description: [
+	"从原料进厂到成品入库，中间没有任何一个环节需要人到场。"
+	"到这一步，「生产」这件事才从日程表上划掉。"
+	]
+	quest.4315C3103C8EEEAD.title: "原料进、成品出"
+	quest.4315C3103C8EEEAD.description: [
+	"指一个成品，然后只往线头投原料：产出必须连续不断。"
+	]
+	quest.238BECF1B9A0A384.title: "全厂看板"
+	quest.238BECF1B9A0A384.description: [
+	"一处能同时看到所有产线状态的地方，异常不用巡厂才发现。"
+	]
+	quest.E1C448498D7D07CB.title: "自维护"
+	quest.E1C448498D7D07CB.description: [
+	"磨损件与耗材要能自动补齐：维护靠人跑，就不算全自动。"
+	]
+	quest.C08803D781024FA7.title: "下界据点"
+	quest.C08803D781024FA7.description: [
+	"在下界有一处能重生、能存货、能补给的地方，往返才敢频繁。"
+	]
+	quest.A6662BEAF01FB3BD.title: "下界干线"
+	quest.A6662BEAF01FB3BD.description: [
+	"下界一格顶主世界八格，干线铺好之后远征成本直接降一个量级。"
+	]
+	quest.C9934A96CFCA681F.title: "末地据点"
+	quest.C9934A96CFCA681F.description: [
+	"末地是最远的一站：先建一处据点，否则只能空手来回，带不走东西。"
+	]
+	quest.93437919C3D833E8.title: "超级管道"
+	quest.93437919C3D833E8.description: [
+	"点对点的高速通道：适合把两处固定据点接起来，不适合当路网。"
+	]
+	quest.3AE06A3765AAEFCD.title: "传送网络"
+	quest.3AE06A3765AAEFCD.description: [
+	"先把走过的地方串成网，回程就不再占掉整晚时间。"
+	]
+	quest.9F1BF19594D0152A.title: "养遍家畜"
+	quest.9F1BF19594D0152A.description: [
+	"图鉴里最基础的一页：所有能繁殖的家畜都养过一遍。"
+	]
+	quest.AD8C119EB29690F9.title: "十一种猫"
+	quest.AD8C119EB29690F9.description: [
+	"猫的变种随群系走，要全收就得把这些群系都找一个遍。"
+	]
+	quest.C07D134DFF7DC58B.title: "狼的全谱"
+	quest.C07D134DFF7DC58B.description: [
+	"八种狼要跑遍对应群系才凑得齐，收全之后狼甲才有意义。"
+	]
+	quest.912CED54B525D5B7.title: "药水全谱"
+	quest.912CED54B525D5B7.description: [
+	"所有药水效果同时挂上过，是下界材料用得最狠的一次。"
+	]
+	quest.EEC44353FFC275C4.title: "效果全开"
+	quest.EEC44353FFC275C4.description: [
+	"比药水更狠：把信标与食物能给的也算进来，全部做成一次同时生效。"
+	]
+	quest.F4F87A4204D8BB09.title: "锻纹全收"
+	quest.F4F87A4204D8BB09.description: [
+	"每种盔甲纹样各打一件，收全之后全队的装备才有身份感。"
+	]
+	quest.5002A3B50FD48907.title: "陶片全收"
+	quest.5002A3B50FD48907.description: [
+	"只用陶片拼出一只完整的饰纹陶罐——它是考古线的收尾。"
+	]
+	quest.B6B8507F1CD0BDCA.title: "唱片全收"
+	quest.B6B8507F1CD0BDCA.description: [
+	"最难拿的几张唱片各有来源：遗迹、考古与试炼。收全等于把三条线都走完。"
+	]
+	quest.4E86E13AD2361CB2.title: "三种蛙明灯"
+	quest.4E86E13AD2361CB2.description: [
+	"带三种蛙去下界吃岩浆怪，三种颜色的灯就齐了。"
+	]
+	quest.3EE686A77932A4F2.title: "满配信标"
+	quest.3EE686A77932A4F2.description: [
+	"信标要四面满配才给最高档效果，做齐它是最费矿的一件收集品。"
+	]
+	quest.AD3BBECF785FFBB4.title: "尸潮夜不停产"
+	quest.AD3BBECF785FFBB4.description: [
+	"尸潮来的那一夜不许停线：防线顶住，产线照跑。"
+	"这一条考的不是打得过，而是「打着的时候别的照常」。"
+	]
+	quest.D6D46F9F5DD97FCB.title: "血月夜"
+	quest.D6D46F9F5DD97FCB.description: [
+	"血月把怪物的强度与数量一起抬上去。把这一夜的照明与通道先补满。"
+	]
+	quest.B605641D2881C861.title: "累计清场一千"
+	quest.B605641D2881C861.description: [
+	"累计打满四位数击杀，才谈得上「守得住」而不是「躲得过」。"
+	]
+	quest.BDADB83AD7D5F633.title: "图鉴满页"
+	quest.BDADB83AD7D5F633.description: [
+	"图鉴这一栏收满：动物、药水、纹样、陶片、唱片、信标都各有一页。"
+	"收满之后，剩下的横向目标就只剩「造」这一类了。"
+	]
 }

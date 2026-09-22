@@ -173,4 +173,140 @@
 	quest.69CFAD8435DF0EAA.description: [
 	"闹饥荒的代价远大于囤粮占的地方。这一条是「能撑过意外」的底线。"
 	]
+	quest.89BFDFADBBB1C93C.title: "水坝"
+	quest.89BFDFADBBB1C93C.description: [
+	"先选一处河湾拦起来，把水位抬成可用的落差。"
+	"落差是后面所有流体设施省力的地方——泵要抽得省，靠的就是它。"
+	]
+	quest.D61BAC24BB1ED9C7.title: "水库"
+	quest.D61BAC24BB1ED9C7.description: [
+	"坝拦下来的水要有地方存。存量决定旱季与围攻期间能撑多久。"
+	]
+	quest.796FC1F0C891D555.title: "渡槽"
+	quest.796FC1F0C891D555.description: [
+	"跨过山谷与道路把水送到用水处，不必让渠绕一大圈。"
+	"它是水利里最像工程的一件：看得见，也要求一次把坡度做对。"
+	]
+	quest.27A483C0D44B2B73.title: "井群"
+	quest.27A483C0D44B2B73.description: [
+	"在城里均匀打几口井，让每个片区都能就近取水。"
+	"井群是供水网的兜底：主管断了，城不至于立刻断水。"
+	]
+	quest.594C07F89DAD8B3D.title: "主干道"
+	quest.594C07F89DAD8B3D.description: [
+	"城市与外界的路要有一条等级最高的：宽、直、不积水，而且能走车。"
+	"支路可以窄，主干道不行——运力都压在它身上。"
+	]
+	quest.876F02B8D3A62CBC.title: "支路与人行道"
+	quest.876F02B8D3A62CBC.description: [
+	"铺装分两级：走货的与走人的。人行道铺出来，城市才不是一片工地。"
+	]
+	quest.183615AF75831AA9.title: "台阶与坡道"
+	quest.183615AF75831AA9.description: [
+	"高差要能走。每处高台都该接上台阶或坡道，而不是靠人往上跳。"
+	]
+	quest.CD3166E69AE76182.title: "石桥"
+	quest.CD3166E69AE76182.description: [
+	"常走的过河点要用石桥：耐久、能过车，也不会像木桥那样烧起来。"
+	]
+	quest.7398CF6A4D6139EA.title: "吊桥"
+	quest.7398CF6A4D6139EA.description: [
+	"深谷与峭壁之间立不住桥墩，索桥是唯一划算的做法。"
+	"它接的是那些「绕过去要半小时」的地方。"
+	]
+	quest.400656B38C4A98C7.title: "跨谷桥"
+	quest.400656B38C4A98C7.description: [
+	"跨度到这一档，桥本身就是一处地标：一次建成，之后长期都靠它。"
+	]
+	quest.DB61CBE0B98ACCD9.title: "明渠"
+	quest.DB61CBE0B98ACCD9.description: [
+	"排水沟敞开走，好处是堵了看得见、能掏。先把这一层铺满主路两侧。"
+	]
+	quest.734FF60ED7964483.title: "暗管"
+	quest.734FF60ED7964483.description: [
+	"穿过道路与建筑的那一段必须走地下，否则一条沟把城市切成两半。"
+	"明渠与暗管接得上，排水才算一套系统。"
+	]
+	quest.F74623B6DB682AAD.title: "蓄洪池"
+	quest.F74623B6DB682AAD.description: [
+	"暴雨时先存后放，比把水一次性推给下游便宜得多。池底要能事后清干净。"
+	]
+	quest.B1E6EC11CDB063D1.title: "单向道与环岛"
+	quest.B1E6EC11CDB063D1.description: [
+	"城里的路一多，会车就成了主要堵点。"
+	"环岛与单向道把路口从冲突点改成通过点，不需要任何机器。"
+	]
+	quest.C92692DC1C4DFE00.title: "停车区"
+	quest.C92692DC1C4DFE00.description: [
+	"矿车、船只与载具要有固定停放处。随手停在路口，堵的是自己人。"
+	]
+	quest.B51559625DCEDE80.title: "中转驿站"
+	quest.B51559625DCEDE80.description: [
+	"远路上人要歇、货要换装。驿站是两种运输方式的接缝。"
+	"有了它，长途可以分段接力，不必一次走完全程。"
+	]
+	quest.FF1434D794A02CF8.title: "配电干线"
+	quest.FF1434D794A02CF8.description: [
+	"动力不能一台机器拉一条线：先定一个源，再沿路送到每个片区。"
+	"这一层做好了，以后每添一台机器都不用重新拉线。"
+	]
+	quest.5F4231D285BC1FBF.title: "变电所"
+	quest.5F4231D285BC1FBF.description: [
+	"电压要在城里再分一级，否则一次故障会带走整片城区。"
+	]
+	quest.8B6544DE73A989A2.title: "计量与开关"
+	quest.8B6544DE73A989A2.description: [
+	"哪一段在耗、哪一段该断，要能当场看出来。"
+	"计量到位之后，排查从「全线摸一遍」变成「看表」。"
+	]
+	quest.1F3E380C7DBD5448.title: "市政干管"
+	quest.1F3E380C7DBD5448.description: [
+	"水、料、缆走同一条沟，是城市与村落的分界：开挖一次，全部到位。"
+	]
+	quest.7A7596A8000D9F39.title: "分区接入验收"
+	quest.7A7596A8000D9F39.description: [
+	"住、工、农、仓四个片区各有一处接入点，而且都能单独关断。"
+	"这一条验收的是覆盖而不是长度：漏掉一个片区，它就会变成孤岛。"
+	]
+	quest.A9F054E8EAD23735.title: "消防水池"
+	quest.A9F054E8EAD23735.description: [
+	"木构城市最贵的教训是火。水池与取水点常备，比事后重建便宜。"
+	]
+	quest.EEF4438ADC31FA16.title: "疏散通道与备用出口"
+	quest.EEF4438ADC31FA16.description: [
+	"每个片区至少两条出路，而且互不重叠。"
+	"被围一次就会明白：只有一个门的城，等于没有门。"
+	]
+	quest.AA85F1179C7CB43D.title: "护城河"
+	quest.AA85F1179C7CB43D.description: [
+	"水是比墙便宜的屏障，而且可以接进排水系统当末端蓄水。"
+	]
+	quest.63690B16A709DD40.title: "关卡与门禁"
+	quest.63690B16A709DD40.description: [
+	"城门要能控：能关、能查、能只放自己人。"
+	"边界不是画出来的，是有人管着的那几个口子。"
+	]
+	quest.2391DC691E88B107.title: "测量与放线"
+	quest.2391DC691E88B107.description: [
+	"开工前先定基准点与标高，后面所有尺寸都从这里算。"
+	"没有放线的工地，做出来的东西对不上，改起来比重做贵。"
+	]
+	quest.028A0E52862EA4D0.title: "脚手架"
+	quest.028A0E52862EA4D0.description: [
+	"高处作业要有地方站。它决定同一件事是一个人做还是三个人做。"
+	]
+	quest.BC53040EBB17FE61.title: "临时工棚"
+	quest.BC53040EBB17FE61.description: [
+	"工地旁边要有休息与存放的地方。省下的是往返主城的那段路。"
+	]
+	quest.5BCAC8BE5536FA2E.title: "材料堆放场"
+	quest.5BCAC8BE5536FA2E.description: [
+	"工地要有一处按规格分堆的料场，而不是把所有东西倒在一处。"
+	"料场整齐，取料时间就短——这是施工里最容易省下的一段时间。"
+	]
+	quest.235ADF1F08F06F66.title: "市政工程验收"
+	quest.235ADF1F08F06F66.description: [
+	"水、电、路、桥、排水、应急各成一套，而且都接到了每个片区。"
+	"这一章前面那些散件，到这一步才合成一座城。"
+	]
 }

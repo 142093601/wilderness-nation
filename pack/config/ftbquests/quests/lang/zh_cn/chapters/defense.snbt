@@ -66,4 +66,189 @@
 	"（The Hordes / Undead Nights 不提供进度或统计，实测）。所以它靠自己确认。"
 	"⚠️ 想让这一步自动判定，需要 mod 侧给「波次开始/结束」事件——已记进待办。"
 	]
+	quest.A83562E55B39F16B.title: "马面与转角"
+	quest.A83562E55B39F16B.description: [
+	"直墙的贴墙根是打不到的死角；凸出去的马面就是为了消掉它。"
+	"转角处理得不好，墙越高越像个陷阱——上面的人反而打不到下面的人。"
+	]
+	quest.2BD5179C1F06D511.title: "注水护城河"
+	quest.2BD5179C1F06D511.description: [
+	"干沟只是绊一下。放上水之后，它们要么绕路，要么在水里挨打。"
+	]
+	quest.DA2A3688343E85DA.title: "陷坑与尖刺"
+	quest.DA2A3688343E85DA.description: [
+	"滴水石锥会对落到它上面的东西造成伤害，所以坑底铺它比铺石头划算。"
+	"坑口用活板门盖着：自己人过路没事，追兵踩上去就掉。"
+	]
+	quest.D20635CDACDF9E70.title: "拒马"
+	quest.D20635CDACDF9E70.description: [
+	"拒马的作用不是挡住，是**减慢**：让它们在射界里多待几秒。"
+	]
+	quest.9FCCAAAB15A1BFE9.title: "仙人掌篱"
+	quest.9FCCAAAB15A1BFE9.description: [
+	"仙人掌不用铁也不用维护，碰上去就掉血——最便宜的一层外围。"
+	]
+	quest.21CBF8E458ED3B52.title: "岩浆沟"
+	quest.21CBF8E458ED3B52.description: [
+	"岩浆是最省事的一道沟：不需要人守，代价是自己也不能直接过去。"
+	"所以它只放在最外圈，且必须留出可关闭的通过口。"
+	]
+	quest.2BA49C1DA577C922.title: "发射器阵列"
+	quest.2BA49C1DA577C922.description: [
+	"一台发射器是玩具，一排发射器才是一段火力。"
+	"阵列的价值在于它不需要人在场——尸潮的波次是每 45 秒判一次（chanceForAdditionalWave = 7），人盯不住。"
+	]
+	quest.39335EDC08C11284.title: "触发线路"
+	quest.39335EDC08C11284.description: [
+	"阵列要有人拉第一下。压力板与侦测器是两种最省心的触发：一个等脚踩，一个等东西经过。"
+	]
+	quest.BCB9D7E4EFD15A95.title: "机械臂补弹"
+	quest.BCB9D7E4EFD15A95.description: [
+	"发射器空了不会自己满。机械臂负责把箭从箱子里递进去。"
+	]
+	quest.4C1F922A6716645D.title: "传送带供弹"
+	quest.4C1F922A6716645D.description: [
+	"把补弹这一段做成一条带：箱子 → 带 → 机械臂 → 发射器。"
+	"到这一步，箭的存量才真正等于火力，而不是等于箱子里有多少。"
+	]
+	quest.08950E31BE871E43.title: "弹药下限告警"
+	quest.08950E31BE871E43.description: [
+	"存量转信器与智能侦测器合起来读的是「还剩多少」，而不是「有没有」。"
+	"告警要挂在墙上看得见的位置——不然它只是又一个要查的箱子。"
+	]
+	quest.D746CADA3AA59C7E.title: "机械闸门"
+	quest.D746CADA3AA59C7E.description: [
+	"动力轴承 + 强力胶：把一段墙做成会抬起来的门。"
+	"它的用处是「需要时打开」——被围时城门不该是唯一能出去的地方。"
+	]
+	quest.3EA4894FB3B5D4B4.title: "土豆炮"
+	quest.3EA4894FB3B5D4B4.description: [
+	"铜背罐供气，土豆炮负责把东西打上天——第 50 天之后的波次表里是有幻翼的。"
+	"它也是唯一能对着墙头以上开火的便携武器。"
+	]
+	quest.9EEF67DF891125ED.title: "巨型火把"
+	quest.9EEF67DF891125ED.description: [
+	"64 格立方范围内不再自然刷怪（torchmaster.toml：megaTorchRadius = 64），并且顺带挡住僵尸围村（blockVillageSieges = true）。"
+	"⚠️ 它挡的是**自然刷怪**（blockOnlyNaturalSpawns = true），挡不住尸潮波次——这一条很重要，别把灯当防线。"
+	]
+	quest.17AAAFC0868FE758.title: "恐惧灯"
+	quest.17AAAFC0868FE758.description: [
+	"它管的是**非敌对**生物（鱿鱼、蝙蝠、豹猫），半径也是 64 格。"
+	"它不防怪；它让城外水面与洞里安静下来，夜间值守才听得见真动静。"
+	]
+	quest.37743798ED6F75FE.title: "野火灯笼"
+	quest.37743798ED6F75FE.description: [
+	"16 格内自动铺光（feralFlareRadius = 16，最低光照 10），上限 255 盏。"
+	"铺完要用霜冻珍珠回收（1024 耐久）——不回收，这些无形光会一直堆着。"
+	]
+	quest.F7F7183280C382F0.title: "灯笼网"
+	quest.F7F7183280C382F0.description: [
+	"沿墙顶每八格一盏灯，一路铺到看不见断口——这是最便宜的「不留黑角」。"
+	]
+	quest.2409413278B9C951.title: "音符盒编码"
+	quest.2409413278B9C951.description: [
+	"不同音高代表不同区段——比喊话清楚，而且原版真的记这个统计（play_noteblock）。"
+	]
+	quest.312C80E85A410A55.title: "绊线报警"
+	quest.312C80E85A410A55.description: [
+	"线要横在**看不见**的地方（草丛、门口、马面脚下），看得见的线不会有人踩。"
+	]
+	quest.434762C5D87FBAF3.title: "烟花报警"
+	quest.434762C5D87FBAF3.description: [
+	"烟花是白天也能看见的信号，射高就是它的通信距离。"
+	]
+	quest.3A0809872BDAB9FC.title: "外围警戒线"
+	quest.3A0809872BDAB9FC.description: [
+	"第一层不在墙上，在墙外：拒马、仙人掌、绊线与灯围一圈。"
+	"它的任务只有一个——**让它们在路上被看见**，而不是在墙根被听见。"
+	]
+	quest.E639E5F187E5F871.title: "主墙达标"
+	quest.E639E5F187E5F871.description: [
+	"石砖打底、关键段上铁、转角有马面——这一层是真正要扛住的那一层。"
+	"墙顶要走得通：走不通的墙，上面的人只能站着看。"
+	]
+	quest.0AF2DF3F4A60EEE4.title: "墙头弩炮"
+	quest.0AF2DF3F4A60EEE4.description: [
+	"弩炮架在墙顶：直射、精度高，弹药是巨型弩箭。"
+	"（攻城视角在 `54-conquest`；这里只用它的守城用法——**固定在墙上**，不推着走。）"
+	]
+	quest.04CF61E2FB077AD7.title: "墙头炮座"
+	quest.04CF61E2FB077AD7.description: [
+	"把器械固定下来，它就不会累、不会下线——守城时这比多两个人有用。"
+	]
+	quest.AA33BBDEE153B935.title: "防空层"
+	quest.AA33BBDEE153B935.description: [
+	"尸潮的波次表会随时间加料：幻翼第 50 天起出现，骷髅马从第 60 天起常驻。"
+	"所以墙上要有对空的一层：瞭望、弩、以及能打到墙头以上的武器。"
+	]
+	quest.995C5EABEEAC5210.title: "铁傀儡驻军"
+	quest.995C5EABEEAC5210.description: [
+	"铁傀儡不要工资、不会下线，是驻军里最便宜的一档。"
+	]
+	quest.B3ABE03540F3AFCA.title: "雪傀儡哨"
+	quest.B3ABE03540F3AFCA.description: [
+	"雪傀儡造不成伤害，但雪球有击退，能把爬上墙头的东西推下去。"
+	"它怕雨——只放在有顶棚的墙段。"
+	]
+	quest.DF838E6091F7C77B.title: "内城第二道"
+	quest.DF838E6091F7C77B.description: [
+	"外圈被撕开是迟早的事——undeadnights 的等级表里，破块档位最高到黑曜石（tier 4）。"
+	"所以内城要有第二道门与街垒，把战场限制在两条街里。"
+	]
+	quest.826DA8CA54B94BFF.title: "核心库地堡"
+	quest.826DA8CA54B94BFF.description: [
+	"最后一道防线是**物资**：库房搬到地下，外壳用黑曜石，门只有一道。"
+	"守不住城的时候，守得住库——这一层决定的是「输一次」还是「输掉」。"
+	]
+	quest.02A133584EC7AF21.title: "定期检修"
+	quest.02A133584EC7AF21.description: [
+	"工事会坏：门被拆、栏杆缺一段、发射器空着。所以要有固定的检修动作与修具。"
+	"检修的判据只能是「修具到位」——原版不记「修过墙」。"
+	]
+	quest.D27ECD4F8EF246FC.title: "备件库"
+	quest.D27ECD4F8EF246FC.description: [
+	"备件要按「坏一次要换什么」来备，不是按种类堆满。"
+	]
+	quest.74F17E2E930BA1B3.title: "三种弹药"
+	quest.74F17E2E930BA1B3.description: [
+	"普通箭是消耗品，光灵箭用来标记，药箭用来处理成群的。"
+	"只备一种，遇到特殊情况就没有牌可打。"
+	]
+	quest.DE034B4C64ADFD70.title: "击杀尸潮僵尸"
+	quest.DE034B4C64ADFD70.description: [
+	"尸潮僵尸有 40 点血（undeadnights-server.toml），白天也不烧（hordeZombiesBurnInTheSun = false），"
+	"一波最多同时在场 15 只。所以三十个是「真的挡住过几波」的量级，不是刷怪数。"
+	]
+	quest.281131CB435326BD.title: "击杀精英僵尸"
+	quest.281131CB435326BD.description: [
+	"精英僵尸在波次里的出现权重是 3（horde_mobs 配置），血更厚——它通常在最前面。"
+	]
+	quest.899F4B9CBC2039C0.title: "优先打爆破僵尸"
+	quest.899F4B9CBC2039C0.description: [
+	"爆破僵尸带五份 TNT（extraSpawnInfo = tnt:5），是唯一会主动拆工事的品种。"
+	"守城时它优先级最高：墙塌一段，后面就顾不上队形了。"
+	]
+	quest.7413989EBA879087.title: "镇杀阵亡者的化身"
+	quest.7413989EBA879087.description: [
+	"死于感染的队友会变成 `hordes:zombie_player`（感染概率 0.75），而且会带走自己身上的东西。"
+	"杀掉它，东西才捡得回来；这件事本身就是应急预案的一部分。"
+	]
+	quest.A2F189CBAE402223.title: "撤离预案"
+	quest.A2F189CBAE402223.description: [
+	"撤离要有终点：一个写在纸上、全队都知道的集合点。"
+	]
+	quest.5C8416D0DEBFDAA1.title: "地堡物资"
+	quest.5C8416D0DEBFDAA1.description: [
+	"地堡里备的是**不用火**也能吃的东西，以及够全队撑过几天的量。"
+	]
+	quest.18A139366E03F321.title: "消防水路"
+	quest.18A139366E03F321.description: [
+	"木构与麻袋都怕火。软管滑轮 + 动力泵 + 储罐，是一条能直接拉到墙根的灭火线。"
+	"它也是唯一能扑灭 TNT 引燃的工事的手段。"
+	]
+	quest.CE8AA2A947A221DF.title: "击退波次统计"
+	quest.CE8AA2A947A221DF.description: [
+	"复盘要有数字：这一夜来了几波、在哪一段破的、箭打掉多少。"
+	"累计三百个击杀之后，这一套设施才算被实战检验过。"
+	]
 }

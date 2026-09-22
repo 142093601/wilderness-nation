@@ -132,14 +132,14 @@
 		"C0BBC7D3AB4EEF4F"
 		]
 		icon: {
-			id: "waystones:portstone"
+			id: "waystones:white_portstone"
 		}
 		id: "560266D2609959F2"
 		shape: "circle"
 		size: 1.2d
 		tasks: [
 		{
-			item: "waystones:portstone"
+			item: "waystones:white_portstone"
 			id: "B751717F340A16C1"
 			type: "item"
 		}
@@ -238,7 +238,7 @@
 		"09A2E7B7EE5170C8"
 		]
 		icon: {
-			id: "betterarcheology:identified_artifact"
+			id: "betterarcheology:unidentified_artifact"
 		}
 		id: "4497F23114906057"
 		shape: "octagon"
@@ -250,7 +250,7 @@
 			type: "item"
 		}
 		{
-			item: "betterarcheology:identified_artifact"
+			item: "betterarcheology:unidentified_artifact"
 			id: "13583BCED88A4C00"
 			type: "item"
 		}
@@ -579,7 +579,7 @@
 			type: "item"
 		}
 		{
-			item: "exposure:selfie_stick"
+			item: "exposure:camera_stand"
 			id: "FE5E2AE9A92E8554"
 			type: "item"
 		}

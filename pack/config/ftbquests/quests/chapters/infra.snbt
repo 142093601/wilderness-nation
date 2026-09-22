@@ -45,7 +45,7 @@
 			type: "advancement"
 		}
 		]
-		x: -9.38d
+		x: -11.25d
 		y: -1.75d
 	}
 	{
@@ -65,7 +65,7 @@
 			type: "advancement"
 		}
 		]
-		x: -7.88d
+		x: -17.18d
 		y: -3.5d
 	}
 	{
@@ -85,7 +85,7 @@
 			type: "advancement"
 		}
 		]
-		x: -4.88d
+		x: -14.18d
 		y: -3.5d
 	}
 	{
@@ -115,7 +115,7 @@
 			type: "item"
 		}
 		]
-		x: -9.38d
+		x: -19.91d
 		y: -5.25d
 	}
 	{
@@ -136,7 +136,7 @@
 			type: "item"
 		}
 		]
-		x: -6.38d
+		x: -16.91d
 		y: -5.25d
 	}
 	{
@@ -155,7 +155,7 @@
 			type: "checkmark"
 		}
 		]
-		x: -6.38d
+		x: -8.25d
 		y: -1.75d
 	}
 	{
@@ -180,7 +180,7 @@
 			type: "item"
 		}
 		]
-		x: -3.6d
+		x: -14.14d
 		y: -5.25d
 	}
 	{
@@ -201,7 +201,7 @@
 			type: "item"
 		}
 		]
-		x: -1.05d
+		x: -11.59d
 		y: -5.25d
 	}
 	{
@@ -222,7 +222,7 @@
 			type: "item"
 		}
 		]
-		x: 1.5d
+		x: -9.04d
 		y: -5.25d
 	}
 	{
@@ -243,7 +243,7 @@
 			type: "item"
 		}
 		]
-		x: -11.48d
+		x: -19.8d
 		y: -7.0d
 	}
 	{
@@ -269,7 +269,7 @@
 			type: "item"
 		}
 		]
-		x: -3.38d
+		x: -5.25d
 		y: -1.75d
 	}
 	{
@@ -290,7 +290,7 @@
 			type: "item"
 		}
 		]
-		x: 4.05d
+		x: -6.49d
 		y: -5.25d
 	}
 	{
@@ -310,7 +310,7 @@
 			type: "item"
 		}
 		]
-		x: -8.93d
+		x: -17.25d
 		y: -7.0d
 	}
 	{
@@ -331,7 +331,7 @@
 			type: "item"
 		}
 		]
-		x: -2.55d
+		x: -6.6d
 		y: -8.75d
 	}
 	{
@@ -351,7 +351,7 @@
 			type: "item"
 		}
 		]
-		x: -2.1d
+		x: -11.4d
 		y: -3.5d
 	}
 	{
@@ -372,7 +372,7 @@
 			type: "item"
 		}
 		]
-		x: 6.6d
+		x: -3.94d
 		y: -5.25d
 	}
 	{
@@ -392,7 +392,7 @@
 			type: "item"
 		}
 		]
-		x: 9.37d
+		x: -1.16d
 		y: -5.25d
 	}
 	{
@@ -439,7 +439,7 @@
 			type: "item"
 		}
 		]
-		x: -1.27d
+		x: -4.24d
 		y: -10.5d
 	}
 	{
@@ -466,7 +466,7 @@
 			type: "item"
 		}
 		]
-		x: -0.6d
+		x: -2.48d
 		y: -1.75d
 	}
 	{
@@ -487,7 +487,7 @@
 			type: "item"
 		}
 		]
-		x: 0.45d
+		x: -8.85d
 		y: -3.5d
 	}
 	{
@@ -508,7 +508,7 @@
 			type: "item"
 		}
 		]
-		x: 3.0d
+		x: -6.3d
 		y: -3.5d
 	}
 	{
@@ -529,7 +529,7 @@
 			type: "item"
 		}
 		]
-		x: 1.95d
+		x: 0.07d
 		y: -1.75d
 	}
 	{
@@ -550,7 +550,7 @@
 			type: "item"
 		}
 		]
-		x: 2.25d
+		x: -0.71d
 		y: -10.5d
 	}
 	{
@@ -571,7 +571,7 @@
 			type: "item"
 		}
 		]
-		x: -6.38d
+		x: -14.7d
 		y: -7.0d
 	}
 	{
@@ -598,7 +598,7 @@
 			type: "item"
 		}
 		]
-		x: -3.83d
+		x: -12.15d
 		y: -7.0d
 	}
 	{
@@ -619,7 +619,7 @@
 			type: "item"
 		}
 		]
-		x: -1.28d
+		x: -9.6d
 		y: -7.0d
 	}
 	{
@@ -640,7 +640,7 @@
 			type: "item"
 		}
 		]
-		x: 1.27d
+		x: -7.05d
 		y: -7.0d
 	}
 	{
@@ -661,7 +661,7 @@
 			type: "item"
 		}
 		]
-		x: 3.82d
+		x: -4.5d
 		y: -7.0d
 	}
 	{
@@ -682,7 +682,7 @@
 			type: "item"
 		}
 		]
-		x: 6.37d
+		x: -1.95d
 		y: -7.0d
 	}
 	{
@@ -709,7 +709,7 @@
 			type: "item"
 		}
 		]
-		x: 8.92d
+		x: 0.6d
 		y: -7.0d
 	}
 	{
@@ -730,7 +730,7 @@
 			type: "item"
 		}
 		]
-		x: 4.5d
+		x: 2.62d
 		y: -1.75d
 	}
 	{
@@ -751,7 +751,7 @@
 			type: "item"
 		}
 		]
-		x: 7.05d
+		x: 5.17d
 		y: -1.75d
 	}
 	{
@@ -772,7 +772,7 @@
 			type: "item"
 		}
 		]
-		x: 9.6d
+		x: 7.72d
 		y: -1.75d
 	}
 	{
@@ -793,7 +793,7 @@
 			type: "item"
 		}
 		]
-		x: 5.55d
+		x: -3.75d
 		y: -3.5d
 	}
 	{
@@ -814,7 +814,7 @@
 			type: "item"
 		}
 		]
-		x: 8.1d
+		x: -1.2d
 		y: -3.5d
 	}
 	{
@@ -835,7 +835,7 @@
 			type: "item"
 		}
 		]
-		x: 0.0d
+		x: -4.05d
 		y: -8.75d
 	}
 	{
@@ -862,7 +862,7 @@
 			type: "item"
 		}
 		]
-		x: 2.55d
+		x: -1.5d
 		y: -8.75d
 	}
 	{
@@ -901,8 +901,912 @@
 			type: "item"
 		}
 		]
-		x: 11.47d
+		x: 3.15d
 		y: -7.0d
+	}
+	{
+		dependencies: [
+		"11875898F0862C88"
+		]
+		icon: {
+			id: "minecraft:cobblestone"
+		}
+		id: "89BFDFADBBB1C93C"
+		rewards: [
+		{
+			xp: 30
+			id: "33BDB5C9FB5F2E28"
+			type: "xp"
+		}
+		{
+			id: "780ACB2714DF1C24"
+			type: "toast"
+		}
+		]
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "minecraft:cobblestone"
+			count: 256
+			id: "EE32526E73AFE1D8"
+			type: "item"
+		}
+		{
+			item: "minecraft:water_bucket"
+			count: 8
+			id: "C90349E9AABCF8D3"
+			type: "item"
+		}
+		]
+		x: 1.95d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"89BFDFADBBB1C93C"
+		]
+		icon: {
+			id: "minecraft:water_bucket"
+		}
+		id: "D61BAC24BB1ED9C7"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:water_bucket"
+			count: 16
+			id: "FC1E7268D34A8FCE"
+			type: "item"
+		}
+		{
+			item: "minecraft:stone_bricks"
+			count: 64
+			id: "4E325CC17F862B64"
+			type: "item"
+		}
+		]
+		x: 1.61d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"D61BAC24BB1ED9C7"
+		]
+		icon: {
+			id: "minecraft:stone_brick_stairs"
+		}
+		id: "796FC1F0C891D555"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:stone_brick_stairs"
+			count: 64
+			id: "0A31222ECAE2D019"
+			type: "item"
+		}
+		{
+			item: "minecraft:stone_brick_slab"
+			count: 32
+			id: "157AED03AD494D7C"
+			type: "item"
+		}
+		]
+		x: 5.93d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"11875898F0862C88"
+		]
+		icon: {
+			id: "minecraft:mossy_cobblestone"
+		}
+		id: "27A483C0D44B2B73"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:mossy_cobblestone"
+			count: 64
+			id: "0D53C95BFF7AF4BD"
+			type: "item"
+		}
+		{
+			item: "minecraft:chain"
+			count: 16
+			id: "C52C0F84DECC86E3"
+			type: "item"
+		}
+		]
+		x: 5.1d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"A5DB0F3C70C45AE0"
+		]
+		icon: {
+			id: "tfmg:asphalt"
+		}
+		id: "594C07F89DAD8B3D"
+		rewards: [
+		{
+			xp: 30
+			id: "69E338FF08DB7E28"
+			type: "xp"
+		}
+		{
+			id: "EB23A5728E627D93"
+			type: "toast"
+		}
+		]
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "tfmg:asphalt"
+			count: 256
+			id: "73CD7B3D3E5E18DE"
+			type: "item"
+		}
+		{
+			item: "tfmg:asphalt_slab"
+			count: 32
+			id: "F8C39678B9A5610B"
+			type: "item"
+		}
+		]
+		x: 10.87d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"594C07F89DAD8B3D"
+		]
+		icon: {
+			id: "mcwpaths:andesite_flagstone_path"
+		}
+		id: "876F02B8D3A62CBC"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "mcwpaths:andesite_flagstone_path"
+			count: 64
+			id: "CA3CBC1EFC5908F4"
+			type: "item"
+		}
+		{
+			item: "mcwpaths:andesite_square_paving"
+			count: 32
+			id: "44CCA0B65EC4B922"
+			type: "item"
+		}
+		]
+		x: 7.87d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"876F02B8D3A62CBC"
+		]
+		icon: {
+			id: "mcwpaths:andesite_flagstone_stairs"
+		}
+		id: "183615AF75831AA9"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mcwpaths:andesite_flagstone_stairs"
+			count: 64
+			id: "9B4C2865E4F72527"
+			type: "item"
+		}
+		{
+			item: "minecraft:ladder"
+			count: 32
+			id: "481538A63FC09D99"
+			type: "item"
+		}
+		]
+		x: 4.16d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"993F5DBB86D7FD03"
+		]
+		icon: {
+			id: "mcwbridges:stone_brick_bridge"
+		}
+		id: "CD3166E69AE76182"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "mcwbridges:stone_brick_bridge"
+			count: 8
+			id: "5784449BFF0769B4"
+			type: "item"
+		}
+		{
+			item: "mcwbridges:stone_bridge_pier"
+			count: 8
+			id: "BC513F277A68E377"
+			type: "item"
+		}
+		]
+		x: 10.88d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"993F5DBB86D7FD03"
+		]
+		icon: {
+			id: "mcwbridges:rope_oak_bridge"
+		}
+		id: "7398CF6A4D6139EA"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mcwbridges:rope_oak_bridge"
+			count: 4
+			id: "60D4D69BBA9C6B96"
+			type: "item"
+		}
+		]
+		x: 13.65d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"CD3166E69AE76182"
+		"7398CF6A4D6139EA"
+		]
+		icon: {
+			id: "mcwbridges:iron_bridge"
+		}
+		id: "400656B38C4A98C7"
+		shape: "octagon"
+		size: 1.75d
+		tasks: [
+		{
+			item: "mcwbridges:iron_bridge"
+			count: 6
+			id: "6E4F8BB3A1B78CEF"
+			type: "item"
+		}
+		{
+			item: "mcwbridges:iron_bridge_pier"
+			count: 6
+			id: "3D1662FB824E210F"
+			type: "item"
+		}
+		{
+			item: "mcwbridges:bridge_lantern"
+			count: 8
+			id: "2C3E2832B38ACAEC"
+			type: "item"
+		}
+		]
+		x: 7.12d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"4E1FABCBDD04417E"
+		]
+		icon: {
+			id: "minecraft:bricks"
+		}
+		id: "DB61CBE0B98ACCD9"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:bricks"
+			count: 128
+			id: "F97E866F45CC7654"
+			type: "item"
+		}
+		{
+			item: "minecraft:stone_brick_slab"
+			count: 32
+			id: "E108B0EAEED9878F"
+			type: "item"
+		}
+		]
+		x: 10.09d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"DB61CBE0B98ACCD9"
+		]
+		icon: {
+			id: "create:fluid_pipe"
+		}
+		id: "734FF60ED7964483"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "create:fluid_pipe"
+			count: 64
+			id: "2DDFD1A787BF57BF"
+			type: "item"
+		}
+		{
+			item: "minecraft:iron_trapdoor"
+			count: 8
+			id: "0949DE76BE1F2A04"
+			type: "item"
+		}
+		]
+		x: 8.93d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"734FF60ED7964483"
+		]
+		icon: {
+			id: "minecraft:sponge"
+		}
+		id: "F74623B6DB682AAD"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:sponge"
+			count: 16
+			id: "FE8032E2F50C266A"
+			type: "item"
+		}
+		{
+			item: "minecraft:water_bucket"
+			count: 8
+			id: "006575989107EE32"
+			type: "item"
+		}
+		]
+		x: 1.05d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"306CE9560F0230E8"
+		]
+		icon: {
+			id: "tfmg:traffic_light"
+		}
+		id: "B1E6EC11CDB063D1"
+		rewards: [
+		{
+			xp: 30
+			id: "730FCB12AB7497CC"
+			type: "xp"
+		}
+		{
+			id: "B1B65064FDDA2A14"
+			type: "toast"
+		}
+		]
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "tfmg:traffic_light"
+			count: 4
+			id: "0E979823921D1C47"
+			type: "item"
+		}
+		{
+			item: "minecraft:white_concrete"
+			count: 64
+			id: "6CB0E5124FE7C8C1"
+			type: "item"
+		}
+		]
+		x: 16.8d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"B1E6EC11CDB063D1"
+		]
+		icon: {
+			id: "minecraft:minecart"
+		}
+		id: "C92692DC1C4DFE00"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:minecart"
+			count: 4
+			id: "5272DC04955AE77C"
+			type: "item"
+		}
+		{
+			item: "minecraft:rail"
+			count: 64
+			id: "9666CCEF1C721DB5"
+			type: "item"
+		}
+		]
+		x: 12.64d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"C92692DC1C4DFE00"
+		]
+		icon: {
+			id: "minecraft:lodestone"
+		}
+		id: "B51559625DCEDE80"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:lodestone"
+			count: 2
+			id: "DE8A1F2EB5FFA2B3"
+			type: "item"
+		}
+		{
+			item: "minecraft:campfire"
+			count: 4
+			id: "15C31EF360D8FFBF"
+			type: "item"
+		}
+		{
+			item: "minecraft:barrel"
+			count: 8
+			id: "D152E3211298ACF2"
+			type: "item"
+		}
+		]
+		x: 11.7d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"C268D78E02E9E408"
+		]
+		icon: {
+			id: "tfmg:electric_post"
+		}
+		id: "FF1434D794A02CF8"
+		rewards: [
+		{
+			xp: 30
+			id: "6EF7DD7944D4668B"
+			type: "xp"
+		}
+		{
+			id: "A910885971FE25F1"
+			type: "toast"
+		}
+		]
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "tfmg:electric_post"
+			count: 16
+			id: "F24949861DA220D9"
+			type: "item"
+		}
+		{
+			item: "tfmg:cable_tube"
+			count: 32
+			id: "D48DF95E258752E3"
+			type: "item"
+		}
+		]
+		x: 15.79d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"FF1434D794A02CF8"
+		]
+		icon: {
+			id: "tfmg:transformer"
+		}
+		id: "5F4231D285BC1FBF"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "tfmg:transformer"
+			count: 4
+			id: "6693F8515F7BBF0C"
+			type: "item"
+		}
+		{
+			item: "tfmg:transformer"
+			count: 1
+			id: "7D25724124FE74D7"
+			type: "item"
+		}
+		]
+		x: 14.48d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"5F4231D285BC1FBF"
+		]
+		icon: {
+			id: "tfmg:voltmeter"
+		}
+		id: "8B6544DE73A989A2"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "tfmg:voltmeter"
+			count: 2
+			id: "A32FA9FA1FF338BD"
+			type: "item"
+		}
+		{
+			item: "tfmg:electrical_switch"
+			count: 4
+			id: "476A68CDE9229901"
+			type: "item"
+		}
+		]
+		x: 3.6d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"8B6544DE73A989A2"
+		"734FF60ED7964483"
+		]
+		icon: {
+			id: "tfmg:industrial_pipe"
+		}
+		id: "1F3E380C7DBD5448"
+		shape: "octagon"
+		size: 1.75d
+		tasks: [
+		{
+			item: "tfmg:industrial_pipe"
+			count: 64
+			id: "FEDFE8EA2428A267"
+			type: "item"
+		}
+		{
+			item: "tfmg:cable_tube"
+			count: 64
+			id: "BD78D8A4C5FFFBF2"
+			type: "item"
+		}
+		{
+			item: "tfmg:steel_pipe"
+			count: 32
+			id: "91A988F7975BA991"
+			type: "item"
+		}
+		]
+		x: 2.25d
+		y: -10.5d
+	}
+	{
+		dependencies: [
+		"1F3E380C7DBD5448"
+		]
+		icon: {
+			id: "tfmg:cable_connector"
+		}
+		id: "7A7596A8000D9F39"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "tfmg:cable_connector"
+			count: 16
+			id: "C0D10886A665607D"
+			type: "item"
+		}
+		{
+			item: "tfmg:steel_fluid_tank"
+			count: 4
+			id: "3C6952238D2D323A"
+			type: "item"
+		}
+		]
+		x: -1.27d
+		y: -12.25d
+	}
+	{
+		dependencies: [
+		"7A7596A8000D9F39"
+		]
+		icon: {
+			id: "minecraft:cauldron"
+		}
+		id: "A9F054E8EAD23735"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:cauldron"
+			count: 8
+			id: "4E69EFD1F86B8626"
+			type: "item"
+		}
+		{
+			item: "minecraft:water_bucket"
+			count: 8
+			id: "B87D87CC8C88A3A2"
+			type: "item"
+		}
+		]
+		x: -1.27d
+		y: -14.0d
+	}
+	{
+		dependencies: [
+		"7A7596A8000D9F39"
+		]
+		icon: {
+			id: "minecraft:iron_door"
+		}
+		id: "EEF4438ADC31FA16"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:iron_door"
+			count: 8
+			id: "23AC3BCD74070C9F"
+			type: "item"
+		}
+		{
+			item: "minecraft:iron_bars"
+			count: 32
+			id: "43A868B3074A5323"
+			type: "item"
+		}
+		]
+		x: 1.27d
+		y: -14.0d
+	}
+	{
+		dependencies: [
+		"F74623B6DB682AAD"
+		"EEFBAE645686C7F5"
+		]
+		icon: {
+			id: "minecraft:water_bucket"
+		}
+		id: "AA85F1179C7CB43D"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:water_bucket"
+			count: 16
+			id: "1EAC566AB23BD870"
+			type: "item"
+		}
+		{
+			item: "minecraft:mossy_cobblestone"
+			count: 64
+			id: "1A555824F51D3E9C"
+			type: "item"
+		}
+		]
+		x: 5.21d
+		y: -10.5d
+	}
+	{
+		dependencies: [
+		"AA85F1179C7CB43D"
+		]
+		icon: {
+			id: "minecraft:iron_bars"
+		}
+		id: "63690B16A709DD40"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:iron_bars"
+			count: 64
+			id: "FCFB0D03A1BDD875"
+			type: "item"
+		}
+		{
+			item: "minecraft:oak_fence_gate"
+			count: 4
+			id: "A791D6785F46EAF3"
+			type: "item"
+		}
+		]
+		x: 1.5d
+		y: -12.25d
+	}
+	{
+		dependencies: [
+		"012C33D8C552CEF0"
+		]
+		icon: {
+			id: "minecraft:spyglass"
+		}
+		id: "2391DC691E88B107"
+		rewards: [
+		{
+			xp: 30
+			id: "6918A20FED94835A"
+			type: "xp"
+		}
+		{
+			id: "B3C193600C4E7428"
+			type: "toast"
+		}
+		]
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "minecraft:spyglass"
+			count: 1
+			id: "8486756769DAC00C"
+			type: "item"
+		}
+		{
+			item: "minecraft:target"
+			count: 4
+			id: "F80C553EE56A59B9"
+			type: "item"
+		}
+		{
+			item: "minecraft:filled_map"
+			count: 4
+			id: "36640BBA05622A82"
+			type: "item"
+		}
+		]
+		x: 19.54d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"2391DC691E88B107"
+		]
+		icon: {
+			id: "minecraft:scaffolding"
+		}
+		id: "028A0E52862EA4D0"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:scaffolding"
+			count: 64
+			id: "CDE192B9E06530D8"
+			type: "item"
+		}
+		{
+			item: "tfmg:steel_scaffolding"
+			count: 16
+			id: "470AD197C4732034"
+			type: "item"
+		}
+		]
+		x: 17.25d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"2391DC691E88B107"
+		]
+		icon: {
+			id: "minecraft:campfire"
+		}
+		id: "BC53040EBB17FE61"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:campfire"
+			count: 4
+			id: "5738D2B54891770B"
+			type: "item"
+		}
+		{
+			item: "minecraft:red_bed"
+			count: 2
+			id: "8869C4F30CB83339"
+			type: "item"
+		}
+		{
+			item: "minecraft:chest"
+			count: 4
+			id: "094DE4CA919F250B"
+			type: "item"
+		}
+		]
+		x: 19.8d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"BC53040EBB17FE61"
+		"028A0E52862EA4D0"
+		]
+		icon: {
+			id: "tfmg:factory_floor"
+		}
+		id: "5BCAC8BE5536FA2E"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "tfmg:factory_floor"
+			count: 64
+			id: "7ADF99E910E98AF2"
+			type: "item"
+		}
+		{
+			item: "minecraft:barrel"
+			count: 16
+			id: "6F3E3A93E60B9CDB"
+			type: "item"
+		}
+		]
+		x: 6.37d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"D61BAC24BB1ED9C7"
+		"796FC1F0C891D555"
+		"27A483C0D44B2B73"
+		"183615AF75831AA9"
+		"400656B38C4A98C7"
+		"F74623B6DB682AAD"
+		"B51559625DCEDE80"
+		"8B6544DE73A989A2"
+		"7A7596A8000D9F39"
+		"EEF4438ADC31FA16"
+		"63690B16A709DD40"
+		"5BCAC8BE5536FA2E"
+		]
+		icon: {
+			id: "minecraft:chiseled_stone_bricks"
+		}
+		id: "235ADF1F08F06F66"
+		shape: "octagon"
+		size: 1.75d
+		tasks: [
+		{
+			item: "minecraft:chiseled_stone_bricks"
+			count: 32
+			id: "303E8E9E84EFD08F"
+			type: "item"
+		}
+		{
+			item: "minecraft:oak_sign"
+			count: 8
+			id: "1FF4A346789BBB12"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -15.75d
 	}
 	]
 }

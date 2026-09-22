@@ -1,17 +1,35 @@
-# 御敌（时代 4 · defense）
+# 编年 · 御敌（时代 4 · defense）
 #
 # 时代定义：`eras.json` → id=defense, name=御敌, durationHours=60, coefficient=1.60
-# 主菜：**威胁防御**（DESIGN.md §17.5）
 #
-# 与「技艺 · 防御与尸潮」的分工（**这条很重要，免得两章重复**）
+# 本章的定位（**与相邻章的分工，先看这一段**）
 # ------------------------------------------------------------
-#   · 本章 = **国策视角**：这个时代要做什么、达标线在哪（袭击规模、工事升级树、国力映射）
-#   · 技艺章 = **系统视角**：The Hordes / Undead Nights 这套外来威胁怎么用、判据怎么写
-#   两章用 quest_links 软链，不互相做硬前置。
+#   · **本章 = 国策·达标线**：这个时代要达成什么防御目标——人、编制、标准、验收
+#   · `70-defense`（技艺）  = 系统层：工事怎么建、自动化怎么搭、照明预警怎么布
+#   · `164-cat-horde`（类目）= mod 家族：The Hordes / Undead Nights 各自是什么
+#     → 本章不介绍它们，只把它们的**配置数字**当标准依据
+#   · `54-conquest`（邦交） = 攻城与属地治理；本章只写**与属地的联防**这一面
+#   软链接，不做硬前置。
 #
-# 判据来源：原版统计（bell_ring / raid_trigger / damage_blocked_by_shield / mob_kills）
-# + 原版进度 + 物品。The Hordes / Undead Nights **不提供进度与统计**（实测），
-# 所以"袭击被守住"这种事件级目标只能自检——已在正文里写明。
+# 判据依据（逐条取过证，不凭印象）
+# ------------------------------------------------------------
+#   · `server/logs/hordes.log`（The Hordes 自己写的加载日志，2026-09-22 读到）：
+#     注册名 `hordes:zombie_player` / `hordes:husk_player` / `hordes:drowned_player`；
+#     免疫清单只有 `minecraft:enchanted_golden_apple`（150 tick）；
+#     护甲抗感染表 leather 0.05 / iron 0.10 / diamond 0.15 / netherite 0.20 / wolf_armor 1.0；
+#     感染转换表：村民→僵尸村民 0.15、掠夺者→僵尸村民 0.15、唤魔者 0.5、女巫 0.7
+#   · `server/config/hordes-common.toml`：hordeSpawnDays=10、spawnAmount=15、
+#     hordeSpawnMultiplier=1.05（每波 +5%）、hordeStartTime=18000（午夜）、
+#     canSleepDuringHorde=false、zombiesBurn=false、infectPlayers=true
+#   · `server/config/undeadnights-server.toml` 与同目录两份 json：
+#     5 天一次尸潮夜、场上上限 80、`hordeMobsCanClimbEachOther=true`（叠罗汉爬墙）、
+#     爆破僵尸带 `tnt:5`、尸潮僵尸白天不烧、
+#     `blockLightLevelsInfluenceMonsterSpawns=false`（**光照拦不住尸潮**：
+#     所以「把墙外点亮」是治安措施，不是防守方案）
+#   · 原版统计与进度：bell_ring / raid_trigger / target_hit / walk_one_cm / deaths / mob_kills
+#
+# **checkmark**：本章只在两条**已登记过的旧条目**上用（`hold_a_wave`、`under_attack`，
+# 理由写在那两条的注释里）。本次新增的条目一律用 kill / stat 落判据，**不新增自检格**。
 
 key = "defense_era"
 title = "御敌"
@@ -21,7 +39,380 @@ icon = "minecraft:shield"
 order_index = 6
 grid = { step = 1.5, row_h = 1.75 }
 
-# ---------------- 国策主线 ----------------
+# ---- 簇 1：编制 ----
+
+[[quest]]
+name = "militia_roll"
+title = "民兵名册"
+desc = [
+	"名册要写清三件事：谁能上墙、谁只做后勤、谁在城外的据点。",
+	"没有名册的动员，第一夜会先花时间找人，再谈防守。",
+]
+icon = "minecraft:written_book"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "minecraft:written_book" },
+	{ type = "item", item = "minecraft:ink_sac", count = 4 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "militia_kit"
+title = "制式装备"
+desc = [
+	"护甲在这里不只是防御值：hordes 的护甲表按甲种给抗感染率——皮革 0.05、铁 0.10、钻石 0.15、下界合金 0.20。",
+	"「制式」的意思就是同一档的甲要够一队人穿。",
+]
+icon = "minecraft:iron_chestplate"
+shape = "rsquare"
+deps = ["militia_roll"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_helmet", count = 8 },
+	{ type = "item", item = "minecraft:iron_chestplate", count = 8 },
+	{ type = "item", item = "minecraft:shield", count = 8 },
+]
+
+[[quest]]
+name = "militia_bow"
+title = "弩手班"
+desc = [
+	"守城的主力是齐射，不是个人勇武。",
+	"一队人的弩与箭按同一口径备，才不会有人打完三轮就空手。",
+]
+icon = "minecraft:crossbow"
+shape = "rsquare"
+deps = ["militia_kit"]
+tasks = [
+	{ type = "item", item = "minecraft:crossbow", count = 8 },
+	{ type = "item", item = "minecraft:arrow", count = 256 },
+]
+
+[[quest]]
+name = "militia_reserve"
+title = "后备役"
+desc = [
+	"后备役不配铁：皮革甲的抗感染率是 0.05，仍然比空手强。",
+]
+icon = "minecraft:leather_chestplate"
+shape = "circle"
+size = 1.2
+deps = ["militia_roll"]
+tasks = [
+	{ type = "item", item = "minecraft:leather_chestplate", count = 8 },
+	{ type = "item", item = "minecraft:leather_helmet", count = 8 },
+]
+
+[[quest]]
+name = "militia_wolves"
+title = "狼群哨"
+desc = [
+	"hordes 的护甲表里，狼铠的感染减免是 1.0——那张表上唯一满值的一项。",
+	"所以先驯几头狼，再给它们配狼铠：这是唯一不会被感染的哨兵。",
+]
+icon = "minecraft:wolf_armor"
+shape = "circle"
+size = 1.2
+deps = ["militia_roll"]
+tasks = [
+	{ type = "item", item = "minecraft:wolf_armor", count = 4 },
+	{ type = "item", item = "minecraft:bone", count = 16 },
+]
+
+[[quest]]
+name = "mobilize_plan"
+title = "战时动员令"
+desc = [
+	"动员令只回答三件事：谁上前、谁留守、谁管后勤。",
+]
+icon = "minecraft:bell"
+shape = "rsquare"
+deps = ["militia_roll"]
+tasks = [
+	{ type = "item", item = "minecraft:written_book" },
+	{ type = "item", item = "minecraft:white_banner", count = 4 },
+]
+
+[[quest]]
+name = "squad_banner"
+title = "分段队旗"
+desc = [
+	"先把墙分段、每段定一面旗；出事时报的是「哪面旗」，不是模糊的方向。",
+]
+icon = "minecraft:white_banner"
+shape = "circle"
+size = 1.2
+deps = ["militia_kit"]
+tasks = [
+	{ type = "item", item = "minecraft:white_banner", count = 8 },
+	{ type = "item", item = "minecraft:item_frame", count = 8 },
+]
+
+[[quest]]
+name = "civil_evac"
+title = "平民安置"
+desc = [
+	"村民被咬会变成僵尸村民（hordes 的感染转换表里，村民与掠夺者的抗性都只有 0.15）。",
+	"所以平民安置不是后勤问题，是防御问题。",
+]
+icon = "minecraft:white_bed"
+shape = "rsquare"
+deps = ["militia_roll"]
+tasks = [
+	{ type = "item", item = "minecraft:white_bed", count = 8 },
+	{ type = "item", item = "minecraft:bread", count = 32 },
+]
+
+[[quest]]
+name = "ally_defense"
+title = "与属地的联防"
+desc = [
+	"联防要落到三个数字上：谁能来、多久能到、来了吃什么。",
+	"写在纸上才算数，口头约定在围城时找不到人。",
+]
+icon = "minecraft:filled_map"
+shape = "rsquare"
+deps = ["militia_roll"]
+tasks = [
+	{ type = "item", item = "minecraft:filled_map", count = 3 },
+	{ type = "item", item = "minecraft:written_book" },
+	{ type = "item", item = "minecraft:bread", count = 32 },
+]
+
+# ---- 簇 2：值守与演练 ----
+
+[[quest]]
+name = "watch_roster"
+title = "值守轮班表"
+desc = [
+	"尸潮从午夜开始（The Hordes 的 hordeStartTime = 18000），而且尸潮期间不能睡（canSleepDuringHorde = false）。",
+	"所以轮班表不是排班偏好，是硬约束。",
+]
+icon = "minecraft:clock"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "minecraft:clock", count = 4 },
+	{ type = "item", item = "minecraft:written_book" },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "watch_posts"
+title = "哨位与瞭望台"
+desc = [
+	"哨位要能互相看见：看不见的哨位等于没有哨位。",
+]
+icon = "minecraft:scaffolding"
+shape = "rsquare"
+deps = ["watch_roster"]
+tasks = [
+	{ type = "item", item = "minecraft:scaffolding", count = 32 },
+	{ type = "item", item = "minecraft:spyglass", count = 2 },
+]
+
+[[quest]]
+name = "night_watch"
+title = "夜班加岗"
+desc = [
+	"白天不刷的只有原版僵尸；尸潮僵尸白天照样站着（hordeZombiesBurnInTheSun = false）。",
+	"但它们的波次从午夜来，所以夜班必须比白班厚。",
+]
+icon = "minecraft:lantern"
+shape = "circle"
+size = 1.2
+deps = ["watch_roster"]
+tasks = [
+	{ type = "item", item = "minecraft:lantern", count = 24 },
+	{ type = "item", item = "minecraft:clock", count = 2 },
+]
+
+[[quest]]
+name = "patrol_route"
+title = "巡逻路线"
+desc = [
+	"巡逻没有专门统计，只有里程可查——所以这一条看的是走出来的距离，不是排过的班。",
+]
+icon = "minecraft:leather_boots"
+shape = "circle"
+size = 1.2
+deps = ["watch_roster"]
+tasks = [
+	{ type = "item", item = "minecraft:leather_boots" },
+	{ type = "stat", stat = "minecraft:walk_one_cm", value = 100000 },
+]
+
+[[quest]]
+name = "bell_protocol"
+title = "敲钟集结"
+desc = [
+	"设计里「敲钟集结」是唯一的集结信号，而原版**真的记这个统计**（`bell_ring`）。",
+	"约定好敲法：一声集合、三声回城。敲够 10 次，说明它真的被用起来了。",
+]
+icon = "minecraft:bell"
+shape = "rsquare"
+deps = ["wall_upgrade_1"]
+tasks = [
+	{ type = "stat", stat = "minecraft:bell_ring", value = 10 },
+]
+
+[[quest]]
+name = "drill_evac"
+title = "疏散演练"
+desc = [
+	"疏散信号就是钟。演练到三十次，它才算条件反射，而不是纸面流程。",
+]
+icon = "minecraft:bell"
+shape = "rsquare"
+deps = ["bell_protocol"]
+tasks = [
+	{ type = "stat", stat = "minecraft:bell_ring", value = 30 },
+]
+
+[[quest]]
+name = "drill_fire"
+title = "消防水缸"
+desc = [
+	"游戏不记「灭过火」，所以这一步的判据落在设施上：水缸与水桶放在墙根，不是仓库深处。",
+]
+icon = "minecraft:cauldron"
+shape = "circle"
+size = 1.2
+deps = ["watch_roster"]
+tasks = [
+	{ type = "item", item = "minecraft:cauldron", count = 4 },
+	{ type = "item", item = "minecraft:water_bucket", count = 4 },
+]
+
+[[quest]]
+name = "drill_siege"
+title = "围城演练"
+desc = [
+	"标靶击中有原版统计（target_hit），是少数能机械判定的演练动作。",
+]
+icon = "minecraft:target"
+shape = "rsquare"
+deps = ["drill_evac"]
+tasks = [
+	{ type = "stat", stat = "minecraft:target_hit", value = 20 },
+]
+
+# ---- 簇 3：预警分级 ----
+
+[[quest]]
+name = "alert_three_tier"
+title = "三级戒备"
+desc = [
+	"三级要各有各的信号：常态是火，加强是钟，临战是烟花。",
+	"三档混用等于没有预警——喊同一句话，没人知道该拿武器还是该撤。",
+]
+icon = "minecraft:campfire"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "minecraft:campfire", count = 3 },
+	{ type = "item", item = "minecraft:bell" },
+	{ type = "item", item = "minecraft:firework_rocket", count = 8 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "alert_fireworks"
+title = "烟花信号弹"
+desc = [
+	"烟花是唯一白天也能看见的信号，射高就是它的射程。",
+]
+icon = "minecraft:firework_rocket"
+shape = "circle"
+size = 1.2
+deps = ["alert_three_tier"]
+tasks = [
+	{ type = "item", item = "minecraft:firework_rocket", count = 24 },
+	{ type = "item", item = "minecraft:gunpowder", count = 16 },
+]
+
+[[quest]]
+name = "alert_scouts"
+title = "斥候与情报分级"
+desc = [
+	"斥候报回来的东西要分档：看见了、看见了几个、几个正朝这里来。",
+]
+icon = "minecraft:spyglass"
+shape = "rsquare"
+deps = ["alert_three_tier"]
+tasks = [
+	{ type = "item", item = "minecraft:spyglass", count = 2 },
+	{ type = "item", item = "minecraft:written_book" },
+	{ type = "item", item = "minecraft:filled_map" },
+]
+
+[[quest]]
+name = "alert_courier"
+title = "驿传与信使"
+desc = [
+	"在属地与主城之间建驿站：属地的报信要在半天内到主城。",
+	"靠人送情报，驿站与坐骑就是预警系统的一部分。",
+]
+icon = "minecraft:saddle"
+shape = "rsquare"
+deps = ["alert_scouts"]
+tasks = [
+	{ type = "item", item = "minecraft:saddle", count = 2 },
+	{ type = "item", item = "minecraft:filled_map", count = 2 },
+]
+
+[[quest]]
+name = "alert_darken"
+title = "灯火管制"
+desc = [
+	"灯火管制的用处不在躲，而在读：灯灭即临战，城里所有人一眼就知道现在是什么状态。",
+]
+icon = "minecraft:redstone_lamp"
+shape = "circle"
+size = 1.2
+deps = ["alert_three_tier"]
+tasks = [
+	{ type = "item", item = "minecraft:redstone_lamp", count = 8 },
+	{ type = "item", item = "minecraft:lever", count = 8 },
+]
+
+[[quest]]
+name = "warning_net"
+title = "烽火网络"
+desc = [
+	"三处烽火，点火要在主城能看见。远方的据点出事时，这是唯一的信号。",
+]
+icon = "minecraft:campfire"
+shape = "rsquare"
+deps = ["wall_upgrade_1"]
+tasks = [
+	{ type = "item", item = "minecraft:campfire", count = 3 },
+]
+
+[[quest]]
+name = "under_attack"
+title = "被宣战"
+desc = [
+	"有一个国家对你们宣战——这是国策的第一次真正压力。",
+	"⚠️ 宣战是 mod 侧事件，不发进度（实测），所以这一条自检。",
+]
+icon = "minecraft:writable_book"
+shape = "rsquare"
+deps = ["clear_a_zone"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# ---- 簇 4：储备与规格 ----
 
 [[quest]]
 name = "wall_upgrade_1"
@@ -51,30 +442,105 @@ tasks = [
 ]
 
 [[quest]]
-name = "warning_net"
-title = "烽火网络"
+name = "stock_spec_height"
+title = "墙高规格"
 desc = [
-	"三处烽火，点火要在主城能看见。远方的据点出事时，这是唯一的信号。",
+	"尸潮会叠着往上爬（undeadnights 的 hordeMobsCanClimbEachOther = true）。",
+	"所以要按硬指标定墙高：高度不够，墙顶再加一圈外挑。",
 ]
-icon = "minecraft:campfire"
+icon = "minecraft:scaffolding"
 shape = "rsquare"
 deps = ["wall_upgrade_1"]
 tasks = [
-	{ type = "item", item = "minecraft:campfire", count = 3 },
+	{ type = "item", item = "minecraft:stone_bricks", count = 128 },
+	{ type = "item", item = "minecraft:scaffolding", count = 32 },
 ]
 
 [[quest]]
-name = "bell_protocol"
-title = "敲钟集结"
+name = "stock_spec_thickness"
+title = "墙厚规格"
 desc = [
-	"设计里「敲钟集结」是唯一的集结信号，而原版**真的记这个统计**（`bell_ring`）。",
-	"约定好敲法：一声集合、三声回城。敲够 10 次，说明它真的被用起来了。",
+	"爆破僵尸带 TNT（horde_mobs 配置里 extraSpawnInfo = tnt:5），厚墙是唯一不需要人维护的对策。",
 ]
-icon = "minecraft:bell"
+icon = "minecraft:stone_bricks"
+shape = "rsquare"
+deps = ["stock_spec_height"]
+tasks = [
+	{ type = "item", item = "minecraft:stone_bricks", count = 256 },
+	{ type = "item", item = "minecraft:cobblestone", count = 256 },
+]
+
+[[quest]]
+name = "stock_spec_bastion"
+title = "马面与射界"
+desc = [
+	"直墙有一段打不到的死角，凸出去的马面就是为了消掉它。",
+]
+icon = "minecraft:stone_brick_stairs"
+shape = "rsquare"
+deps = ["stock_spec_height"]
+tasks = [
+	{ type = "item", item = "minecraft:stone_brick_stairs", count = 64 },
+	{ type = "item", item = "minecraft:ladder", count = 16 },
+]
+
+[[quest]]
+name = "stock_arrows"
+title = "箭矢基数"
+desc = [
+	"基数 = 打光一整个尸潮夜也不会见底的数量。",
+]
+icon = "minecraft:arrow"
+shape = "circle"
+size = 1.2
+deps = ["wall_upgrade_1"]
+tasks = [
+	{ type = "item", item = "minecraft:arrow", count = 256 },
+]
+
+[[quest]]
+name = "stock_immunity"
+title = "免疫储备"
+desc = [
+	"hordes 的免疫清单上只有附魔金苹果（150 tick）；感染会死人，也会把死人变成僵尸玩家。",
+	"这是唯一挡得住感染的东西，所以按人头备，不按箱备。",
+]
+icon = "minecraft:enchanted_golden_apple"
 shape = "rsquare"
 deps = ["wall_upgrade_1"]
 tasks = [
-	{ type = "stat", stat = "minecraft:bell_ring", value = 10 },
+	{ type = "item", item = "minecraft:enchanted_golden_apple", count = 4 },
+	{ type = "item", item = "minecraft:golden_apple", count = 16 },
+]
+
+[[quest]]
+name = "stock_potions"
+title = "药剂储备"
+desc = [
+	"药剂按用途分箱：治疗、迅捷、抗火。牛奶桶留一组应急。",
+]
+icon = "minecraft:splash_potion"
+shape = "circle"
+size = 1.2
+deps = ["wall_upgrade_1"]
+tasks = [
+	{ type = "item", item = "minecraft:splash_potion", count = 8 },
+	{ type = "item", item = "minecraft:milk_bucket", count = 4 },
+]
+
+[[quest]]
+name = "stock_food"
+title = "战备粮"
+desc = [
+	"被围时最先见底的往往是食物，不是箭。",
+]
+icon = "minecraft:hay_block"
+shape = "circle"
+size = 1.2
+deps = ["wall_upgrade_1"]
+tasks = [
+	{ type = "item", item = "minecraft:hay_block", count = 32 },
+	{ type = "item", item = "minecraft:dried_kelp_block", count = 16 },
 ]
 
 [[quest]]
@@ -91,6 +557,218 @@ tasks = [
 	{ type = "item", item = "minecraft:iron_chestplate", count = 4 },
 ]
 
+[[quest]]
+name = "emergency_store"
+title = "应急仓"
+desc = [
+	"被围时能独立支撑的食物与箭——放在城墙内侧，不在主仓。",
+]
+icon = "minecraft:barrel"
+shape = "circle"
+size = 1.2
+deps = ["armory"]
+tasks = [
+	{ type = "item", item = "minecraft:barrel", count = 8 },
+]
+
+[[quest]]
+name = "auto_arrows"
+title = "自动补箭"
+desc = [
+	"一支箭的产线：木 → 箭。缺箭的守城撑不过第二波。",
+]
+icon = "minecraft:fletching_table"
+shape = "circle"
+size = 1.2
+deps = ["arrow_towers"]
+tasks = [
+	{ type = "item", item = "minecraft:fletching_table" },
+]
+
+[[quest]]
+name = "moat"
+title = "壕沟"
+desc = [
+	"城外一道 ≥2 格深的沟，入口配吊桥或跳板。",
+]
+icon = "minecraft:iron_trapdoor"
+shape = "circle"
+size = 1.2
+deps = ["wall_upgrade_1"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_trapdoor", count = 4 },
+]
+
+[[quest]]
+name = "trap_field"
+title = "陷阱区"
+desc = [
+	"入口处一片可复用的陷阱——不是一次性消耗品。",
+]
+icon = "minecraft:target"
+shape = "circle"
+size = 1.2
+deps = ["wall_upgrade_1"]
+tasks = [
+	{ type = "item", item = "minecraft:target", count = 4 },
+]
+
+[[quest]]
+name = "wall_lighting"
+title = "墙外不黑"
+desc = [
+	"黑的地方就是它们生成的地方。墙外一圈点亮。",
+]
+icon = "minecraft:lantern"
+shape = "circle"
+size = 1.2
+deps = ["wall_upgrade_1"]
+tasks = [
+	{ type = "item", item = "minecraft:lantern", count = 32 },
+]
+
+[[quest]]
+name = "arrow_towers"
+title = "箭塔"
+desc = [
+	"≥2 座，能覆盖城外一段。塔上有箭箱。",
+]
+icon = "minecraft:dispenser"
+shape = "circle"
+size = 1.2
+deps = ["armory"]
+tasks = [
+	{ type = "item", item = "minecraft:dispenser", count = 2 },
+]
+
+[[quest]]
+name = "escape_tunnel"
+title = "地道"
+desc = [
+	"一条不经过正门的进出通道。城被围死时它是退路。",
+]
+icon = "minecraft:iron_pickaxe"
+shape = "circle"
+size = 1.2
+deps = ["wall_upgrade_2"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_pickaxe" },
+]
+
+# ---- 簇 5：善后与复盘 ----
+
+[[quest]]
+name = "infirmary"
+title = "救护点"
+desc = [
+	"床 + 药 + 一张写明流程的牌子。别让人受伤后只能等死。",
+]
+icon = "minecraft:white_bed"
+shape = "circle"
+size = 1.2
+deps = ["armory"]
+tasks = [
+	{ type = "item", item = "minecraft:white_bed", count = 4 },
+	{ type = "item", item = "minecraft:brewing_stand" },
+]
+
+[[quest]]
+name = "casualty_roll"
+title = "伤亡名册"
+desc = [
+	"伤亡要记下来：谁在哪个位置倒下、当时是几级戒备。",
+	"下一次布防靠这份记录，而不是靠印象。",
+]
+icon = "minecraft:written_book"
+shape = "pentagon"
+size = 2.0
+deps = ["infirmary"]
+tasks = [
+	{ type = "stat", stat = "minecraft:deaths", value = 1 },
+	{ type = "item", item = "minecraft:written_book" },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "graveyard"
+title = "阵亡者墓园"
+desc = [
+	"先把墓园选址在城外一侧，碑上刻名字与日期——这是方志的第一手材料。",
+]
+icon = "minecraft:chiseled_stone_bricks"
+shape = "rsquare"
+deps = ["casualty_roll"]
+tasks = [
+	{ type = "item", item = "minecraft:chiseled_stone_bricks", count = 8 },
+	{ type = "item", item = "minecraft:oak_sign", count = 8 },
+]
+
+# 判据说明：`hordes:zombie_player` 的**镇杀**判据写在 `70-defense.kill_zombie_player`。
+# 同一章对（55 / 70）不放同一条击杀判据 —— 否则两条任务会在同一刻一起亮。
+# 所以这一条的判据落在「收殓箱 + 遗物名册」，机制写在正文里。
+[[quest]]
+name = "relics"
+title = "遗物收殓"
+desc = [
+	"死于感染的队友会变成 hordes:zombie_player，而且带走了自己的东西（zombiePlayersStoreItems = true）。",
+	"把东西拿回来、记进名册，才算收殓完——镇杀那一步的判据在技艺章的「镇杀阵亡者的化身」。",
+]
+icon = "minecraft:chest"
+shape = "rsquare"
+deps = ["casualty_roll"]
+tasks = [
+	{ type = "item", item = "minecraft:chest" },
+	{ type = "item", item = "minecraft:written_book" },
+]
+
+[[quest]]
+name = "pension"
+title = "抚恤"
+desc = [
+	"抚恤要定成规矩、从国库出，不能靠同队的人自己凑——这是国家行为与义气的分界。",
+]
+icon = "minecraft:emerald"
+shape = "circle"
+size = 1.2
+deps = ["casualty_roll"]
+tasks = [
+	{ type = "item", item = "minecraft:emerald", count = 32 },
+	{ type = "item", item = "minecraft:hay_block", count = 16 },
+]
+
+[[quest]]
+name = "after_action_review"
+title = "战后复盘"
+desc = [
+	"复盘只问三句：哪一段先破、哪一步慢了、下次改什么。",
+]
+icon = "minecraft:lectern"
+shape = "rsquare"
+deps = ["casualty_roll", "relics"]
+tasks = [
+	{ type = "item", item = "minecraft:lectern" },
+	{ type = "item", item = "minecraft:written_book", count = 2 },
+]
+
+[[quest]]
+name = "history_record"
+title = "写进史册"
+desc = [
+	"复盘要落到能翻回去的文本上——这个时代记的是伤亡与工事。",
+]
+icon = "minecraft:book"
+shape = "rsquare"
+deps = ["after_action_review"]
+tasks = [
+	{ type = "item", item = "minecraft:written_book", count = 2 },
+	{ type = "item", item = "minecraft:book", count = 8 },
+]
+
+# ⚠️ 以下两条用 checkmark，理由见 `tools/questbook_check.py` 的例外清单：
+#   · hold_a_wave：The Hordes / Undead Nights 不提供进度或统计（实测），波次事件没有信号源
 [[quest]]
 name = "hold_a_wave"
 title = "守住一次大规模袭击"
@@ -120,136 +798,7 @@ tasks = [
 	{ type = "stat", stat = "minecraft:raid_trigger", value = 1 },
 ]
 
-[[quest]]
-name = "under_attack"
-title = "被宣战"
-desc = [
-	"有一个国家对你们宣战——这是国策的第一次真正压力。",
-	"⚠️ 宣战是 mod 侧事件，不发进度（实测），所以这一条自检。",
-]
-icon = "minecraft:writable_book"
-shape = "rsquare"
-deps = ["clear_a_zone"]
-tasks = [
-	{ type = "checkmark" },
-]
-
-# ---------------- 支线：工事细节 ----------------
-
-[[quest]]
-name = "moat"
-title = "壕沟"
-desc = [
-	"城外一道 ≥2 格深的沟，入口配吊桥或跳板。",
-]
-icon = "minecraft:iron_trapdoor"
-shape = "circle"
-size = 1.2
-deps = ["wall_upgrade_1"]
-tasks = [
-	{ type = "item", item = "minecraft:iron_trapdoor", count = 4 },
-]
-
-[[quest]]
-name = "arrow_towers"
-title = "箭塔"
-desc = [
-	"≥2 座，能覆盖城外一段。塔上有箭箱。",
-]
-icon = "minecraft:dispenser"
-shape = "circle"
-size = 1.2
-deps = ["armory"]
-tasks = [
-	{ type = "item", item = "minecraft:dispenser", count = 2 },
-]
-
-[[quest]]
-name = "trap_field"
-title = "陷阱区"
-desc = [
-	"入口处一片可复用的陷阱——不是一次性消耗品。",
-]
-icon = "minecraft:target"
-shape = "circle"
-size = 1.2
-deps = ["wall_upgrade_1"]
-tasks = [
-	{ type = "item", item = "minecraft:target", count = 4 },
-]
-
-[[quest]]
-name = "emergency_store"
-title = "应急仓"
-desc = [
-	"被围时能独立支撑的食物与箭——放在城墙内侧，不在主仓。",
-]
-icon = "minecraft:barrel"
-shape = "circle"
-size = 1.2
-deps = ["armory"]
-tasks = [
-	{ type = "item", item = "minecraft:barrel", count = 8 },
-]
-
-[[quest]]
-name = "infirmary"
-title = "救护点"
-desc = [
-	"床 + 药 + 一张写明流程的牌子。别让人受伤后只能等死。",
-]
-icon = "minecraft:white_bed"
-shape = "circle"
-size = 1.2
-deps = ["armory"]
-tasks = [
-	{ type = "item", item = "minecraft:white_bed", count = 4 },
-	{ type = "item", item = "minecraft:brewing_stand" },
-]
-
-[[quest]]
-name = "escape_tunnel"
-title = "地道"
-desc = [
-	"一条不经过正门的进出通道。城被围死时它是退路。",
-]
-icon = "minecraft:iron_pickaxe"
-shape = "circle"
-size = 1.2
-deps = ["wall_upgrade_2"]
-tasks = [
-	{ type = "item", item = "minecraft:iron_pickaxe" },
-]
-
-[[quest]]
-name = "wall_lighting"
-title = "墙外不黑"
-desc = [
-	"黑的地方就是它们生成的地方。墙外一圈点亮。",
-]
-icon = "minecraft:lantern"
-shape = "circle"
-size = 1.2
-deps = ["wall_upgrade_1"]
-tasks = [
-	{ type = "item", item = "minecraft:lantern", count = 32 },
-]
-
-[[quest]]
-name = "auto_arrows"
-title = "自动补箭"
-desc = [
-	"一支箭的产线：木 → 箭。缺箭的守城撑不过第二波。",
-]
-icon = "minecraft:fletching_table"
-shape = "circle"
-size = 1.2
-deps = ["arrow_towers"]
-tasks = [
-	{ type = "item", item = "minecraft:fletching_table" },
-]
-
-# ---------------- 终局 ----------------
+# ---- 终局 ----
 
 [[quest]]
 name = "defense_monument"

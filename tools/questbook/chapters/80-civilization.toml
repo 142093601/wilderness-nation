@@ -753,3 +753,431 @@ tasks = [
 	{ type = "item", item = "create:track_signal", count = 4 },
 ]
 
+# ================= 追加：文明的软性面（2026-09-22）=================
+# 原章做的是**能留下来的东西**：大工程、国史、分区、图书馆、第二城、终局碑。
+# 这一轮补的是「城市不只是建筑」的那一半：时间、度量、礼节、节日、教育、艺术、
+# 分区规划、环境、公共安全、对外形象。
+#
+# 判据用到的 mod（逐个核过 id）：
+#   · `create`：布谷鸟钟（全城计时）、遥控器讲台（公开讲学）、桌上铃（接待）。
+#   · `createrailwaysnavigator`：车站时钟（公共报时）。
+#   · `supplementaries`：时钟方块、黑板、书堆、地球仪、公告板、基座。
+#   · `handcrafted`：长椅与椅子（宴席、接待）。
+#   · `amendments`：双层蛋糕、吊顶旗帜（节庆）。
+#   · `immersive_paintings`：自制画与涂鸦（壁画）。
+#   · `letsparkour`：九种跑酷台阶（体育场与赛道）。
+#   · `tfmg`：万用表（度量衡的实物）。
+#   · 原版：烟花、唱片、烟花之星、皮革衣装、锻纹模板。
+#
+# **覆盖不到的两个（不是漏写，是还没进包）**：`macaws-paintings` 与 `medieval-paintings`
+# 在 `modlist.tsv` 里的状态还是 `plan`，`tools/registry.json` 里没有 `macawspaintings`
+# 与 `medieval_paintings` 命名空间 —— 写它们只会得到永远做不完的任务，所以不写。
+#
+# 与 `40-infra` 的分工：那一章是时代 2 的**工程目标**（水电路桥）；本章是文明时代的
+# **城市形态与社会性内容**（时间、礼节、教育、艺术、规划、卫生、治安、对外）。
+# 与 `88-legacy` 的分工：那一章管「记住与交接」，本章只管「活着的时候像个城」。
+
+# ---------------- 簇 7：历法、度量衡与秩序 ----------------
+
+[[quest]]
+name = "cv_calendar"
+title = "历法与纪年"
+desc = [
+	"全城要有同一个时间：从建国那天起算，写进牌子、书与碑。",
+	"没有共同刻度，国史上所有「第三年秋」都没法互相对齐。",
+]
+icon = "create:cuckoo_clock"
+shape = "pentagon"
+size = 2.0
+deps = ["town_hall"]
+tasks = [
+	{ type = "item", item = "create:cuckoo_clock", count = 1 },
+	{ type = "item", item = "minecraft:clock", count = 2 },
+	{ type = "item", item = "supplementaries:clock_block", count = 2 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "cv_public_clock"
+title = "公共报时"
+desc = [
+	"把时间摆到广场与站台上，让人不用问就知道现在是什么时辰。",
+]
+icon = "createrailwaysnavigator:train_station_clock"
+shape = "circle"
+size = 1.2
+deps = ["cv_calendar"]
+tasks = [
+	{ type = "item", item = "createrailwaysnavigator:train_station_clock", count = 4 },
+	{ type = "item", item = "minecraft:daylight_detector", count = 4 },
+]
+
+[[quest]]
+name = "cv_measures"
+title = "度量衡"
+desc = [
+	"长度、容量、重量各定一个基准，城里所有量都从这里换算。",
+	"基准不定，两处仓库报出来的数字就没法对账。",
+]
+icon = "tfmg:multimeter"
+shape = "rsquare"
+size = 1.75
+deps = ["cv_calendar"]
+tasks = [
+	{ type = "item", item = "tfmg:multimeter", count = 2 },
+	{ type = "item", item = "tfmg:voltmeter", count = 2 },
+	{ type = "item", item = "minecraft:comparator", count = 4 },
+]
+
+[[quest]]
+name = "cv_etiquette"
+title = "公共礼仪与服饰"
+desc = [
+	"办公、接待、节庆各有各的穿戴规矩，把统一配色先定下来。",
+	"外人一眼就能分出谁是当值的、谁是来客。",
+]
+icon = "minecraft:leather_chestplate"
+shape = "circle"
+size = 1.2
+deps = ["cv_measures"]
+tasks = [
+	{ type = "item", item = "minecraft:leather_chestplate", count = 4 },
+	{ type = "item", item = "minecraft:leather_boots", count = 4 },
+	{ type = "item", item = "minecraft:white_dye", count = 16 },
+]
+
+# ---------------- 簇 8：节日、体育与娱乐 ----------------
+
+[[quest]]
+name = "cv_festival"
+title = "节日与庆典"
+desc = [
+	"一年要留出几天专门不做工：烟花、宴席、比赛都算。",
+	"它是长期留人最便宜的手段——比再加一处产线便宜。",
+]
+icon = "minecraft:firework_rocket"
+shape = "pentagon"
+size = 2.0
+deps = ["central_plaza"]
+tasks = [
+	{ type = "item", item = "minecraft:firework_rocket", count = 32 },
+	{ type = "item", item = "minecraft:firework_star", count = 16 },
+	{ type = "item", item = "minecraft:cake", count = 2 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "cv_banquet"
+title = "公共宴席"
+desc = [
+	"吃得下全城人的长桌与座位，摆在广场或大会堂前。",
+	"宴席是唯一能让所有人同时到场的事，散朝之后才好议事。",
+]
+icon = "minecraft:cake"
+shape = "circle"
+size = 1.2
+deps = ["cv_festival"]
+tasks = [
+	{ type = "item", item = "minecraft:cake", count = 4 },
+	{ type = "item", item = "handcrafted:oak_bench", count = 8 },
+	{ type = "item", item = "handcrafted:oak_chair", count = 8 },
+]
+
+[[quest]]
+name = "cv_sports"
+title = "体育场与赛道"
+desc = [
+	"用跑酷台阶铺出有难度的赛道，围出看台与终点。",
+	"比赛是除打仗之外唯一能量出「谁更强」的场合。",
+]
+icon = "minecraft:packed_ice"
+shape = "rsquare"
+size = 1.75
+deps = ["cv_festival"]
+tasks = [
+	{ type = "item", item = "minecraft:packed_ice", count = 16 },
+	{ type = "item", item = "minecraft:slime_block", count = 16 },
+	{ type = "item", item = "minecraft:target", count = 8 },
+]
+
+[[quest]]
+name = "cv_music"
+title = "乐队与曲目"
+desc = [
+	"把能演奏的人与能发声的东西凑到一处，定下几支固定曲目。",
+	"唱片要收藏起来，节日与外交场合都放得出。",
+]
+icon = "minecraft:goat_horn"
+shape = "circle"
+size = 1.2
+deps = ["cv_festival"]
+tasks = [
+	{ type = "item", item = "minecraft:goat_horn", count = 2 },
+	{ type = "item", item = "minecraft:music_disc_cat", count = 1 },
+	{ type = "item", item = "create:steam_whistle", count = 2 },
+]
+
+# ---------------- 簇 9：教育与学术 ----------------
+
+[[quest]]
+name = "cv_school_exam"
+title = "考试与结业"
+desc = [
+	"新人学完要考一次，考过了才算自己人。",
+	"黑板与试卷让「教会了没有」有个看得见的答案。",
+]
+icon = "supplementaries:blackboard"
+shape = "rsquare"
+size = 1.75
+deps = ["school"]
+tasks = [
+	{ type = "item", item = "supplementaries:blackboard", count = 2 },
+	{ type = "item", item = "minecraft:written_book", count = 4 },
+	{ type = "item", item = "minecraft:paper", count = 32 },
+]
+
+[[quest]]
+name = "cv_library_catalog"
+title = "藏书编目"
+desc = [
+	"书要有编号与分区，找一本不用翻遍整座图书馆。",
+	"编目之后，书才能按主题外借，而不是锁在架子上。",
+]
+icon = "minecraft:chiseled_bookshelf"
+shape = "rsquare"
+size = 1.75
+deps = ["library"]
+tasks = [
+	{ type = "item", item = "minecraft:chiseled_bookshelf", count = 16 },
+	{ type = "item", item = "minecraft:chiseled_bookshelf", count = 4 },
+	{ type = "item", item = "minecraft:book", count = 32 },
+]
+
+[[quest]]
+name = "cv_public_lecture"
+title = "公开讲学"
+desc = [
+	"固定时间在讲台前开一次公开课，谁都能来听。",
+	"把「怎么做事」从口耳相传变成可以重复听的东西。",
+]
+icon = "create:controls"
+shape = "circle"
+size = 1.2
+deps = ["cv_school_exam"]
+tasks = [
+	{ type = "item", item = "create:controls", count = 1 },
+	{ type = "item", item = "supplementaries:blackboard", count = 1 },
+	{ type = "item", item = "minecraft:lectern", count = 2 },
+]
+
+# ---------------- 簇 10：美术与展览 ----------------
+
+[[quest]]
+name = "cv_paintings"
+title = "自制画与壁画"
+desc = [
+	"把国旗、国史场面与地标画下来挂上墙，而不是只用原版画。",
+	"自制画的好处是内容由自己定，城市因此有专属的图像。",
+]
+icon = "immersive_paintings:painting"
+shape = "pentagon"
+size = 2.0
+deps = ["museum"]
+tasks = [
+	{ type = "item", item = "immersive_paintings:painting", count = 4 },
+	{ type = "item", item = "immersive_paintings:graffiti", count = 2 },
+	{ type = "item", item = "immersive_paintings:glow_painting", count = 2 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "cv_gallery"
+title = "画廊与陈列"
+desc = [
+	"给画、雕塑与工艺品一个固定的陈列空间与说明牌。",
+	"有陈列，创作者才愿意继续做新的东西。",
+]
+icon = "handcrafted:fancy_painting"
+shape = "circle"
+size = 1.2
+deps = ["cv_paintings"]
+tasks = [
+	{ type = "item", item = "handcrafted:fancy_painting", count = 4 },
+	{ type = "item", item = "supplementaries:pedestal", count = 4 },
+	{ type = "item", item = "minecraft:armor_stand", count = 4 },
+]
+
+[[quest]]
+name = "cv_globe_room"
+title = "舆图与地球仪"
+desc = [
+	"把已知世界做成一件能转着看的东西，摆在接待与议事的地方。",
+	"它是「我们知道多少」最直观的展示。",
+]
+icon = "supplementaries:globe"
+shape = "circle"
+size = 1.2
+deps = ["map_room"]
+tasks = [
+	{ type = "item", item = "supplementaries:globe", count = 2 },
+	{ type = "item", item = "supplementaries:globe_sepia", count = 1 },
+	{ type = "item", item = "minecraft:item_frame", count = 8 },
+]
+
+# ---------------- 簇 11：城市规划与环境 ----------------
+
+[[quest]]
+name = "cv_zoning_map"
+title = "分区图与红线"
+desc = [
+	"把居住、工业、农业、军事四片的边界画成图并钉在墙上。",
+	"红线定下来，扩建才不会互相挤占，争议也才有依据。",
+]
+icon = "minecraft:filled_map"
+shape = "pentagon"
+size = 2.0
+deps = ["districts"]
+tasks = [
+	{ type = "item", item = "minecraft:filled_map", count = 8 },
+	{ type = "item", item = "minecraft:white_concrete", count = 64 },
+	{ type = "item", item = "minecraft:oak_sign", count = 16 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "cv_skyline"
+title = "天际线"
+desc = [
+	"定几个高度档次与屋顶做法，让城市从远处看有轮廓。",
+	"先定高处的用材与灯位，再往上盖，才不会越盖越乱。",
+]
+icon = "minecraft:sea_lantern"
+shape = "circle"
+size = 1.2
+deps = ["cv_zoning_map"]
+tasks = [
+	{ type = "item", item = "minecraft:sea_lantern", count = 16 },
+	{ type = "item", item = "minecraft:glass", count = 64 },
+	{ type = "item", item = "minecraft:lightning_rod", count = 4 },
+]
+
+[[quest]]
+name = "cv_sanitation"
+title = "垃圾与排污"
+desc = [
+	"城里要有固定的废弃物去处：堆肥桶、下水口与清运路线。",
+	"这一条不做，住区会先变成垃圾场，然后才变成废墟。",
+]
+icon = "minecraft:composter"
+shape = "rsquare"
+size = 1.75
+deps = ["cv_zoning_map"]
+tasks = [
+	{ type = "item", item = "minecraft:composter", count = 8 },
+	{ type = "item", item = "minecraft:hopper", count = 8 },
+	{ type = "item", item = "minecraft:cauldron", count = 8 },
+]
+
+[[quest]]
+name = "cv_greening"
+title = "绿化"
+desc = [
+	"沿街与广场补种树木、草皮与花箱，把裸地盖住。",
+	"绿化是最便宜的美化，也是唯一会自己长大的装饰。",
+]
+icon = "minecraft:oak_sapling"
+shape = "circle"
+size = 1.2
+deps = ["cv_zoning_map"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_sapling", count = 32 },
+	{ type = "item", item = "minecraft:moss_block", count = 32 },
+	{ type = "item", item = "minecraft:bone_meal", count = 32 },
+]
+
+# ---------------- 簇 12：公共安全与对外形象 ----------------
+
+[[quest]]
+name = "cv_patrol"
+title = "巡逻与值班"
+desc = [
+	"定下固定巡逻路线与交接班记录，夜里也有人当值。",
+	"出事时知道该找谁，比多修一道墙更管用。",
+]
+icon = "minecraft:shield"
+shape = "rsquare"
+size = 1.75
+deps = ["watch_towers"]
+tasks = [
+	{ type = "item", item = "minecraft:shield", count = 8 },
+	{ type = "item", item = "minecraft:lantern", count = 16 },
+	{ type = "item", item = "minecraft:campfire", count = 2 },
+]
+
+[[quest]]
+name = "cv_lost_and_found"
+title = "失物招领"
+desc = [
+	"设一处公共收存点，死人丢失的装备与多余物资都往这里归。",
+	"有固定的招领处，队里才不会为「谁拿了」反复扯。",
+]
+icon = "minecraft:barrel"
+shape = "circle"
+size = 1.2
+deps = ["cv_patrol"]
+tasks = [
+	{ type = "item", item = "minecraft:barrel", count = 8 },
+	{ type = "item", item = "minecraft:ender_chest", count = 1 },
+	{ type = "item", item = "minecraft:item_frame", count = 8 },
+]
+
+[[quest]]
+name = "cv_foreign_reception"
+title = "外事接待"
+desc = [
+	"给来客一条完整动线：落脚的房间、会谈的桌、展示的陈列。",
+	"接待做得好，谈判桌上能少让一步。",
+]
+icon = "create:desk_bell"
+shape = "circle"
+size = 1.2
+deps = ["embassy"]
+tasks = [
+	{ type = "item", item = "create:desk_bell", count = 2 },
+	{ type = "item", item = "minecraft:oak_hanging_sign", count = 8 },
+	{ type = "item", item = "supplementaries:notice_board", count = 2 },
+]
+
+# ---------------- 文明软性面收束 ----------------
+
+[[quest]]
+name = "cv_civic_done"
+title = "城市像个城了"
+desc = [
+	"时间、度量、礼节、节日、教育、艺术、规划、卫生、治安、对外都有落点。",
+	"把这一栏对一遍：缺哪一项，城就还是个放大了的营地。",
+]
+icon = "supplementaries:notice_board"
+shape = "octagon"
+size = 1.75
+deps = ["cv_public_clock", "cv_etiquette", "cv_banquet", "cv_sports", "cv_music",
+        "cv_public_lecture", "cv_library_catalog", "cv_gallery", "cv_globe_room",
+        "cv_skyline", "cv_sanitation", "cv_greening", "cv_lost_and_found",
+        "cv_foreign_reception"]
+tasks = [
+	{ type = "item", item = "supplementaries:notice_board", count = 4 },
+	{ type = "item", item = "minecraft:book", count = 32 },
+]
+

@@ -57,4 +57,179 @@
 	quest.3C9A1C94E9621B5F.description: [
 	"把即时通讯、传送、权限三样凑齐，领地才算「国土」而不是「一块安全区」。"
 	]
+	quest.EB6788A0AD658CED.title: "界桩"
+	quest.EB6788A0AD658CED.description: [
+	"线上看不见的边界，地上得看得见：四角立界桩，进出挂木牌。"
+	"界桩是给**自己人**看的——不然新成员根本不知道哪里能挖。"
+	]
+	quest.923C40C8EF8F5A06.title: "边界规矩写下来"
+	quest.923C40C8EF8F5A06.description: [
+	"边界不是一次画完的：路要延伸、田要扩建、矿口要外移。"
+	"把「怎么改边界、谁来批」写成条文挂在议事厅，后面就不会为一条路吵三次。"
+	"⚠️ 文本约定，游戏里没有信号源，自检。"
+	]
+	quest.F4A1EBDA5541DCA4.title: "围墙材料"
+	quest.F4A1EBDA5541DCA4.description: [
+	"线上拦得住，线下也别让人一眼就跨过去：铁栏杆划硬边，栅栏划软边。"
+	"围墙不是防怪物用的，是让「这里有人管」这件事变得看得见。"
+	]
+	quest.919B16D76130F172.title: "组一支队"
+	quest.919B16D76130F172.description: [
+	"FTB Teams：领地、传送、权限都挂在队伍上——先有队，才有「我们的」。"
+	"⚠️ FTB Teams 不提供物品（实测 hits 0），组队只能靠命令，自检。"
+	]
+	quest.2B0412A9F9B9AD9C.title: "队伍名册"
+	quest.2B0412A9F9B9AD9C.description: [
+	"队伍一多，就得知道谁在哪支队、各队负责哪一片地。"
+	"名册挂在驿站或者议事厅，比在聊天里问一遍快得多。"
+	]
+	quest.973FB834EBA5ADAF.title: "带一个人进队"
+	quest.973FB834EBA5ADAF.description: [
+	"新成员进队的那一分钟，是他对这套规则的第一印象。"
+	"⚠️ 邀请动作只有命令，没有判据，自检。"
+	]
+	quest.6A8070D62D43F603.title: "第二支队"
+	quest.6A8070D62D43F603.description: [
+	"第二支队出现的时候，「一个国家」才变成一个**多队协作**的结构。"
+	"从这一步起，权限要开始分层——不能让每支队都能改全城。"
+	]
+	quest.29D82416D34BA3C0.title: "角色与职责"
+	quest.29D82416D34BA3C0.description: [
+	"队长、建设、仓储、外交——每支队至少要有一个人对每件事负责。"
+	"职责写清楚之前，「这事该问谁」每次都要重新吵。"
+	]
+	quest.240AA5AC28B97655.title: "只收该收的"
+	quest.240AA5AC28B97655.description: [
+	"公共箱子最容易被塞满杂物。智能过滤器把「该收什么」变成一件可以设的机器。"
+	]
+	quest.7DF3EB87D8098642.title: "传送石的前置材料"
+	quest.7DF3EB87D8098642.description: [
+	"做传送石之前，先备基础料——传送网络是一整套工具，不是一块石头。"
+	"备料这一步的意义是：你开始为**网络**准备，而不是为一个点准备。"
+	]
+	quest.E65CEBF4713A2DD5.title: "传送粉"
+	quest.E65CEBF4713A2DD5.description: [
+	"传送粉是把「传送」从一次性道具变成可维护系统的材料。"
+	]
+	quest.D343F3BBBF13CDB6.title: "传送石盘"
+	quest.D343F3BBBF13CDB6.description: [
+	"石盘是踩上去就走的入口：门厅、驿站、矿口最需要它。"
+	"它把「传送」变成一个不需要手持道具的公共设施。"
+	]
+	quest.2FFC8DA044F0F393.title: "传送卷轴"
+	quest.2FFC8DA044F0F393.description: [
+	"卷轴是消耗品那一档：用一次少一张，换的是「不用回城」。"
+	]
+	quest.C3EE846EEB0A7115.title: "绑定的传送卷轴"
+	quest.C3EE846EEB0A7115.description: [
+	"绑定之后，卷轴指向的是**某一座**石，而不是「随便哪一座」。"
+	"分工明确的车队，靠的就是绑定卷轴把路线固定下来。"
+	]
+	quest.133860697837F66B.title: "返回卷轴"
+	quest.133860697837F66B.description: [
+	"返回卷轴只回最后一座：它是「迷路了怎么办」最直接的答案。"
+	]
+	quest.3AA1B888ACCB144C.title: "空白卷轴"
+	quest.3AA1B888ACCB144C.description: [
+	"空白卷轴是自制的起点：从「捡到就用」变成「自己造」。"
+	]
+	quest.4258B8C014A0CEF1.title: "分档立石"
+	quest.4258B8C014A0CEF1.description: [
+	"苔石、砂岩、黑石、深板岩——外观不同的传送石正好用来区分档次："
+	"村口一座、城区一座、前线一座，一眼就知道自己在哪一级。"
+	]
+	quest.A101B001E2628B8B.title: "进阶传送石"
+	quest.A101B001E2628B8B.description: [
+	"深板岩、末地石、海晶石、紫珀——越难拿的材料，越适合当「只给核心成员开」的那一档。"
+	]
+	quest.FCEB295BD4BD981F.title: "沉眠碎片"
+	quest.FCEB295BD4BD981F.description: [
+	"沉眠碎片是共鸣碎片的前一档：先有沉睡的，才有能用的。"
+	]
+	quest.A31DF0DEB7E08943.title: "共鸣碎片"
+	quest.A31DF0DEB7E08943.description: [
+	"共鸣碎片是这套网络里最贵的一档材料：它决定了哪些石能互相看见。"
+	]
+	quest.85703A8981ACECD0.title: "碎裂的共鸣碎片"
+	quest.85703A8981ACECD0.description: [
+	"碎掉的共鸣碎片：网络不是一次建成的，废料也是过程的一部分。"
+	"（它也是「重新校准」这件事在游戏里的实物形态。）"
+	]
+	quest.EADACE88ABA5AF96.title: "深板岩碎片"
+	quest.EADACE88ABA5AF96.description: [
+	"深板岩碎片：挖到深层的凭证，也是更高级传送石的门槛。"
+	]
+	quest.D128E908B160DD15.title: "公共传送石"
+	quest.D128E908B160DD15.description: [
+	"公共那一座，颜色要选得跟私人的不一样——这是最省事的「权限可视化」。"
+	]
+	quest.22C187073D2B1385.title: "传送石座"
+	quest.22C187073D2B1385.description: [
+	"石座是另一档：外观不同、摆放位置不同，适合放在「只准进、不准出」的地方。"
+	]
+	quest.4C15EA5589C0E840.title: "石座分色"
+	quest.4C15EA5589C0E840.description: [
+	"石座也分 16 色：一座驿站一种颜色，比在门口挂牌子直观。"
+	]
+	quest.CB8C39D79DDAC4DF.title: "跨维度卷轴"
+	quest.CB8C39D79DDAC4DF.description: [
+	"门卷轴把网络伸到别的维度：下界、末地的前哨也能挂在自己这张网上。"
+	]
+	quest.265E30CA7B4B7F58.title: "传送门"
+	quest.265E30CA7B4B7F58.description: [
+	"传送门是永久设施那一档：不用道具、不用卷轴，走进去就走。"
+	"网络建到这一步，才算真的「基础设施」。"
+	]
+	quest.583B8E91DAD32A3B.title: "驿站名册"
+	quest.583B8E91DAD32A3B.description: [
+	"每座石挂一块告示牌：名字、归属、开放对象。"
+	"没有名字的传送石，在列表里就是一串坐标。"
+	]
+	quest.D3B3A195E8C7C778.title: "石被拆了怎么办"
+	quest.D3B3A195E8C7C778.description: [
+	"网络最怕的不是没建，是**建好了被人拆掉**：谁有权拆、拆了怎么补，要事先说清。"
+	"墓地铭牌与瞬忆碑是这套系统里跟「失去」有关的实物："
+	"它们提醒所有人，传送点是资产，不是地砖。"
+	]
+	quest.B053D0F4AE50DF2B.title: "双生羽毛"
+	quest.B053D0F4AE50DF2B.description: [
+	"双生羽毛是「两个人共用一条线」的实物：它把同行这件事做成了一个道具。"
+	]
+	quest.7B4D7AC77C4729F3.title: "冲突处置"
+	quest.7B4D7AC77C4729F3.description: [
+	"越界、拆错、拿错——事先写清「谁受理、怎么判、怎么补」。"
+	"公告牌是这套流程的载体：判罚要贴在所有人看得见的地方。"
+	"⚠️ 流程本身没有信号源，自检。"
+	]
+	quest.42A3243900D04324.title: "取证"
+	quest.42A3243900D04324.description: [
+	"望远镜是这套系统里唯一能用来「先看清楚再说话」的工具。"
+	"有取证工具，冲突才不会全变成嗓门大小的比较。"
+	]
+	quest.B5C5230B85E8EAF7.title: "外人处置"
+	quest.B5C5230B85E8EAF7.description: [
+	"来了个不在队里的人：先拦住、再讲规矩、最后才是处理。"
+	"顺序不能反——先动手的队伍，规矩就立不住了。"
+	]
+	quest.86A780C76C12AD6E.title: "领地内的公共设施"
+	quest.86A780C76C12AD6E.description: [
+	"一块地只有仓库和城墙，那只是工地。"
+	"把钟、灯笼、告示牌摆进来，领地里才有「住」这件事。"
+	]
+	quest.E0D1E886F8601883.title: "把规矩写下来"
+	quest.E0D1E886F8601883.description: [
+	"告示牌挂到每一个路口：这里能不能挖、能不能盖、能不能过夜。"
+	"条文一旦写在牌子上，就不需要每次由人复述一遍。"
+	]
+	quest.A4D7B0FD0B306F3D.title: "这块地是「我们的」"
+	quest.A4D7B0FD0B306F3D.description: [
+	"边界清楚、队伍分层、传送成网、规矩上榜——**四样齐了**才叫领地。"
+	"到这个阶段，新成员进来不需要人带：界桩告诉他范围，站牌告诉他规矩，"
+	"传送石告诉他怎么走。制度开始替人干活了。"
+	]
+	quest.3915A12CFD32A128.title: "四色共享石"
+	quest.3915A12CFD32A128.description: [
+	"把共享石按用途分色：一色一处，谁的石一眼分明。"
+	"颜色分完之后，「这块石是谁开的、谁能用」就不再需要口头说明。"
+	]
 }

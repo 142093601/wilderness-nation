@@ -298,4 +298,107 @@
 	"让至少三件事完全不用人管：原料进去、成品出来，中间没有人。"
 	"这一条是「基建」时代的彩排——它成立，基建时代才有东西可做。"
 	]
+	quest.5871145E8164334B.title: "机械合成器"
+	quest.5871145E8164334B.description: [
+	"一个会自己合成的格子。九个排在一起才等于一张工作台。"
+	"有了它，箱子里的材料才可能自己变成成品。"
+	]
+	quest.AD5D0C99F3D80521.title: "合成阵列"
+	quest.AD5D0C99F3D80521.description: [
+	"九个机械合成器排成 3x3 —— 用**置物台或溜槽**喂料，别用手塞。"
+	]
+	quest.36999F7504AC7D1C.title: "装配线"
+	quest.36999F7504AC7D1C.description: [
+	"Create 最核心的一件事：**让传送带带着半成品依次经过每一道工序**。"
+	"一条典型的线是：压 → 锯 → 注液 → 机械手 → 出成品。"
+	"（节拍与吞吐在「机械动力·物流」那一章，这一条只要求你真的排出一条。）"
+	]
+	quest.89A7039B5C990C7E.title: "装配线上出精密构件"
+	quest.89A7039B5C990C7E.description: [
+	"手搓也能出精密构件，但那样就白搭这条线了。"
+	"用自己排的线做出四个，才算这条线真的通了。"
+	]
+	quest.043CE24D1AE50AAC.title: "动态结构上的物品口"
+	quest.043CE24D1AE50AAC.description: [
+	"移动的机器（钻头臂、收割机）怎么把东西交回固定产线？靠这个口。"
+	]
+	quest.834F9236A928E28E.title: "流体阀门"
+	quest.834F9236A928E28E.description: [
+	"流体也要能在工序之间开关，否则注液那一段永远在漏。"
+	]
+	quest.D6484E0D46FE7243.title: "动力犁"
+	quest.D6484E0D46FE7243.description: [
+	"把一块地整片翻好：农业自动化的第一步。"
+	]
+	quest.1B0CD30EBF245FE8.title: "动力收割机"
+	quest.1B0CD30EBF245FE8.description: [
+	"和犁配套：一个开地，一个收成。装在移动机械上就是一整台农机。"
+	]
+	quest.5FD5C0AEBF051951.title: "农机组"
+	quest.5FD5C0AEBF051951.description: [
+	"把犁、收割机、储物箱装到**同一个移动机械**上，让它在地里走一趟全干完。"
+	"这是这个包里第一台真正自己干活的机器。"
+	]
+	quest.4684573A4BF12468.title: "电梯"
+	quest.4684573A4BF12468.description: [
+	"上下运输不必修楼梯：一个滑轮加一块平台，就是一栋楼的电梯。"
+	]
+	quest.3DD7FB84F8D165F2.title: "发条轴承"
+	quest.3DD7FB84F8D165F2.description: [
+	"让一整个结构绕自己的轴转 —— 风车叶、瞭望台、旋转餐厅都靠它。"
+	]
+	quest.13A7626A03B1022A.title: "压路机"
+	quest.13A7626A03B1022A.description: [
+	"铺路、压平、压实。城市级道路工程靠它省下大量手工。"
+	]
+	quest.D952411AF255CC7E.title: "移动仓储接口"
+	quest.D952411AF255CC7E.description: [
+	"让在动的机器和**固定的仓库**直接交换物品 —— 移动产线的关键一件。"
+	]
+	quest.6BB29155492367DE.title: "移动流体接口"
+	quest.A078785ECB17FCC5.title: "内容观测器"
+	quest.A078785ECB17FCC5.description: [
+	"它看的不是有没有方块，是**容器里有没有东西**。"
+	"自动化里最常用的一类条件：满了停、空了启。"
+	]
+	quest.B4252ED0B2F3902A.title: "模拟拉杆"
+	quest.B4252ED0B2F3902A.description: [
+	"能给 0~15 任意档位的拉杆：调速、定量的场合靠它。"
+	]
+	quest.D8E6DB07B013EE86.title: "展示板"
+	quest.D8E6DB07B013EE86.description: [
+	"贴在产线旁边的一块信息板：显示库存、转速、开关状态。"
+	"**让机器自己报状态**，比每次跑过去看一眼强得多。"
+	]
+	quest.B042C4003795BB9E.title: "数码管"
+	quest.B042C4003795BB9E.description: [
+	"把数值显示出来。产线出问题时，数字对不对是最快的判断依据。"
+	]
+	quest.491BAA5845C645D5.title: "轨道观测器"
+	quest.D0B19F76791D8CC6.title: "布谷鸟钟"
+	quest.D0B19F76791D8CC6.description: [
+	"会报时的装饰件。公共空间里放一个，比钟表更像个地方。"
+	]
+	quest.BE8137B0E999459D.title: "延长抓取器"
+	quest.BE8137B0E999459D.description: [
+	"够得着更远的地方 —— 装机器、拆机器时省掉一半跑动。"
+	]
+	quest.45A6E2343D2E77AE.title: "列车时刻表"
+	quest.45A6E2343D2E77AE.description: [
+	"让列车按表走：哪里停、停多久、装什么货。"
+	"（线路本身在「蒸汽与铁路」那一章，这里只讲排班这件事。）"
+	]
+	quest.7ECE7C79802A18B7.title: "合成蓝图"
+	quest.7ECE7C79802A18B7.description: [
+	"把常用配方抄一份挂在工位上 —— 新人不必问人就能照做。"
+	]
+	quest.D565E464EE181BE8.title: "采购清单"
+	quest.D565E464EE181BE8.description: [
+	"盖大工程时最费时间的不是搬，是**忘了还缺什么**。"
+	]
+	quest.273E869E8B31076E.title: "蓝图炮"
+	quest.273E869E8B31076E.description: [
+	"把一张图纸**直接盖出来** —— 这是从手工建筑跨到工程化建造的那一步。"
+	"（图纸怎么扫描、怎么修、怎么组织施工在「图纸与工程」那一章；这里只要用一次。）"
+	]
 }

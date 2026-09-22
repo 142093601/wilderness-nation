@@ -64,4 +64,134 @@
 	"装备、后勤、攻城器械、以及打出去的能力——四样齐了。"
 	"到这一步，「夺城」（邦交章最后一条）才真的可执行。"
 	]
+	quest.830D34A284D2100F.title: "钢制列装"
+	quest.830D34A284D2100F.description: [
+	"「制式」的意思不是好看，是同型号够一批人用：队列里谁缺什么，一眼看得出来。"
+	"这一条按把数、按面数备，不按件数——个人装备章管的是挑一件顺手的。"
+	]
+	quest.BE7BD4D7B47503F8.title: "盾的四种形制"
+	quest.BE7BD4D7B47503F8.description: [
+	"鸢盾、圆盾、扇形盾、椭圆盾：遮住的部位不同，走窄道与列阵时的空当也不同。"
+	"这里要的是四种都备、按队形发，而不是每人挑一面顺手的。"
+	]
+	quest.BC82E10B03F261A3.title: "长矛一排"
+	quest.BC82E10B03F261A3.description: [
+	"矛的价值不在单挑，在并排：一排矛比一排剑多挡住一个身位。"
+	"木、铁、钢三档各备一排——木矛练手，钢矛上阵。"
+	]
+	quest.2798D2514EE9316D.title: "骑枪"
+	quest.2798D2514EE9316D.description: [
+	"骑枪的长度是给马用的：跑起来那一下才叫冲锋，站住了它比矛难使。"
+	]
+	quest.417FE343CE4B4839.title: "战马也要披甲"
+	quest.417FE343CE4B4839.description: [
+	"骑兵冲一次就退回来，原因通常不是人怕，是马先倒。"
+	]
+	quest.1E871723282E0EB9.title: "靶场加练"
+	quest.1E871723282E0EB9.description: [
+	"御敌章（编年）定的围城演练是二十次命中；这一条是往上加练到一百次。"
+	"练两件事：射准，以及挨打之后还站得住——假人就是用来被打的。"
+	]
+	quest.ACF7DB2F1662915F.title: "马衣与旗章"
+	quest.ACF7DB2F1662915F.description: [
+	"两军搅在一起的时候，认错人比挨刀更常见。"
+	"队旗这一层归御敌章（编年）；这里管的是马衣图案与马装饰——骑兵的识别靠这些。"
+	]
+	quest.BC57EE9C9E952FC5.title: "民兵卷轴"
+	quest.BC57EE9C9E952FC5.description: [
+	"HYW 的部队不是招来的，是**编**出来的：卷轴就是一份编制凭证。"
+	"民兵是最低一档——装备差、走得慢，胜在不用练。第一批守夜的人从他们里出。"
+	]
+	quest.C1622E828B72ABC5.title: "卷轴分阶"
+	quest.C1622E828B72ABC5.description: [
+	"同一兵种有 I / II / III 阶，差的是装备档次（生成点界面里那一栏就叫 Tier）。"
+	"常备军的意义就在这一档：不靠人多，靠用得起好的。"
+	]
+	quest.AA2FB0458393DF4D.title: "弓手与骑射"
+	quest.EFFDDF6FB523C38B.title: "弩手与长矛兵"
+	quest.48FE09F73DBDE0F4.title: "盾兵与战士"
+	quest.E98507FA42A0220A.title: "骑兵编制"
+	quest.E98507FA42A0220A.description: [
+	"马、骑枪、骑射手三件凑齐才叫一支骑兵：只有马没有枪的，是交通队。"
+	]
+	quest.2972CE51B3F3B720.title: "攻城技师"
+	quest.2972CE51B3F3B720.description: [
+	"器械不会自己上弦：队伍里得有专门摆弄它们的人，不然那些机器只是摆设。"
+	]
+	quest.FCC13D9C7E7642D0.title: "指挥杖"
+	quest.FCC13D9C7E7642D0.description: [
+	"指挥杖把喊话变成指令：整队移动、圈选一片区域，按住中键还能调出**阵型**轮盘。"
+	"到这一步，队伍才从一堆人变成一个单位。"
+	]
+	quest.DC003A28291A568B.title: "三种兵齐备"
+	quest.DC003A28291A568B.description: [
+	"近战、远程、机动各有编制，指挥杖在手——这支部队能列阵，也能分头行动。"
+	]
+	quest.8AEBA09E852BD696.title: "弩炮"
+	quest.8AEBA09E852BD696.description: [
+	"直射、架得住：放在墙上打对面的人，也能打对面的器械。"
+	]
+	quest.6B07AE37F61EAB01.title: "轻型投石机"
+	quest.6B07AE37F61EAB01.description: [
+	"比巨型投石机好挪，比弩炮打得远——它是跟着队伍走的那一档火力。"
+	]
+	quest.C72DD0CA611DB45D.title: "攻城塔"
+	quest.C72DD0CA611DB45D.description: [
+	"它抹平的是「墙」这个优势——自己先造一台，比等别人造一台便宜。"
+	]
+	quest.43C36445B82F922E.title: "火炮与火药"
+	quest.43C36445B82F922E.description: [
+	"手推炮往上还有蛇炮、加农炮、巨型火炮，射程与口径都往上走。"
+	"它们吃的是火药与弹丸，口径越大越像在吃资源——产线不跟上就打不起。"
+	]
+	quest.87F94AB0B467D980.title: "补给点"
+	quest.87F94AB0B467D980.description: [
+	"军队走不远，原因通常不是打不过，是没东西吃。"
+	"补给点把「东西从哪来」立成一个点；先有它，才谈往前推多远。"
+	]
+	quest.C0F5EB0456F64B65.title: "集结点"
+	quest.C0F5EB0456F64B65.description: [
+	"队伍从哪出来，决定出事时多久能到位。"
+	]
+	quest.D4656D29C3A95900.title: "军需仓库"
+	quest.D4656D29C3A95900.description: [
+	"仓库控制块 + 存储块：军械与粮草分开记账，领料不必再问人。"
+	]
+	quest.C9457DB83B779D11.title: "运输指令"
+	quest.C9457DB83B779D11.description: [
+	"补给线真正的瓶颈是运力：路线太长，东西就一直在路上。"
+	]
+	quest.21FB29B28C55F68B.title: "随军工作站"
+	quest.21FB29B28C55F68B.description: [
+	"农、矿、伐木、渔、牧、合成六种工作站，把「养兵」摊进日常生产里。"
+	"它们同时也是平民的活计——军民两用，才不会养出一群只会吃的人。"
+	]
+	quest.A32E9AFC4B6417A0.title: "运输工与合成工"
+	quest.64D75C3D6D275CC5.title: "后勤成链"
+	quest.64D75C3D6D275CC5.description: [
+	"补给点、集结点、军需仓库、运输指令、工作站各就各位——打得远不远，由这条线决定。"
+	]
+	quest.18B5A075ECD84AD4.title: "反制云梯"
+	quest.18B5A075ECD84AD4.description: [
+	"守方视角：云梯靠上墙就变成一条单人通道——堵住顶端，比拆整架梯子省力。"
+	"先在自己墙上架一次，比看图纸有用。"
+	]
+	quest.D11D7DB18B72F874.title: "反制撞门锤"
+	quest.D11D7DB18B72F874.description: [
+	"撞门锤只认得门那一格；门后面是什么，是守方决定的。"
+	"留一台在自己的门外演一次，就知道哪一段门最经不起推。"
+	]
+	quest.619EDA35F7242356.title: "反制预案"
+	quest.619EDA35F7242356.description: [
+	"来犯方式就那么几种：爬墙、撞门、围着不走。预案的意义是先想好，而不是当场想。"
+	]
+	quest.B3F4756BDF1D2C7A.title: "出城反击"
+	quest.B3F4756BDF1D2C7A.description: [
+	"只守不攻，对方就能从容架梯子上墙；出城打一次，节奏才在自己手里。"
+	]
+	quest.A7C1EEF9C8793454.title: "缴获入账"
+	quest.A7C1EEF9C8793454.description: [
+	"抢来的东西归公还是归己，是「国家行为」与「土匪」的分界——先把缴获集中起来。"
+	"灾厄旗帜那一瓶是队长的凭证，挂上墙就是这一仗的物证。"
+	]
 }

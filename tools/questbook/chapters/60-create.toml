@@ -1129,6 +1129,415 @@ tasks = [
 	{ type = "advancement", advancement = "create:train_portal" },
 ]
 
+# ---------------- 簇 6：装配线（2026-09-22 加厚） ----------------
+#
+# 这一簇补的是原章最大的缺口：**从「能加工」到「能连续装配」**。
+# 原来的 68 条把零件（锯、钻、压、拌、风、注液、机械手）讲全了，
+# 但没讲**把它们排成一条能自动出成品的线** —— 而那正是 Create 真正的分水岭。
+
+[[quest]]
+name = "mechanical_crafter"
+title = "机械合成器"
+desc = [
+	"一个会自己合成的格子。九个排在一起才等于一张工作台。",
+	"有了它，箱子里的材料才可能自己变成成品。",
+]
+icon = "create:mechanical_crafter"
+shape = "pentagon"
+size = 2.0
+deps = ["mechanical_arm", "brass"]
+x = -6.0
+y = -30.0
+tasks = [
+	{ type = "item", item = "create:mechanical_crafter" },
+]
+
+[[quest]]
+name = "crafter_array"
+title = "合成阵列"
+desc = [
+	"九个机械合成器排成 3x3 —— 用**置物台或溜槽**喂料，别用手塞。",
+]
+icon = "create:mechanical_crafter"
+shape = "square"
+deps = ["mechanical_crafter"]
+x = -4.0
+y = -30.0
+tasks = [
+	{ type = "item", item = "create:mechanical_crafter", count = 9 },
+]
+
+[[quest]]
+name = "assembly_line"
+title = "装配线"
+desc = [
+	"Create 最核心的一件事：**让传送带带着半成品依次经过每一道工序**。",
+	"一条典型的线是：压 → 锯 → 注液 → 机械手 → 出成品。",
+	"（节拍与吞吐在「机械动力·物流」那一章，这一条只要求你真的排出一条。）",
+]
+icon = "create:depot"
+shape = "rsquare"
+deps = ["crafter_array", "deployer", "spout"]
+x = -2.0
+y = -30.0
+tasks = [
+	{ type = "item", item = "create:depot", count = 4 },
+	{ type = "item", item = "create:belt_connector", count = 4 },
+]
+
+[[quest]]
+name = "assembly_precision"
+title = "装配线上出精密构件"
+desc = [
+	"手搓也能出精密构件，但那样就白搭这条线了。",
+	"用自己排的线做出四个，才算这条线真的通了。",
+]
+icon = "create:precision_mechanism"
+shape = "rsquare"
+deps = ["assembly_line"]
+x = 0.0
+y = -30.0
+tasks = [
+	{ type = "item", item = "create:precision_mechanism", count = 4 },
+]
+
+[[quest]]
+name = "item_hatch"
+title = "动态结构上的物品口"
+desc = [
+	"移动的机器（钻头臂、收割机）怎么把东西交回固定产线？靠这个口。",
+]
+icon = "create:item_hatch"
+shape = "circle"
+size = 1.2
+deps = ["assembly_line"]
+x = 2.0
+y = -30.0
+tasks = [
+	{ type = "item", item = "create:item_hatch" },
+]
+
+[[quest]]
+name = "fluid_valve"
+title = "流体阀门"
+desc = [
+	"流体也要能在工序之间开关，否则注液那一段永远在漏。",
+]
+icon = "create:fluid_valve"
+shape = "circle"
+size = 1.2
+deps = ["assembly_line"]
+x = 4.0
+y = -30.0
+tasks = [
+	{ type = "item", item = "create:fluid_valve", count = 2 },
+]
+
+# ---------------- 簇 7：农场与移动机器 ----------------
+
+[[quest]]
+name = "mechanical_plough"
+title = "动力犁"
+desc = [
+	"把一块地整片翻好：农业自动化的第一步。",
+]
+icon = "create:mechanical_plough"
+shape = "pentagon"
+size = 2.0
+deps = ["mechanical_drill"]
+x = -6.0
+y = -32.0
+tasks = [
+	{ type = "item", item = "create:mechanical_plough" },
+]
+
+[[quest]]
+name = "mechanical_harvester"
+title = "动力收割机"
+desc = [
+	"和犁配套：一个开地，一个收成。装在移动机械上就是一整台农机。",
+]
+icon = "create:mechanical_harvester"
+shape = "rsquare"
+deps = ["mechanical_plough"]
+x = -4.0
+y = -32.0
+tasks = [
+	{ type = "item", item = "create:mechanical_harvester" },
+]
+
+[[quest]]
+name = "farm_contraption"
+title = "农机组"
+desc = [
+	"把犁、收割机、储物箱装到**同一个移动机械**上，让它在地里走一趟全干完。",
+	"这是这个包里第一台真正自己干活的机器。",
+]
+icon = "create:cart_assembler"
+shape = "rsquare"
+deps = ["mechanical_harvester", "contraption_controls"]
+x = -2.0
+y = -32.0
+tasks = [
+	{ type = "item", item = "create:cart_assembler" },
+	{ type = "item", item = "create:sticker", count = 4 },
+]
+
+[[quest]]
+name = "elevator_pulley"
+title = "电梯"
+desc = [
+	"上下运输不必修楼梯：一个滑轮加一块平台，就是一栋楼的电梯。",
+]
+icon = "create:elevator_pulley"
+shape = "rsquare"
+deps = ["rope_pulley"]
+x = 0.0
+y = -32.0
+tasks = [
+	{ type = "item", item = "create:elevator_pulley" },
+]
+
+[[quest]]
+name = "clockwork_bearing"
+title = "发条轴承"
+desc = [
+	"让一整个结构绕自己的轴转 —— 风车叶、瞭望台、旋转餐厅都靠它。",
+]
+icon = "create:clockwork_bearing"
+shape = "circle"
+size = 1.2
+deps = ["mechanical_bearing"]
+x = 2.0
+y = -32.0
+tasks = [
+	{ type = "item", item = "create:clockwork_bearing" },
+]
+
+[[quest]]
+name = "mechanical_roller"
+title = "压路机"
+desc = [
+	"铺路、压平、压实。城市级道路工程靠它省下大量手工。",
+]
+icon = "create:mechanical_roller"
+shape = "circle"
+size = 1.2
+deps = ["mechanical_drill"]
+x = 4.0
+y = -32.0
+tasks = [
+	{ type = "item", item = "create:mechanical_roller" },
+]
+
+[[quest]]
+name = "portable_storage_interface"
+title = "移动仓储接口"
+desc = [
+	"让在动的机器和**固定的仓库**直接交换物品 —— 移动产线的关键一件。",
+]
+icon = "create:portable_storage_interface"
+shape = "rsquare"
+deps = ["item_vault"]
+x = -6.0
+y = -34.0
+tasks = [
+	{ type = "item", item = "create:portable_storage_interface" },
+]
+
+[[quest]]
+name = "portable_fluid_interface"
+title = "移动流体接口"
+icon = "create:portable_fluid_interface"
+shape = "circle"
+size = 1.2
+deps = ["portable_storage_interface"]
+x = -4.0
+y = -34.0
+tasks = [
+	{ type = "item", item = "create:portable_fluid_interface" },
+]
+
+# ---------------- 簇 8：控制与显示 ----------------
+
+[[quest]]
+name = "content_observer"
+title = "内容观测器"
+desc = [
+	"它看的不是有没有方块，是**容器里有没有东西**。",
+	"自动化里最常用的一类条件：满了停、空了启。",
+]
+icon = "create:content_observer"
+shape = "rsquare"
+deps = ["redstone_link"]
+x = -2.0
+y = -34.0
+tasks = [
+	{ type = "item", item = "create:content_observer" },
+]
+
+[[quest]]
+name = "analog_lever"
+title = "模拟拉杆"
+desc = [
+	"能给 0~15 任意档位的拉杆：调速、定量的场合靠它。",
+]
+icon = "create:analog_lever"
+shape = "circle"
+size = 1.2
+deps = ["redstone_link"]
+x = 0.0
+y = -34.0
+tasks = [
+	{ type = "item", item = "create:analog_lever" },
+]
+
+[[quest]]
+name = "display_board"
+title = "展示板"
+desc = [
+	"贴在产线旁边的一块信息板：显示库存、转速、开关状态。",
+	"**让机器自己报状态**，比每次跑过去看一眼强得多。",
+]
+icon = "create:display_board"
+shape = "rsquare"
+deps = ["redstone_link"]
+x = 2.0
+y = -34.0
+tasks = [
+	{ type = "item", item = "create:display_board", count = 2 },
+	{ type = "item", item = "create:display_link" },
+]
+
+[[quest]]
+name = "nixie_tube"
+title = "数码管"
+desc = [
+	"把数值显示出来。产线出问题时，数字对不对是最快的判断依据。",
+]
+icon = "create:nixie_tube"
+shape = "circle"
+size = 1.2
+deps = ["display_board"]
+x = 4.0
+y = -34.0
+tasks = [
+	{ type = "item", item = "create:nixie_tube" },
+]
+
+[[quest]]
+name = "track_observer"
+title = "轨道观测器"
+icon = "create:track_observer"
+shape = "circle"
+size = 1.2
+deps = ["content_observer"]
+x = -6.0
+y = -36.0
+tasks = [
+	{ type = "item", item = "create:track_observer" },
+]
+
+[[quest]]
+name = "cuckoo_clock"
+title = "布谷鸟钟"
+desc = [
+	"会报时的装饰件。公共空间里放一个，比钟表更像个地方。",
+]
+icon = "create:cuckoo_clock"
+shape = "circle"
+size = 1.2
+deps = ["mechanical_bearing"]
+x = -4.0
+y = -36.0
+tasks = [
+	{ type = "item", item = "create:cuckoo_clock" },
+]
+
+# ---------------- 簇 9：随身的与施工的 ----------------
+
+[[quest]]
+name = "extendo_grip"
+title = "延长抓取器"
+desc = [
+	"够得着更远的地方 —— 装机器、拆机器时省掉一半跑动。",
+]
+icon = "create:extendo_grip"
+shape = "circle"
+size = 1.2
+deps = ["goggles"]
+x = -2.0
+y = -36.0
+tasks = [
+	{ type = "item", item = "create:extendo_grip" },
+]
+
+[[quest]]
+name = "schedule"
+title = "列车时刻表"
+desc = [
+	"让列车按表走：哪里停、停多久、装什么货。",
+	"（线路本身在「蒸汽与铁路」那一章，这里只讲排班这件事。）",
+]
+icon = "create:schedule"
+shape = "rsquare"
+deps = ["railway"]
+x = 0.0
+y = -36.0
+tasks = [
+	{ type = "item", item = "create:schedule" },
+]
+
+[[quest]]
+name = "crafting_blueprint"
+title = "合成蓝图"
+desc = [
+	"把常用配方抄一份挂在工位上 —— 新人不必问人就能照做。",
+]
+icon = "create:crafting_blueprint"
+shape = "circle"
+size = 1.2
+deps = ["brass"]
+x = 2.0
+y = -36.0
+tasks = [
+	{ type = "item", item = "create:crafting_blueprint" },
+]
+
+[[quest]]
+name = "shopping_list"
+title = "采购清单"
+desc = [
+	"盖大工程时最费时间的不是搬，是**忘了还缺什么**。",
+]
+icon = "create:shopping_list"
+shape = "circle"
+size = 1.2
+deps = ["crafting_blueprint"]
+x = 4.0
+y = -36.0
+tasks = [
+	{ type = "item", item = "create:shopping_list" },
+]
+
+[[quest]]
+name = "schematic_cannon"
+title = "蓝图炮"
+desc = [
+	"把一张图纸**直接盖出来** —— 这是从手工建筑跨到工程化建造的那一步。",
+	"（图纸怎么扫描、怎么修、怎么组织施工在「图纸与工程」那一章；这里只要用一次。）",
+]
+icon = "create:schematicannon"
+shape = "octagon"
+size = 1.75
+deps = ["assembly_line", "windmill_maxed"]
+x = -6.0
+y = -38.0
+tasks = [
+	{ type = "item", item = "create:schematicannon" },
+	{ type = "item", item = "minecraft:gunpowder", count = 8 },
+]
+
 [[quest]]
 name = "create_monument"
 title = "全自动的一天"

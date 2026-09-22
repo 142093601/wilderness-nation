@@ -1,0 +1,795 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "cat_horde"
+	group: "1439886072EE757D"
+	icon: {
+		id: "minecraft:zombie_head"
+	}
+	id: "0E85F3EB3E52FA47"
+	order_index: 63
+	quest_links: [ ]
+	quests: [
+	{
+		icon: {
+			id: "minecraft:clock"
+		}
+		id: "CF3B8DF4AF6A436C"
+		rewards: [
+		{
+			xp: 30
+			id: "501E90E05DEACD98"
+			type: "xp"
+		}
+		{
+			id: "9669FD98E534DDCD"
+			type: "toast"
+		}
+		]
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "minecraft:clock"
+			id: "B5D1C8A6866FA193"
+			type: "item"
+		}
+		{
+			stat: "minecraft:play_time"
+			value: 240000
+			id: "C549A17276038A71"
+			type: "stat"
+		}
+		]
+		x: 0.0d
+		y: 0.0d
+	}
+	{
+		dependencies: [
+		"CF3B8DF4AF6A436C"
+		]
+		icon: {
+			id: "minecraft:husk_spawn_egg"
+		}
+		id: "6560DD00536B4BF9"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			entity: "minecraft:husk"
+			value: 15
+			id: "67220B634F54DAE6"
+			type: "kill"
+		}
+		]
+		x: -3.38d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"6560DD00536B4BF9"
+		]
+		icon: {
+			id: "minecraft:zombified_piglin_spawn_egg"
+		}
+		id: "48944BFAD7995701"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			entity: "minecraft:zombified_piglin"
+			value: 10
+			id: "05A7B3212BA7F1F1"
+			type: "kill"
+		}
+		{
+			entity: "minecraft:zoglin"
+			value: 3
+			id: "989C2E2104DED297"
+			type: "kill"
+		}
+		]
+		x: -10.2d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"6560DD00536B4BF9"
+		]
+		icon: {
+			id: "minecraft:wither_skeleton_skull"
+		}
+		id: "836F2A62F54855E9"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			entity: "minecraft:stray"
+			value: 5
+			id: "2EAE60B0D463E518"
+			type: "kill"
+		}
+		{
+			entity: "minecraft:bogged"
+			value: 5
+			id: "FADC8A61FA8DCCC4"
+			type: "kill"
+		}
+		]
+		x: -7.65d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"48944BFAD7995701"
+		]
+		icon: {
+			id: "minecraft:vindicator_spawn_egg"
+		}
+		id: "49EE12397903AB5F"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			entity: "minecraft:wither_skeleton"
+			value: 5
+			id: "3375A84E794B4AE6"
+			type: "kill"
+		}
+		{
+			entity: "minecraft:vindicator"
+			value: 5
+			id: "2B0EA405E635FF2B"
+			type: "kill"
+		}
+		]
+		x: -12.53d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"49EE12397903AB5F"
+		]
+		icon: {
+			id: "minecraft:piglin_brute_spawn_egg"
+		}
+		id: "D655ED5A225DD92D"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			entity: "minecraft:piglin_brute"
+			value: 5
+			id: "7B382EEC965ACF28"
+			type: "kill"
+		}
+		]
+		x: -6.82d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"CF3B8DF4AF6A436C"
+		]
+		icon: {
+			id: "minecraft:white_bed"
+		}
+		id: "21099104F1C5EF3B"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			stat: "minecraft:time_since_rest"
+			value: 36000
+			id: "FE6B4D93587B1868"
+			type: "stat"
+		}
+		]
+		x: -0.38d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"6560DD00536B4BF9"
+		]
+		icon: {
+			id: "minecraft:ender_pearl"
+		}
+		id: "85D6F7AEF5723ABA"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:ender_pearl"
+			count: 4
+			id: "C107414F09AE65CF"
+			type: "item"
+		}
+		]
+		x: -5.1d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"21099104F1C5EF3B"
+		]
+		icon: {
+			id: "minecraft:blackstone"
+		}
+		id: "1EB02EB2DDB814A2"
+		rewards: [
+		{
+			xp: 30
+			id: "8154AA1577FBCC7F"
+			type: "xp"
+		}
+		{
+			id: "1D9C28466F60BABA"
+			type: "toast"
+		}
+		]
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "minecraft:blackstone"
+			id: "A4DEDFC1F5D3EFD1"
+			type: "item"
+		}
+		]
+		x: -1.95d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"1EB02EB2DDB814A2"
+		]
+		icon: {
+			id: "minecraft:moss_block"
+		}
+		id: "E3EB0678FD89FAD7"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:blackstone"
+			count: 4
+			id: "74F2FDA5089473D3"
+			type: "item"
+		}
+		{
+			item: "minecraft:moss_block"
+			count: 8
+			id: "0DBD3BD7DD12DC3D"
+			type: "item"
+		}
+		]
+		x: -9.53d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"1EB02EB2DDB814A2"
+		]
+		icon: {
+			id: "minecraft:zombie_head"
+		}
+		id: "BF2EBBAB7973FCB8"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			entity: "minecraft:zombie"
+			value: 30
+			id: "CC0205C375EB6EFD"
+			type: "kill"
+		}
+		]
+		x: -6.53d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"BF2EBBAB7973FCB8"
+		]
+		icon: {
+			id: "minecraft:zombie_head"
+		}
+		id: "AC4DF223CE306ED9"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			entity: "minecraft:zombie"
+			value: 50
+			id: "0EA637DD609285C9"
+			type: "kill"
+		}
+		]
+		x: -4.28d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"1EB02EB2DDB814A2"
+		]
+		icon: {
+			id: "minecraft:slime_ball"
+		}
+		id: "01A3872AC2D4468F"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			entity: "minecraft:slime"
+			value: 20
+			id: "124383A80983F23F"
+			type: "kill"
+		}
+		]
+		x: -3.75d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"1EB02EB2DDB814A2"
+		]
+		icon: {
+			id: "minecraft:wheat"
+		}
+		id: "07761C4DDD6BE87D"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:wheat"
+			count: 64
+			id: "058F600470484E35"
+			type: "item"
+		}
+		]
+		x: -1.2d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"1EB02EB2DDB814A2"
+		]
+		icon: {
+			id: "minecraft:fishing_rod"
+		}
+		id: "A9884E4CDADC9703"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			stat: "minecraft:fish_caught"
+			value: 20
+			id: "171F5F30EAB48D86"
+			type: "stat"
+		}
+		]
+		x: 1.35d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"21099104F1C5EF3B"
+		]
+		icon: {
+			id: "minecraft:white_bed"
+		}
+		id: "A10A4F593D4B8AEA"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			stat: "minecraft:sleep_in_bed"
+			value: 10
+			id: "4DE709B55F0DBB0C"
+			type: "stat"
+		}
+		]
+		x: 1.42d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"CF3B8DF4AF6A436C"
+		]
+		icon: {
+			id: "minecraft:daylight_detector"
+		}
+		id: "E5AFD6CB66206CC3"
+		rewards: [
+		{
+			xp: 30
+			id: "95DE3051303236D6"
+			type: "xp"
+		}
+		{
+			id: "4055D65E68CD1C14"
+			type: "toast"
+		}
+		]
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "minecraft:daylight_detector"
+			count: 2
+			id: "2115CAD453F8BA42"
+			type: "item"
+		}
+		]
+		x: 3.0d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"E5AFD6CB66206CC3"
+		]
+		icon: {
+			id: "minecraft:ladder"
+		}
+		id: "989836D6CB869D3C"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:ladder"
+			count: 16
+			id: "00C5887CB8E7D147"
+			type: "item"
+		}
+		]
+		x: 4.42d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"E5AFD6CB66206CC3"
+		]
+		icon: {
+			id: "undeadnights:slimy_rotten_flesh"
+		}
+		id: "47AC1694FEBAA109"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "undeadnights:slimy_rotten_flesh"
+			count: 8
+			id: "7B7E4E87E6883E4B"
+			type: "item"
+		}
+		{
+			item: "minecraft:slime_ball"
+			count: 16
+			id: "C32B6C397E47B528"
+			type: "item"
+		}
+		]
+		x: 7.2d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"E5AFD6CB66206CC3"
+		]
+		icon: {
+			id: "takesapillage:archer_spawn_egg"
+		}
+		id: "4A01633D7B0A8AC8"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			entity: "takesapillage:archer"
+			value: 10
+			id: "56C68D65C49CBE9B"
+			type: "kill"
+		}
+		]
+		x: 9.97d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"4A01633D7B0A8AC8"
+		]
+		icon: {
+			id: "takesapillage:legioner_spawn_egg"
+		}
+		id: "8382ACA4A2503131"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			entity: "takesapillage:legioner"
+			value: 5
+			id: "A77B74A9A683E455"
+			type: "kill"
+		}
+		]
+		x: 3.9d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"4A01633D7B0A8AC8"
+		]
+		icon: {
+			id: "takesapillage:skirmisher_spawn_egg"
+		}
+		id: "9346347BB838A142"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			entity: "takesapillage:skirmisher"
+			value: 5
+			id: "51AC6144871C9A34"
+			type: "kill"
+		}
+		]
+		x: 6.45d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"4A01633D7B0A8AC8"
+		]
+		icon: {
+			id: "takesapillage:clay_golem_spawn_egg"
+		}
+		id: "06051B11565AFC88"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			entity: "takesapillage:clay_golem"
+			value: 3
+			id: "F316AD4D12D9A51D"
+			type: "kill"
+		}
+		]
+		x: 9.0d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"8382ACA4A2503131"
+		]
+		icon: {
+			id: "minecraft:saddle"
+		}
+		id: "5374AC99A73A1F12"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			entity: "minecraft:ravager"
+			value: 2
+			id: "439A74D1DD26297F"
+			type: "kill"
+		}
+		]
+		x: -1.5d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"8382ACA4A2503131"
+		]
+		icon: {
+			id: "minecraft:bell"
+		}
+		id: "1C4025E0027956A9"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			stat: "minecraft:raid_trigger"
+			value: 3
+			id: "F6CA9381D5C79664"
+			type: "stat"
+		}
+		]
+		x: 1.27d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"47AC1694FEBAA109"
+		]
+		icon: {
+			id: "minecraft:rotten_flesh"
+		}
+		id: "01DF00B6798330F8"
+		rewards: [
+		{
+			xp: 30
+			id: "2E757E29501500C7"
+			type: "xp"
+		}
+		{
+			id: "8AA75CBEF0C03BF1"
+			type: "toast"
+		}
+		]
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "minecraft:rotten_flesh"
+			count: 64
+			id: "815F28C3CFB1ED13"
+			type: "item"
+		}
+		{
+			item: "minecraft:bone"
+			count: 32
+			id: "F2E08D3FD72C5356"
+			type: "item"
+		}
+		]
+		x: 12.15d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"01DF00B6798330F8"
+		]
+		icon: {
+			id: "minecraft:iron_leggings"
+		}
+		id: "6842480032E63BBA"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:iron_leggings"
+			id: "1AE95D47E2259749"
+			type: "item"
+		}
+		{
+			item: "minecraft:iron_boots"
+			id: "DEA51117964B1780"
+			type: "item"
+		}
+		{
+			item: "minecraft:iron_sword"
+			id: "7688E285E8518EE6"
+			type: "item"
+		}
+		]
+		x: 4.05d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"5374AC99A73A1F12"
+		]
+		icon: {
+			id: "takesapillage:ravager_horn"
+		}
+		id: "FB1A8D69A290BA5B"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "takesapillage:ravager_horn"
+			id: "76E2C5DBBAE631F5"
+			type: "item"
+		}
+		]
+		x: -1.27d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"1C4025E0027956A9"
+		]
+		icon: {
+			id: "takesapillage:music_disc_bastille_blues"
+		}
+		id: "F7FAAE40BECBA49D"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "takesapillage:music_disc_bastille_blues"
+			id: "168A5A9FF8A96198"
+			type: "item"
+		}
+		{
+			item: "minecraft:glow_item_frame"
+			count: 4
+			id: "3ACAA69C39C51F9A"
+			type: "item"
+		}
+		]
+		x: 1.27d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"01DF00B6798330F8"
+		]
+		icon: {
+			id: "minecraft:barrel"
+		}
+		id: "AC1A9FF8BB0578E6"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:barrel"
+			count: 8
+			id: "16B401D89FEAB318"
+			type: "item"
+		}
+		{
+			item: "minecraft:shulker_box"
+			count: 2
+			id: "886E1AD0B2A40DC9"
+			type: "item"
+		}
+		]
+		x: 6.82d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"D655ED5A225DD92D"
+		"989836D6CB869D3C"
+		"85D6F7AEF5723ABA"
+		"01DF00B6798330F8"
+		"6842480032E63BBA"
+		"FB1A8D69A290BA5B"
+		"F7FAAE40BECBA49D"
+		"AC1A9FF8BB0578E6"
+		]
+		icon: {
+			id: "undeadnights:horde_zombie_spawn_egg"
+		}
+		id: "DF8BB9BC5E71D997"
+		rewards: [
+		{
+			xp: 100
+			id: "44DF4626D54AF6C6"
+			type: "xp"
+		}
+		{
+			id: "736A99A4C7C79B53"
+			type: "toast"
+		}
+		]
+		shape: "hexagon"
+		size: 2.5d
+		tasks: [
+		{
+			entity: "undeadnights:horde_zombie"
+			value: 60
+			id: "880ACA7BDBB0D301"
+			type: "kill"
+		}
+		{
+			entity: "undeadnights:elite_zombie"
+			value: 20
+			id: "E648E37CBCCB51F9"
+			type: "kill"
+		}
+		{
+			entity: "undeadnights:demolition_zombie"
+			value: 10
+			id: "10AB8E07DE58D82A"
+			type: "kill"
+		}
+		]
+		x: 0.0d
+		y: -10.5d
+	}
+	]
+}

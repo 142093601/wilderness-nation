@@ -1,0 +1,217 @@
+{
+	quest.6231A7AE95C5F3FC.title: "主干带路"
+	quest.6231A7AE95C5F3FC.description: [
+	"一整条线上，带只走一个方向，中途不改道。"
+	"往返混线的第一段带出多少件，决定了整线的上限。"
+	]
+	quest.FAD12BF27BF1588A.title: "带速就是吞吐"
+	quest.FAD12BF27BF1588A.description: [
+	"转速直接写在带速上，带速乘上间距才是理论的件数。"
+	"调转速之前，先量出这条线现在每分钟过多少件。"
+	]
+	quest.C8757E5CCADD66A1.title: "岔路与合流"
+	quest.C8757E5CCADD66A1.description: [
+	"两条带汇进一条时，接缝处会抢道，件数掉得比预期的多。"
+	"分流也一样：岔口越靠前，后面的带越不容易压满。"
+	]
+	quest.968A04AB88EDB91B.title: "跨层提升"
+	quest.968A04AB88EDB91B.description: [
+	"物料跨楼层走，靠一段倾斜带或一个锁链传动轮拉上去。"
+	"接缝处的取放位置差一格，整段的吞吐就折半。"
+	]
+	quest.12015685CF178168.title: "不耗动力的落差搬运"
+	quest.12015685CF178168.description: [
+	"上下楼层的大宗料，用落差省掉一段动力带。"
+	"代价是节拍由重力决定，接料口压满就会回流。"
+	]
+	quest.631AC77CE3CE75AA.title: "流向开关"
+	quest.631AC77CE3CE75AA.description: [
+	"一条线要按需求开停，而不是一直转着空跑。"
+	"开关装在主线的一段上，整段的件数一起被限住。"
+	]
+	quest.3334EEB6130AA87A.title: "按需求取料"
+	quest.3334EEB6130AA87A.description: [
+	"取料口按一个固定件数取，多取的部分等于白搬一趟。"
+	"定量投放是这一环的执行件：数量写死，节拍才稳。"
+	]
+	quest.06A02B2D8023704B.title: "中间仓位"
+	quest.06A02B2D8023704B.description: [
+	"工段之间留一格缓冲，上游短暂停顿时下游不用跟着停。"
+	"缓冲太小等于没有，太大则会把堵塞藏起来。"
+	]
+	quest.E99DA9CB49FAAA48.title: "全线的件数定下来"
+	quest.E99DA9CB49FAAA48.description: [
+	"主干带路、提升、缓冲都定了：这条线每分钟过多少件是个已知数。"
+	"后面的分流与投递都按这个数来配。"
+	]
+	quest.DC3FA7D165CF7440.title: "只取该取的"
+	quest.DC3FA7D165CF7440.description: [
+	"分拣规则写在岔口的过滤上，而不是写在每台机器里。"
+	"规则集中一处，改配方时只要改这一处。"
+	]
+	quest.B739FC799021AF05.title: "列表过滤器"
+	quest.B739FC799021AF05.description: [
+	"把一张写好的清单当成一个部件插进岔口，比逐个设过滤省事。"
+	"一份清单能复用在同一片区的多个岔口上。"
+	]
+	quest.2643952C5F31A67E.title: "规则合并与去重"
+	quest.2643952C5F31A67E.description: [
+	"多张清单并成一张：先查重，再插进机器。"
+	"重复条目不会报错，只会让排查时看不出哪条在生效。"
+	]
+	quest.84807DD099508292.title: "机械臂取放"
+	quest.84807DD099508292.description: [
+	"机械臂负责越过分拣线的那一段：从带上取，放到机器口。"
+	"它的取放是有节奏的，摆得太密反而互相等待。"
+	]
+	quest.F5DA475B87D33C40.title: "移动设备怎么对接"
+	quest.F5DA475B87D33C40.description: [
+	"移动的装置停在工位时，接口要能自动接上。"
+	"接不上就只能在它停下的那几秒里手动搬，吞吐归零。"
+	]
+	quest.02AF8F1124FED49B.title: "批量分流"
+	quest.02AF8F1124FED49B.description: [
+	"同一批料要同时进多个工位时，岔口要按批分组。"
+	"分组之后，每组的件数可以单独调，不必大改整线。"
+	]
+	quest.FEFE3BA848FC7AAE.title: "堵在哪个岔口"
+	quest.FEFE3BA848FC7AAE.description: [
+	"叉口堵住时，带会先满，然后整段反压到上游。"
+	"先找那段被压住的带，再往上追它前面的岔口。"
+	]
+	quest.133D1BD4805C09F3.title: "分拣吞吐达标"
+	quest.133D1BD4805C09F3.description: [
+	"分拣段不再是最慢的一环：岔口的件数已经跟上干线。"
+	"后面每一步都建立在「分拣不再是瓶颈」这个前提上。"
+	]
+	quest.B0832F7C02662B08.title: "按地址投递"
+	quest.B0832F7C02662B08.description: [
+	"一件东西装进包裹，写上收件地址，剩下的交给线体。"
+	"包裹是本章唯一允许「跨基地」的搬运方式。"
+	]
+	quest.0D71DCA78A6E9C85.title: "包装材料消耗"
+	quest.0D71DCA78A6E9C85.description: [
+	"打包是要吃纸板的，纸板链断掉，整条投递线就停。"
+	"先把纸板与包裹算成一项日常消耗。"
+	]
+	quest.0BA1F50DFB59D27E.title: "什么尺寸装什么"
+	quest.0BA1F50DFB59D27E.description: [
+	"包裹有大小之分，装错尺寸会退回来重打一遍。"
+	"固定几种常用尺寸，投递环节才不会天天返工。"
+	]
+	quest.AC3D25B347801FBD.title: "地址规则"
+	quest.AC3D25B347801FBD.description: [
+	"同一个收件点只用一个地址，跨基地的线才不会跑错。"
+	"地址是线体的路由表：写错了不报错，只送到错的地方。"
+	]
+	quest.34BB846D354F5742.title: "投递端点"
+	quest.34BB846D354F5742.description: [
+	"发件口要能自己把包裹塞进线体，不需要人站在旁边。"
+	"端点一多，就得给每个端点定优先级，否则会互相抢道。"
+	]
+	quest.40C86EB69E5AF77D.title: "收件点"
+	quest.40C86EB69E5AF77D.description: [
+	"远端要有一个固定的收件点，包裹到了就知道该往哪放。"
+	"收件点满了以后包裹会停在路上，这一段的吞吐要留余量。"
+	]
+	quest.B4860E00FC94F73A.title: "到站重打包"
+	quest.B4860E00FC94F73A.description: [
+	"长距离运过来的包裹，到站按本地规则拆开重组。"
+	"这一步是为了让跨基地运输与本地分拣共用同一套线体。"
+	]
+	quest.31982E503CC78033.title: "两端跑通"
+	quest.31982E503CC78033.description: [
+	"甲地打包、乙地收到、中间没有人，这才叫跨基地运输。"
+	"先跑通一对端点，再复制到第二对。"
+	]
+	quest.24373931B0ABD2C5.title: "稀有包裹"
+	quest.24373931B0ABD2C5.description: [
+	"线上偶尔会掉出稀有的包裹，这是投递线自己长出来的彩头。"
+	"它与产线效率无关，但值得留一条能收下它的支线。"
+	]
+	quest.819989441EC1027D.title: "跨基地投递成线"
+	quest.819989441EC1027D.description: [
+	"打包、写地址、投递、收件、重打包连成一条闭环。"
+	"到这里，两个基地之间已经不需要人带货。"
+	]
+	quest.B770D4E0BB2E2645.title: "领料不用翻仓库"
+	quest.B770D4E0BB2E2645.description: [
+	"仓库自己知道有什么、剩多少，领料只写清单。"
+	"这是「一堆箱子」与「一套设施」的分界。"
+	]
+	quest.97262CD8EBDB59EF.title: "账要能读出来"
+	quest.97262CD8EBDB59EF.description: [
+	"库存清单是唯一的账：有什么、剩多少、谁在动它。"
+	"没有账，多人共仓就只能靠问人。"
+	]
+	quest.3497FFD39CB18764.title: "工位领料"
+	quest.3497FFD39CB18764.description: [
+	"领料走信号：写清单，仓库自己把东西送到工位。"
+	"这一步省下的是走路，而不是机器时间。"
+	]
+	quest.750456C8DBB05FA2.title: "登记缺料"
+	quest.750456C8DBB05FA2.description: [
+	"缺什么写进清单，补料就不再靠人记。"
+	"清单与库存账对不上时，先去查谁的机器装了同一个链接站。"
+	]
+	quest.A8F5FACFFE5C16C2.title: "补货阈值"
+	quest.A8F5FACFFE5C16C2.description: [
+	"关键料低于下限就报信，别等用完了才发现。"
+	"阈值定得太高会一直补，太低则等于没有。"
+	]
+	quest.F8951B190EE20D00.title: "仪表盘"
+	quest.F8951B190EE20D00.description: [
+	"把几条线的状态集中到一块面板上，异常一眼能看见。"
+	"面板只做显示，不参与控制——它坏了不该让产线停。"
+	]
+	quest.BC6F6CFE727427AB.title: "线边的取料口"
+	quest.BC6F6CFE727427AB.description: [
+	"工位旁边一个接口，接上就能领料，不必回总仓。"
+	"接口数量上来之后，仓库的压力会集中到那几个最忙的。"
+	]
+	quest.49CCBC94A1367F05.title: "库存不再靠人记"
+	quest.49CCBC94A1367F05.description: [
+	"账、请求、补货、显示四件事都有判断依据。"
+	"从这一步起，仓库的极限只由机构决定，不由人的记性决定。"
+	]
+	quest.0E23C3CA94BE0938.title: "每小时多少件"
+	quest.0E23C3CA94BE0938.description: [
+	"产线只有两个数：每分钟过多少件，以及卡在哪一段。"
+	"本章剩下的条目都围绕这两个数。"
+	]
+	quest.0068DD396703015B.title: "测出节拍"
+	quest.0068DD396703015B.description: [
+	"空转的带上没有件数：必须让料真的走过去才算测到。"
+	"先量一段，再乘段数，别用估的。"
+	]
+	quest.B50D0BF1E306DF0B.title: "节拍与缓存"
+	quest.B50D0BF1E306DF0B.description: [
+	"上下游节拍不一致时，用缓存吸收差值，而不是让两边都降速。"
+	"缓存放在最慢那一段的前面，效果最明显。"
+	]
+	quest.153828A2C09F93CA.title: "线边读数"
+	quest.153828A2C09F93CA.description: [
+	"箱里现在有多少，直接从机器上读，不用开箱看。"
+	"读数是判断「这段是不是在堵」最省事的办法。"
+	]
+	quest.1407CB72E4FDDAA6.title: "上下游交接"
+	quest.1407CB72E4FDDAA6.description: [
+	"两段线之间的交接处，是整条线上最容易丢件数的地方。"
+	"把交接改成有仓库中转，丢件就变成看得见的账。"
+	]
+	quest.EA92ED5E2713FC75.title: "整线吞吐达标"
+	quest.EA92ED5E2713FC75.description: [
+	"从原料进来到成品到工位，全程没有人搬东西，且件数可测。"
+	"做到这一步，产线的瓶颈才从「人」变成「某一台机器」。"
+	]
+	quest.5EB0AEBCAC46709B.title: "分流与合流"
+	quest.5EB0AEBCAC46709B.description: [
+	"分流靠隧道件：一条主线按规则岔进几个工位，再合回来。"
+	"合流处两条带抢道时，件数掉得比预期的多。"
+	]
+	quest.512CBDE51190F17B.title: "垂直分拣"
+	quest.512CBDE51190F17B.description: [
+	"上下楼层之间按规则落料，不必先运到地面再升上去。"
+	"堵在这一段时，下层的带会先满，反压到上层。"
+	]
+}

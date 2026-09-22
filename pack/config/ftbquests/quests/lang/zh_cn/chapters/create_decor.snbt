@@ -1,0 +1,202 @@
+{
+	quest.CCD4DEE947561911.title: "工业饰面板"
+	quest.CCD4DEE947561911.description: [
+	"Design n' Decor：机械动力系厂房的基准面材。"
+	"先把一种面材定下来，后面所有机器底座都用它。"
+	]
+	quest.152ADE7C3032902E.title: "金属板覆面"
+	quest.152ADE7C3032902E.description: [
+	"薄板是最省料的一种包面：盖在墙上，墙面就不再是石头原色。"
+	]
+	quest.BF45D2BFED67C441.title: "深色金属与镀层"
+	quest.BF45D2BFED67C441.description: [
+	"深色面材压在亮色梁上，机器的轮廓才看得出来。"
+	"镀层板用来做台面与踢脚，不怕踩。"
+	]
+	quest.583B30F47F189F27.title: "梁与斜撑"
+	quest.583B30F47F189F27.description: [
+	"梁是承重线，斜撑是补刚度的那一根。"
+	"把梁的走向画出来再填墙，厂房就不会歪。"
+	]
+	quest.B182016CB1CC7043.title: "支柱与斜支柱"
+	quest.B182016CB1CC7043.description: [
+	"高处设备要落脚：支柱把重量传下去，斜支柱抗侧向推力。"
+	"大型货架与天车轨道下面基本都要一组。"
+	]
+	quest.BAD5FACB351BB97E.title: "格栅与网板"
+	quest.BAD5FACB351BB97E.description: [
+	"格栅是「这台机器在运转」的观感来源。"
+	"它还能当检修口：看得见里面，也不必拆墙。"
+	]
+	quest.3060A5010BB08DD3.title: "检修通道"
+	quest.3060A5010BB08DD3.description: [
+	"设备架空之后，需要能走上去的通道才能修。"
+	"通道用面材与栏杆，和厂房保持同一套配色。"
+	]
+	quest.2C0223BD749B963D.title: "嵌框面材"
+	quest.2C0223BD749B963D.description: [
+	"Create: Framed：把一个方块「贴」成金属、木头或别的材质。"
+	"凡是要与机器同色的表面，都先从这一层挑。"
+	]
+	quest.145B4F3EB81311E7.title: "横竖两个方向"
+	quest.145B4F3EB81311E7.description: [
+	"嵌框有两种方向，横竖混用能把一片墙分成上下两段。"
+	]
+	quest.2087FCC2C4516057.title: "染色嵌框玻璃"
+	quest.2087FCC2C4516057.description: [
+	"同样的框，换一种玻璃颜色，就是另一个车间。"
+	"染色是为了分区：一眼看出这块归哪条线。"
+	]
+	quest.DC79A1AABBC492BF.title: "网格玻璃"
+	quest.DC79A1AABBC492BF.description: [
+	"网格玻璃比整片玻璃更适合工业窗：格子本身就是分格线。"
+	]
+	quest.F2A0C4DEBBAC4E84.title: "成套的窗"
+	quest.F2A0C4DEBBAC4E84.description: [
+	"金属窗、黄铜窗、铜窗、玫瑰石英窗：按机器外壳挑同色的一种。"
+	"同一栋厂房只用一种窗，比多挑几种更好看。"
+	]
+	quest.81D2119CE23DF56A.title: "纸板与墙板"
+	quest.81D2119CE23DF56A.description: [
+	"便宜的整面墙材：仓库、货棚、临时工棚用它最划算。"
+	"做出第一批捆装板再动工，缺料停工的棚子最后都会半途留在那。"
+	]
+	quest.A426F29EAFEA04A7.title: "装纸板窗"
+	quest.A426F29EAFEA04A7.description: [
+	"纸板窗是这套里唯一透明的部分，货棚也就能采光。"
+	]
+	quest.C9EC0C2DFD262252.title: "切制石料收边"
+	quest.C9EC0C2DFD262252.description: [
+	"厂房的墙脚、柱础、台阶都靠切制石料收口。"
+	"只做一种切制石，整片场地就不花。"
+	]
+	quest.4ECDDB805E668439.title: "石料分格"
+	quest.4ECDDB805E668439.description: [
+	"把小砖与方格砖铺在地面，等于给场地画了网格。"
+	]
+	quest.1F0B44685EC63C9E.title: "层叠与拼色"
+	quest.1F0B44685EC63C9E.description: [
+	"把两种石料层叠或拼成方格，地面就有方向感。"
+	]
+	quest.3E8A7D4E039CBCA1.title: "压深色墙脚"
+	quest.3E8A7D4E039CBCA1.description: [
+	"深色石料压住墙面下部，是整个观感里最省力的一步。"
+	"石金件是石料与金属的过渡带，厂房与草地之间靠它收边。"
+	]
+	quest.3E3640113E9FB7F8.title: "切割器"
+	quest.3E3640113E9FB7F8.description: [
+	"Slice & Dice：把成型这一步接进动力线，一次切一批。"
+	]
+	quest.010C5E2495EB91B5.title: "液体切割"
+	quest.010C5E2495EB91B5.description: [
+	"切割需要液体：先有一份能用的切割介质，机器才出件。"
+	"湿润空气是这套里最基础的一种。"
+	]
+	quest.A7B9FD4C973F6430.title: "洒水与液体肥料"
+	quest.A7B9FD4C973F6430.description: [
+	"这套 mod 的另一半在农业侧：洒水器把液体按片铺开。"
+	"液态肥让作物成片长，是大面积种植的一件基础设备。"
+	]
+	quest.EED83296D5D2ECBF.title: "地面洒水"
+	quest.EED83296D5D2ECBF.description: [
+	"贴地的那一种只服务一格，用在温室与苗床旁边。"
+	]
+	quest.871640E701A8C734.title: "管道与接头"
+	quest.871640E701A8C734.description: [
+	"Create: Hypertube：在基地之间铺一套能坐人的管道。"
+	"它也是厂区里最像「管网」的一层装饰。"
+	]
+	quest.0B6E2357085F547B.title: "入口与加速段"
+	quest.0B6E2357085F547B.description: [
+	"入口是进出口，加速段决定一趟要多久。"
+	"两样都不做，管道就只是一段摆设。"
+	]
+	quest.CE7FD9C10A7EF034.title: "接头与读取"
+	quest.CE7FD9C10A7EF034.description: [
+	"多路管道要用接头分流；扫描附件用来读线上有什么。"
+	]
+	quest.5B05EFB20EB34572.title: "管上红石检测"
+	quest.5B05EFB20EB34572.description: [
+	"管道口能给出信号，就能与别的设施联动（比如自动开门）。"
+	]
+	quest.33DA16F25BCB4190.title: "舱口与易碎储罐"
+	quest.33DA16F25BCB4190.description: [
+	"Create: Dragons Plus：把流体接进车间，需要一个不占地方的接口。"
+	"易碎储罐容量小、能随手搬，适合做线边的临时罐。"
+	]
+	quest.6DE711CC5F7F16E2.title: "厂区灯型"
+	quest.6DE711CC5F7F16E2.description: [
+	"工业灯、前照灯、锅炉灯：同一片车间只用一种灯型。"
+	"灯型一乱，再整齐的机器看着也像拼的。"
+	]
+	quest.A85CF58198863979.title: "仪表与操作件"
+	quest.A85CF58198863979.description: [
+	"仪表盘、断路开关、分级拉杆：装饰与操作合成一件东西。"
+	"它们不只是好看，也是面板与分区的边界。"
+	]
+	quest.A3146ABDB13D7F33.title: "警示标线（螺栓）"
+	quest.A3146ABDB13D7F33.description: [
+	"四种螺栓图案就是地面上的警示与分区标线。"
+	"沿边走一圈，够用就好——铺满地面反而看不清。"
+	]
+	quest.EE84E4C6C639452D.title: "文本板与标识"
+	quest.EE84E4C6C639452D.description: [
+	"每个车间挂一块能读的牌子：编号、归属、负责人。"
+	"牌子写成一样的格式，扫一眼就知道走到哪一区了。"
+	]
+	quest.A74595243B31EDA5.title: "锅炉成套"
+	quest.A74595243B31EDA5.description: [
+	"锅炉不只是装饰：它是把「这里有热源」讲清楚的那一件。"
+	"放在蒸汽机旁边，机器才像装在一个车间里。"
+	]
+	quest.36DAE8FBDC103CD2.title: "栈桥成线"
+	quest.36DAE8FBDC103CD2.description: [
+	"把检修通道连成一条：从楼梯上去，沿机器走一圈再下来。"
+	"连成环之后，检修不必原路折返。"
+	]
+	quest.7EE54714114E64C5.title: "一色到底"
+	quest.7EE54714114E64C5.description: [
+	"车间先定一种主色，面材、容器、彩装全用它。"
+	"配色不统一时，机器做得再对也看着是临时搭的。"
+	]
+	quest.F373A298781F3FD2.title: "染料供应"
+	quest.F373A298781F3FD2.description: [
+	"Create: Dragons Plus 把染料做成桶装，配色才有量。"
+	"染一次是一批，不是一格一格刷。"
+	]
+	quest.02020BC564E1D7F4.title: "扩展色系"
+	quest.02020BC564E1D7F4.description: [
+	"十六色之外还有一整套扩展色，厂房不必挤在常用色里。"
+	"先挑三种做样板，定了再批量。"
+	]
+	quest.A3C3B87461995B66.title: "染料进车间"
+	quest.A3C3B87461995B66.description: [
+	"桶装染料与染色件是同一条线：桶是原料，件是产出。"
+	"这一步做完，配色就从手工活变成一道工序。"
+	]
+	quest.074D3DACD475EE68.title: "畜力上料"
+	quest.074D3DACD475EE68.description: [
+	"Create Horsepower：厂区里唯一一种不吃燃料的动力。"
+	"它带不动大机器，但适合拖一段附属的传送或磨盘。"
+	]
+	quest.C24C934A2B69D5C1.title: "管网走线"
+	quest.C24C934A2B69D5C1.description: [
+	"管不必笔直：沿墙、跨梁、下穿地面，走线定了再铺。"
+	"先把主管走完，再分枝——反过来的话每分一支都要拆一次。"
+	]
+	quest.7D187AC9C1795898.title: "厂房正立面"
+	quest.7D187AC9C1795898.description: [
+	"厂房好不好看，九成在正立面：面材、窗、招牌三者对齐。"
+	"先立一面，成了再照抄到其余三面。"
+	]
+	quest.9E8CFCC5BF3B32C2.title: "一座完整的车间"
+	quest.9E8CFCC5BF3B32C2.description: [
+	"面材、梁柱、窗、管网、灯、标线与栈桥，一次全部用上。"
+	"做完这一条，厂区就不再是「机器摆在空地上」。"
+	]
+	quest.3A882CBB73CD8B04.title: "厂区成套"
+	quest.3A882CBB73CD8B04.description: [
+	"从一块面材到一整座车间，材料、配色与走线是同一套。"
+	"公共工程与大剧院都按这套做法复制。"
+	]
+}

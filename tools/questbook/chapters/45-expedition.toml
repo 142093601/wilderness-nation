@@ -7,6 +7,42 @@
 # 判据来源：原版结构/维度/生物群系进度 + 物品 + 统计。
 # 结构 mod 大多不发进度（YUNG's / repurposed_structures 有少量），所以这一章主要靠
 # 原版进度（到过某维度/某结构）与"带回什么"这两类判据 —— 都指向真实游戏事实。
+#
+# 本章的 mod（逐个核对过 `python tools/item_index.py --ns <ns>`）：
+#   · Small Ships `smallships`（66 项：7 种船 × 9 种木 + sail + cannon + cannon_ball）
+#   · Waystones `waystones`（63 项：waystone / sharestone / portstone / warp_* / *_scroll）
+#   · Create 铁路段 `create`：track · track_station · track_signal · schedule · railway_casing
+#   · Create Train Parts `create_train_parts`（16 项：道口闸门 / 台阶 / 伸缩踏板 / 滑动窗）
+#   · Railways Navigator `createrailwaysnavigator`（10 项：导航仪 + 车站时钟 + 显示器）
+#   · Steam 'n' Rails `railways`（列车长帽、指挥哨）
+#   · Elevator `elevatorid`（16 项：16 色电梯）
+#   · Explorer's Compass `explorerscompass` / Nature's Compass `naturescompass`（结构/群系定位）
+#   · Player Tracking Compass `playertrackingcompass`（1 项：tracking_compass）
+#   · Better Archeology `betterarcheology`（102 项：刷子 / 化石 / 图腾 / 神器 / 考古学桌）
+#   · Portable Blueprints `portable_blueprints`（6 项：扫描仪 / 图纸 / 平板）
+#   · TorchMaster `torchmaster`（4 项：巨型火把 / 野火灯笼 / 恐惧之灯 / 冰冻珍珠）
+#   · Lootr `lootr`（遗迹每人一份的战利品容器）
+#
+# **覆盖不到的两种（不是漏写，逐条给证据）**：
+#   · Xaero's Minimap / World Map `xaeros_*`：**纯客户端 mod，注册表里没有 `xaero*`
+#     命名空间，也没有任何 item**（实测：`--stats` 的 100 个命名空间里没有它）。
+#     它的产出是世界地图与路径点，都不是可持有物；"看过一眼地图"没有游戏信号。
+#   · `dungeons_arise` / `nova_structures` / `repurposed_structures` / `betterdungeons`
+#     等结构 mod：**未安装在 mods/ 里**（`registry.json` 的 advancements 表里有残留记录，
+#     但 items 命名空间为 0）。本章的遗迹考察一律落到 `betterarcheology` 与 Lootr 上。
+#
+# 与其它章的分工：
+#   · 类目·结构与遗迹 (`154-cat-structures`) = **结构 mod 家族**本身（有哪些、长什么样）
+#   · 类目·地图与导航 (`150-cat-explore`)    = 导航 mod 家族的功能
+#   · 蒸汽与铁路   (`75-steam`)              = 铁路的**建造与技术**
+#   · 领地与队伍   (`95-claims`)             = 传送石的**权限与共享**
+#   · 本章                                   = **「出远门」这件事怎么组织**：编制、联络、
+#                                              补给点、导航纪律、交通、地形专项、报告、
+#                                              搜救、前哨升级、边界外的标记
+#
+# checkmark 用量：3 条 —— 全部是**原有**条目（情报墙的覆盖率、出发名册的内容、
+# 情报站升级动作），都是主观完成度或模组不发信号的界面动作，游戏里判不了；
+# 本轮新增的 59 条**一条 checkmark 都没有**，全部落在实物 / 原版进度 / 统计上。
 
 key = "expedition"
 title = "出关"
@@ -90,7 +126,7 @@ tasks = [
 name = "archive"
 title = "档案馆"
 desc = [
-	"把带回来的书、地图、唱片集中收在一处——不然它们会散在每个人背包里。",
+	"把带回来的书、地图、唱片集中收在一处 —— 不然它们会散在每个人背包里找不回来。",
 ]
 icon = "minecraft:bookshelf"
 shape = "rsquare"
@@ -231,6 +267,938 @@ tasks = [
 	{ type = "checkmark" },
 ]
 
+# ---------------- 簇 1：编制与联络 ----------------
+
+[[quest]]
+name = "e_crew_split"
+title = "谁去、谁留守"
+desc = [
+	"出发前把队伍劈成两半：外出的人按「能互相救」编组，留守的人要够用来看住家。",
+	"**留守名单和远征名单一样重要** —— 只写在墙上的名单，出事时没人看。",
+]
+icon = "minecraft:shield"
+shape = "pentagon"
+size = 2.0
+deps = ["roster"]
+tasks = [
+	{ type = "item", item = "minecraft:shield", count = 3 },
+	{ type = "item", item = "minecraft:white_bed", count = 2 },
+]
+
+[[quest]]
+name = "e_loadout"
+title = "装备清单"
+desc = [
+	"全队照同一张清单装包：镐、剑、食物、水、床、火把、备用工具各一份。",
+	"清单的意义是**不必临出发再想**，也避免有人只带了镐子就出门。",
+]
+icon = "minecraft:iron_pickaxe"
+shape = "rsquare"
+deps = ["e_crew_split"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_pickaxe", count = 2 },
+	{ type = "item", item = "minecraft:iron_sword", count = 2 },
+	{ type = "item", item = "minecraft:cooked_beef", count = 16 },
+]
+
+[[quest]]
+name = "e_contact_rule"
+title = "联络约定"
+desc = [
+	"三条最省事的约定：多久没消息算异常、失联时先找哪、在哪个坐标集合。",
+	"⚠️ 约定本身判不了。但它要**写下来贴在议事厅**，不能只在口头上。",
+]
+icon = "minecraft:bell"
+shape = "rsquare"
+deps = ["e_loadout"]
+tasks = [
+	{ type = "item", item = "minecraft:bell" },
+	{ type = "item", item = "minecraft:written_book" },
+]
+
+[[quest]]
+name = "e_roll_call"
+title = "定点报平安"
+desc = [
+	"每到一处补给点做一次点名：人在不在、谁受伤、剩多少补给。",
+	"点名是搜救的前提 —— 没有点名记录，出事时连「什么时候丢的」都不知道。",
+]
+icon = "minecraft:paper"
+shape = "circle"
+size = 1.2
+deps = ["e_contact_rule"]
+tasks = [
+	{ type = "item", item = "minecraft:paper", count = 16 },
+	{ type = "item", item = "minecraft:ink_sac", count = 4 },
+]
+
+[[quest]]
+name = "e_recovery_kit"
+title = "追一只回来的方向"
+desc = [
+	"每人一个回程方向的凭据：重生罗盘、磁石、指南针都行 —— 关键是**不靠地图也能回**。",
+	"地图会在死亡掉落、会在水里糊掉；方向感不会。",
+]
+icon = "minecraft:recovery_compass"
+shape = "rsquare"
+deps = ["e_roll_call"]
+tasks = [
+	{ type = "item", item = "minecraft:recovery_compass", count = 2 },
+	{ type = "item", item = "minecraft:compass", count = 2 },
+]
+
+# ---------------- 簇 2：补给点网络 ----------------
+
+[[quest]]
+name = "e_relay_spacing"
+title = "站点间距"
+desc = [
+	"补给点按**一天的路程**布置，不是按地图好看的程度布置。",
+	"先量一次：从主城到第一个站点走多久。超过一天，中间必须再加一个。",
+]
+icon = "minecraft:clock"
+shape = "pentagon"
+size = 2.0
+deps = ["outposts"]
+tasks = [
+	{ type = "item", item = "minecraft:clock" },
+	{ type = "item", item = "minecraft:item_frame", count = 4 },
+]
+
+[[quest]]
+name = "e_relay_three"
+title = "三处驿站"
+desc = [
+	"在同一方向上排三处站点：第一处是出发日的目的地，第三处是这次远征的边界。",
+	"三处连起来，这条路才叫「有后勤的路」。",
+]
+icon = "waystones:waystone"
+shape = "rsquare"
+deps = ["e_relay_spacing"]
+tasks = [
+	{ type = "item", item = "waystones:waystone", count = 3 },
+]
+
+[[quest]]
+name = "e_relay_kit"
+title = "每个驿站备什么"
+desc = [
+	"一箱食物、一桶水、一组火把、一张床、一把备用镐 —— 每处驿站都照这个配。",
+	"配得一样的好处是：**到哪一处都能马上补给**，不用先找东西。",
+]
+icon = "minecraft:barrel"
+shape = "square"
+deps = ["e_relay_three"]
+tasks = [
+	{ type = "item", item = "minecraft:barrel", count = 3 },
+	{ type = "item", item = "minecraft:bread", count = 24 },
+	{ type = "item", item = "minecraft:torch", count = 32 },
+]
+
+[[quest]]
+name = "e_relay_mark"
+title = "驿站要认得出来"
+desc = [
+	"每一处驿站必须**从远处就能认**：一杆旗、一盏长明灯、或者一座塔。",
+	"找站点花的时间不能超过赶路的时间 —— 否则这条路是负资产。",
+]
+icon = "minecraft:white_banner"
+shape = "circle"
+size = 1.2
+deps = ["e_relay_three"]
+tasks = [
+	{ type = "item", item = "minecraft:white_banner", count = 3 },
+	{ type = "item", item = "minecraft:lantern", count = 12 },
+]
+
+[[quest]]
+name = "e_relay_net"
+title = "补给网成型"
+desc = [
+	"两个方向各三处站点，彼此能互相支援 —— 这时远征半径才不再受背包限制。",
+	"这是「出关」这一章真正的门槛：**有网才敢走远**。",
+]
+icon = "minecraft:cartography_table"
+shape = "octagon"
+size = 1.75
+deps = ["e_relay_kit", "e_relay_mark"]
+tasks = [
+	{ type = "item", item = "minecraft:cartography_table" },
+	{ type = "item", item = "minecraft:map", count = 4 },
+]
+
+# ---------------- 簇 3：导航与记录 ----------------
+
+[[quest]]
+name = "e_nature_compass"
+title = "用自然罗盘找群系"
+desc = [
+	"要什么木头、什么动物、什么作物，先问自然罗盘 —— 它直接给最近的那个群系。",
+	"**先定群系再定路线**，比走到哪算哪省一半时间。",
+]
+icon = "naturescompass:naturescompass"
+shape = "pentagon"
+size = 2.0
+deps = ["first_expedition"]
+tasks = [
+	{ type = "item", item = "naturescompass:naturescompass" },
+]
+
+[[quest]]
+name = "e_explorer_compass"
+title = "用结构罗盘找遗迹"
+desc = [
+	"结构罗盘给最近的结构坐标：要找哪种遗迹，就点那种。",
+	"这是本章最实用的一件工具 —— 它把「碰运气」换成了「有计划」。",
+]
+icon = "explorerscompass:explorerscompass"
+shape = "rsquare"
+deps = ["e_nature_compass"]
+tasks = [
+	{ type = "item", item = "explorerscompass:explorerscompass" },
+]
+
+[[quest]]
+name = "e_compass_repair"
+title = "罗盘要能修"
+desc = [
+	"两个罗盘都是消耗品（用一次损一点），备件与修复材料要常备。",
+	"出远门前先确认：罗盘还能用几次。",
+]
+icon = "minecraft:copper_ingot"
+shape = "circle"
+size = 1.2
+deps = ["e_explorer_compass"]
+tasks = [
+	{ type = "item", item = "explorerscompass:explorerscompass" },
+	{ type = "item", item = "naturescompass:naturescompass" },
+	{ type = "item", item = "minecraft:copper_ingot", count = 8 },
+]
+
+[[quest]]
+name = "e_world_map"
+title = "世界地图记路线"
+desc = [
+	"（这些是纯客户端 mod，注册表里没有它们的命名空间、也没有任何物品 ——",
+	"所以判据落在实物上：图上要有的那张地图本身，与沿途钉下的路径点。）",
+]
+icon = "minecraft:map"
+shape = "rsquare"
+deps = ["e_nature_compass"]
+tasks = [
+	{ type = "item", item = "minecraft:map", count = 6 },
+	{ type = "item", item = "minecraft:item_frame", count = 8 },
+]
+
+[[quest]]
+name = "e_lodestone_mark"
+title = "沿途钉锚点"
+desc = [
+	"每处值得再来的地方放一块磁石或一个路标：**下次不必重新找**。",
+	"锚点的价值会随次数增长 —— 第一次是标记，第五次是网络。",
+]
+icon = "minecraft:lodestone"
+shape = "circle"
+size = 1.2
+deps = ["e_world_map"]
+tasks = [
+	{ type = "item", item = "minecraft:lodestone", count = 2 },
+	{ type = "item", item = "minecraft:oak_sign", count = 8 },
+]
+
+[[quest]]
+name = "e_tracking_compass"
+title = "队内定位"
+desc = [
+	"队员之间互相定位的罗盘：**散开搜遗迹时用它集合**。",
+	"多人远征最容易出的事不是打不过，是找不到人。",
+]
+icon = "minecraft:recovery_compass"
+shape = "rsquare"
+deps = ["e_lodestone_mark"]
+tasks = [
+	{ type = "item", item = "minecraft:recovery_compass", count = 2 },
+]
+
+[[quest]]
+name = "e_nav_done"
+title = "导航这块成型"
+desc = [
+	"找群系、找结构、记路线、钉锚点、队内定位 —— 五件齐了，远征才算「组织」而不是「出走」。",
+]
+icon = "minecraft:spyglass"
+shape = "octagon"
+size = 1.75
+deps = ["e_compass_repair", "e_tracking_compass"]
+tasks = [
+	{ type = "item", item = "minecraft:spyglass", count = 2 },
+	{ type = "item", item = "minecraft:map", count = 4 },
+]
+
+# ---------------- 簇 4：交通工具 ----------------
+
+[[quest]]
+name = "e_ship"
+title = "造船"
+desc = [
+	"Small Ships：风帆船能装货、能载多人 —— 海运的吞吐是划艇的几倍。",
+	"海洋方向的远征从此不必贴着岸走。",
+]
+icon = "smallships:oak_cog"
+shape = "pentagon"
+size = 2.0
+deps = ["ocean_trip"]
+tasks = [
+	{ type = "item", item = "smallships:oak_cog" },
+	{ type = "item", item = "smallships:sail" },
+]
+
+[[quest]]
+name = "e_war_galley"
+title = "武装帆船"
+desc = [
+	"带炮位的船：远海要防的不只是浪，还有别人。",
+	"（船炮本身在「战斗与军械」章会再提一次 —— 那里讲打，这里讲走。）",
+]
+icon = "smallships:oak_galley"
+shape = "circle"
+size = 1.2
+deps = ["e_ship"]
+tasks = [
+	{ type = "item", item = "smallships:oak_galley" },
+	{ type = "item", item = "smallships:cannon" },
+]
+
+[[quest]]
+name = "e_cargo_ship"
+title = "货船"
+desc = [
+	"把「运回来」这件事做成一趟能搬空的量：箱子船比背包船重要得多。",
+]
+icon = "minecraft:oak_chest_boat"
+shape = "rsquare"
+deps = ["e_ship"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_chest_boat", count = 2 },
+	{ type = "item", item = "minecraft:chest", count = 8 },
+]
+
+[[quest]]
+name = "e_rail"
+title = "铺一段铁路"
+desc = [
+	"从主城往远征方向铺一段轨 —— 铁路的运量比任何背包都大。",
+	"铁轨铺到哪里，「后方」就延伸到哪里。",
+]
+icon = "create:track"
+shape = "rsquare"
+deps = ["e_relay_three"]
+tasks = [
+	{ type = "item", item = "create:track", count = 64 },
+	{ type = "item", item = "create:railway_casing", count = 4 },
+]
+
+[[quest]]
+name = "e_train_station"
+title = "终点站"
+desc = [
+	"一段路要有个尽头：站点方块 + 信号机，让列车知道该停哪。",
+]
+icon = "create:track_station"
+shape = "rsquare"
+deps = ["e_rail"]
+tasks = [
+	{ type = "item", item = "create:track_station" },
+	{ type = "item", item = "create:track_signal", count = 2 },
+]
+
+[[quest]]
+name = "e_train_schedule"
+title = "排出时刻表"
+desc = [
+	"列车不用人开：时刻表 + 站台，跑起来就是一条自动补给线。",
+	"到这一步，**补给从「人扛」变成「按点发车」**。",
+]
+icon = "create:schedule"
+shape = "circle"
+size = 1.2
+deps = ["e_train_station"]
+tasks = [
+	{ type = "item", item = "create:schedule" },
+	{ type = "item", item = "createrailwaysnavigator:navigator" },
+]
+
+[[quest]]
+name = "e_rail_crossing"
+title = "道口要有人管"
+desc = [
+	"在铁路穿过大路的地方装闸门与延长杆 —— 铁路上撞一次，整条线的料都得重来。",
+]
+icon = "create_train_parts:crossing"
+shape = "circle"
+size = 1.2
+deps = ["e_train_station"]
+tasks = [
+	{ type = "item", item = "create_train_parts:crossing", count = 2 },
+	{ type = "item", item = "create_train_parts:arm_extender", count = 2 },
+]
+
+[[quest]]
+name = "e_conductor"
+title = "列车长"
+desc = [
+	"用指挥哨加列车长帽管站台：吹一声，人和货都动起来。",
+]
+icon = "railways:conductor_whistle"
+shape = "circle"
+size = 1.2
+deps = ["e_train_schedule"]
+tasks = [
+	{ type = "item", item = "railways:conductor_whistle" },
+	{ type = "item", item = "railways:black_conductor_cap" },
+]
+
+[[quest]]
+name = "e_elevator"
+title = "垂直运输"
+desc = [
+	"矿道、塔楼、前哨的上下全靠它：电梯彩色区分，一眼知道哪台去哪层。",
+	"远征里最费时间的动作是「上下爬」，不是「走远路」。",
+]
+icon = "elevatorid:elevator_white"
+shape = "circle"
+size = 1.2
+deps = ["e_relay_kit"]
+tasks = [
+	{ type = "item", item = "elevatorid:elevator_white", count = 4 },
+	{ type = "item", item = "elevatorid:elevator_black", count = 4 },
+]
+
+[[quest]]
+name = "e_portal_scroll"
+title = "跨维度回程"
+desc = [
+	"下界、末地走一趟，**回来比去难**：传送门卷轴与绑定卷轴要提前备好。",
+	"（传送网络的权限与共享是「领地与队伍」章的事，这里只管带在身上那几张。）",
+]
+icon = "waystones:portal_scroll"
+shape = "rsquare"
+deps = ["nether_trip"]
+tasks = [
+	{ type = "item", item = "waystones:portal_scroll" },
+	{ type = "item", item = "waystones:bound_scroll", count = 2 },
+]
+
+[[quest]]
+name = "e_vehicle_net"
+title = "海陆轨三线都通"
+desc = [
+	"把船、车、脚三条线各跑通一次：船走海、车走轨、脚走陆，各有各的活。",
+	"到这一步，「多远算远」这个问题才第一次有了答案。",
+]
+icon = "smallships:oak_galley"
+shape = "octagon"
+size = 1.75
+deps = ["e_war_galley", "e_cargo_ship", "e_train_schedule", "e_rail_crossing",
+        "e_conductor", "e_elevator", "e_portal_scroll"]
+tasks = [
+	{ type = "item", item = "smallships:oak_galley" },
+	{ type = "item", item = "create:track_station" },
+	{ type = "item", item = "minecraft:oak_chest_boat" },
+]
+
+# ---------------- 簇 5：地形专项 ----------------
+
+[[quest]]
+name = "e_cave_recon"
+title = "洞穴勘察"
+desc = [
+	"洞穴远征要带三样别的：绳子（脚手架）、备用光源、一条**能退回来**的记号线。",
+	"洞穴里的死因几乎全是迷路，不是打不过。",
+]
+icon = "minecraft:scaffolding"
+shape = "pentagon"
+size = 2.0
+deps = ["e_loadout"]
+tasks = [
+	{ type = "item", item = "minecraft:scaffolding", count = 32 },
+	{ type = "item", item = "minecraft:torch", count = 32 },
+]
+
+[[quest]]
+name = "e_cave_haul"
+title = "洞穴带回来的"
+desc = [
+	"判定标准不是「走了多深」，是**带回了多少能用在地面上的东西**：矿、发光植物、苔藓。",
+]
+icon = "minecraft:glow_berries"
+shape = "circle"
+size = 1.2
+deps = ["e_cave_recon"]
+tasks = [
+	{ type = "item", item = "minecraft:glow_berries", count = 8 },
+	{ type = "item", item = "minecraft:moss_block", count = 8 },
+	{ type = "item", item = "minecraft:spore_blossom" },
+]
+
+[[quest]]
+name = "e_swamp_run"
+title = "沼泽远征"
+desc = [
+	"沼泽是**建材与药材的产地**：黏土、睡莲、蘑菇、红树林木。",
+	"路难走，所以这趟要一次带够，别来回三趟。",
+]
+icon = "minecraft:mangrove_log"
+shape = "circle"
+size = 1.2
+deps = ["e_cave_recon"]
+tasks = [
+	{ type = "item", item = "minecraft:mangrove_log", count = 32 },
+	{ type = "item", item = "minecraft:clay", count = 16 },
+	{ type = "item", item = "minecraft:brown_mushroom", count = 8 },
+]
+
+[[quest]]
+name = "e_jungle_run"
+title = "丛林远征"
+desc = [
+	"丛林给竹子、可可豆、西瓜与丛林木 —— 高度落差大，落下去就上不来。",
+	"带够脚手架，丛林其实是最划算的一趟。",
+]
+icon = "minecraft:bamboo"
+shape = "circle"
+size = 1.2
+deps = ["e_swamp_run"]
+tasks = [
+	{ type = "item", item = "minecraft:bamboo", count = 32 },
+	{ type = "item", item = "minecraft:cocoa_beans", count = 8 },
+	{ type = "item", item = "minecraft:melon", count = 4 },
+]
+
+[[quest]]
+name = "e_snow_run"
+title = "雪原远征"
+desc = [
+	"雪原的主要风险不是怪，是**细雪与失温**：普通雪球下去就出不来。",
+	"带皮革靴与细雪桶，别穿铁靴进去。",
+]
+icon = "minecraft:powder_snow_bucket"
+shape = "circle"
+size = 1.2
+deps = ["e_jungle_run"]
+tasks = [
+	{ type = "item", item = "minecraft:powder_snow_bucket" },
+	{ type = "item", item = "minecraft:leather_boots" },
+	{ type = "item", item = "minecraft:campfire", count = 4 },
+]
+
+[[quest]]
+name = "e_ocean_deep"
+title = "深海远征"
+desc = [
+	"海底遗迹与沉船都在深处：水下呼吸、夜视、以及一条**回水面的路**。",
+	"海晶灯与海晶碎片是这一趟最实用的收获。",
+]
+icon = "minecraft:heart_of_the_sea"
+shape = "rsquare"
+deps = ["ocean_trip"]
+tasks = [
+	{ type = "item", item = "minecraft:heart_of_the_sea" },
+	{ type = "item", item = "minecraft:nautilus_shell", count = 2 },
+	{ type = "item", item = "minecraft:sea_lantern", count = 4 },
+]
+
+[[quest]]
+name = "e_nether_deep"
+title = "下界纵深"
+desc = [
+	"下界远征要按「一进一出」算：进去多少格、出来多少格、路上有没有锚点。",
+	"烈焰棒与下界合金碎片的产地都在深处 —— 这是**唯一**能拿到它们的地方。",
+]
+icon = "minecraft:blaze_rod"
+shape = "rsquare"
+deps = ["nether_trip", "e_portal_scroll"]
+tasks = [
+	{ type = "item", item = "minecraft:blaze_rod", count = 8 },
+	{ type = "item", item = "minecraft:ancient_debris" },
+	{ type = "item", item = "minecraft:respawn_anchor" },
+]
+
+[[quest]]
+name = "e_end_run"
+title = "末地远征"
+desc = [
+	"末地是**一次性远征**：准备错了没法回头补。",
+	"全队一起去，末影之眼与回程手段先备齐 —— 这是一趟不能有人掉队的行程。",
+]
+icon = "minecraft:ender_eye"
+shape = "rsquare"
+deps = ["e_nether_deep"]
+tasks = [
+	{ type = "item", item = "minecraft:ender_eye", count = 12 },
+	{ type = "item", item = "minecraft:ender_pearl", count = 4 },
+	{ type = "item", item = "minecraft:ender_chest" },
+]
+
+# ---------------- 簇 6：遗迹考察（Better Archeology） ----------------
+
+[[quest]]
+name = "e_arch_table"
+title = "考古学桌"
+desc = [
+	"Better Archeology：把「可疑的沙土」变成实物的那一张桌子。",
+	"遗迹考察从此不再只是「找箱子」，而是**挖一处的完整流程**。",
+]
+icon = "betterarcheology:archeology_table"
+shape = "pentagon"
+size = 2.0
+deps = ["three_structures"]
+tasks = [
+	{ type = "item", item = "betterarcheology:archeology_table" },
+	{ type = "item", item = "betterarcheology:iron_brush" },
+]
+
+[[quest]]
+name = "e_arch_brush"
+title = "刷子要升级"
+desc = [
+	"铁刷、钻石刷、下界合金刷：**刷得越快，一趟能挖的遗迹越多**。",
+	"钻石刷是这一章的性价比拐点。",
+]
+icon = "betterarcheology:diamond_brush"
+shape = "rsquare"
+deps = ["e_arch_table"]
+tasks = [
+	{ type = "item", item = "betterarcheology:diamond_brush" },
+	{ type = "item", item = "betterarcheology:iron_brush", count = 2 },
+]
+
+[[quest]]
+name = "e_arch_vase"
+title = "砸古代花瓶"
+desc = [
+	"遗迹里的花瓶砸开有货 —— 这是最直接的一条「遗迹产出」。",
+]
+icon = "betterarcheology:loot_vase"
+shape = "circle"
+size = 1.2
+deps = ["e_arch_table"]
+tasks = [
+	{ type = "item", item = "betterarcheology:loot_vase" },
+]
+
+[[quest]]
+name = "e_arch_fossil"
+title = "拼出第一具化石"
+desc = [
+	"化石分头骨与身体两半，凑齐才算一具。头骨能当展示品，**身体有实际用途**。",
+	"这一条游戏会自己判定（发现化石）。",
+]
+icon = "betterarcheology:villager_fossil"
+shape = "rsquare"
+deps = ["e_arch_brush"]
+tasks = [
+	{ type = "advancement", advancement = "betterarcheology:fossil_found" },
+]
+
+[[quest]]
+name = "e_arch_all_fossils"
+title = "六具化石齐了"
+desc = [
+	"六种化石全部拼完 —— 这是一条**长线收集**：每一具都要刷很多处遗迹。",
+	"它们的陈列室就是「结构与遗迹」章里博物馆的前身。",
+]
+icon = "betterarcheology:creeper_fossil"
+shape = "octagon"
+size = 1.75
+deps = ["e_arch_fossil"]
+tasks = [
+	{ type = "advancement", advancement = "betterarcheology:all_fossils_found" },
+]
+
+[[quest]]
+name = "e_arch_artifact"
+title = "鉴定神器"
+desc = [
+	"未鉴定的神器要鉴定后才成型：神器碎片是这条链的原料。",
+]
+icon = "betterarcheology:unidentified_artifact"
+shape = "circle"
+size = 1.2
+deps = ["e_arch_brush"]
+tasks = [
+	{ type = "advancement", advancement = "betterarcheology:artifact_shards" },
+	{ type = "item", item = "betterarcheology:unidentified_artifact" },
+]
+
+[[quest]]
+name = "e_arch_totem"
+title = "带一具图腾回来"
+desc = [
+	"考古图腾各有用途：生长、光辉、灵魂、洪流 —— 它们是**遗迹里唯一能带回城的实用件**。",
+]
+icon = "betterarcheology:radiance_totem"
+shape = "circle"
+size = 1.2
+deps = ["e_arch_artifact"]
+tasks = [
+	{ type = "item", item = "betterarcheology:radiance_totem" },
+	{ type = "item", item = "betterarcheology:growth_totem" },
+]
+
+[[quest]]
+name = "e_arch_done"
+title = "遗迹考察成体系"
+desc = [
+	"桌子、刷子、化石、神器、图腾 —— 一趟遗迹能从「找箱子」升级成一条产线。",
+	"到这一步，远征的产出才配得上它的成本。",
+]
+icon = "betterarcheology:unidentified_artifact"
+shape = "octagon"
+size = 1.75
+deps = ["e_arch_vase", "e_arch_all_fossils", "e_arch_totem"]
+tasks = [
+	{ type = "item", item = "betterarcheology:unidentified_artifact", count = 2 },
+	{ type = "item", item = "betterarcheology:netherite_brush" },
+]
+
+# ---------------- 簇 7：报告、伤亡与搜救 ----------------
+
+[[quest]]
+name = "e_report"
+title = "远征报告"
+desc = [
+	"回来之后交一页：去了哪、走了多少格、带回了什么、下次还去不去。",
+	"报告是**下一趟的起点** —— 没有它，每次远征都从零开始。",
+]
+icon = "minecraft:writable_book"
+shape = "rsquare"
+deps = ["first_expedition"]
+tasks = [
+	{ type = "item", item = "minecraft:writable_book" },
+	{ type = "item", item = "minecraft:paper", count = 8 },
+]
+
+[[quest]]
+name = "e_map_update"
+title = "把地图补上"
+desc = [
+	"报告写完就更新情报墙：新群系、新站点、新风险，当次就标。",
+	"**当场标比事后回忆准得多。**",
+]
+icon = "minecraft:cartography_table"
+shape = "circle"
+size = 1.2
+deps = ["e_report"]
+tasks = [
+	{ type = "item", item = "minecraft:cartography_table" },
+	{ type = "item", item = "minecraft:item_frame", count = 4 },
+]
+
+[[quest]]
+name = "e_loot_split"
+title = "战利品怎么分"
+desc = [
+	"带回来的东西先入库再分，别在门口就地分了 —— 就地分的结局是**没人记账**。",
+	"（公共仓库与账本是「立国」与「国库」章的事；这里只定「先入库」这一条纪律。）",
+]
+icon = "minecraft:chest"
+shape = "rsquare"
+deps = ["e_map_update"]
+tasks = [
+	{ type = "item", item = "minecraft:chest", count = 4 },
+	{ type = "item", item = "minecraft:barrel", count = 4 },
+]
+
+[[quest]]
+name = "e_emergency_route"
+title = "紧急撤离路线"
+desc = [
+	"每一趟出发前定好**往回跑的那条线**：往哪跑、在哪集合、谁断后。",
+	"路线要在出发前走一遍 —— 事到临头再找路，等于没有路。",
+]
+icon = "minecraft:leather_boots"
+shape = "rsquare"
+deps = ["e_contact_rule"]
+tasks = [
+	{ type = "item", item = "minecraft:leather_boots", count = 2 },
+	{ type = "item", item = "minecraft:recovery_compass", count = 2 },
+]
+
+[[quest]]
+name = "e_search_party"
+title = "搜救队"
+desc = [
+	"失联之后谁来救、带什么、找多久：**搜救队要提前指定**，不能临时喊人。",
+	"搜救装备与远征装备不同：光源、床、食物、以及不恋战的纪律。",
+]
+icon = "minecraft:shield"
+shape = "rsquare"
+deps = ["e_emergency_route"]
+tasks = [
+	{ type = "item", item = "minecraft:shield", count = 2 },
+	{ type = "item", item = "minecraft:lantern", count = 8 },
+	{ type = "item", item = "minecraft:white_bed", count = 2 },
+]
+
+[[quest]]
+name = "e_casualty_record"
+title = "伤亡要记账"
+desc = [
+	"死了谁、在哪、为什么 —— 记进档案馆。这条记录会直接改变下一次的编组。",
+	"（碑林与史册章会把「记名」做成制度；这里先记在远征报告里。）",
+]
+icon = "minecraft:bookshelf"
+shape = "circle"
+size = 1.2
+deps = ["e_search_party"]
+tasks = [
+	{ type = "item", item = "minecraft:bookshelf", count = 4 },
+	{ type = "item", item = "minecraft:written_book" },
+]
+
+# ---------------- 簇 8：前哨升级为据点 ----------------
+
+[[quest]]
+name = "e_post_wall"
+title = "前哨加墙"
+desc = [
+	"前哨从「能睡一觉」升级到「能守一夜」：石砖墙 + 一道门 + 一条退路。",
+]
+icon = "minecraft:stone_brick_wall"
+shape = "pentagon"
+size = 2.0
+deps = ["forward_post"]
+tasks = [
+	{ type = "item", item = "minecraft:stone_brick_wall", count = 32 },
+	{ type = "item", item = "minecraft:iron_door", count = 2 },
+]
+
+[[quest]]
+name = "e_post_store"
+title = "据点的仓储"
+desc = [
+	"据点要有**自己的一份库存**：不必每次从主城带全套过去。",
+	"有余粮的据点才能当中转站用。",
+]
+icon = "minecraft:barrel"
+shape = "rsquare"
+deps = ["e_post_wall"]
+tasks = [
+	{ type = "item", item = "minecraft:barrel", count = 8 },
+	{ type = "item", item = "minecraft:chest", count = 8 },
+]
+
+[[quest]]
+name = "e_post_light"
+title = "据点防刷怪"
+desc = [
+	"据点的敌人不是来攻城的，是**刷在墙里**的：巨型火把或恐惧之灯把范围清干净。",
+	"一个据点如果夜夜有人死，它就不是据点，是陷阱。",
+]
+icon = "torchmaster:megatorch"
+shape = "rsquare"
+deps = ["e_post_store"]
+tasks = [
+	{ type = "item", item = "torchmaster:megatorch" },
+	{ type = "item", item = "torchmaster:dreadlamp" },
+]
+
+[[quest]]
+name = "e_post_waystone"
+title = "据点接入传送网"
+desc = [
+	"据点与主城之间连一座传送石：**来回一次从一天变成一瞬间**。",
+	"（传送权限与共享是「领地与队伍」章的事；这里只要求这座据点上网。）",
+]
+icon = "waystones:waystone"
+shape = "rsquare"
+deps = ["e_post_light"]
+tasks = [
+	{ type = "item", item = "waystones:waystone" },
+	{ type = "item", item = "waystones:attuned_shard", count = 2 },
+]
+
+[[quest]]
+name = "e_post_garrison"
+title = "据点常驻"
+desc = [
+	"据点要有人常驻才算据点，否则它只是一间没人住的房子。",
+	"常驻的标准：床、粮、值夜排班 —— 三样都有。",
+]
+icon = "minecraft:white_bed"
+shape = "octagon"
+size = 1.75
+deps = ["e_post_waystone"]
+tasks = [
+	{ type = "item", item = "minecraft:white_bed", count = 4 },
+	{ type = "item", item = "minecraft:bread", count = 32 },
+]
+
+# ---------------- 簇 9：边界以外 ----------------
+
+[[quest]]
+name = "e_outward_flag"
+title = "边界外插旗"
+desc = [
+	"走出去立一面旗：**旗是「我们到过这里」的凭据**，也是下一次的坐标。",
+	"旗立在补给点或据点旁，不要插在路中间。",
+]
+icon = "minecraft:white_banner"
+shape = "pentagon"
+size = 2.0
+deps = ["e_relay_net"]
+tasks = [
+	{ type = "item", item = "minecraft:white_banner", count = 4 },
+	{ type = "item", item = "minecraft:stripped_oak_log", count = 4 },
+]
+
+[[quest]]
+name = "e_unexplored_mark"
+title = "未探索区标记"
+desc = [
+	"情报墙上要有一块**明确的空白**：标出「还没去过」的区域，而不是留白让人以为去过了。",
+	"知道哪里没去过，比知道哪里去过更值钱。",
+]
+icon = "minecraft:item_frame"
+shape = "rsquare"
+deps = ["e_outward_flag"]
+tasks = [
+	{ type = "item", item = "minecraft:item_frame", count = 8 },
+	{ type = "item", item = "minecraft:black_dye", count = 4 },
+]
+
+[[quest]]
+name = "e_blueprint_scan"
+title = "把建筑扫成图纸"
+desc = [
+	"Portable Blueprints：扫描仪把见到的建筑存成图纸，**带回来就能复建**。",
+	"这是远征产出里唯一能直接变成「城里的东西」的一类。",
+]
+icon = "portable_blueprints:scanner"
+shape = "rsquare"
+deps = ["e_unexplored_mark"]
+tasks = [
+	{ type = "item", item = "portable_blueprints:scanner" },
+	{ type = "item", item = "portable_blueprints:blueprint" },
+]
+
+[[quest]]
+name = "e_frontier_done"
+title = "边界推到哪，国就到哪"
+desc = [
+	"旗、锚点、据点、图纸四样齐了：边界以外第一次有了**可复现的东西**。",
+	"下一时代是压力时代：把远征带回来的东西变成工事。",
+]
+icon = "minecraft:lodestone"
+shape = "octagon"
+size = 1.75
+deps = ["e_post_garrison", "e_blueprint_scan"]
+tasks = [
+	{ type = "item", item = "minecraft:lodestone", count = 2 },
+	{ type = "item", item = "portable_blueprints:blueprint", count = 2 },
+]
+
 # ---------------- 终局 ----------------
 
 [[quest]]
@@ -244,7 +1212,10 @@ icon = "minecraft:stone_bricks"
 shape = "hexagon"
 size = 2.5
 deps = ["nether_trip", "long_haul", "three_structures", "ocean_trip", "high_peak",
-        "desert_run", "beacon_point", "forward_post", "gear_room", "archive", "tracking"]
+        "desert_run", "beacon_point", "forward_post", "gear_room", "archive", "tracking",
+        "e_roll_call", "e_relay_net", "e_nav_done", "e_vehicle_net", "e_cave_haul",
+        "e_swamp_run", "e_jungle_run", "e_snow_run", "e_ocean_deep", "e_end_run",
+        "e_arch_done", "e_casualty_record", "e_frontier_done"]
 tasks = [
 	{ type = "item", item = "minecraft:stone_bricks", count = 32 },
 ]

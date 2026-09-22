@@ -515,3 +515,488 @@ deps = ["mats_throughput", "mats_reserve"]
 tasks = [
 	{ type = "item", item = "minecraft:anvil", count = 2 },
 ]
+
+# ================= 追加：重工业与材料体系（2026-09-22）=================
+# 这一轮加的是「原木—石料—砖」之外的另一半：**金属、油、化工、规格**。
+# 判据用到的 mod（都是实物，逐个核过 id：`tfmg` 656 项 / `create` 901 项）：
+#   · `tfmg`（The Factory Must Grow）：本章最大的一块簇 —— 焦炉→高炉→炼钢→铸件、
+#     油田→抽油机→分馏→燃料与化工、塑料与合成材料、管线与重工业厂房。
+#   · `create`：合金与压片（黄铜、金属板、光耀/暗影钢）。
+#   · 原版：金、下界合金、远古残骸。
+#
+# **跨章边界（写清楚，避免与 `64-create-decor` 打架）**：
+#   · `64-create-decor` 用 TFMG 的**建材与装饰**视角（混凝土、警示块、工厂地板这类表皮）。
+#   · 本章用 TFMG 的**加工链**视角（矿→锭→构件→成品）。同一 mod 两章各写一半，
+#     这是 ROSTER §4.1 那张例外表之外新加的一条，需要汇总者登记。
+#   · Create 机器内部的工序仍然不在本章（那是 `60-create` / `62-logistics`）。
+
+# ---------------- 簇 6：重工业（TFMG · 含 Create 合金与压片） ----------------
+
+[[quest]]
+name = "mt_alloy"
+title = "合金与压片"
+desc = [
+	"铜与锌合成黄铜，再压成板材——机器零件的前置都在这一层。",
+	"它把「有矿」变成「有能用的件」。",
+]
+icon = "create:brass_ingot"
+shape = "pentagon"
+size = 2.0
+deps = ["ore_processing"]
+tasks = [
+	{ type = "item", item = "create:brass_ingot", count = 64 },
+	{ type = "item", item = "create:brass_sheet", count = 32 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "mt_sheets"
+title = "金属压片"
+desc = [
+	"铁、铜、金都要有板材形态。先各压一批出来，后面配零件才不缺料。",
+]
+icon = "create:iron_sheet"
+shape = "rsquare"
+size = 1.75
+deps = ["mt_alloy"]
+tasks = [
+	{ type = "item", item = "create:iron_sheet", count = 64 },
+	{ type = "item", item = "create:copper_sheet", count = 64 },
+	{ type = "item", item = "create:golden_sheet", count = 32 },
+]
+
+[[quest]]
+name = "mt_radiance"
+title = "光耀与暗影钢"
+desc = [
+	"到这一步才有余力去碰它们：它们不解决生产问题，只解决「做得出做不出」。",
+]
+icon = "create:refined_radiance"
+shape = "circle"
+size = 1.2
+deps = ["mt_alloy"]
+tasks = [
+	{ type = "item", item = "create:chromatic_compound", count = 8 },
+	{ type = "item", item = "create:refined_radiance", count = 4 },
+	{ type = "item", item = "create:shadow_steel", count = 4 },
+]
+
+[[quest]]
+name = "mt_coke"
+title = "焦炉与焦煤"
+desc = [
+	"先建焦炉把煤炼成焦煤，煤直接烧的温度不够，它是炼钢这一层的入场券。",
+]
+icon = "tfmg:coke_oven"
+shape = "rsquare"
+size = 1.75
+deps = ["ore_processing"]
+tasks = [
+	{ type = "item", item = "tfmg:coke_oven", count = 1 },
+	{ type = "item", item = "tfmg:coal_coke", count = 64 },
+]
+
+[[quest]]
+name = "mt_firebrick"
+title = "耐火材料"
+desc = [
+	"先备耐火黏土与耐火砖：普通砖砌的炉子在这一层会直接烧穿。",
+]
+icon = "tfmg:fireclay"
+shape = "circle"
+size = 1.2
+deps = ["mt_coke"]
+tasks = [
+	{ type = "item", item = "tfmg:fireclay", count = 64 },
+	{ type = "item", item = "tfmg:fireproof_brick", count = 64 },
+]
+
+[[quest]]
+name = "mt_blast"
+title = "高炉"
+desc = [
+	"把高炉建起来，钢才可能成规模地出，而不是一炉一炉点。",
+]
+icon = "tfmg:blast_furnace_hatch"
+shape = "rsquare"
+size = 1.75
+deps = ["mt_firebrick"]
+tasks = [
+	{ type = "item", item = "tfmg:blast_furnace_hatch", count = 1 },
+	{ type = "item", item = "tfmg:blast_furnace_output", count = 1 },
+	{ type = "item", item = "tfmg:fireproof_brick_reinforcement", count = 16 },
+]
+
+[[quest]]
+name = "mt_steel"
+title = "炼钢"
+desc = [
+	"先把它做到能连续出：机器外壳、管道、脚手架、列车都吃钢。",
+	"产量到这一档，重工业才算立起来。",
+]
+icon = "tfmg:steel_ingot"
+shape = "octagon"
+size = 1.75
+deps = ["mt_blast"]
+tasks = [
+	{ type = "item", item = "tfmg:steel_ingot", count = 128 },
+	{ type = "item", item = "tfmg:molten_steel_bucket", count = 8 },
+]
+
+[[quest]]
+name = "mt_cast"
+title = "铸件与铸模"
+desc = [
+	"铸模决定成品形状。锭、块、异形件各有一套模，换模比换机器便宜。",
+]
+icon = "tfmg:casting_basin"
+shape = "circle"
+size = 1.2
+deps = ["mt_steel"]
+tasks = [
+	{ type = "item", item = "tfmg:casting_basin", count = 1 },
+	{ type = "item", item = "tfmg:casting_basin", count = 1 },
+	{ type = "item", item = "tfmg:lead_ingot", count = 2 },
+	{ type = "item", item = "tfmg:steel_ingot", count = 2 },
+]
+
+[[quest]]
+name = "mt_steel_parts"
+title = "钢铁构件"
+desc = [
+	"把钢锭做成构件才能上机器：钢铁构件、厚钢板、钢机壳各备一批。",
+]
+icon = "tfmg:steel_mechanism"
+shape = "rsquare"
+size = 1.75
+deps = ["mt_steel"]
+tasks = [
+	{ type = "item", item = "tfmg:steel_mechanism", count = 32 },
+	{ type = "item", item = "tfmg:heavy_plate", count = 16 },
+	{ type = "item", item = "tfmg:steel_casing", count = 16 },
+]
+
+[[quest]]
+name = "mt_oil_scan"
+title = "找油"
+desc = [
+	"原油是这个包唯一「必须出门找」的原料：油田分布是固定的，先探到再谈产线。",
+]
+icon = "tfmg:surface_scanner"
+shape = "rsquare"
+size = 1.75
+deps = ["deep_ores"]
+tasks = [
+	{ type = "item", item = "tfmg:surface_scanner", count = 1 },
+	{ type = "item", item = "tfmg:oil_hammer", count = 1 },
+	{ type = "item", item = "tfmg:crude_oil_bucket", count = 8 },
+]
+
+[[quest]]
+name = "mt_pumpjack"
+title = "抽油机"
+desc = [
+	"把抽油机装到油田上：一桶一桶舀出来的量，撑不起任何一条产线。",
+]
+icon = "tfmg:pumpjack_hammer"
+shape = "rsquare"
+size = 1.75
+deps = ["mt_oil_scan"]
+tasks = [
+	{ type = "item", item = "tfmg:pumpjack_base", count = 1 },
+	{ type = "item", item = "tfmg:pumpjack_crank", count = 1 },
+	{ type = "item", item = "tfmg:pumpjack_hammer", count = 1 },
+	{ type = "item", item = "tfmg:pumpjack_hammer", count = 1 },
+]
+
+[[quest]]
+name = "mt_refinery"
+title = "分馏塔"
+desc = [
+	"先分馏再谈用途：混着烧只能当燃料，分开之后每一种馏分都有专门去处。",
+]
+icon = "tfmg:steel_distillation_controller"
+shape = "rsquare"
+size = 1.75
+deps = ["mt_pumpjack"]
+tasks = [
+	{ type = "item", item = "tfmg:steel_distillation_controller", count = 1 },
+	{ type = "item", item = "tfmg:steel_distillation_output", count = 1 },
+	{ type = "item", item = "tfmg:steel_chemical_vat", count = 1 },
+]
+
+[[quest]]
+name = "mt_fuels"
+title = "燃料谱系"
+desc = [
+	"柴油、煤油、汽油、润滑油各归各的用途。这一层定下来，引擎与机械才好选料。",
+]
+icon = "tfmg:kerosene_bucket"
+shape = "rsquare"
+size = 1.75
+deps = ["mt_refinery"]
+tasks = [
+	{ type = "item", item = "tfmg:diesel_bucket", count = 8 },
+	{ type = "item", item = "tfmg:kerosene_bucket", count = 8 },
+	{ type = "item", item = "tfmg:gasoline_bucket", count = 8 },
+	{ type = "item", item = "tfmg:lubrication_oil_bucket", count = 8 },
+]
+
+[[quest]]
+name = "mt_petrochem"
+title = "化工品"
+desc = [
+	"先把酸与硝酸盐这条线接上：副产品没人收，就只能堆着占地方。",
+]
+icon = "tfmg:sulfuric_acid_bucket"
+shape = "circle"
+size = 1.2
+deps = ["mt_refinery"]
+tasks = [
+	{ type = "item", item = "tfmg:sulfuric_acid_bucket", count = 4 },
+	{ type = "item", item = "tfmg:sulfur_dust", count = 32 },
+	{ type = "item", item = "tfmg:nitrate_dust", count = 32 },
+]
+
+[[quest]]
+name = "mt_plastic"
+title = "塑料与合成材料"
+desc = [
+	"把塑料板、橡胶与合成革做出来：软材料从此不必全靠养殖。",
+]
+icon = "tfmg:plastic_sheet"
+shape = "circle"
+size = 1.2
+deps = ["mt_petrochem"]
+tasks = [
+	{ type = "item", item = "tfmg:plastic_sheet", count = 64 },
+	{ type = "item", item = "tfmg:plastic_sheet", count = 8 },
+	{ type = "item", item = "tfmg:rubber_sheet", count = 32 },
+	{ type = "item", item = "tfmg:synthetic_leather", count = 16 },
+]
+
+[[quest]]
+name = "mt_pipes"
+title = "管线规格"
+desc = [
+	"钢管、阀门、工业管道要按口径成套备，缺一种就接不通。",
+]
+icon = "tfmg:steel_pipe"
+shape = "rsquare"
+size = 1.75
+deps = ["mt_steel_parts"]
+tasks = [
+	{ type = "item", item = "tfmg:steel_pipe", count = 64 },
+	{ type = "item", item = "tfmg:steel_fluid_valve", count = 8 },
+	{ type = "item", item = "tfmg:industrial_pipe", count = 32 },
+]
+
+[[quest]]
+name = "mt_heavy_shop"
+title = "重工业厂房"
+desc = [
+	"重工业不能挤在木工旁边：厂房、地面与行车空间都要先单独留出来。",
+]
+icon = "tfmg:heavy_machinery_casing"
+shape = "octagon"
+size = 1.75
+deps = ["mt_steel_parts"]
+tasks = [
+	{ type = "item", item = "tfmg:heavy_machinery_casing", count = 16 },
+	{ type = "item", item = "tfmg:factory_floor", count = 64 },
+	{ type = "item", item = "tfmg:steel_frame", count = 16 },
+]
+
+# ---------------- 簇 7：稀有金属与回收 ----------------
+
+[[quest]]
+name = "mt_rare_metals"
+title = "稀有金属谱"
+desc = [
+	"铝、镍、铅、锂各有专门矿脉，也都只在特定产线上用。",
+	"先把四种都拿到手，再谈往哪条线投。",
+]
+icon = "tfmg:lithium_ingot"
+shape = "pentagon"
+size = 2.0
+deps = ["deep_ores"]
+tasks = [
+	{ type = "item", item = "tfmg:lithium_ingot", count = 16 },
+	{ type = "item", item = "tfmg:nickel_ingot", count = 32 },
+	{ type = "item", item = "tfmg:lead_ingot", count = 32 },
+	{ type = "item", item = "tfmg:aluminum_ingot", count = 64 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "mt_ancient"
+title = "远古残骸"
+desc = [
+	"要挖到远古残骸只能去下界深处。它是这个包里最贵的原料，产量天然受限。",
+]
+icon = "minecraft:ancient_debris"
+shape = "rsquare"
+size = 1.75
+deps = ["nether_bricks"]
+tasks = [
+	{ type = "item", item = "minecraft:ancient_debris", count = 8 },
+	{ type = "item", item = "minecraft:netherite_scrap", count = 8 },
+]
+
+[[quest]]
+name = "mt_gold"
+title = "黄金与电极"
+desc = [
+	"金不只是装饰：电极与电子件都在吃它，要按用量存一批。",
+]
+icon = "minecraft:gold_ingot"
+shape = "circle"
+size = 1.2
+deps = ["deep_ores"]
+tasks = [
+	{ type = "item", item = "minecraft:gold_ingot", count = 64 },
+	{ type = "item", item = "tfmg:graphite_electrode", count = 8 },
+	{ type = "item", item = "tfmg:copper_electrode", count = 8 },
+]
+
+[[quest]]
+name = "mt_netherite"
+title = "下界合金"
+desc = [
+	"合金锭只能靠锻造台把残骸与金合起来，做不了批量。所以要按件规划用在哪。",
+]
+icon = "minecraft:netherite_ingot"
+shape = "rsquare"
+size = 1.75
+deps = ["mt_ancient", "mt_gold"]
+tasks = [
+	{ type = "item", item = "minecraft:netherite_ingot", count = 4 },
+	{ type = "item", item = "minecraft:netherite_block", count = 1 },
+]
+
+[[quest]]
+name = "mt_slag_recycle"
+title = "炉渣转水泥"
+desc = [
+	"炼钢的炉渣不是垃圾：磨细之后就是水泥的原料。",
+	"把副产接进建材线，比另开一座采石场便宜。",
+]
+icon = "tfmg:slag_block"
+shape = "rsquare"
+size = 1.75
+deps = ["mt_steel"]
+tasks = [
+	{ type = "item", item = "tfmg:slag", count = 64 },
+	{ type = "item", item = "tfmg:cement", count = 32 },
+]
+
+[[quest]]
+name = "mt_byproduct"
+title = "冶炼副产"
+desc = [
+	"硫、炭粉、硫酸铜都是别人产线上的副产，单独去造不值，丢掉可惜。",
+]
+icon = "tfmg:sulfur"
+shape = "circle"
+size = 1.2
+deps = ["mt_petrochem"]
+tasks = [
+	{ type = "item", item = "tfmg:sulfur", count = 32 },
+	{ type = "item", item = "minecraft:charcoal", count = 32 },
+	{ type = "item", item = "tfmg:copper_sulfate", count = 16 },
+]
+
+[[quest]]
+name = "mt_special_alloy"
+title = "特种合金"
+desc = [
+	"先备一批康铜与磁性合金：这类料用量小，但没有替代品。",
+]
+icon = "tfmg:constantan_ingot"
+shape = "rsquare"
+size = 1.75
+deps = ["mt_rare_metals", "mt_alloy"]
+tasks = [
+	{ type = "item", item = "tfmg:constantan_ingot", count = 32 },
+	{ type = "item", item = "tfmg:magnetic_alloy_ingot", count = 16 },
+	{ type = "item", item = "tfmg:laminated_magnetic_alloy_block", count = 4 },
+]
+
+# ---------------- 簇 8：库存与规格 ----------------
+
+[[quest]]
+name = "mt_spec"
+title = "统一规格"
+desc = [
+	"同一个尺寸的螺丝、同一种扳手，是「批量生产」与「手工凑合」的分界。",
+	"先统一标准件与工具，后面的图纸才可复用。",
+]
+icon = "tfmg:screw"
+shape = "pentagon"
+size = 2.0
+deps = ["mats_throughput"]
+tasks = [
+	{ type = "item", item = "tfmg:screw", count = 32 },
+	{ type = "item", item = "tfmg:screwdriver", count = 1 },
+	{ type = "item", item = "tfmg:electricians_wrench", count = 1 },
+	{ type = "item", item = "create:wrench", count = 1 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "mt_standard_sizes"
+title = "建材统一尺寸"
+desc = [
+	"钢筋与混凝土按同一套尺寸出，工地才不用现场裁。",
+]
+icon = "tfmg:rebar_concrete"
+shape = "rsquare"
+size = 1.75
+deps = ["mt_spec"]
+tasks = [
+	{ type = "item", item = "tfmg:rebar_concrete", count = 64 },
+	{ type = "item", item = "tfmg:concrete", count = 64 },
+]
+
+[[quest]]
+name = "mt_catalog"
+title = "材料台账"
+desc = [
+	"哪种料、有多少、在哪一格，要写成一份能传阅的台账。",
+	"台账比记忆可靠，尤其是换人接手的时候。",
+]
+icon = "create:clipboard"
+shape = "circle"
+size = 1.2
+deps = ["mt_spec"]
+tasks = [
+	{ type = "item", item = "create:clipboard", count = 2 },
+	{ type = "item", item = "minecraft:book", count = 16 },
+	{ type = "item", item = "minecraft:lectern", count = 1 },
+]
+
+[[quest]]
+name = "mt_spec_done"
+title = "材料体系成型"
+desc = [
+	"把四段接起来检查一遍：从矿石到成品都通了，机器才有料可吃。",
+	"副产有去处、标准件有规格、库存有台账，材料这一层才算稳。",
+]
+icon = "tfmg:factory_floor"
+shape = "octagon"
+size = 1.75
+deps = ["mt_heavy_shop", "mt_special_alloy", "mt_slag_recycle", "mt_catalog",
+        "mt_standard_sizes"]
+tasks = [
+	{ type = "item", item = "tfmg:factory_floor", count = 32 },
+	{ type = "item", item = "minecraft:barrel", count = 16 },
+]

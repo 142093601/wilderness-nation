@@ -1,0 +1,70 @@
+# 真机拒绝过的物品 id（服务端报 Unknown registry key ... minecraft:item）
+#
+# 来源：tools/runtime_deny.py --scan <服务端日志>
+# 纪律：**只增不删**（除非有新的真机证据证明它现在能用了）。
+# 每条后面的注释写清证据来源与日期。
+
+smallships:oak_rowboat
+sliceanddice:fertilizer
+exposure:selfie_stick
+create_dragons_plus:white_dye
+another_furniture:red_awning
+tombstone:tombstone
+create:rare_package
+create_dragons_plus:dragon_breath
+mynethersdelight:stuffed_hoglin
+another_furniture:oak_small_shelf
+another_furniture:oak_grandfather_clock
+refurbished_furniture:light_freezer
+create_dragons_plus:dyenamics_wine_dye
+create_dragons_plus:dye_depot_amber_dye
+create:package
+tombstone:engraved_grave_plate
+create_dragons_plus:arts_and_crafts_bleached_dye
+tombstone:grave_normal
+storagedelight:oak_pantry_cabinet
+letsparkour:fast_parkour_slab
+supplementaries:planter_rich
+miners_delight:rock_soup_cup
+endersdelight:crushed_voidpepper
+tombstone:grave_cross
+betterarcheology:identified_artifact
+mynethersdelight:nether_stove
+create_dragons_plus:fragile_fluid_tank
+seaworthyboats:shipyard
+sliceanddice:wet_air
+smallships:oak_war_galley
+letsparkour:jump_parkour_slab
+another_furniture:lamp_connector
+waystones:portstone
+tfmg:casting_spout  # 新增（本次 scan 发现）
+miners_delight:strider_stew_cup  # 新增（本次 scan 发现）
+playertrackingcompass:tracking_compass  # 新增（本次 scan 发现）
+waystones:warp_portal  # 新增（本次 scan 发现）
+dnt:citadel_key  # 新增（本次 scan 发现）
+supplementaries:cartographers_quill  # 新增（本次 scan 发现）
+letsparkour:jelly_parkour_slab  # 新增（本次 scan 发现）
+createrailwaysnavigator:navigator_lectern  # 新增（本次 scan 发现）
+waystones:sharestone  # 新增（本次 scan 发现）
+enhancedcelestials:meteor  # 新增（本次 scan 发现）
+tfmg:charcoal_dust  # 新增（本次 scan 发现）
+create:steam_whistle_extension  # 新增（本次 scan 发现）
+create_dragons_plus:dyenamics_wine_dye_bucket  # 新增（本次 scan 发现）
+waystones:fleeting_memorial  # 新增（本次 scan 发现）
+tfmg:ingot_mold  # 新增（本次 scan 发现）
+create:lectern_controller  # 新增（本次 scan 发现）
+tfmg:block_mold  # 新增（本次 scan 发现）
+waystones:warp_scroll_bound  # 新增（本次 scan 发现）
+letsparkour:slippery_parkour_slab  # 新增（本次 scan 发现）
+supplementaries:book_pile  # 新增（本次 scan 发现）
+create_dragons_plus:dye_depot_amber_dye_bucket  # 新增（本次 scan 发现）
+create:fake_track  # 新增（本次 scan 发现）
+enhancedcelestials:space_moss_block  # 新增（本次 scan 发现）
+amendments:double_cake  # 新增（本次 scan 发现）
+tfmg:liquid_plastic_bucket  # 新增（本次 scan 发现）
+dnt:nether_keep_key  # 新增（本次 scan 发现）
+create_dragons_plus:arts_and_crafts_bleached_dye_bucket  # 新增（本次 scan 发现）
+hundred_years_war:scroll_cavalry  # 新增（本次 scan 发现）
+tfmg:large_transformer  # 新增（本次 scan 发现）
+tfmg:pumpjack_hammer_holder  # 新增（本次 scan 发现）
+dnt:citadel_boss_key  # 新增（本次 scan 发现）

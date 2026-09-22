@@ -62,4 +62,57 @@
 	"主城周边 + 两条远征路线 + 下界通道，都画进同一张地图。"
 	"到这一步，「情报墙」才有东西可挂（见出关章）。"
 	]
+	quest.47905F6278DE99C1.title: "纸质地图"
+	quest.47905F6278DE99C1.description: [
+	"界面上的地图只有自己看得见；纸质地图能挂在墙上、能复制发给队友。"
+	"情报墙、行军图、前哨交接都靠它，所以它是这一簇里第一件要囤的东西。"
+	]
+	quest.A42C2692B077EDA0.title: "制图台"
+	quest.1F09BC64D2F56A6B.title: "路标与旗标"
+	quest.4B270579EF8D2E33.title: "磁石指路"
+	quest.4B270579EF8D2E33.description: [
+	"磁石把指南针钉在一个固定点上，于是「家」有了一个不随坐标漂移的方向。"
+	"它和地图是两件事：地图告诉你周围有什么，磁石告诉你该往哪走。"
+	]
+	quest.CCE96AF37541A9B0.title: "修复结构罗盘"
+	quest.01C6AEA73775BEF8.title: "修复自然罗盘"
+	quest.A5F90DE89218B99E.title: "玩家追踪罗盘"
+	quest.A5F90DE89218B99E.description: [
+	"指人而不是指地方：多人分头行动时，走散与集合都不必再靠喊坐标。"
+	"它把「队友在哪」也变成一件可以查的事。"
+	]
+	quest.1C5DCB2025657547.title: "石碑：网络的起点"
+	quest.1C5DCB2025657547.description: [
+	"传送石碑是把「距离」换成「有没有连上」的那个方块。"
+	"四座是起步：主城、驿站、矿场、前线各一处，网络才谈得上覆盖。"
+	]
+	quest.B6C4BEB1EA36EBB3.title: "苔石与砂岩石碑"
+	quest.0009B4C46DB56B0B.title: "深板岩与海晶石碑"
+	quest.92FE5B29D2FACD9D.title: "黑石与地狱砖石碑"
+	quest.CCC0362703EF2DD5.title: "末地石与紫珀石碑"
+	quest.906BF6E86844F622.title: "碎片两态"
+	quest.B3C1AA2AC229D1F5.title: "传送粉"
+	quest.E4721B5614E07B08.title: "传送石"
+	quest.064A0DB4D68AE036.title: "传送门方块"
+	quest.833859484152F679.title: "空白卷轴"
+	quest.4CE83764D5382761.title: "返回卷轴"
+	quest.2503EC0E2301191D.title: "已绑定的传送卷轴"
+	quest.23ECB027C05089EB.title: "瞬忆碑"
+	quest.23ECB027C05089EB.description: [
+	"卷轴这条线收在这里：出门带什么、怎么回来，都有了一件固定的事对应。"
+	]
+	quest.B95FC1D30DE004EA.title: "灰阶石座"
+	quest.C1FA9A00DFA1B9D8.title: "暖色石座"
+	quest.09AED4E9A63CD5AF.title: "青绿石座"
+	quest.71A98AEBC96FC797.title: "蓝紫石座"
+	quest.818269FFE0D88C0A.title: "灰阶共享石碑"
+	quest.4A16B009DC643ED9.title: "暖色共享石碑"
+	quest.C5D634F88470A048.title: "青绿共享石碑"
+	quest.B1ABC7E7CCC0498B.title: "蓝紫共享石碑"
+	quest.BB80B16703B4B3D9.title: "石座与共享石碑配齐"
+	quest.BB80B16703B4B3D9.description: [
+	"十六色石座与十五色共享石碑（白色那面就是基座方块本身）各就各位——"
+	"颜色在这里不是装饰，是给不同路线、不同队伍分档用的标记。"
+	"到这一步，传送网络从「几座石碑」变成一套有编号的设施。"
+	]
 }

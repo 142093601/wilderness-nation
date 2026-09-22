@@ -213,6 +213,264 @@ tasks = [
 	{ type = "kill", entity = "minecraft:zombie", value = 100 },
 ]
 
+# ---------------- 情报站深化：从「有一个站」到「有一张网」 ----------------
+#
+# 这 17 条是 2026-09-22 加厚时补的。原来的 13 条只讲"接触 → 建站 → 第一次外交 → 夺城"，
+# 中间那一层（**情报本身怎么积累、怎么用**）是空的。
+# 而 `52-treaty` / `54-conquest` 已经把"外交条款"与"攻城夺城"接走了，
+# 所以这一章的定位收敛为：**看见 → 知道 → 用情报做事**。
+
+[[quest]]
+name = "station_upgrade"
+title = "情报站升级"
+desc = [
+	"情报站不是建完就完了：升级后能看的档位更多、覆盖更远。",
+	"升级要花的还是国库里的东西 —— 这也是「国库与营建」那一章为什么要单独存在。",
+]
+icon = "minecraft:chiseled_bookshelf"
+shape = "rsquare"
+deps = ["scribe_on_duty"]
+tasks = [
+	{ type = "item", item = "minecraft:chiseled_bookshelf", count = 2 },
+	{ type = "item", item = "minecraft:emerald", count = 32 },
+]
+
+[[quest]]
+name = "border_walk"
+title = "沿着边界走一圈"
+desc = [
+	"地形是情报的一部分：哪边是河、哪边是山、哪边能过车。",
+	"走完把结论标到地图上，别只留在自己脑子里。",
+]
+icon = "minecraft:leather_boots"
+shape = "rsquare"
+deps = ["station_upgrade"]
+tasks = [
+	{ type = "stat", stat = "minecraft:walk_one_cm", value = 120000 },
+]
+
+[[quest]]
+name = "capital_on_map"
+title = "把邻国都城标上图"
+desc = [
+	"地图上知道它在哪，比册子里写着「在东边」有用得多。",
+]
+icon = "minecraft:filled_map"
+shape = "rsquare"
+deps = ["station_upgrade"]
+tasks = [
+	{ type = "item", item = "minecraft:filled_map", count = 2 },
+	{ type = "item", item = "minecraft:cartography_table" },
+]
+
+[[quest]]
+name = "neighbor_dossier"
+title = "邻国档案"
+desc = [
+	"一份档案记四件事：**它在哪、它多强、它缺什么、它跟谁有仇**。",
+	"这四条决定了后面该通商、该结盟，还是该打。",
+]
+icon = "minecraft:written_book"
+shape = "pentagon"
+size = 2.0
+deps = ["border_walk", "capital_on_map"]
+tasks = [
+	{ type = "item", item = "minecraft:written_book", count = 2 },
+]
+
+[[quest]]
+name = "intel_grade"
+title = "给情报分级"
+desc = [
+	"公开的贴墙上，机密的锁柜子里 —— 不分级的情报网等于没有。",
+]
+icon = "minecraft:barrel"
+shape = "circle"
+size = 1.2
+deps = ["neighbor_dossier"]
+tasks = [
+	{ type = "item", item = "minecraft:barrel", count = 4 },
+	{ type = "item", item = "minecraft:iron_door" },
+]
+
+[[quest]]
+name = "envoy_post"
+title = "派驻使节"
+desc = [
+	"常驻的使节比每次派人过去省事得多，也更容易发现对方的变化。",
+	"游戏里它就是「在它附近有一间能住的屋子 + 一个人」。",
+]
+icon = "minecraft:lectern"
+shape = "rsquare"
+deps = ["neighbor_dossier"]
+tasks = [
+	{ type = "item", item = "minecraft:lectern" },
+	{ type = "item", item = "minecraft:white_bed" },
+]
+
+[[quest]]
+name = "border_outpost"
+title = "边境哨所"
+desc = [
+	"哨所的作用不是打仗，是**早点知道**。放在你们和它之间那条路上。",
+]
+icon = "minecraft:scaffolding"
+shape = "rsquare"
+deps = ["border_walk"]
+tasks = [
+	{ type = "item", item = "minecraft:scaffolding", count = 16 },
+	{ type = "item", item = "minecraft:lantern", count = 4 },
+]
+
+[[quest]]
+name = "watchtower"
+title = "瞭望塔"
+desc = [
+	"比哨所高一层就行：能看见对面有没有人在集结。",
+]
+icon = "minecraft:spyglass"
+shape = "circle"
+size = 1.2
+deps = ["border_outpost"]
+tasks = [
+	{ type = "item", item = "minecraft:spyglass" },
+	{ type = "item", item = "minecraft:stone_bricks", count = 32 },
+]
+
+[[quest]]
+name = "courier_line"
+title = "驿站与传信"
+desc = [
+	"情报的价值随时间衰减：**晚三天的消息基本没用**。",
+	"沿途设驿站、备快马（鞍与干草块），是情报网的物理基础。",
+]
+icon = "minecraft:saddle"
+shape = "rsquare"
+deps = ["border_outpost"]
+tasks = [
+	{ type = "item", item = "minecraft:saddle", count = 2 },
+	{ type = "item", item = "minecraft:hay_block", count = 4 },
+]
+
+[[quest]]
+name = "trade_route_recon"
+title = "侦察商路"
+desc = [
+	"通商之前先自己走一遍：路况、补给点、有没有劫道的。",
+	"（真正「跑通商路」是 `52-treaty` 那一章的事，这里只做侦察。）",
+]
+icon = "minecraft:compass"
+shape = "rsquare"
+deps = ["border_walk"]
+tasks = [
+	{ type = "item", item = "minecraft:compass" },
+	{ type = "item", item = "minecraft:bread", count = 8 },
+]
+
+[[quest]]
+name = "informant"
+title = "在它附近留个暗桩"
+desc = [
+	"最靠前的一双眼睛：一间小屋、一张床、一个讲台，够用了。",
+]
+icon = "minecraft:dark_oak_door"
+shape = "circle"
+size = 1.2
+deps = ["envoy_post"]
+tasks = [
+	{ type = "item", item = "minecraft:dark_oak_door" },
+	{ type = "item", item = "minecraft:white_bed" },
+]
+
+[[quest]]
+name = "interrogate"
+title = "问出话来"
+desc = [
+	"抓到的敌人嘴里有布防、有路线、有他们的打算。",
+	"（用它做判据的是「抓到了人」这件事本身，不是「问出了什么」。）",
+]
+icon = "minecraft:lead"
+shape = "circle"
+size = 1.2
+deps = ["station_upgrade"]
+tasks = [
+	{ type = "item", item = "minecraft:lead", count = 2 },
+]
+
+[[quest]]
+name = "counter_intel"
+title = "反情报"
+desc = [
+	"你们的情报站也会被人盯上：锁门、留人、别把册子摊在门口。",
+]
+icon = "minecraft:iron_trapdoor"
+shape = "circle"
+size = 1.2
+deps = ["intel_grade"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_trapdoor", count = 2 },
+	{ type = "item", item = "minecraft:lever", count = 2 },
+]
+
+[[quest]]
+name = "intel_network"
+title = "情报网成型"
+desc = [
+	"站点、哨所、驿站、暗桩连成一条线之后，",
+	"**你们对邻国的了解不再依赖谁碰巧路过**。",
+]
+icon = "minecraft:bell"
+shape = "octagon"
+size = 1.75
+deps = ["watchtower", "courier_line", "informant", "counter_intel", "trade_route_recon"]
+tasks = [
+	{ type = "item", item = "minecraft:bell", count = 2 },
+	{ type = "item", item = "minecraft:filled_map", count = 2 },
+]
+
+[[quest]]
+name = "intel_briefing"
+title = "向全队通报"
+desc = [
+	"情报要变成**共同知识**才有用：在议事厅讲一次，把结论贴上墙。",
+]
+icon = "minecraft:item_frame"
+shape = "rsquare"
+deps = ["intel_network"]
+tasks = [
+	{ type = "item", item = "minecraft:item_frame", count = 4 },
+	{ type = "item", item = "minecraft:oak_sign", count = 4 },
+]
+
+[[quest]]
+name = "scribe_supply"
+title = "给文书供纸"
+desc = [
+	"情报站每天在消耗纸与墨 —— 断供的站等于关门。",
+]
+icon = "minecraft:paper"
+shape = "square"
+deps = ["station_upgrade"]
+tasks = [
+	{ type = "item", item = "minecraft:paper", count = 32 },
+	{ type = "item", item = "minecraft:ink_sac", count = 4 },
+]
+
+[[quest]]
+name = "green_eye"
+title = "换个角度再看一次"
+desc = [
+	"同一个国家，从北边看和从南边看是两回事。",
+	"这一条要的是**再走一趟**，不是新的东西 —— 所以判据是走路统计。",
+]
+icon = "minecraft:ender_pearl"
+shape = "circle"
+size = 1.2
+deps = ["neighbor_dossier"]
+tasks = [
+	{ type = "stat", stat = "minecraft:walk_one_cm", value = 250000 },
+]
+
 [[quest]]
 name = "take_the_city"
 title = "夺下一座城"

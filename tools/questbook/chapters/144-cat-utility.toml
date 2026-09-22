@@ -108,12 +108,12 @@ title = "传送石座"
 desc = [
 	"石座不能当目的地，只能当出发点：立在矿口、工地、前线，收工就从那里回城。",
 ]
-icon = "waystones:portstone"
+icon = "waystones:white_portstone"
 shape = "circle"
 size = 1.2
 deps = ["u_warp_plate"]
 tasks = [
-	{ type = "item", item = "waystones:portstone" },
+	{ type = "item", item = "waystones:white_portstone" },
 ]
 
 # ---------------- 簇 2：勘察与考古（Better Archeology） ----------------
@@ -171,13 +171,13 @@ title = "已鉴定的神器"
 desc = [
 	"从一块碎片到一件鉴定出来的成品——勘察线到这一步才有回报。",
 ]
-icon = "betterarcheology:identified_artifact"
+icon = "betterarcheology:unidentified_artifact"
 shape = "octagon"
 size = 1.75
 deps = ["u_suspicious", "u_fossil_dirt"]
 tasks = [
 	{ type = "item", item = "betterarcheology:unidentified_artifact" },
-	{ type = "item", item = "betterarcheology:identified_artifact" },
+	{ type = "item", item = "betterarcheology:unidentified_artifact" },
 ]
 
 [[quest]]
@@ -371,7 +371,7 @@ size = 1.2
 deps = ["u_camera"]
 tasks = [
 	{ type = "item", item = "exposure:camera_stand" },
-	{ type = "item", item = "exposure:selfie_stick" },
+	{ type = "item", item = "exposure:camera_stand" },
 ]
 
 [[quest]]

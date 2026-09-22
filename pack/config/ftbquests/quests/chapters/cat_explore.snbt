@@ -7,7 +7,7 @@
 		id: "minecraft:compass"
 	}
 	id: "D265B46A0D43ECBF"
-	order_index: 35
+	order_index: 60
 	quest_links: [ ]
 	quests: [
 	{
@@ -31,11 +31,116 @@
 		"C946CDB9DF287ECE"
 		]
 		icon: {
+			id: "minecraft:map"
+		}
+		id: "47905F6278DE99C1"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:map"
+			count: 8
+			id: "74F7928DE42B6F91"
+			type: "item"
+		}
+		]
+		x: -4.43d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"47905F6278DE99C1"
+		]
+		icon: {
+			id: "minecraft:cartography_table"
+		}
+		id: "A42C2692B077EDA0"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:cartography_table"
+			id: "B606F177FD5E7F47"
+			type: "item"
+		}
+		]
+		x: -4.42d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"A42C2692B077EDA0"
+		]
+		icon: {
+			id: "minecraft:white_banner"
+		}
+		id: "1F09BC64D2F56A6B"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:white_banner"
+			count: 4
+			id: "D79B1E41733F9650"
+			type: "item"
+		}
+		{
+			item: "minecraft:item_frame"
+			count: 8
+			id: "8CB85AC13A0D97C3"
+			type: "item"
+		}
+		{
+			item: "minecraft:glow_item_frame"
+			count: 2
+			id: "85D292E606C858D3"
+			type: "item"
+		}
+		]
+		x: -12.49d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"C946CDB9DF287ECE"
+		]
+		icon: {
+			id: "minecraft:lodestone"
+		}
+		id: "4B270579EF8D2E33"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:lodestone"
+			id: "DEC34850E8558B8F"
+			type: "item"
+		}
+		{
+			item: "minecraft:compass"
+			count: 2
+			id: "D131D87873A67029"
+			type: "item"
+		}
+		{
+			advancement: "minecraft:nether/use_lodestone"
+			id: "336A7FEB80403132"
+			type: "advancement"
+		}
+		]
+		x: -1.65d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"C946CDB9DF287ECE"
+		]
+		icon: {
 			id: "explorerscompass:explorerscompass"
 		}
 		id: "9004448B5DC4C470"
-		shape: "rsquare"
-		size: 1.5d
+		shape: "pentagon"
+		size: 2.0d
 		tasks: [
 		{
 			item: "explorerscompass:explorerscompass"
@@ -43,7 +148,7 @@
 			type: "item"
 		}
 		]
-		x: -1.27d
+		x: 1.5d
 		y: -1.75d
 	}
 	{
@@ -63,8 +168,684 @@
 			type: "item"
 		}
 		]
-		x: 0.0d
+		x: -1.87d
 		y: -3.5d
+	}
+	{
+		dependencies: [
+		"9004448B5DC4C470"
+		]
+		icon: {
+			id: "explorerscompass:explorerscompass"
+		}
+		id: "CCE96AF37541A9B0"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "explorerscompass:repair_explorers_compass"
+			id: "3430D785350AF481"
+			type: "advancement"
+		}
+		]
+		x: 0.68d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"5361C6541C525E23"
+		]
+		icon: {
+			id: "naturescompass:naturescompass"
+		}
+		id: "01C6AEA73775BEF8"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "naturescompass:repair_natures_compass"
+			id: "420A972CB2417F9A"
+			type: "advancement"
+		}
+		]
+		x: -9.94d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"5361C6541C525E23"
+		]
+		icon: {
+			id: "minecraft:recovery_compass"
+		}
+		id: "A5F90DE89218B99E"
+		shape: "octagon"
+		size: 1.75d
+		tasks: [
+		{
+			item: "minecraft:recovery_compass"
+			id: "6C1828B1235C6FCD"
+			type: "item"
+		}
+		]
+		x: -6.98d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"9004448B5DC4C470"
+		]
+		icon: {
+			id: "waystones:waystone"
+		}
+		id: "1C5DCB2025657547"
+		rewards: [
+		{
+			xp: 30
+			id: "0D67776664C6C735"
+			type: "xp"
+		}
+		{
+			id: "7BD79B49526D3EE2"
+			type: "toast"
+		}
+		]
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "waystones:waystone"
+			count: 4
+			id: "613CB7D4BE6BD2DB"
+			type: "item"
+		}
+		]
+		x: 3.83d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"1C5DCB2025657547"
+		]
+		icon: {
+			id: "waystones:mossy_waystone"
+		}
+		id: "B6C4BEB1EA36EBB3"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "waystones:mossy_waystone"
+			id: "405D9627EC5140E9"
+			type: "item"
+		}
+		{
+			item: "waystones:sandy_waystone"
+			id: "69AB2724DD55BCC6"
+			type: "item"
+		}
+		]
+		x: -4.01d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"1C5DCB2025657547"
+		]
+		icon: {
+			id: "waystones:deepslate_waystone"
+		}
+		id: "0009B4C46DB56B0B"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "waystones:deepslate_waystone"
+			id: "E8FC506AC619E719"
+			type: "item"
+		}
+		{
+			item: "waystones:prismarine_waystone"
+			id: "E8057BBCDEF9A758"
+			type: "item"
+		}
+		]
+		x: -1.46d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"B6C4BEB1EA36EBB3"
+		]
+		icon: {
+			id: "waystones:blackstone_waystone"
+		}
+		id: "92FE5B29D2FACD9D"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "waystones:blackstone_waystone"
+			id: "C80E8C6522FD46D9"
+			type: "item"
+		}
+		{
+			item: "waystones:red_nether_bricks_waystone"
+			id: "98DD2A6B9469DDAF"
+			type: "item"
+		}
+		{
+			item: "waystones:mud_bricks_waystone"
+			id: "EC568BA48E745DFA"
+			type: "item"
+		}
+		]
+		x: -13.2d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"0009B4C46DB56B0B"
+		]
+		icon: {
+			id: "waystones:end_stone_waystone"
+		}
+		id: "CCC0362703EF2DD5"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "waystones:end_stone_waystone"
+			id: "97D68C1451311785"
+			type: "item"
+		}
+		{
+			item: "waystones:purpur_waystone"
+			id: "31C48FF62445583A"
+			type: "item"
+		}
+		]
+		x: -10.65d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"1C5DCB2025657547"
+		]
+		icon: {
+			id: "waystones:dormant_shard"
+		}
+		id: "906BF6E86844F622"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "waystones:dormant_shard"
+			id: "801A2226CBD04480"
+			type: "item"
+		}
+		{
+			item: "waystones:crumbling_attuned_shard"
+			id: "69962416D9F27077"
+			type: "item"
+		}
+		]
+		x: 1.09d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"906BF6E86844F622"
+		]
+		icon: {
+			id: "waystones:warp_dust"
+		}
+		id: "B3C1AA2AC229D1F5"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "waystones:warp_dust"
+			count: 4
+			id: "E0D16AD4239E4E42"
+			type: "item"
+		}
+		]
+		x: -8.1d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"B3C1AA2AC229D1F5"
+		]
+		icon: {
+			id: "waystones:warp_stone"
+		}
+		id: "E4721B5614E07B08"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "waystones:warp_stone"
+			id: "F28CAEC07F9E293A"
+			type: "item"
+		}
+		]
+		x: -6.6d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"E4721B5614E07B08"
+		]
+		icon: {
+			id: "waystones:warp_plate"
+		}
+		id: "064A0DB4D68AE036"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "waystones:warp_plate"
+			id: "A0EDD92D719873A7"
+			type: "item"
+		}
+		]
+		x: -5.51d
+		y: -10.5d
+	}
+	{
+		dependencies: [
+		"1C5DCB2025657547"
+		]
+		icon: {
+			id: "waystones:blank_scroll"
+		}
+		id: "833859484152F679"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "waystones:blank_scroll"
+			count: 2
+			id: "705E1363DC758F04"
+			type: "item"
+		}
+		]
+		x: 3.64d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"833859484152F679"
+		]
+		icon: {
+			id: "waystones:return_scroll"
+		}
+		id: "4CE83764D5382761"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "waystones:return_scroll"
+			count: 2
+			id: "53AFDB7F53FE2377"
+			type: "item"
+		}
+		]
+		x: -5.55d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"4CE83764D5382761"
+		]
+		icon: {
+			id: "waystones:warp_scroll"
+		}
+		id: "2503EC0E2301191D"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "waystones:warp_scroll"
+			count: 2
+			id: "5A70F1F834873AAB"
+			type: "item"
+		}
+		]
+		x: -3.82d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"2503EC0E2301191D"
+		]
+		icon: {
+			id: "waystones:epitaph"
+		}
+		id: "23ECB027C05089EB"
+		shape: "octagon"
+		size: 1.75d
+		tasks: [
+		{
+			item: "waystones:epitaph"
+			id: "329FE1A68550D970"
+			type: "item"
+		}
+		]
+		x: -2.55d
+		y: -10.5d
+	}
+	{
+		dependencies: [
+		"1C5DCB2025657547"
+		]
+		icon: {
+			id: "waystones:white_portstone"
+		}
+		id: "B95FC1D30DE004EA"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "waystones:white_portstone"
+			id: "E9DFBA5C7ACCAE11"
+			type: "item"
+		}
+		{
+			item: "waystones:light_gray_portstone"
+			id: "A79EC716F11406A3"
+			type: "item"
+		}
+		{
+			item: "waystones:gray_portstone"
+			id: "AEC84D75C761402B"
+			type: "item"
+		}
+		{
+			item: "waystones:black_portstone"
+			id: "36F6A1CE814F565F"
+			type: "item"
+		}
+		]
+		x: 6.19d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"B95FC1D30DE004EA"
+		]
+		icon: {
+			id: "waystones:red_portstone"
+		}
+		id: "C1FA9A00DFA1B9D8"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "waystones:red_portstone"
+			id: "817BEC5054EB8311"
+			type: "item"
+		}
+		{
+			item: "waystones:orange_portstone"
+			id: "A07EB36BB40EA2D6"
+			type: "item"
+		}
+		{
+			item: "waystones:yellow_portstone"
+			id: "FC8E59474CE89095"
+			type: "item"
+		}
+		{
+			item: "waystones:brown_portstone"
+			id: "887D613EB4C33578"
+			type: "item"
+		}
+		]
+		x: -3.0d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"C1FA9A00DFA1B9D8"
+		]
+		icon: {
+			id: "waystones:green_portstone"
+		}
+		id: "09AED4E9A63CD5AF"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "waystones:lime_portstone"
+			id: "532113C8810DDBC6"
+			type: "item"
+		}
+		{
+			item: "waystones:green_portstone"
+			id: "78C77857D9F0BCBB"
+			type: "item"
+		}
+		{
+			item: "waystones:cyan_portstone"
+			id: "1C2CC205410460DB"
+			type: "item"
+		}
+		{
+			item: "waystones:light_blue_portstone"
+			id: "82A83BD9413E8A1F"
+			type: "item"
+		}
+		]
+		x: -1.27d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"09AED4E9A63CD5AF"
+		]
+		icon: {
+			id: "waystones:purple_portstone"
+		}
+		id: "71A98AEBC96FC797"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "waystones:blue_portstone"
+			id: "006F2DE1F187719F"
+			type: "item"
+		}
+		{
+			item: "waystones:purple_portstone"
+			id: "FA4E1D6BFC300E41"
+			type: "item"
+		}
+		{
+			item: "waystones:magenta_portstone"
+			id: "42795584DA3D2C03"
+			type: "item"
+		}
+		{
+			item: "waystones:pink_portstone"
+			id: "575DCE75570414F4"
+			type: "item"
+		}
+		]
+		x: 0.41d
+		y: -10.5d
+	}
+	{
+		dependencies: [
+		"1C5DCB2025657547"
+		]
+		icon: {
+			id: "waystones:red_sharestone"
+		}
+		id: "818269FFE0D88C0A"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "waystones:red_sharestone"
+			id: "8BFCD771EF8E4EAF"
+			type: "item"
+		}
+		{
+			item: "waystones:light_gray_sharestone"
+			id: "1ABD4729CEBE5DA5"
+			type: "item"
+		}
+		{
+			item: "waystones:gray_sharestone"
+			id: "76EBB68FBB697799"
+			type: "item"
+		}
+		{
+			item: "waystones:black_sharestone"
+			id: "6701E8CA8417FBC4"
+			type: "item"
+		}
+		]
+		x: 8.74d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"818269FFE0D88C0A"
+		]
+		icon: {
+			id: "waystones:red_sharestone"
+		}
+		id: "4A16B009DC643ED9"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "waystones:red_sharestone"
+			id: "F5D8C219D63C3166"
+			type: "item"
+		}
+		{
+			item: "waystones:orange_sharestone"
+			id: "5E8FE0D072988A5D"
+			type: "item"
+		}
+		{
+			item: "waystones:yellow_sharestone"
+			id: "ED9D42B074EF18ED"
+			type: "item"
+		}
+		{
+			item: "waystones:brown_sharestone"
+			id: "349E3F58C4BF0049"
+			type: "item"
+		}
+		]
+		x: -0.45d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"4A16B009DC643ED9"
+		]
+		icon: {
+			id: "waystones:green_sharestone"
+		}
+		id: "C5D634F88470A048"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "waystones:lime_sharestone"
+			id: "87705474B8D11B56"
+			type: "item"
+		}
+		{
+			item: "waystones:green_sharestone"
+			id: "8A3C0608A27E0F91"
+			type: "item"
+		}
+		{
+			item: "waystones:cyan_sharestone"
+			id: "6073500ED57F447A"
+			type: "item"
+		}
+		{
+			item: "waystones:light_blue_sharestone"
+			id: "7E18BBBD2F245444"
+			type: "item"
+		}
+		]
+		x: 1.27d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"C5D634F88470A048"
+		]
+		icon: {
+			id: "waystones:purple_sharestone"
+		}
+		id: "B1ABC7E7CCC0498B"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "waystones:blue_sharestone"
+			id: "FFFE673862B95869"
+			type: "item"
+		}
+		{
+			item: "waystones:purple_sharestone"
+			id: "C32CE2BAA086D115"
+			type: "item"
+		}
+		{
+			item: "waystones:magenta_sharestone"
+			id: "AE6F65698690614A"
+			type: "item"
+		}
+		{
+			item: "waystones:pink_sharestone"
+			id: "9BC282B4E66DA897"
+			type: "item"
+		}
+		]
+		x: 2.96d
+		y: -10.5d
+	}
+	{
+		dependencies: [
+		"71A98AEBC96FC797"
+		"B1ABC7E7CCC0498B"
+		"23ECB027C05089EB"
+		"064A0DB4D68AE036"
+		]
+		icon: {
+			id: "waystones:red_sharestone"
+		}
+		id: "BB80B16703B4B3D9"
+		shape: "octagon"
+		size: 1.75d
+		tasks: [
+		{
+			item: "waystones:red_sharestone"
+			count: 8
+			id: "1A5C2E55B30DF060"
+			type: "item"
+		}
+		{
+			item: "waystones:white_portstone"
+			count: 8
+			id: "9246501FEEB2C3DB"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -12.25d
 	}
 	{
 		dependencies: [
@@ -74,8 +855,8 @@
 			id: "minecraft:map"
 		}
 		id: "00B3D4C1CE27A7E2"
-		shape: "rsquare"
-		size: 1.5d
+		shape: "pentagon"
+		size: 2.0d
 		tasks: [
 		{
 			advancement: "minecraft:adventure/adventuring_time"
@@ -83,7 +864,7 @@
 			type: "advancement"
 		}
 		]
-		x: 0.0d
+		x: 11.89d
 		y: -5.25d
 	}
 	{
@@ -104,7 +885,7 @@
 			type: "stat"
 		}
 		]
-		x: 1.5d
+		x: 4.65d
 		y: -1.75d
 	}
 	{
@@ -124,7 +905,7 @@
 			type: "advancement"
 		}
 		]
-		x: -5.32d
+		x: 2.32d
 		y: -7.0d
 	}
 	{
@@ -144,7 +925,7 @@
 			type: "advancement"
 		}
 		]
-		x: -2.55d
+		x: 5.1d
 		y: -7.0d
 	}
 	{
@@ -164,7 +945,7 @@
 			type: "advancement"
 		}
 		]
-		x: 0.0d
+		x: 7.65d
 		y: -7.0d
 	}
 	{
@@ -184,7 +965,7 @@
 			type: "advancement"
 		}
 		]
-		x: 2.55d
+		x: 10.2d
 		y: -7.0d
 	}
 	{
@@ -204,7 +985,7 @@
 			type: "advancement"
 		}
 		]
-		x: 5.33d
+		x: 12.97d
 		y: -7.0d
 	}
 	{
@@ -229,7 +1010,7 @@
 			type: "advancement"
 		}
 		]
-		x: -1.5d
+		x: 3.82d
 		y: -8.75d
 	}
 	{
@@ -249,7 +1030,7 @@
 			type: "advancement"
 		}
 		]
-		x: 0.0d
+		x: 5.51d
 		y: -10.5d
 	}
 	{
@@ -269,7 +1050,7 @@
 			type: "advancement"
 		}
 		]
-		x: 1.27d
+		x: 6.6d
 		y: -8.75d
 	}
 	{
@@ -281,6 +1062,12 @@
 		"44CF0609ECFC72DE"
 		"BBD3E994F92EE44C"
 		"4ECFA357D8694C57"
+		"BB80B16703B4B3D9"
+		"A5F90DE89218B99E"
+		"1F09BC64D2F56A6B"
+		"4B270579EF8D2E33"
+		"CCE96AF37541A9B0"
+		"01C6AEA73775BEF8"
 		]
 		icon: {
 			id: "minecraft:filled_map"
@@ -308,7 +1095,7 @@
 		}
 		]
 		x: 0.0d
-		y: -12.25d
+		y: -14.0d
 	}
 	]
 }

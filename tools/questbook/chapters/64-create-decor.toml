@@ -1,0 +1,712 @@
+# 技艺 · 机械动力·建材与装饰
+#
+# 本章的 mod（逐个核对过：`python tools/item_index.py --ns <ns>`）：
+#   · Create: Design n' Decor `dndecor`（848 项：金属板 / 格栅 / 支撑 / 高架台 / 锅炉 /
+#     灯具 / 螺栓 / 染色彩装 / 切制石料 · 也是 Copycats 的底面）
+#   · Create: Framed `createframed`（559 项：嵌框玻璃 / 染色嵌框玻璃 / 网格玻璃 / 纸板窗 /
+#     带颜色的包裹与纸板块 / 海带板）
+#   · Slice & Dice `sliceanddice`（6 项：切割器 / 洒水器 / 液体肥料）
+#   · Create: Dragons Plus `create_dragons_plus`（112 项：染料桶 / 龙息 / 易碎流体储罐 / 流体舱口）
+#   · Create: Hypertube `create_hypertube`（10 项：超级管道 / 入口 / 加速 / 接头 / 扫描器）
+#   · Create Horsepower `createhorsepower`（1 项：畜力曲柄）
+#
+# **不在本章的（按 ROSTER §4.1 与任务书口径）**：
+#   · `copycats` / `rechiseledcreate` → 归 `100-cat-building`（那章已有伪装方块与机械雕刻）
+#   · `tfmg`（Create: The Factory Must Grow）→ 归 `42-materials`
+#   · `create:railway` / `createrailwaysnavigator` → 归 `75-steam`
+#   · Create 本体的机器与物流件 → 归 `60-create` / `62-logistics`
+#
+# 与其它章的分工：
+#   · `100-cat-building` = **通用结构构件**（门窗、桥、路、栅栏、雕刻变体、框架方块）
+#   · `64`（本章）       = **机械动力系的建材**：让厂房、管线与栈桥看起来是同一套东西做的
+#
+# 判据：全是实物 —— 这类 mod 的价值就是提供方块，判据自然是持有它们。**checkmark = 0**。
+#
+# 条数：42（簇 1 金属建材 7 · 簇 2 嵌框与伪装 7 · 簇 3 切割件 8 ·
+#            簇 4 工业装饰 11 · 簇 5 成组搭配 9）。形状：五边形 5（每簇头一条）·
+# 八边形 3 · 六边形 1（终局，放最后）。
+
+key = "create_decor"
+title = "机械动力·建材与装饰"
+subtitle = "把厂房、管线和栈桥做成同一套东西"
+group = "craft"
+icon = "dndecor:industrial_plating_block"
+order_index = 33
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---- 簇 1：金属建材 ----
+
+[[quest]]
+name = "dc_plate"
+title = "工业饰面板"
+desc = [
+	"Design n' Decor：机械动力系厂房的基准面材。",
+	"先把一种面材定下来，后面所有机器底座都用它。",
+]
+icon = "dndecor:industrial_plating_block"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "dndecor:industrial_plating_block", count = 32 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "dc_sheet_metal"
+title = "金属板覆面"
+desc = [
+	"薄板是最省料的一种包面：盖在墙上，墙面就不再是石头原色。",
+]
+icon = "dndecor:black_sheet_metal"
+shape = "circle"
+size = 1.2
+deps = ["dc_plate"]
+tasks = [
+	{ type = "item", item = "dndecor:black_sheet_metal", count = 32 },
+	{ type = "item", item = "dndecor:industrial_sheet_metal", count = 32 },
+]
+
+[[quest]]
+name = "dc_dark_metal"
+title = "深色金属与镀层"
+desc = [
+	"深色面材压在亮色梁上，机器的轮廓才看得出来。",
+	"镀层板用来做台面与踢脚，不怕踩。",
+]
+icon = "dndecor:dark_metal_block"
+shape = "circle"
+size = 1.2
+deps = ["dc_plate"]
+tasks = [
+	{ type = "item", item = "dndecor:dark_metal_block", count = 16 },
+	{ type = "item", item = "dndecor:dark_metal_plating", count = 16 },
+]
+
+[[quest]]
+name = "dc_girder"
+title = "梁与斜撑"
+desc = [
+	"梁是承重线，斜撑是补刚度的那一根。",
+	"把梁的走向画出来再填墙，厂房就不会歪。",
+]
+icon = "dndecor:large_metal_girder"
+shape = "rsquare"
+deps = ["dc_plate"]
+tasks = [
+	{ type = "item", item = "dndecor:large_metal_girder", count = 16 },
+	{ type = "item", item = "dndecor:diagonal_girder", count = 8 },
+]
+
+[[quest]]
+name = "dc_support"
+title = "支柱与斜支柱"
+desc = [
+	"高处设备要落脚：支柱把重量传下去，斜支柱抗侧向推力。",
+	"大型货架与天车轨道下面基本都要一组。",
+]
+icon = "dndecor:metal_support"
+shape = "circle"
+size = 1.2
+deps = ["dc_girder"]
+tasks = [
+	{ type = "item", item = "dndecor:metal_support", count = 16 },
+	{ type = "item", item = "dndecor:diagonal_metal_support", count = 8 },
+]
+
+[[quest]]
+name = "dc_grate"
+title = "格栅与网板"
+desc = [
+	"格栅是「这台机器在运转」的观感来源。",
+	"它还能当检修口：看得见里面，也不必拆墙。",
+]
+icon = "dndecor:ornate_grate"
+shape = "circle"
+size = 1.2
+deps = ["dc_plate"]
+tasks = [
+	{ type = "item", item = "dndecor:ornate_grate", count = 16 },
+]
+
+[[quest]]
+name = "dc_catwalk"
+title = "检修通道"
+desc = [
+	"设备架空之后，需要能走上去的通道才能修。",
+	"通道用面材与栏杆，和厂房保持同一套配色。",
+]
+icon = "dndecor:industrial_catwalk"
+shape = "circle"
+size = 1.2
+deps = ["dc_plate"]
+tasks = [
+	{ type = "item", item = "dndecor:industrial_catwalk", count = 16 },
+	{ type = "item", item = "dndecor:industrial_floor", count = 16 },
+]
+
+# ---- 簇 2：嵌框与伪装 ----
+
+[[quest]]
+name = "dc_framed_glass"
+title = "嵌框面材"
+desc = [
+	"Create: Framed：把一个方块「贴」成金属、木头或别的材质。",
+	"凡是要与机器同色的表面，都先从这一层挑。",
+]
+icon = "createframed:tinted_framed_glass"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "createframed:tinted_framed_glass", count = 16 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "dc_vertical_framed"
+title = "横竖两个方向"
+desc = [
+	"嵌框有两种方向，横竖混用能把一片墙分成上下两段。",
+]
+icon = "createframed:horizontal_tinted_framed_glass"
+shape = "circle"
+size = 1.2
+deps = ["dc_framed_glass"]
+tasks = [
+	{ type = "item", item = "createframed:horizontal_tinted_framed_glass", count = 16 },
+	{ type = "item", item = "createframed:vertical_tinted_framed_glass", count = 16 },
+]
+
+[[quest]]
+name = "dc_stained_framed"
+title = "染色嵌框玻璃"
+desc = [
+	"同样的框，换一种玻璃颜色，就是另一个车间。",
+	"染色是为了分区：一眼看出这块归哪条线。",
+]
+icon = "createframed:white_stained_framed_glass"
+shape = "circle"
+size = 1.2
+deps = ["dc_framed_glass"]
+tasks = [
+	{ type = "item", item = "createframed:white_stained_framed_glass", count = 16 },
+	{ type = "item", item = "createframed:black_stained_framed_glass", count = 16 },
+]
+
+[[quest]]
+name = "dc_tiled_glass"
+title = "网格玻璃"
+desc = [
+	"网格玻璃比整片玻璃更适合工业窗：格子本身就是分格线。",
+]
+icon = "createframed:white_stained_tiled_glass"
+shape = "circle"
+size = 1.2
+deps = ["dc_stained_framed"]
+tasks = [
+	{ type = "item", item = "createframed:white_stained_tiled_glass", count = 16 },
+	{ type = "item", item = "createframed:tinted_tiled_glass", count = 16 },
+]
+
+[[quest]]
+name = "dc_window_kit"
+title = "成套的窗"
+desc = [
+	"金属窗、黄铜窗、铜窗、玫瑰石英窗：按机器外壳挑同色的一种。",
+	"同一栋厂房只用一种窗，比多挑几种更好看。",
+]
+icon = "createframed:andesite_alloy_window"
+shape = "rsquare"
+deps = ["dc_framed_glass"]
+tasks = [
+	{ type = "item", item = "createframed:andesite_alloy_window", count = 16 },
+	{ type = "item", item = "createframed:brass_window", count = 4 },
+]
+
+[[quest]]
+name = "dc_cardboard_face"
+title = "纸板与墙板"
+desc = [
+	"便宜的整面墙材：仓库、货棚、临时工棚用它最划算。",
+	"做出第一批捆装板再动工，缺料停工的棚子最后都会半途留在那。",
+]
+icon = "createframed:cardboard_window"
+shape = "rsquare"
+deps = ["dc_framed_glass"]
+tasks = [
+	{ type = "item", item = "createframed:bound_white_cardboard_block", count = 32 },
+]
+
+[[quest]]
+name = "dc_cardboard_window"
+title = "装纸板窗"
+desc = [
+	"货棚也要采光，装一排纸板窗就够了。",
+]
+icon = "createframed:cardboard_window"
+shape = "circle"
+size = 1.2
+deps = ["dc_cardboard_face"]
+tasks = [
+	{ type = "item", item = "createframed:cardboard_window", count = 16 },
+	{ type = "item", item = "createframed:white_cardboard_window", count = 8 },
+]
+
+# ---- 簇 3：切割件 ----
+
+[[quest]]
+name = "dc_cut_stone"
+title = "切制石料收边"
+desc = [
+	"厂房的墙脚、柱础、台阶都靠切制石料收口。",
+	"只做一种切制石，整片场地就不花。",
+]
+icon = "dndecor:cut_stone"
+shape = "pentagon"
+size = 2.0
+deps = ["dc_plate"]
+tasks = [
+	{ type = "item", item = "dndecor:cut_stone", count = 32 },
+	{ type = "item", item = "dndecor:cut_stone_bricks", count = 32 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "dc_stone_tile"
+title = "石料分格"
+desc = [
+	"把小砖与方格砖铺在地面，等于给场地画了网格。",
+]
+icon = "dndecor:polished_cut_stone"
+shape = "circle"
+size = 1.2
+deps = ["dc_cut_stone"]
+tasks = [
+	{ type = "item", item = "dndecor:polished_cut_stone", count = 32 },
+	{ type = "item", item = "dndecor:small_stone_bricks", count = 32 },
+]
+
+[[quest]]
+name = "dc_layered_stone"
+title = "层叠与拼色"
+desc = [
+	"把两种石料层叠或拼成方格，地面就有方向感。",
+]
+icon = "dndecor:layered_stone"
+shape = "circle"
+size = 1.2
+deps = ["dc_cut_stone"]
+tasks = [
+	{ type = "item", item = "dndecor:layered_stone", count = 32 },
+	{ type = "item", item = "dndecor:zinc_checker_tiles", count = 16 },
+]
+
+[[quest]]
+name = "dc_dark_cut"
+title = "压深色墙脚"
+desc = [
+	"把深色石料铺在墙面下部，是整个观感里最省力的一步。",
+	"石金件用来收口：厂房与草地之间靠它过渡。",
+]
+icon = "dndecor:cut_blackstone"
+shape = "circle"
+size = 1.2
+deps = ["dc_cut_stone"]
+tasks = [
+	{ type = "item", item = "dndecor:cut_blackstone", count = 32 },
+	{ type = "item", item = "dndecor:stone_metal", count = 16 },
+]
+
+[[quest]]
+name = "dc_slicer"
+title = "切割器"
+desc = [
+	"Slice & Dice：把成型这一步接进动力线，一次切一批。",
+]
+icon = "sliceanddice:slicer"
+shape = "rsquare"
+deps = ["dc_cut_stone"]
+tasks = [
+	{ type = "item", item = "sliceanddice:slicer", count = 1 },
+]
+
+[[quest]]
+name = "dc_wet_cut"
+title = "液体切割"
+desc = [
+	"切割需要液体：先有一份能用的切割介质，机器才出件。",
+	"湿润空气是这套里最基础的一种。",
+]
+icon = "sliceanddice:floor_sprinkler"
+shape = "circle"
+size = 1.2
+deps = ["dc_slicer"]
+tasks = [
+	{ type = "item", item = "sliceanddice:floor_sprinkler", count = 2 },
+]
+
+[[quest]]
+name = "dc_sprinkler"
+title = "洒水与液体肥料"
+desc = [
+	"这套 mod 的另一半在农业侧：洒水器把液体按片铺开。",
+	"液态肥让作物成片长，是大面积种植的一件基础设备。",
+]
+icon = "sliceanddice:sprinkler"
+shape = "rsquare"
+deps = ["dc_wet_cut"]
+tasks = [
+	{ type = "item", item = "sliceanddice:sprinkler", count = 2 },
+	{ type = "item", item = "sliceanddice:sprinkler", count = 4 },
+]
+
+[[quest]]
+name = "dc_floor_sprinkler"
+title = "地面洒水"
+desc = [
+	"贴地的那一种只服务一格，用在温室与苗床旁边。",
+]
+icon = "sliceanddice:floor_sprinkler"
+shape = "circle"
+size = 1.2
+deps = ["dc_sprinkler"]
+tasks = [
+	{ type = "item", item = "sliceanddice:floor_sprinkler", count = 4 },
+]
+
+# ---- 簇 4：工业装饰 ----
+
+[[quest]]
+name = "dc_hypertube_block"
+title = "管道与接头"
+desc = [
+	"Create: Hypertube：在基地之间铺一套能坐人的管道。",
+	"它也是厂区里最像「管网」的一层装饰。",
+]
+icon = "create_hypertube:hypertube"
+shape = "pentagon"
+size = 2.0
+deps = ["dc_plate"]
+tasks = [
+	{ type = "item", item = "create_hypertube:hypertube", count = 16 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "dc_hypertube_end"
+title = "入口与加速段"
+desc = [
+	"入口是进出口，加速段决定一趟要多久。",
+	"两样都不做，管道就只是一段摆设。",
+]
+icon = "create_hypertube:hypertube_entrance"
+shape = "rsquare"
+deps = ["dc_hypertube_block"]
+tasks = [
+	{ type = "item", item = "create_hypertube:hypertube_entrance", count = 4 },
+	{ type = "item", item = "create_hypertube:hypertube_accelerator", count = 8 },
+]
+
+[[quest]]
+name = "dc_hypertube_junction"
+title = "接头与读取"
+desc = [
+	"多路管道要用接头分流；扫描附件用来读线上有什么。",
+]
+icon = "create_hypertube:hypertube_junction"
+shape = "circle"
+size = 1.2
+deps = ["dc_hypertube_end"]
+tasks = [
+	{ type = "item", item = "create_hypertube:hypertube_junction", count = 2 },
+	{ type = "item", item = "create_hypertube:tube_scanner_attachment", count = 2 },
+]
+
+[[quest]]
+name = "dc_hypertube_gate"
+title = "管上红石检测"
+desc = [
+	"管道口能给出信号，就能与别的设施联动（比如自动开门）。",
+]
+icon = "create_hypertube:redstone_detector_tube_attachment"
+shape = "circle"
+size = 1.2
+deps = ["dc_hypertube_end"]
+tasks = [
+	{ type = "item", item = "create_hypertube:redstone_detector_tube_attachment", count = 2 },
+]
+
+[[quest]]
+name = "dc_fluid_hatch"
+title = "舱口与易碎储罐"
+desc = [
+	"Create: Dragons Plus：把流体接进车间，需要一个不占地方的接口。",
+	"易碎储罐容量小、能随手搬，适合做线边的临时罐。",
+]
+icon = "create_dragons_plus:fluid_hatch"
+shape = "rsquare"
+deps = ["dc_plate"]
+tasks = [
+	{ type = "item", item = "create_dragons_plus:fluid_hatch", count = 2 },
+	{ type = "item", item = "create:fluid_tank", count = 4 },
+]
+
+[[quest]]
+name = "dc_lamp"
+title = "厂区灯型"
+desc = [
+	"工业灯、前照灯、锅炉灯：同一片车间只用一种灯型。",
+	"灯型一乱，再整齐的机器看着也像拼的。",
+]
+icon = "dndecor:industrial_lamp"
+shape = "rsquare"
+deps = ["dc_plate"]
+tasks = [
+	{ type = "item", item = "dndecor:industrial_lamp", count = 8 },
+	{ type = "item", item = "dndecor:industrial_frontlight", count = 8 },
+]
+
+[[quest]]
+name = "dc_meter"
+title = "仪表与操作件"
+desc = [
+	"仪表盘、断路开关、分级拉杆：装饰与操作合成一件东西。",
+	"它们不只是好看，也是面板与分区的边界。",
+]
+icon = "dndecor:breaker_switch"
+shape = "circle"
+size = 1.2
+deps = ["dc_lamp"]
+tasks = [
+	{ type = "item", item = "dndecor:breaker_switch", count = 4 },
+	{ type = "item", item = "dndecor:stepped_lever", count = 4 },
+]
+
+[[quest]]
+name = "dc_hazard"
+title = "警示标线（螺栓）"
+desc = [
+	"四种螺栓图案就是地面上的警示与分区标线。",
+	"沿边走一圈，够用就好——铺满地面反而看不清。",
+]
+icon = "dndecor:industrial_flat_bolt"
+shape = "circle"
+size = 1.2
+deps = ["dc_plate"]
+tasks = [
+	{ type = "item", item = "dndecor:industrial_flat_bolt", count = 32 },
+	{ type = "item", item = "dndecor:industrial_dot_bolt", count = 32 },
+	{ type = "item", item = "dndecor:industrial_cross_bolt", count = 16 },
+	{ type = "item", item = "dndecor:industrial_dash_bolt", count = 16 },
+]
+
+[[quest]]
+name = "dc_label"
+title = "文本板与标识"
+desc = [
+	"每个车间挂一块能读的牌子：编号、归属、负责人。",
+	"牌子写成一样的格式，扫一眼就知道走到哪一区了。",
+]
+icon = "dndecor:text_plate"
+shape = "circle"
+size = 1.2
+deps = ["dc_hazard"]
+tasks = [
+	{ type = "item", item = "dndecor:text_plate", count = 8 },
+]
+
+[[quest]]
+name = "dc_boiler"
+title = "锅炉成套"
+desc = [
+	"锅炉不只是装饰：它是把「这里有热源」讲清楚的那一件。",
+	"放在蒸汽机旁边，机器才像装在一个车间里。",
+]
+icon = "dndecor:industrial_boiler"
+shape = "rsquare"
+deps = ["dc_lamp"]
+tasks = [
+	{ type = "item", item = "dndecor:industrial_boiler", count = 4 },
+]
+
+[[quest]]
+name = "dc_catwalk_run"
+title = "栈桥成线"
+desc = [
+	"把检修通道连成一条：从楼梯上去，沿机器走一圈再下来。",
+	"连成环之后，检修不必原路折返。",
+]
+icon = "dndecor:industrial_catwalk"
+shape = "octagon"
+size = 1.75
+deps = ["dc_hypertube_block", "dc_lamp", "dc_hazard"]
+tasks = [
+	{ type = "item", item = "dndecor:industrial_catwalk", count = 32 },
+	{ type = "item", item = "dndecor:industrial_floor", count = 32 },
+]
+
+# ---- 簇 5：成组搭配 ----
+
+[[quest]]
+name = "dc_palette"
+title = "一色到底"
+desc = [
+	"车间先定一种主色，面材、容器、彩装全用它。",
+	"配色不统一时，机器做得再对也看着是临时搭的。",
+]
+icon = "dndecor:white_container"
+shape = "pentagon"
+size = 2.0
+deps = ["dc_plate"]
+tasks = [
+	{ type = "item", item = "dndecor:white_container", count = 8 },
+	{ type = "item", item = "dndecor:white_velvet_block", count = 8 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "dc_dye_supply"
+title = "染料供应"
+desc = [
+	"Create: Dragons Plus 把染料做成桶装，配色才有量。",
+	"染一次是一批，不是一格一格刷。",
+]
+icon = "create_dragons_plus:white_dye_bucket"
+shape = "rsquare"
+deps = ["dc_palette"]
+tasks = [
+	{ type = "item", item = "create_dragons_plus:white_dye_bucket", count = 2 },
+	{ type = "item", item = "create_dragons_plus:white_dye_bucket", count = 8 },
+]
+
+[[quest]]
+name = "dc_palette_wide"
+title = "扩展色系"
+desc = [
+	"十六色之外还有一整套扩展色，厂房不必挤在常用色里。",
+	"先挑三种做样板，定了再批量。",
+]
+icon = "create_dragons_plus:white_dye_bucket"
+shape = "circle"
+size = 1.2
+deps = ["dc_dye_supply"]
+tasks = [
+	{ type = "item", item = "create_dragons_plus:white_dye_bucket", count = 4 },
+	{ type = "item", item = "create_dragons_plus:white_dye_bucket", count = 4 },
+]
+
+[[quest]]
+name = "dc_dye_industrial"
+title = "染料进车间"
+desc = [
+	"桶装染料与染色件是同一条线：桶是原料，件是产出。",
+	"这一步做完，配色就从手工活变成一道工序。",
+]
+icon = "create_dragons_plus:dragon_breath_bucket"
+shape = "circle"
+size = 1.2
+deps = ["dc_palette_wide"]
+tasks = [
+	{ type = "item", item = "create_dragons_plus:dragon_breath_bucket", count = 2 },
+	{ type = "item", item = "create_dragons_plus:white_dye_bucket", count = 2 },
+]
+
+[[quest]]
+name = "dc_horsepower"
+title = "畜力上料"
+desc = [
+	"Create Horsepower：厂区里唯一一种不吃燃料的动力。",
+	"它带不动大机器，但适合拖一段附属的传送或磨盘。",
+]
+icon = "createhorsepower:horse_crank"
+shape = "circle"
+size = 1.2
+deps = ["dc_plate"]
+tasks = [
+	{ type = "item", item = "createhorsepower:horse_crank", count = 1 },
+]
+
+[[quest]]
+name = "dc_pipe_run"
+title = "管网走线"
+desc = [
+	"管不必笔直：沿墙、跨梁、下穿地面，走线定了再铺。",
+	"先把主管走完，再分枝——反过来的话每分一支都要拆一次。",
+]
+icon = "create:fluid_pipe"
+shape = "rsquare"
+deps = ["dc_fluid_hatch"]
+tasks = [
+	{ type = "item", item = "create:fluid_pipe", count = 32 },
+	{ type = "item", item = "create:fluid_valve", count = 4 },
+]
+
+[[quest]]
+name = "dc_facade"
+title = "厂房正立面"
+desc = [
+	"厂房好不好看，九成在正立面：面材、窗、招牌三者对齐。",
+	"先立一面，成了再照抄到其余三面。",
+]
+icon = "createframed:cardboard_window"
+shape = "octagon"
+size = 1.75
+deps = ["dc_window_kit", "dc_cardboard_window", "dc_label", "dc_boiler"]
+tasks = [
+	{ type = "item", item = "createframed:cardboard_window", count = 16 },
+	{ type = "item", item = "dndecor:text_plate", count = 4 },
+]
+
+[[quest]]
+name = "dc_workshop"
+title = "一座完整的车间"
+desc = [
+	"面材、梁柱、窗、管网、灯、标线与栈桥，一次全部用上。",
+	"做完这一条，厂区就不再是「机器摆在空地上」。",
+]
+icon = "dndecor:industrial_plating_block"
+shape = "octagon"
+size = 1.75
+deps = ["dc_catwalk_run", "dc_facade", "dc_dye_industrial", "dc_pipe_run"]
+tasks = [
+	{ type = "item", item = "dndecor:industrial_plating_block", count = 64 },
+	{ type = "item", item = "dndecor:large_metal_girder", count = 16 },
+	{ type = "item", item = "dndecor:industrial_lamp", count = 8 },
+]
+
+[[quest]]
+name = "dc_decor_done"
+title = "厂区成套"
+desc = [
+	"从一块面材到一整座车间，材料、配色与走线是同一套。",
+	"公共工程与大剧院都按这套做法复制。",
+]
+icon = "createframed:tinted_framed_glass"
+shape = "hexagon"
+size = 2.5
+deps = ["dc_catwalk_run", "dc_workshop", "dc_palette_wide", "dc_facade",
+        "dc_girder", "dc_pipe_run", "dc_hypertube_end"]
+tasks = [
+	{ type = "item", item = "dndecor:industrial_plating_block", count = 64 },
+	{ type = "item", item = "createframed:tinted_framed_glass", count = 32 },
+	{ type = "item", item = "dndecor:industrial_catwalk", count = 32 },
+]
+rewards = [
+	{ type = "xp", xp = 100 },
+	{ type = "toast" },
+]

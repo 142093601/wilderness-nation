@@ -1,0 +1,724 @@
+# 类目 · 结构与遗迹
+#
+# 本章的 mod 家族（每个都开过 jar：`data/<ns>/` 的命名空间不是猜的）：
+#
+#   YUNG's 全家 8 个（**命名空间与 jar 文件名不一样，逐个查过**）：
+#     · yungs-better-caves            → `bettercaves`（只有 configured_carver + biome_modifier）
+#     · yungs-better-dungeons         → `betterdungeons`（5 个结构 + 7 条进度）
+#     · yungs-better-end-island       → `betterendisland`（只有主岛的 .nbt 构件）
+#     · yungs-better-jungle-temples   → `betterjungletemples`（structure: jungle_temple）
+#     · yungs-better-mineshafts       → `bettermineshafts`（13 个 structure）
+#     · yungs-better-nether-fortresses→ `betterfortresses`（structure: fortress）
+#     · yungs-better-ocean-monuments  → `betteroceanmonuments`（structure: ocean_monument）
+#     · yungs-better-strongholds      → `betterstrongholds`（structure: stronghold）
+#   · dungeons-and-taverns → 数据命名空间 `nova_structures`（96 个 structure + 34 条进度），
+#     **物品却在 `dnt`**（`assets/dnt/lang/en_us.json` 里的 `item.dnt.*_key`）——两个命名空间都真
+#   · when-dungeons-arise → `dungeons_arise`（40 个 structure + 39 条进度）
+#   · towns-and-towers → `towns_and_towers`（60 个 structure）
+#   · repurposed-structures → `repurposed_structures`（107 个 structure + 19 条进度）
+#   · medieval-buildings → `medieval_buildings` / 下界版 `medieval_nether` / 末地版 `medievalend`
+#   · grim-kingdoms → `grim_kingdoms`（65 个 structure）
+#   · additional-structures → `additionalstructures`（198 个 structure）
+#   · tidal-towns → `joshie`（**命名空间是作者名**，structure: village_ocean）
+#   · choicetheorems-overhauled-village → `ctov`（78 个 structure）
+#   · betterarcheology → `betterarcheology`（102 项 + 25 个 structure + 29 条进度）
+#   · lootr → `lootr`（10 项 + 16 条进度）
+#   · terralith → `terralith`（28 个 structure + 2112 项群系数据）
+#
+# 判据怎么来的（结构类 mod 大多没有物品，所以**逐条**说明用了哪一层）：
+#   ① 实物：`betterarcheology` / `lootr` / `dnt` 三家的方块与物品 → 直接 `item`
+#   ② 进度：`betterdungeons`(7) · `nova_structures`(34) · `dungeons_arise`(39) ·
+#      `repurposed_structures`(19) · `betterarcheology`(29) · `lootr`(16) —— 全部对着
+#      `tools/registry.json` 的 `advancements` 逐条核过，都是"找到某结构"类进度
+#   ③ `structure`：id 一律来自 jar 里 `data/<ns>/worldgen/structure/<path>.json` 的**路径**。
+#      带斜杠的也真的存在 —— `ctov:large/village_plains` 这个字符串能在
+#      `data/ctov/structure_icons.json` 与 `data/ctov/tags/worldgen/structure/*.json` 里读到，
+#      不是我按规则推的。
+#   ④ `dimension`：只有 Better End Island 一条。它不发进度、不发物品、只有主岛的 .nbt 构件，
+#      而它改的就是**末地主岛**本身 —— 踏上主岛即已被它影响，所以用「到过末地」判。
+#   ⑤ **checkmark：本章 0 条**。上面 22 个家族每一个都有真实信号，不需要自检打勾。
+#
+# 与其它章的分工：
+#   · 地图与导航 (`150-cat-explore`) = 怎么**找**到遗迹（罗盘、地图、传送网络）
+#   · 出关 (`45-expedition`)         = 远征的**组织**（补给、前哨、带回什么）
+#   · 仓储 (`130-cat-storage`)       = Lootr 的**仓储面**（遗迹箱子每人一份 → 卸货入库）
+#   · 实用与奇物 (`144-cat-utility`) = Better Archeology 的**奇物面**（图腾、神器、相机旁的展示）
+#   · 本章 = 遗迹**本身**：地下（簇 1）· 地表与村庄（簇 2）· 下界与末地（簇 3）·
+#     海洋与远方（簇 4）· 考古与战利品（簇 5）
+#   ⚠️ 已知重叠（写给汇总的人）：Better Archeology（`144-cat-utility`）与 Lootr
+#     （`130-cat-storage`）都被 ROSTER 同时划给两章；本章按上面的分工只取
+#     「遗迹里的考古现场」与「遗迹里的那一份战利品」，两章用的**条目没有重复**。
+#
+# 形状说明：本簇按**主题**分簇（不是按 mod 分簇），所以 `pentagon` 给的是
+#   簇头与各家第一条主链，不是"每个 mod 一个"—— 22 个家族每个一条 pentagon 会占掉半章。
+
+key = "cat_structures"
+title = "结构与遗迹"
+subtitle = "地下的、地上的、别的维度的：值得专程去一趟的地方"
+group = "category"
+icon = "minecraft:mossy_stone_bricks"
+order_index = 61
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---- 簇 1：地下 ----
+
+[[quest]]
+name = "st_mineshaft"
+title = "矿井：YUNG's 版"
+desc = [
+	"YUNG's Better Mineshafts 换掉了原版矿井的骨架，它是这一章里最容易撞见的一处。",
+	"先把它当成「地下第一站」：从这里起，地下才不只是挖矿的通道。",
+]
+icon = "minecraft:rail"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "structure", structure = "bettermineshafts:mineshaft_oak" },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "st_mineshaft_variants"
+title = "矿井的四种地貌版本"
+desc = [
+	"同一套矿井按群系换了材料与结构；走满几种，才知道这个 mod 到底改了多少。",
+]
+icon = "minecraft:ice"
+shape = "circle"
+size = 1.2
+deps = ["st_mineshaft"]
+tasks = [
+	{ type = "structure", structure = "bettermineshafts:mineshaft_ice" },
+	{ type = "structure", structure = "bettermineshafts:mineshaft_desert" },
+	{ type = "structure", structure = "bettermineshafts:mineshaft_mesa" },
+	{ type = "structure", structure = "repurposed_structures:mineshaft_birch" },
+]
+
+[[quest]]
+name = "st_deep_cave"
+title = "洞穴系统：Better Caves"
+desc = [
+	"YUNG's Better Caves 只做一件事：把地下的空洞换成更连贯的洞穴系统。",
+	"它没有方块也没有进度，所以这条用**只有深洞才拿得到的东西**来判：",
+	"深板岩、繁茂洞穴的苔藓与发光浆果、溶洞的滴水石、紫水晶洞的晶簇。",
+]
+icon = "minecraft:cobbled_deepslate"
+shape = "rsquare"
+deps = ["st_mineshaft"]
+tasks = [
+	{ type = "item", item = "minecraft:cobbled_deepslate", count = 64 },
+	{ type = "item", item = "minecraft:moss_block", count = 16 },
+	{ type = "item", item = "minecraft:glow_berries", count = 8 },
+	{ type = "item", item = "minecraft:pointed_dripstone", count = 8 },
+	{ type = "item", item = "minecraft:amethyst_shard", count = 4 },
+]
+
+[[quest]]
+name = "st_dungeon_small"
+title = "小型地牢：Better Dungeons"
+desc = [
+	"YUNG's Better Dungeons 的五种地牢各有自己的进度，先认第一种。",
+]
+icon = "minecraft:mossy_cobblestone"
+shape = "pentagon"
+size = 2.0
+deps = ["st_mineshaft"]
+tasks = [
+	{ type = "advancement", advancement = "betterdungeons:small_dungeon" },
+]
+
+[[quest]]
+name = "st_dungeon_themes"
+title = "三种主题地牢"
+icon = "minecraft:skeleton_skull"
+shape = "circle"
+size = 1.2
+deps = ["st_dungeon_small"]
+tasks = [
+	{ type = "advancement", advancement = "betterdungeons:skeleton_dungeon" },
+	{ type = "advancement", advancement = "betterdungeons:spider_dungeon" },
+	{ type = "advancement", advancement = "betterdungeons:zombie_dungeon" },
+]
+
+[[quest]]
+name = "st_dungeon_all"
+title = "五种地牢走全"
+icon = "minecraft:spawner"
+shape = "octagon"
+size = 1.75
+deps = ["st_dungeon_themes"]
+tasks = [
+	{ type = "advancement", advancement = "betterdungeons:all_dungeons" },
+]
+
+[[quest]]
+name = "st_stronghold"
+title = "要塞：Better Strongholds"
+desc = [
+	"末地传送门所在的那座要塞也被重做了。这里同时是「地下」这一簇的收束点。",
+]
+icon = "minecraft:end_portal_frame"
+shape = "rsquare"
+deps = ["st_dungeon_all"]
+tasks = [
+	{ type = "structure", structure = "betterstrongholds:stronghold" },
+]
+
+# ---- 簇 2：地表与村庄 ----
+
+[[quest]]
+name = "st_ctov"
+title = "改版村庄：CTOV"
+desc = [
+	"ChoiceTheorem's Overhauled Village 把村庄拆成大小三档、再按群系换皮（78 个版本）。",
+	"它是地表这一簇的起点：从这里开始，村庄不再是「几间房子加一块田」。",
+]
+icon = "minecraft:bell"
+shape = "pentagon"
+size = 2.0
+deps = ["st_stronghold"]
+tasks = [
+	{ type = "structure", structure = "ctov:large/village_plains" },
+	{ type = "structure", structure = "ctov:pillager_outpost_plains" },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "st_tt_village"
+title = "村庄：Towns and Towers"
+desc = [
+	"60 个版本：村庄按群系换风格，塔与前哨按群系换阵型。",
+]
+icon = "minecraft:jungle_planks"
+shape = "pentagon"
+size = 2.0
+deps = ["st_stronghold"]
+tasks = [
+	{ type = "structure", structure = "towns_and_towers:village_jungle" },
+	{ type = "structure", structure = "towns_and_towers:pillager_outpost_snowy_taiga" },
+]
+
+[[quest]]
+name = "st_rs_village"
+title = "村庄：Repurposed Structures"
+icon = "minecraft:brown_mushroom"
+shape = "circle"
+size = 1.2
+deps = ["st_tt_village"]
+tasks = [
+	{ type = "structure", structure = "repurposed_structures:village_mushroom" },
+]
+
+[[quest]]
+name = "st_rs_temple"
+title = "神殿与金字塔：Repurposed Structures"
+icon = "minecraft:chiseled_sandstone"
+shape = "circle"
+size = 1.2
+deps = ["st_rs_village"]
+tasks = [
+	{ type = "structure", structure = "repurposed_structures:pyramid_jungle" },
+	{ type = "structure", structure = "repurposed_structures:temple_taiga" },
+]
+
+[[quest]]
+name = "st_medieval"
+title = "中世纪建筑：堡垒、塔、船与民居"
+desc = [
+	"Medieval Buildings 只有五个结构，胜在体量与做工：一座堡垒就是一整场攻坚战。",
+]
+icon = "minecraft:stone_bricks"
+shape = "pentagon"
+size = 2.0
+deps = ["st_stronghold"]
+tasks = [
+	{ type = "structure", structure = "medieval_buildings:fort" },
+	{ type = "structure", structure = "medieval_buildings:tower" },
+	{ type = "structure", structure = "medieval_buildings:ship" },
+	{ type = "structure", structure = "medieval_buildings:house_1" },
+]
+
+[[quest]]
+name = "st_grim_castle"
+title = "失落城堡：Grim Kingdoms"
+desc = [
+	"北欧风的一整套：城堡、塔、哨所、船只残骸，共 65 处，大半长在寒冷群系。",
+	"往北走一趟就能一次看全这一家的手艺。",
+]
+icon = "minecraft:cracked_stone_bricks"
+shape = "pentagon"
+size = 2.0
+deps = ["st_stronghold"]
+tasks = [
+	{ type = "structure", structure = "grim_kingdoms:winterhold_citadel" },
+	{ type = "structure", structure = "grim_kingdoms:gnome_tall_tower" },
+	{ type = "structure", structure = "grim_kingdoms:old_timber_watch" },
+]
+
+[[quest]]
+name = "st_as_ruins"
+title = "大地上的废墟：Additional Structures"
+desc = [
+	"198 个结构，是这一章里数量最大的一家：神庙、石阵、营地、地陷、废弃小屋。",
+	"它不做大工程，做的是「走到哪都能撞见点什么」。",
+]
+icon = "minecraft:mossy_stone_bricks"
+shape = "pentagon"
+size = 2.0
+deps = ["st_stronghold"]
+tasks = [
+	{ type = "structure", structure = "additionalstructures:temple_1" },
+	{ type = "structure", structure = "additionalstructures:stone_circle_1" },
+	{ type = "structure", structure = "additionalstructures:camp_1" },
+	{ type = "structure", structure = "additionalstructures:villager_house_1" },
+]
+
+[[quest]]
+name = "st_terralith_tower"
+title = "法师塔与尖塔：Terralith"
+desc = [
+	"Terralith 以群系闻名，但它也带 28 处结构：法师塔、尖塔、要塞村庄、地下小屋。",
+	"找一座法师塔进去看，是了解这一家除群系之外最直接的一站。",
+]
+icon = "minecraft:enchanting_table"
+shape = "rsquare"
+deps = ["st_as_ruins"]
+tasks = [
+	{ type = "structure", structure = "terralith:mage_tower" },
+	{ type = "structure", structure = "terralith:spire" },
+	{ type = "structure", structure = "terralith:fortified_village" },
+]
+
+[[quest]]
+name = "st_dnt_tavern"
+title = "酒馆：Dungeons and Taverns"
+desc = [
+	"这一家的数据在 `nova_structures` 命名空间下，96 处结构配 34 条进度。",
+	"酒馆是最容易先撞见的一处，也是它整套「路上有落脚点」思路的开头。",
+]
+icon = "minecraft:barrel"
+shape = "pentagon"
+size = 2.0
+deps = ["st_tt_village"]
+tasks = [
+	{ type = "advancement", advancement = "nova_structures:adventure/find_tavern" },
+]
+
+[[quest]]
+name = "st_dnt_shrine"
+title = "试炼神龛与灾厄庄园"
+icon = "minecraft:trial_key"
+shape = "circle"
+size = 1.2
+deps = ["st_dnt_tavern"]
+tasks = [
+	{ type = "advancement", advancement = "nova_structures:adventure/find_shrine" },
+	{ type = "advancement", advancement = "nova_structures:adventure/find_illager_manor" },
+]
+
+# ---- 簇 3：下界与末地 ----
+
+[[quest]]
+name = "st_nf_fortress"
+title = "下界要塞：Better Nether Fortresses"
+desc = [
+	"YUNG's 版要塞重排了烈焰人刷怪区与走廊，是下界这一簇的主链起点。",
+]
+icon = "minecraft:nether_bricks"
+shape = "pentagon"
+size = 2.0
+deps = ["st_dnt_shrine"]
+tasks = [
+	{ type = "structure", structure = "betterfortresses:fortress" },
+]
+
+[[quest]]
+name = "st_rs_nether"
+title = "丛林要塞与下界之城：Repurposed Structures"
+icon = "minecraft:polished_blackstone_bricks"
+shape = "circle"
+size = 1.2
+deps = ["st_nf_fortress"]
+tasks = [
+	{ type = "structure", structure = "repurposed_structures:fortress_jungle" },
+	{ type = "structure", structure = "repurposed_structures:city_nether" },
+]
+
+[[quest]]
+name = "st_medieval_nether"
+title = "下界建筑：Nether Edition"
+icon = "minecraft:blackstone"
+shape = "rsquare"
+deps = ["st_nf_fortress"]
+tasks = [
+	{ type = "structure", structure = "medieval_nether:castle" },
+	{ type = "structure", structure = "medieval_nether:shrine" },
+]
+
+[[quest]]
+name = "st_additional_nether"
+title = "下界遗迹：Additional Structures"
+icon = "minecraft:netherrack"
+shape = "circle"
+size = 1.2
+deps = ["st_medieval_nether"]
+tasks = [
+	{ type = "structure", structure = "additionalstructures:nether_dungeon_1" },
+	{ type = "structure", structure = "additionalstructures:nether_building_1" },
+]
+
+[[quest]]
+name = "st_dnt_nether"
+title = "下界前哨：Dungeons and Taverns"
+icon = "minecraft:gilded_blackstone"
+shape = "pentagon"
+size = 2.0
+deps = ["st_nf_fortress"]
+tasks = [
+	{ type = "advancement", advancement = "nova_structures:nether/find_piglin_outpost" },
+]
+
+[[quest]]
+name = "st_dnt_donjon"
+title = "猪灵要塞"
+icon = "minecraft:gold_block"
+shape = "circle"
+size = 1.2
+deps = ["st_dnt_nether"]
+tasks = [
+	{ type = "advancement", advancement = "nova_structures:nether/find_donjon" },
+]
+
+[[quest]]
+name = "st_be_endisland"
+title = "末地主岛：Better End Island"
+desc = [
+	"这个 mod 没有进度也没有方块，它重写的是**末地主岛本身**（黑曜石柱、出生平台、折返门）。",
+	"踏上主岛就等于走过它 —— 所以这条用「到过末地」判，这是它唯一的真实信号。",
+]
+icon = "minecraft:end_stone"
+shape = "pentagon"
+size = 2.0
+deps = ["st_dnt_donjon"]
+tasks = [
+	{ type = "dimension", dimension = "minecraft:the_end" },
+]
+
+[[quest]]
+name = "st_medieval_end"
+title = "末地建筑：End Edition"
+icon = "minecraft:purpur_block"
+shape = "circle"
+size = 1.2
+deps = ["st_be_endisland"]
+tasks = [
+	{ type = "structure", structure = "medievalend:castle" },
+	{ type = "structure", structure = "medievalend:shrine" },
+]
+
+[[quest]]
+name = "st_dnt_end"
+title = "末地城堡与灯塔"
+icon = "minecraft:end_stone_bricks"
+shape = "circle"
+size = 1.2
+deps = ["st_be_endisland"]
+tasks = [
+	{ type = "advancement", advancement = "nova_structures:end/find_end_castle" },
+]
+
+[[quest]]
+name = "st_rs_end"
+title = "末地要塞与远古城市：Repurposed Structures"
+icon = "minecraft:end_crystal"
+shape = "circle"
+size = 1.2
+deps = ["st_be_endisland"]
+tasks = [
+	{ type = "structure", structure = "repurposed_structures:stronghold_end" },
+	{ type = "structure", structure = "repurposed_structures:ancient_city_end" },
+]
+
+[[quest]]
+name = "st_additional_end"
+title = "末地遗迹：Additional Structures"
+icon = "minecraft:end_rod"
+shape = "circle"
+size = 1.2
+deps = ["st_be_endisland"]
+tasks = [
+	{ type = "structure", structure = "additionalstructures:end_dungeon_1" },
+	{ type = "structure", structure = "additionalstructures:end_tower_1" },
+]
+
+# ---- 簇 4：海洋与远方 ----
+
+[[quest]]
+name = "st_monument"
+title = "海底神殿：Better Ocean Monuments"
+desc = [
+	"YUNG's 版海底神殿重排了内部房间与守卫者分布。",
+	"它是「远方」这一簇的起点：从这里起，值得去的地方开始离主城很远。",
+]
+icon = "minecraft:prismarine_bricks"
+shape = "pentagon"
+size = 2.0
+deps = ["st_additional_end"]
+tasks = [
+	{ type = "structure", structure = "betteroceanmonuments:ocean_monument" },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "st_rs_monument"
+title = "沙漠神殿与海洋前哨：Repurposed Structures"
+icon = "minecraft:cut_sandstone"
+shape = "circle"
+size = 1.2
+deps = ["st_monument"]
+tasks = [
+	{ type = "structure", structure = "repurposed_structures:monument_desert" },
+	{ type = "structure", structure = "repurposed_structures:outpost_ocean" },
+]
+
+[[quest]]
+name = "st_tidal_town"
+title = "海上村庄：Tidal Towns"
+desc = [
+	"这一家的命名空间是作者名 `joshie`（不是 `tidaltowns`），全 mod 只有一处结构：海上村庄。",
+	"要走海路才看得到它，也是「远方」这一簇里最偏远的一处落脚点。",
+]
+icon = "minecraft:heart_of_the_sea"
+shape = "pentagon"
+size = 2.0
+deps = ["st_monument"]
+tasks = [
+	{ type = "structure", structure = "joshie:village_ocean" },
+]
+
+[[quest]]
+name = "st_tt_wreckage"
+title = "远洋残骸：Towns and Towers"
+icon = "minecraft:nautilus_shell"
+shape = "circle"
+size = 1.2
+deps = ["st_tidal_town"]
+tasks = [
+	{ type = "structure", structure = "towns_and_towers:wreckage_ocean" },
+]
+
+[[quest]]
+name = "st_jungle_temple"
+title = "丛林神庙：Better Jungle Temples"
+icon = "minecraft:bamboo"
+shape = "rsquare"
+deps = ["st_monument"]
+tasks = [
+	{ type = "structure", structure = "betterjungletemples:jungle_temple" },
+]
+
+[[quest]]
+name = "st_wda_fort"
+title = "灾厄要塞：When Dungeons Arise"
+desc = [
+	"40 处大型结构、39 条进度，是本章里单体体量最大的一家。",
+	"它的结构普遍偏难，建议先把这一簇前几条的补给线铺好再来。",
+]
+icon = "minecraft:iron_bars"
+shape = "pentagon"
+size = 2.0
+deps = ["st_jungle_temple"]
+tasks = [
+	{ type = "advancement", advancement = "dungeons_arise:find_illager_fort" },
+]
+
+[[quest]]
+name = "st_wda_keep"
+title = "凯拉要塞"
+icon = "minecraft:chiseled_stone_bricks"
+shape = "circle"
+size = 1.2
+deps = ["st_wda_fort"]
+tasks = [
+	{ type = "advancement", advancement = "dungeons_arise:find_keep_kayra" },
+]
+
+[[quest]]
+name = "st_wda_far"
+title = "设拉子宫殿与盗匪塔"
+icon = "minecraft:scaffolding"
+shape = "circle"
+size = 1.2
+deps = ["st_wda_fort"]
+tasks = [
+	{ type = "advancement", advancement = "dungeons_arise:find_shiraz_palace" },
+	{ type = "advancement", advancement = "dungeons_arise:find_bandit_towers" },
+	{ type = "advancement", advancement = "dungeons_arise:find_heavenly_conqueror" },
+]
+
+# ---- 簇 5：考古与战利品 ----
+
+[[quest]]
+name = "st_arch_table"
+title = "考古工作台：Better Archeology"
+desc = [
+	"考古这一簇只剩一件事：**从遗迹里把东西挖出来**。",
+	"这张桌子是它的入口，也是本章唯一一条完整「勘察 → 鉴定 → 收藏」的线。",
+]
+icon = "betterarcheology:archeology_table"
+shape = "pentagon"
+size = 2.0
+deps = ["st_wda_far"]
+tasks = [
+	{ type = "item", item = "betterarcheology:archeology_table" },
+]
+
+[[quest]]
+name = "st_arch_brushes"
+title = "三档刷子"
+icon = "betterarcheology:iron_brush"
+shape = "circle"
+size = 1.2
+deps = ["st_arch_table"]
+tasks = [
+	{ type = "item", item = "betterarcheology:iron_brush" },
+	{ type = "item", item = "betterarcheology:diamond_brush" },
+	{ type = "item", item = "betterarcheology:netherite_brush" },
+]
+
+[[quest]]
+name = "st_arch_fossil"
+title = "挖到第一具化石"
+icon = "betterarcheology:chicken_fossil"
+shape = "rsquare"
+deps = ["st_arch_brushes"]
+tasks = [
+	{ type = "advancement", advancement = "betterarcheology:fossil_found" },
+]
+
+[[quest]]
+name = "st_arch_all_fossils"
+title = "化石收齐"
+desc = [
+	"八种化石各有出处，收齐它们等于把 25 处考古遗迹跑了一遍。",
+]
+icon = "betterarcheology:wolf_fossil"
+shape = "octagon"
+size = 1.75
+deps = ["st_arch_fossil"]
+tasks = [
+	{ type = "advancement", advancement = "betterarcheology:all_fossils_found" },
+]
+
+[[quest]]
+name = "st_arch_vase"
+title = "打碎古代花瓶"
+icon = "betterarcheology:loot_vase"
+shape = "circle"
+size = 1.2
+deps = ["st_arch_brushes"]
+tasks = [
+	{ type = "advancement", advancement = "betterarcheology:loot_vase_broken" },
+]
+
+[[quest]]
+name = "st_arch_artifact"
+title = "鉴定神器"
+icon = "betterarcheology:unidentified_artifact"
+shape = "circle"
+size = 1.2
+deps = ["st_arch_vase"]
+tasks = [
+	{ type = "advancement", advancement = "betterarcheology:unidentified_artifact" },
+]
+
+[[quest]]
+name = "st_lootr_pot"
+title = "每人一份：饰纹陶罐"
+desc = [
+	"Lootr 让遗迹里的容器对**每个玩家各算一份**。考古现场从此可以分头挖，不必排队。",
+]
+icon = "lootr:decorated_pot"
+shape = "circle"
+size = 1.2
+deps = ["st_arch_artifact"]
+tasks = [
+	{ type = "advancement", advancement = "lootr:pot_opened" },
+]
+
+[[quest]]
+name = "st_lootr_haul"
+title = "每人一份：考古与陷阱箱"
+icon = "lootr:suspicious_gravel"
+shape = "circle"
+size = 1.2
+deps = ["st_lootr_pot"]
+tasks = [
+	{ type = "advancement", advancement = "lootr:archaeologist" },
+	{ type = "advancement", advancement = "lootr:all_gravel" },
+	{ type = "advancement", advancement = "lootr:trapped_chest" },
+	{ type = "advancement", advancement = "lootr:25loot" },
+]
+
+[[quest]]
+name = "st_dnt_keys"
+title = "遗迹钥匙"
+desc = [
+	"这一家的物品在 `dnt` 命名空间下（数据却在 `nova_structures`），都是结构内部才拿得到的钥匙。",
+]
+icon = "minecraft:trial_key"
+shape = "circle"
+size = 1.2
+deps = ["st_lootr_haul"]
+tasks = [
+	{ type = "item", item = "minecraft:trial_key" },
+	{ type = "item", item = "minecraft:ominous_trial_key" },
+	{ type = "item", item = "minecraft:ancient_debris" },
+]
+
+[[quest]]
+name = "st_rs_ancient"
+title = "远古城市的三种变体：Repurposed Structures"
+icon = "minecraft:sculk"
+shape = "circle"
+size = 1.2
+deps = ["st_dnt_keys"]
+tasks = [
+	{ type = "advancement", advancement = "repurposed_structures:ancient_cities" },
+]
+
+[[quest]]
+name = "st_structures_done"
+title = "遗迹清单立住了"
+desc = [
+	"五个家族的「第一条遗迹」进度握在手里：YUNG's、Dungeons and Taverns、",
+	"Repurposed Structures、When Dungeons Arise、Lootr —— 五家都真的踏进去过。",
+	"到这一步，出关章要的情报墙才有内容可挂。",
+]
+icon = "minecraft:recovery_compass"
+shape = "hexagon"
+size = 2.5
+deps = ["st_arch_all_fossils", "st_rs_ancient", "st_wda_keep", "st_tt_wreckage",
+        "st_terralith_tower", "st_medieval", "st_grim_castle", "st_dnt_shrine",
+        "st_dnt_end", "st_rs_end", "st_additional_end", "st_tidal_town", "st_wda_far"]
+tasks = [
+	{ type = "advancement", advancement = "repurposed_structures:root" },
+	{ type = "advancement", advancement = "betterdungeons:root" },
+	{ type = "advancement", advancement = "lootr:root" },
+	{ type = "advancement", advancement = "nova_structures:root" },
+	{ type = "advancement", advancement = "dungeons_arise:wda_root" },
+]
+rewards = [
+	{ type = "xp", xp = 80 },
+	{ type = "toast" },
+]

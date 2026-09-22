@@ -72,4 +72,81 @@
 	"⚠️ 这条判不了：模组不提供夺城成功事件，也不发进度。"
 	"做完它会生成占领碑、把那座城记进你们的属地清单。"
 	]
+	quest.2BCEAEDE6C3C0F8B.title: "情报站升级"
+	quest.2BCEAEDE6C3C0F8B.description: [
+	"情报站不是建完就完了：升级后能看的档位更多、覆盖更远。"
+	"升级要花的还是国库里的东西 —— 这也是「国库与营建」那一章为什么要单独存在。"
+	]
+	quest.EEA411369A2AA26F.title: "沿着边界走一圈"
+	quest.EEA411369A2AA26F.description: [
+	"地形是情报的一部分：哪边是河、哪边是山、哪边能过车。"
+	"走完把结论标到地图上，别只留在自己脑子里。"
+	]
+	quest.FD9AF1C888D080C4.title: "把邻国都城标上图"
+	quest.FD9AF1C888D080C4.description: [
+	"地图上知道它在哪，比册子里写着「在东边」有用得多。"
+	]
+	quest.F23AFCEAD15C25E5.title: "邻国档案"
+	quest.F23AFCEAD15C25E5.description: [
+	"一份档案记四件事：**它在哪、它多强、它缺什么、它跟谁有仇**。"
+	"这四条决定了后面该通商、该结盟，还是该打。"
+	]
+	quest.2D51D7507D2E6031.title: "给情报分级"
+	quest.2D51D7507D2E6031.description: [
+	"公开的贴墙上，机密的锁柜子里 —— 不分级的情报网等于没有。"
+	]
+	quest.EFFD74786BEA7CB4.title: "派驻使节"
+	quest.EFFD74786BEA7CB4.description: [
+	"常驻的使节比每次派人过去省事得多，也更容易发现对方的变化。"
+	"游戏里它就是「在它附近有一间能住的屋子 + 一个人」。"
+	]
+	quest.1F7F09BB492708FE.title: "边境哨所"
+	quest.1F7F09BB492708FE.description: [
+	"哨所的作用不是打仗，是**早点知道**。放在你们和它之间那条路上。"
+	]
+	quest.472F4187803CB87C.title: "瞭望塔"
+	quest.472F4187803CB87C.description: [
+	"比哨所高一层就行：能看见对面有没有人在集结。"
+	]
+	quest.7761947F9EEA3CB8.title: "驿站与传信"
+	quest.7761947F9EEA3CB8.description: [
+	"情报的价值随时间衰减：**晚三天的消息基本没用**。"
+	"沿途设驿站、备快马（鞍与干草块），是情报网的物理基础。"
+	]
+	quest.7CC4DD58D81F9220.title: "侦察商路"
+	quest.7CC4DD58D81F9220.description: [
+	"通商之前先自己走一遍：路况、补给点、有没有劫道的。"
+	"（真正「跑通商路」是 `52-treaty` 那一章的事，这里只做侦察。）"
+	]
+	quest.06A8D83BFCD416EE.title: "在它附近留个暗桩"
+	quest.06A8D83BFCD416EE.description: [
+	"最靠前的一双眼睛：一间小屋、一张床、一个讲台，够用了。"
+	]
+	quest.C425D9CC6DEC05E3.title: "问出话来"
+	quest.C425D9CC6DEC05E3.description: [
+	"抓到的敌人嘴里有布防、有路线、有他们的打算。"
+	"（用它做判据的是「抓到了人」这件事本身，不是「问出了什么」。）"
+	]
+	quest.D27CD0C70D4CFBE2.title: "反情报"
+	quest.D27CD0C70D4CFBE2.description: [
+	"你们的情报站也会被人盯上：锁门、留人、别把册子摊在门口。"
+	]
+	quest.4CBD2744E2CD1482.title: "情报网成型"
+	quest.4CBD2744E2CD1482.description: [
+	"站点、哨所、驿站、暗桩连成一条线之后，"
+	"**你们对邻国的了解不再依赖谁碰巧路过**。"
+	]
+	quest.95EAD5972F173A3A.title: "向全队通报"
+	quest.95EAD5972F173A3A.description: [
+	"情报要变成**共同知识**才有用：在议事厅讲一次，把结论贴上墙。"
+	]
+	quest.26F5AE2A9F09CC22.title: "给文书供纸"
+	quest.26F5AE2A9F09CC22.description: [
+	"情报站每天在消耗纸与墨 —— 断供的站等于关门。"
+	]
+	quest.92DF53C1EAF4FBDE.title: "换个角度再看一次"
+	quest.92DF53C1EAF4FBDE.description: [
+	"同一个国家，从北边看和从南边看是两回事。"
+	"这一条要的是**再走一趟**，不是新的东西 —— 所以判据是走路统计。"
+	]
 }

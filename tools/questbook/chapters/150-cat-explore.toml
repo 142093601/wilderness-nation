@@ -1,26 +1,48 @@
-# 类目 · 地图与探索
+# 类目 · 地图与导航
 #
-# 本章的 mod：Xaero's（世界地图 / 小地图 / 增强）· Explorer's Compass · Nature's Compass ·
-#   Jade（方块信息）· Traveler's Titles（区域标题）· Distractor 类
+# 本章的 mod 家族（逐个核对过：`python tools/item_index.py --ns <ns>` + 逐个开 jar 看 `data/`）：
+#   · Waystones `waystones`（63 项：石碑 9 种材质 · 传送石 / 传送粉 / 传送门 · 卷轴 5 种 ·
+#     共享石碑 16 色 · 传送石座 16 色 · 碎片与纪念物）—— 本章条数的主力
+#   · Explorer's Compass `explorerscompass`（1 件真物品 + 31 张动画帧；4 条进度）
+#   · Nature's Compass `naturescompass`（1 件真物品 + 31 张动画帧；4 条进度）
+#   · Player Tracking Compass `playertrackingcompass`（1 件：tracking_compass）
+#   · Xaero's 小地图 / 世界地图 / XaeroPlus `xaerominimap` `xaeroworldmap` `xaeroplus`
+#   · Traveler's Titles `travelerstitles` · Jade `jade`
 #
-# ⚠️ **一个重要实测**：上面这些**全是纯客户端界面 mod，零物品**
-#    （实测：`xaero*` / `jade` / `travelerstitles` 的 lang 里 item/block 键数 = 0，
-#    注册表里它们的命名空间是空的）。所以「装了小地图」这类事**没有物品判据**。
+# **本章唯一没有物品判据的一族**（实测证据，不是漏写）：
+#   上面最后两行的五个 mod 全是纯客户端界面 mod。逐个开 jar 的结论：
+#   `models/item/` 条目数 = 0、`blockstates/` = 0、`data/<ns>/worldgen/` 不存在，
+#   注册表里 `xaerominimap` / `xaeroworldmap` / `xaeroplus` / `travelerstitles` 命名空间为空。
+#   所以「装了小地图」「进新群系弹区域名」在游戏里没有可检测信号。
+#   → 这五个 mod **只由簇 1 的第一条自检任务**（`e_client_tools`，已在
+#     `tools/questbook_check.py` 的 `CHECKMARK_EXCEPTIONS` 里登记过）在正文里交代；
+#     「看地图」这件事本身用**实物**表达：纸质地图 · 制图台 · 旗标 · 磁石。
+#   → 本章**没有新增任何 checkmark**（全章 checkmark 仍只有 `e_client_tools` 一条）。
 #
-# 按本项目已定的原则处理（见邦交章与 QUESTBOOK-CRITERIA.md）：
-#   **判不了的就不硬塞成任务** —— 客户端工具用一条说明性自检带过，
-#   这一章的主体放在**真正可判定**的探索实绩上（原版进度 + 统计，都是一手信号）。
+# 与其它章的分工：
+#   · 出关 (`45-expedition`)        = 远征的**组织**（补给点、前哨、带回什么）
+#   · 领地与队伍 (`95-claims`)      = 传送网络的**队伍权限面**（谁能用哪座石碑）
+#   · 实用与奇物 (`144-cat-utility`) = Waystones 的**奇物层**（石盘、共鸣碎片、双生羽毛、墓志铭）
+#   · 本章 = **看路与认路**：把地图画出来（簇 1）· 用罗盘找目标（簇 2）·
+#     把路钉成网络（簇 3）· 走过的证据（簇 4）
+#   ⚠️ 已知重叠（写给汇总的人，不是这一章能决定的）：Waystones 同时出现在
+#     `95-claims` / `144-cat-utility` / 本章，而 `QUESTBOOK-ROSTER.md` §4.1 的
+#     「一个 mod 只有一个家」例外表里**没有登记 Waystones**。三处的分工写在上面了，
+#     要不要收进例外表由汇总的人拍板。
+#
+# 判据：除 `e_client_tools` 外全是实物（item）与原版/模组进度，进度 id 都对着
+#   `tools/registry.json` 的 `advancements` 逐条核过。
 
 key = "cat_explore"
-title = "地图与探索"
+title = "地图与导航"
 subtitle = "先看见，再决定去哪：把未知变成已知"
 group = "category"
 icon = "minecraft:compass"
-order_index = 35
+order_index = 60
 
 grid = { step = 1.5, row_h = 1.75 }
 
-# ---------------- 簇 1：客户端工具（说明性，一条带过） ----------------
+# ---- 簇 1：地图 ----
 
 [[quest]]
 name = "e_client_tools"
@@ -41,13 +63,71 @@ tasks = [
 ]
 
 [[quest]]
+name = "e_map_paper"
+title = "纸质地图"
+desc = [
+	"界面上的地图只有自己看得见；纸质地图能挂在墙上、能复制发给队友。",
+	"情报墙、行军图、前哨交接都靠它，所以它是这一簇里第一件要囤的东西。",
+]
+icon = "minecraft:map"
+shape = "rsquare"
+deps = ["e_client_tools"]
+tasks = [
+	{ type = "item", item = "minecraft:map", count = 8 },
+]
+
+[[quest]]
+name = "e_cartography"
+title = "制图台"
+icon = "minecraft:cartography_table"
+shape = "circle"
+size = 1.2
+deps = ["e_map_paper"]
+tasks = [
+	{ type = "item", item = "minecraft:cartography_table" },
+]
+
+[[quest]]
+name = "e_route_mark"
+title = "路标与旗标"
+icon = "minecraft:white_banner"
+shape = "circle"
+size = 1.2
+deps = ["e_cartography"]
+tasks = [
+	{ type = "item", item = "minecraft:white_banner", count = 4 },
+	{ type = "item", item = "minecraft:item_frame", count = 8 },
+	{ type = "item", item = "minecraft:glow_item_frame", count = 2 },
+]
+
+[[quest]]
+name = "e_lodestone"
+title = "磁石指路"
+desc = [
+	"磁石把指南针钉在一个固定点上，于是「家」有了一个不随坐标漂移的方向。",
+	"它和地图是两件事：地图告诉你周围有什么，磁石告诉你该往哪走。",
+]
+icon = "minecraft:lodestone"
+shape = "circle"
+size = 1.2
+deps = ["e_client_tools"]
+tasks = [
+	{ type = "item", item = "minecraft:lodestone" },
+	{ type = "item", item = "minecraft:compass", count = 2 },
+	{ type = "advancement", advancement = "minecraft:nether/use_lodestone" },
+]
+
+# ---- 簇 2：指路工具 ----
+
+[[quest]]
 name = "e_compass_structure"
 title = "结构罗盘"
 desc = [
 	"Explorer's Compass：指到最近的结构。远征找目标不再靠运气。",
 ]
 icon = "explorerscompass:explorerscompass"
-shape = "rsquare"
+shape = "pentagon"
+size = 2.0
 deps = ["e_client_tools"]
 tasks = [
 	{ type = "item", item = "explorerscompass:explorerscompass" },
@@ -67,7 +147,337 @@ tasks = [
 	{ type = "item", item = "naturescompass:naturescompass" },
 ]
 
-# ---------------- 簇 2：地表探索实绩（原版进度） ----------------
+[[quest]]
+name = "e_compass_repair"
+title = "修复结构罗盘"
+icon = "explorerscompass:explorerscompass"
+shape = "circle"
+size = 1.2
+deps = ["e_compass_structure"]
+tasks = [
+	{ type = "advancement", advancement = "explorerscompass:repair_explorers_compass" },
+]
+
+[[quest]]
+name = "e_compass_repair_nature"
+title = "修复自然罗盘"
+icon = "naturescompass:naturescompass"
+shape = "circle"
+size = 1.2
+deps = ["e_compass_biome"]
+tasks = [
+	{ type = "advancement", advancement = "naturescompass:repair_natures_compass" },
+]
+
+[[quest]]
+name = "e_tracking_compass"
+title = "玩家追踪罗盘"
+desc = [
+	"指人而不是指地方：多人分头行动时，走散与集合都不必再靠喊坐标。",
+	"它把「队友在哪」也变成一件可以查的事。",
+]
+icon = "minecraft:recovery_compass"
+shape = "octagon"
+size = 1.75
+deps = ["e_compass_biome"]
+tasks = [
+	{ type = "item", item = "minecraft:recovery_compass" },
+]
+
+# ---- 簇 3：传送网络 ----
+
+[[quest]]
+name = "e_waystone_net"
+title = "石碑：网络的起点"
+desc = [
+	"传送石碑是把「距离」换成「有没有连上」的那个方块。",
+	"四座是起步：主城、驿站、矿场、前线各一处，网络才谈得上覆盖。",
+]
+icon = "waystones:waystone"
+shape = "pentagon"
+size = 2.0
+deps = ["e_compass_structure"]
+tasks = [
+	{ type = "item", item = "waystones:waystone", count = 4 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "e_waystone_stone"
+title = "苔石与砂岩石碑"
+icon = "waystones:mossy_waystone"
+shape = "circle"
+size = 1.2
+deps = ["e_waystone_net"]
+tasks = [
+	{ type = "item", item = "waystones:mossy_waystone" },
+	{ type = "item", item = "waystones:sandy_waystone" },
+]
+
+[[quest]]
+name = "e_waystone_deep"
+title = "深板岩与海晶石碑"
+icon = "waystones:deepslate_waystone"
+shape = "circle"
+size = 1.2
+deps = ["e_waystone_net"]
+tasks = [
+	{ type = "item", item = "waystones:deepslate_waystone" },
+	{ type = "item", item = "waystones:prismarine_waystone" },
+]
+
+[[quest]]
+name = "e_waystone_heat"
+title = "黑石与地狱砖石碑"
+icon = "waystones:blackstone_waystone"
+shape = "circle"
+size = 1.2
+deps = ["e_waystone_stone"]
+tasks = [
+	{ type = "item", item = "waystones:blackstone_waystone" },
+	{ type = "item", item = "waystones:red_nether_bricks_waystone" },
+	{ type = "item", item = "waystones:mud_bricks_waystone" },
+]
+
+[[quest]]
+name = "e_waystone_end"
+title = "末地石与紫珀石碑"
+icon = "waystones:end_stone_waystone"
+shape = "circle"
+size = 1.2
+deps = ["e_waystone_deep"]
+tasks = [
+	{ type = "item", item = "waystones:end_stone_waystone" },
+	{ type = "item", item = "waystones:purpur_waystone" },
+]
+
+[[quest]]
+name = "e_shards"
+title = "碎片两态"
+icon = "waystones:dormant_shard"
+shape = "circle"
+size = 1.2
+deps = ["e_waystone_net"]
+tasks = [
+	{ type = "item", item = "waystones:dormant_shard" },
+	{ type = "item", item = "waystones:crumbling_attuned_shard" },
+]
+
+[[quest]]
+name = "e_warp_dust"
+title = "传送粉"
+icon = "waystones:warp_dust"
+shape = "circle"
+size = 1.2
+deps = ["e_shards"]
+tasks = [
+	{ type = "item", item = "waystones:warp_dust", count = 4 },
+]
+
+[[quest]]
+name = "e_warp_stone"
+title = "传送石"
+icon = "waystones:warp_stone"
+shape = "rsquare"
+deps = ["e_warp_dust"]
+tasks = [
+	{ type = "item", item = "waystones:warp_stone" },
+]
+
+[[quest]]
+name = "e_warp_portal"
+title = "传送门方块"
+icon = "waystones:warp_plate"
+shape = "circle"
+size = 1.2
+deps = ["e_warp_stone"]
+tasks = [
+	{ type = "item", item = "waystones:warp_plate" },
+]
+
+[[quest]]
+name = "e_scroll_blank"
+title = "空白卷轴"
+icon = "waystones:blank_scroll"
+shape = "circle"
+size = 1.2
+deps = ["e_waystone_net"]
+tasks = [
+	{ type = "item", item = "waystones:blank_scroll", count = 2 },
+]
+
+[[quest]]
+name = "e_scroll_return"
+title = "返回卷轴"
+icon = "waystones:return_scroll"
+shape = "circle"
+size = 1.2
+deps = ["e_scroll_blank"]
+tasks = [
+	{ type = "item", item = "waystones:return_scroll", count = 2 },
+]
+
+[[quest]]
+name = "e_scroll_bound"
+title = "已绑定的传送卷轴"
+icon = "waystones:warp_scroll"
+shape = "circle"
+size = 1.2
+deps = ["e_scroll_return"]
+tasks = [
+	{ type = "item", item = "waystones:warp_scroll", count = 2 },
+]
+
+[[quest]]
+name = "e_memorial"
+title = "瞬忆碑"
+desc = [
+	"卷轴这条线收在这里：出门带什么、怎么回来，都有了一件固定的事对应。",
+]
+icon = "waystones:epitaph"
+shape = "octagon"
+size = 1.75
+deps = ["e_scroll_bound"]
+tasks = [
+	{ type = "item", item = "waystones:epitaph" },
+]
+
+[[quest]]
+name = "e_portstone_gray"
+title = "灰阶石座"
+icon = "waystones:white_portstone"
+shape = "circle"
+size = 1.2
+deps = ["e_waystone_net"]
+tasks = [
+	{ type = "item", item = "waystones:white_portstone" },
+	{ type = "item", item = "waystones:light_gray_portstone" },
+	{ type = "item", item = "waystones:gray_portstone" },
+	{ type = "item", item = "waystones:black_portstone" },
+]
+
+[[quest]]
+name = "e_portstone_warm"
+title = "暖色石座"
+icon = "waystones:red_portstone"
+shape = "circle"
+size = 1.2
+deps = ["e_portstone_gray"]
+tasks = [
+	{ type = "item", item = "waystones:red_portstone" },
+	{ type = "item", item = "waystones:orange_portstone" },
+	{ type = "item", item = "waystones:yellow_portstone" },
+	{ type = "item", item = "waystones:brown_portstone" },
+]
+
+[[quest]]
+name = "e_portstone_cool"
+title = "青绿石座"
+icon = "waystones:green_portstone"
+shape = "circle"
+size = 1.2
+deps = ["e_portstone_warm"]
+tasks = [
+	{ type = "item", item = "waystones:lime_portstone" },
+	{ type = "item", item = "waystones:green_portstone" },
+	{ type = "item", item = "waystones:cyan_portstone" },
+	{ type = "item", item = "waystones:light_blue_portstone" },
+]
+
+[[quest]]
+name = "e_portstone_violet"
+title = "蓝紫石座"
+icon = "waystones:purple_portstone"
+shape = "circle"
+size = 1.2
+deps = ["e_portstone_cool"]
+tasks = [
+	{ type = "item", item = "waystones:blue_portstone" },
+	{ type = "item", item = "waystones:purple_portstone" },
+	{ type = "item", item = "waystones:magenta_portstone" },
+	{ type = "item", item = "waystones:pink_portstone" },
+]
+
+# ⚠️ 共享石碑**没有** `white_sharestone`（实测：`item_index --ns waystones` 的 63 项里
+#    只有 15 个带色共享石碑，白色那面就是基座方块 `waystones:red_sharestone` 本身）。
+#    所以这一条的"白"用 `sharestone` 表达 —— 写 `white_sharestone` 会让任务永远做不完。
+[[quest]]
+name = "e_sharestone_gray"
+title = "灰阶共享石碑"
+icon = "waystones:red_sharestone"
+shape = "circle"
+size = 1.2
+deps = ["e_waystone_net"]
+tasks = [
+	{ type = "item", item = "waystones:red_sharestone" },
+	{ type = "item", item = "waystones:light_gray_sharestone" },
+	{ type = "item", item = "waystones:gray_sharestone" },
+	{ type = "item", item = "waystones:black_sharestone" },
+]
+
+[[quest]]
+name = "e_sharestone_warm"
+title = "暖色共享石碑"
+icon = "waystones:red_sharestone"
+shape = "circle"
+size = 1.2
+deps = ["e_sharestone_gray"]
+tasks = [
+	{ type = "item", item = "waystones:red_sharestone" },
+	{ type = "item", item = "waystones:orange_sharestone" },
+	{ type = "item", item = "waystones:yellow_sharestone" },
+	{ type = "item", item = "waystones:brown_sharestone" },
+]
+
+[[quest]]
+name = "e_sharestone_cool"
+title = "青绿共享石碑"
+icon = "waystones:green_sharestone"
+shape = "circle"
+size = 1.2
+deps = ["e_sharestone_warm"]
+tasks = [
+	{ type = "item", item = "waystones:lime_sharestone" },
+	{ type = "item", item = "waystones:green_sharestone" },
+	{ type = "item", item = "waystones:cyan_sharestone" },
+	{ type = "item", item = "waystones:light_blue_sharestone" },
+]
+
+[[quest]]
+name = "e_sharestone_violet"
+title = "蓝紫共享石碑"
+icon = "waystones:purple_sharestone"
+shape = "circle"
+size = 1.2
+deps = ["e_sharestone_cool"]
+tasks = [
+	{ type = "item", item = "waystones:blue_sharestone" },
+	{ type = "item", item = "waystones:purple_sharestone" },
+	{ type = "item", item = "waystones:magenta_sharestone" },
+	{ type = "item", item = "waystones:pink_sharestone" },
+]
+
+[[quest]]
+name = "e_network_spread"
+title = "石座与共享石碑配齐"
+desc = [
+	"十六色石座与十五色共享石碑（白色那面就是基座方块本身）各就各位——",
+	"颜色在这里不是装饰，是给不同路线、不同队伍分档用的标记。",
+	"到这一步，传送网络从「几座石碑」变成一套有编号的设施。",
+]
+icon = "waystones:red_sharestone"
+shape = "octagon"
+size = 1.75
+deps = ["e_portstone_violet", "e_sharestone_violet", "e_memorial", "e_warp_portal"]
+tasks = [
+	{ type = "item", item = "waystones:red_sharestone", count = 8 },
+	{ type = "item", item = "waystones:white_portstone", count = 8 },
+]
+
+# ---- 簇 4：远征记录 ----
 
 [[quest]]
 name = "e_biomes"
@@ -77,7 +487,8 @@ desc = [
 	"但它是「你确实到处走过」最可靠的证据。",
 ]
 icon = "minecraft:map"
-shape = "rsquare"
+shape = "pentagon"
+size = 2.0
 deps = ["e_compass_biome"]
 tasks = [
 	{ type = "advancement", advancement = "minecraft:adventure/adventuring_time" },
@@ -152,8 +563,6 @@ tasks = [
 	{ type = "advancement", advancement = "minecraft:adventure/play_jukebox_in_meadows" },
 ]
 
-# ---------------- 簇 3：维度探索（下界 / 末地） ----------------
-
 [[quest]]
 name = "e_nether_explore"
 title = "走遍下界"
@@ -220,7 +629,8 @@ icon = "minecraft:filled_map"
 shape = "hexagon"
 size = 2.5
 deps = ["e_long_walk", "e_trials", "e_ancient_city", "e_monster_room", "e_jukebox",
-        "e_ancient_debris", "e_end_city"]
+        "e_ancient_debris", "e_end_city", "e_network_spread", "e_tracking_compass",
+        "e_route_mark", "e_lodestone", "e_compass_repair", "e_compass_repair_nature"]
 tasks = [
 	{ type = "item", item = "minecraft:filled_map", count = 9 },
 ]

@@ -1,0 +1,142 @@
+{
+	quest.CF3B8DF4AF6A436C.title: "十天一波"
+	quest.CF3B8DF4AF6A436C.description: [
+	"The Hordes 的日程写在它自己的配置里：每 10 天一波、午夜（18000 tick）开始、"
+	"每波规模按 1.05 倍往上叠，场上上限 160 —— 而且它按**玩家在线时间**推进，不是世界时间。"
+	"也就是说：谁上得多，谁先把波次引来。"
+	]
+	quest.6560DD00536B4BF9.title: "二十天起：尸壳"
+	quest.6560DD00536B4BF9.description: [
+	"尸潮表里 0~20 天只有普通僵尸；过了 20 天，主力换成尸壳——它们不烧、也不怕太阳。"
+	]
+	quest.48944BFAD7995701.title: "四十天起：僵尸猪灵与僵尸疳"
+	quest.48944BFAD7995701.description: [
+	"这一档开始出现被感染的猪灵与僵尸疳——数量不多，但一只就能把队列冲散。"
+	]
+	quest.836F2A62F54855E9.title: "流浪者与沼骸"
+	quest.836F2A62F54855E9.description: [
+	"尸潮不止是腐肉：从 30 天起，远程也被编进来——流浪者与沼骸。"
+	]
+	quest.49EE12397903AB5F.title: "五十天起：凋灵骷髅与卫道士"
+	quest.49EE12397903AB5F.description: [
+	"腐肉海之外开始夹带能一击破甲的：凋灵骷髅与卫道士。"
+	"这一档之后，穿不穿甲才真的开始有区别。"
+	]
+	quest.D655ED5A225DD92D.title: "六十天起：猪灵蛮兵"
+	quest.21099104F1C5EF3B.title: "夜里不能睡"
+	quest.21099104F1C5EF3B.description: [
+	"两份配置都写着同一件事：尸潮之夜不许睡（hordes 的 canSleepDuringHorde = false、"
+	"undeadnights 的 hordeNightsDisableSleeping = true）。"
+	"所以「距上次休息」被拉长，就是这件事在统计里留下的痕迹。"
+	]
+	quest.85D6F7AEF5723ABA.title: "杀多了会招来更多"
+	quest.85D6F7AEF5723ABA.description: [
+	"undeadnights 里有个反直觉的设定：杀死尸潮怪有几率染上「引怪」效果，"
+	"而这个效果会把整波尸潮直接拉到你头上（enableLureHordeEffect / lureHordeEffectSpawnsHorde）。"
+	"所以恋战是要付账的——手上留一手脱身的东西，比多带一组箭有用。"
+	]
+	quest.1EB02EB2DDB814A2.title: "天象"
+	quest.1EB02EB2DDB814A2.description: [
+	"Enhanced Celestials 按夜给月亮换名字：血月、蓝月、丰收月、超级月亮，各有各的效果。"
+	"月亮在上半夜就挂出来了 —— 今晚会是什么，抬头就能知道。这是本包最便宜的一次预警。"
+	]
+	quest.E3EB0678FD89FAD7.title: "陨石与星苔"
+	quest.E3EB0678FD89FAD7.description: [
+	"天象留下的实物：陨石，以及陨石边上摊开的星苔。"
+	"这是这套内容里少数能搬回家的东西，值得专门去捡一次。"
+	]
+	quest.BF2EBBAB7973FCB8.title: "血月"
+	quest.BF2EBBAB7973FCB8.description: [
+	"血月的定义里写着三件要紧的事：概率 0.1、两轮之间至少隔 4 夜、以及**地表强制刷怪**。"
+	"亮度对那一夜没有意义 —— 城墙外点得再亮，怪还是会在地面上出现。"
+	]
+	quest.AC4DF223CE306ED9.title: "超级血月"
+	quest.AC4DF223CE306ED9.description: [
+	"血月的加强版：同一套刷怪规则，规模更大。"
+	]
+	quest.01A3872AC2D4468F.title: "超级月亮"
+	quest.01A3872AC2D4468F.description: [
+	"超级月亮的配置项叫 slimes_spawn_everywhere：史莱姆不再挑地形，到处都刷。"
+	"它不咬人，但会让地窖、矿道、农场同时变吵。"
+	]
+	quest.07761C4DDD6BE87D.title: "丰收月"
+	quest.07761C4DDD6BE87D.description: [
+	"丰收月把 `#enhancedcelestials:harvest_moon_crops` 的掉落乘 2（drop_enhancer 2.0）。"
+	"它是这套天象里唯一一次纯赚的窗口 —— 但只在那一夜。"
+	]
+	quest.A9884E4CDADC9703.title: "蓝月"
+	quest.A9884E4CDADC9703.description: [
+	"蓝月给的是运气（它的提示文案就是「你觉得运气不错」）。"
+	"运气最实际的用法是钓鱼与开箱，而不是正面接战。"
+	]
+	quest.A10A4F593D4B8AEA.title: "城里的刷怪规则"
+	quest.A10A4F593D4B8AEA.description: [
+	"Easy Mob Spawn Control 是纯配置 mod（实测零物品）：它不改怪，改的是「哪里刷、刷什么、"
+	"亮度算不算数」，还会按来源分档（自然刷、刷怪笼、结构、事件、巡逻队）。"
+	"所以这一条不看配置界面，看结果：城里能连着睡整觉，说明夜里的野生刷怪真的被压住了。"
+	]
+	quest.E5AFD6CB66206CC3.title: "尸潮只走地表"
+	quest.E5AFD6CB66206CC3.description: [
+	"undeadnights 的波次只在地表开刷（水里、树上、洞里三项配置全是 false），"
+	"生成点在离你 70~75 格处、场上同时最多 80 只。"
+	"而且默认**没有倒计时提示**（sendHordeNightsCountdownMessage = false）——日落本身就是信号。"
+	]
+	quest.989836D6CB869D3C.title: "会叠高，也会拆墙"
+	quest.989836D6CB869D3C.description: [
+	"尸潮僵尸能踩着同伴往上爬，爆破僵尸能拆方块（hordeMobsCanClimbEachOther /"
+	"hordeZombiesCanBreakBlocks / zombiesBlockBreakTier）。"
+	"结论很直白：墙高一格不代表安全，退路比墙更值得先想。"
+	]
+	quest.47AC1694FEBAA109.title: "黏腐肉"
+	quest.47AC1694FEBAA109.description: [
+	"尸潮僵尸身上带的黏腐肉，是这一夜里最不起眼的收成，"
+	"也是唯一一件能带回家当材料的掉落。"
+	]
+	quest.4A01633D7B0A8AC8.title: "掠夺者弓手"
+	quest.4A01633D7B0A8AC8.description: [
+	"It Takes a Pillage 的营地与堡垒不是空房子：弓手占高处，是进攻方最先开火的那一批。"
+	]
+	quest.8382ACA4A2503131.title: "重装军"
+	quest.9346347BB838A142.title: "突击手"
+	quest.06051B11565AFC88.title: "黏土傀儡"
+	quest.06051B11565AFC88.description: [
+	"堡垒里的黏土傀儡是它的看守：不打掉，翻箱子的手就一直被人盯着。"
+	]
+	quest.5374AC99A73A1F12.title: "劫掠兽冲阵"
+	quest.5374AC99A73A1F12.description: [
+	"劫掠兽是这套内容里唯一能把队列正面推开的东西——它不追人，它撞门。"
+	]
+	quest.1C4025E0027956A9.title: "袭击的次数"
+	quest.1C4025E0027956A9.description: [
+	"掠夺者不只是刷在营地里：袭击本身也是夜袭的一种，而且它有统计可查（raid_trigger）。"
+	]
+	quest.01DF00B6798330F8.title: "清场收尸"
+	quest.01DF00B6798330F8.description: [
+	"天亮之后的第一件事不是修墙，是把地上的东西收干净："
+	"腐肉与骨头是这一夜唯一的产出，也是下一夜最便宜的补给来源。"
+	]
+	quest.6842480032E63BBA.title: "重新武装"
+	quest.6842480032E63BBA.description: [
+	"死在感染上的人会变成僵尸，而且带走自己身上的东西（hordes 的 zombiePlayersStoreItems = true）。"
+	"所以队里永远要有一套能立刻穿上的备用装 —— 它不是浪费，是保险。"
+	]
+	quest.FB1A8D69A290BA5B.title: "劫掠兽兽角"
+	quest.FB1A8D69A290BA5B.description: [
+	"兽角是打下来的，不是做出来的：它在掠夺者那一侧是乐器（instrument `takesapillage:raid_horn`），"
+	"到了你们手上，它就成了号令。"
+	]
+	quest.F7FAAE40BECBA49D.title: "堡垒蓝调"
+	quest.F7FAAE40BECBA49D.description: [
+	"从堡垒里翻出来的那张唱片（jukebox_song `takesapillage:bastille_blues`）。"
+	"战利品里总要有一样是没用的 —— 那种东西才会被人记住。"
+	]
+	quest.AC1A9FF8BB0578E6.title: "缴获分箱"
+	quest.AC1A9FF8BB0578E6.description: [
+	"一夜下来东西是混的：自己的、别人的、不该留的。分箱这一步做完，才知道这一夜赚了什么。"
+	]
+	quest.DF8BB9BC5E71D997.title: "全队过一夜"
+	quest.DF8BB9BC5E71D997.description: [
+	"从僵尸到尸壳、到被感染的猪灵、到凋灵骷髅与蛮兵 —— 这张表是按天数往上长的。"
+	"能连着过夜、并且把三档尸潮怪都打过一遍，这一章就闭环了。"
+	]
+}

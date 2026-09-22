@@ -274,12 +274,12 @@ tasks = [
 [[quest]]
 name = "s_pantry"
 title = "食材单独一格"
-icon = "storagedelight:oak_pantry_cabinet"
+icon = "storagedelight:oak_single_door_cabinet"
 shape = "circle"
 size = 1.2
 deps = ["s_drawer"]
 tasks = [
-	{ type = "item", item = "storagedelight:oak_pantry_cabinet", count = 2 },
+	{ type = "item", item = "storagedelight:oak_single_door_cabinet", count = 2 },
 ]
 
 [[quest]]
@@ -490,7 +490,7 @@ size = 1.2
 deps = ["s_repackager"]
 tasks = [
 	{ type = "item", item = "create:cardboard_block", count = 8 },
-	{ type = "item", item = "create:package", count = 4 },
+	{ type = "item", item = "create:cardboard_package_12x12", count = 4 },
 ]
 
 [[quest]]

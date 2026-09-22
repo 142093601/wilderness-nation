@@ -144,4 +144,123 @@
 	"刻上这个时代投产的第一条全自动产线是什么。"
 	"下一章往更大的机器走之前，原料这一层必须稳。"
 	]
+	quest.8C42254AC7577076.title: "合金与压片"
+	quest.8C42254AC7577076.description: [
+	"铜与锌合成黄铜，再压成板材——机器零件的前置都在这一层。"
+	"它把「有矿」变成「有能用的件」。"
+	]
+	quest.F740489B0D782F91.title: "金属压片"
+	quest.F740489B0D782F91.description: [
+	"铁、铜、金都要有板材形态。先各压一批出来，后面配零件才不缺料。"
+	]
+	quest.329F48351C8FF4BB.title: "光耀与暗影钢"
+	quest.329F48351C8FF4BB.description: [
+	"到这一步才有余力去碰它们：它们不解决生产问题，只解决「做得出做不出」。"
+	]
+	quest.E90329E75128B4CC.title: "焦炉与焦煤"
+	quest.E90329E75128B4CC.description: [
+	"先建焦炉把煤炼成焦煤，煤直接烧的温度不够，它是炼钢这一层的入场券。"
+	]
+	quest.BE95B5B3D97C44AD.title: "耐火材料"
+	quest.BE95B5B3D97C44AD.description: [
+	"先备耐火黏土与耐火砖：普通砖砌的炉子在这一层会直接烧穿。"
+	]
+	quest.9F47671A803F29B8.title: "高炉"
+	quest.9F47671A803F29B8.description: [
+	"把高炉建起来，钢才可能成规模地出，而不是一炉一炉点。"
+	]
+	quest.71BBBBC41A8994E0.title: "炼钢"
+	quest.71BBBBC41A8994E0.description: [
+	"先把它做到能连续出：机器外壳、管道、脚手架、列车都吃钢。"
+	"产量到这一档，重工业才算立起来。"
+	]
+	quest.FD432D269F9F9D00.title: "铸件与铸模"
+	quest.FD432D269F9F9D00.description: [
+	"铸模决定成品形状。锭、块、异形件各有一套模，换模比换机器便宜。"
+	]
+	quest.99AD7C767055271C.title: "钢铁构件"
+	quest.99AD7C767055271C.description: [
+	"把钢锭做成构件才能上机器：钢铁构件、厚钢板、钢机壳各备一批。"
+	]
+	quest.FEC06ED822C0519E.title: "找油"
+	quest.FEC06ED822C0519E.description: [
+	"原油是这个包唯一「必须出门找」的原料：油田分布是固定的，先探到再谈产线。"
+	]
+	quest.40A240E13642AE90.title: "抽油机"
+	quest.40A240E13642AE90.description: [
+	"把抽油机装到油田上：一桶一桶舀出来的量，撑不起任何一条产线。"
+	]
+	quest.E4A5DB3DAB410B4F.title: "分馏塔"
+	quest.E4A5DB3DAB410B4F.description: [
+	"先分馏再谈用途：混着烧只能当燃料，分开之后每一种馏分都有专门去处。"
+	]
+	quest.EF7156E0CCA8362C.title: "燃料谱系"
+	quest.EF7156E0CCA8362C.description: [
+	"柴油、煤油、汽油、润滑油各归各的用途。这一层定下来，引擎与机械才好选料。"
+	]
+	quest.2E6E6785F9524A88.title: "化工品"
+	quest.2E6E6785F9524A88.description: [
+	"先把酸与硝酸盐这条线接上：副产品没人收，就只能堆着占地方。"
+	]
+	quest.1EDF4EFFD6C8454E.title: "塑料与合成材料"
+	quest.1EDF4EFFD6C8454E.description: [
+	"把塑料板、橡胶与合成革做出来：软材料从此不必全靠养殖。"
+	]
+	quest.58A0DBD1ED196DD6.title: "管线规格"
+	quest.58A0DBD1ED196DD6.description: [
+	"钢管、阀门、工业管道要按口径成套备，缺一种就接不通。"
+	]
+	quest.C1CC11DCA7C4AAB2.title: "重工业厂房"
+	quest.C1CC11DCA7C4AAB2.description: [
+	"重工业不能挤在木工旁边：厂房、地面与行车空间都要先单独留出来。"
+	]
+	quest.B4C85AC3CABB9D30.title: "稀有金属谱"
+	quest.B4C85AC3CABB9D30.description: [
+	"铝、镍、铅、锂各有专门矿脉，也都只在特定产线上用。"
+	"先把四种都拿到手，再谈往哪条线投。"
+	]
+	quest.45424617F9B09637.title: "远古残骸"
+	quest.45424617F9B09637.description: [
+	"要挖到远古残骸只能去下界深处。它是这个包里最贵的原料，产量天然受限。"
+	]
+	quest.6AFE8E465EA9F154.title: "黄金与电极"
+	quest.6AFE8E465EA9F154.description: [
+	"金不只是装饰：电极与电子件都在吃它，要按用量存一批。"
+	]
+	quest.020CE6BB982548F6.title: "下界合金"
+	quest.020CE6BB982548F6.description: [
+	"合金锭只能靠锻造台把残骸与金合起来，做不了批量。所以要按件规划用在哪。"
+	]
+	quest.381859CDC38B6276.title: "炉渣转水泥"
+	quest.381859CDC38B6276.description: [
+	"炼钢的炉渣不是垃圾：磨细之后就是水泥的原料。"
+	"把副产接进建材线，比另开一座采石场便宜。"
+	]
+	quest.332828159AC6C79A.title: "冶炼副产"
+	quest.332828159AC6C79A.description: [
+	"硫、炭粉、硫酸铜都是别人产线上的副产，单独去造不值，丢掉可惜。"
+	]
+	quest.FB6750B7C546E39D.title: "特种合金"
+	quest.FB6750B7C546E39D.description: [
+	"先备一批康铜与磁性合金：这类料用量小，但没有替代品。"
+	]
+	quest.5C632B9916AAC7F0.title: "统一规格"
+	quest.5C632B9916AAC7F0.description: [
+	"同一个尺寸的螺丝、同一种扳手，是「批量生产」与「手工凑合」的分界。"
+	"先统一标准件与工具，后面的图纸才可复用。"
+	]
+	quest.8E591DDDFAB40476.title: "建材统一尺寸"
+	quest.8E591DDDFAB40476.description: [
+	"钢筋与混凝土按同一套尺寸出，工地才不用现场裁。"
+	]
+	quest.886EA2E134FDF9E3.title: "材料台账"
+	quest.886EA2E134FDF9E3.description: [
+	"哪种料、有多少、在哪一格，要写成一份能传阅的台账。"
+	"台账比记忆可靠，尤其是换人接手的时候。"
+	]
+	quest.B5610B85D0D58AAF.title: "材料体系成型"
+	quest.B5610B85D0D58AAF.description: [
+	"把四段接起来检查一遍：从矿石到成品都通了，机器才有料可吃。"
+	"副产有去处、标准件有规格、库存有台账，材料这一层才算稳。"
+	]
 }

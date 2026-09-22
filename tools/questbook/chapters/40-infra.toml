@@ -610,3 +610,527 @@ deps = ["farm_automation"]
 tasks = [
 	{ type = "item", item = "minecraft:hay_block", count = 16 },
 ]
+
+# ================= 追加：市政工程（2026-09-22 · 第二轮）=================
+# 这一轮补的是「工程类型」与「城市尺度的系统」，不是新的机器。
+# 原章已有：路通四邻 / 水塔·灌溉·排水 / 照明 / 生活设施 / 材料产线 / 交通延伸 / 储备。
+# 本轮新增九段：水利工程 · 道路分级 · 桥梁类型 · 排水防洪 · 交通组织 · 全城配电 ·
+# 市政接入 · 应急与边界 · 施工组织。
+#
+# 判据用到的 mod（都是实物，逐个核过 id）：
+#   · `tfmg`（The Factory Must Grow）：沥青与钢筋混凝土的路面、钢管与工业管道、
+#     电线杆·变压器·电压表（全城配电这一层的实物）。
+#     **边界**：TFMG 的加工链（焦炉→高炉→炼钢→分馏）在 `42-materials` 的簇 6，
+#     本章只用它当「路铺成了、电送到了」的验收物，不写它怎么做出来。
+#   · `mcwpaths`：路面铺装（人行道 / 台阶 / 坡道）的实物。
+#   · `mcwbridges`：桥与桥墩、索桥、钢桥的实物。
+#     **边界**：`100-cat-building` 讲这些构件有哪些可选；本章讲「哪一处要建、建成什么样」。
+#   · `create`：只借流体管道当暗管，不碰机器内部工序（那是 `60-create` / `62-logistics`）。
+#
+# 与 `80-civilization` 的分工：本章是**时代 2 的工程目标**（城还没成型时要先有什么），
+# 那一章是**文明时代的城市形态**（分区、天际线、公共设施机构化）。
+
+# ---------------- 簇 8：水利工程 ----------------
+
+[[quest]]
+name = "if_dam"
+title = "水坝"
+desc = [
+	"先选一处河湾拦起来，把水位抬成可用的落差。",
+	"落差是后面所有流体设施省力的地方——泵要抽得省，靠的就是它。",
+]
+icon = "minecraft:cobblestone"
+shape = "pentagon"
+size = 2.0
+deps = ["water_tower"]
+tasks = [
+	{ type = "item", item = "minecraft:cobblestone", count = 256 },
+	{ type = "item", item = "minecraft:water_bucket", count = 8 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "if_reservoir"
+title = "水库"
+desc = [
+	"坝拦下来的水要有地方存。存量决定旱季与围攻期间能撑多久。",
+]
+icon = "minecraft:water_bucket"
+shape = "circle"
+size = 1.2
+deps = ["if_dam"]
+tasks = [
+	{ type = "item", item = "minecraft:water_bucket", count = 16 },
+	{ type = "item", item = "minecraft:stone_bricks", count = 64 },
+]
+
+[[quest]]
+name = "if_flume"
+title = "渡槽"
+desc = [
+	"跨过山谷与道路把水送到用水处，不必让渠绕一大圈。",
+	"它是水利里最像工程的一件：看得见，也要求一次把坡度做对。",
+]
+icon = "minecraft:stone_brick_stairs"
+shape = "rsquare"
+deps = ["if_reservoir"]
+tasks = [
+	{ type = "item", item = "minecraft:stone_brick_stairs", count = 64 },
+	{ type = "item", item = "minecraft:stone_brick_slab", count = 32 },
+]
+
+[[quest]]
+name = "if_wells"
+title = "井群"
+desc = [
+	"在城里均匀打几口井，让每个片区都能就近取水。",
+	"井群是供水网的兜底：主管断了，城不至于立刻断水。",
+]
+icon = "minecraft:mossy_cobblestone"
+shape = "circle"
+size = 1.2
+deps = ["water_tower"]
+tasks = [
+	{ type = "item", item = "minecraft:mossy_cobblestone", count = 64 },
+	{ type = "item", item = "minecraft:chain", count = 16 },
+]
+
+# ---------------- 簇 9：道路分级 ----------------
+
+[[quest]]
+name = "if_arterial"
+title = "主干道"
+desc = [
+	"城市与外界的路要有一条等级最高的：宽、直、不积水，而且能走车。",
+	"支路可以窄，主干道不行——运力都压在它身上。",
+]
+icon = "tfmg:asphalt"
+shape = "pentagon"
+size = 2.0
+deps = ["roads_500"]
+tasks = [
+	{ type = "item", item = "tfmg:asphalt", count = 256 },
+	{ type = "item", item = "tfmg:asphalt_slab", count = 32 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "if_sidewalk"
+title = "支路与人行道"
+desc = [
+	"铺装分两级：走货的与走人的。人行道铺出来，城市才不是一片工地。",
+]
+icon = "mcwpaths:andesite_flagstone_path"
+shape = "rsquare"
+deps = ["if_arterial"]
+tasks = [
+	{ type = "item", item = "mcwpaths:andesite_flagstone_path", count = 64 },
+	{ type = "item", item = "mcwpaths:andesite_square_paving", count = 32 },
+]
+
+[[quest]]
+name = "if_ramps"
+title = "台阶与坡道"
+desc = [
+	"高差要能走。每处高台都该接上台阶或坡道，而不是靠人往上跳。",
+]
+icon = "mcwpaths:andesite_flagstone_stairs"
+shape = "circle"
+size = 1.2
+deps = ["if_sidewalk"]
+tasks = [
+	{ type = "item", item = "mcwpaths:andesite_flagstone_stairs", count = 64 },
+	{ type = "item", item = "minecraft:ladder", count = 32 },
+]
+
+# ---------------- 簇 10：桥梁类型 ----------------
+
+[[quest]]
+name = "if_stone_bridge"
+title = "石桥"
+desc = [
+	"常走的过河点要用石桥：耐久、能过车，也不会像木桥那样烧起来。",
+]
+icon = "mcwbridges:stone_brick_bridge"
+shape = "rsquare"
+deps = ["bridge"]
+tasks = [
+	{ type = "item", item = "mcwbridges:stone_brick_bridge", count = 8 },
+	{ type = "item", item = "mcwbridges:stone_bridge_pier", count = 8 },
+]
+
+[[quest]]
+name = "if_rope_bridge"
+title = "吊桥"
+desc = [
+	"深谷与峭壁之间立不住桥墩，索桥是唯一划算的做法。",
+	"它接的是那些「绕过去要半小时」的地方。",
+]
+icon = "mcwbridges:rope_oak_bridge"
+shape = "circle"
+size = 1.2
+deps = ["bridge"]
+tasks = [
+	{ type = "item", item = "mcwbridges:rope_oak_bridge", count = 4 },
+]
+
+[[quest]]
+name = "if_canyon_bridge"
+title = "跨谷桥"
+desc = [
+	"跨度到这一档，桥本身就是一处地标：一次建成，之后长期都靠它。",
+]
+icon = "mcwbridges:iron_bridge"
+shape = "octagon"
+size = 1.75
+deps = ["if_stone_bridge", "if_rope_bridge"]
+tasks = [
+	{ type = "item", item = "mcwbridges:iron_bridge", count = 6 },
+	{ type = "item", item = "mcwbridges:iron_bridge_pier", count = 6 },
+	{ type = "item", item = "mcwbridges:bridge_lantern", count = 8 },
+]
+
+# ---------------- 簇 11：排水防洪 ----------------
+
+[[quest]]
+name = "if_open_channel"
+title = "明渠"
+desc = [
+	"排水沟敞开走，好处是堵了看得见、能掏。先把这一层铺满主路两侧。",
+]
+icon = "minecraft:bricks"
+shape = "circle"
+size = 1.2
+deps = ["drainage"]
+tasks = [
+	{ type = "item", item = "minecraft:bricks", count = 128 },
+	{ type = "item", item = "minecraft:stone_brick_slab", count = 32 },
+]
+
+[[quest]]
+name = "if_culvert"
+title = "暗管"
+desc = [
+	"穿过道路与建筑的那一段必须走地下，否则一条沟把城市切成两半。",
+	"明渠与暗管接得上，排水才算一套系统。",
+]
+icon = "create:fluid_pipe"
+shape = "rsquare"
+deps = ["if_open_channel"]
+tasks = [
+	{ type = "item", item = "create:fluid_pipe", count = 64 },
+	{ type = "item", item = "minecraft:iron_trapdoor", count = 8 },
+]
+
+[[quest]]
+name = "if_flood_pool"
+title = "蓄洪池"
+desc = [
+	"暴雨时先存后放，比把水一次性推给下游便宜得多。池底要能事后清干净。",
+]
+icon = "minecraft:sponge"
+shape = "circle"
+size = 1.2
+deps = ["if_culvert"]
+tasks = [
+	{ type = "item", item = "minecraft:sponge", count = 16 },
+	{ type = "item", item = "minecraft:water_bucket", count = 8 },
+]
+
+# ---------------- 簇 12：交通组织 ----------------
+
+[[quest]]
+name = "if_traffic_rules"
+title = "单向道与环岛"
+desc = [
+	"城里的路一多，会车就成了主要堵点。",
+	"环岛与单向道把路口从冲突点改成通过点，不需要任何机器。",
+]
+icon = "tfmg:traffic_light"
+shape = "pentagon"
+size = 2.0
+deps = ["rail_or_teleport"]
+tasks = [
+	{ type = "item", item = "tfmg:traffic_light", count = 4 },
+	{ type = "item", item = "minecraft:white_concrete", count = 64 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "if_parking"
+title = "停车区"
+desc = [
+	"矿车、船只与载具要有固定停放处。随手停在路口，堵的是自己人。",
+]
+icon = "minecraft:minecart"
+shape = "circle"
+size = 1.2
+deps = ["if_traffic_rules"]
+tasks = [
+	{ type = "item", item = "minecraft:minecart", count = 4 },
+	{ type = "item", item = "minecraft:rail", count = 64 },
+]
+
+[[quest]]
+name = "if_relay"
+title = "中转驿站"
+desc = [
+	"远路上人要歇、货要换装。驿站是两种运输方式的接缝。",
+	"有了它，长途可以分段接力，不必一次走完全程。",
+]
+icon = "minecraft:lodestone"
+shape = "circle"
+size = 1.2
+deps = ["if_parking"]
+tasks = [
+	{ type = "item", item = "minecraft:lodestone", count = 2 },
+	{ type = "item", item = "minecraft:campfire", count = 4 },
+	{ type = "item", item = "minecraft:barrel", count = 8 },
+]
+
+# ---------------- 簇 13：全城配电 ----------------
+
+[[quest]]
+name = "if_power_grid"
+title = "配电干线"
+desc = [
+	"动力不能一台机器拉一条线：先定一个源，再沿路送到每个片区。",
+	"这一层做好了，以后每添一台机器都不用重新拉线。",
+]
+icon = "tfmg:electric_post"
+shape = "pentagon"
+size = 2.0
+deps = ["stress_network"]
+tasks = [
+	{ type = "item", item = "tfmg:electric_post", count = 16 },
+	{ type = "item", item = "tfmg:cable_tube", count = 32 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "if_substation"
+title = "变电所"
+desc = [
+	"电压要在城里再分一级，否则一次故障会带走整片城区。",
+]
+icon = "tfmg:transformer"
+shape = "rsquare"
+deps = ["if_power_grid"]
+tasks = [
+	{ type = "item", item = "tfmg:transformer", count = 4 },
+	{ type = "item", item = "tfmg:transformer", count = 1 },
+]
+
+[[quest]]
+name = "if_metering"
+title = "计量与开关"
+desc = [
+	"哪一段在耗、哪一段该断，要能当场看出来。",
+	"计量到位之后，排查从「全线摸一遍」变成「看表」。",
+]
+icon = "tfmg:voltmeter"
+shape = "circle"
+size = 1.2
+deps = ["if_substation"]
+tasks = [
+	{ type = "item", item = "tfmg:voltmeter", count = 2 },
+	{ type = "item", item = "tfmg:electrical_switch", count = 4 },
+]
+
+# ---------------- 簇 14：市政接入与应急 ----------------
+
+[[quest]]
+name = "if_utility_trunk"
+title = "市政干管"
+desc = [
+	"水、料、缆走同一条沟，是城市与村落的分界：开挖一次，全部到位。",
+]
+icon = "tfmg:industrial_pipe"
+shape = "octagon"
+size = 1.75
+deps = ["if_metering", "if_culvert"]
+tasks = [
+	{ type = "item", item = "tfmg:industrial_pipe", count = 64 },
+	{ type = "item", item = "tfmg:cable_tube", count = 64 },
+	{ type = "item", item = "tfmg:steel_pipe", count = 32 },
+]
+
+[[quest]]
+name = "if_district_hookup"
+title = "分区接入验收"
+desc = [
+	"住、工、农、仓四个片区各有一处接入点，而且都能单独关断。",
+	"这一条验收的是覆盖而不是长度：漏掉一个片区，它就会变成孤岛。",
+]
+icon = "tfmg:cable_connector"
+shape = "rsquare"
+deps = ["if_utility_trunk"]
+tasks = [
+	{ type = "item", item = "tfmg:cable_connector", count = 16 },
+	{ type = "item", item = "tfmg:steel_fluid_tank", count = 4 },
+]
+
+[[quest]]
+name = "if_fire_water"
+title = "消防水池"
+desc = [
+	"木构城市最贵的教训是火。水池与取水点常备，比事后重建便宜。",
+]
+icon = "minecraft:cauldron"
+shape = "circle"
+size = 1.2
+deps = ["if_district_hookup"]
+tasks = [
+	{ type = "item", item = "minecraft:cauldron", count = 8 },
+	{ type = "item", item = "minecraft:water_bucket", count = 8 },
+]
+
+[[quest]]
+name = "if_evacuation"
+title = "疏散通道与备用出口"
+desc = [
+	"每个片区至少两条出路，而且互不重叠。",
+	"被围一次就会明白：只有一个门的城，等于没有门。",
+]
+icon = "minecraft:iron_door"
+shape = "circle"
+size = 1.2
+deps = ["if_district_hookup"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_door", count = 8 },
+	{ type = "item", item = "minecraft:iron_bars", count = 32 },
+]
+
+# ---------------- 簇 15：城市边界 ----------------
+
+[[quest]]
+name = "if_moat"
+title = "护城河"
+desc = [
+	"水是比墙便宜的屏障，而且可以接进排水系统当末端蓄水。",
+]
+icon = "minecraft:water_bucket"
+shape = "circle"
+size = 1.2
+deps = ["if_flood_pool", "perimeter"]
+tasks = [
+	{ type = "item", item = "minecraft:water_bucket", count = 16 },
+	{ type = "item", item = "minecraft:mossy_cobblestone", count = 64 },
+]
+
+[[quest]]
+name = "if_checkpoint"
+title = "关卡与门禁"
+desc = [
+	"城门要能控：能关、能查、能只放自己人。",
+	"边界不是画出来的，是有人管着的那几个口子。",
+]
+icon = "minecraft:iron_bars"
+shape = "circle"
+size = 1.2
+deps = ["if_moat"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_bars", count = 64 },
+	{ type = "item", item = "minecraft:oak_fence_gate", count = 4 },
+]
+
+# ---------------- 簇 16：施工组织 ----------------
+
+[[quest]]
+name = "if_survey"
+title = "测量与放线"
+desc = [
+	"开工前先定基准点与标高，后面所有尺寸都从这里算。",
+	"没有放线的工地，做出来的东西对不上，改起来比重做贵。",
+]
+icon = "minecraft:spyglass"
+shape = "pentagon"
+size = 2.0
+deps = ["three_automated"]
+tasks = [
+	{ type = "item", item = "minecraft:spyglass", count = 1 },
+	{ type = "item", item = "minecraft:target", count = 4 },
+	{ type = "item", item = "minecraft:filled_map", count = 4 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "if_scaffold"
+title = "脚手架"
+desc = [
+	"高处作业要有地方站。它决定同一件事是一个人做还是三个人做。",
+]
+icon = "minecraft:scaffolding"
+shape = "circle"
+size = 1.2
+deps = ["if_survey"]
+tasks = [
+	{ type = "item", item = "minecraft:scaffolding", count = 64 },
+	{ type = "item", item = "tfmg:steel_scaffolding", count = 16 },
+]
+
+[[quest]]
+name = "if_site_hut"
+title = "临时工棚"
+desc = [
+	"工地旁边要有休息与存放的地方。省下的是往返主城的那段路。",
+]
+icon = "minecraft:campfire"
+shape = "circle"
+size = 1.2
+deps = ["if_survey"]
+tasks = [
+	{ type = "item", item = "minecraft:campfire", count = 4 },
+	{ type = "item", item = "minecraft:red_bed", count = 2 },
+	{ type = "item", item = "minecraft:chest", count = 4 },
+]
+
+[[quest]]
+name = "if_material_yard"
+title = "材料堆放场"
+desc = [
+	"工地要有一处按规格分堆的料场，而不是把所有东西倒在一处。",
+	"料场整齐，取料时间就短——这是施工里最容易省下的一段时间。",
+]
+icon = "tfmg:factory_floor"
+shape = "rsquare"
+deps = ["if_site_hut", "if_scaffold"]
+tasks = [
+	{ type = "item", item = "tfmg:factory_floor", count = 64 },
+	{ type = "item", item = "minecraft:barrel", count = 16 },
+]
+
+# ---------------- 市政收束 ----------------
+
+[[quest]]
+name = "if_city_works_done"
+title = "市政工程验收"
+desc = [
+	"水、电、路、桥、排水、应急各成一套，而且都接到了每个片区。",
+	"这一章前面那些散件，到这一步才合成一座城。",
+]
+icon = "minecraft:chiseled_stone_bricks"
+shape = "octagon"
+size = 1.75
+deps = ["if_reservoir", "if_flume", "if_wells", "if_ramps", "if_canyon_bridge",
+        "if_flood_pool", "if_relay", "if_metering", "if_district_hookup",
+        "if_evacuation", "if_checkpoint", "if_material_yard"]
+tasks = [
+	{ type = "item", item = "minecraft:chiseled_stone_bricks", count = 32 },
+	{ type = "item", item = "minecraft:oak_sign", count = 8 },
+]

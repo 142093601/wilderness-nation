@@ -3,11 +3,28 @@
 # 定位（PLAN-questbook.md §2.3 的技艺章）：大件系统独立成章、按**真实的先后关系**铺树。
 #
 # 这一章覆盖「把建造变成可复制」的那条链：
-#   便携图纸（scan / blueprint / tablet）· 图案图纸 · WorldEdit（op 工具）
+#   拿到图纸 → 扫描 / 修复 → 图案图纸 → 材料清单 → 施工分工 → 按图施工 → 验收归档。
 # 它是 DESIGN.md「工程制：把贴图纸变成多人玩法」的落点。
 #
-# 判据来源：**实物**（这些 mod 提供了真实物品，实测注册表里有）。
-# 注：WorldEdit 是纯命令工具（注册表里 0 个物品），所以它的部分只能自检。
+# 覆盖的命名空间与条数（全部用 `python tools/item_index.py --ns <ns>` 核过）：
+#   · `portable_blueprints`（6 个 id，全部用到）：blueprint · global_blueprint · server_blueprint
+#     · scanner · tablet · worn_blueprint
+#   · `create_pattern_schematics`（3 个 id，全部用到）：pattern_schematic ·
+#     pattern_schematic_and_quill · empty_pattern_schematic
+#   · `create`：蓝图桌 · 合成蓝图 · 剪贴板 · 采购清单 · 工程师护目镜 · 工具箱 · 脚手架 · 纸板
+#   · `minecraft`：纸 / 墨囊 / 羽毛 / 皮革（图纸耗材）· 地图与制图台（现场勘测）·
+#     书架 / 讲台 / 书与笔（图纸归档）· 脚手架 / 告示牌 / 木牌（现场施工）
+#   · `framedblocks:framed_blueprint`：标准件化那一条的落点
+#
+# 与 `54-conquest`（邦交 · 图纸与夺城）的分工：
+#   那一章讲**图纸从哪来**（从邻国买、从废墟缴获、作为战利品分配）。
+#   本章讲**工具怎么用、工程怎么组织**——图纸到手之后的事，一个字都不重复。
+#
+# 与 `60-create` 的分工：`create:schematicannon` 的世界内建造机制归 60 章；
+#   本章只把蓝图桌与合成蓝图当作「图纸工具链」的一环。
+#
+# 判据说明：本章只有 1 条 `checkmark`（`blueprint_origin`）——「拿到第一张图纸」在游戏里
+#   没有任何信号源（`portable_blueprints` 连 advancement 都没有）。其余全部落在实物上。
 
 key = "blueprints"
 title = "图纸与工程"
@@ -17,7 +34,7 @@ icon = "portable_blueprints:blueprint"
 order_index = 35
 grid = { step = 1.5, row_h = 1.75 }
 
-# ---------------- 起点：先有一张纸 ----------------
+# ---------------- 簇 1：拿到图纸 ----------------
 
 [[quest]]
 name = "blank_blueprint"
@@ -31,6 +48,68 @@ size = 2.0
 tasks = [
 	{ type = "item", item = "portable_blueprints:blueprint" },
 ]
+
+[[quest]]
+name = "blueprint_origin"
+title = "第一张图纸是哪来的"
+desc = [
+	"先想清楚这件事：是外购的、扫出来的、还是从废墟里捡的。",
+	"来源不同，后面能复制的东西也不同——买来的图纸只能用，扫来的图纸**还能再扫**。",
+	"⚠️「图纸到手」这个动作在游戏里没有信号源（该 mod 连 advancement 都没有），所以自检。",
+]
+icon = "minecraft:paper"
+shape = "rsquare"
+deps = ["blank_blueprint"]
+tasks = [
+	{ type = "item", item = "minecraft:paper", count = 8 },
+]
+
+[[quest]]
+name = "blueprint_blank_paper"
+title = "备一批图纸耗材"
+desc = [
+	"图纸是一次性消耗品：现场画、现场放，用完就得回城补。",
+	"把常用耗材常备一箱，工程的节奏就不会被「回去拿纸」打断。",
+]
+icon = "minecraft:paper"
+shape = "circle"
+size = 1.2
+deps = ["blueprint_origin"]
+tasks = [
+	{ type = "item", item = "minecraft:paper", count = 32 },
+	{ type = "item", item = "minecraft:ink_sac", count = 4 },
+	{ type = "item", item = "minecraft:feather", count = 4 },
+]
+
+[[quest]]
+name = "worn_repair"
+title = "残破图纸要修"
+desc = [
+	"探索里捡到的图纸多半是残破的：**残破 → 修复 → 可用**，这是设计里明写的一条闭环。",
+]
+icon = "portable_blueprints:worn_blueprint"
+shape = "rsquare"
+deps = ["blank_blueprint"]
+tasks = [
+	{ type = "item", item = "portable_blueprints:worn_blueprint" },
+]
+
+[[quest]]
+name = "repair_kit"
+title = "修复材料"
+desc = [
+	"修复要材料，材料要备。修一张图纸的成本，远低于重新扫一座建筑。",
+]
+icon = "minecraft:leather"
+shape = "circle"
+size = 1.2
+deps = ["worn_repair"]
+tasks = [
+	{ type = "item", item = "minecraft:leather", count = 8 },
+	{ type = "item", item = "minecraft:ink_sac", count = 8 },
+]
+
+# ---------------- 簇 2：读懂图纸 ----------------
 
 [[quest]]
 name = "get_scanner"
@@ -63,7 +142,7 @@ name = "first_scan"
 title = "扫下第一座建筑"
 desc = [
 	"选一座你们自己盖得最满意的建筑，把它扫成图纸。",
-	"⚠️ 「扫成功」这动作没有信号源，自检；判据落在「你已经有了那几样工具」上。",
+	"⚠️「扫成功」这动作没有信号源，自检；判据落在「你已经有了那几样工具」上。",
 ]
 icon = "portable_blueprints:blueprint"
 shape = "rsquare"
@@ -72,7 +151,35 @@ tasks = [
 	{ type = "checkmark" },
 ]
 
-# ---------------- 让图纸流通 ----------------
+[[quest]]
+name = "blueprint_survey"
+title = "现场勘测"
+desc = [
+	"扫描之前要先**量**：地形高差、朝向、与既有道路的接点。",
+	"图纸给的是形状，地图给的是位置——两样都得有。",
+]
+icon = "minecraft:cartography_table"
+shape = "circle"
+size = 1.2
+deps = ["first_scan"]
+tasks = [
+	{ type = "item", item = "minecraft:cartography_table" },
+	{ type = "item", item = "minecraft:map" },
+]
+
+[[quest]]
+name = "blueprint_site_plan"
+title = "选址平面图"
+desc = [
+	"把选址画成一张地图存起来：以后每次讨论「盖在哪」，看的是同一张图。",
+]
+icon = "minecraft:filled_map"
+shape = "circle"
+size = 1.2
+deps = ["blueprint_survey"]
+tasks = [
+	{ type = "item", item = "minecraft:filled_map" },
+]
 
 [[quest]]
 name = "global_blueprint"
@@ -101,21 +208,6 @@ tasks = [
 ]
 
 [[quest]]
-name = "worn_repair"
-title = "残破图纸要修"
-desc = [
-	"探索里捡到的图纸多半是残破的：**残破 → 修复 → 可用**，这是设计里明写的一条闭环。",
-]
-icon = "portable_blueprints:worn_blueprint"
-shape = "rsquare"
-deps = ["blank_blueprint"]
-tasks = [
-	{ type = "item", item = "portable_blueprints:worn_blueprint" },
-]
-
-# ---------------- 图案图纸（Create 系） ----------------
-
-[[quest]]
 name = "pattern_basic"
 title = "图案图纸"
 desc = [
@@ -126,6 +218,20 @@ shape = "rsquare"
 deps = ["blank_blueprint"]
 tasks = [
 	{ type = "item", item = "create_pattern_schematics:pattern_schematic" },
+]
+
+[[quest]]
+name = "pattern_quill"
+title = "带上笔的图案图纸"
+desc = [
+	"图纸与笔一体：现场直接画，不必先回城换成套工具。",
+]
+icon = "create_pattern_schematics:pattern_schematic_and_quill"
+shape = "circle"
+size = 1.2
+deps = ["pattern_basic"]
+tasks = [
+	{ type = "item", item = "create_pattern_schematics:pattern_schematic_and_quill" },
 ]
 
 [[quest]]
@@ -142,7 +248,21 @@ tasks = [
 	{ type = "item", item = "create_pattern_schematics:empty_pattern_schematic", count = 8 },
 ]
 
-# ---------------- 材料与施工 ----------------
+[[quest]]
+name = "blueprint_table"
+title = "蓝图桌"
+desc = [
+	"蓝图桌是图纸的**工作站**：复制、改名、整理都在这张桌子上做。",
+	"它一般放在工坊里——图纸和工具放在一起，才不会被当成杂物丢掉。",
+]
+icon = "create:schematic_table"
+shape = "rsquare"
+deps = ["global_blueprint"]
+tasks = [
+	{ type = "item", item = "create:schematic_table" },
+]
+
+# ---------------- 簇 3：组织施工 ----------------
 
 [[quest]]
 name = "material_list"
@@ -150,12 +270,145 @@ title = "材料清单"
 desc = [
 	"按图纸算出要多少料，一次性备齐——这是「工程制」和「手搓」最大的区别。",
 ]
-icon = "minecraft:paper"
+icon = "create:shopping_list"
 shape = "rsquare"
-deps = ["global_blueprint"]
+deps = ["blueprint_table"]
 tasks = [
-	{ type = "item", item = "minecraft:paper", count = 32 },
+	{ type = "item", item = "create:shopping_list" },
 ]
+
+[[quest]]
+name = "quantity_sheet"
+title = "算量"
+desc = [
+	"一份清单好不好用，取决于数量算得准不准：",
+	"少算了，工程停在半路；多算了，材料堆在仓库里占地。",
+]
+icon = "create:clipboard"
+shape = "rsquare"
+deps = ["material_list"]
+tasks = [
+	{ type = "item", item = "create:clipboard" },
+]
+
+[[quest]]
+name = "toolbox"
+title = "工程工具箱"
+desc = [
+	"工地和仓库不一样：工具得能一起拎走。",
+	"一箱常用件随身，现场缺什么就不用整队停工。",
+]
+icon = "create:white_toolbox"
+shape = "circle"
+size = 1.2
+deps = ["material_list"]
+tasks = [
+	{ type = "item", item = "create:white_toolbox" },
+]
+
+[[quest]]
+name = "engineer_goggles"
+title = "工程师护目镜"
+desc = [
+	"护目镜是这套工程制里少数「给自己用」的东西：看配置、看尺寸都靠它。",
+]
+icon = "create:goggles"
+shape = "circle"
+size = 1.2
+deps = ["material_list"]
+tasks = [
+	{ type = "item", item = "create:goggles" },
+]
+
+[[quest]]
+name = "scaffold_kit"
+title = "脚手架"
+desc = [
+	"脚手架是「够得着」这件事的答案：高处的活没有它就只能靠搭方块。",
+	"安山、黄铜、铜三档，按工地等级挑。",
+]
+icon = "create:andesite_scaffolding"
+shape = "rsquare"
+deps = ["quantity_sheet"]
+tasks = [
+	{ type = "item", item = "create:andesite_scaffolding", count = 32 },
+	{ type = "item", item = "minecraft:scaffolding", count = 32 },
+]
+
+[[quest]]
+name = "scaffold_brass"
+title = "黄铜脚手架"
+desc = [
+	"为地标级工程配的那一档：能承更多、也更像样。",
+]
+icon = "create:brass_scaffolding"
+shape = "circle"
+size = 1.2
+deps = ["scaffold_kit"]
+tasks = [
+	{ type = "item", item = "create:brass_scaffolding", count = 16 },
+]
+
+[[quest]]
+name = "site_marking"
+title = "放线"
+desc = [
+	"开工之前先把线放出来：边界、轴线、门洞位置。",
+	"这一步做错，后面每一块砖都要返工。",
+]
+icon = "minecraft:oak_sign"
+shape = "circle"
+size = 1.2
+deps = ["quantity_sheet"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_sign", count = 8 },
+	{ type = "item", item = "minecraft:oak_fence", count = 32 },
+]
+
+[[quest]]
+name = "crew_roles"
+title = "施工分工"
+desc = [
+	"一座公共建筑不是一个人盖的：谁备料、谁砌墙、谁收尾，事先分好。",
+	"分工写下来之后，「有人闲着、有人累死」这件事才有据可查。",
+]
+icon = "create:cardboard"
+shape = "circle"
+size = 1.2
+deps = ["site_marking"]
+tasks = [
+	{ type = "item", item = "create:cardboard", count = 8 },
+]
+
+[[quest]]
+name = "checklist"
+title = "现场检查表"
+desc = [
+	"把「今天该做完什么」列成一张表，收工前逐条对。",
+	"这张表是**交接**用的：换班的人看表就知道进度到哪。",
+]
+icon = "create:clipboard"
+shape = "rsquare"
+deps = ["crew_roles"]
+tasks = [
+	{ type = "item", item = "create:clipboard", count = 2 },
+]
+
+[[quest]]
+name = "material_stock"
+title = "材料进仓"
+desc = [
+	"材料不是堆在工地上的：按清单进仓、按清单领料，账才对得上。",
+]
+icon = "minecraft:barrel"
+shape = "circle"
+size = 1.2
+deps = ["checklist"]
+tasks = [
+	{ type = "item", item = "minecraft:barrel", count = 4 },
+]
+
+# ---------------- 簇 4：验收与归档 ----------------
 
 [[quest]]
 name = "build_by_blueprint"
@@ -165,13 +418,111 @@ desc = [
 	"这一条完成之后，「建筑目录」才谈得上（见无尽纪元那一章）。",
 ]
 icon = "minecraft:stone_bricks"
-shape = "hexagon"
-size = 2.5
-deps = ["material_list", "server_side", "worn_repair", "pattern_empty"]
+shape = "rsquare"
+deps = ["material_stock", "server_side", "worn_repair", "pattern_empty",
+        "scaffold_brass", "engineer_goggles", "toolbox", "blueprint_site_plan",
+        "pattern_quill", "repair_kit", "blueprint_blank_paper"]
 tasks = [
 	{ type = "item", item = "minecraft:stone_bricks", count = 64 },
 ]
+
+[[quest]]
+name = "quit_kit"
+title = "收工"
+desc = [
+	"工地收工的标准不是「今天干完了」，是**明天能接着干**：",
+	"脚手架不拆、材料归位、工具入库、现场清干净。",
+]
+icon = "create:pulp"
+shape = "circle"
+size = 1.2
+deps = ["build_by_blueprint"]
+tasks = [
+	{ type = "item", item = "create:pulp", count = 8 },
+]
+
+[[quest]]
+name = "closeout"
+title = "竣工验收"
+desc = [
+	"对着图纸逐项验收：尺寸、用料、开口位置、周边接驳。",
+	"验收通过才登记造册——**没验收的建筑不算资产**。",
+]
+icon = "minecraft:chiseled_stone_bricks"
+shape = "octagon"
+size = 1.75
+deps = ["quit_kit"]
+tasks = [
+	{ type = "item", item = "minecraft:chiseled_stone_bricks", count = 8 },
+]
 rewards = [
-	{ type = "xp", xp = 100 },
+	{ type = "xp", xp = 60 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "archive_index"
+title = "图纸索引"
+desc = [
+	"图纸一多，找图纸就成了成本：书架、讲台、书与笔——给图纸建一套索引。",
+	"索引建好之前，每座新城都是「重新找一遍图纸」。",
+]
+icon = "minecraft:bookshelf"
+shape = "rsquare"
+deps = ["closeout"]
+tasks = [
+	{ type = "item", item = "minecraft:bookshelf", count = 4 },
+	{ type = "item", item = "minecraft:lectern" },
+]
+
+[[quest]]
+name = "archive_log"
+title = "工程记录"
+desc = [
+	"书与笔：把这座建筑「谁盖的、用了什么料、改过哪几处」写下来。",
+	"记录是给后来的人看的，也是给自己查账用的。",
+]
+icon = "minecraft:writable_book"
+shape = "circle"
+size = 1.2
+deps = ["archive_index"]
+tasks = [
+	{ type = "item", item = "minecraft:writable_book" },
+	{ type = "item", item = "minecraft:written_book" },
+]
+
+[[quest]]
+name = "handover"
+title = "工地交接"
+desc = [
+	"一座建筑从工程队交给使用方——交接清单要写在牌子上，挂在门口。",
+]
+icon = "minecraft:oak_hanging_sign"
+shape = "circle"
+size = 1.2
+deps = ["archive_log"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_hanging_sign", count = 2 },
+	{ type = "item", item = "minecraft:item_frame" },
+]
+
+[[quest]]
+name = "standard_parts"
+title = "把建筑变成标准件"
+desc = [
+	"最后一步不是盖一座楼，而是让**这一套做法**能重复：",
+	"框架蓝图把构件标准化，图纸进档之后，下一座城照着同一套尺寸盖。",
+	"做到这里，「工程制」才算真的成立——你们卖的不再是劳动力，而是标准。",
+]
+icon = "framedblocks:framed_blueprint"
+shape = "hexagon"
+size = 2.5
+deps = ["handover"]
+tasks = [
+	{ type = "item", item = "framedblocks:framed_blueprint" },
+	{ type = "item", item = "portable_blueprints:blueprint", count = 4 },
+]
+rewards = [
+	{ type = "xp", xp = 120 },
 	{ type = "toast" },
 ]

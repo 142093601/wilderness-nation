@@ -10,6 +10,20 @@
 #    所以"圈地 / 组队"这类动作**没有物品判据**，只能自检。
 #    （这跟邦交章遇到的是同一类问题：模组只提供命令/界面，不发信号。）
 # 能自动判的：Create 的物品（仓库/物流）、原版物品、原版统计。
+#
+# 与其它章的分工（边界写清楚，免得写重）：
+#   · 落地       (`20-landing`)  = 决定住下（选点、定水、分区、起名挂牌）
+#   · 本章                       = **制度与骨架**：国号、四至、权限分层、编制、议事、
+#                                  岗位、国徽国歌、五年计划、公示、继承 —— 全是"定规矩"
+#   · 人口与民生 (`58-people`)   = **居民**（床位、职业、繁衍、治安、配给），本章不写村民
+#   · 国库与营建 (`68-treasury`) = **税与预算**（账本、拨款、结算、审计），本章不写钱
+#   · 领地与队伍 (`95-claims`)   = 权限的**技术细节**（档位怎么配、越界怎么测），
+#                                  本章只写"要分几档、谁在哪一档"
+#   · 立约       (`35-charter`)  = 约定与法典的**文本**；本章只立"规则怎么产生"
+#
+# checkmark 用量：7 条 —— 原有 3 条（圈地 / 组队 / 定下约定），新增 4 条
+# （定国号 / 议事规则 / 给邻国定性 / 交接与继承规则）。
+# 全部是「制度与共识」类判据，游戏里没有任何信号；理由逐条写在条目里。
 
 key = "founding"
 title = "立国"
@@ -110,7 +124,7 @@ tasks = [
 name = "seats_for_all"
 title = "议事厅坐得下所有人"
 desc = [
-	"能坐下说话才算议事厅：至少 8 个座位。",
+	"摆够 8 个座位 —— 能坐下说话才算议事厅，站着开的会没人愿意来。",
 ]
 icon = "minecraft:oak_stairs"
 shape = "circle"
@@ -120,7 +134,544 @@ tasks = [
 	{ type = "item", item = "minecraft:oak_stairs", count = 8 },
 ]
 
-# ---------------- 支线：生存与基建起步 ----------------
+# ---------------- 簇 1：国号与旗帜 ----------------
+
+[[quest]]
+name = "f_state_name"
+title = "定国号"
+desc = [
+	"国号是一个要写在碑上、挂在旗上、刻在界碑上的东西 —— **定下来就别改**。",
+	"规则很简单：两个字能念完、能缩写、不会和邻国重名。",
+	"⚠️ 名字本身游戏判不了，自检；但下一段「立国公示」那条会把名字真的落到实物上。",
+]
+icon = "minecraft:oak_sign"
+shape = "pentagon"
+size = 2.0
+deps = ["claim_the_land"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_sign", count = 2 },
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "f_national_flag"
+title = "国旗"
+desc = [
+	"旗的颜色是有含义的：三种色就够，多了从远处看不清。",
+	"旗要先在议事厅挂一面，再复制到每个入口与界碑旁 —— **同一面旗出现三次，它才算国家的**。",
+]
+icon = "minecraft:white_banner"
+shape = "rsquare"
+deps = ["f_state_name"]
+tasks = [
+	{ type = "item", item = "minecraft:white_banner", count = 3 },
+	{ type = "item", item = "minecraft:white_dye", count = 8 },
+]
+
+[[quest]]
+name = "f_flag_pattern"
+title = "给旗加图案"
+desc = [
+	"纯色旗和别人的分不开。一个图案纹样就够：它是这面旗的「签名」。",
+]
+icon = "minecraft:globe_banner_pattern"
+shape = "circle"
+size = 1.2
+deps = ["f_national_flag"]
+tasks = [
+	{ type = "item", item = "minecraft:globe_banner_pattern" },
+	{ type = "item", item = "minecraft:flower_banner_pattern" },
+]
+
+[[quest]]
+name = "f_flag_hall"
+title = "旗挂在议事厅正面"
+desc = [
+	"旗杆立在议事厅门口，**朝着国门的方向**。",
+	"它同时兼一个功能：从外面回来的人，远远看见旗就知道到家了。",
+]
+icon = "minecraft:item_frame"
+shape = "circle"
+size = 1.2
+deps = ["f_flag_pattern", "meeting_hall"]
+tasks = [
+	{ type = "item", item = "minecraft:white_banner", count = 2 },
+	{ type = "item", item = "minecraft:lantern", count = 4 },
+]
+
+# ---------------- 簇 2：四至与界碑 ----------------
+
+[[quest]]
+name = "f_bounds_survey"
+title = "量一遍四至"
+desc = [
+	"国土的四个方向各走到头，记下坐标：这就是「四至」，写进成书存进议事厅。",
+	"四至不必是矩形 —— 但**必须能一句话说清边界在哪**，否则守不住也管不了。",
+]
+icon = "minecraft:cartography_table"
+shape = "pentagon"
+size = 2.0
+deps = ["claim_the_land"]
+tasks = [
+	{ type = "item", item = "minecraft:cartography_table" },
+	{ type = "item", item = "minecraft:written_book" },
+]
+
+[[quest]]
+name = "f_boundary_stones"
+title = "立界碑"
+desc = [
+	"四角各一块刻字石头：正面国号，背面坐标与朝向。",
+	"界碑是**给外人看的**：不认字的人也知道这里有人管。",
+]
+icon = "minecraft:chiseled_stone_bricks"
+shape = "rsquare"
+deps = ["f_bounds_survey"]
+tasks = [
+	{ type = "item", item = "minecraft:chiseled_stone_bricks", count = 8 },
+]
+
+[[quest]]
+name = "f_stone_numbering"
+title = "界碑编号"
+desc = [
+	"界碑一多就会乱：用雕凿工具或木牌给每块编号，编号与四至那本书对得上。",
+	"没有编号的界碑，几年后没人说得清哪块是哪块。",
+]
+icon = "chipped:chisel"
+shape = "circle"
+size = 1.2
+deps = ["f_boundary_stones"]
+tasks = [
+	{ type = "item", item = "chipped:chisel" },
+	{ type = "item", item = "minecraft:oak_sign", count = 8 },
+]
+
+[[quest]]
+name = "f_border_markers"
+title = "沿边界的路标"
+desc = [
+	"边界不只有四角：每隔一段插一根柱子或火把，走夜路时边界是看得见的。",
+]
+icon = "minecraft:torch"
+shape = "square"
+deps = ["f_boundary_stones"]
+tasks = [
+	{ type = "item", item = "minecraft:torch", count = 32 },
+	{ type = "item", item = "minecraft:stripped_oak_log", count = 8 },
+]
+
+# ---------------- 簇 3：权限分层 ----------------
+
+[[quest]]
+name = "f_role_tiers"
+title = "权限分三档"
+desc = [
+	"**全员同权限等于没有权限**。要分的档：能管（动边界与成员）、能建（动方块）、能住（只进出门与用设施）。",
+	"这一条只定「分几档、每档能干什么」；具体怎么在 OPAC 里配置是另一章的事。",
+]
+icon = "minecraft:shield"
+shape = "pentagon"
+size = 2.0
+deps = ["one_team"]
+tasks = [
+	{ type = "item", item = "minecraft:shield", count = 3 },
+]
+
+[[quest]]
+name = "f_role_list"
+title = "把每档的名单写出来"
+desc = [
+	"牌子上写清：谁在哪一档、为什么。名单要贴在议事厅，不能只存在队长的记忆里。",
+]
+icon = "minecraft:oak_sign"
+shape = "rsquare"
+deps = ["f_role_tiers"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_sign", count = 4 },
+	{ type = "item", item = "minecraft:item_frame", count = 2 },
+]
+
+[[quest]]
+name = "f_guest_rule"
+title = "访客怎么办"
+desc = [
+	"邻国的人、路过的人、还没入伙的人：他们能不能进城、能到哪、能不能开箱。",
+	"**先定访客规则，再谈外交** —— 不然第一次来人就是一次事故。",
+]
+icon = "minecraft:oak_door"
+shape = "rsquare"
+deps = ["f_role_list"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_door" },
+	{ type = "item", item = "minecraft:lever" },
+]
+
+[[quest]]
+name = "f_permission_done"
+title = "权限这块闭环了"
+desc = [
+	"分档、名单、访客规则三样齐了，「我们的地」才算有一套能执行的说法。",
+	"从这一条起，国土的边界不再靠人盯着。",
+]
+icon = "minecraft:iron_bars"
+shape = "octagon"
+size = 1.75
+deps = ["f_guest_rule"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_bars", count = 16 },
+]
+
+# ---------------- 簇 4：编制与议事 ----------------
+
+[[quest]]
+name = "f_roster"
+title = "国册：谁是谁"
+desc = [
+	"一页纸写清全体成员与入伙时间 —— 这是「我们」第一次有正式名单。",
+]
+icon = "minecraft:written_book"
+shape = "rsquare"
+deps = ["one_team"]
+tasks = [
+	{ type = "item", item = "minecraft:written_book" },
+	{ type = "item", item = "minecraft:ink_sac", count = 4 },
+]
+
+[[quest]]
+name = "f_squads"
+title = "编组"
+desc = [
+	"超过五个人就该分组：建设组、后勤组、远征组 —— 每组一个负责人。",
+	"分组的目的是**让缺席的人不影响别人干活**，不是为了排等级。",
+]
+icon = "minecraft:shield"
+shape = "rsquare"
+deps = ["f_roster"]
+tasks = [
+	{ type = "item", item = "minecraft:shield", count = 3 },
+	{ type = "item", item = "minecraft:name_tag", count = 3 },
+]
+
+[[quest]]
+name = "f_meeting_rule"
+title = "议事规则"
+desc = [
+	"写清三件事：多久开一次、怎么表决、谁记录。",
+	"⚠️ 规则文本游戏判不了，自检。少的不是仪式，是**出事时知道找谁拍板**。",
+]
+icon = "minecraft:lectern"
+shape = "rsquare"
+deps = ["f_squads"]
+tasks = [
+	{ type = "item", item = "minecraft:lectern" },
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "f_minutes"
+title = "会议记录本"
+desc = [
+	"每次议完留一页：定了什么、谁反对、下次检查什么。",
+	"记录本比记忆可靠 —— 它也是后面「交接与继承」唯一的凭据。",
+]
+icon = "minecraft:feather"
+shape = "circle"
+size = 1.2
+deps = ["f_meeting_rule"]
+tasks = [
+	{ type = "item", item = "minecraft:feather" },
+	{ type = "item", item = "minecraft:book", count = 4 },
+]
+
+[[quest]]
+name = "f_first_vote"
+title = "第一次表决"
+desc = [
+	"拿一件真事来练：下一座公共建筑盖在哪、叫什么。",
+	"表决的价值不在于结果对不对，在于**输了的人愿不愿意照做**。",
+]
+icon = "minecraft:paper"
+shape = "rsquare"
+deps = ["f_minutes"]
+tasks = [
+	{ type = "item", item = "minecraft:paper", count = 16 },
+	{ type = "item", item = "minecraft:item_frame", count = 2 },
+]
+
+# ---------------- 簇 5：分工与岗位表 ----------------
+
+[[quest]]
+name = "f_jobs_table"
+title = "岗位表"
+desc = [
+	"把「这个国家需要哪些活」列成一张表：建设、采集、冶炼、仓储、远征、防务。",
+	"表上要留空位 —— 空位就是**招人的理由**。",
+]
+icon = "minecraft:oak_sign"
+shape = "pentagon"
+size = 2.0
+deps = ["f_squads"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_sign", count = 8 },
+]
+
+[[quest]]
+name = "f_job_post"
+title = "岗位挂牌"
+desc = [
+	"每个岗位一块牌，挂在它对应的棚门口：这里负责什么、找谁。",
+	"（这一条**不写居民职业** —— 那是「人口与民生」章的事。）",
+]
+icon = "minecraft:oak_hanging_sign"
+shape = "circle"
+size = 1.2
+deps = ["f_jobs_table"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_sign", count = 6 },
+	{ type = "item", item = "minecraft:item_frame", count = 4 },
+]
+
+[[quest]]
+name = "f_night_shift"
+title = "值夜安排"
+desc = [
+	"谁在夜里看着：一次排一周，固定在牌上。",
+	"值夜这件事没有实物判据，但**钟与床是它的实物** —— 有钟、有床、有排班表，才算排过班。",
+]
+icon = "minecraft:bell"
+shape = "rsquare"
+deps = ["f_job_post"]
+tasks = [
+	{ type = "item", item = "minecraft:bell" },
+	{ type = "item", item = "minecraft:white_bed", count = 2 },
+]
+
+[[quest]]
+name = "f_handover_duty"
+title = "换班要交接"
+desc = [
+	"值夜换班时对一次：东西少了没有、有没有人来过、哪块墙破了。",
+]
+icon = "minecraft:lantern"
+shape = "circle"
+size = 1.2
+deps = ["f_night_shift"]
+tasks = [
+	{ type = "item", item = "minecraft:lantern", count = 8 },
+]
+
+# ---------------- 簇 6：国徽与国歌 ----------------
+
+[[quest]]
+name = "f_emblem"
+title = "国徽"
+desc = [
+	"国旗是给人远看的，国徽是给人近看的：一个图案，刻在议事厅地板上或挂在正门上方。",
+	"它要能**被复制** —— 每个公共建筑门口都该有一块。",
+]
+icon = "minecraft:item_frame"
+shape = "rsquare"
+deps = ["f_flag_pattern", "meeting_hall"]
+tasks = [
+	{ type = "item", item = "minecraft:item_frame", count = 4 },
+	{ type = "item", item = "minecraft:gold_ingot", count = 8 },
+]
+
+[[quest]]
+name = "f_anthem"
+title = "定一首国歌"
+desc = [
+	"国歌不是写出来的，是**选出来的**：从已有的唱片里挑一首，全体认它。",
+	"选好之后固定下来：升旗、开会、落成仪式都放它。",
+]
+icon = "minecraft:jukebox"
+shape = "pentagon"
+size = 2.0
+deps = ["f_flag_hall"]
+tasks = [
+	{ type = "item", item = "minecraft:jukebox" },
+	{ type = "item", item = "minecraft:music_disc_cat" },
+]
+
+[[quest]]
+name = "f_anthem_archive"
+title = "国歌唱片入档"
+desc = [
+	"那张唱片要存一份在议事厅，别让它跟着某个人出门。",
+	"档案就是「这个国家有什么」的清单 —— 唱片是它的第一件。",
+]
+icon = "minecraft:music_disc_stal"
+shape = "circle"
+size = 1.2
+deps = ["f_anthem"]
+tasks = [
+	{ type = "item", item = "minecraft:music_disc_13" },
+	{ type = "item", item = "minecraft:bookshelf", count = 4 },
+]
+
+[[quest]]
+name = "f_ceremony_first"
+title = "开一次升旗会"
+desc = [
+	"国旗、国徽、国歌三样齐了，就把它们**一起用一次**：升旗、奏歌、点灯。",
+	"仪式本身不产出任何资源，它产出的是「我们是一个国家」这句话的可信度。",
+]
+icon = "minecraft:lantern"
+shape = "octagon"
+size = 1.75
+deps = ["f_emblem", "f_anthem_archive"]
+tasks = [
+	{ type = "item", item = "minecraft:lantern", count = 16 },
+	{ type = "item", item = "minecraft:campfire", count = 2 },
+]
+
+# ---------------- 簇 7：对外关系与计划 ----------------
+
+[[quest]]
+name = "f_neighbor_relation"
+title = "给邻国定性"
+desc = [
+	"把已知的邻国/据点逐个定性：通商、同盟、中立、敌对。一国一句，写进成书。",
+	"⚠️ 定性是主观判断，游戏判不了，自检。但**必须先有定性**，邦交章才有起点。",
+]
+icon = "minecraft:written_book"
+shape = "pentagon"
+size = 2.0
+deps = ["f_guest_rule"]
+tasks = [
+	{ type = "item", item = "minecraft:written_book" },
+	{ type = "item", item = "minecraft:spyglass" },
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "f_embassy_flag"
+title = "给邻国留一面旗"
+desc = [
+	"送一面自己的旗过去（或者留一面对方的旗在议事厅）：**关系要有实物凭据**。",
+	"这一条也是邦交章「国书」的草稿 —— 那边会把它做成正式流程。",
+]
+icon = "minecraft:white_banner"
+shape = "circle"
+size = 1.2
+deps = ["f_neighbor_relation"]
+tasks = [
+	{ type = "item", item = "minecraft:white_banner", count = 2 },
+]
+
+[[quest]]
+name = "f_five_year"
+title = "第一个五年计划"
+desc = [
+	"按这个包的五个时代各写一条目标（二十小时一格）：每个时代结束时，国家应该多出什么。",
+	"写的是**结果**不是任务清单：「有一座桥」比「修一条路」好，因为前者能验收。",
+]
+icon = "minecraft:paper"
+shape = "rsquare"
+deps = ["f_jobs_table"]
+tasks = [
+	{ type = "item", item = "minecraft:paper", count = 32 },
+	{ type = "item", item = "minecraft:written_book" },
+]
+
+[[quest]]
+name = "f_plan_board"
+title = "计划挂在墙上"
+desc = [
+	"计划写进书里只有一个人看，挂在议事厅才有全部人看。",
+	"配一面地图墙：计划里的每一项目标，都在图上有位置。",
+]
+icon = "minecraft:item_frame"
+shape = "circle"
+size = 1.2
+deps = ["f_five_year"]
+tasks = [
+	{ type = "item", item = "minecraft:item_frame", count = 8 },
+	{ type = "item", item = "minecraft:map", count = 4 },
+]
+
+# ---------------- 簇 8：公示、节日、纳新、继承 ----------------
+
+[[quest]]
+name = "f_celebration_day"
+title = "定国庆日"
+desc = [
+	"把「立国碑竖起来的那一天」定成国庆日，写进国册与公示牌。",
+	"每年这一天做同一件事：读一遍国册、检查一遍四至、看一眼五年计划。",
+]
+icon = "minecraft:clock"
+shape = "rsquare"
+deps = ["f_first_vote"]
+tasks = [
+	{ type = "item", item = "minecraft:clock" },
+	{ type = "item", item = "minecraft:written_book" },
+]
+
+[[quest]]
+name = "f_public_notice"
+title = "立国公示"
+desc = [
+	"在议事厅门口立一块公共告示：国号、成立日期、四至、当前成员数。",
+	"这是**这个国家的门面**：新来的人、路过的人，先看它。",
+]
+icon = "minecraft:oak_sign"
+shape = "rsquare"
+deps = ["f_state_name", "f_celebration_day"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_sign", count = 6 },
+	{ type = "item", item = "minecraft:lantern", count = 4 },
+]
+
+[[quest]]
+name = "f_charter_book"
+title = "国册成书"
+desc = [
+	"把四件事抄进同一本成书：国号与旗、四至与界碑编号、权限三档、议事规则。",
+	"这本册子要**能被抄写** —— 副本存在议事厅，正本跟着当值的人。",
+]
+icon = "minecraft:writable_book"
+shape = "rsquare"
+deps = ["f_public_notice", "f_permission_done", "f_meeting_rule"]
+tasks = [
+	{ type = "item", item = "minecraft:writable_book" },
+	{ type = "item", item = "minecraft:book", count = 8 },
+]
+
+[[quest]]
+name = "f_join_process"
+title = "新成员加入流程"
+desc = [
+	"四步写清：谁引荐、谁批准、给什么（住处与工具）、先干什么。",
+	"没有流程，新人前几天就只能在城里乱转 —— 这是**最容易流失人的一段时间**。",
+]
+icon = "minecraft:name_tag"
+shape = "rsquare"
+deps = ["f_charter_book"]
+tasks = [
+	{ type = "item", item = "minecraft:name_tag", count = 2 },
+	{ type = "item", item = "minecraft:bread", count = 8 },
+	{ type = "item", item = "minecraft:stone_pickaxe" },
+]
+
+[[quest]]
+name = "f_succession"
+title = "交接与继承规则"
+desc = [
+	"写清两件事：当值的人长期不在时谁接手、国册与钥匙交给谁。",
+	"⚠️ 判不了，自检。**这是全章最容易被跳过、也最容易出事的一条。**",
+	"验收方式：假装当值的人明天不来了，念一遍规则 —— 念不下去就是没写清。",
+]
+icon = "minecraft:chest"
+shape = "rsquare"
+deps = ["f_join_process"]
+tasks = [
+	{ type = "item", item = "minecraft:chest" },
+	{ type = "item", item = "minecraft:written_book" },
+	{ type = "checkmark" },
+]
+
+# ---------------- 支线：生存与基建起步（原有） ----------------
 
 [[quest]]
 name = "granary"
@@ -168,7 +719,7 @@ tasks = [
 name = "first_road"
 title = "上路"
 desc = [
-	"一条能走的路，连到最近的水源或林地。",
+	"铺一条能走的路，连到最近的水源或林地 —— 两条动线通了，营地的日常才顺。",
 ]
 icon = "minecraft:gravel"
 shape = "circle"
@@ -192,7 +743,7 @@ tasks = [
 	{ type = "item", item = "minecraft:torch", count = 32 },
 ]
 
-# ---------------- 自动化起步 ----------------
+# ---------------- 自动化起步（原有） ----------------
 
 [[quest]]
 name = "stone_supply"
@@ -234,7 +785,9 @@ desc = [
 icon = "minecraft:stone_bricks"
 shape = "hexagon"
 size = 2.5
-deps = ["seats_for_all", "farm_plot", "livestock", "torch_corridor", "bulk_smelting"]
+deps = ["seats_for_all", "farm_plot", "livestock", "torch_corridor", "bulk_smelting",
+        "f_permission_done", "f_handover_duty", "f_ceremony_first", "f_embassy_flag",
+        "f_plan_board", "f_charter_book", "f_succession"]
 tasks = [
 	{ type = "item", item = "minecraft:stone_bricks", count = 32 },
 ]

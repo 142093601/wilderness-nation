@@ -8,7 +8,26 @@
 	}
 	id: "9D6EA4128465C4F3"
 	order_index: 0
-	quest_links: [ ]
+	quest_links: [
+	{
+		id: "24B82F1FA748DEEF"
+		linked_quest: "08EFEA4CB7B868AD"
+		x: -12.0d
+		y: 0.0d
+	}
+	{
+		id: "07E4083D212CDE51"
+		linked_quest: "5071E4F2CB18E4A8"
+		x: -12.0d
+		y: -1.75d
+	}
+	{
+		id: "397DA4D1D82C6C5F"
+		linked_quest: "29C3777502434B67"
+		x: -12.0d
+		y: -3.5d
+	}
+	]
 	quests: [
 	{
 		icon: {
@@ -42,7 +61,83 @@
 			type: "checkmark"
 		}
 		]
-		x: -4.5d
+		x: -8.78d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"3F61926542EAE234"
+		]
+		icon: {
+			id: "minecraft:item_frame"
+		}
+		id: "089288C4192F9168"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			id: "FF8E874F21DC89E6"
+			type: "checkmark"
+		}
+		]
+		x: -5.78d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"089288C4192F9168"
+		]
+		icon: {
+			id: "minecraft:knowledge_book"
+		}
+		id: "58E89CADDB8081CB"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			id: "D1CACE9D1727E38A"
+			type: "checkmark"
+		}
+		]
+		x: -2.78d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"089288C4192F9168"
+		]
+		icon: {
+			id: "minecraft:comparator"
+		}
+		id: "D945C9094E615EAC"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			id: "AA7603DC4C55F47E"
+			type: "checkmark"
+		}
+		]
+		x: 0.22d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"3F61926542EAE234"
+		]
+		icon: {
+			id: "minecraft:experience_bottle"
+		}
+		id: "BB8E4A45C570F3D5"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			id: "8917529C0F3252E3"
+			type: "checkmark"
+		}
+		]
+		x: -3.0d
 		y: -1.75d
 	}
 	{
@@ -61,7 +156,7 @@
 			type: "checkmark"
 		}
 		]
-		x: -1.5d
+		x: -0.23d
 		y: -1.75d
 	}
 	{
@@ -80,7 +175,7 @@
 			type: "checkmark"
 		}
 		]
-		x: 1.5d
+		x: 2.77d
 		y: -1.75d
 	}
 	{
@@ -99,15 +194,76 @@
 			type: "checkmark"
 		}
 		]
-		x: 4.5d
+		x: 5.77d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"6691B954C0425055"
+		]
+		icon: {
+			id: "minecraft:bookshelf"
+		}
+		id: "F04B50B6B5F60EC3"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			id: "1B6ED9FB2DDD32D1"
+			type: "checkmark"
+		}
+		]
+		x: 3.0d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"F04B50B6B5F60EC3"
+		]
+		icon: {
+			id: "minecraft:shield"
+		}
+		id: "53FC076266E63141"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			id: "1AB02234F34B4E3F"
+			type: "checkmark"
+		}
+		]
+		x: 0.0d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"3F61926542EAE234"
+		]
+		icon: {
+			id: "minecraft:wooden_pickaxe"
+		}
+		id: "28A62DE9BF10FFE1"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			id: "F8E1A9E1EA6D940E"
+			type: "checkmark"
+		}
+		]
+		x: 8.77d
 		y: -1.75d
 	}
 	{
 		dependencies: [
 		"B95D3788B6A24B79"
-		"6691B954C0425055"
+		"58E89CADDB8081CB"
+		"D945C9094E615EAC"
+		"BB8E4A45C570F3D5"
 		"3BE9FAE79A813A2C"
 		"EF8F77662A04DAD6"
+		"53FC076266E63141"
+		"28A62DE9BF10FFE1"
 		]
 		icon: {
 			id: "minecraft:campfire"
@@ -122,7 +278,7 @@
 		}
 		]
 		x: 0.0d
-		y: -3.5d
+		y: -7.0d
 	}
 	]
 }

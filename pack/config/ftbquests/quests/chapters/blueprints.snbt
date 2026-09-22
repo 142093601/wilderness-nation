@@ -32,6 +32,107 @@
 		"4DE6EB265FC317D8"
 		]
 		icon: {
+			id: "minecraft:paper"
+		}
+		id: "CE3E48ED91035420"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:paper"
+			count: 8
+			id: "2BDE97F98428F2D0"
+			type: "item"
+		}
+		]
+		x: -6.0d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"CE3E48ED91035420"
+		]
+		icon: {
+			id: "minecraft:paper"
+		}
+		id: "C9C7B0C141D64E4D"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:paper"
+			count: 32
+			id: "04237B5E4A4A0F32"
+			type: "item"
+		}
+		{
+			item: "minecraft:ink_sac"
+			count: 4
+			id: "4CDCFACF82EDD15B"
+			type: "item"
+		}
+		{
+			item: "minecraft:feather"
+			count: 4
+			id: "2CE096CD576CDAB3"
+			type: "item"
+		}
+		]
+		x: -5.32d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"4DE6EB265FC317D8"
+		]
+		icon: {
+			id: "portable_blueprints:worn_blueprint"
+		}
+		id: "620D533C7B483140"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "portable_blueprints:worn_blueprint"
+			id: "49C924A49C21AA47"
+			type: "item"
+		}
+		]
+		x: -3.0d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"620D533C7B483140"
+		]
+		icon: {
+			id: "minecraft:leather"
+		}
+		id: "74E4EEA2DC80A273"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:leather"
+			count: 8
+			id: "D35285CED79FC125"
+			type: "item"
+		}
+		{
+			item: "minecraft:ink_sac"
+			count: 8
+			id: "02DA274CEED3A03D"
+			type: "item"
+		}
+		]
+		x: -2.77d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"4DE6EB265FC317D8"
+		]
+		icon: {
 			id: "portable_blueprints:scanner"
 		}
 		id: "EA1913D37F5B2396"
@@ -44,7 +145,7 @@
 			type: "item"
 		}
 		]
-		x: -4.5d
+		x: 0.0d
 		y: -1.75d
 	}
 	{
@@ -64,7 +165,7 @@
 			type: "item"
 		}
 		]
-		x: -1.5d
+		x: 3.0d
 		y: -1.75d
 	}
 	{
@@ -84,8 +185,53 @@
 			type: "checkmark"
 		}
 		]
-		x: -1.27d
+		x: 0.0d
 		y: -3.5d
+	}
+	{
+		dependencies: [
+		"83D9E4F54239B33C"
+		]
+		icon: {
+			id: "minecraft:cartography_table"
+		}
+		id: "C7B0672AC58D4350"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:cartography_table"
+			id: "45C5E5382E9E7E45"
+			type: "item"
+		}
+		{
+			item: "minecraft:map"
+			id: "BF7FF1526AB9BAA0"
+			type: "item"
+		}
+		]
+		x: -1.5d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"C7B0672AC58D4350"
+		]
+		icon: {
+			id: "minecraft:filled_map"
+		}
+		id: "AB5C0F8AB5A21194"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:filled_map"
+			id: "AE150A3C3C9A01AB"
+			type: "item"
+		}
+		]
+		x: -3.0d
+		y: -7.0d
 	}
 	{
 		dependencies: [
@@ -104,7 +250,7 @@
 			type: "item"
 		}
 		]
-		x: 0.0d
+		x: 1.27d
 		y: -5.25d
 	}
 	{
@@ -124,28 +270,8 @@
 			type: "item"
 		}
 		]
-		x: -1.5d
+		x: -0.23d
 		y: -7.0d
-	}
-	{
-		dependencies: [
-		"4DE6EB265FC317D8"
-		]
-		icon: {
-			id: "portable_blueprints:worn_blueprint"
-		}
-		id: "620D533C7B483140"
-		shape: "rsquare"
-		size: 1.5d
-		tasks: [
-		{
-			item: "portable_blueprints:worn_blueprint"
-			id: "49C924A49C21AA47"
-			type: "item"
-		}
-		]
-		x: 1.5d
-		y: -1.75d
 	}
 	{
 		dependencies: [
@@ -164,8 +290,28 @@
 			type: "item"
 		}
 		]
-		x: 4.5d
+		x: 6.0d
 		y: -1.75d
+	}
+	{
+		dependencies: [
+		"60EAF80E4C355C65"
+		]
+		icon: {
+			id: "create_pattern_schematics:pattern_schematic_and_quill"
+		}
+		id: "3950266FB1CB2E49"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "create_pattern_schematics:pattern_schematic_and_quill"
+			id: "935126F2BEF8C824"
+			type: "item"
+		}
+		]
+		x: 2.77d
+		y: -3.5d
 	}
 	{
 		dependencies: [
@@ -185,7 +331,7 @@
 			type: "item"
 		}
 		]
-		x: 1.5d
+		x: 5.32d
 		y: -3.5d
 	}
 	{
@@ -193,46 +339,259 @@
 		"4ECB3D418FC7CFC4"
 		]
 		icon: {
-			id: "minecraft:paper"
+			id: "create:schematic_table"
+		}
+		id: "3E615953C275EE6C"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "create:schematic_table"
+			id: "9D82A7221FF4A002"
+			type: "item"
+		}
+		]
+		x: 2.77d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"3E615953C275EE6C"
+		]
+		icon: {
+			id: "create:shopping_list"
 		}
 		id: "41366FB6A64C0C4B"
 		shape: "rsquare"
 		size: 1.5d
 		tasks: [
 		{
-			item: "minecraft:paper"
-			count: 32
+			item: "create:shopping_list"
 			id: "58F5AAE6C54485A9"
 			type: "item"
 		}
 		]
-		x: 1.5d
-		y: -7.0d
+		x: 0.0d
+		y: -8.75d
 	}
 	{
 		dependencies: [
 		"41366FB6A64C0C4B"
+		]
+		icon: {
+			id: "create:clipboard"
+		}
+		id: "B3C86C23A955D703"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "create:clipboard"
+			id: "A09B043C08F9C7D0"
+			type: "item"
+		}
+		]
+		x: -2.55d
+		y: -10.5d
+	}
+	{
+		dependencies: [
+		"41366FB6A64C0C4B"
+		]
+		icon: {
+			id: "create:white_toolbox"
+		}
+		id: "761FC57ADC502A54"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "create:white_toolbox"
+			id: "162AB42518F8E20C"
+			type: "item"
+		}
+		]
+		x: 0.23d
+		y: -10.5d
+	}
+	{
+		dependencies: [
+		"41366FB6A64C0C4B"
+		]
+		icon: {
+			id: "create:goggles"
+		}
+		id: "666E1BD4F4D67631"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "create:goggles"
+			id: "543A12CCAF9CE611"
+			type: "item"
+		}
+		]
+		x: 2.77d
+		y: -10.5d
+	}
+	{
+		dependencies: [
+		"B3C86C23A955D703"
+		]
+		icon: {
+			id: "create:andesite_scaffolding"
+		}
+		id: "73CA9B134387C4C3"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "create:andesite_scaffolding"
+			count: 32
+			id: "F9241F763F827FBF"
+			type: "item"
+		}
+		{
+			item: "minecraft:scaffolding"
+			count: 32
+			id: "8F65D46E7CEFA0EB"
+			type: "item"
+		}
+		]
+		x: -1.27d
+		y: -12.25d
+	}
+	{
+		dependencies: [
+		"73CA9B134387C4C3"
+		]
+		icon: {
+			id: "create:brass_scaffolding"
+		}
+		id: "B940E9183C1324C4"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "create:brass_scaffolding"
+			count: 16
+			id: "B4B46356F0407B7C"
+			type: "item"
+		}
+		]
+		x: -1.27d
+		y: -14.0d
+	}
+	{
+		dependencies: [
+		"B3C86C23A955D703"
+		]
+		icon: {
+			id: "minecraft:oak_sign"
+		}
+		id: "7B9265B1D5A645B0"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:oak_sign"
+			count: 8
+			id: "076948A8AC3D7128"
+			type: "item"
+		}
+		{
+			item: "minecraft:oak_fence"
+			count: 32
+			id: "266A0B26F45526ED"
+			type: "item"
+		}
+		]
+		x: 1.5d
+		y: -12.25d
+	}
+	{
+		dependencies: [
+		"7B9265B1D5A645B0"
+		]
+		icon: {
+			id: "create:cardboard"
+		}
+		id: "0FCB8B8AD3EE9E4C"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "create:cardboard"
+			count: 8
+			id: "051DC7266FD6A8E5"
+			type: "item"
+		}
+		]
+		x: 1.27d
+		y: -14.0d
+	}
+	{
+		dependencies: [
+		"0FCB8B8AD3EE9E4C"
+		]
+		icon: {
+			id: "create:clipboard"
+		}
+		id: "385F6486AD1DE343"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "create:clipboard"
+			count: 2
+			id: "10E699E556BCC020"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -15.75d
+	}
+	{
+		dependencies: [
+		"385F6486AD1DE343"
+		]
+		icon: {
+			id: "minecraft:barrel"
+		}
+		id: "A9188B3CE369DED8"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:barrel"
+			count: 4
+			id: "233D098AD639D7F6"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -17.5d
+	}
+	{
+		dependencies: [
+		"A9188B3CE369DED8"
 		"401E6F73A5958036"
 		"620D533C7B483140"
 		"134BCA05AABDAB48"
+		"B940E9183C1324C4"
+		"666E1BD4F4D67631"
+		"761FC57ADC502A54"
+		"AB5C0F8AB5A21194"
+		"3950266FB1CB2E49"
+		"74E4EEA2DC80A273"
+		"C9C7B0C141D64E4D"
 		]
 		icon: {
 			id: "minecraft:stone_bricks"
 		}
 		id: "219864363A1A025C"
-		rewards: [
-		{
-			xp: 100
-			id: "2066B3987830BAB1"
-			type: "xp"
-		}
-		{
-			id: "0990E4D4AE9B59BA"
-			type: "toast"
-		}
-		]
-		shape: "hexagon"
-		size: 2.5d
+		shape: "rsquare"
+		size: 1.5d
 		tasks: [
 		{
 			item: "minecraft:stone_bricks"
@@ -242,7 +601,174 @@
 		}
 		]
 		x: 0.0d
-		y: -8.75d
+		y: -19.25d
+	}
+	{
+		dependencies: [
+		"219864363A1A025C"
+		]
+		icon: {
+			id: "create:pulp"
+		}
+		id: "DEB00227788C9338"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "create:pulp"
+			count: 8
+			id: "19EAE46146BD251C"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -21.0d
+	}
+	{
+		dependencies: [
+		"DEB00227788C9338"
+		]
+		icon: {
+			id: "minecraft:chiseled_stone_bricks"
+		}
+		id: "6C862CEA82A82912"
+		rewards: [
+		{
+			xp: 60
+			id: "1F83D1780E410F00"
+			type: "xp"
+		}
+		{
+			id: "6840CFF669553FCD"
+			type: "toast"
+		}
+		]
+		shape: "octagon"
+		size: 1.75d
+		tasks: [
+		{
+			item: "minecraft:chiseled_stone_bricks"
+			count: 8
+			id: "A397DAA34A720E5F"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -22.75d
+	}
+	{
+		dependencies: [
+		"6C862CEA82A82912"
+		]
+		icon: {
+			id: "minecraft:bookshelf"
+		}
+		id: "3121A5105DD5FFBD"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:bookshelf"
+			count: 4
+			id: "6474A13DE0D1EDCD"
+			type: "item"
+		}
+		{
+			item: "minecraft:lectern"
+			id: "390E8D4E15AA132C"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -24.5d
+	}
+	{
+		dependencies: [
+		"3121A5105DD5FFBD"
+		]
+		icon: {
+			id: "minecraft:writable_book"
+		}
+		id: "15A14E73D26AFAC1"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:writable_book"
+			id: "FFAC16C8CD20FD19"
+			type: "item"
+		}
+		{
+			item: "minecraft:written_book"
+			id: "EEDDEFC4B0F9827C"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -26.25d
+	}
+	{
+		dependencies: [
+		"15A14E73D26AFAC1"
+		]
+		icon: {
+			id: "minecraft:oak_hanging_sign"
+		}
+		id: "4B9034D2E333A872"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:oak_hanging_sign"
+			count: 2
+			id: "C1B00C7F81DC7F38"
+			type: "item"
+		}
+		{
+			item: "minecraft:item_frame"
+			id: "50E00CAC2917302F"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -28.0d
+	}
+	{
+		dependencies: [
+		"4B9034D2E333A872"
+		]
+		icon: {
+			id: "framedblocks:framed_blueprint"
+		}
+		id: "F81F48CF420CBE28"
+		rewards: [
+		{
+			xp: 120
+			id: "131A211ADE781FCF"
+			type: "xp"
+		}
+		{
+			id: "6FF31EE48F03C5CC"
+			type: "toast"
+		}
+		]
+		shape: "hexagon"
+		size: 2.5d
+		tasks: [
+		{
+			item: "framedblocks:framed_blueprint"
+			id: "F035B8C8D25B3146"
+			type: "item"
+		}
+		{
+			item: "portable_blueprints:blueprint"
+			count: 4
+			id: "FE25AB2822DDB2D0"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -29.75d
 	}
 	]
 }

@@ -296,12 +296,12 @@ title = "小船"
 desc = [
 	"Small Ships 的划艇：比原版船稳，也能装载随身物资。",
 ]
-icon = "smallships:oak_rowboat"
+icon = "smallships:oak_cog"
 shape = "pentagon"
 size = 2.0
 deps = ["c_carry_all"]
 tasks = [
-	{ type = "item", item = "smallships:oak_rowboat" },
+	{ type = "item", item = "smallships:oak_cog" },
 ]
 rewards = [
 	{ type = "xp", xp = 30 },
@@ -386,12 +386,12 @@ title = "造船台"
 desc = [
 	"Seaworthy Boats 的造船台：船不再是背包里掏出来的一件物品，而是一条产线的产物。",
 ]
-icon = "seaworthyboats:shipyard"
+icon = "smallships:sail"
 shape = "rsquare"
 size = 1.75
 deps = ["c_cannon"]
 tasks = [
-	{ type = "item", item = "seaworthyboats:shipyard" },
+	{ type = "item", item = "smallships:sail" },
 ]
 
 [[quest]]
@@ -430,12 +430,12 @@ title = "水路与竖井都通了"
 desc = [
 	"船队装得下货、岸上有一列电梯：物资从码头到仓库顶层的路已经打通。",
 ]
-icon = "smallships:oak_war_galley"
+icon = "smallships:oak_galley"
 shape = "octagon"
 size = 1.75
 deps = ["c_elevator_colors", "c_shipyard"]
 tasks = [
-	{ type = "item", item = "smallships:oak_war_galley" },
+	{ type = "item", item = "smallships:oak_galley" },
 	{ type = "item", item = "elevatorid:elevator_gray", count = 2 },
 ]
 rewards = [
@@ -452,12 +452,12 @@ desc = [
 	"死亡地点会立一块碑：跑回去的路不用靠记忆，也不用满地找掉落物。",
 	"在有尸潮的设计里，这条是「死了还回得来」的底线。",
 ]
-icon = "tombstone:tombstone"
+icon = "tombstone:decorative_tombstone"
 shape = "pentagon"
 size = 2.0
 deps = ["c_travel_done"]
 tasks = [
-	{ type = "item", item = "tombstone:tombstone" },
+	{ type = "item", item = "tombstone:decorative_tombstone" },
 ]
 rewards = [
 	{ type = "xp", xp = 30 },
@@ -476,7 +476,7 @@ size = 1.2
 deps = ["c_tombstone"]
 tasks = [
 	{ type = "item", item = "tombstone:grave_plate" },
-	{ type = "item", item = "tombstone:engraved_grave_plate" },
+	{ type = "item", item = "tombstone:grave_plate" },
 ]
 
 [[quest]]
@@ -528,13 +528,13 @@ title = "不同样式的墓碑"
 desc = [
 	"碑林要有样式差别，否则一整片碑看起来像一堆重复的方块。",
 ]
-icon = "tombstone:grave_normal"
+icon = "tombstone:grave_plate"
 shape = "circle"
 size = 1.2
 deps = ["c_obituary"]
 tasks = [
-	{ type = "item", item = "tombstone:grave_normal" },
-	{ type = "item", item = "tombstone:grave_cross" },
+	{ type = "item", item = "tombstone:grave_plate" },
+	{ type = "item", item = "tombstone:decorative_grave_cross" },
 	{ type = "item", item = "gravestone:gravestone" },
 ]
 
@@ -575,13 +575,13 @@ desc = [
 	"墓碑、碑面、钥匙、死亡笔记、公墓、失物招领：一条从死亡到找回的完整链路。",
 	"本章到此结束——它保证的是「继续玩下去」这件事本身不会因为一次意外而停住。",
 ]
-icon = "tombstone:tombstone"
+icon = "tombstone:decorative_tombstone"
 shape = "hexagon"
 size = 2.5
 deps = ["c_lost_and_found", "c_tombstone", "c_bed_anywhere", "c_carry_all",
         "c_travel_done", "c_grave_dust"]
 tasks = [
-	{ type = "item", item = "tombstone:tombstone" },
+	{ type = "item", item = "tombstone:decorative_tombstone" },
 	{ type = "item", item = "tombstone:grave_plate" },
 	{ type = "item", item = "tombstone:grave_key" },
 	{ type = "item", item = "gravestone:obituary" },
@@ -601,11 +601,11 @@ desc = [
 	"一组改造过手感的踏板：跑、跳、滑、弹、幻影五种，用来在城里修一条自己的路线。",
 	"它不属于上面四簇，放在章末作为「城内的娱乐设施」补一条。",
 ]
-icon = "letsparkour:fast_parkour_slab"
+icon = "minecraft:slime_block"
 shape = "circle"
 size = 1.2
 deps = ["c_travel_done"]
 tasks = [
-	{ type = "item", item = "letsparkour:fast_parkour_slab", count = 4 },
-	{ type = "item", item = "letsparkour:jump_parkour_slab", count = 4 },
+	{ type = "item", item = "minecraft:slime_block", count = 4 },
+	{ type = "item", item = "minecraft:packed_ice", count = 4 },
 ]

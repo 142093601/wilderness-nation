@@ -1,0 +1,709 @@
+# 技艺 · 机械动力·物流
+#
+# 本章的 mod：Create 本体（物流件）——所有判据来自 `create` 命名空间，
+# 已用 `python tools/item_index.py --ns create --out tools/out/Q-create.txt` 逐条核对（901 项）。
+#
+# 与其它章的分工（**这条最重要，写之前逐条对过**）：
+#   · `60-create` 已经写过这些机器**是什么**：第一条传送带 · 溜槽 · 置物台 · 黄铜漏斗 ·
+#     智能溜槽 · 物品保险库 · 仓储与打包 · 库存清单 · 蛙口包站 · 机械臂 · 流体管道 ·
+#     动力泵 · 流体储罐。**本章一条都不重复"它是什么"**。
+#   · `130-cat-storage` = 放东西那一段（随身 / 就近 / 回仓 / 每人一份的战利品）。
+#   · `75-steam`      = 列车 · 车站 · 时刻表 · 信号 · 导航（本章不写列车）。
+#   · **本章 = 系统层**：把已有的零件组织成一条不卡的产线。所以每条的题目都是
+#     系统口径（带路分流 / 按地址投递 / 堵塞在哪一段 / 每小时多少件），不是机器名。
+#
+# 本章唯一的指标是**吞吐量**（单位时间的件数），不是"能不能放进去"。
+# 判据全部是实物（item）。**checkmark = 0**：本章没有一条需要靠"自己说做完了"。
+#
+# 条数：43（簇 1 搬运 9 · 簇 2 分流与分拣 10 · 簇 3 包裹与地址 10 ·
+#            簇 4 库存与请求 8 · 簇 5 节拍与吞吐 6）。形状：五边形 5（每簇头一条）·
+# 八边形 4（章内里程碑）· 六边形 1（终局，放最后）。
+
+key = "logistics"
+title = "机械动力·物流"
+subtitle = "物料在机器之间怎么走，以及这条线每小时能过多少件"
+group = "craft"
+icon = "create:belt_connector"
+order_index = 32
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---- 簇 1：搬运 ----
+
+[[quest]]
+name = "lg_belt_line"
+title = "主干带路"
+desc = [
+	"一整条线上，带只走一个方向，中途不改道。",
+	"往返混线的第一段带出多少件，决定了整线的上限。",
+]
+icon = "create:belt_connector"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "create:belt_connector", count = 16 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "lg_belt_speed"
+title = "带速就是吞吐"
+desc = [
+	"转速直接写在带速上，带速乘上间距才是理论的件数。",
+	"调转速之前，先量出这条线现在每分钟过多少件。",
+]
+icon = "create:speedometer"
+shape = "rsquare"
+deps = ["lg_belt_line"]
+tasks = [
+	{ type = "item", item = "create:speedometer", count = 2 },
+]
+
+[[quest]]
+name = "lg_branch_merge"
+title = "岔路与合流"
+desc = [
+	"两条带汇进一条时，接缝处会抢道，件数掉得比预期的多。",
+	"分流也一样：岔口越靠前，后面的带越不容易压满。",
+]
+icon = "create:andesite_tunnel"
+shape = "rsquare"
+deps = ["lg_belt_line"]
+tasks = [
+	{ type = "item", item = "create:andesite_tunnel", count = 2 },
+	{ type = "item", item = "create:brass_tunnel", count = 2 },
+]
+
+[[quest]]
+name = "lg_riser"
+title = "跨层提升"
+desc = [
+	"物料跨楼层走，靠一段倾斜带或一个锁链传动轮拉上去。",
+	"接缝处的取放位置差一格，整段的吞吐就折半。",
+]
+icon = "create:chain_conveyor"
+shape = "rsquare"
+deps = ["lg_belt_line"]
+tasks = [
+	{ type = "item", item = "create:chain_conveyor", count = 2 },
+]
+
+[[quest]]
+name = "lg_zero_power"
+title = "不耗动力的落差搬运"
+desc = [
+	"上下楼层的大宗料，用落差省掉一段动力带。",
+	"代价是节拍由重力决定，接料口压满就会回流。",
+]
+icon = "create:chute"
+shape = "rsquare"
+deps = ["lg_belt_line"]
+tasks = [
+	{ type = "item", item = "create:chute", count = 8 },
+]
+
+[[quest]]
+name = "lg_gate"
+title = "流向开关"
+desc = [
+	"一条线要按需求开停，而不是一直转着空跑。",
+	"开关装在主线的一段上，整段的件数一起被限住。",
+]
+icon = "create:clutch"
+shape = "circle"
+size = 1.2
+deps = ["lg_belt_line"]
+tasks = [
+	{ type = "item", item = "create:clutch", count = 2 },
+]
+
+[[quest]]
+name = "lg_demand"
+title = "按需求取料"
+desc = [
+	"取料口按一个固定件数取，多取的部分等于白搬一趟。",
+	"定量投放是这一环的执行件：数量写死，节拍才稳。",
+]
+icon = "create:weighted_ejector"
+shape = "circle"
+size = 1.2
+deps = ["lg_belt_line"]
+tasks = [
+	{ type = "item", item = "create:weighted_ejector", count = 2 },
+]
+
+[[quest]]
+name = "lg_buffer"
+title = "中间仓位"
+desc = [
+	"工段之间留一格缓冲，上游短暂停顿时下游不用跟着停。",
+	"缓冲太小等于没有，太大则会把堵塞藏起来。",
+]
+icon = "create:item_vault"
+shape = "circle"
+size = 1.2
+deps = ["lg_belt_line"]
+tasks = [
+	{ type = "item", item = "create:item_vault", count = 2 },
+]
+
+[[quest]]
+name = "lg_line_done"
+title = "全线的件数定下来"
+desc = [
+	"主干带路、提升、缓冲都定了：这条线每分钟过多少件是个已知数。",
+	"后面的分流与投递都按这个数来配。",
+]
+icon = "create:belt_connector"
+shape = "octagon"
+size = 1.75
+deps = ["lg_belt_speed", "lg_branch_merge", "lg_riser", "lg_zero_power",
+        "lg_gate", "lg_demand", "lg_buffer"]
+tasks = [
+	{ type = "item", item = "create:belt_connector", count = 32 },
+]
+
+# ---- 簇 2：分流与分拣 ----
+
+[[quest]]
+name = "lg_sort_head"
+title = "只取该取的"
+desc = [
+	"整条线上只有分拣段决定「哪个工位拿到什么」。",
+	"带上混着几种料时，取料口只认自己那一种。",
+	"先把规则层立起来，后面所有岔口都挂在这一层下面。",
+]
+icon = "create:chain_conveyor"
+shape = "pentagon"
+size = 2.0
+deps = ["lg_line_done"]
+tasks = [
+	{ type = "item", item = "create:chain_conveyor", count = 4 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "lg_sort_zone"
+title = "分流与合流"
+desc = [
+	"分流靠隧道件：一条主线按规则岔进几个工位，再合回来。",
+	"合流处两条带抢道时，件数掉得比预期的多。",
+]
+icon = "create:andesite_tunnel"
+shape = "circle"
+size = 1.2
+deps = ["lg_sort_head"]
+tasks = [
+	{ type = "item", item = "create:andesite_tunnel", count = 2 },
+	{ type = "item", item = "create:brass_tunnel", count = 2 },
+]
+
+[[quest]]
+name = "lg_smart_chute"
+title = "垂直分拣"
+desc = [
+	"上下楼层之间按规则落料，不必先运到地面再升上去。",
+	"堵在这一段时，下层的带会先满，反压到上层。",
+]
+icon = "create:smart_chute"
+shape = "circle"
+size = 1.2
+deps = ["lg_sort_head"]
+tasks = [
+	{ type = "item", item = "create:smart_chute", count = 2 },
+]
+
+[[quest]]
+name = "lg_list_rule"
+title = "列表过滤器"
+desc = [
+	"把一张写好的清单当成一个部件插进岔口，比逐个设过滤省事。",
+	"一份清单能复用在同一片区的多个岔口上。",
+]
+icon = "create:filter"
+shape = "rsquare"
+deps = ["lg_sort_head"]
+tasks = [
+	{ type = "item", item = "create:filter", count = 4 },
+]
+
+[[quest]]
+name = "lg_rule_merge"
+title = "规则合并与去重"
+desc = [
+	"多张清单并成一张：先查重，再插进机器。",
+	"重复条目不会报错，只会让排查时看不出哪条在生效。",
+]
+icon = "create:attribute_filter"
+shape = "circle"
+size = 1.2
+deps = ["lg_list_rule"]
+tasks = [
+	{ type = "item", item = "create:attribute_filter", count = 2 },
+]
+
+[[quest]]
+name = "lg_arm_loop"
+title = "机械臂取放"
+desc = [
+	"机械臂负责越过分拣线的那一段：从带上取，放到机器口。",
+	"它的取放是有节奏的，摆得太密反而互相等待。",
+]
+icon = "create:mechanical_arm"
+shape = "rsquare"
+deps = ["lg_sort_head"]
+tasks = [
+	{ type = "item", item = "create:mechanical_arm", count = 2 },
+]
+
+[[quest]]
+name = "lg_contraption_io"
+title = "移动设备怎么对接"
+desc = [
+	"移动的装置停在工位时，接口要能自动接上。",
+	"接不上就只能在它停下的那几秒里手动搬，吞吐归零。",
+]
+icon = "create:portable_storage_interface"
+shape = "circle"
+size = 1.2
+deps = ["lg_arm_loop"]
+tasks = [
+	{ type = "item", item = "create:portable_storage_interface", count = 2 },
+]
+
+[[quest]]
+name = "lg_batch_route"
+title = "批量分流"
+desc = [
+	"同一批料要同时进多个工位时，岔口要按批分组。",
+	"分组之后，每组的件数可以单独调，不必大改整线。",
+]
+icon = "create:brass_tunnel"
+shape = "circle"
+size = 1.2
+deps = ["lg_rule_merge"]
+tasks = [
+	{ type = "item", item = "create:brass_tunnel", count = 6 },
+]
+
+[[quest]]
+name = "lg_jam_diag"
+title = "堵在哪个岔口"
+desc = [
+	"叉口堵住时，带会先满，然后整段反压到上游。",
+	"先找那段被压住的带，再往上追它前面的岔口。",
+]
+icon = "create:smart_chute"
+shape = "rsquare"
+deps = ["lg_batch_route", "lg_arm_loop"]
+tasks = [
+	{ type = "item", item = "create:smart_chute", count = 4 },
+]
+
+[[quest]]
+name = "lg_sort_done"
+title = "分拣吞吐达标"
+desc = [
+	"分拣段不再是最慢的一环：岔口的件数已经跟上干线。",
+	"后面每一步都建立在「分拣不再是瓶颈」这个前提上。",
+]
+icon = "create:brass_tunnel"
+shape = "octagon"
+size = 1.75
+deps = ["lg_list_rule", "lg_rule_merge", "lg_arm_loop", "lg_contraption_io",
+        "lg_batch_route", "lg_jam_diag"]
+tasks = [
+	{ type = "item", item = "create:brass_tunnel", count = 8 },
+	{ type = "item", item = "create:filter", count = 4 },
+]
+
+# ---- 簇 3：包裹与地址 ----
+
+[[quest]]
+name = "lg_package_flow"
+title = "按地址投递"
+desc = [
+	"一件东西装进包裹，写上收件地址，剩下的交给线体。",
+	"包裹是本章唯一允许「跨基地」的搬运方式。",
+]
+icon = "create:packager"
+shape = "pentagon"
+size = 2.0
+deps = ["lg_sort_head"]
+tasks = [
+	{ type = "item", item = "create:packager", count = 2 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "lg_package_blank"
+title = "包装材料消耗"
+desc = [
+	"打包是要吃纸板的，纸板链断掉，整条投递线就停。",
+	"先把纸板与包裹算成一项日常消耗。",
+]
+icon = "create:cardboard"
+shape = "circle"
+size = 1.2
+deps = ["lg_package_flow"]
+tasks = [
+	{ type = "item", item = "create:cardboard", count = 16 },
+	{ type = "item", item = "create:cardboard_package_12x12", count = 8 },
+]
+
+[[quest]]
+name = "lg_parcel_size"
+title = "什么尺寸装什么"
+desc = [
+	"包裹有大小之分，装错尺寸会退回来重打一遍。",
+	"固定几种常用尺寸，投递环节才不会天天返工。",
+]
+icon = "create:cardboard_package_12x12"
+shape = "circle"
+size = 1.2
+deps = ["lg_package_flow"]
+tasks = [
+	{ type = "item", item = "create:cardboard_package_12x12", count = 4 },
+	{ type = "item", item = "create:cardboard_package_10x8", count = 4 },
+]
+
+[[quest]]
+name = "lg_address_rule"
+title = "地址规则"
+desc = [
+	"同一个收件点只用一个地址，跨基地的线才不会跑错。",
+	"地址是线体的路由表：写错了不报错，只送到错的地方。",
+]
+icon = "create:package_filter"
+shape = "rsquare"
+deps = ["lg_package_flow"]
+tasks = [
+	{ type = "item", item = "create:package_filter", count = 4 },
+]
+
+[[quest]]
+name = "lg_endpoint_out"
+title = "投递端点"
+desc = [
+	"发件口要能自己把包裹塞进线体，不需要人站在旁边。",
+	"端点一多，就得给每个端点定优先级，否则会互相抢道。",
+]
+icon = "create:package_frogport"
+shape = "rsquare"
+deps = ["lg_address_rule"]
+tasks = [
+	{ type = "item", item = "create:package_frogport", count = 4 },
+]
+
+[[quest]]
+name = "lg_inbox"
+title = "收件点"
+desc = [
+	"远端要有一个固定的收件点，包裹到了就知道该往哪放。",
+	"收件点满了以后包裹会停在路上，这一段的吞吐要留余量。",
+]
+icon = "create:white_postbox"
+shape = "circle"
+size = 1.2
+deps = ["lg_endpoint_out"]
+tasks = [
+	{ type = "item", item = "create:white_postbox", count = 4 },
+]
+
+[[quest]]
+name = "lg_repack"
+title = "到站重打包"
+desc = [
+	"长距离运过来的包裹，到站按本地规则拆开重组。",
+	"这一步是为了让跨基地运输与本地分拣共用同一套线体。",
+]
+icon = "create:repackager"
+shape = "circle"
+size = 1.2
+deps = ["lg_inbox"]
+tasks = [
+	{ type = "item", item = "create:repackager", count = 2 },
+]
+
+[[quest]]
+name = "lg_cross_base"
+title = "两端跑通"
+desc = [
+	"甲地打包、乙地收到、中间没有人，这才叫跨基地运输。",
+	"先跑通一对端点，再复制到第二对。",
+]
+icon = "create:package_frogport"
+shape = "rsquare"
+deps = ["lg_repack"]
+tasks = [
+	{ type = "item", item = "create:package_frogport", count = 6 },
+	{ type = "item", item = "create:cardboard_package_12x12", count = 16 },
+]
+
+[[quest]]
+name = "lg_rare_drop"
+title = "稀有包裹"
+desc = [
+	"线上偶尔会掉出稀有的包裹，这是投递线自己长出来的彩头。",
+	"它与产线效率无关，但值得留一条能收下它的支线。",
+]
+icon = "create:cardboard_package_10x8"
+shape = "circle"
+size = 1.2
+deps = ["lg_cross_base"]
+tasks = [
+	{ type = "item", item = "create:cardboard_package_10x8", count = 1 },
+]
+
+[[quest]]
+name = "lg_delivery_done"
+title = "跨基地投递成线"
+desc = [
+	"打包、写地址、投递、收件、重打包连成一条闭环。",
+	"到这里，两个基地之间已经不需要人带货。",
+]
+icon = "create:packager"
+shape = "octagon"
+size = 1.75
+deps = ["lg_package_blank", "lg_parcel_size", "lg_cross_base", "lg_rare_drop"]
+tasks = [
+	{ type = "item", item = "create:packager", count = 4 },
+	{ type = "item", item = "create:repackager", count = 2 },
+]
+
+# ---- 簇 4：库存与请求 ----
+
+[[quest]]
+name = "lg_stock_head"
+title = "领料不用翻仓库"
+desc = [
+	"仓库自己知道有什么、剩多少，领料只写清单。",
+	"这是「一堆箱子」与「一套设施」的分界。",
+]
+icon = "create:stock_link"
+shape = "pentagon"
+size = 2.0
+deps = ["lg_package_flow"]
+tasks = [
+	{ type = "item", item = "create:stock_link", count = 4 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "lg_stock_list"
+title = "账要能读出来"
+desc = [
+	"库存清单是唯一的账：有什么、剩多少、谁在动它。",
+	"没有账，多人共仓就只能靠问人。",
+]
+icon = "create:stock_ticker"
+shape = "rsquare"
+deps = ["lg_stock_head"]
+tasks = [
+	{ type = "item", item = "create:stock_ticker", count = 2 },
+]
+
+[[quest]]
+name = "lg_request"
+title = "工位领料"
+desc = [
+	"领料走信号：写清单，仓库自己把东西送到工位。",
+	"这一步省下的是走路，而不是机器时间。",
+]
+icon = "create:redstone_requester"
+shape = "rsquare"
+deps = ["lg_stock_list"]
+tasks = [
+	{ type = "item", item = "create:redstone_requester", count = 2 },
+]
+
+[[quest]]
+name = "lg_shopping"
+title = "登记缺料"
+desc = [
+	"缺什么写进清单，补料就不再靠人记。",
+	"清单与库存账对不上时，先去查谁的机器装了同一个链接站。",
+]
+icon = "create:shopping_list"
+shape = "circle"
+size = 1.2
+deps = ["lg_request"]
+tasks = [
+	{ type = "item", item = "create:shopping_list", count = 2 },
+]
+
+[[quest]]
+name = "lg_refill"
+title = "补货阈值"
+desc = [
+	"关键料低于下限就报信，别等用完了才发现。",
+	"阈值定得太高会一直补，太低则等于没有。",
+]
+icon = "create:stockpile_switch"
+shape = "rsquare"
+deps = ["lg_stock_list"]
+tasks = [
+	{ type = "item", item = "create:stockpile_switch", count = 4 },
+]
+
+[[quest]]
+name = "lg_dashboard"
+title = "仪表盘"
+desc = [
+	"把几条线的状态集中到一块面板上，异常一眼能看见。",
+	"面板只做显示，不参与控制——它坏了不该让产线停。",
+]
+icon = "create:display_board"
+shape = "circle"
+size = 1.2
+deps = ["lg_stock_list"]
+tasks = [
+	{ type = "item", item = "create:display_board", count = 2 },
+	{ type = "item", item = "create:display_link", count = 2 },
+]
+
+[[quest]]
+name = "lg_portable"
+title = "线边的取料口"
+desc = [
+	"工位旁边一个接口，接上就能领料，不必回总仓。",
+	"接口数量上来之后，仓库的压力会集中到那几个最忙的。",
+]
+icon = "create:portable_fluid_interface"
+shape = "circle"
+size = 1.2
+deps = ["lg_request"]
+tasks = [
+	{ type = "item", item = "create:portable_fluid_interface", count = 2 },
+]
+
+[[quest]]
+name = "lg_stock_done"
+title = "库存不再靠人记"
+desc = [
+	"账、请求、补货、显示四件事都有判断依据。",
+	"从这一步起，仓库的极限只由机构决定，不由人的记性决定。",
+]
+icon = "create:stock_link"
+shape = "octagon"
+size = 1.75
+deps = ["lg_stock_list", "lg_request", "lg_shopping", "lg_refill",
+        "lg_dashboard", "lg_portable"]
+tasks = [
+	{ type = "item", item = "create:stock_link", count = 8 },
+	{ type = "item", item = "create:stock_ticker", count = 2 },
+]
+
+# ---- 簇 5：节拍与吞吐 ----
+
+[[quest]]
+name = "lg_tempo_head"
+title = "每小时多少件"
+desc = [
+	"产线只有两个数：每分钟过多少件，以及卡在哪一段。",
+	"本章剩下的条目都围绕这两个数。",
+]
+icon = "create:factory_gauge"
+shape = "pentagon"
+size = 2.0
+deps = ["lg_sort_done"]
+tasks = [
+	{ type = "item", item = "create:factory_gauge", count = 2 },
+]
+rewards = [
+	{ type = "xp", xp = 40 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "lg_tempo_measure"
+title = "测出节拍"
+desc = [
+	"空转的带上没有件数：必须让料真的走过去才算测到。",
+	"先量一段，再乘段数，别用估的。",
+]
+icon = "create:speedometer"
+shape = "rsquare"
+deps = ["lg_tempo_head"]
+tasks = [
+	{ type = "item", item = "create:speedometer", count = 2 },
+]
+
+[[quest]]
+name = "lg_tempo_buffer"
+title = "节拍与缓存"
+desc = [
+	"上下游节拍不一致时，用缓存吸收差值，而不是让两边都降速。",
+	"缓存放在最慢那一段的前面，效果最明显。",
+]
+icon = "create:item_vault"
+shape = "circle"
+size = 1.2
+deps = ["lg_tempo_measure"]
+tasks = [
+	{ type = "item", item = "create:item_vault", count = 4 },
+]
+
+[[quest]]
+name = "lg_tempo_read"
+title = "线边读数"
+desc = [
+	"箱里现在有多少，直接从机器上读，不用开箱看。",
+	"读数是判断「这段是不是在堵」最省事的办法。",
+]
+icon = "create:content_observer"
+shape = "circle"
+size = 1.2
+deps = ["lg_tempo_measure"]
+tasks = [
+	{ type = "item", item = "create:content_observer", count = 4 },
+]
+
+[[quest]]
+name = "lg_handover"
+title = "上下游交接"
+desc = [
+	"两段线之间的交接处，是整条线上最容易丢件数的地方。",
+	"把交接改成有仓库中转，丢件就变成看得见的账。",
+]
+icon = "create:item_hatch"
+shape = "circle"
+size = 1.2
+deps = ["lg_tempo_buffer"]
+tasks = [
+	{ type = "item", item = "create:item_hatch", count = 4 },
+]
+
+[[quest]]
+name = "lg_logistics_done"
+title = "整线吞吐达标"
+desc = [
+	"从原料进来到成品到工位，全程没有人搬东西，且件数可测。",
+	"做到这一步，产线的瓶颈才从「人」变成「某一台机器」。",
+]
+icon = "create:mechanical_arm"
+shape = "hexagon"
+size = 2.5
+deps = ["lg_delivery_done", "lg_stock_done", "lg_tempo_measure", "lg_tempo_buffer",
+        "lg_tempo_read", "lg_handover"]
+tasks = [
+	{ type = "item", item = "create:mechanical_arm", count = 8 },
+	{ type = "item", item = "create:brass_tunnel", count = 8 },
+	{ type = "item", item = "create:belt_connector", count = 32 },
+]
+rewards = [
+	{ type = "xp", xp = 100 },
+	{ type = "toast" },
+]

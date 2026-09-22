@@ -1,27 +1,52 @@
 # 类目 · 战斗与军械
 #
-# 本章的 mod：Hundred Years Warfare（军事单位）· Medieval Siege Machines（攻城器械）·
-#   It Takes a Pillage（掠夺者）· Epic Knights（武器）· Simply Swords（已在装备章铺过）·
-#   Better Combat（战斗手感）· 武器与护甲装饰类
+# 本章的 mod（逐个核对过：`python tools/item_index.py --ns <ns>` → tools/out/P-*.txt）：
+#   · Hundred Years Warfare `hundred_years_war`（269 项：部队卷轴 · 指挥杖 · 补给点 /
+#     生成点 / 仓库控制 / 仓库存储 / 运输指令 · 六种工作站 · 弩炮 / 轻型投石机 / 攻城塔 /
+#     手推炮 · 长矛 / 骑枪 / 军刀 / 弯刀 / 镰形剑）
+#   · Epic Knights（mod id = `magistuarmory`，720 项：钢制武器 · 四种盾形 × 各材质 ·
+#     骑枪 · 马铠 · 马衣图案与马装饰）
+#   · Medieval Siege Machines `siegemachines`（18 项；本章只取**守城视角**的三件）
+#   · It Takes a Pillage `takesapillage`（7 项 + 5 条进度）
+#   · Better Combat（战斗手感，无物品）
+#   · Simply Swords `simplyswords`：武器与独特武器归 `140-cat-gear`，本章不重复
 #
-# 与其它章的分工：
-#   · 工具与装备 = 个人装备
-#   · 御敌（编年） = 国策与达标线
-#   · 本章        = **军械与攻城**这一层：能造什么、怎么用
+# 与相邻章的分工（只在这里划边界，不动别人的文件）：
+#   · `140-cat-gear`   = 一个人的装备：拿什么、穿什么、怎么附魔、怎么修
+#   · `54-conquest`    = **进攻方**：siegemachines 那几台机器怎么造、怎么拿来夺城
+#   · `70-defense`     = 工事与自动化防御：墙、机关、照明、固定炮座、弹药后端
+#   · `55-defense-era` = 国策与达标线：编制名册、储备规格、伤亡与复盘
+#   · 本章             = 军械列装 · 军阵编制 · 器械与后勤 · 反制与善后
+#                        （一支部队用什么、怎么编、走多远、挨打之后怎么办）
 #
-# 判据来源：实物。军事单位（HYW）不发进度（实测 advancements=0），所以
-# "带兵打仗"那一层只能靠**装备与器械的实物**来判定。
+# 判据来源（逐条查过 id，不凭印象）：
+#   · HYW 的部队卷轴（`scroll_*`）、指挥杖、补给点、生成点、仓库控制/存储、运输指令、
+#     六种工作站都是**真实注册物品** —— 所以「编制」与「后勤」这两层判得了
+#   · 掠夺者兵种用 `takesapillage:<兵种>` 击杀（实体名取自它自己的
+#     `data/takesapillage/loot_table/entities/*.json` 与 lang 的 `entity.takesapillage.*`）
+#   · 靶场用原版统计 `minecraft:target_hit`（`QUESTBOOK-CRITERIA.md` §二 实测存在）
+#
+# ⚠️ 两个坑，下一任作者别再踩：
+#   1) `magistuarmory:*_blocking` 与 `*_raised`，以及裸的 `kiteshield` / `roundshield` /
+#      `heatershield` / `ellipticalshield`，**只是模型状态、不是注册物品**（jar 内 lang 键
+#      为 0；`models/item/iron_estoc.json` 用 overrides 指向 `iron_estoc_blocking`）。
+#      把这类 id 写进 tasks，任务永远做不完，理由见说明书 §1.1。
+#   2) `title` / `desc` 的值里不许出现英文双引号，中文引号用「」。
+#
+# 已知的跨章重复（不在本章可改范围内，留给汇总的人处置）：
+#   `w_pillager_camp` / `w_bastille` 用的两条 `takesapillage:adventure/*` 进度，
+#   与 `70-defense` 的 `raid_camp` / `raid_stronghold` 完全相同 → 两处会同时亮。
 
 key = "cat_warfare"
 title = "战斗与军械"
 subtitle = "从一把好剑，到一台能砸开城门的机器"
 group = "category"
 icon = "magistuarmory:steel_chainmail"
-order_index = 36
+order_index = 62
 
 grid = { step = 1.5, row_h = 1.75 }
 
-# ---------------- 簇 1：个人战斗（手感与装备） ----------------
+# ---- 簇 1：个人战斗（已有） ----
 
 [[quest]]
 name = "w_better_combat"
@@ -82,7 +107,294 @@ tasks = [
 	{ type = "item", item = "minecraft:arrow", count = 128 },
 ]
 
-# ---------------- 簇 2：攻城器械（Medieval Siege Machines） ----------------
+[[quest]]
+name = "w_issue_kit"
+title = "钢制列装"
+desc = [
+	"「制式」的意思不是好看，是同型号够一批人用：队列里谁缺什么，一眼看得出来。",
+	"这一条按把数、按面数备，不按件数——个人装备章管的是挑一件顺手的。",
+]
+icon = "magistuarmory:steel_estoc"
+shape = "rsquare"
+deps = ["w_steel"]
+tasks = [
+	{ type = "item", item = "magistuarmory:steel_estoc", count = 8 },
+	{ type = "item", item = "magistuarmory:steel_kiteshield", count = 8 },
+]
+
+[[quest]]
+name = "w_shield_four"
+title = "盾的四种形制"
+desc = [
+	"鸢盾、圆盾、扇形盾、椭圆盾：遮住的部位不同，走窄道与列阵时的空当也不同。",
+	"这里要的是四种都备、按队形发，而不是每人挑一面顺手的。",
+]
+icon = "magistuarmory:steel_ellipticalshield"
+shape = "rsquare"
+deps = ["w_issue_kit"]
+tasks = [
+	{ type = "item", item = "magistuarmory:steel_kiteshield" },
+	{ type = "item", item = "magistuarmory:steel_roundshield" },
+	{ type = "item", item = "magistuarmory:steel_heatershield" },
+	{ type = "item", item = "magistuarmory:steel_ellipticalshield" },
+]
+
+[[quest]]
+name = "w_pike_line"
+title = "长矛一排"
+desc = [
+	"矛的价值不在单挑，在并排：一排矛比一排剑多挡住一个身位。",
+	"木、铁、钢三档各备一排——木矛练手，钢矛上阵。",
+]
+icon = "magistuarmory:steel_pike"
+shape = "rsquare"
+deps = ["w_issue_kit"]
+tasks = [
+	{ type = "item", item = "magistuarmory:wood_pike", count = 8 },
+	{ type = "item", item = "magistuarmory:iron_pike", count = 8 },
+	{ type = "item", item = "magistuarmory:steel_pike", count = 8 },
+]
+
+[[quest]]
+name = "w_chivalry_lance"
+title = "骑枪"
+desc = [
+	"骑枪的长度是给马用的：跑起来那一下才叫冲锋，站住了它比矛难使。",
+]
+icon = "magistuarmory:iron_chivalrylance"
+shape = "circle"
+size = 1.2
+deps = ["w_issue_kit"]
+tasks = [
+	{ type = "item", item = "magistuarmory:iron_chivalrylance" },
+	{ type = "item", item = "magistuarmory:diamond_chivalrylance" },
+]
+
+[[quest]]
+name = "w_horse_barding"
+title = "战马也要披甲"
+desc = [
+	"骑兵冲一次就退回来，原因通常不是人怕，是马先倒。",
+]
+icon = "magistuarmory:chainmail_horse_armor"
+shape = "circle"
+size = 1.2
+deps = ["w_chivalry_lance"]
+tasks = [
+	{ type = "item", item = "magistuarmory:chainmail_horse_armor" },
+]
+
+[[quest]]
+name = "w_training_yard"
+title = "靶场加练"
+desc = [
+	"御敌章（编年）定的围城演练是二十次命中；这一条是往上加练到一百次。",
+	"练两件事：射准，以及挨打之后还站得住——假人就是用来被打的。",
+]
+icon = "minecraft:target"
+shape = "rsquare"
+deps = ["w_better_combat"]
+tasks = [
+	{ type = "item", item = "minecraft:target", count = 8 },
+	{ type = "item", item = "minecraft:armor_stand", count = 4 },
+	{ type = "stat", stat = "minecraft:target_hit", value = 100 },
+]
+
+# ---- 簇 2：军阵与单位 ----
+
+[[quest]]
+name = "w_horse_heraldry"
+title = "马衣与旗章"
+desc = [
+	"两军搅在一起的时候，认错人比挨刀更常见。",
+	"队旗这一层归御敌章（编年）；这里管的是马衣图案与马装饰——骑兵的识别靠这些。",
+]
+icon = "magistuarmory:horse_pattern"
+shape = "rsquare"
+deps = ["w_issue_kit"]
+tasks = [
+	{ type = "item", item = "magistuarmory:horse_pattern" },
+	{ type = "item", item = "magistuarmory:horse_decoration" },
+	{ type = "item", item = "magistuarmory:spike_decoration" },
+]
+
+[[quest]]
+name = "w_recruit"
+title = "第一支队伍"
+desc = [
+	"Hundred Years Warfare 提供中世纪军事单位（步兵/弓手/骑兵/攻城）。",
+	"⚠️ 它**不发进度也不记统计**（实测 advancements=0），所以「招到人」判不了。",
+	"验收靠实物：招募与装备军队需要的东西（甲、武器、粮）。",
+]
+icon = "minecraft:iron_helmet"
+shape = "rsquare"
+deps = ["w_steel"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_helmet", count = 8 },
+	{ type = "item", item = "minecraft:bread", count = 64 },
+]
+
+[[quest]]
+name = "w_supply_line"
+title = "军队要吃饭"
+desc = [
+	"设计里明确写过：军队**必须由国力供养**，不然会变成「暴兵推平一切」，",
+	"威胁时代与军工产线都会失去意义。所以这一条是「后勤线」而不是「兵力」。",
+]
+icon = "minecraft:hay_block"
+shape = "circle"
+size = 1.2
+deps = ["w_recruit"]
+tasks = [
+	{ type = "item", item = "minecraft:hay_block", count = 32 },
+]
+
+[[quest]]
+name = "w_armory_expand"
+title = "军械库扩容"
+desc = [
+	"武器、护甲、箭各有专箱，且有下限告警——打仗时没空翻箱。",
+]
+icon = "minecraft:iron_block"
+shape = "circle"
+size = 1.2
+deps = ["w_recruit"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_block", count = 16 },
+]
+
+[[quest]]
+name = "w_scroll_militia"
+title = "民兵卷轴"
+desc = [
+	"HYW 的部队不是招来的，是**编**出来的：卷轴就是一份编制凭证。",
+	"民兵是最低一档——装备差、走得慢，胜在不用练。第一批守夜的人从他们里出。",
+]
+icon = "hundred_years_war:scroll_militia"
+shape = "pentagon"
+size = 2.0
+deps = ["w_recruit"]
+tasks = [
+	{ type = "item", item = "hundred_years_war:scroll_militia" },
+	{ type = "item", item = "hundred_years_war:scroll_militia_1" },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "w_scroll_tiers"
+title = "卷轴分阶"
+desc = [
+	"同一兵种有 I / II / III 阶，差的是装备档次（生成点界面里那一栏就叫 Tier）。",
+	"常备军的意义就在这一档：不靠人多，靠用得起好的。",
+]
+icon = "hundred_years_war:scroll_militia_3"
+shape = "rsquare"
+deps = ["w_scroll_militia"]
+tasks = [
+	{ type = "item", item = "hundred_years_war:scroll_militia_2" },
+	{ type = "item", item = "hundred_years_war:scroll_militia_3" },
+]
+
+[[quest]]
+name = "w_archer_corps"
+title = "弓手与骑射"
+icon = "hundred_years_war:scroll_archer"
+shape = "circle"
+size = 1.2
+deps = ["w_scroll_tiers"]
+tasks = [
+	{ type = "item", item = "hundred_years_war:scroll_archer" },
+	{ type = "item", item = "hundred_years_war:scroll_mounted_archer" },
+]
+
+[[quest]]
+name = "w_crossbow_corps"
+title = "弩手与长矛兵"
+icon = "hundred_years_war:scroll_crossbowman"
+shape = "circle"
+size = 1.2
+deps = ["w_scroll_tiers"]
+tasks = [
+	{ type = "item", item = "hundred_years_war:scroll_crossbowman" },
+	{ type = "item", item = "hundred_years_war:scroll_spear_man" },
+]
+
+[[quest]]
+name = "w_shield_corps"
+title = "盾兵与战士"
+icon = "hundred_years_war:scroll_shieldman"
+shape = "circle"
+size = 1.2
+deps = ["w_scroll_tiers"]
+tasks = [
+	{ type = "item", item = "hundred_years_war:scroll_shieldman" },
+	{ type = "item", item = "hundred_years_war:scroll_warrior" },
+]
+
+[[quest]]
+name = "w_cavalry_corps"
+title = "骑兵编制"
+desc = [
+	"马、骑枪、骑射手三件凑齐才叫一支骑兵：只有马没有枪的，是交通队。",
+]
+icon = "hundred_years_war:scroll_mounted_lancer"
+shape = "rsquare"
+deps = ["w_scroll_tiers"]
+tasks = [
+	{ type = "item", item = "hundred_years_war:scroll_horse" },
+	{ type = "item", item = "hundred_years_war:scroll_horse" },
+	{ type = "item", item = "hundred_years_war:scroll_mounted_lancer" },
+]
+
+[[quest]]
+name = "w_siege_engineer"
+title = "攻城技师"
+desc = [
+	"器械不会自己上弦：队伍里得有专门摆弄它们的人，不然那些机器只是摆设。",
+]
+icon = "hundred_years_war:scroll_siege_engineer"
+shape = "circle"
+size = 1.2
+deps = ["w_scroll_tiers"]
+tasks = [
+	{ type = "item", item = "hundred_years_war:scroll_siege_engineer" },
+	{ type = "item", item = "hundred_years_war:scroll_siege_engineer_1" },
+]
+
+[[quest]]
+name = "w_command_staff"
+title = "指挥杖"
+desc = [
+	"指挥杖把喊话变成指令：整队移动、圈选一片区域，按住中键还能调出**阵型**轮盘。",
+	"到这一步，队伍才从一堆人变成一个单位。",
+]
+icon = "hundred_years_war:command_staff"
+shape = "rsquare"
+deps = ["w_scroll_militia"]
+tasks = [
+	{ type = "item", item = "hundred_years_war:command_staff" },
+]
+
+[[quest]]
+name = "w_formation_ready"
+title = "三种兵齐备"
+desc = [
+	"近战、远程、机动各有编制，指挥杖在手——这支部队能列阵，也能分头行动。",
+]
+icon = "hundred_years_war:conquerors_staff"
+shape = "octagon"
+size = 1.75
+deps = ["w_archer_corps", "w_crossbow_corps", "w_shield_corps", "w_cavalry_corps",
+        "w_command_staff", "w_supply_line", "w_armory_expand"]
+tasks = [
+	{ type = "item", item = "hundred_years_war:conquerors_staff" },
+	{ type = "item", item = "hundred_years_war:conquerors_manual" },
+]
+
+# ---- 簇 3：远程与器械 ----
 
 [[quest]]
 name = "w_trebuchet"
@@ -142,54 +454,230 @@ tasks = [
 	{ type = "item", item = "minecraft:barrel", count = 4 },
 ]
 
-# ---------------- 簇 3：军事单位（HYW） ----------------
-
 [[quest]]
-name = "w_recruit"
-title = "第一支队伍"
+name = "w_springald"
+title = "弩炮"
 desc = [
-	"Hundred Years Warfare 提供中世纪军事单位（步兵/弓手/骑兵/攻城）。",
-	"⚠️ 它**不发进度也不记统计**（实测 advancements=0），所以「招到人」判不了。",
-	"验收靠实物：招募与装备军队需要的东西（甲、武器、粮）。",
+	"直射、架得住：放在墙上打对面的人，也能打对面的器械。",
 ]
-icon = "minecraft:iron_helmet"
+icon = "hundred_years_war:springald"
 shape = "rsquare"
-deps = ["w_steel"]
+deps = ["w_trebuchet"]
 tasks = [
-	{ type = "item", item = "minecraft:iron_helmet", count = 8 },
-	{ type = "item", item = "minecraft:bread", count = 64 },
+	{ type = "item", item = "hundred_years_war:springald" },
 ]
 
 [[quest]]
-name = "w_supply_line"
-title = "军队要吃饭"
+name = "w_mangonel"
+title = "轻型投石机"
 desc = [
-	"设计里明确写过：军队**必须由国力供养**，不然会变成「暴兵推平一切」，",
-	"威胁时代与军工产线都会失去意义。所以这一条是「后勤线」而不是「兵力」。",
+	"比巨型投石机好挪，比弩炮打得远——它是跟着队伍走的那一档火力。",
 ]
-icon = "minecraft:hay_block"
+icon = "hundred_years_war:mangonels"
 shape = "circle"
 size = 1.2
-deps = ["w_recruit"]
+deps = ["w_springald"]
 tasks = [
-	{ type = "item", item = "minecraft:hay_block", count = 32 },
+	{ type = "item", item = "hundred_years_war:mangonels" },
 ]
 
 [[quest]]
-name = "w_armory_expand"
-title = "军械库扩容"
+name = "w_siege_tower"
+title = "攻城塔"
 desc = [
-	"武器、护甲、箭各有专箱，且有下限告警——打仗时没空翻箱。",
+	"它抹平的是「墙」这个优势——自己先造一台，比等别人造一台便宜。",
 ]
-icon = "minecraft:iron_block"
-shape = "circle"
-size = 1.2
-deps = ["w_recruit"]
+icon = "hundred_years_war:siege_tower"
+shape = "rsquare"
+deps = ["w_springald"]
 tasks = [
-	{ type = "item", item = "minecraft:iron_block", count = 16 },
+	{ type = "item", item = "hundred_years_war:siege_tower" },
 ]
 
-# ---------------- 簇 4：掠夺者那一线 ----------------
+[[quest]]
+name = "w_bombard"
+title = "火炮与火药"
+desc = [
+	"手推炮往上还有蛇炮、加农炮、巨型火炮，射程与口径都往上走。",
+	"它们吃的是火药与弹丸，口径越大越像在吃资源——产线不跟上就打不起。",
+]
+icon = "hundred_years_war:bombard"
+shape = "rsquare"
+deps = ["w_springald"]
+tasks = [
+	{ type = "item", item = "hundred_years_war:bombard" },
+	{ type = "item", item = "hundred_years_war:bullet", count = 32 },
+	{ type = "item", item = "minecraft:gunpowder", count = 64 },
+]
+
+# ---- 簇 4：战场后勤 ----
+
+[[quest]]
+name = "w_supply_point"
+title = "补给点"
+desc = [
+	"军队走不远，原因通常不是打不过，是没东西吃。",
+	"补给点把「东西从哪来」立成一个点；先有它，才谈往前推多远。",
+]
+icon = "hundred_years_war:supply_point"
+shape = "pentagon"
+size = 2.0
+deps = ["w_recruit"]
+tasks = [
+	{ type = "item", item = "hundred_years_war:supply_point", count = 2 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "w_muster_point"
+title = "集结点"
+desc = [
+	"队伍从哪出来，决定出事时多久能到位。",
+]
+icon = "hundred_years_war:spawn_point"
+shape = "rsquare"
+deps = ["w_supply_point"]
+tasks = [
+	{ type = "item", item = "hundred_years_war:spawn_point", count = 2 },
+]
+
+[[quest]]
+name = "w_field_warehouse"
+title = "军需仓库"
+desc = [
+	"仓库控制块 + 存储块：军械与粮草分开记账，领料不必再问人。",
+]
+icon = "hundred_years_war:warehouse_control"
+shape = "rsquare"
+deps = ["w_supply_point"]
+tasks = [
+	{ type = "item", item = "hundred_years_war:warehouse_control" },
+	{ type = "item", item = "hundred_years_war:warehouse_storage", count = 4 },
+]
+
+[[quest]]
+name = "w_transport_order"
+title = "运输指令"
+desc = [
+	"补给线真正的瓶颈是运力：路线太长，东西就一直在路上。",
+]
+icon = "hundred_years_war:transport_order"
+shape = "circle"
+size = 1.2
+deps = ["w_field_warehouse"]
+tasks = [
+	{ type = "item", item = "hundred_years_war:transport_order", count = 4 },
+]
+
+[[quest]]
+name = "w_camp_workstations"
+title = "随军工作站"
+desc = [
+	"农、矿、伐木、渔、牧、合成六种工作站，把「养兵」摊进日常生产里。",
+	"它们同时也是平民的活计——军民两用，才不会养出一群只会吃的人。",
+]
+icon = "hundred_years_war:crafting_workstation"
+shape = "rsquare"
+deps = ["w_supply_point"]
+tasks = [
+	{ type = "item", item = "hundred_years_war:crafting_workstation" },
+	{ type = "item", item = "hundred_years_war:mining_workstation" },
+	{ type = "item", item = "hundred_years_war:lumber_workstation" },
+	{ type = "item", item = "hundred_years_war:farming_workstation" },
+	{ type = "item", item = "hundred_years_war:fishing_workstation" },
+	{ type = "item", item = "hundred_years_war:breeding_workstation" },
+]
+
+[[quest]]
+name = "w_porter_corps"
+title = "运输工与合成工"
+icon = "hundred_years_war:scroll_porter"
+shape = "circle"
+size = 1.2
+deps = ["w_camp_workstations"]
+tasks = [
+	{ type = "item", item = "hundred_years_war:scroll_porter" },
+	{ type = "item", item = "hundred_years_war:scroll_crafter" },
+]
+
+[[quest]]
+name = "w_logistics_line"
+title = "后勤成链"
+desc = [
+	"补给点、集结点、军需仓库、运输指令、工作站各就各位——打得远不远，由这条线决定。",
+]
+icon = "hundred_years_war:warehouse_storage"
+shape = "octagon"
+size = 1.75
+deps = ["w_muster_point", "w_transport_order", "w_camp_workstations", "w_porter_corps"]
+tasks = [
+	{ type = "item", item = "hundred_years_war:supply_point", count = 4 },
+	{ type = "item", item = "hundred_years_war:warehouse_control", count = 2 },
+]
+
+# ---- 簇 5：反制与善后 ----
+
+[[quest]]
+name = "w_counter_ladder"
+title = "反制云梯"
+desc = [
+	"守方视角：云梯靠上墙就变成一条单人通道——堵住顶端，比拆整架梯子省力。",
+	"先在自己墙上架一次，比看图纸有用。",
+]
+icon = "siegemachines:siege_ladder"
+shape = "rsquare"
+deps = ["w_siege_tower"]
+tasks = [
+	{ type = "item", item = "siegemachines:siege_ladder" },
+	{ type = "item", item = "minecraft:water_bucket", count = 2 },
+]
+
+[[quest]]
+name = "w_counter_ram"
+title = "反制撞门锤"
+desc = [
+	"撞门锤只认得门那一格；门后面是什么，是守方决定的。",
+	"留一台在自己的门外演一次，就知道哪一段门最经不起推。",
+]
+icon = "siegemachines:battering_ram"
+shape = "rsquare"
+deps = ["w_battering_ram"]
+tasks = [
+	{ type = "item", item = "siegemachines:battering_ram" },
+	{ type = "item", item = "minecraft:iron_trapdoor", count = 8 },
+]
+
+[[quest]]
+name = "w_counter_plan"
+title = "反制预案"
+desc = [
+	"来犯方式就那么几种：爬墙、撞门、围着不走。预案的意义是先想好，而不是当场想。",
+]
+icon = "siegemachines:siege_ladder"
+shape = "octagon"
+size = 1.75
+deps = ["w_counter_ladder", "w_counter_ram", "w_sally"]
+tasks = [
+	{ type = "item", item = "siegemachines:siege_ladder", count = 2 },
+	{ type = "item", item = "siegemachines:battering_ram", count = 2 },
+]
+
+[[quest]]
+name = "w_sally"
+title = "出城反击"
+desc = [
+	"只守不攻，对方就能从容架梯子上墙；出城打一次，节奏才在自己手里。",
+]
+icon = "minecraft:iron_axe"
+shape = "circle"
+size = 1.2
+deps = ["w_pillager_camp"]
+tasks = [
+	{ type = "kill", entity = "minecraft:pillager", value = 10 },
+]
 
 [[quest]]
 name = "w_pillager_camp"
@@ -219,7 +707,23 @@ tasks = [
 	{ type = "advancement", advancement = "takesapillage:adventure/bastille" },
 ]
 
-# ---------------- 终局 ----------------
+[[quest]]
+name = "w_war_spoils"
+title = "缴获入账"
+desc = [
+	"抢来的东西归公还是归己，是「国家行为」与「土匪」的分界——先把缴获集中起来。",
+	"灾厄旗帜那一瓶是队长的凭证，挂上墙就是这一仗的物证。",
+]
+icon = "minecraft:ominous_bottle"
+shape = "circle"
+size = 1.2
+deps = ["w_bastille"]
+tasks = [
+	{ type = "item", item = "minecraft:ominous_bottle", count = 2 },
+	{ type = "item", item = "minecraft:item_frame", count = 8 },
+]
+
+# ---- 终局 ----
 
 [[quest]]
 name = "w_army_ready"
@@ -231,7 +735,8 @@ desc = [
 icon = "minecraft:netherite_sword"
 shape = "hexagon"
 size = 2.5
-deps = ["w_poleaxe", "w_siege_camp", "w_supply_line", "w_armory_expand", "w_bastille"]
+deps = ["w_poleaxe", "w_siege_camp", "w_supply_line", "w_armory_expand", "w_bastille",
+        "w_formation_ready", "w_logistics_line", "w_counter_plan"]
 tasks = [
 	{ type = "item", item = "minecraft:netherite_sword" },
 ]
