@@ -23,7 +23,7 @@
 			type: "checkmark"
 		}
 		]
-		x: 14.1d
+		x: 26.72d
 		y: 0.0d
 	}
 	{
@@ -44,8 +44,8 @@
 			type: "item"
 		}
 		]
-		x: 3.56d
-		y: -1.18d
+		x: 5.41d
+		y: -1.75d
 	}
 	{
 		dependencies: [
@@ -70,8 +70,8 @@
 			type: "item"
 		}
 		]
-		x: 0.96d
-		y: -2.11d
+		x: 1.25d
+		y: -3.25d
 	}
 	{
 		dependencies: [
@@ -97,8 +97,8 @@
 			type: "item"
 		}
 		]
-		x: 2.73d
-		y: -2.11d
+		x: 3.88d
+		y: -3.25d
 	}
 	{
 		dependencies: [
@@ -124,8 +124,8 @@
 			type: "item"
 		}
 		]
-		x: 4.09d
-		y: -2.11d
+		x: 6.09d
+		y: -3.25d
 	}
 	{
 		dependencies: [
@@ -151,8 +151,8 @@
 			type: "item"
 		}
 		]
-		x: 3.67d
-		y: -3.29d
+		x: 5.38d
+		y: -5.0d
 	}
 	{
 		dependencies: [
@@ -178,8 +178,8 @@
 			type: "item"
 		}
 		]
-		x: 5.3d
-		y: -2.11d
+		x: 8.15d
+		y: -3.25d
 	}
 	{
 		dependencies: [
@@ -205,8 +205,8 @@
 			type: "item"
 		}
 		]
-		x: 5.3d
-		y: -3.29d
+		x: 8.15d
+		y: -5.0d
 	}
 	{
 		dependencies: [
@@ -232,8 +232,8 @@
 			type: "item"
 		}
 		]
-		x: 4.52d
-		y: -3.29d
+		x: 6.8d
+		y: -5.0d
 	}
 	{
 		dependencies: [
@@ -258,8 +258,8 @@
 			type: "advancement"
 		}
 		]
-		x: 8.37d
-		y: -1.18d
+		x: 14.81d
+		y: -1.75d
 	}
 	{
 		dependencies: [
@@ -279,8 +279,8 @@
 			type: "item"
 		}
 		]
-		x: 8.37d
-		y: -2.11d
+		x: 14.81d
+		y: -3.25d
 	}
 	{
 		dependencies: [
@@ -317,8 +317,8 @@
 			type: "item"
 		}
 		]
-		x: 8.37d
-		y: -3.29d
+		x: 14.81d
+		y: -5.0d
 	}
 	{
 		dependencies: [
@@ -344,8 +344,8 @@
 			type: "item"
 		}
 		]
-		x: 7.08d
-		y: -4.72d
+		x: 12.67d
+		y: -7.0d
 	}
 	{
 		dependencies: [
@@ -371,8 +371,8 @@
 			type: "item"
 		}
 		]
-		x: 8.02d
-		y: -4.72d
+		x: 14.17d
+		y: -7.0d
 	}
 	{
 		dependencies: [
@@ -398,8 +398,8 @@
 			type: "item"
 		}
 		]
-		x: 8.02d
-		y: -5.9d
+		x: 14.17d
+		y: -8.75d
 	}
 	{
 		dependencies: [
@@ -425,8 +425,8 @@
 			type: "item"
 		}
 		]
-		x: 8.87d
-		y: -4.72d
+		x: 15.6d
+		y: -7.0d
 	}
 	{
 		dependencies: [
@@ -458,7 +458,7 @@
 		}
 		]
 		x: 0.38d
-		y: -3.29d
+		y: -5.0d
 	}
 	{
 		dependencies: [
@@ -482,8 +482,8 @@
 			type: "item"
 		}
 		]
-		x: 9.65d
-		y: -4.72d
+		x: 16.95d
+		y: -7.0d
 	}
 	{
 		dependencies: [
@@ -503,8 +503,8 @@
 			type: "item"
 		}
 		]
-		x: 6.16d
-		y: -2.11d
+		x: 9.58d
+		y: -3.25d
 	}
 	{
 		dependencies: [
@@ -524,8 +524,8 @@
 			type: "stat"
 		}
 		]
-		x: 11.79d
-		y: -1.18d
+		x: 22.11d
+		y: -1.75d
 	}
 	{
 		dependencies: [
@@ -545,8 +545,8 @@
 			type: "item"
 		}
 		]
-		x: 10.5d
-		y: -2.11d
+		x: 19.98d
+		y: -3.25d
 	}
 	{
 		icon: {
@@ -574,7 +574,7 @@
 			type: "item"
 		}
 		]
-		x: 26.31d
+		x: 52.44d
 		y: 0.0d
 	}
 	{
@@ -595,8 +595,8 @@
 			type: "item"
 		}
 		]
-		x: 25.49d
-		y: -1.18d
+		x: 51.05d
+		y: -1.75d
 	}
 	{
 		dependencies: [
@@ -621,8 +621,8 @@
 			type: "item"
 		}
 		]
-		x: 26.27d
-		y: -1.18d
+		x: 52.4d
+		y: -1.75d
 	}
 	{
 		dependencies: [
@@ -648,8 +648,8 @@
 			type: "item"
 		}
 		]
-		x: 27.12d
-		y: -1.18d
+		x: 53.83d
+		y: -1.75d
 	}
 	{
 		dependencies: [
@@ -675,8 +675,8 @@
 			type: "stat"
 		}
 		]
-		x: 11.43d
-		y: -2.11d
+		x: 21.48d
+		y: -3.25d
 	}
 	{
 		dependencies: [
@@ -702,8 +702,8 @@
 			type: "item"
 		}
 		]
-		x: 12.29d
-		y: -2.11d
+		x: 22.9d
+		y: -3.25d
 	}
 	{
 		dependencies: [
@@ -729,8 +729,8 @@
 			type: "item"
 		}
 		]
-		x: 13.07d
-		y: -2.11d
+		x: 24.25d
+		y: -3.25d
 	}
 	{
 		dependencies: [
@@ -750,8 +750,8 @@
 			type: "item"
 		}
 		]
-		x: 16.99d
-		y: -1.18d
+		x: 33.14d
+		y: -1.75d
 	}
 	{
 		dependencies: [
@@ -788,8 +788,8 @@
 			type: "item"
 		}
 		]
-		x: 16.99d
-		y: -2.11d
+		x: 33.14d
+		y: -3.25d
 	}
 	{
 		dependencies: [
@@ -815,8 +815,8 @@
 			type: "item"
 		}
 		]
-		x: 16.99d
-		y: -3.29d
+		x: 33.14d
+		y: -5.0d
 	}
 	{
 		dependencies: [
@@ -841,8 +841,8 @@
 			type: "item"
 		}
 		]
-		x: 13.92d
-		y: -4.72d
+		x: 27.28d
+		y: -7.0d
 	}
 	{
 		dependencies: [
@@ -868,8 +868,8 @@
 			type: "item"
 		}
 		]
-		x: 13.92d
-		y: -5.9d
+		x: 27.28d
+		y: -8.75d
 	}
 	{
 		dependencies: [
@@ -901,8 +901,8 @@
 			type: "item"
 		}
 		]
-		x: 14.78d
-		y: -4.72d
+		x: 28.7d
+		y: -7.0d
 	}
 	{
 		dependencies: [
@@ -928,8 +928,8 @@
 			type: "item"
 		}
 		]
-		x: 15.56d
-		y: -4.72d
+		x: 30.05d
+		y: -7.0d
 	}
 	{
 		dependencies: [
@@ -949,8 +949,8 @@
 			type: "item"
 		}
 		]
-		x: 15.56d
-		y: -5.9d
+		x: 30.05d
+		y: -8.75d
 	}
 	{
 		dependencies: [
@@ -976,8 +976,8 @@
 			type: "item"
 		}
 		]
-		x: 16.41d
-		y: -4.72d
+		x: 31.48d
+		y: -7.0d
 	}
 	{
 		dependencies: [
@@ -1003,8 +1003,8 @@
 			type: "item"
 		}
 		]
-		x: 16.41d
-		y: -5.9d
+		x: 31.48d
+		y: -8.75d
 	}
 	{
 		dependencies: [
@@ -1024,8 +1024,8 @@
 			type: "stat"
 		}
 		]
-		x: 23.7d
-		y: -1.18d
+		x: 46.53d
+		y: -1.75d
 	}
 	{
 		dependencies: [
@@ -1045,8 +1045,8 @@
 			type: "kill"
 		}
 		]
-		x: 24.63d
-		y: -1.18d
+		x: 48.03d
+		y: -1.75d
 	}
 	{
 		dependencies: [
@@ -1066,8 +1066,8 @@
 			type: "stat"
 		}
 		]
-		x: 24.63d
-		y: -2.11d
+		x: 48.03d
+		y: -3.25d
 	}
 	{
 		dependencies: [
@@ -1086,8 +1086,8 @@
 			type: "structure"
 		}
 		]
-		x: 24.63d
-		y: -3.29d
+		x: 48.03d
+		y: -5.0d
 	}
 	{
 		dependencies: [
@@ -1112,8 +1112,8 @@
 			type: "item"
 		}
 		]
-		x: 24.63d
-		y: -4.72d
+		x: 48.03d
+		y: -7.0d
 	}
 	{
 		dependencies: [
@@ -1148,8 +1148,8 @@
 			type: "item"
 		}
 		]
-		x: 20.06d
-		y: -4.72d
+		x: 39.0d
+		y: -7.0d
 	}
 	{
 		dependencies: [
@@ -1175,8 +1175,8 @@
 			type: "item"
 		}
 		]
-		x: 17.34d
-		y: -5.9d
+		x: 34.58d
+		y: -8.75d
 	}
 	{
 		dependencies: [
@@ -1208,8 +1208,8 @@
 			type: "item"
 		}
 		]
-		x: 18.27d
-		y: -5.9d
+		x: 36.08d
+		y: -8.75d
 	}
 	{
 		dependencies: [
@@ -1229,8 +1229,8 @@
 			type: "kill"
 		}
 		]
-		x: 20.02d
-		y: -5.9d
+		x: 38.96d
+		y: -8.75d
 	}
 	{
 		dependencies: [
@@ -1250,8 +1250,8 @@
 			type: "kill"
 		}
 		]
-		x: 19.13d
-		y: -6.83d
+		x: 37.5d
+		y: -10.25d
 	}
 	{
 		dependencies: [
@@ -1271,8 +1271,8 @@
 			type: "kill"
 		}
 		]
-		x: 19.98d
-		y: -6.83d
+		x: 38.93d
+		y: -10.25d
 	}
 	{
 		dependencies: [
@@ -1292,8 +1292,8 @@
 			type: "kill"
 		}
 		]
-		x: 20.91d
-		y: -6.83d
+		x: 40.43d
+		y: -10.25d
 	}
 	{
 		dependencies: [
@@ -1319,8 +1319,8 @@
 			type: "item"
 		}
 		]
-		x: 21.84d
-		y: -5.9d
+		x: 41.93d
+		y: -8.75d
 	}
 	{
 		dependencies: [
@@ -1346,8 +1346,8 @@
 			type: "item"
 		}
 		]
-		x: 21.84d
-		y: -6.83d
+		x: 41.93d
+		y: -10.25d
 	}
 	{
 		dependencies: [
@@ -1377,8 +1377,8 @@
 			type: "item"
 		}
 		]
-		x: 22.77d
-		y: -5.9d
+		x: 43.43d
+		y: -8.75d
 	}
 	{
 		dependencies: [
@@ -1404,8 +1404,8 @@
 			type: "item"
 		}
 		]
-		x: 20.91d
-		y: -7.76d
+		x: 40.43d
+		y: -11.75d
 	}
 	{
 		dependencies: [
@@ -1439,8 +1439,8 @@
 			type: "checkmark"
 		}
 		]
-		x: 1.55d
-		y: -3.29d
+		x: 2.12d
+		y: -5.0d
 	}
 	]
 }

@@ -23,7 +23,7 @@
 			type: "checkmark"
 		}
 		]
-		x: 2.58d
+		x: 4.0d
 		y: 0.0d
 	}
 	{
@@ -43,7 +43,7 @@
 		}
 		]
 		x: 0.3d
-		y: -1.18d
+		y: -1.75d
 	}
 	{
 		dependencies: [
@@ -61,8 +61,8 @@
 			type: "checkmark"
 		}
 		]
-		x: 1.41d
-		y: -1.18d
+		x: 1.98d
+		y: -1.75d
 	}
 	{
 		dependencies: [
@@ -80,8 +80,8 @@
 			type: "checkmark"
 		}
 		]
-		x: 1.41d
-		y: -2.11d
+		x: 1.98d
+		y: -3.25d
 	}
 	{
 		dependencies: [
@@ -99,8 +99,8 @@
 			type: "checkmark"
 		}
 		]
-		x: 2.51d
-		y: -1.18d
+		x: 3.65d
+		y: -1.75d
 	}
 	{
 		dependencies: [
@@ -118,8 +118,8 @@
 			type: "checkmark"
 		}
 		]
-		x: 3.29d
-		y: -1.18d
+		x: 5.0d
+		y: -1.75d
 	}
 	{
 		dependencies: [
@@ -137,8 +137,8 @@
 			type: "checkmark"
 		}
 		]
-		x: 3.29d
-		y: -2.11d
+		x: 5.0d
+		y: -3.25d
 	}
 	{
 		dependencies: [
@@ -156,8 +156,8 @@
 			type: "checkmark"
 		}
 		]
-		x: 4.07d
-		y: -1.18d
+		x: 6.35d
+		y: -1.75d
 	}
 	{
 		dependencies: [
@@ -175,8 +175,8 @@
 			type: "checkmark"
 		}
 		]
-		x: 4.85d
-		y: -1.18d
+		x: 7.7d
+		y: -1.75d
 	}
 	{
 		dependencies: [
@@ -195,8 +195,8 @@
 			type: "item"
 		}
 		]
-		x: 1.41d
-		y: -3.04d
+		x: 1.98d
+		y: -4.75d
 	}
 	{
 		dependencies: [
@@ -214,8 +214,8 @@
 			type: "checkmark"
 		}
 		]
-		x: 3.29d
-		y: -3.04d
+		x: 5.0d
+		y: -4.75d
 	}
 	{
 		dependencies: [
@@ -234,8 +234,8 @@
 			type: "item"
 		}
 		]
-		x: 1.41d
-		y: -3.82d
+		x: 1.98d
+		y: -6.1d
 	}
 	{
 		icon: {
@@ -250,7 +250,7 @@
 			type: "checkmark"
 		}
 		]
-		x: 7.39d
+		x: 13.69d
 		y: 0.0d
 	}
 	{
@@ -269,8 +269,8 @@
 			type: "checkmark"
 		}
 		]
-		x: 5.63d
-		y: -1.18d
+		x: 10.65d
+		y: -1.75d
 	}
 	{
 		dependencies: [
@@ -290,8 +290,8 @@
 			type: "stat"
 		}
 		]
-		x: 5.63d
-		y: -2.11d
+		x: 10.65d
+		y: -3.25d
 	}
 	{
 		dependencies: [
@@ -315,8 +315,8 @@
 			type: "item"
 		}
 		]
-		x: 5.63d
-		y: -3.04d
+		x: 10.65d
+		y: -4.75d
 	}
 	{
 		dependencies: [
@@ -342,8 +342,8 @@
 			type: "item"
 		}
 		]
-		x: 6.49d
-		y: -1.18d
+		x: 12.08d
+		y: -1.75d
 	}
 	{
 		dependencies: [
@@ -362,8 +362,8 @@
 			type: "item"
 		}
 		]
-		x: 6.49d
-		y: -2.11d
+		x: 12.08d
+		y: -3.25d
 	}
 	{
 		dependencies: [
@@ -381,8 +381,8 @@
 			type: "checkmark"
 		}
 		]
-		x: 7.34d
-		y: -1.18d
+		x: 13.5d
+		y: -1.75d
 	}
 	{
 		dependencies: [
@@ -400,8 +400,8 @@
 			type: "checkmark"
 		}
 		]
-		x: 8.12d
-		y: -1.18d
+		x: 14.85d
+		y: -1.75d
 	}
 	{
 		dependencies: [
@@ -419,8 +419,8 @@
 			type: "checkmark"
 		}
 		]
-		x: 9.14d
-		y: -1.18d
+		x: 16.72d
+		y: -1.75d
 	}
 	{
 		dependencies: [
@@ -438,8 +438,8 @@
 			type: "checkmark"
 		}
 		]
-		x: 8.75d
-		y: -2.11d
+		x: 16.05d
+		y: -3.25d
 	}
 	{
 		dependencies: [
@@ -457,8 +457,8 @@
 			type: "checkmark"
 		}
 		]
-		x: 8.75d
-		y: -3.04d
+		x: 16.05d
+		y: -4.75d
 	}
 	{
 		dependencies: [
@@ -476,8 +476,8 @@
 			type: "checkmark"
 		}
 		]
-		x: 9.53d
-		y: -2.11d
+		x: 17.4d
+		y: -3.25d
 	}
 	{
 		icon: {
@@ -492,7 +492,7 @@
 			type: "checkmark"
 		}
 		]
-		x: 12.26d
+		x: 23.73d
 		y: 0.0d
 	}
 	{
@@ -511,8 +511,8 @@
 			type: "checkmark"
 		}
 		]
-		x: 10.31d
-		y: -1.18d
+		x: 20.35d
+		y: -1.75d
 	}
 	{
 		dependencies: [
@@ -530,8 +530,8 @@
 			type: "checkmark"
 		}
 		]
-		x: 10.31d
-		y: -2.11d
+		x: 20.35d
+		y: -3.25d
 	}
 	{
 		dependencies: [
@@ -549,8 +549,8 @@
 			type: "checkmark"
 		}
 		]
-		x: 11.09d
-		y: -1.18d
+		x: 21.7d
+		y: -1.75d
 	}
 	{
 		dependencies: [
@@ -568,8 +568,8 @@
 			type: "checkmark"
 		}
 		]
-		x: 11.87d
-		y: -1.18d
+		x: 23.05d
+		y: -1.75d
 	}
 	{
 		dependencies: [
@@ -587,8 +587,8 @@
 			type: "checkmark"
 		}
 		]
-		x: 12.65d
-		y: -1.18d
+		x: 24.4d
+		y: -1.75d
 	}
 	{
 		dependencies: [
@@ -606,8 +606,8 @@
 			type: "checkmark"
 		}
 		]
-		x: 12.65d
-		y: -2.11d
+		x: 24.4d
+		y: -3.25d
 	}
 	{
 		dependencies: [
@@ -626,8 +626,8 @@
 			type: "item"
 		}
 		]
-		x: 13.43d
-		y: -1.18d
+		x: 25.75d
+		y: -1.75d
 	}
 	{
 		dependencies: [
@@ -645,8 +645,8 @@
 			type: "checkmark"
 		}
 		]
-		x: 14.21d
-		y: -1.18d
+		x: 27.1d
+		y: -1.75d
 	}
 	{
 		dependencies: [
@@ -677,8 +677,8 @@
 			type: "checkmark"
 		}
 		]
-		x: 1.41d
-		y: -4.6d
+		x: 1.98d
+		y: -7.45d
 	}
 	]
 }

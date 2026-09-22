@@ -428,7 +428,21 @@ def layout(chapter: ChapterDef) -> dict[str, tuple[float, float]]:
     也就是"两个图标刚刚好不重叠"。本包之前用固定步长 1.5~3.75，
     **比需要的松 3~5 倍**，这才是画布铺得开的真正原因（不是内容多）。
     """
-    g = {"gap": 0.18, "unit": 0.5, "origin_x": 0.0, "origin_y": 0.0}
+    # ⚠️ `gap` 是**唯一**决定"看起来挤不挤"的参数（2026-09-22 用户实测反馈后改正）。
+    #
+    # 为什么只调它、不调 unit：
+    #   中心距 = (s₁+s₂)/2 × unit + gap      节点视觉直径 = s × k（k 是 FTB 内部常数）
+    #   相对空隙 = gap / (s × k) —— **与 unit 无关**。
+    #   unit 只影响"整章占多大画布"（玩家要缩放多少），gap 才影响手感。
+    #   所以我原来把两者一起按参照包反推是错的：ATM10 每章面积小，
+    #   不等于它的**视觉空隙**也小。
+    #
+    # 取值依据是用户的直接观察："基本所有章节排版都太过于紧密"。
+    # 旧值 0.18 对 size 1.2 的节点只有 **15% 图标宽**的净空隙（几乎贴在一起）。
+    # 改成 0.75 ≈ **62% 图标宽**：两个图标之间看得清依赖线，不再糊成一团。
+    # 用户明确说"游戏里可以放大缩小，没必要这么紧密"——那就给足空气，
+    # 画布变大不成问题（缩一下就能看全）。
+    g = {"gap": 0.75, "unit": 0.5, "origin_x": 0.0, "origin_y": 0.0}
     g.update(chapter.grid)
     gap = float(g["gap"])
     unit = float(g["unit"])          # = data.snbt 的 grid_scale
@@ -487,25 +501,60 @@ def layout(chapter: ChapterDef) -> dict[str, tuple[float, float]]:
     # 按 DFS 序排槽（A1 A2 B1 B2）则每个子树占一条独立的带，不可能相交。
     roots = [n for n in names if parent[n] is None]
     dfs_order: list[str] = []
+    root_of: dict[str, str] = {}
     seen: set[str] = set()
 
-    def walk(n: str) -> None:
+    def walk(n: str, r: str) -> None:
         if n in seen:
             return
         seen.add(n)
         dfs_order.append(n)
+        root_of[n] = r
         for k in kids[n]:
-            walk(k)
+            walk(k, r)
 
     for r in roots:
-        walk(r)
+        walk(r, r)
     for n in names:                      # 环里的节点兜底
-        walk(n)
+        walk(n, root_of.get(n, n))
 
+    # ---- 分组：**按五边形簇头**（这是作者标出来的分组信号，见 PLAN §2.5）----
+    #
+    # 为什么不用"根"来分组（第一版就是这么写的，结果毫无效果）：
+    # 实测每章平均只有 **1.5 个根**（1776 条里只有 60 条没有依赖）——
+    # 因为簇与簇之间本来就有依赖把它们连成一棵树。所以"按根分组"= 全章一组。
+    # 作者真正用来标"这里开始是新的一类事"的是 **pentagon 形状的簇头**，
+    # 而 `PLAN-questbook.md` §2.5 早就把这条语义定死了，只是排版没用上它。
+    # 现在就用：每个节点归到"它最近的 pentagon 祖先"那一组，组间额外留白。
+    shape = {n: str(by[n].get("shape", "circle")) for n in names}
+
+    def group_head(n: str) -> str:
+        cur: str | None = n
+        guard = 0
+        while cur is not None and guard < 10000:
+            if shape[cur] == "pentagon" or parent[cur] is None:
+                return cur
+            cur = parent[cur]
+            guard += 1
+        return n
+
+    group_of = {n: group_head(n) for n in names}
+
+    # ---- 叶子按 DFS 序排槽，**并在"组与组之间"额外留白** ----
+    #
+    # 整齐树只保证"子树不交错"，两组之间原来只隔一个普通间距 →
+    # 整章看起来是"一片平铺的图标"，看不出分组（用户看游戏截图后的反馈）。
+    # 用一个明显更大的空档表达"换了一类事"，玩家一眼就知道分界在哪。
+    # 这不影响零交叉（各组仍各自连续），只是把带与带拉开。
+    group_gap = float(g.get("group_gap", 1.6))
     x: dict[str, float] = {}
     cursor = 0.0
+    prev_group: str | None = None
     for n in dfs_order:
         if not kids[n]:                            # 叶子
+            if prev_group is not None and group_of[n] != prev_group:
+                cursor += group_gap                # ← 组与组之间的留白
+            prev_group = group_of[n]
             x[n] = cursor + w[n] / 2.0
             cursor += w[n] + gap
     # 后序：先算完子节点再算父节点。深度从大到小就是合法的后序。
@@ -546,8 +595,19 @@ def layout(chapter: ChapterDef) -> dict[str, tuple[float, float]]:
             y[n] = round(cur, 2)
         cur -= max(w[m] for m in row) + gap
 
-    lo = min(x[n] - w[n] / 2.0 for n in names)
-    ox = float(g["origin_x"]) - lo
+    # ---- 【2026-09-22 撤掉折行】----
+    #
+    # 试过"按组折行把画布压回方形"，**画出来一看更糟**：
+    # 折行会在中间留下大片空洞，还把一个小簇孤立到整张图的最下面
+    # （tools/out/preview/42-materials.png 能直接看到）。
+    # 原因：带宽上限是按"组的宽度"判断的，一个 60 条的组本身就比上限宽，
+    # 折不动；于是只有末尾那点小组被推到下一带 —— 得到"方但有洞"，
+    # 而"宽但连续、分组清楚"明显更好读（用户能缩放，宽不是问题）。
+    #
+    # **教训**：这类几何决策必须画出来看（tools/questbook_layout_preview.py），
+    # 只看"宽高比"这样的标量会得出相反的结论。
+    lo_x = min(x[n] - w[n] / 2.0 for n in names)
+    ox = float(g["origin_x"]) - lo_x
     return {n: (round(x[n] + ox, 2), y[n]) for n in names}
 
 
