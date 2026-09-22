@@ -1,0 +1,323 @@
+# 编年 · 国库与营建
+#
+# 这一章为什么必须单独存在
+# ------------------------
+# 这个包有一条别的整合包没有的**真实经济回路**：
+#   情报站图纸要 64 绿宝石（`blueprintPrice`）→ 通商让双方国库上涨 →
+#   大工程要「先立项、再拨款、后结算」。
+# 前面所有章都在讲**怎么造**，这一章讲**拿什么造、造之前谁批、造完怎么算账**。
+#
+# 与其它章的分工：
+#   · 立国   = 仓库与粮仓（**实物储备**）
+#   · 邦交   = 图纸怎么从邻国买回来（**外交渠道**）
+#   · 本章   = 队内那一本账：税、预算、结算、审计（**制度**）
+#
+# 判据：贵金属、铸块、账本、金库大门的**实物** + 两个原版进度（交易/成交）。
+# checkmark 用量：2 条（"立了账"与"结算过"），理由逐条写在条目注释里。
+
+key = "treasury"
+title = "国库与营建"
+subtitle = "大工程不是有材料就能开工的"
+group = "chronicle"
+icon = "minecraft:emerald_block"
+order_index = 8
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 簇 1：把"钱"变成实物 ----------------
+
+[[quest]]
+name = "t_first_coin"
+title = "第一种硬通货"
+desc = [
+	"这个包没有货币 mod（是设计决定：不上货币就没有「防刷」那一整类麻烦）。",
+	"所以国库是**实物**的：绿宝石、金锭、钻石，各当一种用途的钱。",
+	"绿宝石是「对外的钱」——买图纸、通商都用它。",
+]
+icon = "minecraft:emerald"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "minecraft:emerald", count = 32 },
+]
+
+[[quest]]
+name = "t_emerald_source"
+title = "绿宝石从哪来"
+desc = [
+	"换绿宝石的路子就那几条：村民交易、山地矿脉、劫掠者掉落。",
+	"**在立国阶段就得想清楚走哪条**，因为它是唯一能换图纸的东西。",
+]
+icon = "minecraft:emerald_ore"
+shape = "rsquare"
+deps = ["t_first_coin"]
+tasks = [
+	{ type = "item", item = "minecraft:emerald_ore", count = 4 },
+]
+
+[[quest]]
+name = "t_trade_route"
+title = "跑通一条贸易路线"
+icon = "minecraft:emerald"
+shape = "rsquare"
+deps = ["t_first_coin"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:adventure/trade" },
+]
+
+[[quest]]
+name = "t_gold"
+title = "金：第二个用途"
+desc = [
+	"金在这个包里比原版有用得多（动力臂、金苹果、轨道）。",
+	"**给金定一个用途，它才不会变成压箱底的花瓶。**",
+]
+icon = "minecraft:gold_ingot"
+shape = "rsquare"
+deps = ["t_first_coin"]
+tasks = [
+	{ type = "item", item = "minecraft:gold_ingot", count = 32 },
+]
+
+[[quest]]
+name = "t_diamond"
+title = "钻石：大工程的押金"
+desc = [
+	"钻石在这个包不是终点，是**开工许可**：任何一座「地标」级建筑都要先押一批进去。",
+]
+icon = "minecraft:diamond"
+shape = "rsquare"
+deps = ["t_gold"]
+tasks = [
+	{ type = "item", item = "minecraft:diamond", count = 8 },
+]
+
+# ---------------- 簇 2：金库 ----------------
+
+[[quest]]
+name = "t_vault_room"
+title = "金库房间"
+desc = [
+	"国库必须有**一间房**，而不是某人背包里的一格。",
+	"硬性要求：单独的墙、单独的门、能上锁（铁门 + 拉杆/按钮）。",
+]
+icon = "minecraft:iron_door"
+shape = "pentagon"
+size = 2.0
+deps = ["t_first_coin"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_door" },
+	{ type = "item", item = "minecraft:lever" },
+]
+
+[[quest]]
+name = "t_vault_blocks"
+title = "金库的柜子"
+desc = [
+	"贴墙一排桶或箱子，分格存放。**混着放等于没有账**。",
+]
+icon = "minecraft:barrel"
+shape = "square"
+deps = ["t_vault_room"]
+tasks = [
+	{ type = "item", item = "minecraft:barrel", count = 12 },
+]
+
+[[quest]]
+name = "t_ledger"
+title = "账本（书与笔）"
+desc = [
+	"一本成书就是一本账：谁拿了多少、为什么拿、什么时候还。",
+	"**这一条是判据的**（书与笔是可持有物）；但「你有没有真的记」判不了。",
+]
+icon = "minecraft:writable_book"
+shape = "rsquare"
+deps = ["t_vault_room"]
+tasks = [
+	{ type = "item", item = "minecraft:written_book" },
+]
+
+[[quest]]
+name = "t_ledger_sign"
+title = "挂上公示牌"
+desc = [
+	"账本要能被人看见：金库门口一块牌子。这一条是「制度落地」的最便宜形式。",
+]
+icon = "minecraft:oak_sign"
+shape = "circle"
+size = 1.2
+deps = ["t_ledger"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_sign", count = 2 },
+]
+
+# ---------------- 簇 3：预算与结算 ----------------
+
+[[quest]]
+name = "t_first_budget"
+title = "第一个预算案"
+desc = [
+	"立项三件套：**要造什么、要多少料、谁负责**。",
+	"（这一条判不了：写没写下来游戏不知道。理由：`treasury` 无 mod 支持，",
+	"书的内容不可读。请务必真的写下来，它是后面所有大工程的前提。）",
+]
+icon = "minecraft:paper"
+shape = "rsquare"
+deps = ["t_ledger"]
+tasks = [
+	{ type = "item", item = "minecraft:paper", count = 16 },
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "t_reserve_mat"
+title = "按预算备料"
+desc = [
+	"预算批了就得**先把料堆起来**：石砖、木料、玻璃、铁 — 至少各一组。",
+]
+icon = "minecraft:stone_bricks"
+shape = "square"
+deps = ["t_first_budget"]
+tasks = [
+	{ type = "item", item = "minecraft:stone_bricks", count = 64 },
+	{ type = "item", item = "minecraft:glass", count = 32 },
+	{ type = "item", item = "minecraft:iron_ingot", count = 16 },
+]
+
+[[quest]]
+name = "t_public_fund"
+title = "公共账户"
+desc = [
+	"国库不是队长的私房钱。**至少两人能开那个柜子** —— 一人管钥匙的国家迟早出事。",
+]
+icon = "minecraft:gold_block"
+shape = "rsquare"
+deps = ["t_vault_blocks", "t_reserve_mat"]
+tasks = [
+	{ type = "item", item = "minecraft:gold_block", count = 4 },
+]
+
+[[quest]]
+name = "t_settle"
+title = "第一次结算"
+desc = [
+	"工程完事之后要对一次账：花了多少、剩了多少、超了多少。",
+	"⚠️ 判不了（没有 mod 会计系统）。用「工程交付的实物」当替代判据 ——",
+	"一座盖完的公共建筑会留下至少这些材料。",
+]
+icon = "minecraft:chest"
+shape = "octagon"
+size = 1.75
+deps = ["t_public_fund"]
+tasks = [
+	{ type = "item", item = "minecraft:chest", count = 8 },
+	{ type = "item", item = "minecraft:scaffolding", count = 16 },
+]
+
+# ---------------- 簇 4：大工程 ----------------
+
+[[quest]]
+name = "t_landmark_budget"
+title = "给地标立项"
+desc = [
+	"地标 = 全城都能看到的东西。**第一个地标的预算必须公开**，这是它和违章建筑的区别。",
+]
+icon = "minecraft:beacon"
+shape = "pentagon"
+size = 2.0
+deps = ["t_settle"]
+tasks = [
+	{ type = "item", item = "minecraft:scaffolding", count = 48 },
+	{ type = "item", item = "minecraft:lantern", count = 16 },
+]
+
+[[quest]]
+name = "t_netherite_fund"
+title = "下界合金的预算"
+desc = [
+	"下界合金是唯一「花得起也舍不得花」的材料。**它只应该出现在两个地方**：",
+	"工具，和纪念碑的铭文底座。",
+]
+icon = "minecraft:netherite_ingot"
+shape = "rsquare"
+deps = ["t_diamond"]
+tasks = [
+	{ type = "item", item = "minecraft:netherite_scrap", count = 4 },
+]
+
+[[quest]]
+name = "t_grindstone_shop"
+title = "公共修理站"
+desc = [
+	"砂轮 + 铁砧：全队共用的修装备点。它省下的不是铁，是**所有人跑回自己箱子的时间**。",
+]
+icon = "minecraft:anvil"
+shape = "rsquare"
+deps = ["t_public_fund"]
+tasks = [
+	{ type = "item", item = "minecraft:anvil" },
+	{ type = "item", item = "minecraft:grindstone", count = 2 },
+]
+
+[[quest]]
+name = "t_tax_policy"
+title = "定一条税则"
+desc = [
+	"最简单的税则：**开采所得交一成进公共箱**。",
+	"金额不重要，重要的是「有一条规则、而且大家知道它」。",
+]
+icon = "minecraft:emerald_block"
+shape = "rsquare"
+deps = ["t_public_fund"]
+tasks = [
+	{ type = "item", item = "minecraft:emerald_block", count = 2 },
+]
+
+[[quest]]
+name = "t_audit"
+title = "换个人查一次账"
+desc = [
+	"审计的意义不在钱，在**让人放心把钱放进来**。",
+]
+icon = "minecraft:spyglass"
+shape = "circle"
+size = 1.2
+deps = ["t_tax_policy"]
+tasks = [
+	{ type = "item", item = "minecraft:spyglass" },
+]
+
+[[quest]]
+name = "t_mint"
+title = "铸块库存"
+desc = [
+	"把散钱铸成块：绿宝石块、金块、钻石块各一批。",
+	"**块状储备是「这个国家有钱」唯一能被一眼看出来的形式。**",
+]
+icon = "minecraft:diamond_block"
+shape = "rsquare"
+deps = ["t_tax_policy"]
+tasks = [
+	{ type = "item", item = "minecraft:emerald_block", count = 4 },
+	{ type = "item", item = "minecraft:diamond_block", count = 2 },
+]
+
+[[quest]]
+name = "t_treasury_done"
+title = "国库能撑起一座城"
+desc = [
+	"有钱、有账、有储备、有规则 —— 后面「文明」章那些大工程，",
+	"从这一条起才谈得上「排期」而不是「看运气」。",
+]
+icon = "minecraft:beacon"
+shape = "hexagon"
+size = 2.5
+deps = ["t_ledger_sign", "t_netherite_fund", "t_grindstone_shop", "t_audit", "t_mint",
+        "t_landmark_budget"]
+tasks = [
+	{ type = "item", item = "minecraft:beacon" },
+]
+rewards = [
+	{ type = "xp", xp = 100 },
+	{ type = "toast" },
+]

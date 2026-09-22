@@ -13,8 +13,7 @@ title = "出关"
 subtitle = "要建 X，就必须去 Y——远征得先有理由"
 group = "chronicle"
 icon = "minecraft:compass"
-order_index = 4
-
+order_index = 5
 grid = { step = 1.5, row_h = 1.75 }
 
 # ---------------- 国策主线 ----------------

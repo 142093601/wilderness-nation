@@ -19,8 +19,7 @@ title = "防御与尸潮"
 subtitle = "御敌：来犯的怎么运作、怎么挡；有些结果判不了，得自己打勾"
 group = "craft"
 icon = "minecraft:shield"
-order_index = 21
-
+order_index = 37
 grid = { step = 1.5, row_h = 1.75 }
 
 # ---------------- 主线：工事升级树 ----------------

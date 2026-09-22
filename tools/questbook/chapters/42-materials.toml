@@ -18,8 +18,7 @@ title = "材料与工业"
 subtitle = "原料进来、建材出去：一座城的实际吞吐量"
 group = "craft"
 icon = "minecraft:blast_furnace"
-order_index = 22
-
+order_index = 30
 grid = { step = 1.5, row_h = 1.75 }
 
 # ---------------- 从「基建」带过来的产线 ----------------

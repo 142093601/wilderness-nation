@@ -1,0 +1,160 @@
+{
+	quest.E2C0AF2F565152D4.title: "睡袋"
+	quest.E2C0AF2F565152D4.description: [
+	"Comforts 的睡袋：不用先铺一张床才能过夜。"
+	"远行与工地都用得上——它是本章之后所有「在外过夜」的前提。"
+	]
+	quest.C834FDD0D98E89BA.title: "吊床"
+	quest.C834FDD0D98E89BA.description: [
+	"吊床挂在两根柱子之间，白天也能躺：休息区不必只在屋里。"
+	]
+	quest.0D9725CA57123B52.title: "绳与钉"
+	quest.0D9725CA57123B52.description: [
+	"固定吊床与绳梯用的件：没有它，吊床只能挂在现成的墙上。"
+	]
+	quest.74DF859BB79A026B.title: "绳梯"
+	quest.74DF859BB79A026B.description: [
+	"上下悬崖、进矿井、回自己的塔：绳梯是最便宜的垂直通路。"
+	]
+	quest.4E50E86D0EC68EA5.title: "配齐队伍的睡袋颜色"
+	quest.4E50E86D0EC68EA5.description: [
+	"每人一种颜色：夜里集合、分散露营、找自己的铺位都不用问。"
+	]
+	quest.A43EDD9958DB12DC.title: "走到哪睡到哪"
+	quest.A43EDD9958DB12DC.description: [
+	"睡袋、吊床、绳梯三样齐了：任何一处都能临时扎营，重生点也随时能挪。"
+	"这一步之后，远行才谈得上「连续几天」。"
+	]
+	quest.BA46401239FF2874.title: "旅行背包"
+	quest.BA46401239FF2874.description: [
+	"第一件真正的随身仓库：出门不必再腾出一个物品栏来装工具。"
+	]
+	quest.5E0650F3B3322847.title: "升级背包等级"
+	quest.5E0650F3B3322847.description: [
+	"从皮革到铁、金、钻石、下界合金：容量与耐久随队伍阶段一起涨。"
+	]
+	quest.2212622A74699511.title: "给背包加水箱"
+	quest.2212622A74699511.description: [
+	"背包储罐：出远门带水带药，不必来回跑补给点。"
+	]
+	quest.4FCDB6C4C01F8768.title: "背包里的工作台"
+	quest.4FCDB6C4C01F8768.description: [
+	"合成升级：路上能补工具，等于把工坊压缩进背包。"
+	]
+	quest.47B0A548C387F343.title: "磁铁升级"
+	quest.47B0A548C387F343.description: [
+	"掉落物自己进背包：挖矿与清战场时省掉一遍手动捡拾。"
+	]
+	quest.16FD4D8A60D7991E.title: "自动拾取"
+	quest.16FD4D8A60D7991E.description: [
+	"拾取升级与磁铁升级不同：它管的是「捡起来之后放哪里」。"
+	]
+	quest.DAF482E48F3BCBC5.title: "喂食升级"
+	quest.DAF482E48F3BCBC5.description: [
+	"背包里的食物自动喂给自己：长时间作业不靠停下来吃。"
+	]
+	quest.B2FF76543548AF4E.title: "虚空升级"
+	quest.B2FF76543548AF4E.description: [
+	"圆石、泥土、腐肉不再占格子：过滤器是长期在外作业的必需品。"
+	]
+	quest.88D594AFCD74B527.title: "背包自带睡袋"
+	quest.88D594AFCD74B527.description: [
+	"背包附件里的睡袋：随身装备与休息装备合成一件东西。"
+	]
+	quest.B928E6898AD47419.title: "龙背包"
+	quest.B928E6898AD47419.description: [
+	"背包体系的顶层：容量到这一档，一个人就能顶一支小队搬家。"
+	]
+	quest.C96238EAF2CF8FF7.title: "一个人搬得动一队的东西"
+	quest.C96238EAF2CF8FF7.description: [
+	"睡袋一路升到旅行背包顶配：背上能装、地上能睡、路上能修。"
+	"此后远行的瓶颈不再是「带不了」，而是「要不要带」。"
+	]
+	quest.C118459326F2C2CE.title: "小船"
+	quest.C118459326F2C2CE.description: [
+	"Small Ships 的划艇：比原版船稳，也能装载随身物资。"
+	]
+	quest.C35DE8A8D563657C.title: "帆"
+	quest.C35DE8A8D563657C.description: [
+	"有帆才有顺风：帆船与划艇的差别就是「要不要一直按键」。"
+	]
+	quest.2E45AFBE10B5FC4F.title: "货船"
+	quest.2E45AFBE10B5FC4F.description: [
+	"装货的船：大宗建材与农产品走水路，比车队省事。"
+	]
+	quest.892F41FE0182B56B.title: "桨帆船"
+	quest.892F41FE0182B56B.description: [
+	"长距离航行靠它：桨与帆并用，逆风也不至于停在水上。"
+	]
+	quest.47809FFD11179C5F.title: "战船"
+	quest.47809FFD11179C5F.description: [
+	"沿海巡防与登陆运兵：船队到这里开始具备军事意义。"
+	]
+	quest.E791EFED08FE4113.title: "舰炮"
+	quest.E791EFED08FE4113.description: [
+	"船上的火力：水面不再是只能绕开的区域。"
+	"岸防与船队护航从此可以用同一套装备。"
+	]
+	quest.33AF39731313EBBA.title: "造船台"
+	quest.33AF39731313EBBA.description: [
+	"Seaworthy Boats 的造船台：船不再是背包里掏出来的一件物品，而是一条产线的产物。"
+	]
+	quest.B043380D47545376.title: "电梯"
+	quest.B043380D47545376.description: [
+	"同色电梯上下对齐即成一列：竖向交通不再靠一格一格的梯子。"
+	"塔楼、矿井、立体城区都要靠它。"
+	]
+	quest.B4F1140BF3988F17.title: "多条独立电梯"
+	quest.B4F1140BF3988F17.description: [
+	"不同颜色互不串层：一栋楼里可以同时有货梯与客梯。"
+	]
+	quest.0A38D45B517F1A1B.title: "水路与竖井都通了"
+	quest.0A38D45B517F1A1B.description: [
+	"船队装得下货、岸上有一列电梯：物资从码头到仓库顶层的路已经打通。"
+	]
+	quest.3F2FDCA473E81BE9.title: "墓碑"
+	quest.3F2FDCA473E81BE9.description: [
+	"死亡地点会立一块碑：跑回去的路不用靠记忆，也不用满地找掉落物。"
+	"在有尸潮的设计里，这条是「死了还回得来」的底线。"
+	]
+	quest.EFF849429BE3140B.title: "可刻字的碑面"
+	quest.EFF849429BE3140B.description: [
+	"刻字碑面与铭牌：碑不只是坐标，也能写下是谁、什么时候。"
+	]
+	quest.E7E9075394D09432.title: "遗物与墓尘"
+	quest.E7E9075394D09432.description: [
+	"遗留物会以另一种形态存在：找回与安置都需要它。"
+	]
+	quest.B3605A541A053B54.title: "墓穴钥匙"
+	quest.B3605A541A053B54.description: [
+	"多人同葬一处时的归属问题：钥匙决定谁能开哪一块碑。"
+	]
+	quest.5C181490927C07C9.title: "死亡笔记"
+	quest.5C181490927C07C9.description: [
+	"GraveStone Mod 的记录册：谁在哪一天死在什么地方，都留得下。"
+	"这一条是「伤亡与善后」在任务书里的入口。"
+	]
+	quest.35E4744D670B0635.title: "不同样式的墓碑"
+	quest.35E4744D670B0635.description: [
+	"碑林要有样式差别，否则一整片碑看起来像一堆重复的方块。"
+	]
+	quest.B5DD8E3AFE9912E4.title: "公墓与纪念碑"
+	quest.B5DD8E3AFE9912E4.description: [
+	"把散落各处的碑集中成一片：城市开始记得自己的伤亡。"
+	]
+	quest.F04C76701AF59442.title: "失物招领处"
+	quest.F04C76701AF59442.description: [
+	"集中存放无人认领的遗物：给「东西丢了」一个比翻箱倒柜更省事的去处。"
+	"Tombstone 的收纳件在这里当分类柜用——它解决的正是失物越攒越乱的问题。"
+	]
+	quest.A035AAA342E146A8.title: "死了也不至于白跑"
+	quest.A035AAA342E146A8.description: [
+	"墓碑、碑面、钥匙、死亡笔记、公墓、失物招领：一条从死亡到找回的完整链路。"
+	"本章到此结束——它保证的是「继续玩下去」这件事本身不会因为一次意外而停住。"
+	]
+	quest.4A378D7CBF504010.title: "跑酷板"
+	quest.4A378D7CBF504010.description: [
+	"一组改造过手感的踏板：跑、跳、滑、弹、幻影五种，用来在城里修一条自己的路线。"
+	"它不属于上面四簇，放在章末作为「城内的娱乐设施」补一条。"
+	]
+}

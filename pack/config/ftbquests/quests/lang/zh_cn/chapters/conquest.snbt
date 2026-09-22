@@ -1,0 +1,128 @@
+{
+	quest.32D9503EA38CE630.title: "攻城工坊"
+	quest.32D9503EA38CE630.description: [
+	"所有攻城器械都从这一张工作台出来。它是这一章真正的入口 ——"
+	"没有它，后面那九台机器一件也造不了。"
+	]
+	quest.03D60D3464600693.title: "轮与梁"
+	quest.03D60D3464600693.description: [
+	"器械的通用件：轮子、主梁、配重。**先批量做件，再组装**，比一件件凑快得多。"
+	]
+	quest.3EEAA8270CBE09EC.title: "撞门锤"
+	quest.3EEAA8270CBE09EC.description: [
+	"对付城门最直接的东西。它的价值不在杀伤，在**把门打开**。"
+	]
+	quest.AFE22089B2141F67.title: "云梯"
+	quest.AFE22089B2141F67.description: [
+	"墙越高，梯越重要。**注意：云梯是给进攻方用的** —— 你们自己的城墙也要防它。"
+	]
+	quest.72DAB0E8AA3898CD.title: "投石机"
+	quest.72DAB0E8AA3898CD.description: [
+	"抛射石块，越过城墙打城内。它要消耗弹药 —— 弹药本身就是补给线考题。"
+	]
+	quest.8749A4962B969A63.title: "重力投石机"
+	quest.8749A4962B969A63.description: [
+	"配重式，射程与威力都更大，代价是**架设更慢**。围城战的节奏由它决定。"
+	]
+	quest.EC5BBB557801DC69.title: "弩炮"
+	quest.EC5BBB557801DC69.description: [
+	"直射、精度高：**打人和打器械都用它**，是攻城武器里最「通用」的一台。"
+	]
+	quest.FD7ED903D3826697.title: "长管炮"
+	quest.FD7ED903D3826697.description: [
+	"火药武器：射程远、弹道平。它是这一章**技术含量最高**的一件。"
+	]
+	quest.2A276362BABAFDF8.title: "臼炮"
+	quest.2A276362BABAFDF8.description: [
+	"高抛弹道，专打**墙后面看不见的地方**。守方最讨厌的就是它。"
+	]
+	quest.BBB372C783D2114A.title: "固定炮座"
+	quest.BBB372C783D2114A.description: [
+	"把一台器械**固定下来**：守城时它比人可靠，因为它不会累、不会下线。"
+	]
+	quest.2B01FF2B5D62C7E2.title: "器械成军"
+	quest.2B01FF2B5D62C7E2.description: [
+	"同时拥有撞门、云梯、抛射、直射、固定炮座五类 —— 这才叫**能打一场围城战**。"
+	]
+	quest.1DA83DE772949F6D.title: "探城"
+	quest.1DA83DE772949F6D.description: [
+	"打之前先看：城墙多高、门在哪、守军多少、有没有护城河。"
+	"侦察的结论要能复述给全队 —— 一个人看见不算看见。"
+	]
+	quest.337382D6F9A800BB.title: "城防图"
+	quest.337382D6F9A800BB.description: [
+	"把侦察结果画成图，进攻时人手一份。"
+	]
+	quest.7326891D4A9BA571.title: "向邻国买图纸"
+	quest.7326891D4A9BA571.description: [
+	"攻城之外还有一条更便宜的路：**用国库把他们的图纸买回来**。"
+	"一张 64 绿宝石（`blueprintPrice`），所以这实质上是「值不值得打」的算术题。"
+	"⚠️ 这一章与 `90-blueprints` 的分工：那边讲**工具怎么用**，这里只讲**图纸从哪来**。"
+	]
+	quest.2AC7FAA8A3885AC8.title: "集结"
+	quest.2AC7FAA8A3885AC8.description: [
+	"夺城靠的是**同时在线的兵力**。先把人凑齐、装备发下去，再谈开打。"
+	]
+	quest.7D693F69DC017E90.title: "补给线"
+	quest.7D693F69DC017E90.description: [
+	"围城是消耗战：弹药、食物、箭，都要有人在后面送。"
+	"**没有补给线的一方，围三天就得撤。**"
+	]
+	quest.8B754C6EB8CC31CF.title: "破墙"
+	quest.8B754C6EB8CC31CF.description: [
+	"城墙的弱点从来不是砖，是**门**。炸开门，或者把一段墙推倒。"
+	]
+	quest.7D32FE87A204C492.title: "斩首"
+	quest.7D32FE87A204C492.description: [
+	"守城方会一直补员，直到**指挥官倒下**。所以实际节奏永远是"
+	"「先找指挥官、再插旗」，反过来做只会被人海拖死。"
+	"⚠️ 这条判不了：Statecraft 不提供指挥官实体的注册名，也不发击杀事件。"
+	"用「你手上确实有能完成这件事的装备」当替代判据。"
+	]
+	quest.58317CA3F2978F2C.title: "插旗"
+	quest.58317CA3F2978F2C.description: [
+	"走到城中心的旗座，按住 N 秒 —— 这是夺城的**最后一步**，也是最危险的一步。"
+	"（mod 侧要求：指挥官已死 + 插旗完成，两件同时成立。）"
+	]
+	quest.D53EB37E41A3B2EF.title: "占领碑"
+	quest.D53EB37E41A3B2EF.description: [
+	"夺下来的城会自动生成一块占领碑。**它是这件事唯一的物证** ——"
+	"没有碑，就等于没占。"
+	]
+	quest.A1BE8F1550E903A7.title: "驻军"
+	quest.A1BE8F1550E903A7.description: [
+	"占下来不等于守得住。铁傀儡 + 常驻的人，是最低成本的驻军。"
+	]
+	quest.64A8F7577DD8D7F8.title: "清点战利品"
+	quest.64A8F7577DD8D7F8.description: [
+	"战利品要**入库入账**，不是谁捡到归谁。这是「国家行为」和「抢劫」的分界。"
+	]
+	quest.2737E1CA18502982.title: "俘虏与平民"
+	quest.2737E1CA18502982.description: [
+	"城里有居民。**怎么处置他们，决定了这座城以后能不能自己运转。**"
+	"最省事的做法：不杀、不关，让他们照常干活。"
+	]
+	quest.5B05CB16A59D3199.title: "修复城防"
+	quest.5B05CB16A59D3199.description: [
+	"你们打坏的那段墙，现在是**你们的**墙。先补，再谈别的。"
+	]
+	quest.CD0029FE90CB20C6.title: "派任官吏"
+	quest.CD0029FE90CB20C6.description: [
+	"新属地要有**有人管**：一个讲台（办公桌）、一份任命书、一个常驻的人。"
+	]
+	quest.4FCF78A6EBAEEAB2.title: "新属地税则"
+	quest.4FCF78A6EBAEEAB2.description: [
+	"税率不能比母国高 —— 属地反叛的起点永远是税。"
+	]
+	quest.B31CBA6B2404D7B7.title: "属地入册"
+	quest.B31CBA6B2404D7B7.description: [
+	"把它记进你们的册子：什么时候拿下的、现在谁管、产出什么。"
+	"**这一步之后它才是「国土」的一部分，而不是一块飞地。**"
+	]
+	quest.253C6611D07590B5.title: "重画疆域"
+	quest.787A98794F31DC11.title: "从一座城到一个国家"
+	quest.787A98794F31DC11.description: [
+	"会打、能占、占得住、管得起 —— 邦交线到这里闭环："
+	"**外交拿不到的东西，战争能拿到；战争拿到的东西，治理才留得住。**"
+	]
+}

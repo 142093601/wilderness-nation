@@ -1,0 +1,611 @@
+# 类目 · 生活与出行
+#
+# 本章的 mod：Comforts(睡袋/吊床/绳梯) · Travelers Backpack(背包体系：内胆/升级/睡袋) ·
+#             Small Ships(小船与帆船) · OpenBlocks Elevator(电梯) ·
+#             Corail Tombstone + GraveStone Mod(死后物品与墓碑) ·
+#             Seaworthy Boats(造船台) · Let's Parkour(跑酷板)
+#
+# 与其它章的分工：
+#   · 仓储章 = 背包**内胆与分类**（storage 视角）；本章只讲「背着走」这一层
+#   · 出关章 = 远行的**准备与补给点**；本章讲随身装备本身
+#   · 防御章 = 尸潮与夜袭；本章讲「死了以后东西还在不在」
+#   · 音画章 = Corail Tombstone 的**氛围**表现；本章只用它的墓碑与找回机制
+
+key = "cat_comfort"
+title = "生活与出行"
+subtitle = "睡得下、带得走、过得了河、丢不了东西"
+group = "category"
+icon = "comforts:sleeping_bag_white"
+order_index = 53
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 簇 1：睡眠与休息 ----------------
+
+[[quest]]
+name = "c_sleep_bag"
+title = "睡袋"
+desc = [
+	"Comforts 的睡袋：不用先铺一张床才能过夜。",
+	"远行与工地都用得上——它是本章之后所有「在外过夜」的前提。",
+]
+icon = "comforts:sleeping_bag_white"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "comforts:sleeping_bag_white" },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "c_hammock"
+title = "吊床"
+desc = [
+	"吊床挂在两根柱子之间，白天也能躺：休息区不必只在屋里。",
+]
+icon = "comforts:hammock_white"
+shape = "circle"
+size = 1.2
+deps = ["c_sleep_bag"]
+tasks = [
+	{ type = "item", item = "comforts:hammock_white" },
+]
+
+[[quest]]
+name = "c_rope_and_nail"
+title = "绳与钉"
+desc = [
+	"固定吊床与绳梯用的件：没有它，吊床只能挂在现成的墙上。",
+]
+icon = "comforts:rope_and_nail"
+shape = "circle"
+size = 1.2
+deps = ["c_hammock"]
+tasks = [
+	{ type = "item", item = "comforts:rope_and_nail", count = 4 },
+]
+
+[[quest]]
+name = "c_rope_ladder"
+title = "绳梯"
+desc = [
+	"上下悬崖、进矿井、回自己的塔：绳梯是最便宜的垂直通路。",
+]
+icon = "comforts:rope_and_nail"
+shape = "rsquare"
+size = 1.75
+deps = ["c_rope_and_nail"]
+tasks = [
+	{ type = "item", item = "comforts:rope_and_nail", count = 8 },
+	{ type = "item", item = "minecraft:ladder", count = 16 },
+]
+
+[[quest]]
+name = "c_sleep_bags_all"
+title = "配齐队伍的睡袋颜色"
+desc = [
+	"每人一种颜色：夜里集合、分散露营、找自己的铺位都不用问。",
+]
+icon = "comforts:sleeping_bag_red"
+shape = "square"
+size = 1.5
+deps = ["c_rope_ladder"]
+tasks = [
+	{ type = "item", item = "comforts:sleeping_bag_red" },
+	{ type = "item", item = "comforts:sleeping_bag_blue" },
+	{ type = "item", item = "comforts:sleeping_bag_green" },
+	{ type = "item", item = "comforts:sleeping_bag_yellow" },
+]
+
+[[quest]]
+name = "c_bed_anywhere"
+title = "走到哪睡到哪"
+desc = [
+	"睡袋、吊床、绳梯三样齐了：任何一处都能临时扎营，重生点也随时能挪。",
+	"这一步之后，远行才谈得上「连续几天」。",
+]
+icon = "comforts:hammock_red"
+shape = "octagon"
+size = 1.75
+deps = ["c_sleep_bags_all"]
+tasks = [
+	{ type = "item", item = "comforts:hammock_red" },
+	{ type = "item", item = "comforts:sleeping_bag_black" },
+]
+rewards = [
+	{ type = "xp", xp = 40 },
+	{ type = "toast" },
+]
+
+# ---------------- 簇 2：随身与搬运 ----------------
+
+[[quest]]
+name = "c_backpack"
+title = "旅行背包"
+desc = [
+	"第一件真正的随身仓库：出门不必再腾出一个物品栏来装工具。",
+]
+icon = "travelersbackpack:standard"
+shape = "pentagon"
+size = 2.0
+deps = ["c_bed_anywhere"]
+tasks = [
+	{ type = "item", item = "travelersbackpack:standard" },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "c_backpack_tier"
+title = "升级背包等级"
+desc = [
+	"从皮革到铁、金、钻石、下界合金：容量与耐久随队伍阶段一起涨。",
+]
+icon = "travelersbackpack:iron_tier_upgrade"
+shape = "rsquare"
+size = 1.75
+deps = ["c_backpack"]
+tasks = [
+	{ type = "item", item = "travelersbackpack:iron_tier_upgrade" },
+	{ type = "item", item = "travelersbackpack:gold_tier_upgrade" },
+]
+
+[[quest]]
+name = "c_backpack_tank"
+title = "给背包加水箱"
+desc = [
+	"背包储罐：出远门带水带药，不必来回跑补给点。",
+]
+icon = "travelersbackpack:backpack_tank"
+shape = "circle"
+size = 1.2
+deps = ["c_backpack_tier"]
+tasks = [
+	{ type = "item", item = "travelersbackpack:backpack_tank" },
+]
+
+[[quest]]
+name = "c_backpack_crafting"
+title = "背包里的工作台"
+desc = [
+	"合成升级：路上能补工具，等于把工坊压缩进背包。",
+]
+icon = "travelersbackpack:crafting_upgrade"
+shape = "circle"
+size = 1.2
+deps = ["c_backpack_tier"]
+tasks = [
+	{ type = "item", item = "travelersbackpack:crafting_upgrade" },
+]
+
+[[quest]]
+name = "c_backpack_magnet"
+title = "磁铁升级"
+desc = [
+	"掉落物自己进背包：挖矿与清战场时省掉一遍手动捡拾。",
+]
+icon = "travelersbackpack:magnet_upgrade"
+shape = "circle"
+size = 1.2
+deps = ["c_backpack_crafting"]
+tasks = [
+	{ type = "item", item = "travelersbackpack:magnet_upgrade" },
+]
+
+[[quest]]
+name = "c_backpack_pickup"
+title = "自动拾取"
+desc = [
+	"拾取升级与磁铁升级不同：它管的是「捡起来之后放哪里」。",
+]
+icon = "travelersbackpack:pickup_upgrade"
+shape = "circle"
+size = 1.2
+deps = ["c_backpack_magnet"]
+tasks = [
+	{ type = "item", item = "travelersbackpack:pickup_upgrade" },
+]
+
+[[quest]]
+name = "c_backpack_feeding"
+title = "喂食升级"
+desc = [
+	"背包里的食物自动喂给自己：长时间作业不靠停下来吃。",
+]
+icon = "travelersbackpack:feeding_upgrade"
+shape = "circle"
+size = 1.2
+deps = ["c_backpack_pickup"]
+tasks = [
+	{ type = "item", item = "travelersbackpack:feeding_upgrade" },
+]
+
+[[quest]]
+name = "c_backpack_void"
+title = "虚空升级"
+desc = [
+	"圆石、泥土、腐肉不再占格子：过滤器是长期在外作业的必需品。",
+]
+icon = "travelersbackpack:void_upgrade"
+shape = "circle"
+size = 1.2
+deps = ["c_backpack_feeding"]
+tasks = [
+	{ type = "item", item = "travelersbackpack:void_upgrade" },
+]
+
+[[quest]]
+name = "c_backpack_sleeping_bag"
+title = "背包自带睡袋"
+desc = [
+	"背包附件里的睡袋：随身装备与休息装备合成一件东西。",
+]
+icon = "travelersbackpack:white_sleeping_bag"
+shape = "circle"
+size = 1.2
+deps = ["c_backpack_void"]
+tasks = [
+	{ type = "item", item = "travelersbackpack:white_sleeping_bag" },
+]
+
+[[quest]]
+name = "c_backpack_dragon"
+title = "龙背包"
+desc = [
+	"背包体系的顶层：容量到这一档，一个人就能顶一支小队搬家。",
+]
+icon = "travelersbackpack:dragon"
+shape = "rsquare"
+size = 1.75
+deps = ["c_backpack_sleeping_bag"]
+tasks = [
+	{ type = "item", item = "travelersbackpack:dragon" },
+]
+
+[[quest]]
+name = "c_carry_all"
+title = "一个人搬得动一队的东西"
+desc = [
+	"睡袋一路升到旅行背包顶配：背上能装、地上能睡、路上能修。",
+	"此后远行的瓶颈不再是「带不了」，而是「要不要带」。",
+]
+icon = "travelersbackpack:netherite"
+shape = "octagon"
+size = 1.75
+deps = ["c_backpack_dragon", "c_backpack_tank"]
+tasks = [
+	{ type = "item", item = "travelersbackpack:netherite" },
+	{ type = "item", item = "travelersbackpack:diamond_tier_upgrade" },
+	{ type = "item", item = "travelersbackpack:refill_upgrade" },
+]
+rewards = [
+	{ type = "xp", xp = 50 },
+	{ type = "toast" },
+]
+
+# ---------------- 簇 3：水上与垂直交通 ----------------
+
+[[quest]]
+name = "c_rowboat"
+title = "小船"
+desc = [
+	"Small Ships 的划艇：比原版船稳，也能装载随身物资。",
+]
+icon = "smallships:oak_rowboat"
+shape = "pentagon"
+size = 2.0
+deps = ["c_carry_all"]
+tasks = [
+	{ type = "item", item = "smallships:oak_rowboat" },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "c_sail"
+title = "帆"
+desc = [
+	"有帆才有顺风：帆船与划艇的差别就是「要不要一直按键」。",
+]
+icon = "smallships:sail"
+shape = "circle"
+size = 1.2
+deps = ["c_rowboat"]
+tasks = [
+	{ type = "item", item = "smallships:sail", count = 4 },
+]
+
+[[quest]]
+name = "c_cog"
+title = "货船"
+desc = [
+	"装货的船：大宗建材与农产品走水路，比车队省事。",
+]
+icon = "smallships:oak_cog"
+shape = "rsquare"
+size = 1.75
+deps = ["c_sail"]
+tasks = [
+	{ type = "item", item = "smallships:oak_cog" },
+]
+
+[[quest]]
+name = "c_galley"
+title = "桨帆船"
+desc = [
+	"长距离航行靠它：桨与帆并用，逆风也不至于停在水上。",
+]
+icon = "smallships:oak_galley"
+shape = "circle"
+size = 1.2
+deps = ["c_cog"]
+tasks = [
+	{ type = "item", item = "smallships:oak_galley" },
+]
+
+[[quest]]
+name = "c_drakkar"
+title = "战船"
+desc = [
+	"沿海巡防与登陆运兵：船队到这里开始具备军事意义。",
+]
+icon = "smallships:oak_drakkar"
+shape = "circle"
+size = 1.2
+deps = ["c_galley"]
+tasks = [
+	{ type = "item", item = "smallships:oak_drakkar" },
+]
+
+[[quest]]
+name = "c_cannon"
+title = "舰炮"
+desc = [
+	"船上的火力：水面不再是只能绕开的区域。",
+	"岸防与船队护航从此可以用同一套装备。",
+]
+icon = "smallships:cannon"
+shape = "circle"
+size = 1.2
+deps = ["c_drakkar"]
+tasks = [
+	{ type = "item", item = "smallships:cannon" },
+	{ type = "item", item = "smallships:cannon_ball", count = 16 },
+]
+
+[[quest]]
+name = "c_shipyard"
+title = "造船台"
+desc = [
+	"Seaworthy Boats 的造船台：船不再是背包里掏出来的一件物品，而是一条产线的产物。",
+]
+icon = "seaworthyboats:shipyard"
+shape = "rsquare"
+size = 1.75
+deps = ["c_cannon"]
+tasks = [
+	{ type = "item", item = "seaworthyboats:shipyard" },
+]
+
+[[quest]]
+name = "c_elevator"
+title = "电梯"
+desc = [
+	"同色电梯上下对齐即成一列：竖向交通不再靠一格一格的梯子。",
+	"塔楼、矿井、立体城区都要靠它。",
+]
+icon = "elevatorid:elevator_white"
+shape = "rsquare"
+size = 1.75
+deps = ["c_shipyard"]
+tasks = [
+	{ type = "item", item = "elevatorid:elevator_white", count = 4 },
+]
+
+[[quest]]
+name = "c_elevator_colors"
+title = "多条独立电梯"
+desc = [
+	"不同颜色互不串层：一栋楼里可以同时有货梯与客梯。",
+]
+icon = "elevatorid:elevator_red"
+shape = "circle"
+size = 1.2
+deps = ["c_elevator"]
+tasks = [
+	{ type = "item", item = "elevatorid:elevator_red", count = 2 },
+	{ type = "item", item = "elevatorid:elevator_blue", count = 2 },
+]
+
+[[quest]]
+name = "c_travel_done"
+title = "水路与竖井都通了"
+desc = [
+	"船队装得下货、岸上有一列电梯：物资从码头到仓库顶层的路已经打通。",
+]
+icon = "smallships:oak_war_galley"
+shape = "octagon"
+size = 1.75
+deps = ["c_elevator_colors", "c_shipyard"]
+tasks = [
+	{ type = "item", item = "smallships:oak_war_galley" },
+	{ type = "item", item = "elevatorid:elevator_gray", count = 2 },
+]
+rewards = [
+	{ type = "xp", xp = 50 },
+	{ type = "toast" },
+]
+
+# ---------------- 簇 4：死后与失物 ----------------
+
+[[quest]]
+name = "c_tombstone"
+title = "墓碑"
+desc = [
+	"死亡地点会立一块碑：跑回去的路不用靠记忆，也不用满地找掉落物。",
+	"在有尸潮的设计里，这条是「死了还回得来」的底线。",
+]
+icon = "tombstone:tombstone"
+shape = "pentagon"
+size = 2.0
+deps = ["c_travel_done"]
+tasks = [
+	{ type = "item", item = "tombstone:tombstone" },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "c_grave_plate"
+title = "可刻字的碑面"
+desc = [
+	"刻字碑面与铭牌：碑不只是坐标，也能写下是谁、什么时候。",
+]
+icon = "tombstone:grave_plate"
+shape = "circle"
+size = 1.2
+deps = ["c_tombstone"]
+tasks = [
+	{ type = "item", item = "tombstone:grave_plate" },
+	{ type = "item", item = "tombstone:engraved_grave_plate" },
+]
+
+[[quest]]
+name = "c_grave_dust"
+title = "遗物与墓尘"
+desc = [
+	"遗留物会以另一种形态存在：找回与安置都需要它。",
+]
+icon = "tombstone:grave_dust"
+shape = "circle"
+size = 1.2
+deps = ["c_grave_plate"]
+tasks = [
+	{ type = "item", item = "tombstone:grave_dust", count = 4 },
+]
+
+[[quest]]
+name = "c_grave_key"
+title = "墓穴钥匙"
+desc = [
+	"多人同葬一处时的归属问题：钥匙决定谁能开哪一块碑。",
+]
+icon = "tombstone:grave_key"
+shape = "circle"
+size = 1.2
+deps = ["c_grave_dust"]
+tasks = [
+	{ type = "item", item = "tombstone:grave_key" },
+]
+
+[[quest]]
+name = "c_obituary"
+title = "死亡笔记"
+desc = [
+	"GraveStone Mod 的记录册：谁在哪一天死在什么地方，都留得下。",
+	"这一条是「伤亡与善后」在任务书里的入口。",
+]
+icon = "gravestone:obituary"
+shape = "rsquare"
+size = 1.75
+deps = ["c_grave_key"]
+tasks = [
+	{ type = "item", item = "gravestone:obituary" },
+]
+
+[[quest]]
+name = "c_grave_styles"
+title = "不同样式的墓碑"
+desc = [
+	"碑林要有样式差别，否则一整片碑看起来像一堆重复的方块。",
+]
+icon = "tombstone:grave_normal"
+shape = "circle"
+size = 1.2
+deps = ["c_obituary"]
+tasks = [
+	{ type = "item", item = "tombstone:grave_normal" },
+	{ type = "item", item = "tombstone:grave_cross" },
+	{ type = "item", item = "gravestone:gravestone" },
+]
+
+[[quest]]
+name = "c_memorial"
+title = "公墓与纪念碑"
+desc = [
+	"把散落各处的碑集中成一片：城市开始记得自己的伤亡。",
+]
+icon = "tombstone:decorative_tombstone"
+shape = "rsquare"
+size = 1.75
+deps = ["c_grave_styles"]
+tasks = [
+	{ type = "item", item = "tombstone:decorative_tombstone" },
+	{ type = "item", item = "tombstone:decorative_grave_cross" },
+]
+
+[[quest]]
+name = "c_lost_and_found"
+title = "失物招领处"
+desc = [
+	"集中存放无人认领的遗物：给「东西丢了」一个比翻箱倒柜更省事的去处。",
+	"Tombstone 的收纳件在这里当分类柜用——它解决的正是失物越攒越乱的问题。",
+]
+icon = "tombstone:receptacle_of_soul"
+shape = "circle"
+size = 1.2
+deps = ["c_memorial"]
+tasks = [
+	{ type = "item", item = "tombstone:receptacle_of_soul" },
+]
+
+[[quest]]
+name = "c_safe_death"
+title = "死了也不至于白跑"
+desc = [
+	"墓碑、碑面、钥匙、死亡笔记、公墓、失物招领：一条从死亡到找回的完整链路。",
+	"本章到此结束——它保证的是「继续玩下去」这件事本身不会因为一次意外而停住。",
+]
+icon = "tombstone:tombstone"
+shape = "hexagon"
+size = 2.5
+deps = ["c_lost_and_found", "c_tombstone", "c_bed_anywhere", "c_carry_all",
+        "c_travel_done", "c_grave_dust"]
+tasks = [
+	{ type = "item", item = "tombstone:tombstone" },
+	{ type = "item", item = "tombstone:grave_plate" },
+	{ type = "item", item = "tombstone:grave_key" },
+	{ type = "item", item = "gravestone:obituary" },
+	{ type = "stat", stat = "minecraft:deaths", value = 1 },
+]
+rewards = [
+	{ type = "xp", xp = 120 },
+	{ type = "toast" },
+]
+
+# ---------------- 附：跑酷（Let's Parkour） ----------------
+
+[[quest]]
+name = "c_parkour_plates"
+title = "跑酷板"
+desc = [
+	"一组改造过手感的踏板：跑、跳、滑、弹、幻影五种，用来在城里修一条自己的路线。",
+	"它不属于上面四簇，放在章末作为「城内的娱乐设施」补一条。",
+]
+icon = "letsparkour:fast_parkour_slab"
+shape = "circle"
+size = 1.2
+deps = ["c_travel_done"]
+tasks = [
+	{ type = "item", item = "letsparkour:fast_parkour_slab", count = 4 },
+	{ type = "item", item = "letsparkour:jump_parkour_slab", count = 4 },
+]

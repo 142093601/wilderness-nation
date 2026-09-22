@@ -1,0 +1,521 @@
+# 类目 · 实用与奇物
+#
+# 本章的 mod：Waystones（只取**高级与奇物**那一层）· Better Archeology（考古、化石、图腾）·
+#   Exposure（相机、胶卷、暗房、相框、投影）· Exposure: Polaroid（拍立得）·
+#   Friends & Foes（新怪物带来的奇物：蟹钳、图腾、王冠、唱片）
+#
+# 与其它章的分工（这一章的定义）：
+#   · 本章 = **不是装备、也不是家具，但「没有它很难受」的那些东西**
+#   · 领地与队伍（95-claims）= Waystones 的**基础网络**（石碑、卷轴、分享石、绑定卷轴）——
+#     所以本章只写它没用过的那一层：石盘、共鸣碎片、传送门卷轴、双生羽毛、墓志铭、传送石座
+#   · 地图与探索（150-cat-explore）= Explorer's Compass 与 Nature's Compass，
+#     那两个罗盘在那一章已经各有专条，本章**不再重复**
+#   · 装饰 / 农牧 / 建筑各章 = 蜂箱与铜件的外观用途；本章只写「多一个养蜂人岗位」这种实用面
+#
+# 判据来源：全是实物（这一章的 mod 都注册了真实物品）。
+
+key = "cat_utility"
+title = "实用与奇物"
+subtitle = "不推主线，但缺了天天别扭"
+group = "category"
+icon = "waystones:warp_plate"
+order_index = 59
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 簇 1：出行与落脚（Waystones 的高级层） ----------------
+
+[[quest]]
+name = "u_warp_plate"
+title = "传送石盘"
+desc = [
+	"传送石碑解决「目的地在哪」，石盘解决「这两处之间怎么来回」。",
+	"据点一多，固定两点之间的往返就是最先该省掉的那件事。",
+]
+icon = "waystones:warp_plate"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "waystones:warp_plate" },
+]
+
+[[quest]]
+name = "u_attuned_shard"
+title = "共鸣碎片"
+icon = "waystones:attuned_shard"
+shape = "circle"
+size = 1.2
+deps = ["u_warp_plate"]
+tasks = [
+	{ type = "item", item = "waystones:attuned_shard" },
+]
+
+[[quest]]
+name = "u_deepslate_shard"
+title = "深板岩碎片：把石盘钉死"
+icon = "waystones:deepslate_shard"
+shape = "circle"
+size = 1.2
+deps = ["u_attuned_shard"]
+tasks = [
+	{ type = "item", item = "waystones:deepslate_shard" },
+]
+
+[[quest]]
+name = "u_portal_scroll"
+title = "传送门卷轴"
+desc = [
+	"临时门：在远处、在地下也能开一次，用完就散。",
+	"它是「今天必须回去一趟」这种时候的兜底。",
+]
+icon = "waystones:portal_scroll"
+shape = "rsquare"
+deps = ["u_warp_plate"]
+tasks = [
+	{ type = "item", item = "waystones:portal_scroll" },
+]
+
+[[quest]]
+name = "u_twinbound_feather"
+title = "双生羽毛"
+desc = [
+	"两个人各拿一支、互相绑定——结伴出远门时，谁掉队都能立刻回到对方身边。",
+]
+icon = "waystones:twinbound_feather"
+shape = "circle"
+size = 1.2
+deps = ["u_warp_plate"]
+tasks = [
+	{ type = "item", item = "waystones:twinbound_feather" },
+]
+
+[[quest]]
+name = "u_epitaph"
+title = "墓志铭"
+desc = [
+	"出事之后回得去现场——墓志铭与瞬忆碑是给「丢东西」这件事兜底的。",
+]
+icon = "waystones:epitaph"
+shape = "rsquare"
+deps = ["u_warp_plate"]
+tasks = [
+	{ type = "item", item = "waystones:epitaph" },
+]
+
+[[quest]]
+name = "u_portstone"
+title = "传送石座"
+desc = [
+	"石座不能当目的地，只能当出发点：立在矿口、工地、前线，收工就从那里回城。",
+]
+icon = "waystones:portstone"
+shape = "circle"
+size = 1.2
+deps = ["u_warp_plate"]
+tasks = [
+	{ type = "item", item = "waystones:portstone" },
+]
+
+# ---------------- 簇 2：勘察与考古（Better Archeology） ----------------
+
+[[quest]]
+name = "u_archeology_table"
+title = "考古学桌"
+desc = [
+	"这个包的考古不只有可疑的沙子：从这张桌子开始，才有后面一整条勘察线。",
+	"它管的是「地下的东西怎么变成能用的东西」。",
+]
+icon = "betterarcheology:archeology_table"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "betterarcheology:archeology_table" },
+]
+
+[[quest]]
+name = "u_brush"
+title = "刷子"
+icon = "betterarcheology:iron_brush"
+shape = "rsquare"
+deps = ["u_archeology_table"]
+tasks = [
+	{ type = "item", item = "betterarcheology:iron_brush" },
+]
+
+[[quest]]
+name = "u_suspicious"
+title = "可疑的泥土与红沙"
+icon = "betterarcheology:suspicious_dirt"
+shape = "circle"
+size = 1.2
+deps = ["u_brush"]
+tasks = [
+	{ type = "item", item = "betterarcheology:suspicious_dirt", count = 8 },
+	{ type = "item", item = "betterarcheology:suspicious_red_sand", count = 8 },
+]
+
+[[quest]]
+name = "u_fossil_dirt"
+title = "含化石的泥土"
+icon = "betterarcheology:fossiliferous_dirt"
+shape = "circle"
+size = 1.2
+deps = ["u_brush"]
+tasks = [
+	{ type = "item", item = "betterarcheology:fossiliferous_dirt", count = 8 },
+]
+
+[[quest]]
+name = "u_artifact"
+title = "已鉴定的神器"
+desc = [
+	"从一块碎片到一件鉴定出来的成品——勘察线到这一步才有回报。",
+]
+icon = "betterarcheology:identified_artifact"
+shape = "octagon"
+size = 1.75
+deps = ["u_suspicious", "u_fossil_dirt"]
+tasks = [
+	{ type = "item", item = "betterarcheology:unidentified_artifact" },
+	{ type = "item", item = "betterarcheology:identified_artifact" },
+]
+
+[[quest]]
+name = "u_vase"
+title = "古代花瓶"
+icon = "betterarcheology:loot_vase"
+shape = "circle"
+size = 1.2
+deps = ["u_brush"]
+tasks = [
+	{ type = "item", item = "betterarcheology:loot_vase", count = 4 },
+]
+
+[[quest]]
+name = "u_fossil_assemble"
+title = "拼一具完整化石"
+desc = [
+	"头和身体凑齐摆出去，它自带的那点脾性才会显出来（狼化石让骷髅发怵，",
+	"鸡化石让人觉得更轻——说明写在物品上）。这也是本章最便宜的一件纪念物。",
+]
+icon = "betterarcheology:wolf_fossil"
+shape = "rsquare"
+deps = ["u_fossil_dirt"]
+tasks = [
+	{ type = "item", item = "betterarcheology:wolf_fossil_head" },
+	{ type = "item", item = "betterarcheology:wolf_fossil_body" },
+]
+
+[[quest]]
+name = "u_totem_growth"
+title = "生长图腾"
+desc = [
+	"放在田边的生长图腾会加速附近作物——它是「没有它很难受」这句话最标准的例子。",
+]
+icon = "betterarcheology:growth_totem"
+shape = "rsquare"
+deps = ["u_archeology_table"]
+tasks = [
+	{ type = "item", item = "betterarcheology:growth_totem" },
+]
+
+[[quest]]
+name = "u_totem_radiance"
+title = "光辉图腾"
+desc = [
+	"夜里看守、下矿探路都用得上：它的光会照出附近的实体，并且伤害怪物。",
+]
+icon = "betterarcheology:radiance_totem"
+shape = "circle"
+size = 1.2
+deps = ["u_totem_growth"]
+tasks = [
+	{ type = "item", item = "betterarcheology:radiance_totem" },
+]
+
+[[quest]]
+name = "u_totem_soul"
+title = "灵魂图腾与洪流图腾"
+icon = "betterarcheology:soul_totem"
+shape = "circle"
+size = 1.2
+deps = ["u_totem_growth"]
+tasks = [
+	{ type = "item", item = "betterarcheology:soul_totem" },
+	{ type = "item", item = "betterarcheology:torrent_totem" },
+]
+
+[[quest]]
+name = "u_evoker_trap"
+title = "唤魔者陷阱"
+icon = "betterarcheology:evoker_trap"
+shape = "circle"
+size = 1.2
+deps = ["u_archeology_table"]
+tasks = [
+	{ type = "item", item = "betterarcheology:evoker_trap" },
+]
+
+# ---------------- 簇 3：记录与留影（Exposure / Polaroid） ----------------
+
+[[quest]]
+name = "u_camera"
+title = "相机"
+desc = [
+	"Exposure 把「记录」做成了完整玩法：拍照要胶卷、要冲洗、要印出来。",
+	"它也是本包唯一能留下「当时的画面」的手段——文字会记错，照片不会。",
+]
+icon = "exposure:camera"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "exposure:camera" },
+]
+
+[[quest]]
+name = "u_film"
+title = "黑白胶卷"
+icon = "exposure:black_and_white_film"
+shape = "circle"
+size = 1.2
+deps = ["u_camera"]
+tasks = [
+	{ type = "item", item = "exposure:black_and_white_film" },
+]
+
+[[quest]]
+name = "u_color_film"
+title = "彩色胶卷"
+desc = [
+	"黑白能记事，彩色能记「那天是什么样子」。想给以后的人看，就别省这一步。",
+]
+icon = "exposure:color_film"
+shape = "circle"
+size = 1.2
+deps = ["u_film"]
+tasks = [
+	{ type = "item", item = "exposure:color_film" },
+	{ type = "item", item = "exposure:high_sensitivity_color_film" },
+]
+
+[[quest]]
+name = "u_lightroom"
+title = "暗房"
+desc = [
+	"拍完不冲等于没拍。暗房是记录线上的必经工序，也是「照片」这种东西的产地。",
+]
+icon = "exposure:lightroom"
+shape = "rsquare"
+deps = ["u_camera"]
+tasks = [
+	{ type = "item", item = "exposure:lightroom" },
+]
+
+[[quest]]
+name = "u_develop"
+title = "冲洗出底片"
+icon = "exposure:developed_color_film"
+shape = "circle"
+size = 1.2
+deps = ["u_lightroom"]
+tasks = [
+	{ type = "item", item = "exposure:developed_color_film" },
+]
+
+[[quest]]
+name = "u_print"
+title = "印出第一张照片"
+desc = [
+	"从底片到照片：这一步之后，墙上的东西才有得挂，相册里才有得翻。",
+]
+icon = "exposure:photograph"
+shape = "rsquare"
+deps = ["u_develop"]
+tasks = [
+	{ type = "item", item = "exposure:photograph" },
+	{ type = "item", item = "exposure:chromatic_sheet" },
+]
+
+[[quest]]
+name = "u_frame"
+title = "相框：把照片挂上墙"
+icon = "exposure:photograph_frame"
+shape = "circle"
+size = 1.2
+deps = ["u_print"]
+tasks = [
+	{ type = "item", item = "exposure:photograph_frame", count = 4 },
+	{ type = "item", item = "exposure:glass_photograph_frame" },
+]
+
+[[quest]]
+name = "u_album"
+title = "相册"
+desc = [
+	"相册是「这个国家经历过什么」的第一手材料，也是以后写史册时的底稿。",
+]
+icon = "exposure:album"
+shape = "octagon"
+size = 1.75
+deps = ["u_print"]
+tasks = [
+	{ type = "item", item = "exposure:album" },
+]
+
+[[quest]]
+name = "u_stand"
+title = "相机支架与自拍杆"
+icon = "exposure:camera_stand"
+shape = "circle"
+size = 1.2
+deps = ["u_camera"]
+tasks = [
+	{ type = "item", item = "exposure:camera_stand" },
+	{ type = "item", item = "exposure:selfie_stick" },
+]
+
+[[quest]]
+name = "u_projector"
+title = "位面投影器"
+desc = [
+	"本章最像「奇物」的一件：它能把别处的一张图投到眼前，",
+	"当议会厅的展示板或地图墙都行——代价是它会消耗，用久了还会解体。",
+]
+icon = "exposure:interplanar_projector"
+shape = "rsquare"
+deps = ["u_print"]
+tasks = [
+	{ type = "item", item = "exposure:interplanar_projector" },
+]
+
+[[quest]]
+name = "u_polaroid"
+title = "拍立得相机"
+desc = [
+	"拍立得不用暗房，当场出片；代价是相纸有限，适合拍「现在就想要」的东西。",
+]
+icon = "exposure_polaroid:instant_camera"
+shape = "rsquare"
+deps = ["u_camera"]
+tasks = [
+	{ type = "item", item = "exposure_polaroid:instant_camera" },
+]
+
+[[quest]]
+name = "u_polaroid_slide"
+title = "拍立得相纸"
+icon = "exposure_polaroid:instant_color_slide"
+shape = "circle"
+size = 1.2
+deps = ["u_polaroid"]
+tasks = [
+	{ type = "item", item = "exposure_polaroid:instant_color_slide" },
+	{ type = "item", item = "exposure_polaroid:high_sensitivity_instant_color_slide" },
+]
+
+# ---------------- 簇 4：奇物与异兽（Friends & Foes） ----------------
+
+[[quest]]
+name = "u_crab_claw"
+title = "蟹钳"
+desc = [
+	"螃蟹掉下来的钳子。它是这一章最典型的奇物：不用也能玩，用过就回不去。",
+]
+icon = "friendsandfoes:crab_claw"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "friendsandfoes:crab_claw" },
+]
+
+[[quest]]
+name = "u_totems"
+title = "护符位：冰冻与幻象图腾"
+desc = [
+	"冰冻图腾来自冰术师，幻象图腾来自幻术师——它们和原版不死图腾占同一个护符位，",
+	"效果各不相同。带哪一枚出门，是个值得讨论的问题。",
+]
+icon = "friendsandfoes:totem_of_freezing"
+shape = "octagon"
+size = 1.75
+deps = ["u_crab_claw"]
+tasks = [
+	{ type = "item", item = "friendsandfoes:totem_of_freezing" },
+	{ type = "item", item = "friendsandfoes:totem_of_illusion" },
+]
+
+[[quest]]
+name = "u_crown"
+title = "野火王冠"
+desc = [
+	"野火（下界的新对手）掉碎片，五块碎片拼成一顶王冠；它本身是一顶头盔。",
+]
+icon = "friendsandfoes:wildfire_crown"
+shape = "rsquare"
+deps = ["u_crab_claw"]
+tasks = [
+	{ type = "item", item = "friendsandfoes:wildfire_crown" },
+]
+
+[[quest]]
+name = "u_music_disc"
+title = "矿井里的那张唱片"
+desc = [
+	"这张唱片被塞进了废弃矿井的箱子里——想听它，得先下矿找。",
+]
+icon = "friendsandfoes:music_disc_around_the_corner"
+shape = "circle"
+size = 1.2
+deps = ["u_crab_claw"]
+tasks = [
+	{ type = "item", item = "friendsandfoes:music_disc_around_the_corner" },
+]
+
+[[quest]]
+name = "u_beehive"
+title = "养蜂人的蜂箱"
+desc = [
+	"换一种木材的蜂箱也算蜂箱：村里就会多出一个养蜂人的岗位。",
+]
+icon = "friendsandfoes:cherry_beehive"
+shape = "circle"
+size = 1.2
+deps = ["u_crab_claw"]
+tasks = [
+	{ type = "item", item = "friendsandfoes:cherry_beehive" },
+]
+
+[[quest]]
+name = "u_buttercup"
+title = "毛茛"
+icon = "friendsandfoes:buttercup"
+shape = "circle"
+size = 1.2
+deps = ["u_crab_claw"]
+tasks = [
+	{ type = "item", item = "friendsandfoes:buttercup", count = 4 },
+]
+
+# ---------------- 终局 ----------------
+
+[[quest]]
+name = "u_utility_done"
+title = "出门的杂件齐了"
+desc = [
+	"往返、勘察、记录、手感四件事各有趁手的工具。",
+	"这些东西不推主线，但缺一样就会天天别扭——补齐它们，出门才算轻松。",
+]
+icon = "minecraft:bundle"
+shape = "hexagon"
+size = 2.5
+deps = ["u_epitaph", "u_totem_radiance", "u_album", "u_totems"]
+tasks = [
+	{ type = "item", item = "waystones:warp_plate", count = 2 },
+	{ type = "item", item = "betterarcheology:radiance_totem" },
+	{ type = "item", item = "exposure:album" },
+	{ type = "item", item = "friendsandfoes:totem_of_freezing" },
+]
+rewards = [
+	{ type = "xp", xp = 60 },
+	{ type = "toast" },
+]

@@ -1,0 +1,404 @@
+# 类目 · 音画与氛围
+#
+# 本章的 mod（9 个）：
+#   声音   AmbientSounds · Sound Physics Remastered · Medieval Music
+#   画面   Fusion（连接材质，前置 Athena）· EMF = Entity Model Features（实体模型）·
+#          ETF = Entity Texture Features（实体纹理）· LambDynamicLights（动态光源）·
+#          Particle Rain（粒子雨）· Not Enough Animations（动作）
+#
+# 与其它章的分工：
+#   · 建筑构件与装饰细节 = 100-cat-building / 104-cat-decor（本章不碰方块套装）
+#   · 死后与失物（Tombstone / GraveStone / Corpse）= 114-cat-comfort
+#   · 本章 = 声音、光、天气、动作这四样「不是方块」的东西
+#
+# ⚠️ 本章的判据来源：
+#   这 9 个 mod 也都没有注册物品（实测 `python tools/item_index.py --stats` 的 100 个
+#   命名空间里一个都没有；Fusion / EMF / ETF 在材质与模型层，其余在客户端表现层，
+#   其中多项在 modlist.tsv 里还是 plan 状态）。
+#   ⇒ mod 条目 checkmark 并逐条写明理由；「氛围」能用实物搭出来的条目一律用实物判据
+#     （灯、篝火、蜡烛、羊毛、唱片机、烟花、水、玻璃板、石砖……）。
+
+key = "cat_audio"
+title = "音画与氛围"
+subtitle = "听得见的水声、看得见的光：氛围件怎么摆"
+group = "category"
+icon = "minecraft:jukebox"
+order_index = 66
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 簇 1：声音 ----------------
+
+# checkmark：AmbientSounds 加的是环境音（鸟、水、洞穴），是客户端音频层，
+# 注册表里没有 ambientsounds 命名空间（实测 0 物品），也没有可统计的信号。
+[[quest]]
+name = "a_ambientsounds"
+title = "环境音：AmbientSounds"
+desc = [
+	"这一簇解决「这个地方听起来是什么样」——它不加一个方块，只加声音。",
+	"顺序上它排在最前：声音是最便宜的氛围，装上就有，不用动土。",
+]
+icon = "minecraft:sculk_sensor"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "a_sound_physics"
+title = "敲一口钟，听混响：Sound Physics"
+icon = "minecraft:bell"
+shape = "rsquare"
+deps = ["a_ambientsounds"]
+tasks = [
+	{ type = "stat", stat = "minecraft:bell_ring", value = 1 },
+]
+
+# checkmark：Medieval Music 是背景音乐包，纯音频资源，没有物品也没有统计。
+[[quest]]
+name = "a_medieval_music"
+title = "换一套背景音乐：Medieval Music"
+icon = "minecraft:music_disc_cat"
+shape = "circle"
+size = 1.2
+deps = ["a_ambientsounds"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "a_note_block"
+title = "音符盒做报时"
+icon = "minecraft:note_block"
+shape = "circle"
+size = 1.2
+deps = ["a_medieval_music"]
+tasks = [
+	{ type = "item", item = "minecraft:note_block", count = 2 },
+]
+
+# checkmark：音量分轨是客户端声音设置，游戏不记录每一条音量条的值。
+[[quest]]
+name = "a_music_volume"
+title = "环境音与音乐分开调"
+icon = "minecraft:lever"
+shape = "circle"
+size = 1.2
+deps = ["a_ambientsounds"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "a_goat_horn"
+title = "用山羊角集合"
+icon = "minecraft:goat_horn"
+shape = "circle"
+size = 1.2
+deps = ["a_music_volume"]
+tasks = [
+	{ type = "item", item = "minecraft:goat_horn" },
+]
+
+[[quest]]
+name = "a_sound_wall"
+title = "给吵闹的机器围一圈羊毛"
+icon = "minecraft:white_wool"
+shape = "circle"
+size = 1.2
+deps = ["a_ambientsounds"]
+tasks = [
+	{ type = "item", item = "minecraft:white_wool", count = 32 },
+]
+
+[[quest]]
+name = "a_sculk_door"
+title = "声音也能开门"
+icon = "minecraft:iron_door"
+shape = "circle"
+size = 1.2
+deps = ["a_sound_physics"]
+tasks = [
+	{ type = "item", item = "minecraft:sculk_sensor", count = 2 },
+]
+
+# ---------------- 簇 2：画面细节 ----------------
+
+# checkmark：Fusion（前置 Athena）是材质层的连接纹理，注册表里没有 fusion / athena
+# 命名空间（实测 0 物品）—— 它改的是方块面怎么贴图，没有物品与统计。
+[[quest]]
+name = "a_fusion"
+title = "连接材质：玻璃与砖不再有缝"
+desc = [
+	"这一簇要的是「细节看起来是整块的」：同样是墙，接缝对的与不对，观感差一档。",
+	"它不改方块本身，只改贴图怎么连——所以不影响存档与配方。",
+]
+icon = "minecraft:glass"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "a_glass_pane_window"
+title = "窗要用玻璃板"
+icon = "minecraft:glass_pane"
+shape = "circle"
+size = 1.2
+deps = ["a_fusion"]
+tasks = [
+	{ type = "item", item = "minecraft:glass_pane", count = 32 },
+]
+
+[[quest]]
+name = "a_connected_stone"
+title = "整片石砖墙"
+icon = "minecraft:stone_bricks"
+shape = "circle"
+size = 1.2
+deps = ["a_glass_pane_window"]
+tasks = [
+	{ type = "item", item = "minecraft:stone_bricks", count = 64 },
+]
+
+# checkmark：EMF（Entity Model Features）读的是资源包里的实体模型（CEM），
+# 属于模型层，没有物品与统计。
+[[quest]]
+name = "a_emf"
+title = "实体模型：Entity Model Features（EMF）"
+icon = "minecraft:armor_stand"
+shape = "circle"
+size = 1.2
+deps = ["a_fusion"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：ETF（Entity Texture Features）让同一群动物有不同花色，
+# 属于实体纹理随机化，是客户端表现层。
+[[quest]]
+name = "a_etf"
+title = "同一群牛花色不同：Entity Texture Features（ETF）"
+icon = "minecraft:leather"
+shape = "circle"
+size = 1.2
+deps = ["a_emf"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "a_lambdynamiclights"
+title = "手里拿火把，路就亮了"
+icon = "minecraft:lantern"
+shape = "rsquare"
+deps = ["a_fusion"]
+tasks = [
+	{ type = "item", item = "minecraft:torch", count = 16 },
+]
+
+# checkmark：Particle Rain 换的是降雨粒子表现，是客户端天气渲染，没有信号源。
+[[quest]]
+name = "a_particle_rain"
+title = "雨要有雨的粒子：Particle Rain"
+icon = "minecraft:water_bucket"
+shape = "circle"
+size = 1.2
+deps = ["a_lambdynamiclights"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：Not Enough Animations 补的是第三人称动作（举地图、吃东西），是客户端动画层。
+[[quest]]
+name = "a_nea"
+title = "动作补全：Not Enough Animations"
+icon = "minecraft:map"
+shape = "circle"
+size = 1.2
+deps = ["a_fusion"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：画面档位（树叶、云、粒子密度）是客户端视频设置，没有物品与统计。
+[[quest]]
+name = "a_fancy_graphics"
+title = "画面档位调到「华丽」"
+icon = "minecraft:painting"
+shape = "circle"
+size = 1.2
+deps = ["a_particle_rain"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# ---------------- 簇 3：氛围件 ----------------
+
+[[quest]]
+name = "a_night_light"
+title = "入夜先点灯"
+desc = [
+	"这一簇是**动手的部分**：前面两簇装了就生效，这一簇要把东西摆出去。",
+	"从一盏灯开始——夜里能不能看清路，是氛围与实用的同一件事。",
+]
+icon = "minecraft:lantern"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "minecraft:lantern", count = 8 },
+]
+
+[[quest]]
+name = "a_campfire"
+title = "篝火：声、光、烟一次到位"
+icon = "minecraft:campfire"
+shape = "circle"
+size = 1.2
+deps = ["a_night_light"]
+tasks = [
+	{ type = "item", item = "minecraft:campfire", count = 4 },
+]
+
+[[quest]]
+name = "a_soul_light"
+title = "冷色的第二种光"
+icon = "minecraft:soul_lantern"
+shape = "circle"
+size = 1.2
+deps = ["a_night_light"]
+tasks = [
+	{ type = "item", item = "minecraft:soul_lantern", count = 4 },
+]
+
+[[quest]]
+name = "a_candles"
+title = "蜡烛：小范围的光"
+icon = "minecraft:candle"
+shape = "circle"
+size = 1.2
+deps = ["a_night_light"]
+tasks = [
+	{ type = "item", item = "minecraft:candle", count = 8 },
+]
+
+[[quest]]
+name = "a_glowstone_ceiling"
+title = "顶上一块荧光石"
+icon = "minecraft:glowstone"
+shape = "circle"
+size = 1.2
+deps = ["a_candles"]
+tasks = [
+	{ type = "item", item = "minecraft:glowstone", count = 8 },
+]
+
+[[quest]]
+name = "a_jukebox"
+title = "城里放一台唱片机"
+icon = "minecraft:jukebox"
+shape = "rsquare"
+deps = ["a_night_light"]
+tasks = [
+	{ type = "item", item = "minecraft:jukebox" },
+	{ type = "item", item = "minecraft:music_disc_cat" },
+]
+
+[[quest]]
+name = "a_flower_pot"
+title = "窗台与花盆"
+icon = "minecraft:flower_pot"
+shape = "circle"
+size = 1.2
+deps = ["a_jukebox"]
+tasks = [
+	{ type = "item", item = "minecraft:flower_pot", count = 8 },
+]
+
+[[quest]]
+name = "a_armor_stand_scene"
+title = "盔甲架摆成套装备"
+icon = "minecraft:armor_stand"
+shape = "circle"
+size = 1.2
+deps = ["a_night_light"]
+tasks = [
+	{ type = "item", item = "minecraft:armor_stand", count = 4 },
+]
+
+[[quest]]
+name = "a_item_frame_wall"
+title = "展示框挂战利品"
+icon = "minecraft:item_frame"
+shape = "circle"
+size = 1.2
+deps = ["a_armor_stand_scene"]
+tasks = [
+	{ type = "item", item = "minecraft:item_frame", count = 8 },
+]
+
+[[quest]]
+name = "a_water_feature"
+title = "挖一个小水池"
+icon = "minecraft:water_bucket"
+shape = "circle"
+size = 1.2
+deps = ["a_night_light"]
+tasks = [
+	{ type = "item", item = "minecraft:water_bucket", count = 2 },
+	{ type = "item", item = "minecraft:cauldron", count = 2 },
+]
+
+[[quest]]
+name = "a_auto_light"
+title = "天黑了自己亮灯"
+icon = "minecraft:daylight_detector"
+shape = "rsquare"
+deps = ["a_glowstone_ceiling"]
+tasks = [
+	{ type = "item", item = "minecraft:daylight_detector", count = 2 },
+	{ type = "item", item = "minecraft:redstone_lamp", count = 8 },
+]
+
+[[quest]]
+name = "a_fireworks"
+title = "节庆放一次烟花"
+icon = "minecraft:firework_rocket"
+shape = "circle"
+size = 1.2
+deps = ["a_jukebox"]
+tasks = [
+	{ type = "item", item = "minecraft:firework_rocket", count = 16 },
+]
+
+[[quest]]
+name = "a_dog_lead"
+title = "牵一条狗回家"
+icon = "minecraft:lead"
+shape = "circle"
+size = 1.2
+deps = ["a_night_light"]
+tasks = [
+	{ type = "item", item = "minecraft:lead", count = 2 },
+]
+
+[[quest]]
+name = "a_audio_done"
+title = "声音、光、天气都摆过一遍"
+desc = [
+	"声音、画面、氛围三簇都走过一遍之后，这一章就算翻篇了。",
+	"后面的氛围件不用一次做完——哪间屋先住人，就先做哪一间。",
+]
+icon = "minecraft:sea_lantern"
+shape = "hexagon"
+size = 2.5
+deps = ["a_sculk_door", "a_fancy_graphics", "a_dog_lead"]
+tasks = [
+	{ type = "item", item = "minecraft:lantern", count = 16 },
+]
+rewards = [
+	{ type = "xp", xp = 40 },
+	{ type = "toast" },
+]

@@ -284,6 +284,10 @@ class ChapterDef:
         self.order_index: int = int(raw.get("order_index", 0))
         self.progression_mode: str | None = raw.get("progression_mode")
         self.quests: list[dict] = raw.get("quest", [])
+        # 跨章**软链接**（`[[link]]`）：在本书的画布上放一个指路牌，
+        # 指向另一章的某条任务。**不是前置** —— 不做也能继续，
+        # 这正是 PLAN-questbook.md §4.4 要的："主线导向 mod 章，但不变成作业"。
+        self.links: list[dict] = raw.get("link", []) or []
         # 坐标排布参数（章级可覆盖）
         self.grid: dict = raw.get("grid", {})
 
@@ -324,6 +328,40 @@ def load_chapters() -> list[ChapterDef]:
 # 布局：人写意图，工具算坐标
 # ======================================================================
 
+def dep_cycles(quests: list[dict]) -> list[list[str]]:
+    """找出**章内**依赖里的环，返回若干条环路（每个是 name 的列表，首尾相接）。
+
+    为什么要有这个函数（2026-09-22 实测踩到）
+    ----------------------------------------
+    旧的 `layout()` 用裸递归算行号，**没有环检测**。八个 agent 并行写章时，
+    其中一章写出了 `a → b → a`，结果不是"报错"，而是生成器整个
+    `RecursionError: maximum recursion depth exceeded` 崩掉 ——
+    错误信息里连是哪个文件都看不出来，只能一个个文件试。
+    依赖成环是**必然会发生**的输入错误（人写的），生成器必须能指出它在哪。
+    """
+    names = {q["name"] for q in quests}
+    local = {q["name"]: [d for d in (q.get("deps") or []) if d in names] for q in quests}
+    state: dict[str, int] = {}          # 0/absent=未访问 1=在栈上 2=已完成
+    found: list[list[str]] = []
+
+    def dfs(node: str, stack: list[str]) -> None:
+        state[node] = 1
+        for dep in local.get(node, []):
+            if state.get(dep) == 1:
+                if dep in stack:
+                    found.append(stack[stack.index(dep):] + [dep])
+                else:
+                    found.append([node, dep])
+            elif state.get(dep) is None:
+                dfs(dep, stack + [dep])
+        state[node] = 2
+
+    for n in local:
+        if state.get(n) is None:
+            dfs(n, [n])
+    return found
+
+
 def layout(chapter: ChapterDef) -> dict[str, tuple[float, float]]:
     """给没有显式 x/y 的任务排布坐标。
 
@@ -331,6 +369,10 @@ def layout(chapter: ChapterDef) -> dict[str, tuple[float, float]]:
       - 主线（shape = rsquare / pentagon）沿 y = 0 横向排开，左→右
       - 其余任务按"第一条依赖所在的行"决定行号：依赖主线 → 下一行；依赖支线 → 再下一行
       - 每行按该行任务的 size 计算间距，保持不重叠
+
+    ⚠️ 行号用**迭代式不动点**算，不用递归：递归在依赖成环时会 `RecursionError`
+    把生成器整个打挂（2026-09-22 实测）。这里的写法有环时**不会崩**，
+    环里的节点留在第 0 行，由 `compile_chapter()` 报成可读的错误。
     """
     g = {"step": 1.5, "row_h": 1.5, "origin_x": 0.0, "origin_y": 0.0}
     g.update(chapter.grid)
@@ -339,30 +381,29 @@ def layout(chapter: ChapterDef) -> dict[str, tuple[float, float]]:
 
     quests = chapter.quests
     by_name = {q["name"]: q for q in quests}
-    row_of: dict[str, int] = {}
+    # ⚠️ 只有**章内存在**的依赖才算数。跨章引用会被 compile_chapter 报错，
+    # 但 layout() 先跑，所以这里必须自己过滤 —— 否则
+    # `max()` 收到空序列会抛 ValueError，把生成器整个打挂
+    # （2026-09-22 拆章时实测踩到：14 条任务带着跨章依赖搬进新章）。
+    local_deps = {q["name"]: [d for d in (q.get("deps") or []) if d in by_name] for q in quests}
 
-    def row_for(name: str) -> int:
-        if name in row_of:
-            return row_of[name]
-        q = by_name.get(name)
-        if q is None:
-            return 0
-        deps = q.get("deps", []) or []
-        # ⚠️ 只有**章内存在**的依赖才算数。跨章引用会被 compile_chapter 报错，
-        # 但 layout() 先跑，所以这里必须自己过滤 —— 否则
-        # `max()` 收到空序列会抛 ValueError，把生成器整个打挂
-        # （2026-09-22 拆章时实测踩到：14 条任务带着跨章依赖搬进新章）。
-        local_deps = [d for d in deps if d in by_name]
-        if not local_deps:
-            row = 0
-        else:
-            row = 1 + max(row_for(d) for d in local_deps)
-        row_of[name] = row
-        return row
+    row_of: dict[str, int] = {}
+    for _ in range(len(quests) + 2):          # 最多 N+1 轮就能到不动点
+        progressed = False
+        for name, deps in local_deps.items():
+            if name in row_of:
+                continue
+            if all(d in row_of for d in deps):
+                row_of[name] = 0 if not deps else 1 + max(row_of[d] for d in deps)
+                progressed = True
+        if not progressed:
+            break
+    for name in local_deps:                   # 环里的节点兜底
+        row_of.setdefault(name, 0)
 
     rows: dict[int, list[dict]] = {}
     for q in quests:
-        rows.setdefault(row_for(q["name"]), []).append(q)
+        rows.setdefault(row_of[q["name"]], []).append(q)
 
     pos: dict[str, tuple[float, float]] = {}
     for row, items in sorted(rows.items()):
@@ -385,6 +426,11 @@ class Compiler:
         self.ids = IdAllocator()
         self.errors: list[str] = []
         self.warnings: list[str] = []
+        self.chapter_ids: dict[str, str] = {}
+        self.group_ids: dict[str, str] = {}
+        self.quest_ids: dict[str, dict[str, str]] = {}
+        # 每章的原始 node（软链接第二遍解析时要改它）
+        self.chapter_nodes: dict[str, dict] = {}
         self.group_ids: dict[str, str] = {}
         self.chapter_ids: dict[str, str] = {}
         self.quest_ids: dict[str, dict[str, str]] = {}   # chapter_key -> name -> id
@@ -423,6 +469,11 @@ class Compiler:
             dupes = sorted({n for n in names if names.count(n) > 1})
             self.err(where, f"任务 name 重复：{dupes}")
         name_set = set(names)
+
+        # 依赖成环 = 那几条任务**永远不可能解锁**（游戏里表现为永远暗着）。
+        # 必须在生成阶段报出来 —— 见 dep_cycles() 的注释（旧版是 RecursionError 崩掉）。
+        for cyc in dep_cycles(ch.quests):
+            self.err(where, "依赖成环（这几条任务永远解不开）：" + " → ".join(cyc))
 
         positions = layout(ch)
 
@@ -539,7 +590,51 @@ class Compiler:
             node["progression_mode"] = ch.progression_mode
         node["quest_links"] = []
         node["quests"] = compiled_quests
+        # 留一份原始 node：软链接要等**所有**章都编译完（才知道目标任务的 id）
+        # 才能解析，所以这里不能立刻序列化。见 apply_links()。
+        self.chapter_nodes[ch.key] = node
         return snbt(node) + "\n", compiled_quests
+
+    def apply_links(self, chapters: list[ChapterDef]) -> dict[str, str]:
+        """把 `[[link]]` 解析成真正的 `quest_links`，并序列化每一章。
+
+        为什么必须**第二遍**：软链接指向的是**别的章**里某条任务的 id，
+        而那要等那一章编译完才有。所以流程是「先全部编译 → 再统一解析链接 → 再序列化」。
+
+        FTB Quests 的 `quest_links` 元素结构（实测自天空蜂巢的 chapter 文件）：
+            { id: "<链接自己的 id>" linked_quest: "<目标任务 id>" x: …d y: …d }
+        —— 注意 `linked_quest` 是**任务 id**（不是章 id），x/y 是**本章画布**上的位置。
+
+        目标不存在时**报错**（不是警告）：写错的指路牌会把玩家引到空白处，
+        而且这种错在游戏里完全不报错。
+        """
+        texts: dict[str, str] = {}
+        for ch in chapters:
+            node = self.chapter_nodes[ch.key]
+            links: list[dict] = []
+            for i, lk in enumerate(ch.links):
+                tgt_ch = str(lk.get("to_chapter", ""))
+                tgt_q = str(lk.get("to_quest", ""))
+                where = f"{ch.path.name} [[link]] #{i + 1} → {tgt_ch}/{tgt_q}"
+                if tgt_ch == ch.key:
+                    self.err(where, "软链接指向本章（章内连线请用 deps）")
+                    continue
+                tid = self.quest_ids.get(tgt_ch, {}).get(tgt_q)
+                if not tid:
+                    self.err(where, f"目标任务不存在（{tgt_ch} 章里没有名为 {tgt_q} 的任务）")
+                    continue
+                # 缺省位置：排在主轴左侧，按序号往下错开，避免重叠
+                lx = float(lk.get("x", -10.0))
+                ly = float(lk.get("y", -float(i) * 1.75))
+                links.append({
+                    "id": self.ids.make("link", ch.key, str(i)),
+                    "linked_quest": tid,
+                    "x": round(lx, 2),
+                    "y": round(ly, 2),
+                })
+            node["quest_links"] = links
+            texts[ch.key] = snbt(node) + "\n"
+        return texts
 
     # ---- 语言 ----
     def lang_chapter(self, chapters: list[ChapterDef]) -> str:
@@ -681,10 +776,11 @@ def main() -> int:
 
     c = Compiler()
     groups_snbt, groups_raw = c.compile_groups(groups)
-    chapter_texts: dict[str, str] = {}
     for ch in chapters:
-        text, _ = c.compile_chapter(ch)
-        chapter_texts[ch.key] = text
+        c.compile_chapter(ch)          # 第一遍：只为拿到全部 id（含各章的 quest_ids）
+
+    # 第二遍：软链接要等所有章都编译完才知道目标任务 id，所以统一在这里解析并序列化。
+    chapter_texts = c.apply_links(chapters)
 
     if c.errors:
         print("=== 编译失败，未写盘 ===", file=sys.stderr)

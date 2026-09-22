@@ -61,4 +61,88 @@
 	"每个人都有：一件趁手武器、一套甲、一个盾、几个随身小件。"
 	"这条做完，御敌时代才有人可派。"
 	]
+	quest.48FD86F8546ECD78.title: "细剑与三叉刺"
+	quest.5E2045401C555A68.title: "双头剑"
+	quest.06004E59AEB65684.title: "环刃与战刃"
+	quest.37125AE2EE6D166E.title: "阔剑与巨斧"
+	quest.1D5010D10519E8EA.title: "武士刀与弯刀"
+	quest.FDBCC383F89AF1D5.title: "下界合金一档"
+	quest.FDBCC383F89AF1D5.description: [
+	"钻石之后只有两条路：换材料，或者附魔。这一条走的是材料那一条。"
+	]
+	quest.CDDDFB136A3932C1.title: "试用快慢两类武器"
+	quest.CDDDFB136A3932C1.description: [
+	"Better Combat 给每一类武器各自的挥砍动作与攻击范围——同一份材料，手感是两回事。"
+	"这一条只要求队里真的把快、慢两类都拿上手试过：往后的装备表按手感分，"
+	"而不是只看伤害数字。"
+	]
+	quest.E105D4ECD3404D40.title: "手半剑与梅塞尔剑"
+	quest.592014F609823712.title: "皇家剑与炎型巨剑"
+	quest.A6F8007E3DF78A8D.title: "盾的四种形制"
+	quest.A6F8007E3DF78A8D.description: [
+	"鸢盾、圆盾、扇形盾、椭圆盾：形状不同，遮住的部位与挥砍的空当也不同。"
+	"先各做一面在身上比一比，再决定常备哪一种——盾是「站前面」那批人的第一件装备。"
+	]
+	quest.05BF7ED463B2D3CB.title: "弯刀与飞刀"
+	quest.571C592B696A5DD6.title: "手铳与火绳枪"
+	quest.571C592B696A5DD6.description: [
+	"火器吃的是火药，不是十年的练刀功夫——这是本包唯一一类需要常备火药的随身武器。"
+	"它也是个人装备线上第一条「力气不重要」的分支。"
+	]
+	quest.0E39A4C139642076.title: "第一把独特武器"
+	quest.0E39A4C139642076.description: [
+	"Simply Swords 的独特武器不是合成出来的，是打出来的（遗迹与首领掉落）。"
+	"每一把带自己的效果——这是「武器不只是伤害数字」的那一层。"
+	]
+	quest.1C001834C2C0B27F.title: "收齐三把独特武器"
+	quest.32DB135CEAF39C20.title: "软铠与锁子甲"
+	quest.32DB135CEAF39C20.description: [
+	"轻甲的用处不是省铁，是省负重与省修理：日常干活、下矿、跑远路都穿它。"
+	]
+	quest.CD7EA9E85B576193.title: "板甲的三个档位"
+	quest.CD7EA9E85B576193.description: [
+	"半身板甲 → 一体式胸甲 → 重型锁子甲：这条线是重装步兵的骨架。"
+	"做到第三档，前排才真的能站着挨打。"
+	]
+	quest.3406E8EE600C0718.title: "哥特式与马克西米利安"
+	quest.2328FEBF2A59519E.title: "带面罩的头盔"
+	quest.2CD78166CFE2D9F5.title: "日式甲：大铠与轻装"
+	quest.2CD78166CFE2D9F5.description: [
+	"Armor of the Ages 按时代分套：大铠与轻装日本甲各是一整套四件。"
+	"这一支线的意义是「仪式场合也有得穿」。"
+	]
+	quest.6DA17EBCBDB5F137.title: "百夫长铠甲"
+	quest.5A07C1E4BA4C31CB.title: "阿努比斯与法老"
+	quest.65CF8C5211B5C876.title: "羽蛇与雷神"
+	quest.90E9052664DA1774.title: "礼甲：神圣与奥鲁姆"
+	quest.90E9052664DA1774.description: [
+	"这两套不是拿去打架的：开国典礼、迎接使节、纪念仪式穿它。"
+	"做到这里，装备这一章就同时管住了「能打」和「像个国家」。"
+	]
+	quest.E259C076ACCC95C3.title: "坐骑护甲"
+	quest.6DDDEEC55E73822F.title: "修好破损的铁砧"
+	quest.6DDDEEC55E73822F.description: [
+	"Easy Anvils 把铁砧那几个老毛病收拾过了：东西不再动不动被吞掉。"
+	"所以别怕用坏——铁砧坏了就修，这是整条修理链的底气。"
+	]
+	quest.E4BF28F50B6769A4.title: "给装备命名"
+	quest.E27C5B09E65FAE4F.title: "祛魔台"
+	quest.67D8E03F6CFEDA30.title: "锻造台与升级模板"
+	quest.E10771333587F979.title: "箭袋与腰带位"
+	quest.7294F7DFA9031709.title: "护符位：不死图腾"
+	quest.0D5E15D54172AE7D.title: "副手放火把"
+	quest.4EE0ADB46403CDB8.title: "第一本附魔书"
+	quest.4EE0ADB46403CDB8.description: [
+	"Enchantment Descriptions 会在物品提示里写清每个附魔到底做什么。"
+	"先有一本书、把说明读一遍，再决定往哪件装备上花经验。"
+	]
+	quest.E0EAE692FE9676E5.title: "书架围满附魔台"
+	quest.0F376BF67D50BB07.title: "青金石备足"
+	quest.23A406F1DDFE80D9.title: "进阶附魔台"
+	quest.406D3D1B82EFB98E.title: "经验瓶存经验"
+	quest.3713E12F159BDD10.title: "符文宝石与符文石板"
+	quest.3713E12F159BDD10.description: [
+	"Simply Swords 的独特武器上有宝石槽：符文宝石、狱灵宝石就是往里镶的东西。"
+	"它管的是原版附魔之外的那一层强化——到这一步，一把武器才算真正做完。"
+	]
 }

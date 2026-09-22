@@ -1,23 +1,34 @@
-# 类目 · 食物与农业
+# 类目 · 食物与烹饪
 #
-# 本章的 mod（同类中最多的一簇）：Farmer's Delight · Farm & Charm · Vinery ·
-#   Storage Delight · Nether's Delight · Enders Delight · Expanded Delight ·
-#   Ocean's/Miner's Delight · Chef's Delight · Brewin' And Chewin' · Cooking for Blockheads ·
-#   Farming for Blockheads · Rightclick Harvest · Smarter Farmers
+# 本章的 mod：Farmer's Delight（本体：刀 · 砧板 · 厨锅 · 煎锅 · 沃土 · 作物）·
+#   Cooking for Blockheads（厨房多方块：烹饪桌 · 烤箱 · 冰箱 · 保鲜室）·
+#   Farm & Charm（锅灶 · 烘焙机 · 绞肉机 · 肥沃泥土 · 洒水器）·
+#   Brewin' And Chewin'（发酵桶 · 控温 · 奶酪）· Vinery（葡萄 · 压榨 · 陈酿 · 酒柜）·
+#   Expanded Delight · Ender's Delight · Ocean's Delight · Nether's Delight ·
+#   Miner's Delight（minersdelight 与 miners_delight 两个命名空间）·
+#   Chef's Delight（厨师村民）
 #
-# 判据来源：**这一簇有真进度**（实测 farmersdelight 21 条、farm_and_charm 21 条、vinery 20 条），
-# 所以这一章是类目里"能自动判最多"的一章——优先用进度，物品判据用于"备齐工具"。
+# 与其它章的分工：
+#   · 农牧与种植章 = 从种子到食材（地、肥料、牲畜、村民、吃法）
+#   · 本章         = 从食材到菜（厨具、菜谱、酒）——也就是「做出来的那一端」
+#   · 仓储章       = 存放（Storage Delight 的橱柜与抽屉在那边）
+#
+# 两点说明：
+#   1. 本章早先留下的两条（食物专用储藏 · 市场与种子）分属仓储章与农牧章的内容，
+#      名字已定不可改，故原地保留；那两个 mod 的正文覆盖在 130 / 124 章里补足。
+#   2. 奖励只给簇头与终局。簇 1 的头是既有的 food_knife，按「既有条目只追加、不修改」
+#      的约定没有给它补奖励；簇 2 / 3 / 4 的头是本次新增，带奖励。
 
 key = "cat_food"
-title = "食物与农业"
+title = "食物与烹饪"
 subtitle = "从「够吃」到「好吃」：这一章是全队幸福感的来源"
 group = "category"
 icon = "farmersdelight:cooking_pot"
-order_index = 32
+order_index = 54
 
 grid = { step = 1.5, row_h = 1.75 }
 
-# ---------------- 簇 1：厨具入门（Farmer's Delight） ----------------
+# ---- 簇 1：农夫乐事本体 ----
 
 [[quest]]
 name = "food_knife"
@@ -115,7 +126,77 @@ tasks = [
 	{ type = "advancement", advancement = "farmersdelight:main/plant_all_crops" },
 ]
 
-# ---------------- 簇 2：农场与畜牧（Farm & Charm） ----------------
+[[quest]]
+name = "food_straw"
+title = "草秆"
+icon = "farmersdelight:straw"
+shape = "circle"
+size = 1.2
+deps = ["food_knife"]
+tasks = [
+	{ type = "advancement", advancement = "farmersdelight:main/harvest_straw" },
+]
+
+[[quest]]
+name = "food_ham"
+title = "整块肉"
+icon = "farmersdelight:ham"
+shape = "circle"
+size = 1.2
+deps = ["food_knife"]
+tasks = [
+	{ type = "advancement", advancement = "farmersdelight:main/get_ham" },
+]
+
+[[quest]]
+name = "food_colony"
+title = "在家种蘑菇"
+icon = "farmersdelight:brown_mushroom_colony"
+shape = "circle"
+size = 1.2
+deps = ["food_rich_soil"]
+tasks = [
+	{ type = "advancement", advancement = "farmersdelight:main/get_mushroom_colony" },
+]
+
+[[quest]]
+name = "food_compost"
+title = "有机堆肥"
+icon = "farmersdelight:organic_compost"
+shape = "circle"
+size = 1.2
+deps = ["food_rich_soil"]
+tasks = [
+	{ type = "advancement", advancement = "farmersdelight:main/place_organic_compost" },
+]
+
+[[quest]]
+name = "food_rice"
+title = "浅水里的稻"
+icon = "farmersdelight:rice"
+shape = "circle"
+size = 1.2
+deps = ["food_all_crops"]
+tasks = [
+	{ type = "advancement", advancement = "farmersdelight:main/plant_rice" },
+]
+
+[[quest]]
+name = "food_feast_table"
+title = "把菜端上桌"
+desc = [
+	"一个人吃饭，碗就够；宴席块是给一屋子人准备的。",
+	"食堂、宴请、节庆都要用到它，所以放在本章中段。",
+]
+icon = "farmersdelight:honey_glazed_ham_block"
+shape = "octagon"
+size = 1.75
+deps = ["food_nourishing"]
+tasks = [
+	{ type = "advancement", advancement = "farmersdelight:main/place_feast" },
+]
+
+# ---- 簇 2：熟食与厨房 ----
 
 [[quest]]
 name = "food_coop"
@@ -144,7 +225,144 @@ tasks = [
 	{ type = "item", item = "farm_and_charm:butter" },
 ]
 
-# ---------------- 簇 3：酿造（Vinery） ----------------
+[[quest]]
+name = "food_fac_kitchen"
+title = "农庄的锅灶"
+desc = [
+	"Farm & Charm 的烹饪线：同一批食材，菜谱比乐事更偏农家菜。",
+	"它和厨锅共用原料，所以排在乐事的锅之后。",
+]
+icon = "farm_and_charm:cooking_pot"
+shape = "pentagon"
+size = 2.0
+deps = ["food_cooking_pot"]
+tasks = [
+	{ type = "advancement", advancement = "farm_and_charm:main/place_cooking_pot" },
+]
+rewards = [
+	{ type = "xp", xp = 60 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "food_fac_roaster"
+title = "烘焙机"
+icon = "farm_and_charm:roaster"
+shape = "circle"
+size = 1.2
+deps = ["food_fac_kitchen"]
+tasks = [
+	{ type = "advancement", advancement = "farm_and_charm:main/place_roaster" },
+]
+
+[[quest]]
+name = "food_fac_mincer"
+title = "绞肉机"
+icon = "farm_and_charm:mincer"
+shape = "circle"
+size = 1.2
+deps = ["food_fac_kitchen"]
+tasks = [
+	{ type = "advancement", advancement = "farm_and_charm:main/introduction_mincing" },
+]
+
+[[quest]]
+name = "food_fac_soil"
+title = "肥沃泥土"
+icon = "farm_and_charm:fertilized_soil"
+shape = "circle"
+size = 1.2
+deps = ["food_fac_kitchen"]
+tasks = [
+	{ type = "advancement", advancement = "farm_and_charm:main/place_fertilized_soil" },
+]
+
+[[quest]]
+name = "food_fac_sprinkler"
+title = "洒水器"
+icon = "farm_and_charm:water_sprinkler"
+shape = "circle"
+size = 1.2
+deps = ["food_fac_soil"]
+tasks = [
+	{ type = "advancement", advancement = "farm_and_charm:main/place_water_sprinkler" },
+]
+
+[[quest]]
+name = "food_pantry"
+title = "食物专用储藏"
+desc = [
+	"Storage Delight 的橱柜/抽屉：食物要按类放，不然会烂在背包里。",
+]
+icon = "storagedelight:acacia_drawer"
+shape = "rsquare"
+deps = ["food_cooking_pot"]
+tasks = [
+	{ type = "item", item = "storagedelight:acacia_drawer", count = 4 },
+]
+
+[[quest]]
+name = "food_kitchen_block"
+title = "厨房一体化"
+desc = [
+	"Cooking for Blockheads：把厨房设备连成一张操作面，不用来回跑。",
+]
+icon = "cookingforblockheads:cooking_table"
+shape = "circle"
+size = 1.2
+deps = ["food_pantry"]
+tasks = [
+	{ type = "item", item = "cookingforblockheads:cooking_table" },
+]
+
+[[quest]]
+name = "food_cfb_oven"
+title = "烤箱"
+icon = "cookingforblockheads:white_oven"
+shape = "circle"
+size = 1.2
+deps = ["food_kitchen_block"]
+tasks = [
+	{ type = "item", item = "cookingforblockheads:white_oven" },
+]
+
+[[quest]]
+name = "food_cfb_fridge"
+title = "冰箱"
+icon = "cookingforblockheads:white_fridge"
+shape = "circle"
+size = 1.2
+deps = ["food_kitchen_block"]
+tasks = [
+	{ type = "item", item = "cookingforblockheads:white_fridge" },
+]
+
+[[quest]]
+name = "food_cfb_preserve"
+title = "保鲜室"
+icon = "cookingforblockheads:preservation_chamber"
+shape = "circle"
+size = 1.2
+deps = ["food_cfb_fridge"]
+tasks = [
+	{ type = "item", item = "cookingforblockheads:preservation_chamber" },
+]
+
+[[quest]]
+name = "food_market"
+title = "市场与种子"
+desc = [
+	"Farming for Blockheads 的市场：买种子、买树苗，省掉满地图找野生的时间。",
+]
+icon = "farmingforblockheads:market"
+shape = "circle"
+size = 1.2
+deps = ["food_coop"]
+tasks = [
+	{ type = "item", item = "farmingforblockheads:market" },
+]
+
+# ---- 簇 3：酒与饮品 ----
 
 [[quest]]
 name = "food_ferment"
@@ -202,47 +420,253 @@ tasks = [
 	{ type = "advancement", advancement = "vinery:main/juice_it_up" },
 ]
 
-# ---------------- 簇 4：储藏与厨房设施 ----------------
-
 [[quest]]
-name = "food_pantry"
-title = "食物专用储藏"
+name = "food_vinery_press"
+title = "苹果压榨器"
 desc = [
-	"Storage Delight 的橱柜/抽屉：食物要按类放，不然会烂在背包里。",
+	"Vinery 的第一步不是葡萄，是压榨：果汁与果泥都从这里出。",
+	"先有压榨，后面的发酵与陈酿才有原料。",
 ]
-icon = "storagedelight:acacia_drawer"
-shape = "rsquare"
+icon = "vinery:apple_press"
+shape = "pentagon"
+size = 2.0
 deps = ["food_cooking_pot"]
 tasks = [
-	{ type = "item", item = "storagedelight:acacia_drawer", count = 4 },
+	{ type = "advancement", advancement = "vinery:main/the_first_press" },
+]
+rewards = [
+	{ type = "xp", xp = 60 },
+	{ type = "toast" },
 ]
 
 [[quest]]
-name = "food_kitchen_block"
-title = "厨房一体化"
-desc = [
-	"Cooking for Blockheads：把厨房设备连成一张操作面，不用来回跑。",
-]
-icon = "cookingforblockheads:cooking_table"
+name = "food_vinery_cherry"
+title = "第一颗樱桃"
+icon = "vinery:cherry"
 shape = "circle"
 size = 1.2
-deps = ["food_pantry"]
+deps = ["food_vinery_press"]
 tasks = [
-	{ type = "item", item = "cookingforblockheads:cooking_table" },
+	{ type = "advancement", advancement = "vinery:main/cherry_picker" },
 ]
 
 [[quest]]
-name = "food_market"
-title = "市场与种子"
-desc = [
-	"Farming for Blockheads 的市场：买种子、买树苗，省掉满地图找野生的时间。",
-]
-icon = "farmingforblockheads:market"
+name = "food_vinery_lattice"
+title = "让藤蔓爬上去"
+icon = "vinery:oak_lattice"
 shape = "circle"
 size = 1.2
-deps = ["food_coop"]
+deps = ["food_grape"]
 tasks = [
-	{ type = "item", item = "farmingforblockheads:market" },
+	{ type = "advancement", advancement = "vinery:main/overgrown_lattices" },
+]
+
+[[quest]]
+name = "food_vinery_wine"
+title = "第一瓶酒"
+icon = "vinery:red_wine"
+shape = "rsquare"
+deps = ["food_ferment"]
+tasks = [
+	{ type = "advancement", advancement = "vinery:main/the_noble_drop" },
+]
+
+[[quest]]
+name = "food_vinery_somelier"
+title = "把酒单集全"
+desc = [
+	"Vinery 的终点不是一瓶酒，而是一整柜。",
+	"酒款集齐之后，酒窖与宴会才算真正开张。",
+]
+icon = "vinery:wine_box"
+shape = "octagon"
+size = 1.75
+deps = ["food_vinery_wine"]
+tasks = [
+	{ type = "advancement", advancement = "vinery:main/wine_somelier" },
+]
+
+[[quest]]
+name = "food_bac_keg"
+title = "发酵桶（酿造与咀嚼）"
+icon = "brewinandchewin:keg"
+shape = "pentagon"
+size = 2.0
+deps = ["food_cooking_pot"]
+tasks = [
+	{ type = "advancement", advancement = "brewinandchewin:main/place_keg" },
+]
+
+[[quest]]
+name = "food_bac_temp"
+title = "给桶控温"
+icon = "brewinandchewin:heating_cask"
+shape = "circle"
+size = 1.2
+deps = ["food_bac_keg"]
+tasks = [
+	{ type = "advancement", advancement = "brewinandchewin:main/place_temperature_block_near_keg" },
+]
+
+[[quest]]
+name = "food_bac_cheese"
+title = "奶酪"
+icon = "brewinandchewin:flaxen_cheese_wheel"
+shape = "circle"
+size = 1.2
+deps = ["food_bac_keg"]
+tasks = [
+	{ type = "advancement", advancement = "brewinandchewin:main/ferment_cheese" },
+]
+
+# ---- 簇 4：各维度食材扩展 ----
+
+[[quest]]
+name = "food_exd_kitchen"
+title = "扩展乐事：榨汁机"
+desc = [
+	"Expanded Delight 把厨房往外接了一段：榨汁、罐头、盐与奶酪。",
+	"前面的厨具到这里才算有了产线。",
+]
+icon = "expandeddelight:juicer"
+shape = "pentagon"
+size = 2.0
+deps = ["food_cooking_pot"]
+tasks = [
+	{ type = "item", item = "expandeddelight:juicer" },
+]
+rewards = [
+	{ type = "xp", xp = 60 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "food_exd_salt"
+title = "盐"
+icon = "expandeddelight:salt"
+shape = "circle"
+size = 1.2
+deps = ["food_exd_kitchen"]
+tasks = [
+	{ type = "item", item = "expandeddelight:salt" },
+]
+
+[[quest]]
+name = "food_exd_peanut"
+title = "花生酱"
+icon = "expandeddelight:peanut_butter"
+shape = "circle"
+size = 1.2
+deps = ["food_exd_kitchen"]
+tasks = [
+	{ type = "item", item = "expandeddelight:peanut_butter" },
+]
+
+[[quest]]
+name = "food_end_shulker"
+title = "潜影贝上桌"
+desc = [
+	"末地的东西本来只能换经验；Ender's Delight 让潜影贝与虚空胡椒进厨房。",
+	"所以这一条排在去过末地之后。",
+]
+icon = "endersdelight:shulker_mollusk"
+shape = "pentagon"
+size = 2.0
+deps = ["food_cooking_pot"]
+tasks = [
+	{ type = "item", item = "endersdelight:shulker_mollusk" },
+]
+
+[[quest]]
+name = "food_end_pepper"
+title = "虚空胡椒"
+icon = "endersdelight:crushed_voidpepper"
+shape = "circle"
+size = 1.2
+deps = ["food_end_shulker"]
+tasks = [
+	{ type = "item", item = "endersdelight:crushed_voidpepper" },
+]
+
+[[quest]]
+name = "food_nether_stove"
+title = "下界炉灶"
+icon = "mynethersdelight:nether_stove"
+shape = "pentagon"
+size = 2.0
+deps = ["food_cooking_pot"]
+tasks = [
+	{ type = "item", item = "mynethersdelight:nether_stove" },
+]
+
+[[quest]]
+name = "food_nether_hoglin"
+title = "填馅疣猪兽"
+icon = "mynethersdelight:stuffed_hoglin"
+shape = "circle"
+size = 1.2
+deps = ["food_nether_stove"]
+tasks = [
+	{ type = "item", item = "mynethersdelight:stuffed_hoglin" },
+]
+
+[[quest]]
+name = "food_ocean_guardian"
+title = "守卫者浓汤"
+icon = "oceansdelight:guardian_soup"
+shape = "pentagon"
+size = 2.0
+deps = ["food_cooking_pot"]
+tasks = [
+	{ type = "item", item = "oceansdelight:guardian_soup" },
+]
+
+[[quest]]
+name = "food_miner_pot"
+title = "洞里的铜锅"
+icon = "minersdelight:copper_pot"
+shape = "pentagon"
+size = 2.0
+deps = ["food_cooking_pot"]
+tasks = [
+	{ type = "item", item = "minersdelight:copper_pot" },
+]
+
+[[quest]]
+name = "food_miner_carrot"
+title = "洞穴萝卜"
+icon = "minersdelight:cave_carrot"
+shape = "circle"
+size = 1.2
+deps = ["food_miner_pot"]
+tasks = [
+	{ type = "item", item = "minersdelight:cave_carrot" },
+]
+
+[[quest]]
+name = "food_miner_cup"
+title = "杯装汤"
+icon = "miners_delight:rock_soup_cup"
+shape = "circle"
+size = 1.2
+deps = ["food_miner_pot"]
+tasks = [
+	{ type = "item", item = "miners_delight:rock_soup_cup" },
+]
+
+[[quest]]
+name = "food_chef_village"
+title = "村里的厨师"
+desc = [
+	"Chef's Delight 往村庄里添了厨师与厨工两户人家，房子只在村庄里生成。",
+	"懒得自己种的时候，这是最省事的一条补给线。",
+]
+icon = "minecraft:emerald"
+shape = "circle"
+size = 1.2
+deps = ["food_cooking_pot"]
+tasks = [
+	{ type = "structure", structure = "minecraft:village_plains" },
 ]
 
 [[quest]]

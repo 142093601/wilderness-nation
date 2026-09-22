@@ -57,4 +57,181 @@
 	"把上面这些凑起来用一次：窗、门面、灯、室内家具、装饰面。"
 	"这一条之后，「建筑目录」才有素材可收（见无尽纪元）。"
 	]
+	quest.6FBA30C74785E6B1.title: "桥墩"
+	quest.6FBA30C74785E6B1.description: [
+	"桥要有落脚点：墩子决定跨多远、走多稳。"
+	]
+	quest.E18C9453D18DAE80.title: "桥头阶梯"
+	quest.E18C9453D18DAE80.description: [
+	"两端上下桥的那几步，缺了它桥就只是悬空的板。"
+	]
+	quest.55524A053132B302.title: "绳索桥"
+	quest.55524A053132B302.description: [
+	"轻便的临时桥：材料少、架得快，适合前哨与探路。"
+	]
+	quest.5ED8353AA5DD432C.title: "桥梁灯"
+	quest.5ED8353AA5DD432C.description: [
+	"夜里过桥要看得见边——桥上的灯是安全件，不只是装饰。"
+	]
+	quest.DBE3FEF9778423A6.title: "桥用钳具"
+	quest.DBE3FEF9778423A6.description: [
+	"改桥型、拆旧桥要用的工具。桥是会返工的东西。"
+	]
+	quest.31981AD52A7E9E64.title: "院门"
+	quest.31981AD52A7E9E64.description: [
+	"围墙要留一处正式的出入口：门比缺口更像「这里有人管」。"
+	]
+	quest.87FB99B5930387A3.title: "马栏与栅栏"
+	quest.87FB99B5930387A3.description: [
+	"养牲畜的栏与防人的墙是两种东西，样式也该分开。"
+	]
+	quest.2E6EC370EE09D79B.title: "带刺铁丝网"
+	quest.2E6EC370EE09D79B.description: [
+	"最省料的一道阻拦：够用就行，别指望它好看。"
+	]
+	quest.083E6FAA67ADE262.title: "压顶石墙"
+	quest.083E6FAA67ADE262.description: [
+	"石墙压顶之后，墙才像砌完的，而不是砌到一半。"
+	]
+	quest.99F534E2C1DEFF60.title: "百叶与窗帘"
+	quest.99F534E2C1DEFF60.description: [
+	"同一扇窗，白天开百叶、夜里拉帘，是两间屋子的观感。"
+	]
+	quest.BFE0CFF817269293.title: "窗帘杆"
+	quest.BFE0CFF817269293.description: [
+	"帘子要有个挂处：杆是这类细节里最容易被忘掉的一件。"
+	]
+	quest.AED34BE4DECC438E.title: "窗台与女儿墙"
+	quest.AED34BE4DECC438E.description: [
+	"窗外的台沿与屋顶的矮墙：让立面有层次，也让屋顶能站人。"
+	]
+	quest.D57617F1540D75E4.title: "连排大窗"
+	quest.D57617F1540D75E4.description: [
+	"公共建筑才用得上：一整排窗让大厅白天不用点灯。"
+	]
+	quest.D5F8C1607CADED47.title: "玻璃活板门"
+	quest.D5F8C1607CADED47.description: [
+	"当窗用、当天窗用、当柜门用：玻璃活板门是万金油。"
+	]
+	quest.A4E27F3F3CE6A6D0.title: "经典门与牧场门"
+	quest.A4E27F3F3CE6A6D0.description: [
+	"一间屋用一种门：样式统一了，建筑才不像拼的。"
+	]
+	quest.6BE91739901F4946.title: "石板路"
+	quest.6BE91739901F4946.description: [
+	"广场与主街用石板：同一套铺装铺满一片，比花样多更整齐。"
+	]
+	quest.76DE124F982240C8.title: "编织与蜂窝铺装"
+	quest.76DE124F982240C8.description: [
+	"两种能一眼认出来的铺法：用来区分不同区域的场地。"
+	]
+	quest.C84BD02782FEF493.title: "土路与碎石路"
+	quest.C84BD02782FEF493.description: [
+	"城外不需要石板：土路够用，成本低到可以一路铺到边界。"
+	]
+	quest.4DA1AFCA56C9C415.title: "样式工具"
+	quest.4DA1AFCA56C9C415.description: [
+	"Chipped 的两件家什：凿子改款、锯子切形。"
+	]
+	quest.C7F73408B0CDAEBA.title: "样式工作台"
+	quest.C7F73408B0CDAEBA.description: [
+	"变体不是凭空来的：先立一张台子，改款才有地方做。"
+	]
+	quest.77954B0231F8CAA7.title: "木料变体"
+	quest.77954B0231F8CAA7.description: [
+	"同样是木板，斜纹与拼纹是两种房子。"
+	]
+	quest.A564A9CBA99C734F.title: "石料与陶瓦变体"
+	quest.A564A9CBA99C734F.description: [
+	"墙面要耐磨也要有层次，这一层靠石料与陶瓦的变体解决。"
+	]
+	quest.7120494464807474.title: "雕刻凿"
+	quest.7120494464807474.description: [
+	"Rechiseled 与 Chipped 是两套手感：它更偏向成套的铺装与面砖。"
+	"两套并用不冲突——同一面墙可以一半靠它、一半靠 Chipped。"
+	]
+	quest.2EF732B50409EC2C.title: "雕刻铺装"
+	quest.2EF732B50409EC2C.description: [
+	"成套的铺装面砖：一栋楼用一种，整片街区就统一了。"
+	]
+	quest.4B688FA2C7D453F7.title: "机械雕刻"
+	quest.4B688FA2C7D453F7.description: [
+	"把雕刻接进 Create 的动力线上：这批面砖是要按箱产的。"
+	]
+	quest.01F8EA8D8C6812D4.title: "框架方块"
+	quest.01F8EA8D8C6812D4.description: [
+	"FramedBlocks：先做一个「形状」，再往上面贴任意材质。"
+	"它的价值在于**结构自由**——坡、角、棱、柱这些原版没有的形状，这里都有。"
+	]
+	quest.4CB616DA028B4C94.title: "坡、柱与棱"
+	quest.4CB616DA028B4C94.description: [
+	"屋顶的斜面、柱础的收分，靠这一组形状做出来。"
+	]
+	quest.64A8A1782D47879E.title: "框架工具"
+	quest.64A8A1782D47879E.description: [
+	"贴材质、切形状、拆框架：两件工具是这套方块的入口。"
+	]
+	quest.FA90CE760118C1C5.title: "发光框架"
+	quest.FA90CE760118C1C5.description: [
+	"嵌进墙里的灯：光源不再是一个凸出来的方块。"
+	]
+	quest.B52EE4D140957C7A.title: "藏起来的储物"
+	quest.B52EE4D140957C7A.description: [
+	"外观是墙，里面是箱子——仓库可以就在墙里。"
+	]
+	quest.03275734BE414DBE.title: "伪装方块"
+	quest.03275734BE414DBE.description: [
+	"Create: Copycats+：把方块「贴」成别的材质，形状自己定。"
+	"做出机器之后，这一层决定机器能不能长进建筑里。"
+	]
+	quest.43047FC03FAACF1A.title: "伪装斜坡与切角"
+	quest.43047FC03FAACF1A.description: [
+	"机械设备的斜面与收边：机器不再是一堆方块堆出来的。"
+	]
+	quest.0BA7E63CB392B4D5.title: "伪装管道与传动杆"
+	quest.0BA7E63CB392B4D5.description: [
+	"管线埋进墙里、传动杆藏在柱中：这两件是「干净工地」的关键。"
+	]
+	quest.0B024531BE411542.title: "薄层伪装"
+	quest.0B024531BE411542.description: [
+	"半格厚的贴面：用来补墙面与地面的接缝。"
+	]
+	quest.94FA81AB36E1289B.title: "脚手架与爬梯"
+	quest.94FA81AB36E1289B.description: [
+	"盖三层以上的房子，第一件要备的不是建材，是**站得住的地方**。"
+	"脚手架能垫脚也能当临时台阶，比一格一格搭土柱省事得多。"
+	]
+	quest.BD43310A0A69D770.title: "批量建造：阵列与镜像"
+	quest.BD43310A0A69D770.description: [
+	"Effortless Building 把「同一堵墙重复二十次」变成一次操作，"
+	"镜像与阵列让对称的建筑不用两边各盖一遍。"
+	"本包把它当作公共工程与大剧院的默认手法：先有手法，再谈体量。"
+	]
+	quest.F3900240E73F5A27.title: "放线：先定轴"
+	quest.F3900240E73F5A27.description: [
+	"开工前用羊毛和火把把轴线与转角标出来："
+	"房子歪不歪，在放线那一步就定了。"
+	]
+	quest.7A39D73CA3F249A2.title: "工地工作位"
+	quest.7A39D73CA3F249A2.description: [
+	"工地要有就地的工作台与桶：来回跑主基地是最贵的时间开销。"
+	]
+	quest.3D7310E1F9F56D99.title: "斜置墙体"
+	quest.3D7310E1F9F56D99.description: [
+	"规整的直角城里，斜墙是最省力的破格——"
+	"Diagonal Walls 让墙能沿对角线立起来，转角不再只能切直角。"
+	]
+	quest.A0B0F1A2188AFB3E.title: "一次备齐一栋房"
+	quest.A0B0F1A2188AFB3E.description: [
+	"料不够就停工的工地，最后都会变成半成品。"
+	"先把一栋房的主料备齐再动第一块砖。"
+	]
+	quest.6C320B8A62F9B186.title: "室内吊灯"
+	quest.6C320B8A62F9B186.description: [
+	"大厅与议事厅需要一盏「抬头能看见」的灯。"
+	]
+	quest.12D1D6B827C5C97D.title: "街灯成列"
+	quest.12D1D6B827C5C97D.description: [
+	"主街的灯要同一个样式、同一个间距：这是城市与村子的区别。"
+	]
 }

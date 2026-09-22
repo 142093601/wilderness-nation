@@ -1,0 +1,572 @@
+# 类目 · 贸易与工坊辅助
+#
+# 分工说明（本章的定位）：
+#   本章 = 「别把时间浪费在查与找上」的那一层 —— **工具与信息**。
+#   仓储本体（柜子、抽屉、保险库、背包内胆、Lootr 容器）在 `130-cat-storage`，不在本章。
+#
+# 本章的 mod 家族（逐个核对过注册表与 jar 内容）：
+#   · 有实物、因此能当判据的只有两个：
+#       - Trading Post `tradingpost`：只加了一个方块 `tradingpost:trading_post`（贸易台）
+#       - FTB Filter System `ftbfiltersystem`：只加了一个物品 `ftbfiltersystem:smart_filter`
+#   · **没有实物、因此本章覆盖不到**（不是漏写；jar 内 `assets/*/models/item/` 条目数实测为 0，
+#     注册表里也没有它们的命名空间，游戏里更没有「看过界面」这类信号 —— 按说明书 §5 不硬凑，
+#     也不改用 checkmark 凑数）：
+#       jade · jei · jeresources · almostunified · polymorph · craftingtweaks ·
+#       ftbjeiextras · highlighter(item-highlighter) · legendarytooltips · searchables ·
+#       controlling · mouse-tweaks · shulkerboxtooltip · polyglottooltip · simplytooltips ·
+#       jadeaddons
+#   · 这些 mod 真正省时间的地方不落在物品上（点开界面就有），
+#     所以本章用**原版那些被它们帮你看懂的台子与行为**来落地：
+#     工作台配方书 · 制图台 · 讲台之外的资料层 · 铁砧 / 砂轮 / 切石机 / 锻造台 / 织布机 · 村民交易
+#
+# 三个簇：查配方与查信息 / 合成的摩擦 / 交易与物流辅助
+
+key = "cat_trade"
+title = "贸易与工坊辅助"
+subtitle = "把查与找的时间省下来，用在建与做上"
+group = "category"
+icon = "tradingpost:trading_post"
+order_index = 57
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 簇 1：查配方与查信息 ----------------
+
+[[quest]]
+name = "t_data_shelf"
+title = "资料架"
+desc = [
+	"配方、图样、坐标，靠记是记不长久的。",
+	"这一层先把「要查的东西」放到手边：书架、地图、笔记各就各位。",
+]
+icon = "minecraft:chiseled_bookshelf"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "minecraft:chiseled_bookshelf", count = 2 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "t_bookshelf_wall"
+title = "书架墙"
+desc = [
+	"附魔台要书架，查阅也要书架：一面墙的书比散在箱子里好找。",
+]
+icon = "minecraft:bookshelf"
+shape = "circle"
+size = 1.2
+deps = ["t_data_shelf"]
+tasks = [
+	{ type = "item", item = "minecraft:bookshelf", count = 8 },
+]
+
+[[quest]]
+name = "t_cartography"
+title = "制图台"
+desc = [
+	"地图要复制、要锁定、要放大，都得在制图台上做。",
+]
+icon = "minecraft:cartography_table"
+shape = "rsquare"
+deps = ["t_data_shelf"]
+tasks = [
+	{ type = "stat", stat = "minecraft:interact_with_cartography_table", value = 1 },
+]
+
+[[quest]]
+name = "t_chart_wall"
+title = "墙上挂图"
+icon = "minecraft:filled_map"
+shape = "circle"
+size = 1.2
+deps = ["t_cartography"]
+tasks = [
+	{ type = "item", item = "minecraft:filled_map", count = 2 },
+]
+
+[[quest]]
+name = "t_notebook"
+title = "记事本"
+desc = [
+	"看见什么就先记下来：坐标、配方、谁欠谁什么。",
+]
+icon = "minecraft:writable_book"
+shape = "circle"
+size = 1.2
+deps = ["t_data_shelf"]
+tasks = [
+	{ type = "item", item = "minecraft:writable_book", count = 2 },
+]
+
+[[quest]]
+name = "t_manual"
+title = "把做法定稿成书"
+desc = [
+	"写定稿的书能抄、能发、能放在讲台上一起看——工序要传下去就得成书。",
+]
+icon = "minecraft:written_book"
+shape = "rsquare"
+deps = ["t_notebook"]
+tasks = [
+	{ type = "item", item = "minecraft:written_book" },
+]
+
+[[quest]]
+name = "t_paper_ink"
+title = "纸与墨"
+icon = "minecraft:paper"
+shape = "circle"
+size = 1.2
+deps = ["t_notebook"]
+tasks = [
+	{ type = "item", item = "minecraft:paper", count = 64 },
+	{ type = "item", item = "minecraft:ink_sac", count = 16 },
+]
+
+[[quest]]
+name = "t_spyglass"
+title = "望远镜"
+desc = [
+	"出门前先看清地形，比走过去再折回来便宜。",
+]
+icon = "minecraft:spyglass"
+shape = "circle"
+size = 1.2
+deps = ["t_data_shelf"]
+tasks = [
+	{ type = "item", item = "minecraft:spyglass" },
+]
+
+[[quest]]
+name = "t_recipe_cards"
+title = "配方卡上墙"
+desc = [
+	"把常用配方做成展示框挂在机器旁，新人不用问人。",
+]
+icon = "minecraft:glow_item_frame"
+shape = "circle"
+size = 1.2
+deps = ["t_manual"]
+tasks = [
+	{ type = "item", item = "minecraft:glow_item_frame", count = 8 },
+]
+
+[[quest]]
+name = "t_brewing_lookup"
+title = "酿造台"
+desc = [
+	"药水配方是最容易记错的一类，酿造台旁边应该有一张表。",
+]
+icon = "minecraft:brewing_stand"
+shape = "circle"
+size = 1.2
+deps = ["t_data_shelf"]
+tasks = [
+	{ type = "stat", stat = "minecraft:interact_with_brewingstand", value = 1 },
+]
+
+[[quest]]
+name = "t_info_ready"
+title = "查得到、看得见"
+desc = [
+	"资料、图、配方卡、药水表都有了，接下来才是动手合成。",
+]
+icon = "minecraft:chiseled_bookshelf"
+shape = "octagon"
+size = 1.75
+deps = ["t_manual", "t_chart_wall", "t_recipe_cards", "t_brewing_lookup"]
+tasks = [
+	{ type = "item", item = "minecraft:chiseled_bookshelf", count = 4 },
+	{ type = "item", item = "minecraft:written_book", count = 2 },
+]
+
+# ---------------- 簇 2：合成的摩擦 ----------------
+
+[[quest]]
+name = "t_craft_corner"
+title = "工坊一角"
+desc = [
+	"合成这一步的摩擦全在细节：台子够不够、料在不在旁边、修装备要不要排队。",
+	"先把它当一个固定的地方来建，而不是到处临时凑。",
+]
+icon = "minecraft:crafting_table"
+shape = "pentagon"
+size = 2.0
+deps = ["t_info_ready"]
+tasks = [
+	{ type = "item", item = "minecraft:crafting_table", count = 4 },
+	{ type = "stat", stat = "minecraft:interact_with_crafting_table", value = 50 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "t_crafter"
+title = "合成器"
+desc = [
+	"接上红石就能批量合成：需要一百个台阶时不必按一百次。",
+]
+icon = "minecraft:crafter"
+shape = "rsquare"
+deps = ["t_craft_corner"]
+tasks = [
+	{ type = "item", item = "minecraft:crafter" },
+]
+
+[[quest]]
+name = "t_stonecutter"
+title = "切石机"
+desc = [
+	"切石机比合成省料：一块石头能出的东西更多，形状也更整齐。",
+]
+icon = "minecraft:stonecutter"
+shape = "circle"
+size = 1.2
+deps = ["t_craft_corner"]
+tasks = [
+	{ type = "stat", stat = "minecraft:interact_with_stonecutter", value = 1 },
+]
+
+[[quest]]
+name = "t_anvil"
+title = "铁砧"
+desc = [
+	"改名、合并附魔、修工具，都在这台上。",
+]
+icon = "minecraft:anvil"
+shape = "rsquare"
+deps = ["t_craft_corner"]
+tasks = [
+	{ type = "stat", stat = "minecraft:interact_with_anvil", value = 1 },
+]
+
+[[quest]]
+name = "t_grindstone"
+title = "砂轮"
+desc = [
+	"附魔选错了不用重新做：砂轮能拆下来，还能还一部分经验。",
+]
+icon = "minecraft:grindstone"
+shape = "circle"
+size = 1.2
+deps = ["t_anvil"]
+tasks = [
+	{ type = "stat", stat = "minecraft:interact_with_grindstone", value = 1 },
+]
+
+[[quest]]
+name = "t_smithing"
+title = "锻造台"
+desc = [
+	"下界合金升级与盔甲纹饰模板都在这里用，做之前先备好模板。",
+]
+icon = "minecraft:smithing_table"
+shape = "rsquare"
+deps = ["t_craft_corner"]
+tasks = [
+	{ type = "stat", stat = "minecraft:interact_with_smithing_table", value = 1 },
+]
+
+[[quest]]
+name = "t_loom"
+title = "织布机"
+desc = [
+	"旗帜图案只能用织布机，做队旗之前得先把它摆出来。",
+]
+icon = "minecraft:loom"
+shape = "circle"
+size = 1.2
+deps = ["t_craft_corner"]
+tasks = [
+	{ type = "stat", stat = "minecraft:interact_with_loom", value = 1 },
+]
+
+[[quest]]
+name = "t_cauldron"
+title = "炼药锅"
+desc = [
+	"洗旗帜、洗皮革、接雨水，都靠它——工坊里最便宜的一件设施。",
+]
+icon = "minecraft:cauldron"
+shape = "circle"
+size = 1.2
+deps = ["t_craft_corner"]
+tasks = [
+	{ type = "stat", stat = "minecraft:use_cauldron", value = 1 },
+]
+
+[[quest]]
+name = "t_barrel_parts"
+title = "零件桶"
+desc = [
+	"台子旁边放一排桶，比每次开主仓翻找快得多。",
+]
+icon = "minecraft:barrel"
+shape = "circle"
+size = 1.2
+deps = ["t_craft_corner"]
+tasks = [
+	{ type = "item", item = "minecraft:barrel", count = 8 },
+]
+
+[[quest]]
+name = "t_craft_volume"
+title = "一千次合成"
+desc = [
+	"手熟是工坊的底子：到这一档，批量活儿基本不用看配方了。",
+]
+icon = "minecraft:crafting_table"
+shape = "circle"
+size = 1.2
+deps = ["t_craft_corner"]
+tasks = [
+	{ type = "stat", stat = "minecraft:crafted", value = 1000 },
+]
+
+[[quest]]
+name = "t_workshop_ready"
+title = "修装工位不排队"
+desc = [
+	"工坊里最容易排队的是修装备那三步：铁砧、砂轮、切石机。",
+	"多备一套放在工地，远的活儿也能就地修。",
+]
+icon = "minecraft:smithing_table"
+shape = "octagon"
+size = 1.75
+deps = ["t_crafter", "t_stonecutter", "t_grindstone", "t_smithing",
+        "t_loom", "t_cauldron", "t_barrel_parts", "t_craft_volume"]
+tasks = [
+	{ type = "item", item = "minecraft:anvil", count = 2 },
+	{ type = "item", item = "minecraft:grindstone", count = 2 },
+	{ type = "item", item = "minecraft:stonecutter", count = 2 },
+]
+
+# ---------------- 簇 3：交易与物流辅助 ----------------
+
+[[quest]]
+name = "t_trading_post"
+title = "贸易台"
+desc = [
+	"Trading Post：把村民请上贸易台，交易不用追着他跑。",
+	"它只加这一个方块，但这是本章「贸易」那一半的起点。",
+]
+icon = "tradingpost:trading_post"
+shape = "pentagon"
+size = 2.0
+deps = ["t_info_ready"]
+tasks = [
+	{ type = "item", item = "tradingpost:trading_post" },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "t_emerald_float"
+title = "周转的绿宝石"
+desc = [
+	"交易要现钱：先攒一组绿宝石，后面才谈得上挑货。",
+]
+icon = "minecraft:emerald"
+shape = "circle"
+size = 1.2
+deps = ["t_trading_post"]
+tasks = [
+	{ type = "item", item = "minecraft:emerald", count = 32 },
+]
+
+[[quest]]
+name = "t_emerald_block"
+title = "绿宝石块"
+desc = [
+	"大额交易与储值用块更方便，也省箱子格数。",
+]
+icon = "minecraft:emerald_block"
+shape = "circle"
+size = 1.2
+deps = ["t_emerald_float"]
+tasks = [
+	{ type = "item", item = "minecraft:emerald_block", count = 4 },
+]
+
+[[quest]]
+name = "t_first_deal"
+title = "第一笔成交"
+icon = "minecraft:emerald"
+shape = "rsquare"
+deps = ["t_trading_post"]
+tasks = [
+	{ type = "stat", stat = "minecraft:traded_with_villager", value = 1 },
+]
+
+[[quest]]
+name = "t_trade_height"
+title = "高空成交"
+desc = [
+	"在世界最高处和村民做成一次交易——顺便看看你们的城在天上看是什么样。",
+]
+icon = "minecraft:scaffolding"
+shape = "circle"
+size = 1.2
+deps = ["t_first_deal"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:adventure/trade_at_world_height" },
+]
+
+[[quest]]
+name = "t_market_bell"
+title = "集市的钟"
+desc = [
+	"贸易点要有钟：商队到了敲一下，比挨个去叫人快。",
+]
+icon = "minecraft:bell"
+shape = "circle"
+size = 1.2
+deps = ["t_trading_post"]
+tasks = [
+	{ type = "item", item = "minecraft:bell", count = 2 },
+]
+
+[[quest]]
+name = "t_compost"
+title = "堆肥桶"
+desc = [
+	"没有职业的村民不会做生意：堆肥桶是把他变成农民最快的一件东西。",
+]
+icon = "minecraft:composter"
+shape = "rsquare"
+deps = ["t_trading_post"]
+tasks = [
+	{ type = "item", item = "minecraft:composter", count = 2 },
+]
+
+[[quest]]
+name = "t_fletcher"
+title = "制箭师"
+desc = [
+	"制箭师收羽毛与木棍、卖箭与弓，是最早能稳定供货的交易之一。",
+]
+icon = "minecraft:fletching_table"
+shape = "circle"
+size = 1.2
+deps = ["t_compost"]
+tasks = [
+	{ type = "item", item = "minecraft:fletching_table" },
+	{ type = "item", item = "minecraft:feather", count = 32 },
+]
+
+[[quest]]
+name = "t_leather_armorer"
+title = "盔甲匠的皮料"
+desc = [
+	"盔甲匠用皮革与铁换装备，交易前先把料备在自己手里。",
+]
+icon = "minecraft:leather"
+shape = "circle"
+size = 1.2
+deps = ["t_trading_post"]
+tasks = [
+	{ type = "item", item = "minecraft:leather", count = 32 },
+]
+
+[[quest]]
+name = "t_villager_transport"
+title = "把村民运回来"
+desc = [
+	"贸易台要有货源：矿车加拴绳，是最稳的搬运方式。",
+]
+icon = "minecraft:minecart"
+shape = "circle"
+size = 1.2
+deps = ["t_trading_post"]
+tasks = [
+	{ type = "item", item = "minecraft:minecart", count = 4 },
+	{ type = "item", item = "minecraft:lead", count = 4 },
+]
+
+[[quest]]
+name = "t_filter"
+title = "只收该收的"
+desc = [
+	"FTB Filter System：把「什么该进箱子」写成一个能复用的条件，交易来的杂货不必手动分。",
+]
+icon = "ftbfiltersystem:smart_filter"
+shape = "rsquare"
+deps = ["t_trading_post"]
+tasks = [
+	{ type = "item", item = "ftbfiltersystem:smart_filter", count = 2 },
+]
+
+[[quest]]
+name = "t_hopper"
+title = "漏斗收尾"
+desc = [
+	"交易出来的东西直接进箱，人就可以一直站在贸易台前。",
+]
+icon = "minecraft:hopper"
+shape = "rsquare"
+deps = ["t_filter"]
+tasks = [
+	{ type = "item", item = "minecraft:hopper", count = 4 },
+	{ type = "stat", stat = "minecraft:inspect_hopper", value = 1 },
+]
+
+[[quest]]
+name = "t_dropper"
+title = "投掷器分流"
+desc = [
+	"投掷器把成品推向下一格，是「不用人接」的最小一步。",
+]
+icon = "minecraft:dropper"
+shape = "circle"
+size = 1.2
+deps = ["t_hopper"]
+tasks = [
+	{ type = "item", item = "minecraft:dropper", count = 2 },
+	{ type = "stat", stat = "minecraft:inspect_dropper", value = 1 },
+]
+
+[[quest]]
+name = "t_market_open"
+title = "集市开张"
+desc = [
+	"两台贸易台分开摆（一台对外、一台对内），交易不再堵在一个人手上。",
+]
+icon = "minecraft:bell"
+shape = "octagon"
+size = 1.75
+deps = ["t_emerald_block", "t_trade_height", "t_market_bell", "t_fletcher",
+        "t_leather_armorer", "t_villager_transport", "t_dropper"]
+tasks = [
+	{ type = "item", item = "tradingpost:trading_post", count = 2 },
+	{ type = "item", item = "minecraft:emerald_block", count = 8 },
+	{ type = "stat", stat = "minecraft:traded_with_villager", value = 32 },
+]
+
+[[quest]]
+name = "t_workshop_smooth"
+title = "查得到、做得快、换得动"
+desc = [
+	"三件事齐了：要查的有地方查（资料与图）、要做的做得快（台子与修装位）、要换的换得动（贸易台与过滤器）。",
+	"这一层做完，剩下的时间才真的花在建东西上。",
+]
+icon = "tradingpost:trading_post"
+shape = "hexagon"
+size = 2.5
+deps = ["t_info_ready", "t_workshop_ready", "t_market_open"]
+tasks = [
+	{ type = "item", item = "ftbfiltersystem:smart_filter", count = 4 },
+	{ type = "item", item = "tradingpost:trading_post", count = 4 },
+	{ type = "stat", stat = "minecraft:traded_with_villager", value = 64 },
+]
+rewards = [
+	{ type = "xp", xp = 80 },
+	{ type = "toast" },
+]

@@ -7,7 +7,7 @@
 		id: "create:item_vault"
 	}
 	id: "994C41C732487EFB"
-	order_index: 33
+	order_index: 56
 	quest_links: [ ]
 	quests: [
 	{
@@ -132,7 +132,7 @@
 			type: "item"
 		}
 		]
-		x: -1.5d
+		x: -8.4d
 		y: -3.5d
 	}
 	{
@@ -174,7 +174,7 @@
 			type: "item"
 		}
 		]
-		x: 1.27d
+		x: -5.63d
 		y: -3.5d
 	}
 	{
@@ -194,7 +194,7 @@
 			type: "item"
 		}
 		]
-		x: 0.0d
+		x: -13.58d
 		y: -5.25d
 	}
 	{
@@ -214,7 +214,7 @@
 			type: "item"
 		}
 		]
-		x: 0.0d
+		x: -5.51d
 		y: -7.0d
 	}
 	{
@@ -235,7 +235,7 @@
 			type: "item"
 		}
 		]
-		x: -1.5d
+		x: -8.1d
 		y: -8.75d
 	}
 	{
@@ -256,8 +256,745 @@
 			type: "item"
 		}
 		]
-		x: 1.27d
+		x: -5.33d
 		y: -8.75d
+	}
+	{
+		dependencies: [
+		"1901DD1DD7F66B0D"
+		]
+		icon: {
+			id: "storagedelight:oak_drawer"
+		}
+		id: "29D3596A7654DF43"
+		rewards: [
+		{
+			xp: 30
+			id: "DABCEE5D8AC6DCB9"
+			type: "xp"
+		}
+		{
+			id: "23FD24EA2FC3AB83"
+			type: "toast"
+		}
+		]
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "storagedelight:oak_drawer"
+			count: 8
+			id: "98769D05CC93608F"
+			type: "item"
+		}
+		]
+		x: -2.25d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"29D3596A7654DF43"
+		]
+		icon: {
+			id: "storagedelight:small_oak_drawers"
+		}
+		id: "C06100CBCAD04DC9"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "storagedelight:small_oak_drawers"
+			count: 8
+			id: "955E9EFB9F906576"
+			type: "item"
+		}
+		]
+		x: -10.8d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"29D3596A7654DF43"
+		]
+		icon: {
+			id: "storagedelight:glass_oak_cabinet"
+		}
+		id: "51C5DA43F4835A4A"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "storagedelight:glass_oak_cabinet"
+			count: 4
+			id: "6EC3EF0FD73585FC"
+			type: "item"
+		}
+		]
+		x: -8.25d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"29D3596A7654DF43"
+		]
+		icon: {
+			id: "storagedelight:acacia_cabinet_with_polished_andesite_countertop"
+		}
+		id: "87BCE9C7AE5514FC"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "storagedelight:acacia_cabinet_with_polished_andesite_countertop"
+			count: 4
+			id: "5BC3FF4133F5046C"
+			type: "item"
+		}
+		]
+		x: -5.48d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"29D3596A7654DF43"
+		]
+		icon: {
+			id: "storagedelight:oak_drawer_with_books"
+		}
+		id: "59821A97064A3FBB"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "storagedelight:oak_drawer_with_books"
+			count: 4
+			id: "AE06CC97B285FBA7"
+			type: "item"
+		}
+		]
+		x: -2.7d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"29D3596A7654DF43"
+		]
+		icon: {
+			id: "storagedelight:oak_pantry_cabinet"
+		}
+		id: "7F952FF2E934E4B0"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "storagedelight:oak_pantry_cabinet"
+			count: 2
+			id: "3F7DDED57E450BC6"
+			type: "item"
+		}
+		]
+		x: -0.15d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"C06100CBCAD04DC9"
+		"51C5DA43F4835A4A"
+		"87BCE9C7AE5514FC"
+		"59821A97064A3FBB"
+		"7F952FF2E934E4B0"
+		]
+		icon: {
+			id: "storagedelight:oak_single_door_cabinet"
+		}
+		id: "9261B318BCC99C82"
+		shape: "octagon"
+		size: 1.75d
+		tasks: [
+		{
+			item: "storagedelight:oak_single_door_cabinet"
+			count: 16
+			id: "4F8F48880BA70DBF"
+			type: "item"
+		}
+		]
+		x: -2.55d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"05DFBFFD5C743FCF"
+		]
+		icon: {
+			id: "travelersbackpack:tanks_upgrade"
+		}
+		id: "484B882A19FB0C56"
+		rewards: [
+		{
+			xp: 30
+			id: "05E38B4C0E6BB991"
+			type: "xp"
+		}
+		{
+			id: "90BA3C0F255A1F17"
+			type: "toast"
+		}
+		]
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "travelersbackpack:tanks_upgrade"
+			id: "EC79905B3CB9C1C7"
+			type: "item"
+		}
+		]
+		x: 1.5d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"484B882A19FB0C56"
+		]
+		icon: {
+			id: "travelersbackpack:hose_nozzle"
+		}
+		id: "A6166CD3BEF7C2A6"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "travelersbackpack:hose_nozzle"
+			id: "C79C8AE2300F7756"
+			type: "item"
+		}
+		{
+			item: "travelersbackpack:hose"
+			id: "9DD7E88D257B435F"
+			type: "item"
+		}
+		]
+		x: 2.4d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"05DFBFFD5C743FCF"
+		]
+		icon: {
+			id: "travelersbackpack:furnace_upgrade"
+		}
+		id: "9F1FEFDB3AFE6474"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "travelersbackpack:furnace_upgrade"
+			id: "E977F559891628B0"
+			type: "item"
+		}
+		]
+		x: 4.65d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"9F1FEFDB3AFE6474"
+		]
+		icon: {
+			id: "travelersbackpack:blast_furnace_upgrade"
+		}
+		id: "57390F615AD735DA"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "travelersbackpack:blast_furnace_upgrade"
+			id: "72D676E1C8FD0FF5"
+			type: "item"
+		}
+		]
+		x: 4.95d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"05B462B7B3F64B20"
+		]
+		icon: {
+			id: "create:smart_chute"
+		}
+		id: "86DD308CA93829AC"
+		rewards: [
+		{
+			xp: 30
+			id: "B779E898B63E57AE"
+			type: "xp"
+		}
+		{
+			id: "B6E92A2ED6CFA96D"
+			type: "toast"
+		}
+		]
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "create:smart_chute"
+			count: 2
+			id: "B1CC4E0D2AA1DBFC"
+			type: "item"
+		}
+		]
+		x: 8.1d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"86DD308CA93829AC"
+		]
+		icon: {
+			id: "create:andesite_funnel"
+		}
+		id: "2087273D295EE0B2"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "create:andesite_funnel"
+			count: 8
+			id: "2986A77A7FDC5A00"
+			type: "item"
+		}
+		]
+		x: 0.41d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"2087273D295EE0B2"
+		]
+		icon: {
+			id: "create:brass_funnel"
+		}
+		id: "31B17C5DB0601485"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "create:brass_funnel"
+			count: 4
+			id: "12630AABB11C7649"
+			type: "item"
+		}
+		]
+		x: -2.55d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"86DD308CA93829AC"
+		]
+		icon: {
+			id: "create:depot"
+		}
+		id: "1313E84AB67395E4"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "create:depot"
+			count: 4
+			id: "BD00D1ABEC77F65A"
+			type: "item"
+		}
+		]
+		x: 2.96d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"1313E84AB67395E4"
+		]
+		icon: {
+			id: "create:weighted_ejector"
+		}
+		id: "B167E2DCDB010F58"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "create:weighted_ejector"
+			count: 2
+			id: "2B984580CE5FC917"
+			type: "item"
+		}
+		]
+		x: -0.0d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"31B17C5DB0601485"
+		]
+		icon: {
+			id: "create:mechanical_arm"
+		}
+		id: "609141EB095A7C0F"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "create:mechanical_arm"
+			count: 2
+			id: "03F42F67897A5A9B"
+			type: "item"
+		}
+		]
+		x: -2.96d
+		y: -10.5d
+	}
+	{
+		dependencies: [
+		"32806DAC98F84539"
+		]
+		icon: {
+			id: "create:content_observer"
+		}
+		id: "3C58DF8EA3AC5C27"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "create:content_observer"
+			count: 2
+			id: "DA3F3CEFCDC1ACF1"
+			type: "item"
+		}
+		]
+		x: 2.55d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"3C58DF8EA3AC5C27"
+		]
+		icon: {
+			id: "create:factory_gauge"
+		}
+		id: "B629C3AE1A000CAD"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "create:factory_gauge"
+			count: 2
+			id: "8FC6BE4A3CC65A26"
+			type: "item"
+		}
+		]
+		x: -0.19d
+		y: -10.5d
+	}
+	{
+		dependencies: [
+		"B629C3AE1A000CAD"
+		]
+		icon: {
+			id: "create:stock_link"
+		}
+		id: "64379B2A614EEBD1"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "create:stock_link"
+			count: 4
+			id: "425BCC3281B32533"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -12.25d
+	}
+	{
+		dependencies: [
+		"64379B2A614EEBD1"
+		]
+		icon: {
+			id: "create:package_filter"
+		}
+		id: "DEA310EF6C79CA0F"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "create:package_filter"
+			count: 2
+			id: "7254231093DDCBF2"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -14.0d
+	}
+	{
+		dependencies: [
+		"DEA310EF6C79CA0F"
+		]
+		icon: {
+			id: "create:repackager"
+		}
+		id: "085AB1F797B05D86"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "create:repackager"
+			id: "08E863548ACF82C1"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -15.75d
+	}
+	{
+		dependencies: [
+		"085AB1F797B05D86"
+		]
+		icon: {
+			id: "create:cardboard_block"
+		}
+		id: "03B79EA2A2E190E9"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "create:cardboard_block"
+			count: 8
+			id: "929017BF6F285739"
+			type: "item"
+		}
+		{
+			item: "create:package"
+			count: 4
+			id: "54F449856AB85182"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -17.5d
+	}
+	{
+		dependencies: [
+		"03B79EA2A2E190E9"
+		]
+		icon: {
+			id: "create:package_frogport"
+		}
+		id: "95C977F5BCC25F97"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "create:package_frogport"
+			count: 2
+			id: "188A21F62FF6CF05"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -19.25d
+	}
+	{
+		dependencies: [
+		"609141EB095A7C0F"
+		"B167E2DCDB010F58"
+		"95C977F5BCC25F97"
+		]
+		icon: {
+			id: "create:stock_link"
+		}
+		id: "428C83D9BB0BF6C7"
+		shape: "octagon"
+		size: 1.75d
+		tasks: [
+		{
+			item: "create:stock_link"
+			count: 8
+			id: "6D445F27C9F3263B"
+			type: "item"
+		}
+		{
+			item: "create:factory_gauge"
+			count: 2
+			id: "F9CC9F19B92F6575"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -21.0d
+	}
+	{
+		dependencies: [
+		"53C3373A69CDB61A"
+		]
+		icon: {
+			id: "lootr:lootr_chest"
+		}
+		id: "C893879E9E4A8B1E"
+		rewards: [
+		{
+			xp: 30
+			id: "15644E092A1CFD09"
+			type: "xp"
+		}
+		{
+			id: "009BD98D663F8CDA"
+			type: "toast"
+		}
+		]
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			advancement: "lootr:1chest"
+			id: "73BE8A747F373B99"
+			type: "advancement"
+		}
+		]
+		x: 7.8d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"C893879E9E4A8B1E"
+		]
+		icon: {
+			id: "lootr:lootr_barrel"
+		}
+		id: "B9245AF3C49CA3BB"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "lootr:1barrel"
+			id: "03F9E359B6D31BF5"
+			type: "advancement"
+		}
+		]
+		x: 11.25d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"C893879E9E4A8B1E"
+		]
+		icon: {
+			id: "lootr:lootr_shulker"
+		}
+		id: "1CFB20E9A1E93BE1"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "lootr:1shulker"
+			id: "218E47B7502A29BE"
+			type: "advancement"
+		}
+		]
+		x: 13.8d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"B9245AF3C49CA3BB"
+		"1CFB20E9A1E93BE1"
+		]
+		icon: {
+			id: "minecraft:chest"
+		}
+		id: "F20AD52D891AEDAF"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "lootr:10loot"
+			id: "D292423CD15FA123"
+			type: "advancement"
+		}
+		]
+		x: 5.51d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"F20AD52D891AEDAF"
+		]
+		icon: {
+			id: "lootr:trophy"
+		}
+		id: "7D4751F16B42E56C"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "lootr:trophy"
+			id: "6E7727177E7F89EC"
+			type: "item"
+		}
+		]
+		x: 5.1d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"32806DAC98F84539"
+		]
+		icon: {
+			id: "ftbfiltersystem:smart_filter"
+		}
+		id: "9F8AB4D04BC28CBD"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "ftbfiltersystem:smart_filter"
+			count: 2
+			id: "BEB427DACB5ADDBB"
+			type: "item"
+		}
+		]
+		x: 7.87d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"9F8AB4D04BC28CBD"
+		"F20AD52D891AEDAF"
+		]
+		icon: {
+			id: "ftbfiltersystem:smart_filter"
+		}
+		id: "C960552DD7B73784"
+		shape: "octagon"
+		size: 1.75d
+		tasks: [
+		{
+			item: "ftbfiltersystem:smart_filter"
+			count: 4
+			id: "267500EC6C2DCD48"
+			type: "item"
+		}
+		{
+			item: "minecraft:barrel"
+			count: 8
+			id: "F7407E3E4F8B9B57"
+			type: "item"
+		}
+		]
+		x: 2.77d
+		y: -10.5d
 	}
 	{
 		dependencies: [
@@ -267,6 +1004,10 @@
 		"137494D224880CE7"
 		"2464A382B9FE5E3F"
 		"DCA4F05BEC7B873C"
+		"9261B318BCC99C82"
+		"484B882A19FB0C56"
+		"428C83D9BB0BF6C7"
+		"C960552DD7B73784"
 		]
 		icon: {
 			id: "travelersbackpack:standard"
@@ -294,7 +1035,7 @@
 		}
 		]
 		x: 0.0d
-		y: -10.5d
+		y: -22.75d
 	}
 	]
 }

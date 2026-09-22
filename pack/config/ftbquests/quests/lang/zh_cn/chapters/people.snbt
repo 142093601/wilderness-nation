@@ -1,0 +1,117 @@
+{
+	quest.F2C257EA792D0BD6.title: "床位够住"
+	quest.F2C257EA792D0BD6.description: [
+	"村民认床：晚上没床他就走。**床数 = 人口上限**，这是最硬的约束。"
+	"想留住 8 个人，先摆 8 张床。"
+	]
+	quest.166543A6805FE5AD.title: "给每户一间屋"
+	quest.166543A6805FE5AD.description: [
+	"有墙有门有屋顶，才算一间屋。露天摆床不算 —— 村民会认，但雷雨天会出事。"
+	]
+	quest.D6E45FED878FF382.title: "村里不黑"
+	quest.D6E45FED878FF382.description: [
+	"居民区不留黑块：既是为了不刷怪，也是为了**村民晚上敢走动**。"
+	]
+	quest.D04CC89D66F126E3.title: "村钟"
+	quest.D04CC89D66F126E3.description: [
+	"钟是村子的中心点：敲一下，附近的居民会往这里聚。"
+	"它也是「这个聚落已经成型」最直观的标志 —— 放在广场上。"
+	]
+	quest.4B4A99EDA9706713.title: "堆肥桶 · 农人"
+	quest.4B4A99EDA9706713.description: [
+	"从这一条起是**职业清单**：一个工作站方块 = 一个能上岗的居民。"
+	"按你的产业需要去配，不必一次配齐 —— 但缺了哪个，那类物资就只能玩家自己干。"
+	]
+	quest.AB8AB6DB586707A2.title: "木桶 · 渔夫"
+	quest.D496A80F264391A3.title: "织布机 · 牧羊人"
+	quest.C6ACB6D59820C2FD.title: "制箭台 · 制箭师"
+	quest.C6ACB6D59820C2FD.description: [
+	"制箭师卖箭与弓。对「御敌」章那套消耗品经济来说，这是最省事的一条补给线。"
+	]
+	quest.EE4D279C9D5690CF.title: "酿造台 · 牧师"
+	quest.EE4D279C9D5690CF.description: [
+	"牧师收腐肉、卖附魔之瓶与红石。**腐肉终于有去处了** —— 顺带解决僵尸夜的库存问题。"
+	]
+	quest.9E85D7F0E45B531C.title: "砂轮 · 武器匠"
+	quest.3A9C75A917AB127C.title: "锻造台 · 工具匠"
+	quest.3A9C75A917AB127C.description: [
+	"工具匠是**钻石工具的唯一稳定来源**（不必自己凑附魔）。"
+	]
+	quest.F385669C73FD9B9A.title: "高炉 · 盔甲匠"
+	quest.F385669C73FD9B9A.description: [
+	"高炉本身也是你熔炼链的一环 —— 一个方块两份收益。"
+	]
+	quest.393FF0907F21C737.title: "制图台 · 制图师"
+	quest.393FF0907F21C737.description: [
+	"制图师卖**林地府邸与海底神殿的地图**。想出关又不知道去哪，先问他。"
+	]
+	quest.CF20C108881C6645.title: "讲台 · 图书管理员"
+	quest.CF20C108881C6645.description: [
+	"整个包里**性价比最高的一格**：讲台 + 一个新村民 = 无限次刷附魔书。"
+	"他要纸，所以这后面应该接纸的生产线（材料章那条）。"
+	]
+	quest.852B6B22227842CE.title: "烟熏炉 · 屠夫"
+	quest.D1B524737E9DDB0E.title: "炼药锅 · 皮匠"
+	quest.7C6BFF5044DCF191.title: "切石机 · 石匠"
+	quest.7C6BFF5044DCF191.description: [
+	"石匠卖石英与各类磨制石 —— 大规模盖楼时的建材缺口，靠他补。"
+	]
+	quest.A558C4AFE6226974.title: "每个职业都有人干"
+	quest.A558C4AFE6226974.description: [
+	"十五种工作站全部就位之后，这个据点**在物资上基本不需要玩家亲自去换东西**了。"
+	"从这一刻起，你们的角色从「打工人」变成「管事的人」。"
+	]
+	quest.FF4FB29905AECE6F.title: "面包管够"
+	quest.FF4FB29905AECE6F.description: [
+	"村民繁殖要食物，玩家也要。**面包是最省事的那一种**：三个麦子一个包。"
+	]
+	quest.13EF3AAFED68BB69.title: "胡萝卜田"
+	quest.13EF3AAFED68BB69.description: [
+	"胡萝卜既能喂人也能喂村民，还能喂兔子。它比小麦更「一条顶三条用」。"
+	]
+	quest.C32FE39860DAEAA1.title: "人口增长"
+	quest.C32FE39860DAEAA1.description: [
+	"给两个村民足够的食物，他们就会生出下一代 —— 这是**唯一**的人口增长方式。"
+	"所以「粮食储备」不是后勤细节，是国策。"
+	]
+	quest.E3931EF05CE3A5F1.title: "公共粮囤"
+	quest.E3931EF05CE3A5F1.description: [
+	"干草块是压缩粮：九个麦子压一格。全队的口粮应该有**一个地方**放着。"
+	]
+	quest.7135A6C4EB226AB3.title: "铁傀儡"
+	quest.7135A6C4EB226AB3.description: [
+	"四个铁块加一个南瓜：这是**不需要玩家在线**的治安力量。"
+	"它挡不住尸潮，但挡得住夜里的零散怪 —— 有它之后你才敢离开据点出远门。"
+	]
+	quest.3442E67E07125697.title: "常驻岗哨"
+	quest.3442E67E07125697.description: [
+	"至少两个铁傀儡，才算「夜里有人看着」；一个会被逐个引开。"
+	]
+	quest.0AC29781F5ED9433.title: "水井"
+	quest.0AC29781F5ED9433.description: [
+	"居民区要有**不用跑远**的水：一口井（水源 + 炼药锅）解决喝、洗、灭火三件事。"
+	]
+	quest.24F8082049DE338C.title: "药与治疗"
+	quest.24F8082049DE338C.description: [
+	"金苹果是最早能拿到的「稳定治疗」：八个金锭一个果，值得为它留一条金矿线。"
+	]
+	quest.057BA4CF5A1E0848.title: "学堂"
+	quest.057BA4CF5A1E0848.description: [
+	"书架 + 讲台：既是附魔的产能基础，也是「这里有人在读书」的标志。"
+	]
+	quest.1B22815199B387C2.title: "户籍登记"
+	quest.1B22815199B387C2.description: [
+	"命名牌 + 告示牌：谁负责什么，写在墙上。"
+	"国家一旦超过五六个人，**口头分工就开始失效** —— 这一条是在为那个时刻做准备。"
+	]
+	quest.7504C42467D57742.title: "墓园"
+	quest.7504C42467D57742.description: [
+	"按规矩埋人，比把人埋在门口体面。石砖围墙圈一块地，插牌记名。"
+	"（碑林那一章会把「记名」这件事做成制度。）"
+	]
+	quest.B201525045AB2357.title: "这是一座城了"
+	quest.B201525045AB2357.description: [
+	"有居民、有职业、有粮、有治安、有记录 —— 从这一条开始，"
+	"「文明」章里那些大工程才不是空房子。"
+	]
+}

@@ -1,0 +1,959 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "cat_comfort"
+	group: "1439886072EE757D"
+	icon: {
+		id: "comforts:sleeping_bag_white"
+	}
+	id: "2D4FDE580D3373FB"
+	order_index: 53
+	quest_links: [ ]
+	quests: [
+	{
+		icon: {
+			id: "comforts:sleeping_bag_white"
+		}
+		id: "E2C0AF2F565152D4"
+		rewards: [
+		{
+			xp: 30
+			id: "6AC081585D56360B"
+			type: "xp"
+		}
+		{
+			id: "07F18D3CFFD18619"
+			type: "toast"
+		}
+		]
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "comforts:sleeping_bag_white"
+			id: "4C1EADA6209BB9A2"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: 0.0d
+	}
+	{
+		dependencies: [
+		"E2C0AF2F565152D4"
+		]
+		icon: {
+			id: "comforts:hammock_white"
+		}
+		id: "C834FDD0D98E89BA"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "comforts:hammock_white"
+			id: "6F8185581918B859"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"C834FDD0D98E89BA"
+		]
+		icon: {
+			id: "comforts:rope_and_nail"
+		}
+		id: "0D9725CA57123B52"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "comforts:rope_and_nail"
+			count: 4
+			id: "F463EB3211D6402B"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"0D9725CA57123B52"
+		]
+		icon: {
+			id: "comforts:rope_and_nail"
+		}
+		id: "74DF859BB79A026B"
+		shape: "rsquare"
+		size: 1.75d
+		tasks: [
+		{
+			item: "comforts:rope_and_nail"
+			count: 8
+			id: "947B400918A3E6EF"
+			type: "item"
+		}
+		{
+			item: "minecraft:ladder"
+			count: 16
+			id: "4214096319840FCC"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"74DF859BB79A026B"
+		]
+		icon: {
+			id: "comforts:sleeping_bag_red"
+		}
+		id: "4E50E86D0EC68EA5"
+		shape: "square"
+		size: 1.5d
+		tasks: [
+		{
+			item: "comforts:sleeping_bag_red"
+			id: "117F1B67D248A7E6"
+			type: "item"
+		}
+		{
+			item: "comforts:sleeping_bag_blue"
+			id: "C34701D3E786AB6D"
+			type: "item"
+		}
+		{
+			item: "comforts:sleeping_bag_green"
+			id: "0398F6C2C173530F"
+			type: "item"
+		}
+		{
+			item: "comforts:sleeping_bag_yellow"
+			id: "86EC5F7F21D11AAE"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"4E50E86D0EC68EA5"
+		]
+		icon: {
+			id: "comforts:hammock_red"
+		}
+		id: "A43EDD9958DB12DC"
+		rewards: [
+		{
+			xp: 40
+			id: "5A868807C72D65A4"
+			type: "xp"
+		}
+		{
+			id: "38A6BAFAE57C813D"
+			type: "toast"
+		}
+		]
+		shape: "octagon"
+		size: 1.75d
+		tasks: [
+		{
+			item: "comforts:hammock_red"
+			id: "CD82A196FC577CC6"
+			type: "item"
+		}
+		{
+			item: "comforts:sleeping_bag_black"
+			id: "E997E1E8775DC6C8"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"A43EDD9958DB12DC"
+		]
+		icon: {
+			id: "travelersbackpack:standard"
+		}
+		id: "BA46401239FF2874"
+		rewards: [
+		{
+			xp: 30
+			id: "492DCCC3777B3AA9"
+			type: "xp"
+		}
+		{
+			id: "588D70FA7CE51616"
+			type: "toast"
+		}
+		]
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "travelersbackpack:standard"
+			id: "3207600305F42554"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -10.5d
+	}
+	{
+		dependencies: [
+		"BA46401239FF2874"
+		]
+		icon: {
+			id: "travelersbackpack:iron_tier_upgrade"
+		}
+		id: "5E0650F3B3322847"
+		shape: "rsquare"
+		size: 1.75d
+		tasks: [
+		{
+			item: "travelersbackpack:iron_tier_upgrade"
+			id: "03FF43D9BF7990B7"
+			type: "item"
+		}
+		{
+			item: "travelersbackpack:gold_tier_upgrade"
+			id: "3C3F36E87930B37D"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -12.25d
+	}
+	{
+		dependencies: [
+		"5E0650F3B3322847"
+		]
+		icon: {
+			id: "travelersbackpack:backpack_tank"
+		}
+		id: "2212622A74699511"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "travelersbackpack:backpack_tank"
+			id: "2038D87C60CA0484"
+			type: "item"
+		}
+		]
+		x: -1.27d
+		y: -14.0d
+	}
+	{
+		dependencies: [
+		"5E0650F3B3322847"
+		]
+		icon: {
+			id: "travelersbackpack:crafting_upgrade"
+		}
+		id: "4FCDB6C4C01F8768"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "travelersbackpack:crafting_upgrade"
+			id: "454772B6FE419A3D"
+			type: "item"
+		}
+		]
+		x: 1.27d
+		y: -14.0d
+	}
+	{
+		dependencies: [
+		"4FCDB6C4C01F8768"
+		]
+		icon: {
+			id: "travelersbackpack:magnet_upgrade"
+		}
+		id: "47B0A548C387F343"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "travelersbackpack:magnet_upgrade"
+			id: "E6D4C0000AA91307"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -15.75d
+	}
+	{
+		dependencies: [
+		"47B0A548C387F343"
+		]
+		icon: {
+			id: "travelersbackpack:pickup_upgrade"
+		}
+		id: "16FD4D8A60D7991E"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "travelersbackpack:pickup_upgrade"
+			id: "69319B68EF0F7E1A"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -17.5d
+	}
+	{
+		dependencies: [
+		"16FD4D8A60D7991E"
+		]
+		icon: {
+			id: "travelersbackpack:feeding_upgrade"
+		}
+		id: "DAF482E48F3BCBC5"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "travelersbackpack:feeding_upgrade"
+			id: "C5224EAD3AF89ED9"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -19.25d
+	}
+	{
+		dependencies: [
+		"DAF482E48F3BCBC5"
+		]
+		icon: {
+			id: "travelersbackpack:void_upgrade"
+		}
+		id: "B2FF76543548AF4E"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "travelersbackpack:void_upgrade"
+			id: "25CA6CF9BFD111B1"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -21.0d
+	}
+	{
+		dependencies: [
+		"B2FF76543548AF4E"
+		]
+		icon: {
+			id: "travelersbackpack:white_sleeping_bag"
+		}
+		id: "88D594AFCD74B527"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "travelersbackpack:white_sleeping_bag"
+			id: "F3A2C6053BD8672E"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -22.75d
+	}
+	{
+		dependencies: [
+		"88D594AFCD74B527"
+		]
+		icon: {
+			id: "travelersbackpack:dragon"
+		}
+		id: "B928E6898AD47419"
+		shape: "rsquare"
+		size: 1.75d
+		tasks: [
+		{
+			item: "travelersbackpack:dragon"
+			id: "1789E4358FA870C6"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -24.5d
+	}
+	{
+		dependencies: [
+		"B928E6898AD47419"
+		"2212622A74699511"
+		]
+		icon: {
+			id: "travelersbackpack:netherite"
+		}
+		id: "C96238EAF2CF8FF7"
+		rewards: [
+		{
+			xp: 50
+			id: "4BE46C732677D905"
+			type: "xp"
+		}
+		{
+			id: "1CED1D2592867AB6"
+			type: "toast"
+		}
+		]
+		shape: "octagon"
+		size: 1.75d
+		tasks: [
+		{
+			item: "travelersbackpack:netherite"
+			id: "747B9051398A4447"
+			type: "item"
+		}
+		{
+			item: "travelersbackpack:diamond_tier_upgrade"
+			id: "BEDDD5A3223C147E"
+			type: "item"
+		}
+		{
+			item: "travelersbackpack:refill_upgrade"
+			id: "0F8712659634EACE"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -26.25d
+	}
+	{
+		dependencies: [
+		"C96238EAF2CF8FF7"
+		]
+		icon: {
+			id: "smallships:oak_rowboat"
+		}
+		id: "C118459326F2C2CE"
+		rewards: [
+		{
+			xp: 30
+			id: "2B3372B0FE4F8A96"
+			type: "xp"
+		}
+		{
+			id: "11FD29D9BAF37402"
+			type: "toast"
+		}
+		]
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "smallships:oak_rowboat"
+			id: "3F18D589A0382951"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -28.0d
+	}
+	{
+		dependencies: [
+		"C118459326F2C2CE"
+		]
+		icon: {
+			id: "smallships:sail"
+		}
+		id: "C35DE8A8D563657C"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "smallships:sail"
+			count: 4
+			id: "E7098544694B1080"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -29.75d
+	}
+	{
+		dependencies: [
+		"C35DE8A8D563657C"
+		]
+		icon: {
+			id: "smallships:oak_cog"
+		}
+		id: "2E45AFBE10B5FC4F"
+		shape: "rsquare"
+		size: 1.75d
+		tasks: [
+		{
+			item: "smallships:oak_cog"
+			id: "A3624644FE0C641A"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -31.5d
+	}
+	{
+		dependencies: [
+		"2E45AFBE10B5FC4F"
+		]
+		icon: {
+			id: "smallships:oak_galley"
+		}
+		id: "892F41FE0182B56B"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "smallships:oak_galley"
+			id: "508253EE1EAEF88E"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -33.25d
+	}
+	{
+		dependencies: [
+		"892F41FE0182B56B"
+		]
+		icon: {
+			id: "smallships:oak_drakkar"
+		}
+		id: "47809FFD11179C5F"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "smallships:oak_drakkar"
+			id: "B07E9BF8ED1C9955"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -35.0d
+	}
+	{
+		dependencies: [
+		"47809FFD11179C5F"
+		]
+		icon: {
+			id: "smallships:cannon"
+		}
+		id: "E791EFED08FE4113"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "smallships:cannon"
+			id: "33D7F72A1875278E"
+			type: "item"
+		}
+		{
+			item: "smallships:cannon_ball"
+			count: 16
+			id: "8D98A046ED6AEC53"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -36.75d
+	}
+	{
+		dependencies: [
+		"E791EFED08FE4113"
+		]
+		icon: {
+			id: "seaworthyboats:shipyard"
+		}
+		id: "33AF39731313EBBA"
+		shape: "rsquare"
+		size: 1.75d
+		tasks: [
+		{
+			item: "seaworthyboats:shipyard"
+			id: "EF5025BEFEACEED4"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -38.5d
+	}
+	{
+		dependencies: [
+		"33AF39731313EBBA"
+		]
+		icon: {
+			id: "elevatorid:elevator_white"
+		}
+		id: "B043380D47545376"
+		shape: "rsquare"
+		size: 1.75d
+		tasks: [
+		{
+			item: "elevatorid:elevator_white"
+			count: 4
+			id: "0F94F7C2DEFC607D"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -40.25d
+	}
+	{
+		dependencies: [
+		"B043380D47545376"
+		]
+		icon: {
+			id: "elevatorid:elevator_red"
+		}
+		id: "B4F1140BF3988F17"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "elevatorid:elevator_red"
+			count: 2
+			id: "9DD26796CD4C4F0D"
+			type: "item"
+		}
+		{
+			item: "elevatorid:elevator_blue"
+			count: 2
+			id: "D00BA6209B4AB037"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -42.0d
+	}
+	{
+		dependencies: [
+		"B4F1140BF3988F17"
+		"33AF39731313EBBA"
+		]
+		icon: {
+			id: "smallships:oak_war_galley"
+		}
+		id: "0A38D45B517F1A1B"
+		rewards: [
+		{
+			xp: 50
+			id: "1161204AC3EF8588"
+			type: "xp"
+		}
+		{
+			id: "3C020BD85F73964E"
+			type: "toast"
+		}
+		]
+		shape: "octagon"
+		size: 1.75d
+		tasks: [
+		{
+			item: "smallships:oak_war_galley"
+			id: "9FD66EEC3768F318"
+			type: "item"
+		}
+		{
+			item: "elevatorid:elevator_gray"
+			count: 2
+			id: "5CF3285077D53F56"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -43.75d
+	}
+	{
+		dependencies: [
+		"0A38D45B517F1A1B"
+		]
+		icon: {
+			id: "tombstone:tombstone"
+		}
+		id: "3F2FDCA473E81BE9"
+		rewards: [
+		{
+			xp: 30
+			id: "46CE2C351777C7E6"
+			type: "xp"
+		}
+		{
+			id: "B839606B9DDF058F"
+			type: "toast"
+		}
+		]
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "tombstone:tombstone"
+			id: "6F51501D37BAA5CF"
+			type: "item"
+		}
+		]
+		x: -1.27d
+		y: -45.5d
+	}
+	{
+		dependencies: [
+		"3F2FDCA473E81BE9"
+		]
+		icon: {
+			id: "tombstone:grave_plate"
+		}
+		id: "EFF849429BE3140B"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "tombstone:grave_plate"
+			id: "BE30BB29E4E630C9"
+			type: "item"
+		}
+		{
+			item: "tombstone:engraved_grave_plate"
+			id: "52A206D44AC44802"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -47.25d
+	}
+	{
+		dependencies: [
+		"EFF849429BE3140B"
+		]
+		icon: {
+			id: "tombstone:grave_dust"
+		}
+		id: "E7E9075394D09432"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "tombstone:grave_dust"
+			count: 4
+			id: "F339AF2FE2FCED04"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -49.0d
+	}
+	{
+		dependencies: [
+		"E7E9075394D09432"
+		]
+		icon: {
+			id: "tombstone:grave_key"
+		}
+		id: "B3605A541A053B54"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "tombstone:grave_key"
+			id: "A73EA9D76A7777DD"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -50.75d
+	}
+	{
+		dependencies: [
+		"B3605A541A053B54"
+		]
+		icon: {
+			id: "gravestone:obituary"
+		}
+		id: "5C181490927C07C9"
+		shape: "rsquare"
+		size: 1.75d
+		tasks: [
+		{
+			item: "gravestone:obituary"
+			id: "763F43B58B999CFF"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -52.5d
+	}
+	{
+		dependencies: [
+		"5C181490927C07C9"
+		]
+		icon: {
+			id: "tombstone:grave_normal"
+		}
+		id: "35E4744D670B0635"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "tombstone:grave_normal"
+			id: "F298B9A2D7AC8BA7"
+			type: "item"
+		}
+		{
+			item: "tombstone:grave_cross"
+			id: "ED6BD95B8EEEC59A"
+			type: "item"
+		}
+		{
+			item: "gravestone:gravestone"
+			id: "F4644280F54568DB"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -54.25d
+	}
+	{
+		dependencies: [
+		"35E4744D670B0635"
+		]
+		icon: {
+			id: "tombstone:decorative_tombstone"
+		}
+		id: "B5DD8E3AFE9912E4"
+		shape: "rsquare"
+		size: 1.75d
+		tasks: [
+		{
+			item: "tombstone:decorative_tombstone"
+			id: "EA97C6BF6CBF6759"
+			type: "item"
+		}
+		{
+			item: "tombstone:decorative_grave_cross"
+			id: "162165AE6E0BBCBB"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -56.0d
+	}
+	{
+		dependencies: [
+		"B5DD8E3AFE9912E4"
+		]
+		icon: {
+			id: "tombstone:receptacle_of_soul"
+		}
+		id: "F04C76701AF59442"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "tombstone:receptacle_of_soul"
+			id: "E516092E8CC07FEE"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -57.75d
+	}
+	{
+		dependencies: [
+		"F04C76701AF59442"
+		"3F2FDCA473E81BE9"
+		"A43EDD9958DB12DC"
+		"C96238EAF2CF8FF7"
+		"0A38D45B517F1A1B"
+		"E7E9075394D09432"
+		]
+		icon: {
+			id: "tombstone:tombstone"
+		}
+		id: "A035AAA342E146A8"
+		rewards: [
+		{
+			xp: 120
+			id: "6E38115CD5B35CE4"
+			type: "xp"
+		}
+		{
+			id: "2365EB8EFD094451"
+			type: "toast"
+		}
+		]
+		shape: "hexagon"
+		size: 2.5d
+		tasks: [
+		{
+			item: "tombstone:tombstone"
+			id: "EFD2BE5292D9D462"
+			type: "item"
+		}
+		{
+			item: "tombstone:grave_plate"
+			id: "A21AC75495C906B5"
+			type: "item"
+		}
+		{
+			item: "tombstone:grave_key"
+			id: "8182C5BD2321EE26"
+			type: "item"
+		}
+		{
+			item: "gravestone:obituary"
+			id: "9691C43D9C854E5D"
+			type: "item"
+		}
+		{
+			stat: "minecraft:deaths"
+			value: 1
+			id: "CD9A98A08DC8FB37"
+			type: "stat"
+		}
+		]
+		x: 0.0d
+		y: -59.5d
+	}
+	{
+		dependencies: [
+		"0A38D45B517F1A1B"
+		]
+		icon: {
+			id: "letsparkour:fast_parkour_slab"
+		}
+		id: "4A378D7CBF504010"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "letsparkour:fast_parkour_slab"
+			count: 4
+			id: "CD5F24E57869CDCA"
+			type: "item"
+		}
+		{
+			item: "letsparkour:jump_parkour_slab"
+			count: 4
+			id: "3C381E373DC2D15C"
+			type: "item"
+		}
+		]
+		x: 1.88d
+		y: -45.5d
+	}
+	]
+}

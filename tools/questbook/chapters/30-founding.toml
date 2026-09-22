@@ -16,8 +16,7 @@ title = "立国"
 subtitle = "把「我们」变成「我们的地、我们的规矩」"
 group = "chronicle"
 icon = "minecraft:white_banner"
-order_index = 2
-
+order_index = 3
 grid = { step = 1.5, row_h = 1.75 }
 
 # ---------------- 国策主线 ----------------

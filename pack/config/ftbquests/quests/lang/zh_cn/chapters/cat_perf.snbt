@@ -52,4 +52,56 @@
 	quest.07BB4EA5ABFE1F81.description: [
 	"它没有奖励，也没有任务要交——出问题时回来翻一遍就够了。"
 	]
+	quest.34F79B5EB43C1D72.title: "渲染器：Embeddium"
+	quest.E393920A0EEF0BF3.title: "看不见的实体不画：EntityCulling"
+	quest.4839917E20CB8460.title: "被挡住的方块面不画：More Culling"
+	quest.1595E0EE79CCF551.title: "界面与文字一次画完：ImmediatelyFast"
+	quest.47356AFF8A80F173.title: "顺手清掉的小开销：BadOptimizations"
+	quest.1BE092A26926CBAB.title: "切出窗口就降帧：Dynamic FPS"
+	quest.A15AEAA0903CB2EC.title: "帧率稳在 60 以上"
+	quest.A15AEAA0903CB2EC.description: [
+	"帧率是唯一当场能感觉到的指标，也是唯一没有服务端记录的一项。"
+	"调到它不再是瓶颈就够了：DESIGN.md §12 管的是 TPS 与 MSPT，客户端只要求不拖后腿。"
+	]
+	quest.CA09E630D05DCB8A.title: "内存：FerriteCore"
+	quest.CA09E630D05DCB8A.description: [
+	"内存与加载这一簇要**排在加内容之前**：这一组不产生玩法，只决定你能装下多少玩法。"
+	"这一簇的验收数字全在 DESIGN.md §12（启动 ≤3 分钟、预生成核心区半径 1000 格）。"
+	]
+	quest.B7A28D1ECB27280D.title: "启动与加载：ModernFix"
+	quest.E6B30FBE05203B5E.title: "地形算得快一点：Noisium"
+	quest.8AAAD7EA5C87E658.title: "光照引擎：ScalableLux"
+	quest.4D9E4B0EE3499999.title: "区块预生成：Chunky"
+	quest.66FE95D9A2F39E0E.title: "预生成之前先定范围"
+	quest.DDE68FD8BCC2B59B.title: "服务端探索配额：Chunk Plan"
+	quest.90504F2D6F146D91.title: "启动压在 3 分钟以内"
+	quest.90504F2D6F146D91.description: [
+	"启动时间是**加 mod 的隐性成本**：每加一组 mod 就该重测一次。"
+	"超过 3 分钟说明该查依赖与加载了（DESIGN.md §12 的指标）。"
+	]
+	quest.28E53073F656C5A4.title: "大改之前先备份"
+	quest.D797E3387AD98CF5.title: "游戏逻辑：Lithium"
+	quest.D797E3387AD98CF5.description: [
+	"这一簇是**服务端侧**的：多人同服时，主线程上的活儿比客户端画面更容易把 TPS 拖下去。"
+	"这一簇的验收数字是常态 TPS ≥19.5 与 MSPT ≤30ms（DESIGN.md §12）。"
+	]
+	quest.EDF501C5958AA580.title: "服务端主线程：ServerCore"
+	quest.59C799FA1C8AFEEB.title: "网络包兼容：Packet Fixer"
+	quest.E2D98685F63125A4.title: "连不上的那类问题：Connectivity"
+	quest.1B76153E4AB83D6E.title: "经验球合并：Clumps"
+	quest.DF378BBA867896DB.title: "坏实体不再拖全服：Neruina"
+	quest.F0DD669CCEB6603B.title: "掉落物是头号卡顿源"
+	quest.C954AE2AD195429F.title: "常驻实体不超过 300"
+	quest.1EF42C1D69A83BDC.title: "常开的红石改成手动"
+	quest.11647CE4E1DC32BD.title: "崩溃先交给它读：Crash Assistant"
+	quest.11647CE4E1DC32BD.description: [
+	"诊断工具是这一章的落点：前面几簇讲「装了什么」，这一簇讲「出事之后怎么查」。"
+	"它的价值在崩溃那一刻——先看清是谁崩的，再决定删什么、退什么。"
+	]
+	quest.F48228FD4AC0C7FE.title: "把每次卡顿的结论记下来"
+	quest.0BF2E84C04AC24D5.title: "四项指标贴在议事厅"
+	quest.0BF2E84C04AC24D5.description: [
+	"预算写在纸上才有人看：四项数字贴在议事厅，谁都能对着查。"
+	"这一格是本章的收尾——以后每加一组 mod，都回到这里对一次账。"
+	]
 }

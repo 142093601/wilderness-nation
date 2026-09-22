@@ -1,0 +1,495 @@
+# 类目 · 农牧与种植
+#
+# 本章的 mod：Farming for Blockheads（三档肥料 · 肥沃耕地 · 鸡窝 · 饲养槽）·
+#   Smarter Farmers（农夫村民收完自己补种）· RightClickHarvest（右键收割并补种）·
+#   Ecologics（杜鹃 / 椰树 / 核桃 / 仙人掌果 · 企鹅 · 椰子蟹）·
+#   Naturalist（野生动物：鹿 · 熊 · 河马 · 长颈鹿，以及捕网与标本工具）·
+#   More Villagers（八种新村民职业与工作站）· Spice of Life: Carrot Edition（食物清单）
+#
+# 与其它章的分工：
+#   · 食物与烹饪章 = 从食材到菜（厨具、菜谱、酒、各维度食材）
+#   · 本章         = 从种子到食材（地、肥料、牲畜、村民、吃法）
+#   · 基建 / 出关章 = 农田与粮仓的**规模**（几百格的水浇地归那边）
+#
+# 两点说明：
+#   1. 本包没有 Manure / Dynamic Trees / Bushy Leaves（pack/mods 下无对应文件），
+#      故本章没有它们的条目；ROSTER 里这三行是备选清单，未采用。
+#   2. RightClickHarvest 与 Smarter Farmers 不注册任何物品，也就没有物品判据；
+#      这两条改用「同一件事的游戏信号」（种下种子 / 农夫的工作站）判定。
+#
+# 奖励只给三个簇头与终局（§3）：三档肥料 · 捕网 · 食物清单 · 饭桌不再靠运气。
+
+key = "cat_farm"
+title = "农牧与种植"
+subtitle = "把种子、牲口与人手接成一条稳定的食物线"
+group = "category"
+icon = "minecraft:wheat"
+order_index = 55
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 簇 1：种植与收割 ----------------
+
+[[quest]]
+name = "farm_ffb_fertilizer"
+title = "三档肥料"
+desc = [
+	"Farming for Blockheads 把「地力」拆成了三档肥料与几种肥沃耕地。",
+	"先有地力，再谈种什么——这一章从地开始。",
+]
+icon = "farmingforblockheads:green_fertilizer"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "farmingforblockheads:green_fertilizer" },
+	{ type = "item", item = "farmingforblockheads:yellow_fertilizer" },
+	{ type = "item", item = "farmingforblockheads:red_fertilizer" },
+]
+rewards = [
+	{ type = "xp", xp = 60 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "farm_ffb_farmland"
+title = "肥沃耕地"
+icon = "farmingforblockheads:fertilized_farmland_rich"
+shape = "circle"
+size = 1.2
+deps = ["farm_ffb_fertilizer"]
+tasks = [
+	{ type = "item", item = "farmingforblockheads:fertilized_farmland_rich" },
+	{ type = "item", item = "farmingforblockheads:fertilized_farmland_healthy" },
+]
+
+[[quest]]
+name = "farm_ffb_nest"
+title = "鸡窝"
+icon = "farmingforblockheads:chicken_nest"
+shape = "circle"
+size = 1.2
+deps = ["farm_ffb_fertilizer"]
+tasks = [
+	{ type = "item", item = "farmingforblockheads:chicken_nest" },
+]
+
+[[quest]]
+name = "farm_ffb_trough"
+title = "饲养槽"
+icon = "farmingforblockheads:feeding_trough"
+shape = "circle"
+size = 1.2
+deps = ["farm_ffb_nest"]
+tasks = [
+	{ type = "item", item = "farmingforblockheads:feeding_trough" },
+]
+
+[[quest]]
+name = "farm_rightclick_harvest"
+title = "收割后自动补种"
+desc = [
+	"RightClickHarvest 让成熟的作物右键即收，收完自己补种。",
+	"它省掉的是「收一遍再种一遍」这一段重复劳动。",
+]
+icon = "minecraft:iron_hoe"
+shape = "rsquare"
+deps = ["farm_ffb_fertilizer"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:husbandry/plant_seed" },
+]
+
+[[quest]]
+name = "farm_smarter_farmers"
+title = "让村民当农夫"
+desc = [
+	"Smarter Farmers 让农夫村民收完自己补种。",
+	"人手不够的时候，田里可以只剩下他们。",
+]
+icon = "minecraft:composter"
+shape = "circle"
+size = 1.2
+deps = ["farm_rightclick_harvest"]
+tasks = [
+	{ type = "item", item = "minecraft:composter" },
+]
+
+[[quest]]
+name = "farm_eco_azalea"
+title = "杜鹃木"
+icon = "ecologics:azalea_log"
+shape = "rsquare"
+deps = ["farm_ffb_fertilizer"]
+tasks = [
+	{ type = "item", item = "ecologics:azalea_log" },
+]
+
+[[quest]]
+name = "farm_eco_coconut"
+title = "椰子树"
+icon = "ecologics:coconut_seedling"
+shape = "circle"
+size = 1.2
+deps = ["farm_eco_azalea"]
+tasks = [
+	{ type = "item", item = "ecologics:coconut_seedling" },
+]
+
+[[quest]]
+name = "farm_eco_walnut"
+title = "核桃"
+icon = "ecologics:walnut"
+shape = "circle"
+size = 1.2
+deps = ["farm_eco_azalea"]
+tasks = [
+	{ type = "item", item = "ecologics:walnut" },
+]
+
+[[quest]]
+name = "farm_eco_stew"
+title = "椰子壳当碗"
+icon = "ecologics:tropical_stew"
+shape = "circle"
+size = 1.2
+deps = ["farm_eco_coconut"]
+tasks = [
+	{ type = "item", item = "ecologics:tropical_stew" },
+]
+
+[[quest]]
+name = "farm_eco_prickly"
+title = "仙人掌果"
+icon = "ecologics:prickly_pear"
+shape = "circle"
+size = 1.2
+deps = ["farm_eco_coconut"]
+tasks = [
+	{ type = "item", item = "ecologics:prickly_pear" },
+]
+
+[[quest]]
+name = "farm_eco_sandcastle"
+title = "沙堡护蛋"
+desc = [
+	"海龟蛋经不起踩，沙堡是 Ecologics 给它们的护栏。",
+	"养海龟和种地是一回事：都要先把地方圈住。",
+]
+icon = "ecologics:sandcastle"
+shape = "circle"
+size = 1.2
+deps = ["farm_eco_coconut"]
+tasks = [
+	{ type = "advancement", advancement = "ecologics:husbandry/sandcastle" },
+]
+
+# ---------------- 簇 2：畜牧与村民 ----------------
+
+[[quest]]
+name = "farm_nat_net"
+title = "捕网"
+desc = [
+	"Naturalist 把野外填满了新动物：鹿、熊、河马、长颈鹿。",
+	"先有一张捕网——抓活的，比打死的用途多。",
+]
+icon = "naturalist:capture_net"
+shape = "pentagon"
+size = 2.0
+deps = ["farm_smarter_farmers"]
+tasks = [
+	{ type = "item", item = "naturalist:capture_net" },
+]
+rewards = [
+	{ type = "xp", xp = 60 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "farm_nat_knapsack"
+title = "标本背包"
+icon = "naturalist:knapsack"
+shape = "circle"
+size = 1.2
+deps = ["farm_nat_net"]
+tasks = [
+	{ type = "item", item = "naturalist:knapsack" },
+]
+
+[[quest]]
+name = "farm_nat_whistle"
+title = "哨子"
+icon = "naturalist:whistle"
+shape = "circle"
+size = 1.2
+deps = ["farm_nat_net"]
+tasks = [
+	{ type = "item", item = "naturalist:whistle" },
+]
+
+[[quest]]
+name = "farm_nat_goop"
+title = "荧光黏胶"
+icon = "naturalist:glow_goop"
+shape = "circle"
+size = 1.2
+deps = ["farm_nat_knapsack"]
+tasks = [
+	{ type = "item", item = "naturalist:glow_goop" },
+]
+
+[[quest]]
+name = "farm_nat_venison"
+title = "鹿肉"
+icon = "naturalist:cooked_venison"
+shape = "circle"
+size = 1.2
+deps = ["farm_nat_net"]
+tasks = [
+	{ type = "item", item = "naturalist:cooked_venison" },
+]
+
+[[quest]]
+name = "farm_nat_bear"
+title = "喂熊"
+desc = [
+	"Naturalist 加的不只是怪：熊、河马、长颈鹿都有自己的互动。",
+	"喂一次熊，就知道这批动物值不值得留在营地边上。",
+]
+icon = "minecraft:honeycomb"
+shape = "circle"
+size = 1.2
+deps = ["farm_nat_net"]
+tasks = [
+	{ type = "advancement", advancement = "naturalist:husbandry/feed_bear_honeycomb" },
+]
+
+[[quest]]
+name = "farm_eco_penguin"
+title = "企鹅"
+icon = "ecologics:penguin_feather"
+shape = "circle"
+size = 1.2
+deps = ["farm_nat_net"]
+tasks = [
+	{ type = "advancement", advancement = "ecologics:husbandry/breed_penguin" },
+]
+
+[[quest]]
+name = "farm_eco_crab"
+title = "椰子蟹"
+icon = "ecologics:crab_meat"
+shape = "circle"
+size = 1.2
+deps = ["farm_eco_penguin"]
+tasks = [
+	{ type = "item", item = "ecologics:crab_meat" },
+]
+
+[[quest]]
+name = "farm_mv_gardening"
+title = "园艺站"
+desc = [
+	"More Villagers 加了八种村民职业，每种对应一张工作台。",
+	"园艺站是离农场最近的那一张。",
+]
+icon = "morevillagers:gardening_table"
+shape = "pentagon"
+size = 2.0
+deps = ["farm_nat_net"]
+tasks = [
+	{ type = "item", item = "morevillagers:gardening_table" },
+]
+
+[[quest]]
+name = "farm_mv_stations"
+title = "林业、狩猎与矿业三站"
+icon = "morevillagers:woodworking_table"
+shape = "square"
+size = 1.5
+deps = ["farm_mv_gardening"]
+tasks = [
+	{ type = "item", item = "morevillagers:woodworking_table" },
+	{ type = "item", item = "morevillagers:hunting_post" },
+	{ type = "item", item = "morevillagers:mining_bench" },
+]
+
+[[quest]]
+name = "farm_mv_trade"
+title = "第一笔交易"
+icon = "minecraft:emerald"
+shape = "circle"
+size = 1.2
+deps = ["farm_mv_gardening"]
+tasks = [
+	{ type = "advancement", advancement = "morevillagers:first_trade" },
+]
+
+[[quest]]
+name = "farm_mv_map"
+title = "买一张探险地图"
+icon = "minecraft:map"
+shape = "circle"
+size = 1.2
+deps = ["farm_mv_trade"]
+tasks = [
+	{ type = "advancement", advancement = "morevillagers:buy_map" },
+]
+
+[[quest]]
+name = "farm_mv_professions"
+title = "和所有职业做过交易"
+desc = [
+	"More Villagers 的八种职业卖的东西各不相同，认全了就知道缺料该找谁。",
+	"这一条是本章畜牧线的里程碑：村民从此不只住在村里。",
+]
+icon = "morevillagers:decayed_workbench"
+shape = "octagon"
+size = 1.75
+deps = ["farm_mv_stations", "farm_mv_trade"]
+tasks = [
+	{ type = "advancement", advancement = "morevillagers:all_professions_traded" },
+]
+
+[[quest]]
+name = "farm_mv_master"
+title = "大师级交易"
+icon = "minecraft:emerald_block"
+shape = "circle"
+size = 1.2
+deps = ["farm_mv_trade"]
+tasks = [
+	{ type = "advancement", advancement = "morevillagers:master_trade" },
+]
+
+# ---------------- 簇 3：食谱多样性 ----------------
+
+[[quest]]
+name = "farm_sol_book"
+title = "食物清单"
+desc = [
+	"Spice of Life 只做一件事：记下你吃过多少种食物。",
+	"吃得越杂换到的加成越多，所以「换着吃」在这个包里是一件正事。",
+]
+icon = "solcarrot:food_book"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "solcarrot:food_book" },
+]
+rewards = [
+	{ type = "xp", xp = 60 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "farm_sol_balance"
+title = "把食物表吃一遍"
+desc = [
+	"长期目标：原版食物表上的东西都尝过一遍。",
+	"它和食物清单是同一件事的两种量法，做不完也不挡后面的条目。",
+]
+icon = "minecraft:golden_carrot"
+shape = "octagon"
+size = 1.75
+deps = ["farm_sol_book"]
+optional = true
+tasks = [
+	{ type = "advancement", advancement = "minecraft:husbandry/balanced_diet" },
+]
+
+[[quest]]
+name = "farm_sol_bread"
+title = "面包自给"
+icon = "minecraft:bread"
+shape = "rsquare"
+deps = ["farm_sol_book"]
+tasks = [
+	{ type = "item", item = "minecraft:bread", count = 16 },
+]
+
+[[quest]]
+name = "farm_sol_honey"
+title = "自己收蜜"
+icon = "minecraft:honey_bottle"
+shape = "circle"
+size = 1.2
+deps = ["farm_sol_book"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:husbandry/safely_harvest_honey" },
+]
+
+[[quest]]
+name = "farm_sol_apple"
+title = "金苹果"
+icon = "minecraft:golden_apple"
+shape = "circle"
+size = 1.2
+deps = ["farm_sol_bread"]
+tasks = [
+	{ type = "item", item = "minecraft:golden_apple" },
+]
+
+[[quest]]
+name = "farm_sol_mushroom"
+title = "蘑菇煲"
+icon = "minecraft:mushroom_stew"
+shape = "circle"
+size = 1.2
+deps = ["farm_sol_bread"]
+tasks = [
+	{ type = "item", item = "minecraft:mushroom_stew" },
+]
+
+[[quest]]
+name = "farm_sol_fish"
+title = "鱼与熟鱼"
+icon = "minecraft:cooked_salmon"
+shape = "circle"
+size = 1.2
+deps = ["farm_sol_bread"]
+tasks = [
+	{ type = "item", item = "minecraft:cooked_salmon" },
+	{ type = "item", item = "minecraft:cooked_cod" },
+]
+
+[[quest]]
+name = "farm_sol_cookie"
+title = "甜点"
+icon = "minecraft:cookie"
+shape = "circle"
+size = 1.2
+deps = ["farm_sol_bread"]
+tasks = [
+	{ type = "item", item = "minecraft:cookie", count = 16 },
+]
+
+[[quest]]
+name = "farm_sol_pie"
+title = "南瓜派"
+icon = "minecraft:pumpkin_pie"
+shape = "circle"
+size = 1.2
+deps = ["farm_sol_cookie"]
+tasks = [
+	{ type = "item", item = "minecraft:pumpkin_pie" },
+]
+
+[[quest]]
+name = "farm_done"
+title = "饭桌不再靠运气"
+desc = [
+	"地里出得来、圈里有肉、村民会补种、桌上花样够多——四条都通了。",
+	"到这一步，粮食才算从「今天的晚饭」变成「这个国家的底子」。",
+]
+icon = "minecraft:hay_block"
+shape = "hexagon"
+size = 2.5
+deps = ["farm_ffb_farmland", "farm_rightclick_harvest", "farm_eco_stew", "farm_nat_venison",
+        "farm_mv_professions", "farm_sol_pie"]
+tasks = [
+	{ type = "item", item = "minecraft:hay_block", count = 16 },
+	{ type = "item", item = "minecraft:cake" },
+]
+rewards = [
+	{ type = "xp", xp = 80 },
+	{ type = "toast" },
+]

@@ -7,7 +7,7 @@
 		id: "minecraft:comparator"
 	}
 	id: "C83EFD5F7165C874"
-	order_index: 37
+	order_index: 64
 	quest_links: [ ]
 	quests: [
 	{
@@ -31,6 +31,570 @@
 		"B88D0AE50816A894"
 		]
 		icon: {
+			id: "minecraft:painting"
+		}
+		id: "0DE602097BABEF6F"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			id: "07939E996A88A49D"
+			type: "checkmark"
+		}
+		]
+		x: -10.12d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"B88D0AE50816A894"
+		]
+		icon: {
+			id: "minecraft:spyglass"
+		}
+		id: "34F79B5EB43C1D72"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			id: "D5B71CF920F33325"
+			type: "checkmark"
+		}
+		]
+		x: -7.35d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"34F79B5EB43C1D72"
+		]
+		icon: {
+			id: "minecraft:cobweb"
+		}
+		id: "E393920A0EEF0BF3"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			id: "B6E87315E0E4EB4E"
+			type: "checkmark"
+		}
+		]
+		x: -19.35d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"34F79B5EB43C1D72"
+		]
+		icon: {
+			id: "minecraft:glass"
+		}
+		id: "4839917E20CB8460"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			id: "2FC9F2161D3E8D12"
+			type: "checkmark"
+		}
+		]
+		x: -16.8d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"34F79B5EB43C1D72"
+		]
+		icon: {
+			id: "minecraft:paper"
+		}
+		id: "1595E0EE79CCF551"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			id: "DBBA38DE63BBE845"
+			type: "checkmark"
+		}
+		]
+		x: -14.25d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"34F79B5EB43C1D72"
+		]
+		icon: {
+			id: "minecraft:amethyst_shard"
+		}
+		id: "47356AFF8A80F173"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			id: "9D3C665870D10BDA"
+			type: "checkmark"
+		}
+		]
+		x: -11.7d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"34F79B5EB43C1D72"
+		]
+		icon: {
+			id: "minecraft:observer"
+		}
+		id: "1BE092A26926CBAB"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			id: "B65A0160ADC323BF"
+			type: "checkmark"
+		}
+		]
+		x: -9.15d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"E393920A0EEF0BF3"
+		"4839917E20CB8460"
+		"1595E0EE79CCF551"
+		"47356AFF8A80F173"
+		"1BE092A26926CBAB"
+		"0DE602097BABEF6F"
+		]
+		icon: {
+			id: "minecraft:target"
+		}
+		id: "A15AEAA0903CB2EC"
+		shape: "octagon"
+		size: 1.75d
+		tasks: [
+		{
+			id: "AD89530B28737C00"
+			type: "checkmark"
+		}
+		]
+		x: -8.29d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"B88D0AE50816A894"
+		]
+		icon: {
+			id: "minecraft:barrel"
+		}
+		id: "CA09E630D05DCB8A"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			id: "9432DC084594E3BE"
+			type: "checkmark"
+		}
+		]
+		x: -3.98d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"CA09E630D05DCB8A"
+		]
+		icon: {
+			id: "minecraft:furnace"
+		}
+		id: "B7A28D1ECB27280D"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			id: "E3A1C6B94297D681"
+			type: "checkmark"
+		}
+		]
+		x: -6.6d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"CA09E630D05DCB8A"
+		]
+		icon: {
+			id: "minecraft:stone"
+		}
+		id: "E6B30FBE05203B5E"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			id: "F05988A0AD1DF0CF"
+			type: "checkmark"
+		}
+		]
+		x: -4.05d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"CA09E630D05DCB8A"
+		]
+		icon: {
+			id: "minecraft:glowstone"
+		}
+		id: "8AAAD7EA5C87E658"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			id: "2E06D9DC540FAB50"
+			type: "checkmark"
+		}
+		]
+		x: -1.5d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"CA09E630D05DCB8A"
+		]
+		icon: {
+			id: "minecraft:map"
+		}
+		id: "4D9E4B0EE3499999"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			id: "76BED2670C2C9FC1"
+			type: "checkmark"
+		}
+		]
+		x: 1.05d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"4D9E4B0EE3499999"
+		]
+		icon: {
+			id: "minecraft:filled_map"
+		}
+		id: "66FE95D9A2F39E0E"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:map"
+			count: 2
+			id: "9C6C8D21B5E90C17"
+			type: "item"
+		}
+		]
+		x: -5.33d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"66FE95D9A2F39E0E"
+		]
+		icon: {
+			id: "minecraft:iron_door"
+		}
+		id: "DDE68FD8BCC2B59B"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			id: "3BFF1E3C9A3D35C8"
+			type: "checkmark"
+		}
+		]
+		x: -7.76d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"B7A28D1ECB27280D"
+		]
+		icon: {
+			id: "minecraft:redstone_lamp"
+		}
+		id: "90504F2D6F146D91"
+		shape: "octagon"
+		size: 1.75d
+		tasks: [
+		{
+			id: "1294BC6B65D71B10"
+			type: "checkmark"
+		}
+		]
+		x: -2.36d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"37D6A4F33C866758"
+		]
+		icon: {
+			id: "minecraft:chipped_anvil"
+		}
+		id: "F1770C2C79C1C308"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			id: "BB46DC08167CE2A5"
+			type: "checkmark"
+		}
+		]
+		x: 0.6d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"F1770C2C79C1C308"
+		]
+		icon: {
+			id: "minecraft:chest"
+		}
+		id: "28E53073F656C5A4"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			id: "79F9736F112D3849"
+			type: "checkmark"
+		}
+		]
+		x: -5.21d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"B88D0AE50816A894"
+		]
+		icon: {
+			id: "minecraft:piston"
+		}
+		id: "D797E3387AD98CF5"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			id: "221095EB28D4CD4F"
+			type: "checkmark"
+		}
+		]
+		x: -0.23d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"D797E3387AD98CF5"
+		]
+		icon: {
+			id: "minecraft:blast_furnace"
+		}
+		id: "EDF501C5958AA580"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			id: "D71227475A7AD631"
+			type: "checkmark"
+		}
+		]
+		x: 3.6d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"D797E3387AD98CF5"
+		]
+		icon: {
+			id: "minecraft:ender_pearl"
+		}
+		id: "59C799FA1C8AFEEB"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			id: "DA342B86581B6C34"
+			type: "checkmark"
+		}
+		]
+		x: 6.15d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"D797E3387AD98CF5"
+		]
+		icon: {
+			id: "minecraft:compass"
+		}
+		id: "E2D98685F63125A4"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			id: "65D3D4B1D7FD62B6"
+			type: "checkmark"
+		}
+		]
+		x: 8.7d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"D797E3387AD98CF5"
+		]
+		icon: {
+			id: "minecraft:experience_bottle"
+		}
+		id: "1B76153E4AB83D6E"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			id: "AF86A616CDFE0433"
+			type: "checkmark"
+		}
+		]
+		x: 11.25d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"D797E3387AD98CF5"
+		]
+		icon: {
+			id: "minecraft:shield"
+		}
+		id: "DF378BBA867896DB"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			id: "CCF51F18EDB99FD5"
+			type: "checkmark"
+		}
+		]
+		x: 13.8d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"0DE602097BABEF6F"
+		]
+		icon: {
+			id: "minecraft:hopper"
+		}
+		id: "37D6A4F33C866758"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			id: "F4A6E4A06F55AED9"
+			type: "checkmark"
+		}
+		]
+		x: 16.35d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"37D6A4F33C866758"
+		]
+		icon: {
+			id: "minecraft:hopper"
+		}
+		id: "F0DD669CCEB6603B"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:hopper"
+			count: 8
+			id: "569866D834197B57"
+			type: "item"
+		}
+		]
+		x: 3.37d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"F0DD669CCEB6603B"
+		]
+		icon: {
+			id: "minecraft:name_tag"
+		}
+		id: "C954AE2AD195429F"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:name_tag"
+			count: 4
+			id: "A285D3B6AB7482DE"
+			type: "item"
+		}
+		]
+		x: -2.66d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"F0DD669CCEB6603B"
+		]
+		icon: {
+			id: "minecraft:lever"
+		}
+		id: "1EF42C1D69A83BDC"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:lever"
+			count: 4
+			id: "0F64602C06847F9C"
+			type: "item"
+		}
+		]
+		x: -0.11d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"B88D0AE50816A894"
+		]
+		icon: {
+			id: "minecraft:anvil"
+		}
+		id: "11647CE4E1DC32BD"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			id: "1E52734AFE37B4CC"
+			type: "checkmark"
+		}
+		]
+		x: 3.52d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"B88D0AE50816A894"
+		]
+		icon: {
 			id: "minecraft:redstone_torch"
 		}
 		id: "C9597E663D98F2A6"
@@ -42,7 +606,7 @@
 			type: "checkmark"
 		}
 		]
-		x: -2.78d
+		x: 6.9d
 		y: -1.75d
 	}
 	{
@@ -61,7 +625,7 @@
 			type: "checkmark"
 		}
 		]
-		x: -1.27d
+		x: 19.13d
 		y: -3.5d
 	}
 	{
@@ -80,46 +644,8 @@
 			type: "checkmark"
 		}
 		]
-		x: -1.27d
+		x: 6.15d
 		y: -5.25d
-	}
-	{
-		dependencies: [
-		"B88D0AE50816A894"
-		]
-		icon: {
-			id: "minecraft:painting"
-		}
-		id: "0DE602097BABEF6F"
-		shape: "circle"
-		size: 1.2d
-		tasks: [
-		{
-			id: "07939E996A88A49D"
-			type: "checkmark"
-		}
-		]
-		x: -0.0d
-		y: -1.75d
-	}
-	{
-		dependencies: [
-		"0DE602097BABEF6F"
-		]
-		icon: {
-			id: "minecraft:hopper"
-		}
-		id: "37D6A4F33C866758"
-		shape: "circle"
-		size: 1.2d
-		tasks: [
-		{
-			id: "F4A6E4A06F55AED9"
-			type: "checkmark"
-		}
-		]
-		x: 1.5d
-		y: -3.5d
 	}
 	{
 		dependencies: [
@@ -137,27 +663,56 @@
 			type: "checkmark"
 		}
 		]
-		x: 2.77d
+		x: 9.9d
 		y: -1.75d
 	}
 	{
 		dependencies: [
-		"37D6A4F33C866758"
+		"E87BAEA60C54066D"
 		]
 		icon: {
-			id: "minecraft:chipped_anvil"
+			id: "minecraft:writable_book"
 		}
-		id: "F1770C2C79C1C308"
+		id: "F48228FD4AC0C7FE"
 		shape: "circle"
 		size: 1.2d
 		tasks: [
 		{
-			id: "BB46DC08167CE2A5"
-			type: "checkmark"
+			item: "minecraft:writable_book"
+			id: "C96D2B0499A956A3"
+			type: "item"
 		}
 		]
-		x: 1.27d
+		x: 8.7d
 		y: -5.25d
+	}
+	{
+		dependencies: [
+		"A4C259239957534F"
+		"F48228FD4AC0C7FE"
+		]
+		icon: {
+			id: "minecraft:oak_sign"
+		}
+		id: "0BF2E84C04AC24D5"
+		shape: "octagon"
+		size: 1.75d
+		tasks: [
+		{
+			item: "minecraft:oak_sign"
+			count: 4
+			id: "E12187FCDACA240D"
+			type: "item"
+		}
+		{
+			item: "minecraft:book"
+			count: 2
+			id: "9F70C7C867FFFF63"
+			type: "item"
+		}
+		]
+		x: 2.85d
+		y: -7.0d
 	}
 	{
 		dependencies: [
@@ -189,7 +744,7 @@
 			type: "checkmark"
 		}
 		]
-		x: 0.0d
+		x: 6.79d
 		y: -7.0d
 	}
 	]

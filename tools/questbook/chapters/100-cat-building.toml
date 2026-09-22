@@ -1,23 +1,38 @@
-# 类目 · 建筑与装饰
+# 类目 · 建筑构件
 #
-# 类目章的作用（PLAN-questbook.md §2.1）：**保证每个有玩法内容的 mod 都有位置**。
-# 同类 mod 各占一个**簇**，簇内 3~8 条——不按"每个 mod 2~4 条"敷衍。
+# 本章的 mod：Macaw's 全家（mcwbridges 桥 · mcwfences 栅栏与树篱 · mcwwindows 窗 ·
+#   mcwpaths 路径铺装 · mcwtrpdoors 活板门 · mcwlights 灯具）· Chipped（样式变体）·
+#   Rechiseled + Rechiseled: Create（雕刻）· FramedBlocks（框架方块）·
+#   Create: Copycats+（伪装板）· Effortless Building（批量建造）
 #
-# 本章的 mod：Macaw's 全家（桥/栅栏/家具/灯/画/路/活板门/窗）· Handcrafted ·
-#             Refurbished Furniture · Chipped/Rechiseled（变体建材）· Amendments
+# 与其它章的分工：
+#   · 本章 = **结构与构件**：墙、窗、门面、路、桥、变体面材、施工工具
+#   · 104-cat-decor = **细节那一层**（摆件、画、附属物：绳索、旗帜、挂饰）
+#   · 110-cat-furniture = **家具**（能坐、能睡、能收纳的那层）
+#   · 64-create-decor（待写）= Create 系建材（Design n' Decor · Create: Framed · Slice & Dice）
 #
-# 判据：**全是实物**——这类 mod 的价值就是"提供方块"，判据自然是持有/放下它们。
+# 覆盖说明（2026-09-22 实测，不是凭印象）：
+#   · Every Compat (Wood Good)：全包只有 1 个注册项 everycomp:all_woods，其模型是
+#     builtin/entity、无语言键、无配方（解包 everycomp-1.21-2.11.52 核对）——隐藏物品，
+#     当判据就是永远做不完的任务，故本章不设条目。
+#   · Diagonal Walls：pack 里有这个 mod，但它不带 assets/data，只在运行时注册方块，
+#     registry.json 里查不到任何 id；本章用「斜置墙体」一条以原版方块为判据覆盖它的用途。
+#   · Athena / Fusion：纯前置库（CTM 与连接材质），按 brief §6 不设条目。
+#   · Macaw's Paintings / Medieval Paintings：只提供画图样，不注册物品
+#     （解包核对：0 个物品模型、0 个 item 语言键），无法作为判据；画作线在 104-cat-decor。
+#
+# 判据：**全是实物**——这类 mod 的价值就是「提供方块」，判据自然是持有它们。
 
 key = "cat_building"
-title = "建筑与装饰"
+title = "建筑构件"
 subtitle = "让「盖得像样」这件事有工具可用"
 group = "category"
 icon = "minecraft:bricks"
-order_index = 30
+order_index = 50
 
 grid = { step = 1.5, row_h = 1.75 }
 
-# ---------------- 簇 1：结构与连接件（Macaw's） ----------------
+# ---- 簇 1：结构与连接件 ----
 
 [[quest]]
 name = "b_bridge"
@@ -30,6 +45,76 @@ shape = "pentagon"
 size = 2.0
 tasks = [
 	{ type = "item", item = "mcwbridges:acacia_log_bridge_middle", count = 8 },
+]
+
+[[quest]]
+name = "b_pier"
+title = "桥墩"
+desc = [
+	"桥要有落脚点：墩子决定跨多远、走多稳。",
+]
+icon = "mcwbridges:andesite_bridge_pier"
+shape = "circle"
+size = 1.2
+deps = ["b_bridge"]
+tasks = [
+	{ type = "item", item = "mcwbridges:andesite_bridge_pier", count = 4 },
+]
+
+[[quest]]
+name = "b_bridge_stair"
+title = "桥头阶梯"
+desc = [
+	"两端上下桥的那几步，缺了它桥就只是悬空的板。",
+]
+icon = "mcwbridges:oak_log_bridge_stair"
+shape = "circle"
+size = 1.2
+deps = ["b_bridge"]
+tasks = [
+	{ type = "item", item = "mcwbridges:oak_log_bridge_stair", count = 4 },
+]
+
+[[quest]]
+name = "b_rope_bridge"
+title = "绳索桥"
+desc = [
+	"轻便的临时桥：材料少、架得快，适合前哨与探路。",
+]
+icon = "mcwbridges:rope_spruce_bridge"
+shape = "circle"
+size = 1.2
+deps = ["b_pier"]
+tasks = [
+	{ type = "item", item = "mcwbridges:rope_spruce_bridge", count = 2 },
+]
+
+[[quest]]
+name = "b_bridge_lantern"
+title = "桥梁灯"
+desc = [
+	"夜里过桥要看得见边——桥上的灯是安全件，不只是装饰。",
+]
+icon = "mcwbridges:bridge_lantern"
+shape = "circle"
+size = 1.2
+deps = ["b_pier"]
+tasks = [
+	{ type = "item", item = "mcwbridges:bridge_lantern", count = 4 },
+]
+
+[[quest]]
+name = "b_pliers"
+title = "桥用钳具"
+desc = [
+	"改桥型、拆旧桥要用的工具。桥是会返工的东西。",
+]
+icon = "mcwbridges:pliers"
+shape = "circle"
+size = 1.2
+deps = ["b_bridge"]
+tasks = [
+	{ type = "item", item = "mcwbridges:pliers" },
 ]
 
 [[quest]]
@@ -47,17 +132,135 @@ tasks = [
 ]
 
 [[quest]]
+name = "b_gate"
+title = "院门"
+desc = [
+	"围墙要留一处正式的出入口：门比缺口更像「这里有人管」。",
+]
+icon = "mcwfences:acacia_curved_gate"
+shape = "circle"
+size = 1.2
+deps = ["b_fence"]
+tasks = [
+	{ type = "item", item = "mcwfences:acacia_curved_gate", count = 2 },
+]
+
+[[quest]]
+name = "b_stockade"
+title = "马栏与栅栏"
+desc = [
+	"养牲畜的栏与防人的墙是两种东西，样式也该分开。",
+]
+icon = "mcwfences:acacia_stockade_fence"
+shape = "circle"
+size = 1.2
+deps = ["b_fence"]
+tasks = [
+	{ type = "item", item = "mcwfences:acacia_stockade_fence", count = 32 },
+	{ type = "item", item = "mcwfences:acacia_horse_fence", count = 16 },
+]
+
+[[quest]]
+name = "b_wired_fence"
+title = "带刺铁丝网"
+desc = [
+	"最省料的一道阻拦：够用就行，别指望它好看。",
+]
+icon = "mcwfences:acacia_wired_fence"
+shape = "circle"
+size = 1.2
+deps = ["b_fence"]
+tasks = [
+	{ type = "item", item = "mcwfences:acacia_wired_fence", count = 16 },
+]
+
+[[quest]]
+name = "b_stone_wall"
+title = "压顶石墙"
+desc = [
+	"石墙压顶之后，墙才像砌完的，而不是砌到一半。",
+]
+icon = "mcwfences:andesite_grass_topped_wall"
+shape = "circle"
+size = 1.2
+deps = ["b_fence"]
+tasks = [
+	{ type = "item", item = "mcwfences:andesite_grass_topped_wall", count = 16 },
+	{ type = "item", item = "mcwfences:andesite_pillar_wall", count = 8 },
+]
+
+# ---- 簇 2：门窗与路径 ----
+
+[[quest]]
 name = "b_window"
 title = "窗"
 desc = [
 	"Macaw's Windows：一整套窗框与玻璃组合。房子有窗才像房子。",
 ]
 icon = "mcwwindows:acacia_window"
-shape = "circle"
-size = 1.2
+shape = "pentagon"
+size = 2.0
 deps = ["b_bridge"]
 tasks = [
 	{ type = "item", item = "mcwwindows:acacia_window", count = 8 },
+]
+
+[[quest]]
+name = "b_shutter"
+title = "百叶与窗帘"
+desc = [
+	"同一扇窗，白天开百叶、夜里拉帘，是两间屋子的观感。",
+]
+icon = "mcwwindows:acacia_shutter"
+shape = "circle"
+size = 1.2
+deps = ["b_window"]
+tasks = [
+	{ type = "item", item = "mcwwindows:acacia_shutter", count = 8 },
+	{ type = "item", item = "mcwwindows:acacia_blinds", count = 4 },
+]
+
+[[quest]]
+name = "b_curtain_rod"
+title = "窗帘杆"
+desc = [
+	"帘子要有个挂处：杆是这类细节里最容易被忘掉的一件。",
+]
+icon = "mcwwindows:acacia_curtain_rod"
+shape = "circle"
+size = 1.2
+deps = ["b_window"]
+tasks = [
+	{ type = "item", item = "mcwwindows:acacia_curtain_rod", count = 4 },
+]
+
+[[quest]]
+name = "b_parapet"
+title = "窗台与女儿墙"
+desc = [
+	"窗外的台沿与屋顶的矮墙：让立面有层次，也让屋顶能站人。",
+]
+icon = "mcwwindows:acacia_log_parapet"
+shape = "circle"
+size = 1.2
+deps = ["b_window"]
+tasks = [
+	{ type = "item", item = "mcwwindows:acacia_log_parapet", count = 8 },
+]
+
+[[quest]]
+name = "b_four_window"
+title = "连排大窗"
+desc = [
+	"公共建筑才用得上：一整排窗让大厅白天不用点灯。",
+]
+icon = "mcwwindows:acacia_plank_four_window"
+shape = "circle"
+size = 1.2
+deps = ["b_window"]
+tasks = [
+	{ type = "item", item = "mcwwindows:acacia_plank_four_window", count = 4 },
+	{ type = "item", item = "mcwwindows:acacia_window2", count = 4 },
 ]
 
 [[quest]]
@@ -69,9 +272,38 @@ desc = [
 icon = "mcwtrpdoors:acacia_barn_trapdoor"
 shape = "circle"
 size = 1.2
-deps = ["b_bridge"]
+deps = ["b_window"]
 tasks = [
 	{ type = "item", item = "mcwtrpdoors:acacia_barn_trapdoor", count = 8 },
+]
+
+[[quest]]
+name = "b_glass_trapdoor"
+title = "玻璃活板门"
+desc = [
+	"当窗用、当天窗用、当柜门用：玻璃活板门是万金油。",
+]
+icon = "mcwtrpdoors:acacia_glass_trapdoor"
+shape = "circle"
+size = 1.2
+deps = ["b_trapdoor"]
+tasks = [
+	{ type = "item", item = "mcwtrpdoors:acacia_glass_trapdoor", count = 8 },
+]
+
+[[quest]]
+name = "b_classic_trapdoor"
+title = "经典门与牧场门"
+desc = [
+	"一间屋用一种门：样式统一了，建筑才不像拼的。",
+]
+icon = "mcwtrpdoors:acacia_classic_trapdoor"
+shape = "circle"
+size = 1.2
+deps = ["b_trapdoor"]
+tasks = [
+	{ type = "item", item = "mcwtrpdoors:acacia_classic_trapdoor", count = 4 },
+	{ type = "item", item = "mcwtrpdoors:acacia_ranch_trapdoor", count = 4 },
 ]
 
 [[quest]]
@@ -88,7 +320,420 @@ tasks = [
 	{ type = "item", item = "mcwpaths:andesite_diamond_paving", count = 16 },
 ]
 
-# ---------------- 簇 2：室内（Handcrafted / Refurbished） ----------------
+[[quest]]
+name = "b_flagstone"
+title = "石板路"
+desc = [
+	"广场与主街用石板：同一套铺装铺满一片，比花样多更整齐。",
+]
+icon = "mcwpaths:stone_flagstone"
+shape = "circle"
+size = 1.2
+deps = ["b_path"]
+tasks = [
+	{ type = "item", item = "mcwpaths:stone_flagstone", count = 32 },
+	{ type = "item", item = "mcwpaths:stone_flagstone_path", count = 16 },
+]
+
+[[quest]]
+name = "b_weave_paving"
+title = "编织与蜂窝铺装"
+desc = [
+	"两种能一眼认出来的铺法：用来区分不同区域的场地。",
+]
+icon = "mcwpaths:andesite_basket_weave_paving"
+shape = "circle"
+size = 1.2
+deps = ["b_path"]
+tasks = [
+	{ type = "item", item = "mcwpaths:andesite_basket_weave_paving", count = 16 },
+	{ type = "item", item = "mcwpaths:andesite_honeycomb_paving", count = 16 },
+]
+
+[[quest]]
+name = "b_dirt_road"
+title = "土路与碎石路"
+desc = [
+	"城外不需要石板：土路够用，成本低到可以一路铺到边界。",
+]
+icon = "mcwpaths:dirt_path_block"
+shape = "circle"
+size = 1.2
+deps = ["b_path"]
+tasks = [
+	{ type = "item", item = "mcwpaths:dirt_path_block", count = 32 },
+	{ type = "item", item = "mcwpaths:gravel_path_block", count = 16 },
+]
+
+# ---- 簇 3：变体与雕刻 ----
+
+[[quest]]
+name = "b_variants"
+title = "同一块砖的十种样子"
+desc = [
+	"Chipped / Rechiseled：把一种建材变成一堆变体。",
+	"用法是「先做基准块，再在切石机里换款」——这是「不靠加 mod 也能有细节」的关键。",
+]
+icon = "minecraft:chiseled_stone_bricks"
+shape = "pentagon"
+size = 2.0
+deps = ["b_bridge"]
+tasks = [
+	{ type = "item", item = "minecraft:chiseled_stone_bricks", count = 16 },
+	{ type = "item", item = "minecraft:stonecutter" },
+]
+
+[[quest]]
+name = "b_chipped_tools"
+title = "样式工具"
+desc = [
+	"Chipped 的两件家什：凿子改款、锯子切形。",
+]
+icon = "chipped:chisel"
+shape = "circle"
+size = 1.2
+deps = ["b_variants"]
+tasks = [
+	{ type = "item", item = "chipped:chisel" },
+	{ type = "item", item = "chipped:saw" },
+]
+
+[[quest]]
+name = "b_chipped_bench"
+title = "样式工作台"
+desc = [
+	"变体不是凭空来的：先立一张台子，改款才有地方做。",
+]
+icon = "chipped:mason_table"
+shape = "circle"
+size = 1.2
+deps = ["b_chipped_tools"]
+tasks = [
+	{ type = "item", item = "chipped:mason_table" },
+	{ type = "item", item = "chipped:botanist_workbench" },
+]
+
+[[quest]]
+name = "b_chipped_wood"
+title = "木料变体"
+desc = [
+	"同样是木板，斜纹与拼纹是两种房子。",
+]
+icon = "chipped:diagonal_oak_planks"
+shape = "circle"
+size = 1.2
+deps = ["b_chipped_bench"]
+tasks = [
+	{ type = "item", item = "chipped:diagonal_oak_planks", count = 32 },
+]
+
+[[quest]]
+name = "b_chipped_stone"
+title = "石料与陶瓦变体"
+desc = [
+	"墙面要耐磨也要有层次，这一层靠石料与陶瓦的变体解决。",
+]
+icon = "chipped:chiseled_terracotta"
+shape = "circle"
+size = 1.2
+deps = ["b_chipped_bench"]
+tasks = [
+	{ type = "item", item = "chipped:chiseled_terracotta", count = 32 },
+]
+
+[[quest]]
+name = "b_rechiseled"
+title = "雕刻凿"
+desc = [
+	"Rechiseled 与 Chipped 是两套手感：它更偏向成套的铺装与面砖。",
+	"两套并用不冲突——同一面墙可以一半靠它、一半靠 Chipped。",
+]
+icon = "rechiseled:chisel"
+shape = "rsquare"
+size = 1.75
+deps = ["b_variants"]
+tasks = [
+	{ type = "item", item = "rechiseled:chisel" },
+]
+
+[[quest]]
+name = "b_rechiseled_paving"
+title = "雕刻铺装"
+desc = [
+	"成套的铺装面砖：一栋楼用一种，整片街区就统一了。",
+]
+icon = "rechiseled:andesite_paving"
+shape = "circle"
+size = 1.2
+deps = ["b_rechiseled"]
+tasks = [
+	{ type = "item", item = "rechiseled:andesite_paving", count = 32 },
+	{ type = "item", item = "rechiseled:andesite_tiles", count = 16 },
+]
+
+[[quest]]
+name = "b_rechiseled_create"
+title = "机械雕刻"
+desc = [
+	"把雕刻接进 Create 的动力线上：这批面砖是要按箱产的。",
+]
+icon = "rechiseledcreate:mechanical_chisel"
+shape = "circle"
+size = 1.2
+deps = ["b_rechiseled"]
+tasks = [
+	{ type = "item", item = "rechiseledcreate:mechanical_chisel" },
+]
+
+[[quest]]
+name = "b_framed_cube"
+title = "框架方块"
+desc = [
+	"FramedBlocks：先做一个「形状」，再往上面贴任意材质。",
+	"它的价值在于**结构自由**——坡、角、棱、柱这些原版没有的形状，这里都有。",
+]
+icon = "framedblocks:framed_cube"
+shape = "rsquare"
+size = 1.75
+deps = ["b_variants"]
+tasks = [
+	{ type = "item", item = "framedblocks:framed_cube", count = 8 },
+]
+
+[[quest]]
+name = "b_framed_slope"
+title = "坡、柱与棱"
+desc = [
+	"屋顶的斜面、柱础的收分，靠这一组形状做出来。",
+]
+icon = "framedblocks:framed_slope"
+shape = "circle"
+size = 1.2
+deps = ["b_framed_cube"]
+tasks = [
+	{ type = "item", item = "framedblocks:framed_slope", count = 4 },
+	{ type = "item", item = "framedblocks:framed_pillar", count = 4 },
+]
+
+[[quest]]
+name = "b_framed_tools"
+title = "框架工具"
+desc = [
+	"贴材质、切形状、拆框架：两件工具是这套方块的入口。",
+]
+icon = "framedblocks:framed_hammer"
+shape = "circle"
+size = 1.2
+deps = ["b_framed_cube"]
+tasks = [
+	{ type = "item", item = "framedblocks:framed_hammer" },
+	{ type = "item", item = "framedblocks:framed_wrench" },
+]
+
+[[quest]]
+name = "b_framed_light"
+title = "发光框架"
+desc = [
+	"嵌进墙里的灯：光源不再是一个凸出来的方块。",
+]
+icon = "framedblocks:framed_glowing_cube"
+shape = "circle"
+size = 1.2
+deps = ["b_framed_cube"]
+tasks = [
+	{ type = "item", item = "framedblocks:framed_glowing_cube", count = 4 },
+]
+
+[[quest]]
+name = "b_framed_storage"
+title = "藏起来的储物"
+desc = [
+	"外观是墙，里面是箱子——仓库可以就在墙里。",
+]
+icon = "framedblocks:framed_secret_storage"
+shape = "circle"
+size = 1.2
+deps = ["b_framed_cube"]
+tasks = [
+	{ type = "item", item = "framedblocks:framed_secret_storage" },
+	{ type = "item", item = "framedblocks:framed_chest" },
+]
+
+[[quest]]
+name = "b_copycat"
+title = "伪装方块"
+desc = [
+	"Create: Copycats+：把方块「贴」成别的材质，形状自己定。",
+	"做出机器之后，这一层决定机器能不能长进建筑里。",
+]
+icon = "copycats:copycat_block"
+shape = "rsquare"
+size = 1.75
+deps = ["b_variants"]
+tasks = [
+	{ type = "item", item = "copycats:copycat_block", count = 8 },
+]
+
+[[quest]]
+name = "b_copycat_shape"
+title = "伪装斜坡与切角"
+desc = [
+	"机械设备的斜面与收边：机器不再是一堆方块堆出来的。",
+]
+icon = "copycats:copycat_slope"
+shape = "circle"
+size = 1.2
+deps = ["b_copycat"]
+tasks = [
+	{ type = "item", item = "copycats:copycat_slope", count = 4 },
+	{ type = "item", item = "copycats:copycat_vertical_slope", count = 4 },
+]
+
+[[quest]]
+name = "b_copycat_pipe"
+title = "伪装管道与传动杆"
+desc = [
+	"管线埋进墙里、传动杆藏在柱中：这两件是「干净工地」的关键。",
+]
+icon = "copycats:copycat_fluid_pipe"
+shape = "circle"
+size = 1.2
+deps = ["b_copycat"]
+tasks = [
+	{ type = "item", item = "copycats:copycat_fluid_pipe", count = 4 },
+	{ type = "item", item = "copycats:copycat_shaft", count = 4 },
+]
+
+[[quest]]
+name = "b_copycat_layer"
+title = "薄层伪装"
+desc = [
+	"半格厚的贴面：用来补墙面与地面的接缝。",
+]
+icon = "copycats:copycat_layer"
+shape = "circle"
+size = 1.2
+deps = ["b_copycat"]
+tasks = [
+	{ type = "item", item = "copycats:copycat_layer", count = 8 },
+]
+
+[[quest]]
+name = "b_glass"
+title = "玻璃与装饰面"
+desc = [
+	"彩色玻璃、图案玻璃：现代感与教堂感的差别就在这一层。",
+]
+icon = "minecraft:glass_pane"
+shape = "circle"
+size = 1.2
+deps = ["b_variants"]
+tasks = [
+	{ type = "item", item = "minecraft:glass_pane", count = 32 },
+]
+
+# ---- 簇 4：建造工具与方法 ----
+
+[[quest]]
+name = "b_scaffold"
+title = "脚手架与爬梯"
+desc = [
+	"盖三层以上的房子，第一件要备的不是建材，是**站得住的地方**。",
+	"脚手架能垫脚也能当临时台阶，比一格一格搭土柱省事得多。",
+]
+icon = "minecraft:scaffolding"
+shape = "pentagon"
+size = 2.0
+deps = ["b_variants"]
+tasks = [
+	{ type = "item", item = "minecraft:scaffolding", count = 16 },
+	{ type = "item", item = "minecraft:ladder", count = 8 },
+]
+rewards = [
+	{ type = "xp", xp = 60 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "b_effortless"
+title = "批量建造：阵列与镜像"
+desc = [
+	"Effortless Building 把「同一堵墙重复二十次」变成一次操作，",
+	"镜像与阵列让对称的建筑不用两边各盖一遍。",
+	"本包把它当作公共工程与大剧院的默认手法：先有手法，再谈体量。",
+]
+icon = "effortlessbuilding:randomizer_tool"
+shape = "rsquare"
+size = 1.75
+deps = ["b_scaffold"]
+tasks = [
+	{ type = "item", item = "effortlessbuilding:randomizer_tool" },
+]
+
+[[quest]]
+name = "b_layout"
+title = "放线：先定轴"
+desc = [
+	"开工前用羊毛和火把把轴线与转角标出来：",
+	"房子歪不歪，在放线那一步就定了。",
+]
+icon = "minecraft:white_wool"
+shape = "circle"
+size = 1.2
+deps = ["b_scaffold"]
+tasks = [
+	{ type = "item", item = "minecraft:white_wool", count = 32 },
+	{ type = "item", item = "minecraft:torch", count = 16 },
+]
+
+[[quest]]
+name = "b_site_station"
+title = "工地工作位"
+desc = [
+	"工地要有就地的工作台与桶：来回跑主基地是最贵的时间开销。",
+]
+icon = "minecraft:crafting_table"
+shape = "circle"
+size = 1.2
+deps = ["b_scaffold"]
+tasks = [
+	{ type = "item", item = "minecraft:crafting_table" },
+	{ type = "item", item = "minecraft:barrel", count = 4 },
+]
+
+[[quest]]
+name = "b_diagonal_wall"
+title = "斜置墙体"
+desc = [
+	"规整的直角城里，斜墙是最省力的破格——",
+	"Diagonal Walls 让墙能沿对角线立起来，转角不再只能切直角。",
+]
+icon = "minecraft:deepslate_bricks"
+shape = "circle"
+size = 1.2
+deps = ["b_scaffold"]
+tasks = [
+	{ type = "item", item = "minecraft:deepslate_bricks", count = 32 },
+	{ type = "item", item = "minecraft:stone_bricks", count = 32 },
+]
+
+[[quest]]
+name = "b_material_stock"
+title = "一次备齐一栋房"
+desc = [
+	"料不够就停工的工地，最后都会变成半成品。",
+	"先把一栋房的主料备齐再动第一块砖。",
+]
+icon = "minecraft:stone_bricks"
+shape = "circle"
+size = 1.2
+deps = ["b_site_station"]
+tasks = [
+	{ type = "item", item = "minecraft:stone_bricks", count = 64 },
+	{ type = "item", item = "minecraft:oak_planks", count = 64 },
+]
+
+# ---- 簇 5：室内与氛围（既有条目，家具线归 110-cat-furniture） ----
 
 [[quest]]
 name = "b_couch"
@@ -97,7 +742,8 @@ desc = [
 	"Handcrafted 的沙发与长凳——室内第一步不是摆家具，是让人有地方坐。",
 ]
 icon = "handcrafted:acacia_couch"
-shape = "rsquare"
+shape = "pentagon"
+size = 2.0
 deps = ["b_bridge"]
 tasks = [
 	{ type = "item", item = "handcrafted:acacia_couch", count = 2 },
@@ -147,39 +793,6 @@ tasks = [
 	{ type = "item", item = "refurbished_furniture:acacia_chair", count = 4 },
 ]
 
-# ---------------- 簇 3：材质变体（Chipped / Rechiseled） ----------------
-
-[[quest]]
-name = "b_variants"
-title = "同一块砖的十种样子"
-desc = [
-	"Chipped / Rechiseled：把一种建材变成一堆变体。",
-	"用法是「先做基准块，再在切石机里换款」——这是「不靠加 mod 也能有细节」的关键。",
-]
-icon = "minecraft:chiseled_stone_bricks"
-shape = "rsquare"
-deps = ["b_bridge"]
-tasks = [
-	{ type = "item", item = "minecraft:chiseled_stone_bricks", count = 16 },
-	{ type = "item", item = "minecraft:stonecutter" },
-]
-
-[[quest]]
-name = "b_glass"
-title = "玻璃与装饰面"
-desc = [
-	"彩色玻璃、图案玻璃：现代感与教堂感的差别就在这一层。",
-]
-icon = "minecraft:glass_pane"
-shape = "circle"
-size = 1.2
-deps = ["b_variants"]
-tasks = [
-	{ type = "item", item = "minecraft:glass_pane", count = 32 },
-]
-
-# ---------------- 簇 4：灯与画（氛围） ----------------
-
 [[quest]]
 name = "b_light"
 title = "灯与灯笼"
@@ -195,6 +808,35 @@ tasks = [
 ]
 
 [[quest]]
+name = "b_chandelier"
+title = "室内吊灯"
+desc = [
+	"大厅与议事厅需要一盏「抬头能看见」的灯。",
+]
+icon = "mcwlights:iron_chandelier"
+shape = "circle"
+size = 1.2
+deps = ["b_light"]
+tasks = [
+	{ type = "item", item = "mcwlights:iron_chandelier", count = 2 },
+	{ type = "item", item = "mcwlights:oak_ceiling_fan_light", count = 2 },
+]
+
+[[quest]]
+name = "b_street_lamp"
+title = "街灯成列"
+desc = [
+	"主街的灯要同一个样式、同一个间距：这是城市与村子的区别。",
+]
+icon = "mcwlights:classic_street_lamp"
+shape = "circle"
+size = 1.2
+deps = ["b_light"]
+tasks = [
+	{ type = "item", item = "mcwlights:classic_street_lamp", count = 6 },
+]
+
+[[quest]]
 name = "b_painting"
 title = "画与装饰画"
 desc = [
@@ -207,6 +849,8 @@ deps = ["b_light"]
 tasks = [
 	{ type = "item", item = "minecraft:painting", count = 8 },
 ]
+
+# ---- 章终局 ----
 
 [[quest]]
 name = "b_building_done"

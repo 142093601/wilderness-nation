@@ -121,6 +121,33 @@ CHECKMARK_EXCEPTIONS = {
     "p_done": "知识型条目：本章收尾格",
     # —— 技艺 · 蒸汽与铁路 ——
     "st_kitchen": "Create Central Kitchen 无物品接口（实测命名空间为空）",
+    # —— 编年 · 国库与营建 ——
+    "t_first_budget": "「有没有把预算写下来」不可检测（政府账目没有 mod 支持，"
+                      "成书的内容读不到）；替代判据是同时持有的纸与账本",
+}
+
+# checkmark **整章批量例外**：按章给一次理由，覆盖该章所有 checkmark 条目。
+#
+# 为什么允许这种批量口子（2026-09-22）
+# ----------------------------------
+# 「类目·性能与优化 / 信息与界面 / 音画与氛围」这三章覆盖的是**纯客户端 mod**：
+# Embeddium / Lithium / Jade / AmbientSounds……实测这些命名空间在 registry.json 里
+# **items=0、blocks=0、advancements=0**（证据：tools/out/H-ns_*.txt，逐个查过）。
+# 它们没有物品，也没有可玩的动作，只有"开着/配好了/知道它是干什么的"。
+#
+# 若强行逐条写理由，会变成 59 行互相复制的字符串（真正的信息量为零）；
+# 而这三章的存在价值是**告诉玩家这 40 个客户端 mod 各自解决什么问题** ——
+# ATM10 有一整章「技巧与窍门」做同样的事（其 4528 条任务里有 183 条 checkmark）。
+#
+# 代价（必须说清）：这一章的任务**不会自动亮**，全靠玩家自己确认。
+# 所以纪律是：**只允许这三章用这个口子**，其它章一律逐条写理由。
+CHECKMARK_CHAPTER_EXCEPTIONS = {
+    "cat_perf": "全章是**性能/诊断类**客户端与服务端 mod，实测零物品零进度；"
+                "判据只能是「按说明做了并确认有效」（Chunky 只有命令、Spark 只有命令）",
+    "cat_client": "全章是**纯客户端界面/操作类** mod（Jade/BetterF3/AppleSkin/Controlling…），"
+                  "实测零物品；判据只能是「装好了、配好了、会用了」",
+    "cat_audio": "全章是**音画/氛围类**客户端 mod（AmbientSounds/Sound Physics/EMF/ETF…），"
+                 "实测零物品；判据只能是「装好了、听/看得出来了」",
 }
 
 
@@ -572,8 +599,15 @@ def check_checkmark(d: dict, r: Report) -> None:
             raw = tomllib.load(fh)
         for q in raw.get("quest", []) or []:
             has_cm = any((t.get("type") == "checkmark") for t in (q.get("tasks") or []))
-            if has_cm and q.get("name") not in CHECKMARK_EXCEPTIONS:
-                offenders.append(f"{raw.get('key')}/{q.get('name')}")
+            if not has_cm:
+                continue
+            name = q.get("name")
+            if name in CHECKMARK_EXCEPTIONS:
+                continue
+            # 整章批量例外（只对登记过的那几章生效，见 CHECKMARK_CHAPTER_EXCEPTIONS 的说明）
+            if raw.get("key") in CHECKMARK_CHAPTER_EXCEPTIONS:
+                continue
+            offenders.append(f"{raw.get('key')}/{name}")
     if offenders:
         r.fail("⑥ checkmark 例外清单",
                f"以下任务用了 checkmark 但不在例外清单里（要么改判据，要么写进清单并给理由）：{offenders}")

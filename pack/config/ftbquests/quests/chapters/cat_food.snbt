@@ -7,7 +7,7 @@
 		id: "farmersdelight:cooking_pot"
 	}
 	id: "87F426743B008B2B"
-	order_index: 32
+	order_index: 54
 	quest_links: [ ]
 	quests: [
 	{
@@ -44,7 +44,7 @@
 			type: "advancement"
 		}
 		]
-		x: -2.78d
+		x: -5.32d
 		y: -1.75d
 	}
 	{
@@ -64,7 +64,7 @@
 			type: "advancement"
 		}
 		]
-		x: -3.82d
+		x: -6.38d
 		y: -3.5d
 	}
 	{
@@ -84,7 +84,7 @@
 			type: "advancement"
 		}
 		]
-		x: -3.0d
+		x: -20.55d
 		y: -5.25d
 	}
 	{
@@ -104,7 +104,7 @@
 			type: "advancement"
 		}
 		]
-		x: -0.0d
+		x: -2.55d
 		y: -1.75d
 	}
 	{
@@ -124,7 +124,7 @@
 			type: "advancement"
 		}
 		]
-		x: -3.82d
+		x: -20.62d
 		y: -7.0d
 	}
 	{
@@ -144,8 +144,128 @@
 			type: "advancement"
 		}
 		]
+		x: -3.6d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"CCB0AFD4DE255272"
+		]
+		icon: {
+			id: "farmersdelight:straw"
+		}
+		id: "3349B259353ACB31"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "farmersdelight:main/harvest_straw"
+			id: "1B1527C1D41DB1C7"
+			type: "advancement"
+		}
+		]
+		x: 0.0d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"CCB0AFD4DE255272"
+		]
+		icon: {
+			id: "farmersdelight:ham"
+		}
+		id: "EC2FA26DBF6A5613"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "farmersdelight:main/get_ham"
+			id: "9E64E33211AFFC69"
+			type: "advancement"
+		}
+		]
+		x: 2.55d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"852B4FC0F6322FDE"
+		]
+		icon: {
+			id: "farmersdelight:brown_mushroom_colony"
+		}
+		id: "6FF9C7201D4FE499"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "farmersdelight:main/get_mushroom_colony"
+			id: "5A729F03F87A3A44"
+			type: "advancement"
+		}
+		]
 		x: -1.05d
 		y: -3.5d
+	}
+	{
+		dependencies: [
+		"852B4FC0F6322FDE"
+		]
+		icon: {
+			id: "farmersdelight:organic_compost"
+		}
+		id: "4CCA50D7CB6CF083"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "farmersdelight:main/place_organic_compost"
+			id: "2F02711EDF04AB6C"
+			type: "advancement"
+		}
+		]
+		x: 1.5d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"B37CDD8AA8722C5E"
+		]
+		icon: {
+			id: "farmersdelight:rice"
+		}
+		id: "05DE0BEEB15AE537"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "farmersdelight:main/plant_rice"
+			id: "88A06E37EB5C0C26"
+			type: "advancement"
+		}
+		]
+		x: -18.0d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"5D0B448782CB1030"
+		]
+		icon: {
+			id: "farmersdelight:honey_glazed_ham_block"
+		}
+		id: "CC6C9ACB8852B43F"
+		shape: "octagon"
+		size: 1.75d
+		tasks: [
+		{
+			advancement: "farmersdelight:main/place_feast"
+			id: "674562AFB3597310"
+			type: "advancement"
+		}
+		]
+		x: -8.06d
+		y: -8.75d
 	}
 	{
 		dependencies: [
@@ -164,7 +284,7 @@
 			type: "item"
 		}
 		]
-		x: 2.77d
+		x: 5.33d
 		y: -1.75d
 	}
 	{
@@ -184,7 +304,7 @@
 			type: "item"
 		}
 		]
-		x: 1.5d
+		x: 4.05d
 		y: -3.5d
 	}
 	{
@@ -192,79 +312,110 @@
 		"F4173A922D4F7741"
 		]
 		icon: {
-			id: "vinery:fermentation_barrel"
+			id: "farm_and_charm:cooking_pot"
 		}
-		id: "FE741E7B9F5D8875"
-		shape: "rsquare"
-		size: 1.5d
-		tasks: [
+		id: "444FDF195136ED40"
+		rewards: [
 		{
-			item: "vinery:fermentation_barrel"
-			id: "FE96E0D258693735"
-			type: "item"
+			xp: 60
+			id: "9AC52501FA3226E6"
+			type: "xp"
+		}
+		{
+			id: "8F380AFE47D7EC80"
+			type: "toast"
 		}
 		]
-		x: -0.23d
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			advancement: "farm_and_charm:main/place_cooking_pot"
+			id: "51128FABACD20589"
+			type: "advancement"
+		}
+		]
+		x: -14.85d
 		y: -5.25d
 	}
 	{
 		dependencies: [
-		"FE741E7B9F5D8875"
+		"444FDF195136ED40"
 		]
 		icon: {
-			id: "vinery:acacia_wine_rack_mid"
+			id: "farm_and_charm:roaster"
 		}
-		id: "BB844AAB017F1E65"
+		id: "AD0C57B4F49E11D4"
 		shape: "circle"
 		size: 1.2d
 		tasks: [
 		{
-			item: "vinery:acacia_wine_rack_mid"
-			id: "31CA491EBFC5630A"
-			type: "item"
+			advancement: "farm_and_charm:main/place_roaster"
+			id: "47376CED6CFF2333"
+			type: "advancement"
 		}
 		]
-		x: -1.27d
+		x: -18.07d
 		y: -7.0d
 	}
 	{
 		dependencies: [
-		"FE741E7B9F5D8875"
+		"444FDF195136ED40"
 		]
 		icon: {
-			id: "vinery:grapevine_stem"
+			id: "farm_and_charm:mincer"
 		}
-		id: "59FFC9FBC635C1DC"
+		id: "7CECBADDA0B9934C"
 		shape: "circle"
 		size: 1.2d
 		tasks: [
 		{
-			advancement: "vinery:main/budding_grapes"
-			id: "D49B4318834C8413"
+			advancement: "farm_and_charm:main/introduction_mincing"
+			id: "0653D87D7191DF0D"
 			type: "advancement"
 		}
 		]
-		x: 1.27d
+		x: -15.52d
 		y: -7.0d
 	}
 	{
 		dependencies: [
-		"59FFC9FBC635C1DC"
+		"444FDF195136ED40"
 		]
 		icon: {
-			id: "vinery:apple_juice"
+			id: "farm_and_charm:fertilized_soil"
 		}
-		id: "F358D05FDF4875D0"
+		id: "1AD8D6AE1942F941"
 		shape: "circle"
 		size: 1.2d
 		tasks: [
 		{
-			advancement: "vinery:main/juice_it_up"
-			id: "B7CF1B0A6C60432D"
+			advancement: "farm_and_charm:main/place_fertilized_soil"
+			id: "9B29F5FE156E18F9"
 			type: "advancement"
 		}
 		]
-		x: 0.0d
+		x: -12.97d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"1AD8D6AE1942F941"
+		]
+		icon: {
+			id: "farm_and_charm:water_sprinkler"
+		}
+		id: "4F95F99A3916D6EB"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "farm_and_charm:main/place_water_sprinkler"
+			id: "22012C27F6AECE72"
+			type: "advancement"
+		}
+		]
+		x: -5.1d
 		y: -8.75d
 	}
 	{
@@ -285,7 +436,7 @@
 			type: "item"
 		}
 		]
-		x: 2.77d
+		x: -11.47d
 		y: -5.25d
 	}
 	{
@@ -305,8 +456,68 @@
 			type: "item"
 		}
 		]
-		x: 3.82d
+		x: -10.42d
 		y: -7.0d
+	}
+	{
+		dependencies: [
+		"B1A457053074F6D9"
+		]
+		icon: {
+			id: "cookingforblockheads:white_oven"
+		}
+		id: "AB0BF6A73DF6D191"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "cookingforblockheads:white_oven"
+			id: "AB9C5DEB645B3F94"
+			type: "item"
+		}
+		]
+		x: -2.55d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"B1A457053074F6D9"
+		]
+		icon: {
+			id: "cookingforblockheads:white_fridge"
+		}
+		id: "E4C2B7D818851FBD"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "cookingforblockheads:white_fridge"
+			id: "89A0FA7C7BB36182"
+			type: "item"
+		}
+		]
+		x: -0.0d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"E4C2B7D818851FBD"
+		]
+		icon: {
+			id: "cookingforblockheads:preservation_chamber"
+		}
+		id: "99A9EDF7E5416C56"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "cookingforblockheads:preservation_chamber"
+			id: "A950F1D1D2CD329B"
+			type: "item"
+		}
+		]
+		x: -2.25d
+		y: -10.5d
 	}
 	{
 		dependencies: [
@@ -325,8 +536,510 @@
 			type: "item"
 		}
 		]
-		x: 4.05d
+		x: 6.6d
 		y: -3.5d
+	}
+	{
+		dependencies: [
+		"F4173A922D4F7741"
+		]
+		icon: {
+			id: "vinery:fermentation_barrel"
+		}
+		id: "FE741E7B9F5D8875"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "vinery:fermentation_barrel"
+			id: "FE96E0D258693735"
+			type: "item"
+		}
+		]
+		x: -8.47d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"FE741E7B9F5D8875"
+		]
+		icon: {
+			id: "vinery:acacia_wine_rack_mid"
+		}
+		id: "BB844AAB017F1E65"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "vinery:acacia_wine_rack_mid"
+			id: "31CA491EBFC5630A"
+			type: "item"
+		}
+		]
+		x: -7.87d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"FE741E7B9F5D8875"
+		]
+		icon: {
+			id: "vinery:grapevine_stem"
+		}
+		id: "59FFC9FBC635C1DC"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "vinery:main/budding_grapes"
+			id: "D49B4318834C8413"
+			type: "advancement"
+		}
+		]
+		x: -5.32d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"59FFC9FBC635C1DC"
+		]
+		icon: {
+			id: "vinery:apple_juice"
+		}
+		id: "F358D05FDF4875D0"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "vinery:main/juice_it_up"
+			id: "B7CF1B0A6C60432D"
+			type: "advancement"
+		}
+		]
+		x: 2.55d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"F4173A922D4F7741"
+		]
+		icon: {
+			id: "vinery:apple_press"
+		}
+		id: "79AAD64EE9125ABE"
+		rewards: [
+		{
+			xp: 60
+			id: "0B03CFBF322FC74D"
+			type: "xp"
+		}
+		{
+			id: "45EB40A0C5827FA3"
+			type: "toast"
+		}
+		]
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			advancement: "vinery:main/the_first_press"
+			id: "C3570F536E958874"
+			type: "advancement"
+		}
+		]
+		x: -5.1d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"79AAD64EE9125ABE"
+		]
+		icon: {
+			id: "vinery:cherry"
+		}
+		id: "6438450F8DB65E22"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "vinery:main/cherry_picker"
+			id: "7BF653DC0E251C6E"
+			type: "advancement"
+		}
+		]
+		x: -2.77d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"59FFC9FBC635C1DC"
+		]
+		icon: {
+			id: "vinery:oak_lattice"
+		}
+		id: "3F749E094ABBD534"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "vinery:main/overgrown_lattices"
+			id: "6563276E591164DF"
+			type: "advancement"
+		}
+		]
+		x: 5.1d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"FE741E7B9F5D8875"
+		]
+		icon: {
+			id: "vinery:red_wine"
+		}
+		id: "4FC9806DF3A1E7A2"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			advancement: "vinery:main/the_noble_drop"
+			id: "D04DBD7E0DA99AB8"
+			type: "advancement"
+		}
+		]
+		x: 0.0d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"4FC9806DF3A1E7A2"
+		]
+		icon: {
+			id: "vinery:wine_box"
+		}
+		id: "98A01A265BCC9DAA"
+		shape: "octagon"
+		size: 1.75d
+		tasks: [
+		{
+			advancement: "vinery:main/wine_somelier"
+			id: "DACDCC6E4B5D66B2"
+			type: "advancement"
+		}
+		]
+		x: 8.06d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"F4173A922D4F7741"
+		]
+		icon: {
+			id: "brewinandchewin:keg"
+		}
+		id: "1D2D16DF8FF038DA"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			advancement: "brewinandchewin:main/place_keg"
+			id: "01B22CB3B96A9B10"
+			type: "advancement"
+		}
+		]
+		x: -1.35d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"1D2D16DF8FF038DA"
+		]
+		icon: {
+			id: "brewinandchewin:heating_cask"
+		}
+		id: "105B587364AFF5BC"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "brewinandchewin:main/place_temperature_block_near_keg"
+			id: "29E3E3ABA48ED679"
+			type: "advancement"
+		}
+		]
+		x: 2.78d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"1D2D16DF8FF038DA"
+		]
+		icon: {
+			id: "brewinandchewin:flaxen_cheese_wheel"
+		}
+		id: "6DEF2AD8CA1E4F45"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "brewinandchewin:main/ferment_cheese"
+			id: "5469C5CA0BB97528"
+			type: "advancement"
+		}
+		]
+		x: 5.33d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"F4173A922D4F7741"
+		]
+		icon: {
+			id: "expandeddelight:juicer"
+		}
+		id: "FDCB89A2D74156CD"
+		rewards: [
+		{
+			xp: 60
+			id: "8B2DEF8938D6311A"
+			type: "xp"
+		}
+		{
+			id: "B520F1E6D6E96CBE"
+			type: "toast"
+		}
+		]
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "expandeddelight:juicer"
+			id: "8AF0D7A7AB22E90A"
+			type: "item"
+		}
+		]
+		x: 2.4d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"FDCB89A2D74156CD"
+		]
+		icon: {
+			id: "expandeddelight:salt"
+		}
+		id: "5DAD08228930245B"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "expandeddelight:salt"
+			id: "98161D197B5978B7"
+			type: "item"
+		}
+		]
+		x: 7.88d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"FDCB89A2D74156CD"
+		]
+		icon: {
+			id: "expandeddelight:peanut_butter"
+		}
+		id: "6C226AD3AAD1CC17"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "expandeddelight:peanut_butter"
+			id: "BCC7C065727ABA19"
+			type: "item"
+		}
+		]
+		x: 10.43d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"F4173A922D4F7741"
+		]
+		icon: {
+			id: "endersdelight:shulker_mollusk"
+		}
+		id: "9CE7D3C148C5E154"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "endersdelight:shulker_mollusk"
+			id: "02064E2A0F6ADB3B"
+			type: "item"
+		}
+		]
+		x: 6.15d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"9CE7D3C148C5E154"
+		]
+		icon: {
+			id: "endersdelight:crushed_voidpepper"
+		}
+		id: "BC253B9B9A7F3536"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "endersdelight:crushed_voidpepper"
+			id: "876125801FFAB37B"
+			type: "item"
+		}
+		]
+		x: 12.98d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"F4173A922D4F7741"
+		]
+		icon: {
+			id: "mynethersdelight:nether_stove"
+		}
+		id: "10AF811BED8B99DC"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "mynethersdelight:nether_stove"
+			id: "D2897E77DD83FF57"
+			type: "item"
+		}
+		]
+		x: 9.9d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"10AF811BED8B99DC"
+		]
+		icon: {
+			id: "mynethersdelight:stuffed_hoglin"
+		}
+		id: "0DD0A7B2F1868C48"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mynethersdelight:stuffed_hoglin"
+			id: "4D320453936F9BD6"
+			type: "item"
+		}
+		]
+		x: 15.53d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"F4173A922D4F7741"
+		]
+		icon: {
+			id: "oceansdelight:guardian_soup"
+		}
+		id: "696FEEEBE30AED1F"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "oceansdelight:guardian_soup"
+			id: "A819EF7AD8AE3007"
+			type: "item"
+		}
+		]
+		x: 13.65d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"F4173A922D4F7741"
+		]
+		icon: {
+			id: "minersdelight:copper_pot"
+		}
+		id: "2F604EC3FF4722ED"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "minersdelight:copper_pot"
+			id: "AC9272841A277FD8"
+			type: "item"
+		}
+		]
+		x: 17.4d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"2F604EC3FF4722ED"
+		]
+		icon: {
+			id: "minersdelight:cave_carrot"
+		}
+		id: "29110956A5F7695A"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minersdelight:cave_carrot"
+			id: "C953558009EDF3D9"
+			type: "item"
+		}
+		]
+		x: 18.08d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"2F604EC3FF4722ED"
+		]
+		icon: {
+			id: "miners_delight:rock_soup_cup"
+		}
+		id: "822124A587CAC57E"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "miners_delight:rock_soup_cup"
+			id: "BA2B7ED0690C80E1"
+			type: "item"
+		}
+		]
+		x: 20.63d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"F4173A922D4F7741"
+		]
+		icon: {
+			id: "minecraft:emerald"
+		}
+		id: "15F094975BE3C08C"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			structure: "minecraft:village_plains"
+			id: "69D080AA60ECFA83"
+			type: "structure"
+		}
+		]
+		x: 20.55d
+		y: -5.25d
 	}
 	{
 		dependencies: [
@@ -367,7 +1080,7 @@
 			type: "item"
 		}
 		]
-		x: 0.0d
+		x: 1.27d
 		y: -10.5d
 	}
 	]

@@ -33,10 +33,6 @@
 	"Exposure 拍照 + Immersive Paintings 上墙：把「这一局发生过什么」变成墙上的画。"
 	"这条对应设计里「国史 / 碑林」的日常化版本。"
 	]
-	quest.0974B8AEECED1DF0.title: "书架与书房"
-	quest.0974B8AEECED1DF0.description: [
-	"密集书架墙：档案、国史、闲书都该有地方放。"
-	]
 	quest.974D73838A71A4C1.title: "地面"
 	quest.974D73838A71A4C1.description: [
 	"地毯与地板：一块空地铺上东西，才算「房间」。"
@@ -44,5 +40,153 @@
 	quest.CE7EF4EFA7439DEF.title: "装完一间能住人的屋子"
 	quest.CE7EF4EFA7439DEF.description: [
 	"坐具、床、收纳、照明、绿植、上墙的画——凑齐这六样。"
+	]
+	quest.ECD8210A94CAC72B.title: "餐椅够一桌"
+	quest.ECD8210A94CAC72B.description: [
+	"待客与聚餐要按人数配椅子，四把是一桌的下限。"
+	]
+	quest.705DDFBF283003D2.title: "餐桌"
+	quest.705DDFBF283003D2.description: [
+	"餐桌是室内第一件「集体家具」——它决定房间留多大。"
+	]
+	quest.896FF8287307C250.title: "另一套椅子"
+	quest.896FF8287307C250.description: [
+	"Another Furniture 的椅子与餐椅：两套并用，同一间屋里才有层次。"
+	]
+	quest.BADD45487F330CE5.title: "抽屉柜"
+	quest.BADD45487F330CE5.description: [
+	"一组抽屉柜比四个箱子省地方，也更容易看出装了什么。"
+	]
+	quest.AD4C3F0525832DA1.title: "书架与橱柜书架"
+	quest.AD4C3F0525832DA1.description: [
+	"带门的书架：书与档案既要放得下，也要关得上。"
+	]
+	quest.BB59F6D070318911.title: "衣柜"
+	quest.BB59F6D070318911.description: [
+	"双门衣柜是卧室与更衣间的分界：盔甲、衣物、杂物各有归处。"
+	]
+	quest.669016899A0B8FD6.title: "床头柜"
+	quest.669016899A0B8FD6.description: [
+	"床边一件小家具，顺手放书、灯、随身物。"
+	]
+	quest.C507F426C91016CF.title: "书桌"
+	quest.C507F426C91016CF.description: [
+	"书桌是「档案与国史」在屋里的落点，也是本章过半的标记。"
+	]
+	quest.281736F7EB0533F1.title: "桌子与边桌"
+	quest.281736F7EB0533F1.description: [
+	"茶几、边桌、长桌：小桌比大桌更常被用到。"
+	]
+	quest.0C3642DDAF55D861.title: "玻璃桌与咖啡桌"
+	quest.0C3642DDAF55D861.description: [
+	"透明与矮桌让房间显得不挤，靠窗的位置尤其明显。"
+	]
+	quest.3D10D432519377F1.title: "凳子与高脚凳"
+	quest.3D10D432519377F1.description: [
+	"吧台、工作台、柜前：站着干活的地方配一张高脚凳。"
+	]
+	quest.7D8F0F04666C1F91.title: "现代线条的椅子"
+	quest.7D8F0F04666C1F91.description: [
+	"同一间屋里换一种椅型，家具才不像同一件东西复制出来的。"
+	]
+	quest.2ED92F77D6B027E9.title: "沙发与躺椅"
+	quest.2ED92F77D6B027E9.description: [
+	"休息区要有开阔感：沙发加一张长条坐具，客厅才成形状。"
+	]
+	quest.37BE71C86D6E6607.title: "厨台与操作台"
+	quest.37BE71C86D6E6607.description: [
+	"切菜、摆盘、上菜都要台面；没有台面的厨房只是几个柜子。"
+	]
+	quest.43ED67D234752E9C.title: "窗帘与窗"
+	quest.43ED67D234752E9C.description: [
+	"窗帘和窗棂：把窗从「一个洞」变成房间的一部分。"
+	]
+	quest.6171705C9DAA6D53.title: "一套木制家具"
+	quest.6171705C9DAA6D53.description: [
+	"坐、睡、收纳、照明、绿植五样齐了：房间不再是「放了东西的屋子」。"
+	"此后每一间屋都照这套配，只是换木料与配色。"
+	]
+	quest.4354C480FB4AA47C.title: "木质书架"
+	quest.4354C480FB4AA47C.description: [
+	"书架是室内立面最省事的装饰：有东西可放，也有东西可看。"
+	]
+	quest.76B8349DCE023C6C.title: "烤面包机"
+	quest.76B8349DCE023C6C.description: [
+	"Refurbished 家电的第一件：厨房从「有灶」变成「有台面设备」。"
+	"它需要电，所以它也是屋内配电的起点。"
+	]
+	quest.1A0A6050782A3295.title: "微波炉"
+	quest.1A0A6050782A3295.description: [
+	"加热与保鲜进入同一面墙：厨房效率的提升从这里开始。"
+	]
+	quest.D6EFE44DEBE81F61.title: "冰箱与冷冻柜"
+	quest.D6EFE44DEBE81F61.description: [
+	"食物要按周存，不再按顿做。冰箱是「屯粮」这一步的家具形态。"
+	]
+	quest.E60750599D14C58A.title: "炉灶与油烟机"
+	quest.E60750599D14C58A.description: [
+	"明火搬进室内就要配排烟：油烟机是长期住人的必要条件。"
+	]
+	quest.17ED82D040760A6C.title: "浴室"
+	quest.17ED82D040760A6C.description: [
+	"浴缸、洗手盆、马桶：从「住得下」到「住得久」的分界。"
+	"这一组家具也意味着房间里要单独划出一间。"
+	]
+	quest.39D3A70F7E1EC76F.title: "储物高柜"
+	quest.39D3A70F7E1EC76F.description: [
+	"带门的高柜：把杂项从台面上收进去，厨房才留得出工作面。"
+	]
+	quest.F527148B0EA14DD3.title: "吊扇与顶灯"
+	quest.F527148B0EA14DD3.description: [
+	"面积大的房间靠顶灯与吊扇撑住，不然一半空间永远是暗的。"
+	]
+	quest.421DC53DF7F37761.title: "开关与灯控"
+	quest.421DC53DF7F37761.description: [
+	"一个开关管一间屋的灯：这是室内配电第一次成为「设施」而不是「火把」。"
+	]
+	quest.2D16510A91D0CF77.title: "信箱与门铃"
+	quest.2D16510A91D0CF77.description: [
+	"门外的第一件家具：访客与信件有固定的落点，不必满地图找人。"
+	]
+	quest.548A7B207A37FCE7.title: "换一种配色"
+	quest.548A7B207A37FCE7.description: [
+	"成套家具换一组颜色，同一栋楼里的房间才不会互相混淆。"
+	]
+	quest.DDF38DD68A25A21B.title: "床单与坐垫"
+	quest.DDF38DD68A25A21B.description: [
+	"床与坐具的软装：房间的完成度有一半来自这些不起眼的东西。"
+	]
+	quest.A5CE106855C14271.title: "柜台与条案"
+	quest.A5CE106855C14271.description: [
+	"齐腰高的柜台与条案：成套搭配从「同一高度的一排家具」开始。"
+	]
+	quest.5D6F34806CA245BE.title: "壁灯与灯柱"
+	quest.5D6F34806CA245BE.description: [
+	"壁灯管走廊，灯柱管院子：两者成对才算一套完整的照明方案。"
+	]
+	quest.F3833E47F34450D2.title: "挂在墙上的战利品"
+	quest.F3833E47F34450D2.description: [
+	"战利品是这一局的记录：打过什么、去过哪里，都该留在墙上。"
+	]
+	quest.F5871409CE46C3F3.title: "可以堆起来的书"
+	quest.F5871409CE46C3F3.description: [
+	"书不只放在书架里：桌上、柜顶、床头都能摞。"
+	]
+	quest.0BDF676C6ACDBC1D.title: "餐具与罐子"
+	quest.0BDF676C6ACDBC1D.description: [
+	"碗、盘、杯、储物罐：厨房与餐厅之间那一段的距离就靠它们补上。"
+	]
+	quest.D0B0C04BB879A5C4.title: "电视与工作间"
+	quest.D0B0C04BB879A5C4.description: [
+	"Refurbished 的屏幕与工作台：公共房间需要一个视觉中心。"
+	]
+	quest.E18B62EE790C7F81.title: "计时与作息"
+	quest.E18B62EE790C7F81.description: [
+	"钟、服务铃、墙面装饰：一间屋子开始有自己的节奏。"
+	]
+	quest.37D9B09499BC30F4.title: "一栋楼全部住得下人"
+	quest.37D9B09499BC30F4.description: [
+	"按同一套配法把公共建筑与住区都装完：家具不再是单间的事，而是城市的标准。"
+	"到此本章结束——往后新建的每一间屋，都照这套清单走。"
 	]
 }

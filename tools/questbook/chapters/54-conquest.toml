@@ -1,0 +1,455 @@
+# 邦交 · 夺城与属地
+#
+# 这一章与相邻章的分工（**必须看清，否则会和别人写重**）
+# --------------------------------------------------
+#   · `90-blueprints`（技艺）   = **怎么用**图纸工具（扫描仪、平板、残破图纸修复、材料清单）
+#     → 本章**不碰**这些工具的教学
+#   · `50-diplomacy`（邦交）    = 接触 → 情报站 → 第一次遣使
+#   · `52-treaty`（邦交）       = 把关系写成条款、通商、结盟
+#   · **本章**                  = 条款崩了之后：**攻城、占领、治理新属地**
+#
+# 本章的"图纸"指的是**从邻国买回来的那一叠**（`blueprintPrice: 64`，用国库换），
+# 即"图纸的来源"，不是"图纸工具的用法"。
+#
+# 判据：攻城器械（`siegemachines` 有 18 个真实 id）、物资、占领与治理的实物。
+# Statecraft 不发 advancement / statistic，所以"夺下了"本身判不了 ——
+# 用**占领碑 + 驻军 + 属地册**这些确实会留下的东西当判据，
+# 真正没有信号的只有 1 条（指挥官已死），理由写在条目注释里。
+
+key = "conquest"
+title = "邦交·夺城与属地"
+subtitle = "条约保不住的东西，只能自己拿"
+group = "diplomacy"
+icon = "minecraft:white_banner"
+order_index = 22
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 簇 1：攻城器械 ----------------
+
+[[quest]]
+name = "cq_workbench"
+title = "攻城工坊"
+desc = [
+	"所有攻城器械都从这一张工作台出来。它是这一章真正的入口 ——",
+	"没有它，后面那九台机器一件也造不了。",
+]
+icon = "siegemachines:siege_workbench"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "siegemachines:siege_workbench" },
+]
+
+[[quest]]
+name = "cq_parts"
+title = "轮与梁"
+desc = [
+	"器械的通用件：轮子、主梁、配重。**先批量做件，再组装**，比一件件凑快得多。",
+]
+icon = "siegemachines:wheel"
+shape = "square"
+deps = ["cq_workbench"]
+tasks = [
+	{ type = "item", item = "siegemachines:wheel", count = 4 },
+	{ type = "item", item = "siegemachines:beam", count = 4 },
+]
+
+[[quest]]
+name = "cq_ram"
+title = "撞门锤"
+desc = [
+	"对付城门最直接的东西。它的价值不在杀伤，在**把门打开**。",
+]
+icon = "siegemachines:battering_ram"
+shape = "rsquare"
+deps = ["cq_parts"]
+tasks = [
+	{ type = "item", item = "siegemachines:battering_ram" },
+]
+
+[[quest]]
+name = "cq_ladder"
+title = "云梯"
+desc = [
+	"墙越高，梯越重要。**注意：云梯是给进攻方用的** —— 你们自己的城墙也要防它。",
+]
+icon = "siegemachines:siege_ladder"
+shape = "rsquare"
+deps = ["cq_parts"]
+tasks = [
+	{ type = "item", item = "siegemachines:siege_ladder" },
+	{ type = "item", item = "minecraft:ladder", count = 16 },
+]
+
+[[quest]]
+name = "cq_catapult"
+title = "投石机"
+desc = [
+	"抛射石块，越过城墙打城内。它要消耗弹药 —— 弹药本身就是补给线考题。",
+]
+icon = "siegemachines:catapult"
+shape = "rsquare"
+deps = ["cq_parts"]
+tasks = [
+	{ type = "item", item = "siegemachines:catapult" },
+	{ type = "item", item = "siegemachines:giant_stone", count = 8 },
+]
+
+[[quest]]
+name = "cq_trebuchet"
+title = "重力投石机"
+desc = [
+	"配重式，射程与威力都更大，代价是**架设更慢**。围城战的节奏由它决定。",
+]
+icon = "siegemachines:trebuchet"
+shape = "rsquare"
+deps = ["cq_catapult"]
+tasks = [
+	{ type = "item", item = "siegemachines:trebuchet" },
+	{ type = "item", item = "siegemachines:counterweight", count = 2 },
+]
+
+[[quest]]
+name = "cq_ballista"
+title = "弩炮"
+desc = [
+	"直射、精度高：**打人和打器械都用它**，是攻城武器里最「通用」的一台。",
+]
+icon = "siegemachines:ballista"
+shape = "rsquare"
+deps = ["cq_parts"]
+tasks = [
+	{ type = "item", item = "siegemachines:ballista" },
+	{ type = "item", item = "siegemachines:giant_arrow", count = 8 },
+]
+
+[[quest]]
+name = "cq_culverin"
+title = "长管炮"
+desc = [
+	"火药武器：射程远、弹道平。它是这一章**技术含量最高**的一件。",
+]
+icon = "siegemachines:culverin"
+shape = "rsquare"
+deps = ["cq_ballista"]
+tasks = [
+	{ type = "item", item = "siegemachines:culverin" },
+	{ type = "item", item = "siegemachines:cannonball", count = 8 },
+]
+
+[[quest]]
+name = "cq_mortar"
+title = "臼炮"
+desc = [
+	"高抛弹道，专打**墙后面看不见的地方**。守方最讨厌的就是它。",
+]
+icon = "siegemachines:mortar"
+shape = "circle"
+size = 1.2
+deps = ["cq_culverin"]
+tasks = [
+	{ type = "item", item = "siegemachines:mortar" },
+]
+
+[[quest]]
+name = "cq_turret"
+title = "固定炮座"
+desc = [
+	"把一台器械**固定下来**：守城时它比人可靠，因为它不会累、不会下线。",
+]
+icon = "siegemachines:turret_base"
+shape = "rsquare"
+deps = ["cq_ballista"]
+tasks = [
+	{ type = "item", item = "siegemachines:turret_base", count = 2 },
+]
+
+[[quest]]
+name = "cq_arsenal"
+title = "器械成军"
+desc = [
+	"同时拥有撞门、云梯、抛射、直射、固定炮座五类 —— 这才叫**能打一场围城战**。",
+]
+icon = "siegemachines:catapult"
+shape = "octagon"
+size = 1.75
+deps = ["cq_ram", "cq_ladder", "cq_trebuchet", "cq_culverin", "cq_mortar", "cq_turret"]
+tasks = [
+	{ type = "item", item = "minecraft:tnt", count = 8 },
+	{ type = "item", item = "minecraft:iron_block", count = 4 },
+]
+
+# ---------------- 簇 2：战前侦察与图纸来源 ----------------
+
+[[quest]]
+name = "cq_scout"
+title = "探城"
+desc = [
+	"打之前先看：城墙多高、门在哪、守军多少、有没有护城河。",
+	"侦察的结论要能复述给全队 —— 一个人看见不算看见。",
+]
+icon = "minecraft:spyglass"
+shape = "pentagon"
+size = 2.0
+deps = ["cq_workbench"]
+tasks = [
+	{ type = "item", item = "minecraft:spyglass" },
+]
+
+[[quest]]
+name = "cq_city_map"
+title = "城防图"
+desc = [
+	"把侦察结果画成图，进攻时人手一份。",
+]
+icon = "minecraft:filled_map"
+shape = "rsquare"
+deps = ["cq_scout"]
+tasks = [
+	{ type = "item", item = "minecraft:filled_map", count = 2 },
+]
+
+[[quest]]
+name = "cq_buy_blueprint"
+title = "向邻国买图纸"
+desc = [
+	"攻城之外还有一条更便宜的路：**用国库把他们的图纸买回来**。",
+	"一张 64 绿宝石（`blueprintPrice`），所以这实质上是「值不值得打」的算术题。",
+	"⚠️ 这一章与 `90-blueprints` 的分工：那边讲**工具怎么用**，这里只讲**图纸从哪来**。",
+]
+icon = "minecraft:paper"
+shape = "rsquare"
+deps = ["cq_scout"]
+tasks = [
+	{ type = "item", item = "minecraft:paper", count = 32 },
+	{ type = "item", item = "minecraft:emerald", count = 64 },
+]
+
+# ---------------- 簇 3：夺城 ----------------
+
+[[quest]]
+name = "cq_muster"
+title = "集结"
+desc = [
+	"夺城靠的是**同时在线的兵力**。先把人凑齐、装备发下去，再谈开打。",
+]
+icon = "minecraft:iron_chestplate"
+shape = "pentagon"
+size = 2.0
+deps = ["cq_arsenal", "cq_city_map"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_chestplate", count = 4 },
+	{ type = "item", item = "minecraft:bread", count = 32 },
+]
+
+[[quest]]
+name = "cq_supply"
+title = "补给线"
+desc = [
+	"围城是消耗战：弹药、食物、箭，都要有人在后面送。",
+	"**没有补给线的一方，围三天就得撤。**",
+]
+icon = "minecraft:hay_block"
+shape = "square"
+deps = ["cq_muster"]
+tasks = [
+	{ type = "item", item = "minecraft:hay_block", count = 16 },
+	{ type = "item", item = "minecraft:arrow", count = 64 },
+]
+
+[[quest]]
+name = "cq_breach"
+title = "破墙"
+desc = [
+	"城墙的弱点从来不是砖，是**门**。炸开门，或者把一段墙推倒。",
+]
+icon = "minecraft:tnt"
+shape = "rsquare"
+deps = ["cq_muster"]
+tasks = [
+	{ type = "item", item = "minecraft:tnt", count = 8 },
+	{ type = "item", item = "minecraft:flint_and_steel" },
+]
+
+[[quest]]
+name = "cq_commander"
+title = "斩首"
+desc = [
+	"守城方会一直补员，直到**指挥官倒下**。所以实际节奏永远是",
+	"「先找指挥官、再插旗」，反过来做只会被人海拖死。",
+	"⚠️ 这条判不了：Statecraft 不提供指挥官实体的注册名，也不发击杀事件。",
+	"用「你手上确实有能完成这件事的装备」当替代判据。",
+]
+icon = "minecraft:crossbow"
+shape = "rsquare"
+deps = ["cq_breach"]
+tasks = [
+	{ type = "item", item = "minecraft:crossbow" },
+	{ type = "item", item = "minecraft:arrow", count = 32 },
+]
+
+[[quest]]
+name = "cq_plant"
+title = "插旗"
+desc = [
+	"走到城中心的旗座，按住 N 秒 —— 这是夺城的**最后一步**，也是最危险的一步。",
+	"（mod 侧要求：指挥官已死 + 插旗完成，两件同时成立。）",
+]
+icon = "minecraft:white_banner"
+shape = "rsquare"
+deps = ["cq_commander"]
+tasks = [
+	{ type = "item", item = "minecraft:white_banner", count = 2 },
+]
+
+[[quest]]
+name = "cq_occupy"
+title = "占领碑"
+desc = [
+	"夺下来的城会自动生成一块占领碑。**它是这件事唯一的物证** ——",
+	"没有碑，就等于没占。",
+]
+icon = "minecraft:chiseled_stone_bricks"
+shape = "hexagon"
+size = 2.5
+deps = ["cq_plant"]
+tasks = [
+	{ type = "item", item = "minecraft:chiseled_stone_bricks", count = 8 },
+]
+rewards = [
+	{ type = "xp", xp = 150 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "cq_garrison"
+title = "驻军"
+desc = [
+	"占下来不等于守得住。铁傀儡 + 常驻的人，是最低成本的驻军。",
+]
+icon = "minecraft:iron_block"
+shape = "rsquare"
+deps = ["cq_occupy"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_block", count = 8 },
+	{ type = "item", item = "minecraft:carved_pumpkin" },
+]
+
+[[quest]]
+name = "cq_loot"
+title = "清点战利品"
+desc = [
+	"战利品要**入库入账**，不是谁捡到归谁。这是「国家行为」和「抢劫」的分界。",
+]
+icon = "minecraft:chest"
+shape = "square"
+deps = ["cq_occupy"]
+tasks = [
+	{ type = "item", item = "minecraft:chest", count = 4 },
+	{ type = "item", item = "minecraft:shulker_box", count = 2 },
+]
+
+[[quest]]
+name = "cq_prisoner"
+title = "俘虏与平民"
+desc = [
+	"城里有居民。**怎么处置他们，决定了这座城以后能不能自己运转。**",
+	"最省事的做法：不杀、不关，让他们照常干活。",
+]
+icon = "minecraft:lead"
+shape = "circle"
+size = 1.2
+deps = ["cq_occupy"]
+tasks = [
+	{ type = "item", item = "minecraft:lead", count = 4 },
+	{ type = "item", item = "minecraft:bread", count = 16 },
+]
+
+# ---------------- 簇 4：属地治理 ----------------
+
+[[quest]]
+name = "cq_rebuild"
+title = "修复城防"
+desc = [
+	"你们打坏的那段墙，现在是**你们的**墙。先补，再谈别的。",
+]
+icon = "minecraft:stone_bricks"
+shape = "pentagon"
+size = 2.0
+deps = ["cq_garrison"]
+tasks = [
+	{ type = "item", item = "minecraft:stone_bricks", count = 64 },
+]
+
+[[quest]]
+name = "cq_appoint"
+title = "派任官吏"
+desc = [
+	"新属地要有**有人管**：一个讲台（办公桌）、一份任命书、一个常驻的人。",
+]
+icon = "minecraft:lectern"
+shape = "rsquare"
+deps = ["cq_rebuild"]
+tasks = [
+	{ type = "item", item = "minecraft:lectern" },
+	{ type = "item", item = "minecraft:emerald", count = 16 },
+]
+
+[[quest]]
+name = "cq_new_tax"
+title = "新属地税则"
+desc = [
+	"税率不能比母国高 —— 属地反叛的起点永远是税。",
+]
+icon = "minecraft:emerald_block"
+shape = "rsquare"
+deps = ["cq_appoint"]
+tasks = [
+	{ type = "item", item = "minecraft:emerald_block", count = 2 },
+]
+
+[[quest]]
+name = "cq_register"
+title = "属地入册"
+desc = [
+	"把它记进你们的册子：什么时候拿下的、现在谁管、产出什么。",
+	"**这一步之后它才是「国土」的一部分，而不是一块飞地。**",
+]
+icon = "minecraft:written_book"
+shape = "rsquare"
+deps = ["cq_new_tax"]
+tasks = [
+	{ type = "item", item = "minecraft:written_book" },
+]
+
+[[quest]]
+name = "cq_new_map"
+title = "重画疆域"
+icon = "minecraft:filled_map"
+shape = "circle"
+size = 1.2
+deps = ["cq_register"]
+tasks = [
+	{ type = "item", item = "minecraft:filled_map", count = 2 },
+	{ type = "item", item = "minecraft:cartography_table" },
+]
+
+[[quest]]
+name = "cq_conquest_done"
+title = "从一座城到一个国家"
+desc = [
+	"会打、能占、占得住、管得起 —— 邦交线到这里闭环：",
+	"**外交拿不到的东西，战争能拿到；战争拿到的东西，治理才留得住。**",
+]
+icon = "minecraft:white_banner"
+shape = "hexagon"
+size = 2.5
+deps = ["cq_loot", "cq_prisoner", "cq_new_map"]
+tasks = [
+	{ type = "item", item = "minecraft:white_banner", count = 8 },
+]
+rewards = [
+	{ type = "xp", xp = 120 },
+	{ type = "toast" },
+]

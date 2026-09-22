@@ -1,0 +1,385 @@
+# 编年 · 生存第一课
+#
+# 这一章为什么在「序」和「落地」之间
+# --------------------------------
+# 序讲的是**这本书怎么用**，落地讲的是**国家怎么开始**。
+# 中间缺了一课：**一个还没决定要建国的玩家，头两天要活下来**。
+# 这段内容不属于任何 mod（全是原版），也没有任何"国家"色彩，
+# 但它决定了后面所有章能不能开始 —— 饿死在第一天的人不会来翻任务书。
+#
+# 与其它章的分工：
+#   · 本章   = 个人层面的"活到能动手"（木 → 石 → 铁 → 有一张床）
+#   · 落地   = 集体层面的"把营地固定下来"（选址、水、圈地、领地）
+#   · 生存线不重复讲 mod：木材/石头/铁怎么来，JEI 一查就有，这里只排顺序。
+#
+# 判据：**全是实物**（持有工具/食物/材料），没有一条 checkmark。
+
+key = "survival"
+title = "生存第一课"
+subtitle = "先活到能动手，再谈立国"
+group = "chronicle"
+icon = "minecraft:wooden_pickaxe"
+order_index = 1
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 簇 1：木与石 ----------------
+
+[[quest]]
+name = "sv_wood"
+title = "先砍树"
+desc = [
+	"任何路线的第一格都是原木。先攒够一组，别砍两棵就跑去挖矿。",
+]
+icon = "minecraft:oak_log"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "minecraft:oak_log", count = 16 },
+]
+
+[[quest]]
+name = "sv_table"
+title = "工作台"
+desc = [
+	"没有工作台，后面所有东西都做不出来。它也是你要记住「回家的那个方块」。",
+]
+icon = "minecraft:crafting_table"
+shape = "rsquare"
+deps = ["sv_wood"]
+tasks = [
+	{ type = "item", item = "minecraft:crafting_table" },
+]
+
+[[quest]]
+name = "sv_wood_pick"
+title = "木镐"
+desc = [
+	"第一把镐子只能挖石头。它的意义不是「好用」，是**把石头变成可获取资源**。",
+]
+icon = "minecraft:wooden_pickaxe"
+shape = "rsquare"
+deps = ["sv_table"]
+tasks = [
+	{ type = "item", item = "minecraft:wooden_pickaxe" },
+]
+
+[[quest]]
+name = "sv_cobble"
+title = "圆石"
+desc = [
+	"圆石是第一个「要多少有多少」的材料：工具、熔炉、墙，全从它开始。",
+]
+icon = "minecraft:cobblestone"
+shape = "square"
+deps = ["sv_wood_pick"]
+tasks = [
+	{ type = "item", item = "minecraft:cobblestone", count = 64 },
+]
+
+[[quest]]
+name = "sv_stone_tools"
+title = "石器一套"
+desc = [
+	"镐、斧、锹、剑换一遍。石制工具是这一章的「工作马」，别省。",
+]
+icon = "minecraft:stone_pickaxe"
+shape = "rsquare"
+deps = ["sv_cobble"]
+tasks = [
+	{ type = "item", item = "minecraft:stone_pickaxe" },
+	{ type = "item", item = "minecraft:stone_axe" },
+	{ type = "item", item = "minecraft:stone_shovel" },
+	{ type = "item", item = "minecraft:stone_sword" },
+]
+
+[[quest]]
+name = "sv_furnace"
+title = "熔炉"
+desc = [
+	"熔炉是把「挖到的」变成「能用的」的唯一入口。第一个熔炉放在营地中心。",
+]
+icon = "minecraft:furnace"
+shape = "rsquare"
+deps = ["sv_cobble"]
+tasks = [
+	{ type = "item", item = "minecraft:furnace" },
+]
+
+[[quest]]
+name = "sv_charcoal"
+title = "先烧木炭"
+desc = [
+	"没找到煤之前，木炭就是煤。这一步让「照明」不必等运气。",
+]
+icon = "minecraft:charcoal"
+shape = "circle"
+size = 1.2
+deps = ["sv_furnace"]
+tasks = [
+	{ type = "item", item = "minecraft:charcoal", count = 8 },
+]
+
+[[quest]]
+name = "sv_torch"
+title = "点亮营地"
+desc = [
+	"火把不是装饰，是**刷怪范围的开关**。营地范围内不留黑块，是硬纪律。",
+]
+icon = "minecraft:torch"
+shape = "square"
+deps = ["sv_charcoal"]
+tasks = [
+	{ type = "item", item = "minecraft:torch", count = 32 },
+]
+
+# ---------------- 簇 2：吃 ----------------
+
+[[quest]]
+name = "sv_hunt"
+title = "打到第一块肉"
+icon = "minecraft:beef"
+shape = "pentagon"
+size = 2.0
+deps = ["sv_stone_tools"]
+tasks = [
+	{ type = "item", item = "minecraft:beef", count = 3 },
+]
+
+[[quest]]
+name = "sv_cook"
+title = "做熟再吃"
+desc = [
+	"生肉的回饱食度低、还占背包。从这一顿起，所有肉都过一遍熔炉。",
+]
+icon = "minecraft:cooked_beef"
+shape = "rsquare"
+deps = ["sv_hunt"]
+tasks = [
+	{ type = "item", item = "minecraft:cooked_beef", count = 3 },
+]
+
+[[quest]]
+name = "sv_field"
+title = "第一块田"
+desc = [
+	"动物会跑光，田不会。有田之后，粮食问题从「今天有没有」变成「够不够多」。",
+]
+icon = "minecraft:wheat_seeds"
+shape = "rsquare"
+deps = ["sv_stone_tools"]
+tasks = [
+	{ type = "item", item = "minecraft:wheat_seeds", count = 8 },
+	{ type = "item", item = "minecraft:stone_hoe" },
+]
+
+[[quest]]
+name = "sv_wheat"
+title = "第一茬麦子"
+icon = "minecraft:wheat"
+shape = "circle"
+size = 1.2
+deps = ["sv_field"]
+tasks = [
+	{ type = "item", item = "minecraft:wheat", count = 12 },
+]
+
+[[quest]]
+name = "sv_bread"
+title = "面包"
+desc = [
+	"面包是三样东西换一顿饱：种田、收割、合成。它标志着你不再靠打猎过活。",
+]
+icon = "minecraft:bread"
+shape = "circle"
+size = 1.2
+deps = ["sv_wheat"]
+tasks = [
+	{ type = "item", item = "minecraft:bread", count = 6 },
+]
+
+[[quest]]
+name = "sv_water"
+title = "稳定的水源"
+desc = [
+	"一桶水就够：倒在地上就是一格无限水源。别每次跑河边。",
+]
+icon = "minecraft:water_bucket"
+shape = "circle"
+size = 1.2
+deps = ["sv_bucket"]
+tasks = [
+	{ type = "item", item = "minecraft:water_bucket" },
+]
+
+# ---------------- 簇 3：铁 ----------------
+
+[[quest]]
+name = "sv_mine"
+title = "下矿"
+desc = [
+	"带上火把、镐子、食物，往 y=-10 到 y=15 这一段走。",
+	"不要一个人下矿 —— 后面「出关」章会讲前哨，但第一条纪律是：留个人在上面。",
+]
+icon = "minecraft:stone_pickaxe"
+shape = "pentagon"
+size = 2.0
+deps = ["sv_stone_tools"]
+tasks = [
+	{ type = "item", item = "minecraft:raw_iron", count = 8 },
+]
+
+[[quest]]
+name = "sv_iron"
+title = "第一块铁锭"
+icon = "minecraft:iron_ingot"
+shape = "rsquare"
+deps = ["sv_mine"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_ingot", count = 3 },
+]
+
+[[quest]]
+name = "sv_iron_pick"
+title = "铁镐"
+desc = [
+	"铁镐是**分水岭**：钻石、红石、金，全都只有它能挖。",
+]
+icon = "minecraft:iron_pickaxe"
+shape = "rsquare"
+deps = ["sv_iron"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_pickaxe" },
+]
+
+[[quest]]
+name = "sv_bucket"
+title = "铁桶"
+desc = [
+	"一个铁桶 = 水源 + 岩浆 + 牛奶 + 挤奶。它是性价比最高的三块铁。",
+]
+icon = "minecraft:bucket"
+shape = "circle"
+size = 1.2
+deps = ["sv_iron"]
+tasks = [
+	{ type = "item", item = "minecraft:bucket" },
+]
+
+[[quest]]
+name = "sv_shield"
+title = "盾"
+desc = [
+	"举盾能挡下绝大多数正面伤害。它是这个包**最好用的保命件**，成本只有一块铁加六块木板。",
+]
+icon = "minecraft:shield"
+shape = "circle"
+size = 1.2
+deps = ["sv_iron"]
+tasks = [
+	{ type = "item", item = "minecraft:shield" },
+]
+
+[[quest]]
+name = "sv_armor"
+title = "一套铁甲"
+icon = "minecraft:iron_chestplate"
+shape = "rsquare"
+deps = ["sv_iron"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_chestplate" },
+	{ type = "item", item = "minecraft:iron_helmet" },
+	{ type = "item", item = "minecraft:iron_leggings" },
+	{ type = "item", item = "minecraft:iron_boots" },
+]
+
+[[quest]]
+name = "sv_sword"
+title = "铁剑"
+icon = "minecraft:iron_sword"
+shape = "circle"
+size = 1.2
+deps = ["sv_iron"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_sword" },
+]
+
+# ---------------- 簇 4：过夜 ----------------
+
+[[quest]]
+name = "sv_bed"
+title = "一张床"
+desc = [
+	"床把「今晚死一次」变成「今晚睡一觉」，还顺手把重生点搬到营地。",
+	"它通常是全队第一个真正的「公共设施」。",
+]
+icon = "minecraft:white_bed"
+shape = "pentagon"
+size = 2.0
+deps = ["sv_wood"]
+tasks = [
+	{ type = "item", item = "minecraft:white_bed" },
+]
+
+[[quest]]
+name = "sv_door"
+title = "装上门"
+desc = [
+	"门挡不住玩家，但挡得住夜里的怪。营地有门之后，进出不必拆墙。",
+]
+icon = "minecraft:oak_door"
+shape = "circle"
+size = 1.2
+deps = ["sv_wood"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_door", count = 2 },
+]
+
+[[quest]]
+name = "sv_chest"
+title = "把东西放下"
+desc = [
+	"箱子 + 物品展示框，是「这堆东西归谁」的起点。",
+	"个人箱子随便放，公共箱子在「立国」章会单独立规矩。",
+]
+icon = "minecraft:chest"
+shape = "rsquare"
+deps = ["sv_wood"]
+tasks = [
+	{ type = "item", item = "minecraft:chest", count = 2 },
+]
+
+[[quest]]
+name = "sv_first_night"
+title = "过完第一晚"
+desc = [
+	"有屋顶、有门、有光、有床 —— 这一晚不需要战斗力，只需要**别出去**。",
+	"判据是「屋里的三件东西都到位」；「有没有死」模组不记，也不该记。",
+]
+icon = "minecraft:campfire"
+shape = "octagon"
+size = 1.75
+deps = ["sv_bed", "sv_door", "sv_torch"]
+tasks = [
+	{ type = "item", item = "minecraft:campfire" },
+	{ type = "item", item = "minecraft:glass", count = 4 },
+]
+
+[[quest]]
+name = "sv_ready"
+title = "可以动手了"
+desc = [
+	"铁器、粮食、住处三件事齐了：从这一刻起，你才真的能开始「建国」这件事。",
+	"下一页（落地）讲的是挑哪块地 —— 先把这一章收掉。",
+]
+icon = "minecraft:iron_block"
+shape = "hexagon"
+size = 2.5
+deps = ["sv_iron_pick", "sv_armor", "sv_bread", "sv_first_night", "sv_chest"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_block" },
+]
+rewards = [
+	{ type = "xp", xp = 60 },
+	{ type = "toast" },
+]

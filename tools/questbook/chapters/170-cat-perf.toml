@@ -1,20 +1,40 @@
-# 类目 · 性能与信息
+# 类目 · 性能与优化
 #
-# 这一章是**知识型**的：性能与信息类 mod **全部没有物品**
-# （实测：`spark` / `modernfix` / `embeddium` / `ferritecore` 的命名空间在注册表里都不存在）。
+# 本章的 mod（20 个）：
+#   帧率       Embeddium · EntityCulling · More Culling · ImmediatelyFast ·
+#              BadOptimizations · Dynamic FPS
+#   内存与加载 FerriteCore · ModernFix · Noisium · ScalableLux · Chunky · Chunk Plan
+#   服务器侧   Lithium · ServerCore · Packet Fixer · Connectivity · Clumps · Neruina
+#   诊断       spark · Crash Assistant
 #
-# 按本项目已定的原则（判不了就不硬塞），这一章不假装能判定什么，
-# 而是把**"卡了怎么办 / 信息在哪看"**写清楚 —— 这是设计里「红线处置流程」的玩家侧版本
-# （DESIGN.md §12）。全部为自检条目，理由统一写在例外清单里。
+# 与其它章的分工：
+#   · 本章         = 跑不跑得动（帧率、内存、加载、服务端）
+#   · 174-cat-client = 屏幕上的信息怎么读（Jade / BetterF3 / AppleSkin …）
+#   · 178-cat-audio  = 音画与氛围
+#
+# ⚠️ 本章的判据来源（这是本章最特殊的地方）：
+#   优化类 mod **全都没有可持有物品**。实测：`python tools/item_index.py --stats` 的
+#   100 个命名空间里，没有 embeddium / lithium / ferritecore / modernfix / entityculling /
+#   moreculling / badoptimizations / dynamicfps / immediatelyfast / scalablelux / noisium /
+#   servercore / packetfixer / chunky / chunkplan / spark / clumps / neruina / connectivity /
+#   crash-assistant 里的任何一个（其中若干项在 modlist.tsv 里还是 plan 状态）。
+#   ⇒ mod 条目一律 checkmark，并在每条上方写明理由；
+#     凡能落到「手上真的拿着某样东西」的流程条目，一律用实物判据（漏斗、命名牌、地图、
+#     拉杆、书与笔、牌子、成书）。
+#
+# 目标数字的出处：DESIGN.md §12（TPS 常态 ≥19.5、袭击期 ≥15、MSPT ≤30ms、
+#   常驻实体 ≤300、预生成核心区半径 1000 格、启动 ≤3 分钟、视距 6~8、模拟距离 4~6）。
 
 key = "cat_perf"
-title = "性能与信息"
-subtitle = "卡了怎么办、东西在哪看：这一章是工具箱，不是任务清单"
+title = "性能与优化"
+subtitle = "跑得动才有后面：性能预算的玩家侧操作面"
 group = "category"
 icon = "minecraft:comparator"
-order_index = 37
+order_index = 64
 
 grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 簇 1：帧率 ----------------
 
 [[quest]]
 name = "p_optimized"
@@ -27,6 +47,388 @@ desc = [
 icon = "minecraft:comparator"
 shape = "pentagon"
 size = 2.0
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "p_graphics"
+title = "客户端画面设置"
+desc = [
+	"帧率低先调这三样（按收益排序）：渲染距离 → 模拟距离 → 阴影/云。",
+	"这个包用的是 Embeddium 系渲染器，视频设置里的选项比原版多。",
+]
+icon = "minecraft:painting"
+shape = "circle"
+size = 1.2
+deps = ["p_optimized"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：Embeddium 是渲染器本体，注册表里没有 embeddium 命名空间（实测 0 物品），
+# 换渲染器这件事在游戏里也没有可统计的信号。
+[[quest]]
+name = "p_embeddium"
+title = "渲染器：Embeddium"
+icon = "minecraft:spyglass"
+shape = "rsquare"
+deps = ["p_optimized"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：EntityCulling 是客户端渲染剔除，注册表里没有它的命名空间（实测 0 物品）。
+[[quest]]
+name = "p_entityculling"
+title = "看不见的实体不画：EntityCulling"
+icon = "minecraft:cobweb"
+shape = "circle"
+size = 1.2
+deps = ["p_embeddium"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：More Culling 同上，是客户端面剔除（实测注册表无该命名空间）。
+[[quest]]
+name = "p_moreculling"
+title = "被挡住的方块面不画：More Culling"
+icon = "minecraft:glass"
+shape = "circle"
+size = 1.2
+deps = ["p_embeddium"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：ImmediatelyFast 优化的是界面与文字的渲染批次，没有物品也没有统计。
+[[quest]]
+name = "p_immediatelyfast"
+title = "界面与文字一次画完：ImmediatelyFast"
+icon = "minecraft:paper"
+shape = "circle"
+size = 1.2
+deps = ["p_embeddium"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：BadOptimizations 是一组零碎微优化，实测注册表无该命名空间。
+[[quest]]
+name = "p_badoptimizations"
+title = "顺手清掉的小开销：BadOptimizations"
+icon = "minecraft:amethyst_shard"
+shape = "circle"
+size = 1.2
+deps = ["p_embeddium"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：Dynamic FPS 是客户端窗口状态触发的降帧，属于界面行为，没有信号源。
+[[quest]]
+name = "p_dynamicfps"
+title = "切出窗口就降帧：Dynamic FPS"
+icon = "minecraft:observer"
+shape = "circle"
+size = 1.2
+deps = ["p_embeddium"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：帧率是客户端 F3 的实时读数，游戏不记录「某段时间稳在多少帧」。
+[[quest]]
+name = "p_fps_floor"
+title = "帧率稳在 60 以上"
+desc = [
+	"帧率是唯一当场能感觉到的指标，也是唯一没有服务端记录的一项。",
+	"调到它不再是瓶颈就够了：DESIGN.md §12 管的是 TPS 与 MSPT，客户端只要求不拖后腿。",
+]
+icon = "minecraft:target"
+shape = "octagon"
+size = 1.75
+deps = ["p_entityculling", "p_moreculling", "p_immediatelyfast", "p_badoptimizations",
+        "p_dynamicfps", "p_graphics"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# ---------------- 簇 2：内存与加载 ----------------
+
+# checkmark：FerriteCore 改的是内存里模型数据的存放方式，没有物品、没有统计。
+[[quest]]
+name = "p_ferritecore"
+title = "内存：FerriteCore"
+desc = [
+	"内存与加载这一簇要**排在加内容之前**：这一组不产生玩法，只决定你能装下多少玩法。",
+	"这一簇的验收数字全在 DESIGN.md §12（启动 ≤3 分钟、预生成核心区半径 1000 格）。",
+]
+icon = "minecraft:barrel"
+shape = "pentagon"
+size = 2.0
+deps = ["p_optimized"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：ModernFix 管的是启动与加载，实测注册表里没有 modernfix 命名空间。
+[[quest]]
+name = "p_modernfix"
+title = "启动与加载：ModernFix"
+icon = "minecraft:furnace"
+shape = "circle"
+size = 1.2
+deps = ["p_ferritecore"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：Noisium 优化的是世界生成的噪声函数，属于生成期计算，没有信号源。
+[[quest]]
+name = "p_noisium"
+title = "地形算得快一点：Noisium"
+icon = "minecraft:stone"
+shape = "circle"
+size = 1.2
+deps = ["p_ferritecore"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：ScalableLux 是光照引擎，实测注册表无该命名空间。
+[[quest]]
+name = "p_scalablelux"
+title = "光照引擎：ScalableLux"
+icon = "minecraft:glowstone"
+shape = "circle"
+size = 1.2
+deps = ["p_ferritecore"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：Chunky 只有命令（/chunky），没有物品；「区块生成完成」也不进统计。
+[[quest]]
+name = "p_chunky"
+title = "区块预生成：Chunky"
+icon = "minecraft:map"
+shape = "circle"
+size = 1.2
+deps = ["p_ferritecore"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "p_pregen_map"
+title = "预生成之前先定范围"
+icon = "minecraft:filled_map"
+shape = "circle"
+size = 1.2
+deps = ["p_chunky"]
+tasks = [
+	{ type = "item", item = "minecraft:map", count = 2 },
+]
+
+# checkmark：Chunk Plan 限制的是服务端每 tick 的区块加载配额，是配置项。
+[[quest]]
+name = "p_chunkplan"
+title = "服务端探索配额：Chunk Plan"
+icon = "minecraft:iron_door"
+shape = "circle"
+size = 1.2
+deps = ["p_pregen_map"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：启动耗时要从日志或 F3 读，游戏没有「启动用了多久」这条记录。
+[[quest]]
+name = "p_startup_3min"
+title = "启动压在 3 分钟以内"
+desc = [
+	"启动时间是**加 mod 的隐性成本**：每加一组 mod 就该重测一次。",
+	"超过 3 分钟说明该查依赖与加载了（DESIGN.md §12 的指标）。",
+]
+icon = "minecraft:redstone_lamp"
+shape = "octagon"
+size = 1.75
+deps = ["p_modernfix"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "p_chunk_watch"
+title = "世界变大之后"
+desc = [
+	"玩久了之后，**磁盘与备份**会比性能更早成为问题：",
+	"· 定期备份（本包已配 Simple Backups）",
+	"· 用 Chunky 预生成远征要走的区域，避免边走边生成",
+	"· 清掉不再需要的老区域前，先确认没有人的东西在那里",
+]
+icon = "minecraft:chipped_anvil"
+shape = "circle"
+size = 1.2
+deps = ["p_lag_source"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：备份是服务器侧的文件操作（Simple Backups 配置），游戏里既没有物品也没有统计。
+[[quest]]
+name = "p_backup_before_big"
+title = "大改之前先备份"
+icon = "minecraft:chest"
+shape = "circle"
+size = 1.2
+deps = ["p_chunk_watch"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# ---------------- 簇 3：服务器侧 ----------------
+
+# checkmark：Lithium 改的是服务端游戏逻辑（AI、tick、寻路），实测注册表无该命名空间。
+[[quest]]
+name = "p_lithium"
+title = "游戏逻辑：Lithium"
+desc = [
+	"这一簇是**服务端侧**的：多人同服时，主线程上的活儿比客户端画面更容易把 TPS 拖下去。",
+	"这一簇的验收数字是常态 TPS ≥19.5 与 MSPT ≤30ms（DESIGN.md §12）。",
+]
+icon = "minecraft:piston"
+shape = "pentagon"
+size = 2.0
+deps = ["p_optimized"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：ServerCore 是服务端主线程优化，属于运行期行为，没有物品与统计。
+[[quest]]
+name = "p_servercore"
+title = "服务端主线程：ServerCore"
+icon = "minecraft:blast_furnace"
+shape = "circle"
+size = 1.2
+deps = ["p_lithium"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：Packet Fixer 修的是网络包兼容（大包/超长 NBT），是协议层的事。
+[[quest]]
+name = "p_packetfixer"
+title = "网络包兼容：Packet Fixer"
+icon = "minecraft:ender_pearl"
+shape = "circle"
+size = 1.2
+deps = ["p_lithium"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：Connectivity 修的是登录与连接的握手超时，发生在进世界之前，没有信号源。
+[[quest]]
+name = "p_connectivity"
+title = "连不上的那类问题：Connectivity"
+icon = "minecraft:compass"
+shape = "circle"
+size = 1.2
+deps = ["p_lithium"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：Clumps 合并经验球，是实体行为的改动，实测注册表无该命名空间。
+[[quest]]
+name = "p_clumps"
+title = "经验球合并：Clumps"
+icon = "minecraft:experience_bottle"
+shape = "circle"
+size = 1.2
+deps = ["p_lithium"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：Neruina 拦的是单个异常实体，是异常处理路径，没有物品与统计。
+[[quest]]
+name = "p_neruina"
+title = "坏实体不再拖全服：Neruina"
+icon = "minecraft:shield"
+shape = "circle"
+size = 1.2
+deps = ["p_lithium"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "p_lag_source"
+title = "卡顿的常见来源"
+desc = [
+	"按经验排序：**大量掉落物** › 大量实体（动物/怪）› 区块生成尚未完成 › 红石高频 › 存储网络过大。",
+	"先怀疑前两个——它们占了大多数情况。",
+]
+icon = "minecraft:hopper"
+shape = "circle"
+size = 1.2
+deps = ["p_graphics"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "p_drop_cleanup"
+title = "掉落物是头号卡顿源"
+icon = "minecraft:hopper"
+shape = "rsquare"
+deps = ["p_lag_source"]
+tasks = [
+	{ type = "item", item = "minecraft:hopper", count = 8 },
+]
+
+[[quest]]
+name = "p_entity_cap"
+title = "常驻实体不超过 300"
+icon = "minecraft:name_tag"
+shape = "circle"
+size = 1.2
+deps = ["p_drop_cleanup"]
+tasks = [
+	{ type = "item", item = "minecraft:name_tag", count = 4 },
+]
+
+[[quest]]
+name = "p_redstone_quiet"
+title = "常开的红石改成手动"
+icon = "minecraft:lever"
+shape = "circle"
+size = 1.2
+deps = ["p_drop_cleanup"]
+tasks = [
+	{ type = "item", item = "minecraft:lever", count = 4 },
+]
+
+# ---------------- 簇 4：诊断工具 ----------------
+
+# checkmark：Crash Assistant 是客户端侧的崩溃报告解读界面，实测注册表无 crash_assistant
+# 命名空间；它读的是崩溃报告文件，不是游戏内物品或统计。
+[[quest]]
+name = "p_crash_assistant"
+title = "崩溃先交给它读：Crash Assistant"
+desc = [
+	"诊断工具是这一章的落点：前面几簇讲「装了什么」，这一簇讲「出事之后怎么查」。",
+	"它的价值在崩溃那一刻——先看清是谁崩的，再决定删什么、退什么。",
+]
+icon = "minecraft:anvil"
+shape = "pentagon"
+size = 2.0
+deps = ["p_optimized"]
 tasks = [
 	{ type = "checkmark" },
 ]
@@ -78,36 +480,6 @@ tasks = [
 ]
 
 [[quest]]
-name = "p_graphics"
-title = "客户端画面设置"
-desc = [
-	"帧率低先调这三样（按收益排序）：渲染距离 → 模拟距离 → 阴影/云。",
-	"这个包用的是 Embeddium 系渲染器，视频设置里的选项比原版多。",
-]
-icon = "minecraft:painting"
-shape = "circle"
-size = 1.2
-deps = ["p_optimized"]
-tasks = [
-	{ type = "checkmark" },
-]
-
-[[quest]]
-name = "p_lag_source"
-title = "卡顿的常见来源"
-desc = [
-	"按经验排序：**大量掉落物** › 大量实体（动物/怪）› 区块生成尚未完成 › 红石高频 › 存储网络过大。",
-	"先怀疑前两个——它们占了大多数情况。",
-]
-icon = "minecraft:hopper"
-shape = "circle"
-size = 1.2
-deps = ["p_graphics"]
-tasks = [
-	{ type = "checkmark" },
-]
-
-[[quest]]
 name = "p_info_tools"
 title = "信息怎么看"
 desc = [
@@ -125,20 +497,30 @@ tasks = [
 ]
 
 [[quest]]
-name = "p_chunk_watch"
-title = "世界变大之后"
-desc = [
-	"玩久了之后，**磁盘与备份**会比性能更早成为问题：",
-	"· 定期备份（本包已配 Simple Backups）",
-	"· 用 Chunky 预生成远征要走的区域，避免边走边生成",
-	"· 清掉不再需要的老区域前，先确认没有人的东西在那里",
-]
-icon = "minecraft:chipped_anvil"
+name = "p_report_log"
+title = "把每次卡顿的结论记下来"
+icon = "minecraft:writable_book"
 shape = "circle"
 size = 1.2
-deps = ["p_lag_source"]
+deps = ["p_spark"]
 tasks = [
-	{ type = "checkmark" },
+	{ type = "item", item = "minecraft:writable_book" },
+]
+
+[[quest]]
+name = "p_budget_board"
+title = "四项指标贴在议事厅"
+desc = [
+	"预算写在纸上才有人看：四项数字贴在议事厅，谁都能对着查。",
+	"这一格是本章的收尾——以后每加一组 mod，都回到这里对一次账。",
+]
+icon = "minecraft:oak_sign"
+shape = "octagon"
+size = 1.75
+deps = ["p_tps", "p_report_log"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_sign", count = 4 },
+	{ type = "item", item = "minecraft:book", count = 2 },
 ]
 
 [[quest]]

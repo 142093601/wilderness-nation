@@ -1,0 +1,52 @@
+{
+	quest.745BF1B2179BC4AD.title: "指着方块就显示信息：Jade"
+	quest.745BF1B2179BC4AD.description: [
+	"这一簇解决一件事：**眼前这个东西是什么、它现在什么状态**。"
+	"Jade 是这里的第一块：不看它，很多方块只能靠试。"
+	]
+	quest.11D3BA7D409F73D6.title: "给 Jade 补信息源：Jade Addons"
+	quest.DC8AC5C6A13635E1.title: "F3 面板重排：BetterF3"
+	quest.1A0EE36D93AB82D5.title: "F3 的三个档位要记住"
+	quest.23B2C802AC50315C.title: "饥饿与饱和度读数：AppleSkin"
+	quest.32584F8922AD7F7A.title: "新捡到的东西会亮一下：Item Highlighter"
+	quest.DD821B125CB1C3A3.title: "提示框加边框：Legendary Tooltips"
+	quest.DBBBDD2C4C3CC0B9.title: "进度界面看全貌：Better Advancements"
+	quest.E1CCC53B5EBDCD6C.title: "聊天带头像：Chat Heads"
+	quest.995A4873EBEFEF29.title: "坐标要落到纸上"
+	quest.C7D30E30685775A6.title: "按住 Shift 对比两件装备"
+	quest.FB4CA1216DCCDABB.title: "快捷栏留一块表"
+	quest.BBE1A72B0501DC88.title: "按键冲突一查就知道：Controlling"
+	quest.BBE1A72B0501DC88.description: [
+	"这一簇解决另一件事：**手在键盘鼠标上顺不顺**。"
+	"装了几十个 mod 之后，键位冲突几乎是必然的，先能查，再谈改。"
+	]
+	quest.15306F5027E8E3BC.title: "鼠标拖拽整理背包：Mouse Tweaks"
+	quest.03E38864AC71F0F1.title: "合成台的三键：Crafting Tweaks"
+	quest.863AF45AA3E0026C.title: "背包常备工作台与箱子"
+	quest.4B879C12F095B94D.title: "快捷栏按用途排好"
+	quest.7E05A1CA63F5B5DA.title: "副手常备一面盾"
+	quest.F14D2BAFECA8C70E.title: "指个方向喊人：Ping Wheel"
+	quest.E95E3615AAD5AE2F.title: "皮肤不再是贴纸：3D Skin Layers"
+	quest.3210A6CD3DA6C3B4.title: "疾跑改成常开"
+	quest.8FDDD5EB4DCD97A7.title: "视场角按自己习惯调"
+	quest.808874C283E6988F.title: "鼠标灵敏度调到不飘"
+	quest.5FDCE62518001C9C.title: "自动跳跃开不开"
+	quest.DD4F631AC13687A1.title: "血量显示看得更准：Colorful Hearts"
+	quest.DD4F631AC13687A1.description: [
+	"这一簇解决第三件事：**同样的信息，能不能一眼看清**。"
+	"界面清楚与否直接影响判断速度，出事时尤其明显。"
+	]
+	quest.AD8BEF5BBD902E82.title: "界面缩放先调对"
+	quest.5754C03119C74409.title: "聊天框大小与背景"
+	quest.DCFC79045FE5B9E4.title: "打开字幕：把声音写成字"
+	quest.CD93A1E3598D5193.title: "受伤时画面别晃"
+	quest.84FF6F6521A4A373.title: "亮度调到自己够用"
+	quest.AC15E82EE57AA6FA.title: "粒子效果按需关小"
+	quest.B8272318C08A0424.title: "药水效果要认得出来"
+	quest.39CF0C7F9E6A05AE.title: "耐久数字看得见"
+	quest.646A356FDEAF804F.title: "信息、手感、可读性都到位"
+	quest.646A356FDEAF804F.description: [
+	"三簇都走过一遍之后，这一章就算翻篇了。"
+	"以后再遇到「看不出来」或者「按不动」的问题，回到这三簇里翻。"
+	]
+}

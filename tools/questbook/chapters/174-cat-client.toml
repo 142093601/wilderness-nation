@@ -1,0 +1,454 @@
+# 类目 · 信息与界面
+#
+# 本章的 mod（13 个 + 1 个扩展）：
+#   看信息   Jade（+ Jade Addons）· BetterF3 · AppleSkin · Item Highlighter ·
+#            Legendary Tooltips · Better Advancements · Chat Heads
+#   操作手感 Controlling · Mouse Tweaks · Crafting Tweaks · Ping Wheel · 3D Skin Layers
+#   可读性   Colorful Hearts
+#
+# 与其它章的分工：
+#   · Xaero 小地图/世界地图与区域标题 = 150-cat-explore
+#   · JEI 配方查询与贸易辅助        = 134-cat-trade
+#   · 性能、崩溃与卡顿排查          = 170-cat-perf
+#   · 本章                          = 屏幕上的信息怎么读、操作怎么省事
+#
+# ⚠️ 本章的判据来源：
+#   本章 mod **全是纯客户端界面 mod**，注册表 100 个命名空间里一个都没有
+#   （实测 `python tools/item_index.py --stats`；其中多项在 modlist.tsv 里还是 plan 状态）。
+#   界面开关既没有注册物品，也不进任何统计，所以 mod 条目一律 checkmark 并在每条上方
+#   写明理由；凡能落到「手上真的拿着某样东西」的信息类条目，一律用实物判据。
+
+key = "cat_client"
+title = "信息与界面"
+subtitle = "屏幕上该看见什么、手上该怎么操作"
+group = "category"
+icon = "minecraft:item_frame"
+order_index = 65
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 簇 1：看信息 ----------------
+
+# checkmark：Jade 是纯客户端界面 mod，注册表里没有 jade 命名空间（实测 0 物品），
+# 「指着方块弹面板」这个动作没有物品或统计信号。
+[[quest]]
+name = "c_jade"
+title = "指着方块就显示信息：Jade"
+desc = [
+	"这一簇解决一件事：**眼前这个东西是什么、它现在什么状态**。",
+	"Jade 是这里的第一块：不看它，很多方块只能靠试。",
+]
+icon = "minecraft:spyglass"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：Jade Addons 是 Jade 的信息扩展，同为客户端界面，无物品无统计。
+[[quest]]
+name = "c_jade_addons"
+title = "给 Jade 补信息源：Jade Addons"
+icon = "minecraft:item_frame"
+shape = "circle"
+size = 1.2
+deps = ["c_jade"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：BetterF3 只重排 F3 面板，没有物品也没有可统计的行为。
+[[quest]]
+name = "c_betterf3"
+title = "F3 面板重排：BetterF3"
+icon = "minecraft:paper"
+shape = "circle"
+size = 1.2
+deps = ["c_jade"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：F3 的分档显示是按键切换的客户端行为，游戏不记录。
+[[quest]]
+name = "c_debug_keys"
+title = "F3 的三个档位要记住"
+icon = "minecraft:observer"
+shape = "circle"
+size = 1.2
+deps = ["c_betterf3"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：AppleSkin 加的是饥饿度与饱和度的读数显示，是界面层，无物品无统计。
+[[quest]]
+name = "c_appleskin"
+title = "饥饿与饱和度读数：AppleSkin"
+icon = "minecraft:bread"
+shape = "circle"
+size = 1.2
+deps = ["c_jade"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：Item Highlighter 让新捡到的物品在背包里亮一下，是界面效果。
+[[quest]]
+name = "c_item_highlighter"
+title = "新捡到的东西会亮一下：Item Highlighter"
+icon = "minecraft:diamond"
+shape = "circle"
+size = 1.2
+deps = ["c_jade"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：Legendary Tooltips 美化的是提示框边框，纯界面。
+[[quest]]
+name = "c_legendary_tooltips"
+title = "提示框加边框：Legendary Tooltips"
+icon = "minecraft:book"
+shape = "circle"
+size = 1.2
+deps = ["c_item_highlighter"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：Better Advancements 只改进度界面的排版，进度本身照旧由原版记录。
+[[quest]]
+name = "c_better_advancements"
+title = "进度界面看全貌：Better Advancements"
+icon = "minecraft:bookshelf"
+shape = "circle"
+size = 1.2
+deps = ["c_jade"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：Chat Heads 在聊天行首画玩家头像，是客户端渲染，没有物品与统计。
+[[quest]]
+name = "c_chat_heads"
+title = "聊天带头像：Chat Heads"
+icon = "minecraft:player_head"
+shape = "circle"
+size = 1.2
+deps = ["c_jade"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "c_coord_book"
+title = "坐标要落到纸上"
+icon = "minecraft:writable_book"
+shape = "circle"
+size = 1.2
+deps = ["c_debug_keys"]
+tasks = [
+	{ type = "item", item = "minecraft:writable_book" },
+]
+
+# checkmark：按住 Shift 看对比是原版行为，模组只改提示框的外观，没有信号源。
+[[quest]]
+name = "c_tooltip_compare"
+title = "按住 Shift 对比两件装备"
+icon = "minecraft:iron_pickaxe"
+shape = "circle"
+size = 1.2
+deps = ["c_legendary_tooltips"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "c_clock_item"
+title = "快捷栏留一块表"
+icon = "minecraft:clock"
+shape = "circle"
+size = 1.2
+deps = ["c_coord_book"]
+tasks = [
+	{ type = "item", item = "minecraft:clock" },
+]
+
+# ---------------- 簇 2：操作手感 ----------------
+
+# checkmark：Controlling 是一个按键绑定管理界面，注册表里没有它的命名空间；
+# 「改键位」这个动作游戏不记录。
+[[quest]]
+name = "c_controlling"
+title = "按键冲突一查就知道：Controlling"
+desc = [
+	"这一簇解决另一件事：**手在键盘鼠标上顺不顺**。",
+	"装了几十个 mod 之后，键位冲突几乎是必然的，先能查，再谈改。",
+]
+icon = "minecraft:lever"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：Mouse Tweaks 改的是鼠标拖拽行为，是客户端输入层，无物品无统计。
+[[quest]]
+name = "c_mousetweaks"
+title = "鼠标拖拽整理背包：Mouse Tweaks"
+icon = "minecraft:hopper"
+shape = "circle"
+size = 1.2
+deps = ["c_controlling"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "c_craftingtweaks"
+title = "合成台的三键：Crafting Tweaks"
+icon = "minecraft:crafting_table"
+shape = "rsquare"
+deps = ["c_mousetweaks"]
+tasks = [
+	{ type = "stat", stat = "minecraft:interact_with_crafting_table", value = 30 },
+]
+
+[[quest]]
+name = "c_workbench_kit"
+title = "背包常备工作台与箱子"
+icon = "minecraft:chest"
+shape = "circle"
+size = 1.2
+deps = ["c_craftingtweaks"]
+tasks = [
+	{ type = "item", item = "minecraft:crafting_table" },
+	{ type = "item", item = "minecraft:chest" },
+]
+
+[[quest]]
+name = "c_hotbar_layout"
+title = "快捷栏按用途排好"
+icon = "minecraft:torch"
+shape = "rsquare"
+deps = ["c_controlling"]
+tasks = [
+	{ type = "item", item = "minecraft:torch", count = 16 },
+	{ type = "item", item = "minecraft:cooked_beef", count = 8 },
+]
+
+[[quest]]
+name = "c_offhand_shield"
+title = "副手常备一面盾"
+icon = "minecraft:shield"
+shape = "circle"
+size = 1.2
+deps = ["c_hotbar_layout"]
+tasks = [
+	{ type = "item", item = "minecraft:shield" },
+]
+
+# checkmark：Ping Wheel 是客户端的方向标记轮盘，标记不进世界数据，没有信号源。
+[[quest]]
+name = "c_ping_wheel"
+title = "指个方向喊人：Ping Wheel"
+icon = "minecraft:target"
+shape = "circle"
+size = 1.2
+deps = ["c_controlling"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：3D Skin Layers 改的是玩家皮肤的渲染层数，纯客户端表现。
+[[quest]]
+name = "c_3dskinlayers"
+title = "皮肤不再是贴纸：3D Skin Layers"
+icon = "minecraft:armor_stand"
+shape = "circle"
+size = 1.2
+deps = ["c_controlling"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：疾跑常开是按键设置项，游戏不记录「是否开着疾跑锁定」。
+[[quest]]
+name = "c_sprint_toggle"
+title = "疾跑改成常开"
+icon = "minecraft:firework_rocket"
+shape = "circle"
+size = 1.2
+deps = ["c_controlling"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：视场角是客户端画面设置，没有物品或统计。
+[[quest]]
+name = "c_fov_setting"
+title = "视场角按自己习惯调"
+icon = "minecraft:glass"
+shape = "circle"
+size = 1.2
+deps = ["c_sprint_toggle"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：鼠标灵敏度是客户端输入设置。
+[[quest]]
+name = "c_mouse_sensitivity"
+title = "鼠标灵敏度调到不飘"
+icon = "minecraft:compass"
+shape = "circle"
+size = 1.2
+deps = ["c_fov_setting"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：自动跳跃是原版客户端开关，没有信号源。
+[[quest]]
+name = "c_auto_jump"
+title = "自动跳跃开不开"
+icon = "minecraft:scaffolding"
+shape = "circle"
+size = 1.2
+deps = ["c_sprint_toggle"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# ---------------- 簇 3：界面可读性 ----------------
+
+# checkmark：Colorful Hearts 重画的是血量图标，注册表里没有它的命名空间，纯界面。
+[[quest]]
+name = "c_colorful_hearts"
+title = "血量显示看得更准：Colorful Hearts"
+desc = [
+	"这一簇解决第三件事：**同样的信息，能不能一眼看清**。",
+	"界面清楚与否直接影响判断速度，出事时尤其明显。",
+]
+icon = "minecraft:golden_apple"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：界面缩放是客户端设置项。
+[[quest]]
+name = "c_gui_scale"
+title = "界面缩放先调对"
+icon = "minecraft:painting"
+shape = "circle"
+size = 1.2
+deps = ["c_colorful_hearts"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：聊天框大小与背景是原版聊天设置。
+[[quest]]
+name = "c_chat_size"
+title = "聊天框大小与背景"
+icon = "minecraft:oak_sign"
+shape = "circle"
+size = 1.2
+deps = ["c_gui_scale"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：字幕是原版辅助功能开关，游戏不记录是否开启。
+[[quest]]
+name = "c_subtitles"
+title = "打开字幕：把声音写成字"
+icon = "minecraft:bell"
+shape = "circle"
+size = 1.2
+deps = ["c_colorful_hearts"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：受伤视角晃动是原版辅助功能设置，没有信号源。
+[[quest]]
+name = "c_damage_tilt"
+title = "受伤时画面别晃"
+icon = "minecraft:anvil"
+shape = "circle"
+size = 1.2
+deps = ["c_colorful_hearts"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：亮度是客户端视频设置。
+[[quest]]
+name = "c_brightness"
+title = "亮度调到自己够用"
+icon = "minecraft:torch"
+shape = "circle"
+size = 1.2
+deps = ["c_colorful_hearts"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：粒子密度是客户端视频设置，没有物品或统计。
+[[quest]]
+name = "c_particles_setting"
+title = "粒子效果按需关小"
+icon = "minecraft:campfire"
+shape = "circle"
+size = 1.2
+deps = ["c_brightness"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+[[quest]]
+name = "c_potion_read"
+title = "药水效果要认得出来"
+icon = "minecraft:potion"
+shape = "circle"
+size = 1.2
+deps = ["c_colorful_hearts"]
+tasks = [
+	{ type = "item", item = "minecraft:potion" },
+]
+
+# checkmark：F3+H 显示耐久是原版调试开关，游戏不记录它有没有开。
+[[quest]]
+name = "c_durability_read"
+title = "耐久数字看得见"
+icon = "minecraft:chipped_anvil"
+shape = "circle"
+size = 1.2
+deps = ["c_colorful_hearts"]
+tasks = [
+	{ type = "checkmark" },
+]
+
+# checkmark：本章终局格 —— 界面这类东西没有交付物，也没有可检测的完成事件。
+[[quest]]
+name = "c_client_done"
+title = "信息、手感、可读性都到位"
+desc = [
+	"三簇都走过一遍之后，这一章就算翻篇了。",
+	"以后再遇到「看不出来」或者「按不动」的问题，回到这三簇里翻。",
+]
+icon = "minecraft:knowledge_book"
+shape = "hexagon"
+size = 2.5
+deps = ["c_clock_item", "c_auto_jump", "c_durability_read"]
+tasks = [
+	{ type = "checkmark" },
+]
+rewards = [
+	{ type = "xp", xp = 40 },
+	{ type = "toast" },
+]

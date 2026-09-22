@@ -7,7 +7,7 @@
 		id: "handcrafted:acacia_couch"
 	}
 	id: "4DCF8BEF6FD0004E"
-	order_index: 31
+	order_index: 52
 	quest_links: [ ]
 	quests: [
 	{
@@ -15,6 +15,17 @@
 			id: "handcrafted:acacia_couch"
 		}
 		id: "D733059AE85E72DC"
+		rewards: [
+		{
+			xp: 30
+			id: "EC90D80177B67EC0"
+			type: "xp"
+		}
+		{
+			id: "4FDED9DE7E16A792"
+			type: "toast"
+		}
+		]
 		shape: "pentagon"
 		size: 2.0d
 		tasks: [
@@ -39,27 +50,6 @@
 		"D733059AE85E72DC"
 		]
 		icon: {
-			id: "mcwfurnitures:acacia_drawer"
-		}
-		id: "B6237EA715068A91"
-		shape: "rsquare"
-		size: 1.5d
-		tasks: [
-		{
-			item: "mcwfurnitures:acacia_drawer"
-			count: 4
-			id: "75A0403E92D9E2D9"
-			type: "item"
-		}
-		]
-		x: -5.32d
-		y: -1.75d
-	}
-	{
-		dependencies: [
-		"D733059AE85E72DC"
-		]
-		icon: {
 			id: "handcrafted:acacia_fancy_bed"
 		}
 		id: "9A6D0286088B564D"
@@ -72,19 +62,354 @@
 			type: "item"
 		}
 		]
-		x: -2.55d
+		x: 0.0d
 		y: -1.75d
 	}
 	{
 		dependencies: [
-		"D733059AE85E72DC"
+		"9A6D0286088B564D"
+		]
+		icon: {
+			id: "mcwfurnitures:oak_chair"
+		}
+		id: "ECD8210A94CAC72B"
+		shape: "square"
+		size: 1.5d
+		tasks: [
+		{
+			item: "mcwfurnitures:oak_chair"
+			count: 4
+			id: "D198AAC04DEF95DB"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"ECD8210A94CAC72B"
+		]
+		icon: {
+			id: "mcwfurnitures:oak_table"
+		}
+		id: "705DDFBF283003D2"
+		shape: "rsquare"
+		size: 1.75d
+		tasks: [
+		{
+			item: "mcwfurnitures:oak_table"
+			id: "9740A300FB606DAA"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"705DDFBF283003D2"
+		]
+		icon: {
+			id: "another_furniture:oak_chair"
+		}
+		id: "896FF8287307C250"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "another_furniture:oak_chair"
+			count: 4
+			id: "CC037BF69562334D"
+			type: "item"
+		}
+		{
+			item: "another_furniture:oak_bench"
+			count: 2
+			id: "C05FEA6C38250BA4"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"896FF8287307C250"
+		]
+		icon: {
+			id: "mcwfurnitures:acacia_drawer"
+		}
+		id: "B6237EA715068A91"
+		shape: "rsquare"
+		size: 1.75d
+		tasks: [
+		{
+			item: "mcwfurnitures:acacia_drawer"
+			count: 4
+			id: "75A0403E92D9E2D9"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"B6237EA715068A91"
+		]
+		icon: {
+			id: "another_furniture:oak_drawer"
+		}
+		id: "BADD45487F330CE5"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "another_furniture:oak_drawer"
+			id: "0F73995A364C48E6"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -10.5d
+	}
+	{
+		dependencies: [
+		"BADD45487F330CE5"
+		]
+		icon: {
+			id: "mcwfurnitures:oak_bookshelf_cupboard"
+		}
+		id: "AD4C3F0525832DA1"
+		shape: "rsquare"
+		size: 1.75d
+		tasks: [
+		{
+			item: "mcwfurnitures:oak_bookshelf_cupboard"
+			id: "EF1C8176CF9667C6"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -12.25d
+	}
+	{
+		dependencies: [
+		"AD4C3F0525832DA1"
+		]
+		icon: {
+			id: "mcwfurnitures:oak_wardrobe"
+		}
+		id: "BB59F6D070318911"
+		shape: "rsquare"
+		size: 1.75d
+		tasks: [
+		{
+			item: "mcwfurnitures:oak_wardrobe"
+			id: "692D6539D4C4836C"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -14.0d
+	}
+	{
+		dependencies: [
+		"BB59F6D070318911"
+		]
+		icon: {
+			id: "handcrafted:oak_nightstand"
+		}
+		id: "669016899A0B8FD6"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "handcrafted:oak_nightstand"
+			count: 2
+			id: "8CC4FBBDB123B460"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -15.75d
+	}
+	{
+		dependencies: [
+		"669016899A0B8FD6"
+		]
+		icon: {
+			id: "mcwfurnitures:oak_desk"
+		}
+		id: "C507F426C91016CF"
+		rewards: [
+		{
+			xp: 40
+			id: "ABC1A847F4599C4E"
+			type: "xp"
+		}
+		{
+			id: "23670A879144B9B1"
+			type: "toast"
+		}
+		]
+		shape: "octagon"
+		size: 1.75d
+		tasks: [
+		{
+			item: "mcwfurnitures:oak_desk"
+			id: "17B301B9C23CAA20"
+			type: "item"
+		}
+		{
+			item: "handcrafted:oak_shelf"
+			count: 2
+			id: "8BF3DAAD5E7473D7"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -17.5d
+	}
+	{
+		dependencies: [
+		"C507F426C91016CF"
+		]
+		icon: {
+			id: "another_furniture:oak_table"
+		}
+		id: "281736F7EB0533F1"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "another_furniture:oak_table"
+			id: "F6AA752B30C41681"
+			type: "item"
+		}
+		{
+			item: "another_furniture:oak_small_shelf"
+			id: "783B1B2FBA1B79EB"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -19.25d
+	}
+	{
+		dependencies: [
+		"281736F7EB0533F1"
+		]
+		icon: {
+			id: "mcwfurnitures:oak_glass_table"
+		}
+		id: "0C3642DDAF55D861"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mcwfurnitures:oak_glass_table"
+			id: "9A567CA665311EA1"
+			type: "item"
+		}
+		{
+			item: "mcwfurnitures:oak_coffee_table"
+			id: "429EAEFBAF7453B0"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -21.0d
+	}
+	{
+		dependencies: [
+		"0C3642DDAF55D861"
+		]
+		icon: {
+			id: "another_furniture:white_stool"
+		}
+		id: "3D10D432519377F1"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "another_furniture:white_stool"
+			count: 2
+			id: "D1F969EC7103A8C0"
+			type: "item"
+		}
+		{
+			item: "another_furniture:white_tall_stool"
+			count: 2
+			id: "586B526032A9761D"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -22.75d
+	}
+	{
+		dependencies: [
+		"3D10D432519377F1"
+		]
+		icon: {
+			id: "mcwfurnitures:oak_modern_chair"
+		}
+		id: "7D8F0F04666C1F91"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mcwfurnitures:oak_modern_chair"
+			count: 2
+			id: "638478B7B0F2A91B"
+			type: "item"
+		}
+		{
+			item: "mcwfurnitures:oak_modern_desk"
+			id: "36703D1BA6DD6922"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -24.5d
+	}
+	{
+		dependencies: [
+		"7D8F0F04666C1F91"
+		]
+		icon: {
+			id: "another_furniture:white_sofa"
+		}
+		id: "2ED92F77D6B027E9"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "another_furniture:white_sofa"
+			id: "19497C30E668C20B"
+			type: "item"
+		}
+		{
+			item: "handcrafted:bench"
+			id: "9748CFCBAFF67EDD"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -26.25d
+	}
+	{
+		dependencies: [
+		"2ED92F77D6B027E9"
 		]
 		icon: {
 			id: "refurbished_furniture:acacia_kitchen_drawer"
 		}
 		id: "27D5AA91D24437AE"
-		shape: "circle"
-		size: 1.2d
+		shape: "rsquare"
+		size: 1.75d
 		tasks: [
 		{
 			item: "refurbished_furniture:acacia_kitchen_drawer"
@@ -99,18 +424,44 @@
 		}
 		]
 		x: 0.0d
-		y: -1.75d
+		y: -28.0d
 	}
 	{
 		dependencies: [
-		"D733059AE85E72DC"
+		"27D5AA91D24437AE"
+		]
+		icon: {
+			id: "handcrafted:oak_counter"
+		}
+		id: "37BE71C86D6E6607"
+		shape: "square"
+		size: 1.5d
+		tasks: [
+		{
+			item: "handcrafted:oak_counter"
+			count: 4
+			id: "26D3A2BC0206CF48"
+			type: "item"
+		}
+		{
+			item: "refurbished_furniture:acacia_cutting_board"
+			id: "160AA12C926E54B5"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -29.75d
+	}
+	{
+		dependencies: [
+		"37BE71C86D6E6607"
 		]
 		icon: {
 			id: "minecraft:flower_pot"
 		}
 		id: "36DFA8F8FBBEBF7A"
 		shape: "rsquare"
-		size: 1.5d
+		size: 1.75d
 		tasks: [
 		{
 			item: "minecraft:flower_pot"
@@ -119,40 +470,46 @@
 			type: "item"
 		}
 		]
-		x: 2.78d
-		y: -1.75d
-	}
-	{
-		dependencies: [
-		"D733059AE85E72DC"
-		]
-		icon: {
-			id: "another_furniture:acacia_chair"
-		}
-		id: "FED8DD902A793233"
-		shape: "circle"
-		size: 1.2d
-		tasks: [
-		{
-			item: "another_furniture:acacia_chair"
-			count: 4
-			id: "DF27B84BACB46263"
-			type: "item"
-		}
-		]
-		x: 5.55d
-		y: -1.75d
+		x: 0.0d
+		y: -31.5d
 	}
 	{
 		dependencies: [
 		"36DFA8F8FBBEBF7A"
 		]
 		icon: {
+			id: "another_furniture:white_lamp"
+		}
+		id: "FED8DD902A793233"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "another_furniture:white_lamp"
+			count: 4
+			id: "DF27B84BACB46263"
+			type: "item"
+		}
+		{
+			item: "another_furniture:oak_chair"
+			count: 2
+			id: "2A2C868C3252D78D"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -33.25d
+	}
+	{
+		dependencies: [
+		"FED8DD902A793233"
+		]
+		icon: {
 			id: "supplementaries:globe"
 		}
 		id: "25B6A12B023C4D0F"
 		shape: "rsquare"
-		size: 1.5d
+		size: 1.75d
 		tasks: [
 		{
 			item: "supplementaries:globe"
@@ -160,54 +517,39 @@
 			type: "item"
 		}
 		]
-		x: -2.55d
-		y: -3.5d
+		x: -2.25d
+		y: -35.0d
 	}
 	{
 		dependencies: [
 		"25B6A12B023C4D0F"
 		]
 		icon: {
-			id: "minecraft:item_frame"
+			id: "another_furniture:white_curtain"
 		}
-		id: "CD55146A6D3A33EE"
+		id: "43ED67D234752E9C"
 		shape: "circle"
 		size: 1.2d
 		tasks: [
 		{
-			item: "minecraft:item_frame"
-			count: 8
-			id: "4D2F7FB801EFA824"
+			item: "another_furniture:white_curtain"
+			count: 4
+			id: "C707E2072CFF7B91"
 			type: "item"
 		}
-		]
-		x: 0.0d
-		y: -5.25d
-	}
-	{
-		dependencies: [
-		"B6237EA715068A91"
-		]
-		icon: {
-			id: "minecraft:bookshelf"
-		}
-		id: "0974B8AEECED1DF0"
-		shape: "circle"
-		size: 1.2d
-		tasks: [
 		{
-			item: "minecraft:bookshelf"
-			count: 16
-			id: "79A1FD7AE38AA509"
+			item: "another_furniture:oak_shutter"
+			count: 2
+			id: "E55E7F6CACB36F3D"
 			type: "item"
 		}
 		]
-		x: 0.23d
-		y: -3.5d
+		x: -1.27d
+		y: -36.75d
 	}
 	{
 		dependencies: [
-		"B6237EA715068A91"
+		"43ED67D234752E9C"
 		]
 		icon: {
 			id: "minecraft:white_carpet"
@@ -223,36 +565,594 @@
 			type: "item"
 		}
 		]
-		x: 2.77d
-		y: -3.5d
+		x: -1.88d
+		y: -38.5d
 	}
 	{
 		dependencies: [
-		"B6237EA715068A91"
 		"9A6D0286088B564D"
+		"D733059AE85E72DC"
+		"705DDFBF283003D2"
+		"7D8F0F04666C1F91"
+		"37BE71C86D6E6607"
 		"27D5AA91D24437AE"
+		"669016899A0B8FD6"
+		"BB59F6D070318911"
+		"36DFA8F8FBBEBF7A"
 		"FED8DD902A793233"
-		"CD55146A6D3A33EE"
-		"0974B8AEECED1DF0"
-		"974D73838A71A4C1"
 		]
 		icon: {
-			id: "minecraft:white_bed"
+			id: "mcwfurnitures:oak_wardrobe"
 		}
-		id: "CE7EF4EFA7439DEF"
+		id: "6171705C9DAA6D53"
 		rewards: [
 		{
-			xp: 60
-			id: "29F483441B5DC46A"
+			xp: 90
+			id: "4C444A4EF3EA0EF6"
 			type: "xp"
 		}
 		{
-			id: "F903ED7E7E8E6FC5"
+			id: "482EAB9BC3BEF8E5"
 			type: "toast"
 		}
 		]
 		shape: "hexagon"
 		size: 2.5d
+		tasks: [
+		{
+			item: "mcwfurnitures:oak_wardrobe"
+			id: "230A09CA06B8D696"
+			type: "item"
+		}
+		{
+			item: "mcwfurnitures:oak_table"
+			id: "1829F8DE5C7AFFE0"
+			type: "item"
+		}
+		{
+			item: "handcrafted:oak_fancy_bed"
+			id: "793162957A65B84F"
+			type: "item"
+		}
+		{
+			item: "another_furniture:white_sofa"
+			id: "BB83544CC9590B9D"
+			type: "item"
+		}
+		{
+			item: "another_furniture:oak_grandfather_clock"
+			id: "D61719C9A2F2455A"
+			type: "item"
+		}
+		]
+		x: 1.69d
+		y: -35.0d
+	}
+	{
+		dependencies: [
+		"6171705C9DAA6D53"
+		]
+		icon: {
+			id: "mcwfurnitures:oak_bookshelf"
+		}
+		id: "4354C480FB4AA47C"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mcwfurnitures:oak_bookshelf"
+			count: 4
+			id: "04BD175747760CCA"
+			type: "item"
+		}
+		]
+		x: 1.27d
+		y: -36.75d
+	}
+	{
+		dependencies: [
+		"4354C480FB4AA47C"
+		]
+		icon: {
+			id: "refurbished_furniture:light_toaster"
+		}
+		id: "76B8349DCE023C6C"
+		rewards: [
+		{
+			xp: 30
+			id: "358F053A3935143C"
+			type: "xp"
+		}
+		{
+			id: "790FBABE422C92C1"
+			type: "toast"
+		}
+		]
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "refurbished_furniture:light_toaster"
+			id: "676C4E953436ACEA"
+			type: "item"
+		}
+		{
+			item: "refurbished_furniture:bread_slice"
+			count: 4
+			id: "5652E62686EDE115"
+			type: "item"
+		}
+		]
+		x: 1.27d
+		y: -38.5d
+	}
+	{
+		dependencies: [
+		"76B8349DCE023C6C"
+		]
+		icon: {
+			id: "refurbished_furniture:light_microwave"
+		}
+		id: "1A0A6050782A3295"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "refurbished_furniture:light_microwave"
+			id: "D0BBFAD0A9410AA6"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -40.25d
+	}
+	{
+		dependencies: [
+		"1A0A6050782A3295"
+		]
+		icon: {
+			id: "refurbished_furniture:light_fridge"
+		}
+		id: "D6EFE44DEBE81F61"
+		shape: "rsquare"
+		size: 1.75d
+		tasks: [
+		{
+			item: "refurbished_furniture:light_fridge"
+			id: "405D4AD37E4DE3F4"
+			type: "item"
+		}
+		{
+			item: "refurbished_furniture:light_freezer"
+			id: "1F460DCB6AE24054"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -42.0d
+	}
+	{
+		dependencies: [
+		"D6EFE44DEBE81F61"
+		]
+		icon: {
+			id: "refurbished_furniture:light_stove"
+		}
+		id: "E60750599D14C58A"
+		shape: "rsquare"
+		size: 1.75d
+		tasks: [
+		{
+			item: "refurbished_furniture:light_stove"
+			id: "1615F1512DACEBE9"
+			type: "item"
+		}
+		{
+			item: "refurbished_furniture:light_range_hood"
+			id: "CC44EB577184CF39"
+			type: "item"
+		}
+		{
+			item: "handcrafted:kitchen_hood_pipe"
+			count: 4
+			id: "6BE131E78C4CE3E2"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -43.75d
+	}
+	{
+		dependencies: [
+		"E60750599D14C58A"
+		]
+		icon: {
+			id: "refurbished_furniture:white_bath"
+		}
+		id: "17ED82D040760A6C"
+		shape: "rsquare"
+		size: 1.75d
+		tasks: [
+		{
+			item: "refurbished_furniture:white_bath"
+			id: "4ACA3885ED683FA0"
+			type: "item"
+		}
+		{
+			item: "refurbished_furniture:white_basin"
+			id: "18AB1D60A1FCCECA"
+			type: "item"
+		}
+		{
+			item: "refurbished_furniture:white_toilet"
+			id: "CB279EA9BD407249"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -45.5d
+	}
+	{
+		dependencies: [
+		"17ED82D040760A6C"
+		]
+		icon: {
+			id: "refurbished_furniture:oak_storage_cabinet"
+		}
+		id: "39D3A70F7E1EC76F"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "refurbished_furniture:oak_storage_cabinet"
+			count: 2
+			id: "0B6033E1A46AED7B"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -47.25d
+	}
+	{
+		dependencies: [
+		"39D3A70F7E1EC76F"
+		]
+		icon: {
+			id: "refurbished_furniture:oak_light_ceiling_fan"
+		}
+		id: "F527148B0EA14DD3"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "refurbished_furniture:oak_light_ceiling_fan"
+			id: "62239131817EF8E5"
+			type: "item"
+		}
+		{
+			item: "refurbished_furniture:light_ceiling_light"
+			count: 4
+			id: "B09040FC5F222646"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -49.0d
+	}
+	{
+		dependencies: [
+		"F527148B0EA14DD3"
+		]
+		icon: {
+			id: "refurbished_furniture:light_lightswitch"
+		}
+		id: "421DC53DF7F37761"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "refurbished_furniture:light_lightswitch"
+			count: 4
+			id: "884EB4BDF1F898D2"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -50.75d
+	}
+	{
+		dependencies: [
+		"421DC53DF7F37761"
+		]
+		icon: {
+			id: "refurbished_furniture:oak_mail_box"
+		}
+		id: "2D16510A91D0CF77"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "refurbished_furniture:oak_mail_box"
+			id: "3FB00CD2E2736550"
+			type: "item"
+		}
+		{
+			item: "refurbished_furniture:post_box"
+			id: "9A0DC35DF84AA876"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -52.5d
+	}
+	{
+		dependencies: [
+		"2D16510A91D0CF77"
+		]
+		icon: {
+			id: "refurbished_furniture:red_sofa"
+		}
+		id: "548A7B207A37FCE7"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "refurbished_furniture:red_sofa"
+			id: "E44848EDF43ED8EA"
+			type: "item"
+		}
+		{
+			item: "another_furniture:red_sofa"
+			id: "5858EE893A915ADC"
+			type: "item"
+		}
+		{
+			item: "another_furniture:red_awning"
+			count: 2
+			id: "02B9344D56191C06"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -54.25d
+	}
+	{
+		dependencies: [
+		"548A7B207A37FCE7"
+		]
+		icon: {
+			id: "handcrafted:white_sheet"
+		}
+		id: "DDF38DD68A25A21B"
+		shape: "square"
+		size: 1.5d
+		tasks: [
+		{
+			item: "handcrafted:white_sheet"
+			count: 2
+			id: "381CFE02EB03B511"
+			type: "item"
+		}
+		{
+			item: "handcrafted:white_cushion"
+			count: 4
+			id: "D3368532ABB9B2E4"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -56.0d
+	}
+	{
+		dependencies: [
+		"DDF38DD68A25A21B"
+		]
+		icon: {
+			id: "mcwfurnitures:oak_drawer_counter"
+		}
+		id: "A5CE106855C14271"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mcwfurnitures:oak_drawer_counter"
+			id: "74523AF224C60D38"
+			type: "item"
+		}
+		{
+			item: "mcwfurnitures:oak_cupboard_counter"
+			id: "38EE9907BB7D3DA6"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -57.75d
+	}
+	{
+		dependencies: [
+		"A5CE106855C14271"
+		]
+		icon: {
+			id: "another_furniture:white_lamp"
+		}
+		id: "5D6F34806CA245BE"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "another_furniture:white_lamp"
+			count: 4
+			id: "87F0937A51DCFB64"
+			type: "item"
+		}
+		{
+			item: "another_furniture:lamp_connector"
+			count: 2
+			id: "6886A721F5B6831E"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -59.5d
+	}
+	{
+		dependencies: [
+		"5D6F34806CA245BE"
+		]
+		icon: {
+			id: "handcrafted:blaze_trophy"
+		}
+		id: "F3833E47F34450D2"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "handcrafted:blaze_trophy"
+			id: "3184CFE0F6448F97"
+			type: "item"
+		}
+		{
+			item: "handcrafted:skeleton_trophy"
+			id: "2DDDE921AF33A997"
+			type: "item"
+		}
+		{
+			item: "handcrafted:spider_trophy"
+			id: "1C1F17460B9FE26F"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -61.25d
+	}
+	{
+		dependencies: [
+		"F3833E47F34450D2"
+		]
+		icon: {
+			id: "minecraft:item_frame"
+		}
+		id: "CD55146A6D3A33EE"
+		shape: "rsquare"
+		size: 1.75d
+		tasks: [
+		{
+			item: "minecraft:item_frame"
+			count: 8
+			id: "4D2F7FB801EFA824"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -63.0d
+	}
+	{
+		dependencies: [
+		"CD55146A6D3A33EE"
+		]
+		icon: {
+			id: "handcrafted:stackable_book"
+		}
+		id: "F5871409CE46C3F3"
+		shape: "square"
+		size: 1.5d
+		tasks: [
+		{
+			item: "handcrafted:stackable_book"
+			count: 8
+			id: "B3F343A6D5730C5B"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -64.75d
+	}
+	{
+		dependencies: [
+		"F5871409CE46C3F3"
+		]
+		icon: {
+			id: "handcrafted:white_crockery_combo"
+		}
+		id: "0BDF676C6ACDBC1D"
+		shape: "square"
+		size: 1.5d
+		tasks: [
+		{
+			item: "handcrafted:white_crockery_combo"
+			id: "8517B79EE310A014"
+			type: "item"
+		}
+		{
+			item: "refurbished_furniture:oak_storage_jar"
+			count: 4
+			id: "0FA7FA6EF84A2AFB"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -66.5d
+	}
+	{
+		dependencies: [
+		"0BDF676C6ACDBC1D"
+		]
+		icon: {
+			id: "refurbished_furniture:television"
+		}
+		id: "D0B0C04BB879A5C4"
+		shape: "rsquare"
+		size: 1.75d
+		tasks: [
+		{
+			item: "refurbished_furniture:television"
+			id: "60F1810FC02812BD"
+			type: "item"
+		}
+		{
+			item: "refurbished_furniture:workbench"
+			id: "9A1B388AFDC9D7CC"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -68.25d
+	}
+	{
+		dependencies: [
+		"D0B0C04BB879A5C4"
+		]
+		icon: {
+			id: "another_furniture:oak_grandfather_clock"
+		}
+		id: "E18B62EE790C7F81"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "another_furniture:oak_grandfather_clock"
+			id: "0E825DFA53D154EE"
+			type: "item"
+		}
+		{
+			item: "another_furniture:service_bell"
+			id: "18EDF381F5697344"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -70.0d
+	}
+	{
+		dependencies: [
+		"E18B62EE790C7F81"
+		]
+		icon: {
+			id: "minecraft:white_bed"
+		}
+		id: "CE7EF4EFA7439DEF"
+		shape: "circle"
+		size: 1.2d
 		tasks: [
 		{
 			item: "minecraft:white_bed"
@@ -261,7 +1161,73 @@
 		}
 		]
 		x: 0.0d
-		y: -7.0d
+		y: -71.75d
+	}
+	{
+		dependencies: [
+		"CE7EF4EFA7439DEF"
+		"27D5AA91D24437AE"
+		"AD4C3F0525832DA1"
+		"BB59F6D070318911"
+		"9A6D0286088B564D"
+		"D733059AE85E72DC"
+		"FED8DD902A793233"
+		"CD55146A6D3A33EE"
+		"974D73838A71A4C1"
+		"A5CE106855C14271"
+		]
+		icon: {
+			id: "refurbished_furniture:light_fridge"
+		}
+		id: "37D9B09499BC30F4"
+		rewards: [
+		{
+			xp: 120
+			id: "A65956321128EB5E"
+			type: "xp"
+		}
+		{
+			id: "0BE539EF910BE146"
+			type: "toast"
+		}
+		]
+		shape: "hexagon"
+		size: 2.5d
+		tasks: [
+		{
+			item: "refurbished_furniture:light_fridge"
+			id: "5A49976C8EBB1ED6"
+			type: "item"
+		}
+		{
+			item: "handcrafted:oak_couch"
+			id: "9178FB3BF68F0D7B"
+			type: "item"
+		}
+		{
+			item: "handcrafted:oak_fancy_bed"
+			id: "96B740464287AD58"
+			type: "item"
+		}
+		{
+			item: "mcwfurnitures:oak_wardrobe"
+			id: "6F79602C4487425F"
+			type: "item"
+		}
+		{
+			item: "another_furniture:oak_table"
+			id: "B1C3FE3842035E56"
+			type: "item"
+		}
+		{
+			item: "minecraft:item_frame"
+			count: 8
+			id: "11205EF7A3CC324D"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -73.5d
 	}
 	]
 }

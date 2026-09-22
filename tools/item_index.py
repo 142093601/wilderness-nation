@@ -126,15 +126,18 @@ def main() -> int:
     known = reg["items"] | reg["blocks"]
 
     # ---- 核对模式 ----
+    # ⚠️ 报告文件**每次都重写**（哪怕 missing=0 也要写，写空文件）。
+    # 只在有 miss 时写，会让上一次的旧报告留在盘上 —— 下一个人（或下一个我）
+    # 看到过期的 `idx_missing_toml.txt` 会得出完全相反的结论。
+    # 这是本项目反复踩过的「陈旧文件」坑（见 INCIDENTS.md）。
     if args.verify:
         ids = [ln.strip() for ln in Path(args.verify).read_text(encoding="utf-8").splitlines()]
         ids = [i for i in ids if i and not i.startswith("#")]
         bad = [i for i in ids if i not in known]
         print(f"checked {len(ids)} ids, missing {len(bad)}")
-        if bad:
-            p = OUT_DIR / "idx_missing.txt"
-            write_lines(p, bad)
-            print(f"missing list -> {p}")
+        p = OUT_DIR / "idx_missing.txt"
+        write_lines(p, bad)
+        print(f"missing list -> {p}（missing=0 时该文件为空，能区分「这次没问题」和「这是旧文件」）")
         return 1 if bad else 0
 
     if args.verify_toml:
@@ -145,10 +148,9 @@ def main() -> int:
                 seen.setdefault(iid, []).append(f.name)
         bad = sorted(i for i in seen if i not in known)
         print(f"toml ids {len(seen)}, missing {len(bad)}")
-        if bad:
-            p = OUT_DIR / "idx_missing_toml.txt"
-            write_lines(p, [f"{i}\t{','.join(sorted(set(seen[i])))}" for i in bad])
-            print(f"missing list -> {p}")
+        p = OUT_DIR / "idx_missing_toml.txt"
+        write_lines(p, [f"{i}\t{','.join(sorted(set(seen[i])))}" for i in bad])
+        print(f"missing list -> {p}（missing=0 时该文件为空）")
         return 1 if bad else 0
 
     # ---- 统计模式 ----

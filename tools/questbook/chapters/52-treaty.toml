@@ -1,0 +1,394 @@
+# 邦交 · 外交与条约
+#
+# 为什么把「邦交」拆成三章
+# ----------------------
+# 初版把邦交写成了一章 13 条，实测太薄（对照：ATM10 每章中位 56 条）。
+# 更实际的原因是**这三段的心智完全不同**：
+#   · 接触与情报（`50-diplomacy`）= 先看见、先知道
+#   · 外交与条约（**本章**）    = 把关系写成文字、变成可以执行的条款
+#   · 夺城与属地（`54-conquest`）= 条款崩了之后怎么办
+#
+# ⚠️ 判据的现实限制（`50-diplomacy` 章头已详述）：Statecraft **不发 advancement、
+# 不记自定义统计**。所以"签了条约""对方答应了"这类**动作**判不了，
+# 本章一律用**实物**当判据（国书、印信、货栈、界碑…），
+# 需要"确有其事"的两条用 `checkmark` 并在条目注释里写明理由。
+#
+# 判据来源：`buildings.json` 的锚点方块 + 现实里外交本来就留下的东西。
+
+key = "treaty"
+title = "邦交·外交与条约"
+subtitle = "口头答应不算数，写成条款才算"
+group = "diplomacy"
+icon = "minecraft:writable_book"
+order_index = 21
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 簇 1：国书与礼节 ----------------
+
+[[quest]]
+name = "tr_letter"
+title = "国书"
+desc = [
+	"第一次正式接触要有一封**成文的**国书：你们是谁、在哪、想谈什么。",
+	"游戏里它就是一本成书 —— 内容判不了，但「有没有这东西」判得了。",
+]
+icon = "minecraft:written_book"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "minecraft:written_book" },
+]
+
+[[quest]]
+name = "tr_seal"
+title = "印信"
+desc = [
+	"一枚实体印信：文件上要有「出自谁手」的凭证。金锭压印是最便宜的仪式感。",
+]
+icon = "minecraft:gold_ingot"
+shape = "rsquare"
+deps = ["tr_letter"]
+tasks = [
+	{ type = "item", item = "minecraft:gold_ingot", count = 4 },
+]
+
+[[quest]]
+name = "tr_envoy_kit"
+title = "使节行装"
+desc = [
+	"出使是**一个人出远门**：行装要能撑到对面都城再回来。",
+	"这一条同时是后面的伏笔 —— 没有补给线，外交就只能停在纸面上。",
+]
+icon = "minecraft:leather_boots"
+shape = "rsquare"
+deps = ["tr_letter"]
+tasks = [
+	{ type = "item", item = "minecraft:leather_boots" },
+	{ type = "item", item = "minecraft:bread", count = 8 },
+	{ type = "item", item = "minecraft:compass" },
+]
+
+[[quest]]
+name = "tr_translate"
+title = "通译"
+desc = [
+	"和邻国打交道，最贵的成本是**理解对方在说什么**。",
+	"游戏里没有语言系统，所以这一条落到「你手上有一本记着对方规矩的册子」。",
+]
+icon = "minecraft:book"
+shape = "circle"
+size = 1.2
+deps = ["tr_letter"]
+tasks = [
+	{ type = "item", item = "minecraft:book", count = 2 },
+]
+
+[[quest]]
+name = "tr_gift_list"
+title = "礼单"
+desc = [
+	"空手去谈是没有诚意的。礼单不是贿赂，是**表态**：我们愿意先付出。",
+]
+icon = "minecraft:paper"
+shape = "square"
+deps = ["tr_letter"]
+tasks = [
+	{ type = "item", item = "minecraft:paper", count = 32 },
+]
+
+[[quest]]
+name = "tr_parley_flag"
+title = "休战旗"
+desc = [
+	"谈判现场要有一个「现在不打」的信号。白旗是全世界都认的那一个。",
+]
+icon = "minecraft:white_banner"
+shape = "circle"
+size = 1.2
+deps = ["tr_letter"]
+tasks = [
+	{ type = "item", item = "minecraft:white_banner" },
+]
+
+# ---------------- 簇 2：把条约写下来 ----------------
+
+[[quest]]
+name = "tr_table"
+title = "谈判桌"
+desc = [
+	"谈判需要一个**固定的地方**（情报站旁边最好）。桌子本身不重要，固定地点才重要。",
+]
+icon = "minecraft:dark_oak_stairs"
+shape = "pentagon"
+size = 2.0
+deps = ["tr_letter"]
+tasks = [
+	{ type = "item", item = "minecraft:dark_oak_stairs", count = 8 },
+	{ type = "item", item = "minecraft:dark_oak_fence", count = 8 },
+]
+
+[[quest]]
+name = "tr_witness"
+title = "见证人"
+desc = [
+	"条约要有第三方看着签 —— 队伍里至少两个人到场，事后各记一笔。",
+]
+icon = "minecraft:name_tag"
+shape = "circle"
+size = 1.2
+deps = ["tr_table"]
+tasks = [
+	{ type = "item", item = "minecraft:name_tag", count = 2 },
+]
+
+[[quest]]
+name = "tr_pact"
+title = "签约"
+desc = [
+	"条款要能执行才有意义：写清**边界、义务、期限、违约怎么办**。",
+	"⚠️ 这条判不了（没有 mod 侧的条约系统）。用「成书 + 印信都在手里」当替代判据。",
+]
+icon = "minecraft:written_book"
+shape = "rsquare"
+deps = ["tr_witness", "tr_seal"]
+tasks = [
+	{ type = "item", item = "minecraft:written_book", count = 2 },
+	{ type = "item", item = "minecraft:gold_ingot", count = 4 },
+]
+
+[[quest]]
+name = "tr_boundary"
+title = "定界"
+desc = [
+	"书面边界要落到地上：界碑一路插过去，谁站哪边不留争议。",
+]
+icon = "minecraft:stone_bricks"
+shape = "square"
+deps = ["tr_pact"]
+tasks = [
+	{ type = "item", item = "minecraft:stone_bricks", count = 32 },
+	{ type = "item", item = "minecraft:oak_sign", count = 8 },
+]
+
+[[quest]]
+name = "tr_toll"
+title = "关税"
+desc = [
+	"通商的第一个具体条款就是关税：过境要交多少、交给谁。",
+	"一个桶就是海关 —— 别把它想复杂。",
+]
+icon = "minecraft:barrel"
+shape = "rsquare"
+deps = ["tr_pact"]
+tasks = [
+	{ type = "item", item = "minecraft:barrel", count = 4 },
+]
+
+[[quest]]
+name = "tr_pass"
+title = "通行证"
+desc = [
+	"商队要能证明「我是获准过境的」。纸质凭证是这个包最便宜的可验证物。",
+]
+icon = "minecraft:paper"
+shape = "square"
+deps = ["tr_pact"]
+tasks = [
+	{ type = "item", item = "minecraft:paper", count = 16 },
+]
+
+[[quest]]
+name = "tr_copy"
+title = "副本存档"
+desc = [
+	"一式两份、各自存档。**吵架的时候，副本就是证据。**",
+]
+icon = "minecraft:book"
+shape = "circle"
+size = 1.2
+deps = ["tr_pact"]
+tasks = [
+	{ type = "item", item = "minecraft:book", count = 8 },
+	{ type = "item", item = "minecraft:chest", count = 2 },
+]
+
+# ---------------- 簇 3：通商 ----------------
+
+[[quest]]
+name = "tr_trade_route"
+title = "跑通商路"
+desc = [
+	"条约能不能兑现，看的是**有没有人真的走那条路**。",
+	"第一批货自己押运一次，把沿途的补给点踩出来。",
+]
+icon = "minecraft:emerald"
+shape = "pentagon"
+size = 2.0
+deps = ["tr_pact"]
+tasks = [
+	{ type = "item", item = "minecraft:emerald", count = 64 },
+]
+
+[[quest]]
+name = "tr_caravan"
+title = "商队"
+desc = [
+	"商队需要驮畜与鞍：这是「运量」从背包级升到车级的第一步。",
+]
+icon = "minecraft:saddle"
+shape = "rsquare"
+deps = ["tr_trade_route"]
+tasks = [
+	{ type = "item", item = "minecraft:saddle" },
+	{ type = "item", item = "minecraft:hay_block", count = 8 },
+]
+
+[[quest]]
+name = "tr_depot"
+title = "通商货栈"
+desc = [
+	"两国之间的货要**在中途落地**，不能全靠随身带。",
+	"货栈也是情报点：来往的人会告诉你对面最近在干什么。",
+]
+icon = "minecraft:barrel"
+shape = "square"
+deps = ["tr_trade_route"]
+tasks = [
+	{ type = "item", item = "minecraft:barrel", count = 16 },
+]
+
+[[quest]]
+name = "tr_tariff_ledger"
+title = "关税账"
+icon = "minecraft:written_book"
+shape = "circle"
+size = 1.2
+deps = ["tr_depot"]
+tasks = [
+	{ type = "item", item = "minecraft:written_book" },
+]
+
+[[quest]]
+name = "tr_coin_flow"
+title = "国库有进项"
+desc = [
+	"通商带来的国库增长是**邦交线唯一的正反馈**：有钱 → 买图纸 → 建更大的东西。",
+	"这一条开始，外交不再是「礼貌」，而是产能的一部分。",
+]
+icon = "minecraft:emerald_block"
+shape = "rsquare"
+deps = ["tr_depot"]
+tasks = [
+	{ type = "item", item = "minecraft:emerald_block", count = 4 },
+]
+
+[[quest]]
+name = "tr_market"
+title = "互市"
+desc = [
+	"规模到这一档，两个国家之间就有了**稳定的物资互补**：你缺的它能供，它缺的你有。",
+]
+icon = "minecraft:emerald"
+shape = "octagon"
+size = 1.75
+deps = ["tr_coin_flow", "tr_tariff_ledger"]
+tasks = [
+	{ type = "item", item = "minecraft:emerald", count = 128 },
+]
+
+# ---------------- 簇 4：同盟与求援 ----------------
+
+[[quest]]
+name = "tr_alliance"
+title = "结盟"
+desc = [
+	"同盟 = 一方被打时另一方必须来。**签之前先想清楚自己能不能做到。**",
+	"旗帜互换是这个包能做到的「仪式的实物」。",
+]
+icon = "minecraft:white_banner"
+shape = "pentagon"
+size = 2.0
+deps = ["tr_market"]
+tasks = [
+	{ type = "item", item = "minecraft:white_banner", count = 4 },
+	{ type = "item", item = "minecraft:white_dye", count = 8 },
+]
+
+[[quest]]
+name = "tr_joint_drill"
+title = "联合演训"
+desc = [
+	"同盟的可靠性只能靠演练证明一次。对练一场，比十条条款都管用。",
+]
+icon = "minecraft:iron_sword"
+shape = "rsquare"
+deps = ["tr_alliance"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_sword" },
+	{ type = "item", item = "minecraft:shield" },
+]
+
+[[quest]]
+name = "tr_shared_intel"
+title = "情报共享"
+desc = [
+	"把你们的地图与邻国的地图对一遍：**双方都缺的那一块，就是下一站。**",
+]
+icon = "minecraft:spyglass"
+shape = "rsquare"
+deps = ["tr_alliance"]
+tasks = [
+	{ type = "item", item = "minecraft:spyglass" },
+	{ type = "item", item = "minecraft:filled_map", count = 2 },
+]
+
+[[quest]]
+name = "tr_relief"
+title = "求援与驰援"
+desc = [
+	"求援信号要**提前约定**（钟声几下、烟花什么颜色），临时商量来不及。",
+]
+icon = "minecraft:bell"
+shape = "rsquare"
+deps = ["tr_alliance"]
+tasks = [
+	{ type = "item", item = "minecraft:bell" },
+	{ type = "item", item = "minecraft:firework_rocket", count = 8 },
+]
+
+[[quest]]
+name = "tr_beacon_pact"
+title = "烽火通约"
+desc = [
+	"跨国的预警网络：你这边点火，它那边能看见。这是同盟最实用的一项条款。",
+]
+icon = "minecraft:campfire"
+shape = "circle"
+size = 1.2
+deps = ["tr_relief"]
+tasks = [
+	{ type = "item", item = "minecraft:campfire", count = 4 },
+	{ type = "item", item = "minecraft:crossbow" },
+]
+
+[[quest]]
+name = "tr_treaty_done"
+title = "文字变成了秩序"
+desc = [
+	"国书、印信、条款、商路、同盟、预警 —— 到这一步，",
+	"你们和邻国之间的关系**不再取决于谁在线**。",
+	"（如果这些条款最后崩了，下一章讲怎么办。）",
+]
+icon = "minecraft:written_book"
+shape = "hexagon"
+size = 2.5
+deps = ["tr_boundary", "tr_copy", "tr_market", "tr_joint_drill", "tr_shared_intel",
+        "tr_beacon_pact", "tr_parley_flag"]
+tasks = [
+	{ type = "item", item = "minecraft:emerald_block", count = 8 },
+]
+rewards = [
+	{ type = "xp", xp = 90 },
+	{ type = "toast" },
+]

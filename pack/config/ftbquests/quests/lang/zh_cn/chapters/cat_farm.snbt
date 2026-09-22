@@ -1,0 +1,82 @@
+{
+	quest.FF284EAE1FD27CC3.title: "三档肥料"
+	quest.FF284EAE1FD27CC3.description: [
+	"Farming for Blockheads 把「地力」拆成了三档肥料与几种肥沃耕地。"
+	"先有地力，再谈种什么——这一章从地开始。"
+	]
+	quest.130CC3BFD53EC5E4.title: "肥沃耕地"
+	quest.231BDCCC542570B8.title: "鸡窝"
+	quest.697A30A49EA49AB9.title: "饲养槽"
+	quest.9E7D25B71CA4D68E.title: "收割后自动补种"
+	quest.9E7D25B71CA4D68E.description: [
+	"RightClickHarvest 让成熟的作物右键即收，收完自己补种。"
+	"它省掉的是「收一遍再种一遍」这一段重复劳动。"
+	]
+	quest.E90367BB2A3A0D33.title: "让村民当农夫"
+	quest.E90367BB2A3A0D33.description: [
+	"Smarter Farmers 让农夫村民收完自己补种。"
+	"人手不够的时候，田里可以只剩下他们。"
+	]
+	quest.5FFD84AD55737F47.title: "杜鹃木"
+	quest.710B1045EB8AF562.title: "椰子树"
+	quest.B10862A1E49ADDD0.title: "核桃"
+	quest.76C9F99F3BC5FD9A.title: "椰子壳当碗"
+	quest.86AF867AAE8FD948.title: "仙人掌果"
+	quest.E3CE4A914064880C.title: "沙堡护蛋"
+	quest.E3CE4A914064880C.description: [
+	"海龟蛋经不起踩，沙堡是 Ecologics 给它们的护栏。"
+	"养海龟和种地是一回事：都要先把地方圈住。"
+	]
+	quest.436C680E83880821.title: "捕网"
+	quest.436C680E83880821.description: [
+	"Naturalist 把野外填满了新动物：鹿、熊、河马、长颈鹿。"
+	"先有一张捕网——抓活的，比打死的用途多。"
+	]
+	quest.4AC9C20AD1280FFA.title: "标本背包"
+	quest.73EC70A87A918C92.title: "哨子"
+	quest.FDCB1DE918992E5C.title: "荧光黏胶"
+	quest.67EB8BB52D0A4F52.title: "鹿肉"
+	quest.00858C82F130349B.title: "喂熊"
+	quest.00858C82F130349B.description: [
+	"Naturalist 加的不只是怪：熊、河马、长颈鹿都有自己的互动。"
+	"喂一次熊，就知道这批动物值不值得留在营地边上。"
+	]
+	quest.01685BA35D497303.title: "企鹅"
+	quest.E1A35D63BDC9A27B.title: "椰子蟹"
+	quest.165C8452A247BAB9.title: "园艺站"
+	quest.165C8452A247BAB9.description: [
+	"More Villagers 加了八种村民职业，每种对应一张工作台。"
+	"园艺站是离农场最近的那一张。"
+	]
+	quest.1BF1E6C37141A3DB.title: "林业、狩猎与矿业三站"
+	quest.9A75A7004A3189C0.title: "第一笔交易"
+	quest.EF94A7D3A31B57EA.title: "买一张探险地图"
+	quest.E5AA5E9568B08994.title: "和所有职业做过交易"
+	quest.E5AA5E9568B08994.description: [
+	"More Villagers 的八种职业卖的东西各不相同，认全了就知道缺料该找谁。"
+	"这一条是本章畜牧线的里程碑：村民从此不只住在村里。"
+	]
+	quest.20A93F5EEB67A9C7.title: "大师级交易"
+	quest.CB17186638A9039F.title: "食物清单"
+	quest.CB17186638A9039F.description: [
+	"Spice of Life 只做一件事：记下你吃过多少种食物。"
+	"吃得越杂换到的加成越多，所以「换着吃」在这个包里是一件正事。"
+	]
+	quest.8CFC0BF9BA50E8D0.title: "把食物表吃一遍"
+	quest.8CFC0BF9BA50E8D0.description: [
+	"长期目标：原版食物表上的东西都尝过一遍。"
+	"它和食物清单是同一件事的两种量法，做不完也不挡后面的条目。"
+	]
+	quest.7C9D4416B7F7BF18.title: "面包自给"
+	quest.4E44C69260BFA8C5.title: "自己收蜜"
+	quest.43B3CDC6253DD8EA.title: "金苹果"
+	quest.09496B5BABC0BC67.title: "蘑菇煲"
+	quest.828AF4A498C0AB2D.title: "鱼与熟鱼"
+	quest.838C0F1C2A6FE4A5.title: "甜点"
+	quest.407420D0D71D3929.title: "南瓜派"
+	quest.2B90715B922FF890.title: "饭桌不再靠运气"
+	quest.2B90715B922FF890.description: [
+	"地里出得来、圈里有肉、村民会补种、桌上花样够多——四条都通了。"
+	"到这一步，粮食才算从「今天的晚饭」变成「这个国家的底子」。"
+	]
+}

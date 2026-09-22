@@ -7,7 +7,7 @@
 		id: "simplyswords:iron_longsword"
 	}
 	id: "A839569A8D6C5FF7"
-	order_index: 34
+	order_index: 58
 	quest_links: [ ]
 	quests: [
 	{
@@ -44,7 +44,7 @@
 			type: "item"
 		}
 		]
-		x: -5.55d
+		x: -16.2d
 		y: -1.75d
 	}
 	{
@@ -64,7 +64,7 @@
 			type: "item"
 		}
 		]
-		x: -3.0d
+		x: -13.65d
 		y: -1.75d
 	}
 	{
@@ -84,8 +84,369 @@
 			type: "item"
 		}
 		]
-		x: -0.45d
+		x: -11.1d
 		y: -1.75d
+	}
+	{
+		dependencies: [
+		"6DC3FA505A1BF741"
+		]
+		icon: {
+			id: "simplyswords:iron_rapier"
+		}
+		id: "48FD86F8546ECD78"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "simplyswords:iron_rapier"
+			id: "D1525D83252F017D"
+			type: "item"
+		}
+		{
+			item: "simplyswords:iron_sai"
+			id: "56BE28954A577931"
+			type: "item"
+		}
+		]
+		x: -8.55d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"6DC3FA505A1BF741"
+		]
+		icon: {
+			id: "simplyswords:iron_twinblade"
+		}
+		id: "5E2045401C555A68"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "simplyswords:iron_twinblade"
+			id: "5802320BA664A65A"
+			type: "item"
+		}
+		]
+		x: -6.0d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"6DC3FA505A1BF741"
+		]
+		icon: {
+			id: "simplyswords:iron_warglaive"
+		}
+		id: "06004E59AEB65684"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "simplyswords:iron_chakram"
+			id: "17EA423A49FAA91B"
+			type: "item"
+		}
+		{
+			item: "simplyswords:iron_warglaive"
+			id: "392F888A05AED5E5"
+			type: "item"
+		}
+		]
+		x: -3.45d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"6DC3FA505A1BF741"
+		]
+		icon: {
+			id: "simplyswords:iron_claymore"
+		}
+		id: "37125AE2EE6D166E"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "simplyswords:iron_claymore"
+			id: "93D049E51CD890F9"
+			type: "item"
+		}
+		{
+			item: "simplyswords:iron_greataxe"
+			id: "82FCAFE4F601CE26"
+			type: "item"
+		}
+		]
+		x: -0.9d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"6DC3FA505A1BF741"
+		]
+		icon: {
+			id: "simplyswords:iron_katana"
+		}
+		id: "1D5010D10519E8EA"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "simplyswords:iron_katana"
+			id: "67BEDFC22A545519"
+			type: "item"
+		}
+		{
+			item: "simplyswords:iron_cutlass"
+			id: "E1FF6D674C33ECA2"
+			type: "item"
+		}
+		]
+		x: 1.65d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"07124DBEA65F4D4D"
+		]
+		icon: {
+			id: "simplyswords:netherite_longsword"
+		}
+		id: "FDBCC383F89AF1D5"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "simplyswords:netherite_longsword"
+			id: "798C57CA2BA268F9"
+			type: "item"
+		}
+		{
+			item: "simplyswords:netherite_spear"
+			id: "63A6AC2CB7927F4F"
+			type: "item"
+		}
+		]
+		x: -18.15d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"6DC3FA505A1BF741"
+		]
+		icon: {
+			id: "simplyswords:iron_spear"
+		}
+		id: "CDDDFB136A3932C1"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "simplyswords:iron_spear"
+			id: "CD790263C92AEF3E"
+			type: "item"
+		}
+		{
+			item: "simplyswords:iron_rapier"
+			id: "EA4344F44BCE635D"
+			type: "item"
+		}
+		]
+		x: 4.42d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"6DC3FA505A1BF741"
+		]
+		icon: {
+			id: "magistuarmory:steel_bastardsword"
+		}
+		id: "E105D4ECD3404D40"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "magistuarmory:iron_bastardsword"
+			id: "030C0F6CF299083A"
+			type: "item"
+		}
+		{
+			item: "magistuarmory:messer_sword"
+			id: "A904EDF51F18DD83"
+			type: "item"
+		}
+		]
+		x: 7.42d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"E105D4ECD3404D40"
+		]
+		icon: {
+			id: "magistuarmory:noble_sword"
+		}
+		id: "592014F609823712"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "magistuarmory:noble_sword"
+			id: "35F3140D88839664"
+			type: "item"
+		}
+		{
+			item: "magistuarmory:silver_flamebladedsword"
+			id: "679A87A159955985"
+			type: "item"
+		}
+		]
+		x: -15.37d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"E105D4ECD3404D40"
+		]
+		icon: {
+			id: "magistuarmory:iron_kiteshield"
+		}
+		id: "A6F8007E3DF78A8D"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "magistuarmory:iron_kiteshield"
+			id: "9CC295B2DCD764A4"
+			type: "item"
+		}
+		{
+			item: "magistuarmory:iron_roundshield"
+			id: "ADABC72ADEB6F484"
+			type: "item"
+		}
+		{
+			item: "magistuarmory:iron_heatershield"
+			id: "8CAE79566EE7A35F"
+			type: "item"
+		}
+		]
+		x: -12.6d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"6DC3FA505A1BF741"
+		]
+		icon: {
+			id: "hundred_years_war:diamond_scimitar"
+		}
+		id: "05BF7ED463B2D3CB"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "hundred_years_war:diamond_saber"
+			id: "734E450FD4F5E2D2"
+			type: "item"
+		}
+		{
+			item: "hundred_years_war:diamond_scimitar"
+			id: "41A01143390691FC"
+			type: "item"
+		}
+		{
+			item: "hundred_years_war:throwing_knife"
+			id: "0677C7D6E29ED74D"
+			type: "item"
+		}
+		]
+		x: 10.2d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"05BF7ED463B2D3CB"
+		]
+		icon: {
+			id: "hundred_years_war:matchlock"
+		}
+		id: "571C592B696A5DD6"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "hundred_years_war:handgonne"
+			id: "E463E3A1CF322F8E"
+			type: "item"
+		}
+		{
+			item: "hundred_years_war:matchlock"
+			id: "E1C49DC822048A22"
+			type: "item"
+		}
+		{
+			item: "minecraft:gunpowder"
+			count: 16
+			id: "AE7D9FA22B95014D"
+			type: "item"
+		}
+		]
+		x: -9.6d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"FDBCC383F89AF1D5"
+		]
+		icon: {
+			id: "simplyswords:watcher_claymore"
+		}
+		id: "0E39A4C139642076"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "simplyswords:watcher_claymore"
+			id: "D668416D8F13D774"
+			type: "item"
+		}
+		]
+		x: -15.98d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"0E39A4C139642076"
+		]
+		icon: {
+			id: "simplyswords:icewhisper"
+		}
+		id: "1C001834C2C0B27F"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "simplyswords:icewhisper"
+			id: "28FB182ED46F10CE"
+			type: "item"
+		}
+		{
+			item: "simplyswords:molten_edge"
+			id: "43AF6F9C49467402"
+			type: "item"
+		}
+		{
+			item: "simplyswords:soulkeeper"
+			id: "6D1F832DB74214EF"
+			type: "item"
+		}
+		]
+		x: -9.38d
+		y: -7.0d
 	}
 	{
 		dependencies: [
@@ -104,7 +465,7 @@
 			type: "item"
 		}
 		]
-		x: 2.33d
+		x: 12.98d
 		y: -1.75d
 	}
 	{
@@ -124,7 +485,7 @@
 			type: "item"
 		}
 		]
-		x: -6.6d
+		x: -6.82d
 		y: -3.5d
 	}
 	{
@@ -150,8 +511,280 @@
 			type: "stat"
 		}
 		]
-		x: -4.05d
+		x: -4.27d
 		y: -3.5d
+	}
+	{
+		dependencies: [
+		"EE8137719F67986C"
+		]
+		icon: {
+			id: "magistuarmory:gambeson_chestplate"
+		}
+		id: "32DB135CEAF39C20"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "magistuarmory:gambeson_chestplate"
+			id: "DBF0D57BC0FDDEDC"
+			type: "item"
+		}
+		{
+			item: "magistuarmory:chainmail_chestplate"
+			id: "307F1AD6982B1A7E"
+			type: "item"
+		}
+		{
+			item: "magistuarmory:gambeson_boots"
+			id: "B41B4F4CFDCAA69B"
+			type: "item"
+		}
+		]
+		x: -1.5d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"32DB135CEAF39C20"
+		]
+		icon: {
+			id: "magistuarmory:platemail_chestplate"
+		}
+		id: "CD7EA9E85B576193"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "magistuarmory:halfarmor_chestplate"
+			id: "6960B7A317A95667"
+			type: "item"
+		}
+		{
+			item: "magistuarmory:kastenbrust_chestplate"
+			id: "85FF6402E8107FCF"
+			type: "item"
+		}
+		{
+			item: "magistuarmory:platemail_chestplate"
+			id: "3C47CB15DC81A7D8"
+			type: "item"
+		}
+		]
+		x: -12.98d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"CD7EA9E85B576193"
+		]
+		icon: {
+			id: "magistuarmory:maximilian_chestplate"
+		}
+		id: "3406E8EE600C0718"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "magistuarmory:gothic_chestplate"
+			id: "F53FF2CA720DE7DD"
+			type: "item"
+		}
+		{
+			item: "magistuarmory:maximilian_chestplate"
+			id: "A5976F8B13C6F2AD"
+			type: "item"
+		}
+		{
+			item: "magistuarmory:maximilian_helmet"
+			id: "ADD2A70B229F33FB"
+			type: "item"
+		}
+		]
+		x: -6.83d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"CD7EA9E85B576193"
+		]
+		icon: {
+			id: "magistuarmory:face_helmet"
+		}
+		id: "2328FEBF2A59519E"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "magistuarmory:norman_helmet"
+			id: "C92093032A5E5882"
+			type: "item"
+		}
+		{
+			item: "magistuarmory:face_helmet"
+			id: "C21943AC9518D0EE"
+			type: "item"
+		}
+		{
+			item: "magistuarmory:cuirassier_helmet"
+			id: "4408BD25A59CC301"
+			type: "item"
+		}
+		]
+		x: -4.28d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"EE8137719F67986C"
+		]
+		icon: {
+			id: "armoroftheages:o_yoroi_armor_chest"
+		}
+		id: "2CD78166CFE2D9F5"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "armoroftheages:o_yoroi_armor_chest"
+			id: "461F5793607A890D"
+			type: "item"
+		}
+		{
+			item: "armoroftheages:japanese_light_armor_chest"
+			id: "D7B0F75A0AD5EEFA"
+			type: "item"
+		}
+		]
+		x: 1.5d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"2CD78166CFE2D9F5"
+		]
+		icon: {
+			id: "armoroftheages:centurion_armor_chest"
+		}
+		id: "6DA17EBCBDB5F137"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "armoroftheages:centurion_armor_chest"
+			id: "F1A06FF5AC962F5E"
+			type: "item"
+		}
+		{
+			item: "armoroftheages:centurion_armor_head"
+			id: "D8140403C3365E85"
+			type: "item"
+		}
+		]
+		x: -10.2d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"2CD78166CFE2D9F5"
+		]
+		icon: {
+			id: "armoroftheages:anubis_armor_chest"
+		}
+		id: "5A07C1E4BA4C31CB"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "armoroftheages:anubis_armor_chest"
+			id: "A60195D07F1ED021"
+			type: "item"
+		}
+		{
+			item: "armoroftheages:pharaoh_armor_chest"
+			id: "CA2AAF77B220946E"
+			type: "item"
+		}
+		]
+		x: -7.65d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"2CD78166CFE2D9F5"
+		]
+		icon: {
+			id: "armoroftheages:raijin_armor_chest"
+		}
+		id: "65CF8C5211B5C876"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "armoroftheages:raijin_armor_chest"
+			id: "DD243A9C26588C78"
+			type: "item"
+		}
+		{
+			item: "armoroftheages:quetzalcoatl_armor_chest"
+			id: "57B0BE331088587B"
+			type: "item"
+		}
+		]
+		x: -5.1d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"6DA17EBCBDB5F137"
+		"5A07C1E4BA4C31CB"
+		"65CF8C5211B5C876"
+		]
+		icon: {
+			id: "armoroftheages:holy_armor_chest"
+		}
+		id: "90E9052664DA1774"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "armoroftheages:holy_armor_chest"
+			id: "696B1335DB4B61D8"
+			type: "item"
+		}
+		{
+			item: "armoroftheages:exalted_aurum_armor_chest"
+			id: "A106491CF592F4CB"
+			type: "item"
+		}
+		]
+		x: -1.5d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"32DB135CEAF39C20"
+		]
+		icon: {
+			id: "hundred_years_war:iron_camel_armor"
+		}
+		id: "E259C076ACCC95C3"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "hundred_years_war:iron_camel_armor"
+			id: "E5A48ABB0CF7B82C"
+			type: "item"
+		}
+		{
+			item: "hundred_years_war:diamond_camel_armor"
+			id: "08FD3E08EED6D5A0"
+			type: "item"
+		}
+		]
+		x: -2.55d
+		y: -5.25d
 	}
 	{
 		dependencies: [
@@ -170,68 +803,8 @@
 			type: "item"
 		}
 		]
-		x: 5.33d
+		x: 15.98d
 		y: -1.75d
-	}
-	{
-		dependencies: [
-		"D2306C73A6EF39F3"
-		]
-		icon: {
-			id: "minecraft:enchanting_table"
-		}
-		id: "69F773F6179D1219"
-		shape: "circle"
-		size: 1.2d
-		tasks: [
-		{
-			advancement: "minecraft:story/enchant_item"
-			id: "EA1F0176DFABF9F7"
-			type: "advancement"
-		}
-		]
-		x: -1.5d
-		y: -3.5d
-	}
-	{
-		dependencies: [
-		"69F773F6179D1219"
-		]
-		icon: {
-			id: "enchantinginfuser:enchanting_infuser"
-		}
-		id: "84906A833A81E953"
-		shape: "circle"
-		size: 1.2d
-		tasks: [
-		{
-			item: "enchantinginfuser:enchanting_infuser"
-			id: "94D8A32F43D466C3"
-			type: "item"
-		}
-		]
-		x: 0.0d
-		y: -5.25d
-	}
-	{
-		dependencies: [
-		"84906A833A81E953"
-		]
-		icon: {
-			id: "minecraft:diamond_chestplate"
-		}
-		id: "65B121989B24E120"
-		shape: "circle"
-		size: 1.2d
-		tasks: [
-		{
-			advancement: "minecraft:story/shiny_gear"
-			id: "CF2C449D5C3AE7DD"
-			type: "advancement"
-		}
-		]
-		x: 0.0d
-		y: -7.0d
 	}
 	{
 		dependencies: [
@@ -250,7 +823,7 @@
 			type: "item"
 		}
 		]
-		x: 1.27d
+		x: 4.5d
 		y: -3.5d
 	}
 	{
@@ -271,7 +844,7 @@
 			type: "item"
 		}
 		]
-		x: 4.05d
+		x: 7.28d
 		y: -3.5d
 	}
 	{
@@ -291,8 +864,361 @@
 			type: "item"
 		}
 		]
-		x: 6.6d
+		x: 9.83d
 		y: -3.5d
+	}
+	{
+		dependencies: [
+		"D2306C73A6EF39F3"
+		]
+		icon: {
+			id: "minecraft:chipped_anvil"
+		}
+		id: "6DDDEEC55E73822F"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:chipped_anvil"
+			id: "5EE50C3D65CC533F"
+			type: "item"
+		}
+		{
+			item: "minecraft:damaged_anvil"
+			id: "151E589A4B0B8A4B"
+			type: "item"
+		}
+		{
+			item: "minecraft:iron_block"
+			count: 4
+			id: "67F9D4C963536642"
+			type: "item"
+		}
+		]
+		x: 12.6d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"6DDDEEC55E73822F"
+		]
+		icon: {
+			id: "minecraft:name_tag"
+		}
+		id: "E4BF28F50B6769A4"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:name_tag"
+			count: 4
+			id: "7D867D3442F739CF"
+			type: "item"
+		}
+		]
+		x: -0.0d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"6DDDEEC55E73822F"
+		]
+		icon: {
+			id: "minecraft:grindstone"
+		}
+		id: "E27C5B09E65FAE4F"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:grindstone"
+			id: "4B5568B8E133B4FE"
+			type: "item"
+		}
+		]
+		x: 2.55d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"6DDDEEC55E73822F"
+		]
+		icon: {
+			id: "minecraft:smithing_table"
+		}
+		id: "67D8E03F6CFEDA30"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:smithing_table"
+			id: "7F3C85C300A0C610"
+			type: "item"
+		}
+		{
+			item: "minecraft:netherite_upgrade_smithing_template"
+			id: "227AEE45EC2FD3F7"
+			type: "item"
+		}
+		]
+		x: 5.32d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"25A70F2BBD859FC0"
+		]
+		icon: {
+			id: "supplementaries:quiver"
+		}
+		id: "E10771333587F979"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "supplementaries:quiver"
+			id: "6AF4211A50F80172"
+			type: "item"
+		}
+		]
+		x: 8.1d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"25A70F2BBD859FC0"
+		]
+		icon: {
+			id: "minecraft:totem_of_undying"
+		}
+		id: "7294F7DFA9031709"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:totem_of_undying"
+			id: "4016456E4D10BB07"
+			type: "item"
+		}
+		]
+		x: 10.65d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"D2306C73A6EF39F3"
+		]
+		icon: {
+			id: "minecraft:torch"
+		}
+		id: "0D5E15D54172AE7D"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:torch"
+			count: 32
+			id: "FF7199B6AC1DF465"
+			type: "item"
+		}
+		{
+			item: "minecraft:bread"
+			count: 16
+			id: "D9B35C077F8F9CB7"
+			type: "item"
+		}
+		]
+		x: 15.38d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"D2306C73A6EF39F3"
+		]
+		icon: {
+			id: "minecraft:enchanting_table"
+		}
+		id: "69F773F6179D1219"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			advancement: "minecraft:story/enchant_item"
+			id: "EA1F0176DFABF9F7"
+			type: "advancement"
+		}
+		]
+		x: 18.15d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"69F773F6179D1219"
+		]
+		icon: {
+			id: "enchantinginfuser:enchanting_infuser"
+		}
+		id: "84906A833A81E953"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "enchantinginfuser:enchanting_infuser"
+			id: "94D8A32F43D466C3"
+			type: "item"
+		}
+		]
+		x: 13.2d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"84906A833A81E953"
+		]
+		icon: {
+			id: "minecraft:diamond_chestplate"
+		}
+		id: "65B121989B24E120"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			advancement: "minecraft:story/shiny_gear"
+			id: "CF2C449D5C3AE7DD"
+			type: "advancement"
+		}
+		]
+		x: 1.27d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"69F773F6179D1219"
+		]
+		icon: {
+			id: "minecraft:enchanted_book"
+		}
+		id: "4EE0ADB46403CDB8"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:enchanted_book"
+			id: "2D77C0BF4907C83D"
+			type: "item"
+		}
+		]
+		x: 15.97d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"4EE0ADB46403CDB8"
+		]
+		icon: {
+			id: "minecraft:bookshelf"
+		}
+		id: "E0EAE692FE9676E5"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:bookshelf"
+			count: 15
+			id: "830F81CC5C529488"
+			type: "item"
+		}
+		]
+		x: 3.82d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"4EE0ADB46403CDB8"
+		]
+		icon: {
+			id: "minecraft:lapis_lazuli"
+		}
+		id: "0F376BF67D50BB07"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:lapis_lazuli"
+			count: 64
+			id: "B111E62119D540F1"
+			type: "item"
+		}
+		]
+		x: 6.37d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"84906A833A81E953"
+		]
+		icon: {
+			id: "enchantinginfuser:advanced_enchanting_infuser"
+		}
+		id: "23A406F1DDFE80D9"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "enchantinginfuser:advanced_enchanting_infuser"
+			id: "F2A8CF56190C345B"
+			type: "item"
+		}
+		]
+		x: 9.15d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"23A406F1DDFE80D9"
+		]
+		icon: {
+			id: "minecraft:experience_bottle"
+		}
+		id: "406D3D1B82EFB98E"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:experience_bottle"
+			count: 32
+			id: "749CBC665800F9AA"
+			type: "item"
+		}
+		]
+		x: -3.75d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"0E39A4C139642076"
+		"65B121989B24E120"
+		]
+		icon: {
+			id: "simplyswords:runefused_gem"
+		}
+		id: "3713E12F159BDD10"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "simplyswords:runefused_gem"
+			id: "98E5C9F85340E6F5"
+			type: "item"
+		}
+		{
+			item: "simplyswords:runic_tablet"
+			id: "FCCAE76A026E87E5"
+			type: "item"
+		}
+		]
+		x: -0.98d
+		y: -8.75d
 	}
 	{
 		dependencies: [
@@ -330,7 +1256,7 @@
 			type: "item"
 		}
 		]
-		x: 0.0d
+		x: 2.77d
 		y: -8.75d
 	}
 	]

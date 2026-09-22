@@ -1,5 +1,9 @@
 {
 	chapter.9D6EA4128465C4F3.title: "序"
+	chapter.3FE95F1E7A686150.chapter_subtitle: [
+	"先活到能动手，再谈立国"
+	]
+	chapter.3FE95F1E7A686150.title: "生存第一课"
 	chapter.DAEA88A7CF3C8D89.chapter_subtitle: [
 	"第一夜之前，先弄明白「我们为什么会在这里」"
 	]
@@ -20,6 +24,14 @@
 	"御敌：这个时代的达标线在哪——袭击规模会长，工事就得跟着长"
 	]
 	chapter.C50763FE48E477EC.title: "御敌"
+	chapter.9D29B4D9AD33F8C5.chapter_subtitle: [
+	"让城里真的有居民，而不是一排空房子"
+	]
+	chapter.9D29B4D9AD33F8C5.title: "人口与民生"
+	chapter.76A53255FAB13707.chapter_subtitle: [
+	"大工程不是有材料就能开工的"
+	]
+	chapter.76A53255FAB13707.title: "国库与营建"
 	chapter.BF9A19CB32D5CEBA.chapter_subtitle: [
 	"把打下来的东西，变成能留下来的东西"
 	]
@@ -28,64 +40,104 @@
 	"毕业之后：不是结束，是终于有空做想做的事"
 	]
 	chapter.52921E2919FA30ED.title: "无尽纪元"
+	chapter.6321A25AC6183653.chapter_subtitle: [
+	"让后来的人知道这里发生过什么"
+	]
+	chapter.6321A25AC6183653.title: "碑林与史册"
 	chapter.899ABFDCC287D351.chapter_subtitle: [
 	"世界不只有你们：先看见邻邦，再决定怎么打交道"
 	]
 	chapter.899ABFDCC287D351.title: "邦交"
-	chapter.F9293635781D1E8D.chapter_subtitle: [
-	"从手摇开始，一路到蒸汽与列车：箭头就是路线图"
+	chapter.6227C6B33BA4AD51.chapter_subtitle: [
+	"口头答应不算数，写成条款才算"
 	]
-	chapter.F9293635781D1E8D.title: "机械动力"
-	chapter.C84F299A21D20B48.chapter_subtitle: [
-	"御敌：来犯的怎么运作、怎么挡；有些结果判不了，得自己打勾"
+	chapter.6227C6B33BA4AD51.title: "邦交·外交与条约"
+	chapter.4267E238BF4E1096.chapter_subtitle: [
+	"条约保不住的东西，只能自己拿"
 	]
-	chapter.C84F299A21D20B48.title: "防御与尸潮"
+	chapter.4267E238BF4E1096.title: "邦交·夺城与属地"
 	chapter.200F50D06DD460E3.chapter_subtitle: [
 	"原料进来、建材出去：一座城的实际吞吐量"
 	]
 	chapter.200F50D06DD460E3.title: "材料与工业"
-	chapter.AB866F7190B1B785.chapter_subtitle: [
-	"把「盖一次」变成「盖一百次」：这条链通了，造城速度会变一个量级"
+	chapter.F9293635781D1E8D.chapter_subtitle: [
+	"从手摇开始，一路到蒸汽与列车：箭头就是路线图"
 	]
-	chapter.AB866F7190B1B785.title: "图纸与工程"
-	chapter.A463AC437DC43705.chapter_subtitle: [
-	"「我们的地」这套系统：权限、边界、以及走得回来"
-	]
-	chapter.A463AC437DC43705.title: "领地与队伍"
+	chapter.F9293635781D1E8D.title: "机械动力"
 	chapter.46F69955A516BEE5.chapter_subtitle: [
 	"从烧一炉水，到让整张地图变短"
 	]
 	chapter.46F69955A516BEE5.title: "蒸汽与铁路"
-	chapter.0AE5EAB7FD35FEF7.chapter_subtitle: [
-	"让「盖得像样」这件事有工具可用"
-	]
-	chapter.0AE5EAB7FD35FEF7.title: "建筑与装饰"
-	chapter.4DCF8BEF6FD0004E.chapter_subtitle: [
-	"房子盖好之后：让它住得下人"
-	]
-	chapter.4DCF8BEF6FD0004E.title: "家具与生活"
-	chapter.87F426743B008B2B.chapter_subtitle: [
-	"从「够吃」到「好吃」：这一章是全队幸福感的来源"
-	]
-	chapter.87F426743B008B2B.title: "食物与农业"
-	chapter.994C41C732487EFB.chapter_subtitle: [
-	"随身带什么、就近放什么、什么时候该回仓库"
-	]
-	chapter.994C41C732487EFB.title: "储存与物流"
-	chapter.A839569A8D6C5FF7.chapter_subtitle: [
-	"从「能打」到「打得舒服」"
-	]
-	chapter.A839569A8D6C5FF7.title: "工具与装备"
 	chapter.D265B46A0D43ECBF.chapter_subtitle: [
 	"先看见，再决定去哪：把未知变成已知"
 	]
 	chapter.D265B46A0D43ECBF.title: "地图与探索"
+	chapter.AB866F7190B1B785.chapter_subtitle: [
+	"把「盖一次」变成「盖一百次」：这条链通了，造城速度会变一个量级"
+	]
+	chapter.AB866F7190B1B785.title: "图纸与工程"
 	chapter.848D40BDBBE07AD6.chapter_subtitle: [
 	"从一把好剑，到一台能砸开城门的机器"
 	]
 	chapter.848D40BDBBE07AD6.title: "战斗与军械"
-	chapter.C83EFD5F7165C874.chapter_subtitle: [
-	"卡了怎么办、东西在哪看：这一章是工具箱，不是任务清单"
+	chapter.A463AC437DC43705.chapter_subtitle: [
+	"「我们的地」这套系统：权限、边界、以及走得回来"
 	]
-	chapter.C83EFD5F7165C874.title: "性能与信息"
+	chapter.A463AC437DC43705.title: "领地与队伍"
+	chapter.C84F299A21D20B48.chapter_subtitle: [
+	"御敌：来犯的怎么运作、怎么挡；有些结果判不了，得自己打勾"
+	]
+	chapter.C84F299A21D20B48.title: "防御与尸潮"
+	chapter.0AE5EAB7FD35FEF7.chapter_subtitle: [
+	"让「盖得像样」这件事有工具可用"
+	]
+	chapter.0AE5EAB7FD35FEF7.title: "建筑构件"
+	chapter.9F5FCF5EF7A32648.chapter_subtitle: [
+	"同一栋房子，细节决定它像不像有人住"
+	]
+	chapter.9F5FCF5EF7A32648.title: "装饰与细节"
+	chapter.4DCF8BEF6FD0004E.chapter_subtitle: [
+	"屋子盖好之后：把它做成能住人的家"
+	]
+	chapter.4DCF8BEF6FD0004E.title: "家具"
+	chapter.2D4FDE580D3373FB.chapter_subtitle: [
+	"睡得下、带得走、过得了河、丢不了东西"
+	]
+	chapter.2D4FDE580D3373FB.title: "生活与出行"
+	chapter.87F426743B008B2B.chapter_subtitle: [
+	"从「够吃」到「好吃」：这一章是全队幸福感的来源"
+	]
+	chapter.87F426743B008B2B.title: "食物与烹饪"
+	chapter.416B6B8D808931AC.chapter_subtitle: [
+	"把种子、牲口与人手接成一条稳定的食物线"
+	]
+	chapter.416B6B8D808931AC.title: "农牧与种植"
+	chapter.994C41C732487EFB.chapter_subtitle: [
+	"随身带什么、就近放什么、什么时候该回仓库"
+	]
+	chapter.994C41C732487EFB.title: "仓储"
+	chapter.672CCD1B8CEAF328.chapter_subtitle: [
+	"把查与找的时间省下来，用在建与做上"
+	]
+	chapter.672CCD1B8CEAF328.title: "贸易与工坊辅助"
+	chapter.A839569A8D6C5FF7.chapter_subtitle: [
+	"从「有一把趁手的」到「全队穿得住」"
+	]
+	chapter.A839569A8D6C5FF7.title: "装备与武器"
+	chapter.D0C74967FD0CEDCE.chapter_subtitle: [
+	"不推主线，但缺了天天别扭"
+	]
+	chapter.D0C74967FD0CEDCE.title: "实用与奇物"
+	chapter.C83EFD5F7165C874.chapter_subtitle: [
+	"跑得动才有后面：性能预算的玩家侧操作面"
+	]
+	chapter.C83EFD5F7165C874.title: "性能与优化"
+	chapter.DAD50D3A903FA0FA.chapter_subtitle: [
+	"屏幕上该看见什么、手上该怎么操作"
+	]
+	chapter.DAD50D3A903FA0FA.title: "信息与界面"
+	chapter.86E6FD6C0A0A959E.chapter_subtitle: [
+	"听得见的水声、看得见的光：氛围件怎么摆"
+	]
+	chapter.86E6FD6C0A0A959E.title: "音画与氛围"
 }

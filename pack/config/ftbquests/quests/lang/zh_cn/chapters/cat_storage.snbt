@@ -53,4 +53,72 @@
 	quest.05250B2F3C50BD7F.description: [
 	"随身、就近、回仓三段都通：出门带背包，工地有就近柜，回城自动入库。"
 	]
+	quest.29D3596A7654DF43.title: "抽屉"
+	quest.29D3596A7654DF43.description: [
+	"Storage Delight：一格抽屉就是一格分类，还能并排叠成一面。"
+	"工地、矿道口、灶台边各放一组，就不必每次跑主仓。"
+	]
+	quest.C06100CBCAD04DC9.title: "小抽屉分零件"
+	quest.51C5DA43F4835A4A.title: "玻璃柜"
+	quest.87BCE9C7AE5514FC.title: "台面柜当操作台"
+	quest.59821A97064A3FBB.title: "书橱收资料"
+	quest.7F952FF2E934E4B0.title: "食材单独一格"
+	quest.9261B318BCC99C82.title: "整面柜墙"
+	quest.9261B318BCC99C82.description: [
+	"十六个单门柜并起来，就是一整面可查的墙：一格一类，走过去就知道哪格空着。"
+	]
+	quest.484B882A19FB0C56.title: "背包加两个储罐"
+	quest.484B882A19FB0C56.description: [
+	"背包的流体那一半：两个罐子装水、药水与岩浆，出门不用带一背包桶。"
+	]
+	quest.A6166CD3BEF7C2A6.title: "软管与接口"
+	quest.9F1FEFDB3AFE6474.title: "熔炉内胆"
+	quest.57390F615AD735DA.title: "高炉内胆"
+	quest.57390F615AD735DA.description: [
+	"矿石就地成锭，一趟矿道能带回的是锭而不是矿石——这是「少跑一趟」里最实惠的一步。"
+	]
+	quest.86DD308CA93829AC.title: "智能溜槽"
+	quest.86DD308CA93829AC.description: [
+	"溜槽的过滤版：只让该下去的东西下去，剩下的继续往前走。"
+	]
+	quest.2087273D295EE0B2.title: "安山漏斗"
+	quest.31B17C5DB0601485.title: "黄铜漏斗"
+	quest.1313E84AB67395E4.title: "置物台"
+	quest.B167E2DCDB010F58.title: "定量投放"
+	quest.609141EB095A7C0F.title: "动力臂"
+	quest.3C58DF8EA3AC5C27.title: "箱里有什么能读出来"
+	quest.B629C3AE1A000CAD.title: "工厂仪表"
+	quest.64379B2A614EEBD1.title: "仓储链接站"
+	quest.DEA310EF6C79CA0F.title: "包裹过滤器"
+	quest.085AB1F797B05D86.title: "理包机"
+	quest.03B79EA2A2E190E9.title: "纸板与包裹"
+	quest.95C977F5BCC25F97.title: "货物蛙港"
+	quest.428C83D9BB0BF6C7.title: "仓库自己收自己发"
+	quest.428C83D9BB0BF6C7.description: [
+	"八个链接站加仪表：入库、计数、领料都不再需要人站在箱子前。"
+	"到这一步，「公共仓库」才算从一堆箱子变成一套设施。"
+	]
+	quest.C893879E9E4A8B1E.title: "遗迹的箱子每人一份"
+	quest.C893879E9E4A8B1E.description: [
+	"Lootr：同一个箱子，每个人开出来的是各自的一份——先到的人不会把后来者的那份搬空。"
+	"远征队从此可以分头搜，不必排队等一个人先开完。"
+	]
+	quest.B9245AF3C49CA3BB.title: "战利品木桶"
+	quest.1CFB20E9A1E93BE1.title: "战利品潜影盒"
+	quest.F20AD52D891AEDAF.title: "开过十处"
+	quest.F20AD52D891AEDAF.description: [
+	"十处战利品 = 十次「这一趟没白来」，也是远征队补给的主要来源。"
+	]
+	quest.7D4751F16B42E56C.title: "百次奖杯"
+	quest.7D4751F16B42E56C.description: [
+	"开满一百处战利品容器的纪念品，只能靠开箱拿到。"
+	]
+	quest.9F8AB4D04BC28CBD.title: "只收该收的"
+	quest.9F8AB4D04BC28CBD.description: [
+	"FTB Filter System：把「什么该进箱子」写成一个能复用的条件，不必每次手动挑。"
+	]
+	quest.C960552DD7B73784.title: "分拣清单成型"
+	quest.C960552DD7B73784.description: [
+	"过滤条件、分类桶、每人一份的战利品各就各位——「回到仓库」这一段就闭环了。"
+	]
 }

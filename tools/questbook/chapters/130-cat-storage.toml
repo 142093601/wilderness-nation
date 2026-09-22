@@ -1,19 +1,35 @@
-# 类目 · 储存与物流
+# 类目 · 仓储
 #
-# 本章的 mod：Create 物流系（已在机械动力章铺过一条主线，这里补"仓储"视角）·
-#   Storage Delight · Travelers Backpack · Shulker Box Tooltip · Cupboard · Sophisticated 系
+# 本章的 mod 家族（逐个核对过：`python tools/item_index.py --ns <ns>`）：
+#   · Storage Delight `storagedelight`（170 项：橱柜 / 抽屉 / 书橱 / 台面柜 / 食品柜）
+#   · Travelers Backpack `travelersbackpack`（105 项：背包本身 + 内胆与升级件）
+#   · Create 仓储段 `create`：item_vault · packager · repackager · stock_ticker · stock_link ·
+#     redstone_requester · stockpile_switch · chute · smart_chute · depot · weighted_ejector ·
+#     funnel（安山/黄铜）· mechanical_arm · factory_gauge · content_observer ·
+#     package_filter · package_frogport ·
+#   · Lootr `lootr`（10 项 + 16 条 advancement：战利品箱/桶/潜影盒/奖杯）
+#   · FTB Filter System `ftbfiltersystem`（1 项：smart_filter）
+#
+# **覆盖不到的两种**（不是漏写，是这两个 mod 没有可持有的物品，逐条给证据）：
+#   · Cupboard `cupboard`：它是个**库**（jar 30KB，只有 config / mixin / util 与一个空的
+#     `assets/` 目录，`assets/*/models/item/` 条目数 = 0）；注册表里没有 `cupboard` 命名空间。
+#     按说明书 §6，纯库 mod 不该有任务 → 本章不写它
+#   · Shulker Box Tooltip `shulkerboxtooltip`：纯客户端预览界面（jar 里同样 0 个 item model，
+#     注册表无该命名空间），"看过一眼预览"在游戏里没有任何信号 → 不硬凑
 #
 # 与其它章的分工：
-#   · 机械动力章 = 物流**原理**（带、漏斗、机械臂、打包）
+#   · 机械动力章 (`60-create`)  = 物流**原理**（带、漏斗、机械臂、打包的机制）
+#   · 机械动力·物流 (`62-logistics`) = 产线**吞吐**视角
 #   · 基建章     = 公共仓库**规模**（保险库 16 个、单库 5000 单位）
-#   · 本章       = **随身与就近**（背包、背包内胆、移动仓库、分类容器）
+#   · 本章       = **放东西**这一段：随身（背包内胆）· 就近（柜与抽屉）· 回仓（Create 仓储机构）
+#                  · 遗迹里每人的那一份（Lootr）· 只收该收的（过滤器）
 
 key = "cat_storage"
-title = "储存与物流"
+title = "仓储"
 subtitle = "随身带什么、就近放什么、什么时候该回仓库"
 group = "category"
 icon = "create:item_vault"
-order_index = 33
+order_index = 56
 
 grid = { step = 1.5, row_h = 1.75 }
 
@@ -191,6 +207,418 @@ tasks = [
 	{ type = "item", item = "create:item_vault", count = 32 },
 ]
 
+# ---------------- 簇 5：柜子与抽屉（Storage Delight） ----------------
+
+[[quest]]
+name = "s_drawer"
+title = "抽屉"
+desc = [
+	"Storage Delight：一格抽屉就是一格分类，还能并排叠成一面。",
+	"工地、矿道口、灶台边各放一组，就不必每次跑主仓。",
+]
+icon = "storagedelight:oak_drawer"
+shape = "pentagon"
+size = 2.0
+deps = ["s_cupboard"]
+tasks = [
+	{ type = "item", item = "storagedelight:oak_drawer", count = 8 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "s_small_drawers"
+title = "小抽屉分零件"
+icon = "storagedelight:small_oak_drawers"
+shape = "circle"
+size = 1.2
+deps = ["s_drawer"]
+tasks = [
+	{ type = "item", item = "storagedelight:small_oak_drawers", count = 8 },
+]
+
+[[quest]]
+name = "s_glass_cabinet"
+title = "玻璃柜"
+icon = "storagedelight:glass_oak_cabinet"
+shape = "circle"
+size = 1.2
+deps = ["s_drawer"]
+tasks = [
+	{ type = "item", item = "storagedelight:glass_oak_cabinet", count = 4 },
+]
+
+[[quest]]
+name = "s_countertop"
+title = "台面柜当操作台"
+icon = "storagedelight:acacia_cabinet_with_polished_andesite_countertop"
+shape = "rsquare"
+deps = ["s_drawer"]
+tasks = [
+	{ type = "item", item = "storagedelight:acacia_cabinet_with_polished_andesite_countertop", count = 4 },
+]
+
+[[quest]]
+name = "s_book_cabinet"
+title = "书橱收资料"
+icon = "storagedelight:oak_drawer_with_books"
+shape = "circle"
+size = 1.2
+deps = ["s_drawer"]
+tasks = [
+	{ type = "item", item = "storagedelight:oak_drawer_with_books", count = 4 },
+]
+
+[[quest]]
+name = "s_pantry"
+title = "食材单独一格"
+icon = "storagedelight:oak_pantry_cabinet"
+shape = "circle"
+size = 1.2
+deps = ["s_drawer"]
+tasks = [
+	{ type = "item", item = "storagedelight:oak_pantry_cabinet", count = 2 },
+]
+
+[[quest]]
+name = "s_cabinet_run"
+title = "整面柜墙"
+desc = [
+	"十六个单门柜并起来，就是一整面可查的墙：一格一类，走过去就知道哪格空着。",
+]
+icon = "storagedelight:oak_single_door_cabinet"
+shape = "octagon"
+size = 1.75
+deps = ["s_small_drawers", "s_glass_cabinet", "s_countertop", "s_book_cabinet", "s_pantry"]
+tasks = [
+	{ type = "item", item = "storagedelight:oak_single_door_cabinet", count = 16 },
+]
+
+# ---------------- 簇 6：背包的容量与流体（Travelers Backpack 内胆） ----------------
+
+[[quest]]
+name = "s_bp_tanks"
+title = "背包加两个储罐"
+desc = [
+	"背包的流体那一半：两个罐子装水、药水与岩浆，出门不用带一背包桶。",
+]
+icon = "travelersbackpack:tanks_upgrade"
+shape = "pentagon"
+size = 2.0
+deps = ["s_backpack_upgrade"]
+tasks = [
+	{ type = "item", item = "travelersbackpack:tanks_upgrade" },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "s_bp_hose"
+title = "软管与接口"
+icon = "travelersbackpack:hose_nozzle"
+shape = "circle"
+size = 1.2
+deps = ["s_bp_tanks"]
+tasks = [
+	{ type = "item", item = "travelersbackpack:hose_nozzle" },
+	{ type = "item", item = "travelersbackpack:hose" },
+]
+
+[[quest]]
+name = "s_bp_furnace"
+title = "熔炉内胆"
+icon = "travelersbackpack:furnace_upgrade"
+shape = "circle"
+size = 1.2
+deps = ["s_backpack_upgrade"]
+tasks = [
+	{ type = "item", item = "travelersbackpack:furnace_upgrade" },
+]
+
+[[quest]]
+name = "s_bp_blast"
+title = "高炉内胆"
+desc = [
+	"矿石就地成锭，一趟矿道能带回的是锭而不是矿石——这是「少跑一趟」里最实惠的一步。",
+]
+icon = "travelersbackpack:blast_furnace_upgrade"
+shape = "circle"
+size = 1.2
+deps = ["s_bp_furnace"]
+tasks = [
+	{ type = "item", item = "travelersbackpack:blast_furnace_upgrade" },
+]
+
+# ---------------- 簇 7：Create 仓储机构 ----------------
+
+[[quest]]
+name = "s_smart_chute"
+title = "智能溜槽"
+desc = [
+	"溜槽的过滤版：只让该下去的东西下去，剩下的继续往前走。",
+]
+icon = "create:smart_chute"
+shape = "pentagon"
+size = 2.0
+deps = ["s_deposit"]
+tasks = [
+	{ type = "item", item = "create:smart_chute", count = 2 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "s_funnel_andesite"
+title = "安山漏斗"
+icon = "create:andesite_funnel"
+shape = "circle"
+size = 1.2
+deps = ["s_smart_chute"]
+tasks = [
+	{ type = "item", item = "create:andesite_funnel", count = 8 },
+]
+
+[[quest]]
+name = "s_funnel_brass"
+title = "黄铜漏斗"
+icon = "create:brass_funnel"
+shape = "circle"
+size = 1.2
+deps = ["s_funnel_andesite"]
+tasks = [
+	{ type = "item", item = "create:brass_funnel", count = 4 },
+]
+
+[[quest]]
+name = "s_depot"
+title = "置物台"
+icon = "create:depot"
+shape = "circle"
+size = 1.2
+deps = ["s_smart_chute"]
+tasks = [
+	{ type = "item", item = "create:depot", count = 4 },
+]
+
+[[quest]]
+name = "s_weighted_ejector"
+title = "定量投放"
+icon = "create:weighted_ejector"
+shape = "circle"
+size = 1.2
+deps = ["s_depot"]
+tasks = [
+	{ type = "item", item = "create:weighted_ejector", count = 2 },
+]
+
+[[quest]]
+name = "s_mech_arm"
+title = "动力臂"
+icon = "create:mechanical_arm"
+shape = "rsquare"
+deps = ["s_funnel_brass"]
+tasks = [
+	{ type = "item", item = "create:mechanical_arm", count = 2 },
+]
+
+[[quest]]
+name = "s_content_observer"
+title = "箱里有什么能读出来"
+icon = "create:content_observer"
+shape = "circle"
+size = 1.2
+deps = ["s_stock_keeper"]
+tasks = [
+	{ type = "item", item = "create:content_observer", count = 2 },
+]
+
+[[quest]]
+name = "s_factory_gauge"
+title = "工厂仪表"
+icon = "create:factory_gauge"
+shape = "circle"
+size = 1.2
+deps = ["s_content_observer"]
+tasks = [
+	{ type = "item", item = "create:factory_gauge", count = 2 },
+]
+
+[[quest]]
+name = "s_stock_link"
+title = "仓储链接站"
+icon = "create:stock_link"
+shape = "rsquare"
+deps = ["s_factory_gauge"]
+tasks = [
+	{ type = "item", item = "create:stock_link", count = 4 },
+]
+
+[[quest]]
+name = "s_package_filter"
+title = "包裹过滤器"
+icon = "create:package_filter"
+shape = "circle"
+size = 1.2
+deps = ["s_stock_link"]
+tasks = [
+	{ type = "item", item = "create:package_filter", count = 2 },
+]
+
+[[quest]]
+name = "s_repackager"
+title = "理包机"
+icon = "create:repackager"
+shape = "circle"
+size = 1.2
+deps = ["s_package_filter"]
+tasks = [
+	{ type = "item", item = "create:repackager" },
+]
+
+[[quest]]
+name = "s_cardboard"
+title = "纸板与包裹"
+icon = "create:cardboard_block"
+shape = "circle"
+size = 1.2
+deps = ["s_repackager"]
+tasks = [
+	{ type = "item", item = "create:cardboard_block", count = 8 },
+	{ type = "item", item = "create:package", count = 4 },
+]
+
+[[quest]]
+name = "s_frogport"
+title = "货物蛙港"
+icon = "create:package_frogport"
+shape = "circle"
+size = 1.2
+deps = ["s_cardboard"]
+tasks = [
+	{ type = "item", item = "create:package_frogport", count = 2 },
+]
+
+[[quest]]
+name = "s_auto_warehouse"
+title = "仓库自己收自己发"
+desc = [
+	"八个链接站加仪表：入库、计数、领料都不再需要人站在箱子前。",
+	"到这一步，「公共仓库」才算从一堆箱子变成一套设施。",
+]
+icon = "create:stock_link"
+shape = "octagon"
+size = 1.75
+deps = ["s_mech_arm", "s_weighted_ejector", "s_frogport"]
+tasks = [
+	{ type = "item", item = "create:stock_link", count = 8 },
+	{ type = "item", item = "create:factory_gauge", count = 2 },
+]
+
+# ---------------- 簇 8：每人的那一份与过滤器（Lootr · FTB Filter System） ----------------
+
+[[quest]]
+name = "s_lootr_chest"
+title = "遗迹的箱子每人一份"
+desc = [
+	"Lootr：同一个箱子，每个人开出来的是各自的一份——先到的人不会把后来者的那份搬空。",
+	"远征队从此可以分头搜，不必排队等一个人先开完。",
+]
+icon = "lootr:lootr_chest"
+shape = "pentagon"
+size = 2.0
+deps = ["s_shulker"]
+tasks = [
+	{ type = "advancement", advancement = "lootr:1chest" },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "s_lootr_barrel"
+title = "战利品木桶"
+icon = "lootr:lootr_barrel"
+shape = "circle"
+size = 1.2
+deps = ["s_lootr_chest"]
+tasks = [
+	{ type = "advancement", advancement = "lootr:1barrel" },
+]
+
+[[quest]]
+name = "s_lootr_shulker"
+title = "战利品潜影盒"
+icon = "lootr:lootr_shulker"
+shape = "circle"
+size = 1.2
+deps = ["s_lootr_chest"]
+tasks = [
+	{ type = "advancement", advancement = "lootr:1shulker" },
+]
+
+[[quest]]
+name = "s_lootr_ten"
+title = "开过十处"
+desc = [
+	"十处战利品 = 十次「这一趟没白来」，也是远征队补给的主要来源。",
+]
+icon = "minecraft:chest"
+shape = "circle"
+size = 1.2
+deps = ["s_lootr_barrel", "s_lootr_shulker"]
+tasks = [
+	{ type = "advancement", advancement = "lootr:10loot" },
+]
+
+[[quest]]
+name = "s_lootr_trophy"
+title = "百次奖杯"
+desc = [
+	"开满一百处战利品容器的纪念品，只能靠开箱拿到。",
+]
+icon = "lootr:trophy"
+shape = "circle"
+size = 1.2
+deps = ["s_lootr_ten"]
+tasks = [
+	{ type = "item", item = "lootr:trophy" },
+]
+
+[[quest]]
+name = "s_filter"
+title = "只收该收的"
+desc = [
+	"FTB Filter System：把「什么该进箱子」写成一个能复用的条件，不必每次手动挑。",
+]
+icon = "ftbfiltersystem:smart_filter"
+shape = "rsquare"
+deps = ["s_stock_keeper"]
+tasks = [
+	{ type = "item", item = "ftbfiltersystem:smart_filter", count = 2 },
+]
+
+[[quest]]
+name = "s_whitelist"
+title = "分拣清单成型"
+desc = [
+	"过滤条件、分类桶、每人一份的战利品各就各位——「回到仓库」这一段就闭环了。",
+]
+icon = "ftbfiltersystem:smart_filter"
+shape = "octagon"
+size = 1.75
+deps = ["s_filter", "s_lootr_ten"]
+tasks = [
+	{ type = "item", item = "ftbfiltersystem:smart_filter", count = 4 },
+	{ type = "item", item = "minecraft:barrel", count = 8 },
+]
+
 [[quest]]
 name = "s_logistics_done"
 title = "全队不用背东西了"
@@ -201,7 +629,8 @@ icon = "travelersbackpack:standard"
 shape = "hexagon"
 size = 2.5
 deps = ["s_backpack_tank", "s_sleeping_bag", "s_backpack_upgrade", "s_labeled",
-        "s_threshold", "s_capacity_5000"]
+        "s_threshold", "s_capacity_5000", "s_cabinet_run", "s_bp_tanks",
+        "s_auto_warehouse", "s_whitelist"]
 tasks = [
 	{ type = "item", item = "create:packager", count = 4 },
 ]

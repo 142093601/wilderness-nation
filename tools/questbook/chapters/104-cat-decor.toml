@@ -1,0 +1,659 @@
+# 类目 · 装饰与细节
+#
+# 本章的 mod：Supplementaries（绳索/旗帜/遮阳棚/罐/支架/滑轮/沙漏/保险箱/雕像 等附属物）·
+#   Amendments（**加在原版方块上的那一层**：地毯台阶、吊顶旗帜、墙挂灯笼、染料锅、
+#   药水锅、头颅烛台、悬挂花盆、多层蛋糕）· Handcrafted（柱饰檐饰、陶罐等木作摆件）·
+#   Builders Crafts & Additions（店面：招牌、柜台、橱柜、木工台、支撑梁、木架、抱枕、街机）·
+#   Immersive Paintings（自制画与涂鸦）
+#
+# 与其它章的分工（本章的定位一句话）：
+#   · 本章 = **「让建筑好看」的那一层**：摆件、画、附属物、挂饰。
+#   · 100-cat-building = **结构件**：墙、窗、门面、路、桥、变体面材（那些决定「立不立得住」的）。
+#   · 110-cat-furniture = **家具**：能坐、能睡、能收纳的那层。
+#   · 178-cat-audio（音画与氛围）= 声音与环境粒子，不碰摆放出来的实物。
+#
+# 覆盖说明（2026-09-22 实测，不是凭印象）：
+#   · Amendments 只注册 2 个**物品**（amendments:dye_bottle / amendments:dragon_charge），
+#     其余 50 条全是「无物品形态的方块」（解包核对：0 个物品模型）——它们的设计就是
+#     「在原版方块上原地变形」（地毯 → 地毯台阶、灯笼 → 墙灯、旗帜 → 吊顶旗）。
+#     所以本章这些条目以**原版投入物**为判据，而不是拿查不到的方块 id 硬写。
+#   · Macaw's Paintings / Medieval Paintings：只提供画图样，不注册任何物品
+#     （解包核对：mcw-paintings 里 0 个物品模型、0 个 item 语言键），判据写不出来；
+#     它们的图样由「画框与图样」一条以原版画框提到。
+#   · SpookyJams / Held / Placeable Blaze Rods / Bushy Leaves / Vertical Slabs Compat：
+#     这几个 mod **不在本包**（pack/mods 下 231 个清单里逐个查过，registry.json 里那几条
+#     是旧实例扫描的残留），故一律不写条目——写了就是永远做不完的任务。
+
+key = "cat_decor"
+title = "装饰与细节"
+subtitle = "同一栋房子，细节决定它像不像有人住"
+group = "category"
+icon = "supplementaries:statue"
+order_index = 51
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---- 簇 1：绳索与附属物（Supplementaries） ----
+
+[[quest]]
+name = "d_rope"
+title = "绳索"
+desc = [
+	"Supplementaries 里最通用的一件：能顺着墙垂到楼下，能当扶手，能挂东西。",
+	"它也是这一章的地基——后面所有「挂起来的东西」都要有一根绳。",
+]
+icon = "supplementaries:rope"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "supplementaries:rope", count = 16 },
+]
+rewards = [
+	{ type = "xp", xp = 60 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "d_bunting"
+title = "彩旗与横旗"
+desc = [
+	"过节、开市、庆典：一挂彩旗比一块牌子管用。",
+]
+icon = "supplementaries:bunting_white"
+shape = "circle"
+size = 1.2
+deps = ["d_rope"]
+tasks = [
+	{ type = "item", item = "supplementaries:bunting_white", count = 8 },
+	{ type = "item", item = "supplementaries:flag_white", count = 4 },
+]
+
+[[quest]]
+name = "d_awning"
+title = "遮阳棚"
+desc = [
+	"店面前那一片阴影：既遮阳，也是「这里有生意」的信号。",
+]
+icon = "supplementaries:awning_white"
+shape = "circle"
+size = 1.2
+deps = ["d_rope"]
+tasks = [
+	{ type = "item", item = "supplementaries:awning_white", count = 8 },
+]
+
+[[quest]]
+name = "d_jar"
+title = "玻璃罐"
+desc = [
+	"装东西也是摆东西：柜台上一排罐子，比空墙像住处。",
+]
+icon = "supplementaries:jar"
+shape = "circle"
+size = 1.2
+deps = ["d_rope"]
+tasks = [
+	{ type = "item", item = "supplementaries:jar", count = 4 },
+]
+
+[[quest]]
+name = "d_planter"
+title = "种植盆"
+desc = [
+	"墙面与窗台的绿化：不用整地，放上去就长。",
+]
+icon = "supplementaries:planter"
+shape = "circle"
+size = 1.2
+deps = ["d_rope"]
+tasks = [
+	{ type = "item", item = "supplementaries:planter", count = 4 },
+	{ type = "item", item = "supplementaries:planter_rich", count = 1 },
+]
+
+[[quest]]
+name = "d_timber"
+title = "木支架"
+desc = [
+	"给房子加一副「骨架」：外露的支架是半木结构建筑的全部味道。",
+]
+icon = "supplementaries:timber_frame"
+shape = "circle"
+size = 1.2
+deps = ["d_rope"]
+tasks = [
+	{ type = "item", item = "supplementaries:timber_frame", count = 8 },
+	{ type = "item", item = "supplementaries:timber_brace", count = 4 },
+]
+
+[[quest]]
+name = "d_tile"
+title = "石瓦"
+desc = [
+	"屋顶与墙面要有比砖更小一号的材质，远看才有纹理。",
+]
+icon = "supplementaries:stone_tile"
+shape = "circle"
+size = 1.2
+deps = ["d_rope"]
+tasks = [
+	{ type = "item", item = "supplementaries:stone_tile", count = 16 },
+	{ type = "item", item = "supplementaries:blackstone_tile", count = 16 },
+]
+
+[[quest]]
+name = "d_wind_vane"
+title = "风向标与风箱"
+desc = [
+	"屋顶上的风向标、炉边的风箱：两件会动的小东西。",
+]
+icon = "supplementaries:wind_vane"
+shape = "circle"
+size = 1.2
+deps = ["d_rope"]
+tasks = [
+	{ type = "item", item = "supplementaries:wind_vane" },
+	{ type = "item", item = "supplementaries:bellows" },
+]
+
+[[quest]]
+name = "d_pulley"
+title = "滑轮"
+desc = [
+	"阁楼与仓库的吊运：绳索系统里唯一能省力的那件。",
+]
+icon = "supplementaries:pulley_block"
+shape = "circle"
+size = 1.2
+deps = ["d_rope"]
+tasks = [
+	{ type = "item", item = "supplementaries:pulley_block", count = 2 },
+]
+
+[[quest]]
+name = "d_hourglass"
+title = "沙漏"
+desc = [
+	"会议、比武、换班都靠它计时——比看太阳体面。",
+]
+icon = "supplementaries:hourglass"
+shape = "circle"
+size = 1.2
+deps = ["d_rope"]
+tasks = [
+	{ type = "item", item = "supplementaries:hourglass" },
+]
+
+[[quest]]
+name = "d_safe"
+title = "保险箱"
+desc = [
+	"公共仓库之外，总要有几个能上锁的柜子。",
+]
+icon = "supplementaries:safe"
+shape = "circle"
+size = 1.2
+deps = ["d_rope"]
+tasks = [
+	{ type = "item", item = "supplementaries:safe" },
+]
+
+[[quest]]
+name = "d_statue"
+title = "雕像"
+desc = [
+	"广场中心要有东西可看：雕像是纪念碑最便宜的做法。",
+]
+icon = "supplementaries:statue"
+shape = "circle"
+size = 1.2
+deps = ["d_rope"]
+tasks = [
+	{ type = "item", item = "supplementaries:statue", count = 2 },
+]
+
+[[quest]]
+name = "d_faucet"
+title = "水龙头与酒杯"
+desc = [
+	"酒馆的两件标配：能接水的龙头、能上桌的杯子。",
+]
+icon = "supplementaries:goblet"
+shape = "circle"
+size = 1.2
+deps = ["d_rope"]
+tasks = [
+	{ type = "item", item = "supplementaries:goblet", count = 4 },
+	{ type = "item", item = "supplementaries:faucet", count = 2 },
+]
+
+# ---- 簇 2：加在原版方块上（Amendments） ----
+
+[[quest]]
+name = "d_carpet_stairs"
+title = "地毯台阶与地毯楼梯"
+desc = [
+	"Amendments 的做法不是加新方块，是**让原版方块多一种摆法**：",
+	"地毯顺着台阶与楼梯铺下去，再也不用一格一格切形状。",
+	"大厅、议事厅、剧院这类踩上去要安静的公共空间，从此有得铺。",
+]
+icon = "minecraft:red_carpet"
+shape = "pentagon"
+size = 2.0
+deps = ["d_rope"]
+tasks = [
+	{ type = "item", item = "minecraft:red_carpet", count = 16 },
+]
+rewards = [
+	{ type = "xp", xp = 60 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "d_ceiling_banner"
+title = "吊顶旗帜"
+desc = [
+	"旗帜能从天花板上垂下来了：大厅与城门洞的纵向装饰。",
+]
+icon = "minecraft:white_banner"
+shape = "circle"
+size = 1.2
+deps = ["d_carpet_stairs"]
+tasks = [
+	{ type = "item", item = "minecraft:white_banner", count = 4 },
+]
+
+[[quest]]
+name = "d_wall_lantern"
+title = "墙上的灯笼"
+desc = [
+	"灯笼不再只能吊在方块底下：贴墙挂能省一层空间，走廊尤其明显。",
+]
+icon = "minecraft:lantern"
+shape = "circle"
+size = 1.2
+deps = ["d_carpet_stairs"]
+tasks = [
+	{ type = "item", item = "minecraft:lantern", count = 4 },
+	{ type = "item", item = "minecraft:soul_lantern", count = 2 },
+]
+
+[[quest]]
+name = "d_dye_bottle"
+title = "染料瓶"
+desc = [
+	"Amendments 唯一的新物品：把染料装进瓶里，染锅才有料可下。",
+]
+icon = "amendments:dye_bottle"
+shape = "circle"
+size = 1.2
+deps = ["d_carpet_stairs"]
+tasks = [
+	{ type = "item", item = "amendments:dye_bottle", count = 4 },
+	{ type = "item", item = "minecraft:cauldron", count = 1 },
+]
+
+[[quest]]
+name = "d_potion_cauldron"
+title = "锅里分药水"
+desc = [
+	"一锅药水够一队人喝：公共食堂旁边该有的东西。",
+]
+icon = "minecraft:potion"
+shape = "circle"
+size = 1.2
+deps = ["d_dye_bottle"]
+tasks = [
+	{ type = "item", item = "minecraft:potion", count = 3 },
+	{ type = "item", item = "minecraft:glass_bottle", count = 3 },
+]
+
+[[quest]]
+name = "d_skull_candle"
+title = "头颅烛台"
+desc = [
+	"蜡烛能坐在头骨上：工坊与地窖的氛围件。",
+]
+icon = "minecraft:candle"
+shape = "circle"
+size = 1.2
+deps = ["d_carpet_stairs"]
+tasks = [
+	{ type = "item", item = "minecraft:candle", count = 8 },
+	{ type = "item", item = "minecraft:skeleton_skull", count = 2 },
+]
+
+[[quest]]
+name = "d_hanging_pot"
+title = "悬挂花盆"
+desc = [
+	"吊在梁下的花盆：不占地面，是狭窄街巷里唯一能加绿的地方。",
+]
+icon = "minecraft:chain"
+shape = "circle"
+size = 1.2
+deps = ["d_carpet_stairs"]
+tasks = [
+	{ type = "item", item = "minecraft:chain", count = 8 },
+	{ type = "item", item = "minecraft:flower_pot", count = 4 },
+]
+
+[[quest]]
+name = "d_layer_cake"
+title = "多层蛋糕"
+desc = [
+	"蛋糕能换朝向、能叠起来——食堂的长桌才摆得下。",
+]
+icon = "minecraft:cake"
+shape = "circle"
+size = 1.2
+deps = ["d_carpet_stairs"]
+tasks = [
+	{ type = "item", item = "minecraft:cake", count = 2 },
+]
+
+# ---- 簇 3：木作与店面（Handcrafted / Builders Crafts & Additions） ----
+
+[[quest]]
+name = "d_trim"
+title = "柱饰与檐饰"
+desc = [
+	"Handcrafted 把装饰做成了**收边件**：柱子该有柱头，屋檐该有檐口。",
+	"房子「盖完了」和「盖得像样」之间的差别，基本都在这几厘米上。",
+]
+icon = "handcrafted:oak_pillar_trim"
+shape = "pentagon"
+size = 2.0
+deps = ["d_carpet_stairs"]
+tasks = [
+	{ type = "item", item = "handcrafted:oak_pillar_trim", count = 8 },
+	{ type = "item", item = "handcrafted:stone_corner_trim", count = 8 },
+]
+rewards = [
+	{ type = "xp", xp = 60 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "d_pot"
+title = "陶罐"
+desc = [
+	"角落与墙根的空缺，用罐子补：比再多一个箱子好看。",
+]
+icon = "handcrafted:terracotta_medium_pot"
+shape = "circle"
+size = 1.2
+deps = ["d_trim"]
+tasks = [
+	{ type = "item", item = "handcrafted:terracotta_medium_pot", count = 4 },
+	{ type = "item", item = "handcrafted:white_glazed_wide_pot", count = 2 },
+	{ type = "item", item = "handcrafted:terracotta_thin_pot", count = 2 },
+]
+
+[[quest]]
+name = "d_shop_sign"
+title = "店铺招牌"
+desc = [
+	"Builders Crafts & Additions 的招牌件：挂在门外，一眼看清这家做什么。",
+]
+icon = "buildersaddition2:oak_shop_sign"
+shape = "circle"
+size = 1.2
+deps = ["d_trim"]
+tasks = [
+	{ type = "item", item = "buildersaddition2:oak_shop_sign", count = 4 },
+]
+
+[[quest]]
+name = "d_counter"
+title = "柜台"
+desc = [
+	"有柜台才谈得上「营业」：交易、登记、发料都需要一个台面。",
+]
+icon = "buildersaddition2:oak_counter"
+shape = "circle"
+size = 1.2
+deps = ["d_shop_sign"]
+tasks = [
+	{ type = "item", item = "buildersaddition2:oak_counter", count = 4 },
+	{ type = "item", item = "buildersaddition2:oak_andesite_counter", count = 2 },
+]
+
+[[quest]]
+name = "d_counter_stone"
+title = "石面案台"
+desc = [
+	"深板岩与黑石的台面：工坊与酒馆用得住的那一档。",
+]
+icon = "buildersaddition2:oak_blackstone_counter"
+shape = "circle"
+size = 1.2
+deps = ["d_counter"]
+tasks = [
+	{ type = "item", item = "buildersaddition2:oak_blackstone_counter", count = 2 },
+	{ type = "item", item = "buildersaddition2:oak_deepslate_counter", count = 2 },
+]
+
+[[quest]]
+name = "d_cupboard"
+title = "橱柜与储物柜"
+desc = [
+	"敞开的架子放常拿的，柜门里的放不常拿的。",
+]
+icon = "buildersaddition2:oak_cupboard"
+shape = "circle"
+size = 1.2
+deps = ["d_shop_sign"]
+tasks = [
+	{ type = "item", item = "buildersaddition2:oak_cupboard", count = 2 },
+	{ type = "item", item = "buildersaddition2:oak_cabinet", count = 2 },
+]
+
+[[quest]]
+name = "d_carpenters_table"
+title = "木工台"
+desc = [
+	"这个 mod 的木作件都在木工台上出——它是整条店面线的起点。",
+	"先立台子，后面的招牌、柜台、梁架才有来源。",
+]
+icon = "buildersaddition2:oak_carpenters_table"
+shape = "rsquare"
+size = 1.75
+deps = ["d_trim"]
+tasks = [
+	{ type = "item", item = "buildersaddition2:oak_carpenters_table" },
+]
+
+[[quest]]
+name = "d_beam"
+title = "支撑梁与立柱"
+desc = [
+	"外露的梁与柱：木结构建筑最便宜也最有效的「结构感」。",
+]
+icon = "buildersaddition2:oak_support_beam"
+shape = "circle"
+size = 1.2
+deps = ["d_carpenters_table"]
+tasks = [
+	{ type = "item", item = "buildersaddition2:oak_support_beam", count = 8 },
+	{ type = "item", item = "buildersaddition2:oak_post", count = 8 },
+]
+
+[[quest]]
+name = "d_panel"
+title = "墙面挂板"
+desc = [
+	"整面墙的木板贴面：一层楼的高度差就靠它抹平。",
+]
+icon = "buildersaddition2:oak_panel"
+shape = "circle"
+size = 1.2
+deps = ["d_carpenters_table"]
+tasks = [
+	{ type = "item", item = "buildersaddition2:oak_panel", count = 8 },
+]
+
+[[quest]]
+name = "d_shelf"
+title = "开放木架"
+desc = [
+	"不装门的架子：摆出来比收起来重要。",
+]
+icon = "buildersaddition2:oak_shelf"
+shape = "circle"
+size = 1.2
+deps = ["d_carpenters_table"]
+tasks = [
+	{ type = "item", item = "buildersaddition2:oak_shelf", count = 6 },
+]
+
+[[quest]]
+name = "d_pillow"
+title = "抱枕"
+desc = [
+	"长凳与台阶上的软垫：一小块颜色，房间就不那么硬。",
+]
+icon = "buildersaddition2:white_pillow"
+shape = "circle"
+size = 1.2
+deps = ["d_trim"]
+tasks = [
+	{ type = "item", item = "buildersaddition2:white_pillow", count = 4 },
+	{ type = "item", item = "buildersaddition2:red_pillow", count = 2 },
+]
+
+[[quest]]
+name = "d_arcade"
+title = "街机"
+desc = [
+	"酒馆里的一台街机：不用电、不用网，摆着就能玩。",
+]
+icon = "buildersaddition2:oak_arcade"
+shape = "circle"
+size = 1.2
+deps = ["d_carpenters_table"]
+tasks = [
+	{ type = "item", item = "buildersaddition2:oak_arcade" },
+]
+
+# ---- 簇 4：画面与展示 ----
+
+[[quest]]
+name = "d_paint_custom"
+title = "自制画与涂鸦"
+desc = [
+	"Immersive Paintings 让你把自己的图挂上墙——纪念日、地图、全家福。",
+	"这是本章唯一能「记录我们做过什么」的一层，和其它装饰不是一回事。",
+]
+icon = "immersive_paintings:painting"
+shape = "pentagon"
+size = 2.0
+deps = ["d_trim"]
+tasks = [
+	{ type = "item", item = "immersive_paintings:painting" },
+	{ type = "item", item = "immersive_paintings:graffiti", count = 2 },
+]
+rewards = [
+	{ type = "xp", xp = 60 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "d_paint_glow"
+title = "荧光画"
+desc = [
+	"夜里也看得见的那一版：门口与地下通道尤其合适。",
+]
+icon = "immersive_paintings:glow_painting"
+shape = "circle"
+size = 1.2
+deps = ["d_paint_custom"]
+tasks = [
+	{ type = "item", item = "immersive_paintings:glow_painting" },
+	{ type = "item", item = "immersive_paintings:glow_graffiti" },
+]
+
+[[quest]]
+name = "d_paint_motives"
+title = "画框与图样"
+desc = [
+	"Macaw's Paintings 与 Medieval Paintings 带来成批的画图样——",
+	"图样多了，画框也得跟上，才挂得满一面墙。",
+]
+icon = "minecraft:item_frame"
+shape = "circle"
+size = 1.2
+deps = ["d_paint_custom"]
+tasks = [
+	{ type = "item", item = "minecraft:item_frame", count = 8 },
+]
+
+[[quest]]
+name = "d_display"
+title = "展示台与物品架"
+desc = [
+	"把东西单独摆出来的两件家具：值得被看见的物件不该锁在箱子里。",
+]
+icon = "supplementaries:pedestal"
+shape = "circle"
+size = 1.2
+deps = ["d_paint_custom"]
+tasks = [
+	{ type = "item", item = "supplementaries:pedestal", count = 2 },
+	{ type = "item", item = "supplementaries:item_shelf", count = 4 },
+]
+
+[[quest]]
+name = "d_leaves"
+title = "补上绿意"
+desc = [
+	"房子之间的空档、墙角、屋顶边缘：绿植是唯一能软化建筑的东西。",
+]
+icon = "minecraft:azalea_leaves"
+shape = "circle"
+size = 1.2
+deps = ["d_paint_custom"]
+tasks = [
+	{ type = "item", item = "minecraft:azalea_leaves", count = 16 },
+	{ type = "item", item = "minecraft:flowering_azalea_leaves", count = 8 },
+]
+
+[[quest]]
+name = "d_vine"
+title = "爬藤与苔藓"
+desc = [
+	"旧墙上的藤与地面上的苔：建筑「有年份」最省力的做法。",
+]
+icon = "minecraft:vine"
+shape = "circle"
+size = 1.2
+deps = ["d_leaves"]
+tasks = [
+	{ type = "item", item = "minecraft:vine", count = 16 },
+	{ type = "item", item = "minecraft:moss_block", count = 8 },
+]
+
+# ---- 章终局 ----
+
+[[quest]]
+name = "d_decor_done"
+title = "一间「看得出住过人」的屋子"
+desc = [
+	"结构、家具、附属物、画、绿植各用上一次：屋里要有坐在那儿的人留下的痕迹。",
+	"这一条之后，「装饰」这一层就算通了——剩下的只是换风格。",
+]
+icon = "immersive_paintings:painting"
+shape = "hexagon"
+size = 2.5
+deps = ["d_bunting", "d_awning", "d_timber", "d_statue", "d_faucet",
+        "d_wall_lantern", "d_hanging_pot", "d_pot", "d_counter", "d_shelf",
+        "d_pillow", "d_arcade", "d_paint_glow", "d_display", "d_vine"]
+tasks = [
+	{ type = "item", item = "immersive_paintings:painting" },
+	{ type = "item", item = "supplementaries:pedestal", count = 2 },
+	{ type = "item", item = "handcrafted:terracotta_medium_pot", count = 2 },
+]
+rewards = [
+	{ type = "xp", xp = 80 },
+	{ type = "toast" },
+]

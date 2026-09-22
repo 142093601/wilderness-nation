@@ -1,0 +1,116 @@
+{
+	quest.C0BBC7D3AB4EEF4F.title: "传送石盘"
+	quest.C0BBC7D3AB4EEF4F.description: [
+	"传送石碑解决「目的地在哪」，石盘解决「这两处之间怎么来回」。"
+	"据点一多，固定两点之间的往返就是最先该省掉的那件事。"
+	]
+	quest.73E5BACAB3F473ED.title: "共鸣碎片"
+	quest.00869398419D1511.title: "深板岩碎片：把石盘钉死"
+	quest.0FF8B59917D5F18C.title: "传送门卷轴"
+	quest.0FF8B59917D5F18C.description: [
+	"临时门：在远处、在地下也能开一次，用完就散。"
+	"它是「今天必须回去一趟」这种时候的兜底。"
+	]
+	quest.A1399243D9FBFF46.title: "双生羽毛"
+	quest.A1399243D9FBFF46.description: [
+	"两个人各拿一支、互相绑定——结伴出远门时，谁掉队都能立刻回到对方身边。"
+	]
+	quest.D3D82A3652AA9059.title: "墓志铭"
+	quest.D3D82A3652AA9059.description: [
+	"出事之后回得去现场——墓志铭与瞬忆碑是给「丢东西」这件事兜底的。"
+	]
+	quest.560266D2609959F2.title: "传送石座"
+	quest.560266D2609959F2.description: [
+	"石座不能当目的地，只能当出发点：立在矿口、工地、前线，收工就从那里回城。"
+	]
+	quest.F71FB8C5FEB49FC9.title: "考古学桌"
+	quest.F71FB8C5FEB49FC9.description: [
+	"这个包的考古不只有可疑的沙子：从这张桌子开始，才有后面一整条勘察线。"
+	"它管的是「地下的东西怎么变成能用的东西」。"
+	]
+	quest.AE62EEB55D7F15C3.title: "刷子"
+	quest.969CE08F6D303CF6.title: "可疑的泥土与红沙"
+	quest.09A2E7B7EE5170C8.title: "含化石的泥土"
+	quest.4497F23114906057.title: "已鉴定的神器"
+	quest.4497F23114906057.description: [
+	"从一块碎片到一件鉴定出来的成品——勘察线到这一步才有回报。"
+	]
+	quest.A23B72FFFA68078E.title: "古代花瓶"
+	quest.B1B4918120572A40.title: "拼一具完整化石"
+	quest.B1B4918120572A40.description: [
+	"头和身体凑齐摆出去，它自带的那点脾性才会显出来（狼化石让骷髅发怵，"
+	"鸡化石让人觉得更轻——说明写在物品上）。这也是本章最便宜的一件纪念物。"
+	]
+	quest.6146E0EA2216D1B6.title: "生长图腾"
+	quest.6146E0EA2216D1B6.description: [
+	"放在田边的生长图腾会加速附近作物——它是「没有它很难受」这句话最标准的例子。"
+	]
+	quest.54736BFB9EEA4AA3.title: "光辉图腾"
+	quest.54736BFB9EEA4AA3.description: [
+	"夜里看守、下矿探路都用得上：它的光会照出附近的实体，并且伤害怪物。"
+	]
+	quest.AF31C02576EA7E31.title: "灵魂图腾与洪流图腾"
+	quest.161ED02B39C2C1D7.title: "唤魔者陷阱"
+	quest.0F3F15274257F914.title: "相机"
+	quest.0F3F15274257F914.description: [
+	"Exposure 把「记录」做成了完整玩法：拍照要胶卷、要冲洗、要印出来。"
+	"它也是本包唯一能留下「当时的画面」的手段——文字会记错，照片不会。"
+	]
+	quest.638F59514F9FCF27.title: "黑白胶卷"
+	quest.F4DF4151F22BE0BD.title: "彩色胶卷"
+	quest.F4DF4151F22BE0BD.description: [
+	"黑白能记事，彩色能记「那天是什么样子」。想给以后的人看，就别省这一步。"
+	]
+	quest.BE16B5B021A02F70.title: "暗房"
+	quest.BE16B5B021A02F70.description: [
+	"拍完不冲等于没拍。暗房是记录线上的必经工序，也是「照片」这种东西的产地。"
+	]
+	quest.14FA656C40AD262E.title: "冲洗出底片"
+	quest.363CE1A4B3C0F411.title: "印出第一张照片"
+	quest.363CE1A4B3C0F411.description: [
+	"从底片到照片：这一步之后，墙上的东西才有得挂，相册里才有得翻。"
+	]
+	quest.377CFC52EFCFA3BE.title: "相框：把照片挂上墙"
+	quest.D45AA0BF70539033.title: "相册"
+	quest.D45AA0BF70539033.description: [
+	"相册是「这个国家经历过什么」的第一手材料，也是以后写史册时的底稿。"
+	]
+	quest.B67ABBBB254327F6.title: "相机支架与自拍杆"
+	quest.7D450B0D4CA48DBE.title: "位面投影器"
+	quest.7D450B0D4CA48DBE.description: [
+	"本章最像「奇物」的一件：它能把别处的一张图投到眼前，"
+	"当议会厅的展示板或地图墙都行——代价是它会消耗，用久了还会解体。"
+	]
+	quest.CB9D767EC490A9CE.title: "拍立得相机"
+	quest.CB9D767EC490A9CE.description: [
+	"拍立得不用暗房，当场出片；代价是相纸有限，适合拍「现在就想要」的东西。"
+	]
+	quest.C63F21FB060A029B.title: "拍立得相纸"
+	quest.FFD2733B828090E2.title: "蟹钳"
+	quest.FFD2733B828090E2.description: [
+	"螃蟹掉下来的钳子。它是这一章最典型的奇物：不用也能玩，用过就回不去。"
+	]
+	quest.242F0668956B6AEA.title: "护符位：冰冻与幻象图腾"
+	quest.242F0668956B6AEA.description: [
+	"冰冻图腾来自冰术师，幻象图腾来自幻术师——它们和原版不死图腾占同一个护符位，"
+	"效果各不相同。带哪一枚出门，是个值得讨论的问题。"
+	]
+	quest.95B51AF9C31D03AE.title: "野火王冠"
+	quest.95B51AF9C31D03AE.description: [
+	"野火（下界的新对手）掉碎片，五块碎片拼成一顶王冠；它本身是一顶头盔。"
+	]
+	quest.B3DA9049B45D935F.title: "矿井里的那张唱片"
+	quest.B3DA9049B45D935F.description: [
+	"这张唱片被塞进了废弃矿井的箱子里——想听它，得先下矿找。"
+	]
+	quest.8B1039A010ADFE15.title: "养蜂人的蜂箱"
+	quest.8B1039A010ADFE15.description: [
+	"换一种木材的蜂箱也算蜂箱：村里就会多出一个养蜂人的岗位。"
+	]
+	quest.E59EE86E5D072D1F.title: "毛茛"
+	quest.916580DA1D552D6F.title: "出门的杂件齐了"
+	quest.916580DA1D552D6F.description: [
+	"往返、勘察、记录、手感四件事各有趁手的工具。"
+	"这些东西不推主线，但缺一样就会天天别扭——补齐它们，出门才算轻松。"
+	]
+}

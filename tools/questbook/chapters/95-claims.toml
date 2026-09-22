@@ -15,8 +15,7 @@ title = "领地与队伍"
 subtitle = "「我们的地」这套系统：权限、边界、以及走得回来"
 group = "craft"
 icon = "minecraft:shield"
-order_index = 23
-
+order_index = 36
 grid = { step = 1.5, row_h = 1.75 }
 
 # ---------------- 权限：从「能进」到「能管」 ----------------

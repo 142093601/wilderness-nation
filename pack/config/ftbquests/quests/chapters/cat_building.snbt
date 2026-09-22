@@ -7,7 +7,7 @@
 		id: "minecraft:bricks"
 	}
 	id: "0AE5EAB7FD35FEF7"
-	order_index: 30
+	order_index: 50
 	quest_links: [ ]
 	quests: [
 	{
@@ -33,6 +33,110 @@
 		"27EF883A29B97A4A"
 		]
 		icon: {
+			id: "mcwbridges:andesite_bridge_pier"
+		}
+		id: "6FBA30C74785E6B1"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mcwbridges:andesite_bridge_pier"
+			count: 4
+			id: "DC2733CFFCAA8AEE"
+			type: "item"
+		}
+		]
+		x: -12.0d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"27EF883A29B97A4A"
+		]
+		icon: {
+			id: "mcwbridges:oak_log_bridge_stair"
+		}
+		id: "E18C9453D18DAE80"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mcwbridges:oak_log_bridge_stair"
+			count: 4
+			id: "CCA3A674BE30DB1F"
+			type: "item"
+		}
+		]
+		x: -9.45d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"6FBA30C74785E6B1"
+		]
+		icon: {
+			id: "mcwbridges:rope_spruce_bridge"
+		}
+		id: "55524A053132B302"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mcwbridges:rope_spruce_bridge"
+			count: 2
+			id: "EC7C1D0D7F90E841"
+			type: "item"
+		}
+		]
+		x: -32.44d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"6FBA30C74785E6B1"
+		]
+		icon: {
+			id: "mcwbridges:bridge_lantern"
+		}
+		id: "5ED8353AA5DD432C"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mcwbridges:bridge_lantern"
+			count: 4
+			id: "40CB8607D031F82C"
+			type: "item"
+		}
+		]
+		x: -29.89d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"27EF883A29B97A4A"
+		]
+		icon: {
+			id: "mcwbridges:pliers"
+		}
+		id: "DBE3FEF9778423A6"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mcwbridges:pliers"
+			id: "738BFF208F08ACD2"
+			type: "item"
+		}
+		]
+		x: -6.9d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"27EF883A29B97A4A"
+		]
+		icon: {
 			id: "mcwfences:acacia_hedge"
 		}
 		id: "EF5820F81D73126A"
@@ -46,8 +150,104 @@
 			type: "item"
 		}
 		]
-		x: -8.1d
+		x: -4.35d
 		y: -1.75d
+	}
+	{
+		dependencies: [
+		"EF5820F81D73126A"
+		]
+		icon: {
+			id: "mcwfences:acacia_curved_gate"
+		}
+		id: "31981AD52A7E9E64"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mcwfences:acacia_curved_gate"
+			count: 2
+			id: "B2608A39371DD476"
+			type: "item"
+		}
+		]
+		x: -27.34d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"EF5820F81D73126A"
+		]
+		icon: {
+			id: "mcwfences:acacia_stockade_fence"
+		}
+		id: "87FB99B5930387A3"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mcwfences:acacia_stockade_fence"
+			count: 32
+			id: "784BEAEAE3BB8AB5"
+			type: "item"
+		}
+		{
+			item: "mcwfences:acacia_horse_fence"
+			count: 16
+			id: "1D7CF490CED5B955"
+			type: "item"
+		}
+		]
+		x: -24.79d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"EF5820F81D73126A"
+		]
+		icon: {
+			id: "mcwfences:acacia_wired_fence"
+		}
+		id: "2E6EC370EE09D79B"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mcwfences:acacia_wired_fence"
+			count: 16
+			id: "DDA5DDA4837455FC"
+			type: "item"
+		}
+		]
+		x: -22.24d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"EF5820F81D73126A"
+		]
+		icon: {
+			id: "mcwfences:andesite_grass_topped_wall"
+		}
+		id: "083E6FAA67ADE262"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mcwfences:andesite_grass_topped_wall"
+			count: 16
+			id: "3A0A4EC7C52B33D0"
+			type: "item"
+		}
+		{
+			item: "mcwfences:andesite_pillar_wall"
+			count: 8
+			id: "4BAA8B90EFF9A601"
+			type: "item"
+		}
+		]
+		x: -19.69d
+		y: -3.5d
 	}
 	{
 		dependencies: [
@@ -57,8 +257,8 @@
 			id: "mcwwindows:acacia_window"
 		}
 		id: "E3C3772A3F421871"
-		shape: "circle"
-		size: 1.2d
+		shape: "pentagon"
+		size: 2.0d
 		tasks: [
 		{
 			item: "mcwwindows:acacia_window"
@@ -67,12 +267,108 @@
 			type: "item"
 		}
 		]
-		x: -5.55d
+		x: -1.2d
 		y: -1.75d
 	}
 	{
 		dependencies: [
-		"27EF883A29B97A4A"
+		"E3C3772A3F421871"
+		]
+		icon: {
+			id: "mcwwindows:acacia_shutter"
+		}
+		id: "99F534E2C1DEFF60"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mcwwindows:acacia_shutter"
+			count: 8
+			id: "6A9D6810B77A4D4B"
+			type: "item"
+		}
+		{
+			item: "mcwwindows:acacia_blinds"
+			count: 4
+			id: "1EF44750924E5BE9"
+			type: "item"
+		}
+		]
+		x: -17.14d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"E3C3772A3F421871"
+		]
+		icon: {
+			id: "mcwwindows:acacia_curtain_rod"
+		}
+		id: "BFE0CFF817269293"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mcwwindows:acacia_curtain_rod"
+			count: 4
+			id: "30130F19D187C634"
+			type: "item"
+		}
+		]
+		x: -14.59d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"E3C3772A3F421871"
+		]
+		icon: {
+			id: "mcwwindows:acacia_log_parapet"
+		}
+		id: "AED34BE4DECC438E"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mcwwindows:acacia_log_parapet"
+			count: 8
+			id: "DF616D4CCC4407C1"
+			type: "item"
+		}
+		]
+		x: -12.04d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"E3C3772A3F421871"
+		]
+		icon: {
+			id: "mcwwindows:acacia_plank_four_window"
+		}
+		id: "D57617F1540D75E4"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mcwwindows:acacia_plank_four_window"
+			count: 4
+			id: "8ABAA7D6BBD55AF6"
+			type: "item"
+		}
+		{
+			item: "mcwwindows:acacia_window2"
+			count: 4
+			id: "F95C2C4CF9EA43F8"
+			type: "item"
+		}
+		]
+		x: -9.49d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"E3C3772A3F421871"
 		]
 		icon: {
 			id: "mcwtrpdoors:acacia_barn_trapdoor"
@@ -88,8 +384,56 @@
 			type: "item"
 		}
 		]
-		x: -3.0d
-		y: -1.75d
+		x: -6.94d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"17184EB1B2BCE64B"
+		]
+		icon: {
+			id: "mcwtrpdoors:acacia_glass_trapdoor"
+		}
+		id: "D5F8C1607CADED47"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mcwtrpdoors:acacia_glass_trapdoor"
+			count: 8
+			id: "91D9BD6FF4F8F0DB"
+			type: "item"
+		}
+		]
+		x: -20.81d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"17184EB1B2BCE64B"
+		]
+		icon: {
+			id: "mcwtrpdoors:acacia_classic_trapdoor"
+		}
+		id: "A4E27F3F3CE6A6D0"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mcwtrpdoors:acacia_classic_trapdoor"
+			count: 4
+			id: "5C5FD1306D30C970"
+			type: "item"
+		}
+		{
+			item: "mcwtrpdoors:acacia_ranch_trapdoor"
+			count: 4
+			id: "D951862A2F4ECACF"
+			type: "item"
+		}
+		]
+		x: -18.26d
+		y: -5.25d
 	}
 	{
 		dependencies: [
@@ -109,8 +453,675 @@
 			type: "item"
 		}
 		]
-		x: -0.45d
+		x: 1.95d
 		y: -1.75d
+	}
+	{
+		dependencies: [
+		"89ECD33FD16C1A84"
+		]
+		icon: {
+			id: "mcwpaths:stone_flagstone"
+		}
+		id: "6BE91739901F4946"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mcwpaths:stone_flagstone"
+			count: 32
+			id: "B3722E16674846EB"
+			type: "item"
+		}
+		{
+			item: "mcwpaths:stone_flagstone_path"
+			count: 16
+			id: "F53BB31209B9A3EA"
+			type: "item"
+		}
+		]
+		x: -4.39d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"89ECD33FD16C1A84"
+		]
+		icon: {
+			id: "mcwpaths:andesite_basket_weave_paving"
+		}
+		id: "76DE124F982240C8"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mcwpaths:andesite_basket_weave_paving"
+			count: 16
+			id: "B1E839673674EC83"
+			type: "item"
+		}
+		{
+			item: "mcwpaths:andesite_honeycomb_paving"
+			count: 16
+			id: "100F1AE59EBED868"
+			type: "item"
+		}
+		]
+		x: -1.84d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"89ECD33FD16C1A84"
+		]
+		icon: {
+			id: "mcwpaths:dirt_path_block"
+		}
+		id: "C84BD02782FEF493"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mcwpaths:dirt_path_block"
+			count: 32
+			id: "557C87452A1F1661"
+			type: "item"
+		}
+		{
+			item: "mcwpaths:gravel_path_block"
+			count: 16
+			id: "48AC3C9391759621"
+			type: "item"
+		}
+		]
+		x: 0.71d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"27EF883A29B97A4A"
+		]
+		icon: {
+			id: "minecraft:chiseled_stone_bricks"
+		}
+		id: "24EA85F1928D6D61"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "minecraft:chiseled_stone_bricks"
+			count: 16
+			id: "E096DA1A67161782"
+			type: "item"
+		}
+		{
+			item: "minecraft:stonecutter"
+			id: "1510DACA5F1A6CB6"
+			type: "item"
+		}
+		]
+		x: 5.1d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"24EA85F1928D6D61"
+		]
+		icon: {
+			id: "chipped:chisel"
+		}
+		id: "4DA1AFCA56C9C415"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "chipped:chisel"
+			id: "1F066EF49B339E79"
+			type: "item"
+		}
+		{
+			item: "chipped:saw"
+			id: "A992389CCD68BFA9"
+			type: "item"
+		}
+		]
+		x: 3.26d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"4DA1AFCA56C9C415"
+		]
+		icon: {
+			id: "chipped:mason_table"
+		}
+		id: "C7F73408B0CDAEBA"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "chipped:mason_table"
+			id: "875C87E4185C1CFC"
+			type: "item"
+		}
+		{
+			item: "chipped:botanist_workbench"
+			id: "641CD87EDFE27998"
+			type: "item"
+		}
+		]
+		x: -15.71d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"C7F73408B0CDAEBA"
+		]
+		icon: {
+			id: "chipped:diagonal_oak_planks"
+		}
+		id: "77954B0231F8CAA7"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "chipped:diagonal_oak_planks"
+			count: 32
+			id: "3A4268981A639A9F"
+			type: "item"
+		}
+		]
+		x: -4.8d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"C7F73408B0CDAEBA"
+		]
+		icon: {
+			id: "chipped:chiseled_terracotta"
+		}
+		id: "A564A9CBA99C734F"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "chipped:chiseled_terracotta"
+			count: 32
+			id: "F60A80A3F07D453C"
+			type: "item"
+		}
+		]
+		x: -2.25d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"24EA85F1928D6D61"
+		]
+		icon: {
+			id: "rechiseled:chisel"
+		}
+		id: "7120494464807474"
+		shape: "rsquare"
+		size: 1.75d
+		tasks: [
+		{
+			item: "rechiseled:chisel"
+			id: "304D7E3F6B1B8185"
+			type: "item"
+		}
+		]
+		x: 6.23d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"7120494464807474"
+		]
+		icon: {
+			id: "rechiseled:andesite_paving"
+		}
+		id: "2EF732B50409EC2C"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "rechiseled:andesite_paving"
+			count: 32
+			id: "569C355D537641B3"
+			type: "item"
+		}
+		{
+			item: "rechiseled:andesite_tiles"
+			count: 16
+			id: "1C787CD45ECDF017"
+			type: "item"
+		}
+		]
+		x: -13.16d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"7120494464807474"
+		]
+		icon: {
+			id: "rechiseledcreate:mechanical_chisel"
+		}
+		id: "4B688FA2C7D453F7"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "rechiseledcreate:mechanical_chisel"
+			id: "E92FF4731AF2C18F"
+			type: "item"
+		}
+		]
+		x: -10.61d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"24EA85F1928D6D61"
+		]
+		icon: {
+			id: "framedblocks:framed_cube"
+		}
+		id: "01F8EA8D8C6812D4"
+		shape: "rsquare"
+		size: 1.75d
+		tasks: [
+		{
+			item: "framedblocks:framed_cube"
+			count: 8
+			id: "640AD2483D8CA6AE"
+			type: "item"
+		}
+		]
+		x: 9.6d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"01F8EA8D8C6812D4"
+		]
+		icon: {
+			id: "framedblocks:framed_slope"
+		}
+		id: "4CB616DA028B4C94"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "framedblocks:framed_slope"
+			count: 4
+			id: "A09F6967E7A0E221"
+			type: "item"
+		}
+		{
+			item: "framedblocks:framed_pillar"
+			count: 4
+			id: "62ECA4E40CF92046"
+			type: "item"
+		}
+		]
+		x: -8.06d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"01F8EA8D8C6812D4"
+		]
+		icon: {
+			id: "framedblocks:framed_hammer"
+		}
+		id: "64A8A1782D47879E"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "framedblocks:framed_hammer"
+			id: "DE2E5B29B28236AC"
+			type: "item"
+		}
+		{
+			item: "framedblocks:framed_wrench"
+			id: "F278B55907DB47C1"
+			type: "item"
+		}
+		]
+		x: -5.51d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"01F8EA8D8C6812D4"
+		]
+		icon: {
+			id: "framedblocks:framed_glowing_cube"
+		}
+		id: "FA90CE760118C1C5"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "framedblocks:framed_glowing_cube"
+			count: 4
+			id: "7C3BFDA7D6D121C4"
+			type: "item"
+		}
+		]
+		x: -2.96d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"01F8EA8D8C6812D4"
+		]
+		icon: {
+			id: "framedblocks:framed_secret_storage"
+		}
+		id: "B52EE4D140957C7A"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "framedblocks:framed_secret_storage"
+			id: "BB094F46D3E3C083"
+			type: "item"
+		}
+		{
+			item: "framedblocks:framed_chest"
+			id: "D1C72C733348850B"
+			type: "item"
+		}
+		]
+		x: -0.41d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"24EA85F1928D6D61"
+		]
+		icon: {
+			id: "copycats:copycat_block"
+		}
+		id: "03275734BE414DBE"
+		shape: "rsquare"
+		size: 1.75d
+		tasks: [
+		{
+			item: "copycats:copycat_block"
+			count: 8
+			id: "7156915A865AD426"
+			type: "item"
+		}
+		]
+		x: 12.98d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"03275734BE414DBE"
+		]
+		icon: {
+			id: "copycats:copycat_slope"
+		}
+		id: "43047FC03FAACF1A"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "copycats:copycat_slope"
+			count: 4
+			id: "19D816129BCCACE4"
+			type: "item"
+		}
+		{
+			item: "copycats:copycat_vertical_slope"
+			count: 4
+			id: "1D1B93B3DBEC1351"
+			type: "item"
+		}
+		]
+		x: 2.14d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"03275734BE414DBE"
+		]
+		icon: {
+			id: "copycats:copycat_fluid_pipe"
+		}
+		id: "0BA7E63CB392B4D5"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "copycats:copycat_fluid_pipe"
+			count: 4
+			id: "590637DC6F632EAE"
+			type: "item"
+		}
+		{
+			item: "copycats:copycat_shaft"
+			count: 4
+			id: "6978AC325D1991B3"
+			type: "item"
+		}
+		]
+		x: 4.69d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"03275734BE414DBE"
+		]
+		icon: {
+			id: "copycats:copycat_layer"
+		}
+		id: "0B024531BE411542"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "copycats:copycat_layer"
+			count: 8
+			id: "335FAD11DDBA9DBD"
+			type: "item"
+		}
+		]
+		x: 7.24d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"24EA85F1928D6D61"
+		]
+		icon: {
+			id: "minecraft:glass_pane"
+		}
+		id: "E0BDDF7FBFC59437"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:glass_pane"
+			count: 32
+			id: "21B41DD0A5066BDA"
+			type: "item"
+		}
+		]
+		x: 15.94d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"24EA85F1928D6D61"
+		]
+		icon: {
+			id: "minecraft:scaffolding"
+		}
+		id: "94FA81AB36E1289B"
+		rewards: [
+		{
+			xp: 60
+			id: "F743A6125C63070A"
+			type: "xp"
+		}
+		{
+			id: "67C4C295F9C6D1B7"
+			type: "toast"
+		}
+		]
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "minecraft:scaffolding"
+			count: 16
+			id: "B6D5810744418C96"
+			type: "item"
+		}
+		{
+			item: "minecraft:ladder"
+			count: 8
+			id: "4296105562C492D3"
+			type: "item"
+		}
+		]
+		x: 19.09d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"94FA81AB36E1289B"
+		]
+		icon: {
+			id: "effortlessbuilding:randomizer_tool"
+		}
+		id: "BD43310A0A69D770"
+		shape: "rsquare"
+		size: 1.75d
+		tasks: [
+		{
+			item: "effortlessbuilding:randomizer_tool"
+			id: "4889A22FDF67B73B"
+			type: "item"
+		}
+		]
+		x: 10.2d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"94FA81AB36E1289B"
+		]
+		icon: {
+			id: "minecraft:white_wool"
+		}
+		id: "F3900240E73F5A27"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:white_wool"
+			count: 32
+			id: "9FF404787DC0AEF1"
+			type: "item"
+		}
+		{
+			item: "minecraft:torch"
+			count: 16
+			id: "B7E15D9F2B48B302"
+			type: "item"
+		}
+		]
+		x: 13.16d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"94FA81AB36E1289B"
+		]
+		icon: {
+			id: "minecraft:crafting_table"
+		}
+		id: "7A39D73CA3F249A2"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:crafting_table"
+			id: "F309BB474F8E83CC"
+			type: "item"
+		}
+		{
+			item: "minecraft:barrel"
+			count: 4
+			id: "C12321E6EC7D0A83"
+			type: "item"
+		}
+		]
+		x: 15.71d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"94FA81AB36E1289B"
+		]
+		icon: {
+			id: "minecraft:deepslate_bricks"
+		}
+		id: "3D7310E1F9F56D99"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:deepslate_bricks"
+			count: 32
+			id: "61497E8C759372AD"
+			type: "item"
+		}
+		{
+			item: "minecraft:stone_bricks"
+			count: 32
+			id: "86264336F994D5A9"
+			type: "item"
+		}
+		]
+		x: 18.26d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"7A39D73CA3F249A2"
+		]
+		icon: {
+			id: "minecraft:stone_bricks"
+		}
+		id: "A0B0F1A2188AFB3E"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:stone_bricks"
+			count: 64
+			id: "E40768123E10C863"
+			type: "item"
+		}
+		{
+			item: "minecraft:oak_planks"
+			count: 64
+			id: "6DA4161E5B347E17"
+			type: "item"
+		}
+		]
+		x: 0.3d
+		y: -7.0d
 	}
 	{
 		dependencies: [
@@ -120,8 +1131,8 @@
 			id: "handcrafted:acacia_couch"
 		}
 		id: "5BE6E00CACE57A49"
-		shape: "rsquare"
-		size: 1.5d
+		shape: "pentagon"
+		size: 2.0d
 		tasks: [
 		{
 			item: "handcrafted:acacia_couch"
@@ -130,7 +1141,7 @@
 			type: "item"
 		}
 		]
-		x: 2.32d
+		x: 8.85d
 		y: -1.75d
 	}
 	{
@@ -155,7 +1166,7 @@
 			type: "item"
 		}
 		]
-		x: -3.82d
+		x: 22.24d
 		y: -3.5d
 	}
 	{
@@ -176,7 +1187,7 @@
 			type: "item"
 		}
 		]
-		x: -1.27d
+		x: 24.79d
 		y: -3.5d
 	}
 	{
@@ -202,55 +1213,8 @@
 			type: "item"
 		}
 		]
-		x: 0.0d
+		x: 20.81d
 		y: -5.25d
-	}
-	{
-		dependencies: [
-		"27EF883A29B97A4A"
-		]
-		icon: {
-			id: "minecraft:chiseled_stone_bricks"
-		}
-		id: "24EA85F1928D6D61"
-		shape: "rsquare"
-		size: 1.5d
-		tasks: [
-		{
-			item: "minecraft:chiseled_stone_bricks"
-			count: 16
-			id: "E096DA1A67161782"
-			type: "item"
-		}
-		{
-			item: "minecraft:stonecutter"
-			id: "1510DACA5F1A6CB6"
-			type: "item"
-		}
-		]
-		x: 5.32d
-		y: -1.75d
-	}
-	{
-		dependencies: [
-		"24EA85F1928D6D61"
-		]
-		icon: {
-			id: "minecraft:glass_pane"
-		}
-		id: "E0BDDF7FBFC59437"
-		shape: "circle"
-		size: 1.2d
-		tasks: [
-		{
-			item: "minecraft:glass_pane"
-			count: 32
-			id: "21B41DD0A5066BDA"
-			type: "item"
-		}
-		]
-		x: 1.27d
-		y: -3.5d
 	}
 	{
 		dependencies: [
@@ -270,8 +1234,56 @@
 			type: "item"
 		}
 		]
-		x: 8.1d
+		x: 12.0d
 		y: -1.75d
+	}
+	{
+		dependencies: [
+		"B152F4A1C6D33CC4"
+		]
+		icon: {
+			id: "mcwlights:iron_chandelier"
+		}
+		id: "6C320B8A62F9B186"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mcwlights:iron_chandelier"
+			count: 2
+			id: "5CD6B1511910C9F1"
+			type: "item"
+		}
+		{
+			item: "mcwlights:oak_ceiling_fan_light"
+			count: 2
+			id: "D11FB24DFEC2A26F"
+			type: "item"
+		}
+		]
+		x: 27.34d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"B152F4A1C6D33CC4"
+		]
+		icon: {
+			id: "mcwlights:classic_street_lamp"
+		}
+		id: "12D1D6B827C5C97D"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "mcwlights:classic_street_lamp"
+			count: 6
+			id: "B7B111E56FECB83E"
+			type: "item"
+		}
+		]
+		x: 29.89d
+		y: -3.5d
 	}
 	{
 		dependencies: [
@@ -291,7 +1303,7 @@
 			type: "item"
 		}
 		]
-		x: 3.82d
+		x: 32.44d
 		y: -3.5d
 	}
 	{
@@ -329,7 +1341,7 @@
 			type: "item"
 		}
 		]
-		x: 0.0d
+		x: 3.83d
 		y: -7.0d
 	}
 	]

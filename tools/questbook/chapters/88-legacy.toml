@@ -1,0 +1,324 @@
+# 编年 · 碑林与史册
+#
+# 为什么最后一章是这个
+# --------------------
+# 这个包的自我定义不是"造得最多"，而是"**记得住**"（`DESIGN.md` 里那条：
+# 「碑林：每次时代推进，在碑旁加一块历史碑 —— 一串碑就是可以散步读的编年史」）。
+# 「文明」章已经把碑林当成一个**完成的建筑**在做；这一章做的是**制度**：
+# 一块碑记什么、一册书怎么写、一个人怎么被记住、以及**怎么交给下一批人**。
+#
+# 与其它章的分工：
+#   · 文明   = 碑林作为**建筑**（规模、排布、美观）
+#   · 本章   = 碑林作为**制度**（记什么、谁记、以后谁读）
+#
+# 判据：碑（凿制石砖）、册（成书/书架）、像（盔甲架/展示框）、图（地图）的实物。
+# 没有一条 checkmark —— "写了什么"判不了，但"有没有那个东西"判得了。
+
+key = "legacy"
+title = "碑林与史册"
+subtitle = "让后来的人知道这里发生过什么"
+group = "chronicle"
+icon = "minecraft:chiseled_stone_bricks"
+order_index = 11
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 簇 1：碑（记一件事） ----------------
+
+[[quest]]
+name = "lg_first_stele"
+title = "第一块碑"
+desc = [
+	"碑不是装饰：**一块碑 = 一件事 + 一个时间 + 一群人**。",
+	"凿制石砖起座，规模随事情大小定，但位置要固定 —— 碑林是一条能走的路，不是一堆石头。",
+]
+icon = "minecraft:chiseled_stone_bricks"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "minecraft:chiseled_stone_bricks", count = 4 },
+]
+
+[[quest]]
+name = "lg_stele_text"
+title = "碑上要有字"
+desc = [
+	"没有字的碑只是石头。挂牌、刻字、嵌展示框都行 —— 关键是**路过的人不用问就知道**。",
+]
+icon = "minecraft:dark_oak_sign"
+shape = "rsquare"
+deps = ["lg_first_stele"]
+tasks = [
+	{ type = "item", item = "minecraft:dark_oak_sign", count = 4 },
+]
+
+[[quest]]
+name = "lg_stele_date"
+title = "记下时间"
+desc = [
+	"「第三年秋」比「很久以前」有用得多。游戏里没有历法，所以时间要自己定 ——",
+	"**从你们决定建国的那一天起算**。",
+]
+icon = "minecraft:clock"
+shape = "circle"
+size = 1.2
+deps = ["lg_first_stele"]
+tasks = [
+	{ type = "item", item = "minecraft:clock" },
+]
+
+[[quest]]
+name = "lg_stele_light"
+title = "碑前长明"
+desc = [
+	"碑林要能夜里读：魂灯不熄，也压得住刷怪。",
+]
+icon = "minecraft:soul_lantern"
+shape = "circle"
+size = 1.2
+deps = ["lg_first_stele"]
+tasks = [
+	{ type = "item", item = "minecraft:soul_lantern", count = 4 },
+]
+
+[[quest]]
+name = "lg_stele_row"
+title = "碑排成林"
+desc = [
+	"十块以上才叫「林」。**每个时代至少一块**——这是这个包对自己那段历史的记法。",
+]
+icon = "minecraft:chiseled_stone_bricks"
+shape = "square"
+deps = ["lg_stele_text"]
+tasks = [
+	{ type = "item", item = "minecraft:chiseled_stone_bricks", count = 24 },
+]
+
+[[quest]]
+name = "lg_stele_path"
+title = "碑林有路"
+desc = [
+	"碑林是给人走的：铺路、修台阶、留座位。参观动线本身也是设计的一部分。",
+]
+icon = "minecraft:stone_bricks"
+shape = "square"
+deps = ["lg_stele_row"]
+tasks = [
+	{ type = "item", item = "minecraft:stone_bricks", count = 32 },
+	{ type = "item", item = "minecraft:stone_brick_stairs", count = 8 },
+]
+
+[[quest]]
+name = "lg_stele_shrine"
+title = "碑林有中心"
+desc = [
+	"碑林需要一个视觉中心：一座主碑或一座亭子把整片收住。",
+]
+icon = "minecraft:quartz_block"
+shape = "rsquare"
+deps = ["lg_stele_path"]
+tasks = [
+	{ type = "item", item = "minecraft:quartz_block", count = 16 },
+]
+
+# ---------------- 簇 2：册（记一段） ----------------
+
+[[quest]]
+name = "lg_book_start"
+title = "起一册"
+desc = [
+	"书与笔是**唯一能写长文的工具**。一章一册：不要写一本几百页的万言书，没人读。",
+]
+icon = "minecraft:writable_book"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "minecraft:writable_book" },
+]
+
+[[quest]]
+name = "lg_book_done"
+title = "成书入库"
+desc = [
+	"签完成书就改不了了 —— 这正是史书该有的性质。",
+]
+icon = "minecraft:written_book"
+shape = "rsquare"
+deps = ["lg_book_start"]
+tasks = [
+	{ type = "item", item = "minecraft:written_book", count = 3 },
+]
+
+[[quest]]
+name = "lg_shelf"
+title = "上架"
+icon = "minecraft:bookshelf"
+shape = "square"
+deps = ["lg_book_done"]
+tasks = [
+	{ type = "item", item = "minecraft:bookshelf", count = 15 },
+]
+
+[[quest]]
+name = "lg_chiseled_shelf"
+title = "分类书架"
+desc = [
+	"雕纹书架能按格放书：**按年代或按主题分格**，找起来是翻还是查的区别。",
+]
+icon = "minecraft:chiseled_bookshelf"
+shape = "rsquare"
+deps = ["lg_shelf"]
+tasks = [
+	{ type = "item", item = "minecraft:chiseled_bookshelf", count = 4 },
+]
+
+[[quest]]
+name = "lg_lectern"
+title = "可翻阅"
+desc = [
+	"讲台让书**摊开着放**：来的人不用借，站着就能读。",
+]
+icon = "minecraft:lectern"
+shape = "rsquare"
+deps = ["lg_book_done"]
+tasks = [
+	{ type = "item", item = "minecraft:lectern", count = 2 },
+]
+
+[[quest]]
+name = "lg_archive_room"
+title = "档案室"
+desc = [
+	"桶比箱子好：**闭着眼也知道哪一格是什么**（配合牌子）。",
+]
+icon = "minecraft:barrel"
+shape = "square"
+deps = ["lg_chiseled_shelf"]
+tasks = [
+	{ type = "item", item = "minecraft:barrel", count = 12 },
+]
+
+# ---------------- 簇 3：像（记一个人） ----------------
+
+[[quest]]
+name = "lg_armor_stand"
+title = "立像"
+desc = [
+	"盔甲架穿上那套装备，就是这个人在这座城里的样子 —— 比一行名字有用。",
+]
+icon = "minecraft:armor_stand"
+shape = "pentagon"
+size = 2.0
+deps = ["lg_stele_path"]
+tasks = [
+	{ type = "item", item = "minecraft:armor_stand", count = 2 },
+]
+
+[[quest]]
+name = "lg_relic_frame"
+title = "遗物上墙"
+desc = [
+	"第一把铁镐、第一块钢锭、第一张图纸 —— 这些东西扔了可惜，挂着就是展品。",
+]
+icon = "minecraft:item_frame"
+shape = "square"
+deps = ["lg_armor_stand"]
+tasks = [
+	{ type = "item", item = "minecraft:item_frame", count = 12 },
+	{ type = "item", item = "minecraft:glow_item_frame", count = 4 },
+]
+
+[[quest]]
+name = "lg_banner"
+title = "旗与徽"
+desc = [
+	"图案化的旗帜是这个包**唯一可自定义的「标识系统」**：一人一旗、一城一旗。",
+]
+icon = "minecraft:white_banner"
+shape = "rsquare"
+deps = ["lg_armor_stand"]
+tasks = [
+	{ type = "item", item = "minecraft:white_banner", count = 4 },
+	{ type = "item", item = "minecraft:white_dye", count = 16 },
+]
+
+[[quest]]
+name = "lg_hall"
+title = "名人堂"
+desc = [
+	"把像、遗物、旗放在同一间屋里 —— 走一圈就是一次「这地方是谁建的」。",
+]
+icon = "minecraft:polished_deepslate"
+shape = "octagon"
+size = 1.75
+deps = ["lg_relic_frame", "lg_banner"]
+tasks = [
+	{ type = "item", item = "minecraft:polished_deepslate", count = 32 },
+	{ type = "item", item = "minecraft:lantern", count = 8 },
+]
+
+# ---------------- 簇 4：交接 ----------------
+
+[[quest]]
+name = "lg_map_archive"
+title = "舆图归档"
+desc = [
+	"把探索过的地图**装框上墙**：一张图就是一个人的足迹。",
+	"制图台能把旧图复制、缩放 —— 归档前先做一份副本，原件留着。",
+]
+icon = "minecraft:filled_map"
+shape = "pentagon"
+size = 2.0
+deps = ["lg_lectern"]
+tasks = [
+	{ type = "item", item = "minecraft:filled_map", count = 2 },
+	{ type = "item", item = "minecraft:cartography_table" },
+]
+
+[[quest]]
+name = "lg_handover"
+title = "交接册"
+desc = [
+	"写给**下一个人**的那一册：城里有什么、东西在哪、哪些事还没做完、哪些坑别再踩。",
+	"这是全包里唯一一条「为了你不在的时候」写的任务。",
+]
+icon = "minecraft:book"
+shape = "rsquare"
+deps = ["lg_archive_room", "lg_map_archive"]
+tasks = [
+	{ type = "item", item = "minecraft:book", count = 8 },
+]
+
+[[quest]]
+name = "lg_public_read"
+title = "开架"
+desc = [
+	"把交接册放在公共讲台上：任何人、任何时候都能读，不需要问谁要。",
+]
+icon = "minecraft:lectern"
+shape = "circle"
+size = 1.2
+deps = ["lg_handover"]
+tasks = [
+	{ type = "item", item = "minecraft:lectern", count = 2 },
+	{ type = "item", item = "minecraft:oak_sign", count = 4 },
+]
+
+[[quest]]
+name = "lg_legacy_done"
+title = "这座城记得住"
+desc = [
+	"碑成林、册成架、像成堂、图成墙、册能交接 ——",
+	"到这一步，「我们做过什么」不再依赖任何人的记忆。这也是一段存档真正的毕业条件。",
+]
+icon = "minecraft:chiseled_stone_bricks"
+shape = "hexagon"
+size = 2.5
+deps = ["lg_stele_shrine", "lg_hall", "lg_public_read"]
+tasks = [
+	{ type = "item", item = "minecraft:chiseled_stone_bricks", count = 32 },
+]
+rewards = [
+	{ type = "xp", xp = 120 },
+	{ type = "toast" },
+]

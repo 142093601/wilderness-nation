@@ -1,22 +1,31 @@
-# 类目 · 工具与装备
+# 类目 · 装备与武器
 #
-# 本章的 mod：Simply Swords · Armor of the Ages · Epic Knights · Magistuarmory ·
-#   Enchanting Infuser · Enchantment Descriptions · Curios · Easy Anvils · Crafting Tweaks ·
-#   Carry On · Comforts（睡袋）· TrashSlot · Item Highlighter
+# 本章的 mod：Simply Swords（武器与独特武器）· Epic Knights（mod id = magistuarmory，
+#   中世纪武器 / 护甲 / 盾）· Armor of the Ages（时代护甲）· Hundred Years Warfare
+#   （只取个人兵器；军阵与攻城归战斗与军械章）· Enchanting Infuser · Enchantment
+#   Descriptions · Easy Anvils · Curios · Better Combat（战斗手感，无物品）
 #
-# 判据来源：**全是实物**（这类 mod 就是提供装备）。
-# 进度很少（实测只有 simplyswords 有 57 条），所以本章以物品判据为主。
+# 与其它章的分工：
+#   · 战斗与军械 = **军械与攻城**（钢制军械列装、投石机、撞门器、军事单位）
+#   · 本章       = **一个人的装备**：拿什么、穿什么、怎么附魔、怎么修
+#
+# ⚠️ 命名空间提醒：Epic Knights 的 mod id 就是 magistuarmory（同一个 mod，不是两个；
+#    实测 jar 内 modId = magistuarmory，displayName = Epic Knights: Shields, Armor and Weapons）。
+#
+# 判据来源：全是实物。Enchanting Infuser / Easy Anvils / Curios / Better Combat
+#   这四个自己不注册物品（实测它们的命名空间里没有 item/block），
+#   所以判据落在它们**改造的那件实物**上。
 
 key = "cat_gear"
-title = "工具与装备"
-subtitle = "从「能打」到「打得舒服」"
+title = "装备与武器"
+subtitle = "从「有一把趁手的」到「全队穿得住」"
 group = "category"
 icon = "simplyswords:iron_longsword"
-order_index = 34
+order_index = 58
 
 grid = { step = 1.5, row_h = 1.75 }
 
-# ---------------- 簇 1：武器（Simply Swords） ----------------
+# ---------------- 簇 1：武器 ----------------
 
 [[quest]]
 name = "g_first_sword"
@@ -74,7 +83,191 @@ tasks = [
 	{ type = "item", item = "simplyswords:diamond_longsword" },
 ]
 
-# ---------------- 簇 2：护甲（Armor of the Ages / Epic Knights / Magistuarmory） ----------------
+[[quest]]
+name = "g_light_arms"
+title = "细剑与三叉刺"
+icon = "simplyswords:iron_rapier"
+shape = "circle"
+size = 1.2
+deps = ["g_first_sword"]
+tasks = [
+	{ type = "item", item = "simplyswords:iron_rapier" },
+	{ type = "item", item = "simplyswords:iron_sai" },
+]
+
+[[quest]]
+name = "g_twin_blade"
+title = "双头剑"
+icon = "simplyswords:iron_twinblade"
+shape = "circle"
+size = 1.2
+deps = ["g_first_sword"]
+tasks = [
+	{ type = "item", item = "simplyswords:iron_twinblade" },
+]
+
+[[quest]]
+name = "g_chakram"
+title = "环刃与战刃"
+icon = "simplyswords:iron_warglaive"
+shape = "circle"
+size = 1.2
+deps = ["g_first_sword"]
+tasks = [
+	{ type = "item", item = "simplyswords:iron_chakram" },
+	{ type = "item", item = "simplyswords:iron_warglaive" },
+]
+
+[[quest]]
+name = "g_cleave"
+title = "阔剑与巨斧"
+icon = "simplyswords:iron_claymore"
+shape = "circle"
+size = 1.2
+deps = ["g_first_sword"]
+tasks = [
+	{ type = "item", item = "simplyswords:iron_claymore" },
+	{ type = "item", item = "simplyswords:iron_greataxe" },
+]
+
+[[quest]]
+name = "g_katana"
+title = "武士刀与弯刀"
+icon = "simplyswords:iron_katana"
+shape = "circle"
+size = 1.2
+deps = ["g_first_sword"]
+tasks = [
+	{ type = "item", item = "simplyswords:iron_katana" },
+	{ type = "item", item = "simplyswords:iron_cutlass" },
+]
+
+[[quest]]
+name = "g_netherite_weapon"
+title = "下界合金一档"
+desc = [
+	"钻石之后只有两条路：换材料，或者附魔。这一条走的是材料那一条。",
+]
+icon = "simplyswords:netherite_longsword"
+shape = "rsquare"
+deps = ["g_diamond_weapon"]
+tasks = [
+	{ type = "item", item = "simplyswords:netherite_longsword" },
+	{ type = "item", item = "simplyswords:netherite_spear" },
+]
+
+[[quest]]
+name = "g_combat_style"
+title = "试用快慢两类武器"
+desc = [
+	"Better Combat 给每一类武器各自的挥砍动作与攻击范围——同一份材料，手感是两回事。",
+	"这一条只要求队里真的把快、慢两类都拿上手试过：往后的装备表按手感分，",
+	"而不是只看伤害数字。",
+]
+icon = "simplyswords:iron_spear"
+shape = "rsquare"
+deps = ["g_first_sword"]
+tasks = [
+	{ type = "item", item = "simplyswords:iron_spear" },
+	{ type = "item", item = "simplyswords:iron_rapier" },
+]
+
+[[quest]]
+name = "g_mag_sidearm"
+title = "手半剑与梅塞尔剑"
+icon = "magistuarmory:steel_bastardsword"
+shape = "rsquare"
+deps = ["g_first_sword"]
+tasks = [
+	{ type = "item", item = "magistuarmory:iron_bastardsword" },
+	{ type = "item", item = "magistuarmory:messer_sword" },
+]
+
+[[quest]]
+name = "g_mag_noble"
+title = "皇家剑与炎型巨剑"
+icon = "magistuarmory:noble_sword"
+shape = "circle"
+size = 1.2
+deps = ["g_mag_sidearm"]
+tasks = [
+	{ type = "item", item = "magistuarmory:noble_sword" },
+	{ type = "item", item = "magistuarmory:silver_flamebladedsword" },
+]
+
+[[quest]]
+name = "g_mag_shield"
+title = "盾的四种形制"
+desc = [
+	"鸢盾、圆盾、扇形盾、椭圆盾：形状不同，遮住的部位与挥砍的空当也不同。",
+	"先各做一面在身上比一比，再决定常备哪一种——盾是「站前面」那批人的第一件装备。",
+]
+icon = "magistuarmory:iron_kiteshield"
+shape = "rsquare"
+deps = ["g_mag_sidearm"]
+tasks = [
+	{ type = "item", item = "magistuarmory:iron_kiteshield" },
+	{ type = "item", item = "magistuarmory:iron_roundshield" },
+	{ type = "item", item = "magistuarmory:iron_heatershield" },
+]
+
+[[quest]]
+name = "g_hyw_sidearm"
+title = "弯刀与飞刀"
+icon = "hundred_years_war:diamond_scimitar"
+shape = "circle"
+size = 1.2
+deps = ["g_first_sword"]
+tasks = [
+	{ type = "item", item = "hundred_years_war:diamond_saber" },
+	{ type = "item", item = "hundred_years_war:diamond_scimitar" },
+	{ type = "item", item = "hundred_years_war:throwing_knife" },
+]
+
+[[quest]]
+name = "g_hyw_firearm"
+title = "手铳与火绳枪"
+desc = [
+	"火器吃的是火药，不是十年的练刀功夫——这是本包唯一一类需要常备火药的随身武器。",
+	"它也是个人装备线上第一条「力气不重要」的分支。",
+]
+icon = "hundred_years_war:matchlock"
+shape = "rsquare"
+deps = ["g_hyw_sidearm"]
+tasks = [
+	{ type = "item", item = "hundred_years_war:handgonne" },
+	{ type = "item", item = "hundred_years_war:matchlock" },
+	{ type = "item", item = "minecraft:gunpowder", count = 16 },
+]
+
+[[quest]]
+name = "g_unique_weapon"
+title = "第一把独特武器"
+desc = [
+	"Simply Swords 的独特武器不是合成出来的，是打出来的（遗迹与首领掉落）。",
+	"每一把带自己的效果——这是「武器不只是伤害数字」的那一层。",
+]
+icon = "simplyswords:watcher_claymore"
+shape = "rsquare"
+deps = ["g_netherite_weapon"]
+tasks = [
+	{ type = "item", item = "simplyswords:watcher_claymore" },
+]
+
+[[quest]]
+name = "g_unique_collect"
+title = "收齐三把独特武器"
+icon = "simplyswords:icewhisper"
+shape = "circle"
+size = 1.2
+deps = ["g_unique_weapon"]
+tasks = [
+	{ type = "item", item = "simplyswords:icewhisper" },
+	{ type = "item", item = "simplyswords:molten_edge" },
+	{ type = "item", item = "simplyswords:soulkeeper" },
+]
+
+# ---------------- 簇 2：护甲 ----------------
 
 [[quest]]
 name = "g_armor_set"
@@ -118,7 +311,142 @@ tasks = [
 	{ type = "stat", stat = "minecraft:damage_blocked_by_shield", value = 100 },
 ]
 
-# ---------------- 簇 3：附魔与强化 ----------------
+[[quest]]
+name = "g_light_armor"
+title = "软铠与锁子甲"
+desc = [
+	"轻甲的用处不是省铁，是省负重与省修理：日常干活、下矿、跑远路都穿它。",
+]
+icon = "magistuarmory:gambeson_chestplate"
+shape = "rsquare"
+deps = ["g_armor_set"]
+tasks = [
+	{ type = "item", item = "magistuarmory:gambeson_chestplate" },
+	{ type = "item", item = "magistuarmory:chainmail_chestplate" },
+	{ type = "item", item = "magistuarmory:gambeson_boots" },
+]
+
+[[quest]]
+name = "g_plate_tiers"
+title = "板甲的三个档位"
+desc = [
+	"半身板甲 → 一体式胸甲 → 重型锁子甲：这条线是重装步兵的骨架。",
+	"做到第三档，前排才真的能站着挨打。",
+]
+icon = "magistuarmory:platemail_chestplate"
+shape = "rsquare"
+deps = ["g_light_armor"]
+tasks = [
+	{ type = "item", item = "magistuarmory:halfarmor_chestplate" },
+	{ type = "item", item = "magistuarmory:kastenbrust_chestplate" },
+	{ type = "item", item = "magistuarmory:platemail_chestplate" },
+]
+
+[[quest]]
+name = "g_gothic_maximilian"
+title = "哥特式与马克西米利安"
+icon = "magistuarmory:maximilian_chestplate"
+shape = "circle"
+size = 1.2
+deps = ["g_plate_tiers"]
+tasks = [
+	{ type = "item", item = "magistuarmory:gothic_chestplate" },
+	{ type = "item", item = "magistuarmory:maximilian_chestplate" },
+	{ type = "item", item = "magistuarmory:maximilian_helmet" },
+]
+
+[[quest]]
+name = "g_helmet"
+title = "带面罩的头盔"
+icon = "magistuarmory:face_helmet"
+shape = "circle"
+size = 1.2
+deps = ["g_plate_tiers"]
+tasks = [
+	{ type = "item", item = "magistuarmory:norman_helmet" },
+	{ type = "item", item = "magistuarmory:face_helmet" },
+	{ type = "item", item = "magistuarmory:cuirassier_helmet" },
+]
+
+[[quest]]
+name = "g_age_japanese"
+title = "日式甲：大铠与轻装"
+desc = [
+	"Armor of the Ages 按时代分套：大铠与轻装日本甲各是一整套四件。",
+	"这一支线的意义是「仪式场合也有得穿」。",
+]
+icon = "armoroftheages:o_yoroi_armor_chest"
+shape = "rsquare"
+deps = ["g_armor_set"]
+tasks = [
+	{ type = "item", item = "armoroftheages:o_yoroi_armor_chest" },
+	{ type = "item", item = "armoroftheages:japanese_light_armor_chest" },
+]
+
+[[quest]]
+name = "g_age_centurion"
+title = "百夫长铠甲"
+icon = "armoroftheages:centurion_armor_chest"
+shape = "circle"
+size = 1.2
+deps = ["g_age_japanese"]
+tasks = [
+	{ type = "item", item = "armoroftheages:centurion_armor_chest" },
+	{ type = "item", item = "armoroftheages:centurion_armor_head" },
+]
+
+[[quest]]
+name = "g_age_anubis"
+title = "阿努比斯与法老"
+icon = "armoroftheages:anubis_armor_chest"
+shape = "circle"
+size = 1.2
+deps = ["g_age_japanese"]
+tasks = [
+	{ type = "item", item = "armoroftheages:anubis_armor_chest" },
+	{ type = "item", item = "armoroftheages:pharaoh_armor_chest" },
+]
+
+[[quest]]
+name = "g_age_raijin"
+title = "羽蛇与雷神"
+icon = "armoroftheages:raijin_armor_chest"
+shape = "circle"
+size = 1.2
+deps = ["g_age_japanese"]
+tasks = [
+	{ type = "item", item = "armoroftheages:raijin_armor_chest" },
+	{ type = "item", item = "armoroftheages:quetzalcoatl_armor_chest" },
+]
+
+[[quest]]
+name = "g_age_ceremonial"
+title = "礼甲：神圣与奥鲁姆"
+desc = [
+	"这两套不是拿去打架的：开国典礼、迎接使节、纪念仪式穿它。",
+	"做到这里，装备这一章就同时管住了「能打」和「像个国家」。",
+]
+icon = "armoroftheages:holy_armor_chest"
+shape = "rsquare"
+deps = ["g_age_centurion", "g_age_anubis", "g_age_raijin"]
+tasks = [
+	{ type = "item", item = "armoroftheages:holy_armor_chest" },
+	{ type = "item", item = "armoroftheages:exalted_aurum_armor_chest" },
+]
+
+[[quest]]
+name = "g_mount_armor"
+title = "坐骑护甲"
+icon = "hundred_years_war:iron_camel_armor"
+shape = "circle"
+size = 1.2
+deps = ["g_light_armor"]
+tasks = [
+	{ type = "item", item = "hundred_years_war:iron_camel_armor" },
+	{ type = "item", item = "hundred_years_war:diamond_camel_armor" },
+]
+
+# ---------------- 簇 3：工具与便利 ----------------
 
 [[quest]]
 name = "g_anvil"
@@ -132,50 +460,6 @@ deps = ["g_first_sword"]
 tasks = [
 	{ type = "item", item = "minecraft:anvil" },
 ]
-
-[[quest]]
-name = "g_enchant"
-title = "附魔"
-desc = [
-	"原版进度会给这一条盖章。附魔是装备线的分水岭。",
-]
-icon = "minecraft:enchanting_table"
-shape = "circle"
-size = 1.2
-deps = ["g_anvil"]
-tasks = [
-	{ type = "advancement", advancement = "minecraft:story/enchant_item" },
-]
-
-[[quest]]
-name = "g_infuser"
-title = "附魔灌注器"
-desc = [
-	"Enchanting Infuser：不用赌运气，直接选想要的附魔。",
-]
-icon = "enchantinginfuser:enchanting_infuser"
-shape = "circle"
-size = 1.2
-deps = ["g_enchant"]
-tasks = [
-	{ type = "item", item = "enchantinginfuser:enchanting_infuser" },
-]
-
-[[quest]]
-name = "g_full_enchant"
-title = "满附魔一套"
-desc = [
-	"把武器与护甲都附到位——到这一步，个人战力基本封顶，之后靠的是协同与工事。",
-]
-icon = "minecraft:diamond_chestplate"
-shape = "circle"
-size = 1.2
-deps = ["g_infuser"]
-tasks = [
-	{ type = "advancement", advancement = "minecraft:story/shiny_gear" },
-]
-
-# ---------------- 簇 4：随身小工具 ----------------
 
 [[quest]]
 name = "g_backpack_curio"
@@ -217,6 +501,206 @@ deps = ["g_anvil"]
 tasks = [
 	{ type = "item", item = "comforts:sleeping_bag_white" },
 ]
+
+[[quest]]
+name = "g_anvil_repair"
+title = "修好破损的铁砧"
+desc = [
+	"Easy Anvils 把铁砧那几个老毛病收拾过了：东西不再动不动被吞掉。",
+	"所以别怕用坏——铁砧坏了就修，这是整条修理链的底气。",
+]
+icon = "minecraft:chipped_anvil"
+shape = "rsquare"
+deps = ["g_anvil"]
+tasks = [
+	{ type = "item", item = "minecraft:chipped_anvil" },
+	{ type = "item", item = "minecraft:damaged_anvil" },
+	{ type = "item", item = "minecraft:iron_block", count = 4 },
+]
+
+[[quest]]
+name = "g_nametag"
+title = "给装备命名"
+icon = "minecraft:name_tag"
+shape = "circle"
+size = 1.2
+deps = ["g_anvil_repair"]
+tasks = [
+	{ type = "item", item = "minecraft:name_tag", count = 4 },
+]
+
+[[quest]]
+name = "g_grindstone"
+title = "祛魔台"
+icon = "minecraft:grindstone"
+shape = "circle"
+size = 1.2
+deps = ["g_anvil_repair"]
+tasks = [
+	{ type = "item", item = "minecraft:grindstone" },
+]
+
+[[quest]]
+name = "g_smithing"
+title = "锻造台与升级模板"
+icon = "minecraft:smithing_table"
+shape = "rsquare"
+deps = ["g_anvil_repair"]
+tasks = [
+	{ type = "item", item = "minecraft:smithing_table" },
+	{ type = "item", item = "minecraft:netherite_upgrade_smithing_template" },
+]
+
+[[quest]]
+name = "g_curio_belt"
+title = "箭袋与腰带位"
+icon = "supplementaries:quiver"
+shape = "circle"
+size = 1.2
+deps = ["g_backpack_curio"]
+tasks = [
+	{ type = "item", item = "supplementaries:quiver" },
+]
+
+[[quest]]
+name = "g_curio_charm"
+title = "护符位：不死图腾"
+icon = "minecraft:totem_of_undying"
+shape = "circle"
+size = 1.2
+deps = ["g_backpack_curio"]
+tasks = [
+	{ type = "item", item = "minecraft:totem_of_undying" },
+]
+
+[[quest]]
+name = "g_offhand"
+title = "副手放火把"
+icon = "minecraft:torch"
+shape = "circle"
+size = 1.2
+deps = ["g_anvil"]
+tasks = [
+	{ type = "item", item = "minecraft:torch", count = 32 },
+	{ type = "item", item = "minecraft:bread", count = 16 },
+]
+
+# ---------------- 簇 4：附魔与强化 ----------------
+
+[[quest]]
+name = "g_enchant"
+title = "附魔"
+desc = [
+	"原版进度会给这一条盖章。附魔是装备线的分水岭。",
+]
+icon = "minecraft:enchanting_table"
+shape = "rsquare"
+deps = ["g_anvil"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:story/enchant_item" },
+]
+
+[[quest]]
+name = "g_infuser"
+title = "附魔灌注器"
+desc = [
+	"Enchanting Infuser：不用赌运气，直接选想要的附魔。",
+]
+icon = "enchantinginfuser:enchanting_infuser"
+shape = "circle"
+size = 1.2
+deps = ["g_enchant"]
+tasks = [
+	{ type = "item", item = "enchantinginfuser:enchanting_infuser" },
+]
+
+[[quest]]
+name = "g_full_enchant"
+title = "满附魔一套"
+desc = [
+	"把武器与护甲都附到位——到这一步，个人战力基本封顶，之后靠的是协同与工事。",
+]
+icon = "minecraft:diamond_chestplate"
+shape = "circle"
+size = 1.2
+deps = ["g_infuser"]
+tasks = [
+	{ type = "advancement", advancement = "minecraft:story/shiny_gear" },
+]
+
+[[quest]]
+name = "g_enchant_book"
+title = "第一本附魔书"
+desc = [
+	"Enchantment Descriptions 会在物品提示里写清每个附魔到底做什么。",
+	"先有一本书、把说明读一遍，再决定往哪件装备上花经验。",
+]
+icon = "minecraft:enchanted_book"
+shape = "rsquare"
+deps = ["g_enchant"]
+tasks = [
+	{ type = "item", item = "minecraft:enchanted_book" },
+]
+
+[[quest]]
+name = "g_bookshelf"
+title = "书架围满附魔台"
+icon = "minecraft:bookshelf"
+shape = "circle"
+size = 1.2
+deps = ["g_enchant_book"]
+tasks = [
+	{ type = "item", item = "minecraft:bookshelf", count = 15 },
+]
+
+[[quest]]
+name = "g_lapis"
+title = "青金石备足"
+icon = "minecraft:lapis_lazuli"
+shape = "circle"
+size = 1.2
+deps = ["g_enchant_book"]
+tasks = [
+	{ type = "item", item = "minecraft:lapis_lazuli", count = 64 },
+]
+
+[[quest]]
+name = "g_advanced_infuser"
+title = "进阶附魔台"
+icon = "enchantinginfuser:advanced_enchanting_infuser"
+shape = "rsquare"
+deps = ["g_infuser"]
+tasks = [
+	{ type = "item", item = "enchantinginfuser:advanced_enchanting_infuser" },
+]
+
+[[quest]]
+name = "g_xp_bottle"
+title = "经验瓶存经验"
+icon = "minecraft:experience_bottle"
+shape = "circle"
+size = 1.2
+deps = ["g_advanced_infuser"]
+tasks = [
+	{ type = "item", item = "minecraft:experience_bottle", count = 32 },
+]
+
+[[quest]]
+name = "g_runic_gem"
+title = "符文宝石与符文石板"
+desc = [
+	"Simply Swords 的独特武器上有宝石槽：符文宝石、狱灵宝石就是往里镶的东西。",
+	"它管的是原版附魔之外的那一层强化——到这一步，一把武器才算真正做完。",
+]
+icon = "simplyswords:runefused_gem"
+shape = "rsquare"
+deps = ["g_unique_weapon", "g_full_enchant"]
+tasks = [
+	{ type = "item", item = "simplyswords:runefused_gem" },
+	{ type = "item", item = "simplyswords:runic_tablet" },
+]
+
+# ---------------- 终局 ----------------
 
 [[quest]]
 name = "g_ready"

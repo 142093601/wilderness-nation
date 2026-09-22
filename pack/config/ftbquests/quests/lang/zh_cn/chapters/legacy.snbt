@@ -1,0 +1,88 @@
+{
+	quest.1B0E2C0E6B1BD8F3.title: "第一块碑"
+	quest.1B0E2C0E6B1BD8F3.description: [
+	"碑不是装饰：**一块碑 = 一件事 + 一个时间 + 一群人**。"
+	"凿制石砖起座，规模随事情大小定，但位置要固定 —— 碑林是一条能走的路，不是一堆石头。"
+	]
+	quest.EF0E3C7CE3F33159.title: "碑上要有字"
+	quest.EF0E3C7CE3F33159.description: [
+	"没有字的碑只是石头。挂牌、刻字、嵌展示框都行 —— 关键是**路过的人不用问就知道**。"
+	]
+	quest.2D2976CE3F4A8095.title: "记下时间"
+	quest.2D2976CE3F4A8095.description: [
+	"「第三年秋」比「很久以前」有用得多。游戏里没有历法，所以时间要自己定 ——"
+	"**从你们决定建国的那一天起算**。"
+	]
+	quest.30270E344E9DC9B6.title: "碑前长明"
+	quest.30270E344E9DC9B6.description: [
+	"碑林要能夜里读：魂灯不熄，也压得住刷怪。"
+	]
+	quest.EB3989C4EDC2041D.title: "碑排成林"
+	quest.EB3989C4EDC2041D.description: [
+	"十块以上才叫「林」。**每个时代至少一块**——这是这个包对自己那段历史的记法。"
+	]
+	quest.3012D86BD15CB546.title: "碑林有路"
+	quest.3012D86BD15CB546.description: [
+	"碑林是给人走的：铺路、修台阶、留座位。参观动线本身也是设计的一部分。"
+	]
+	quest.70710332D7A4D12B.title: "碑林有中心"
+	quest.70710332D7A4D12B.description: [
+	"碑林需要一个视觉中心：一座主碑或一座亭子把整片收住。"
+	]
+	quest.20379651ED94B61E.title: "起一册"
+	quest.20379651ED94B61E.description: [
+	"书与笔是**唯一能写长文的工具**。一章一册：不要写一本几百页的万言书，没人读。"
+	]
+	quest.95856C2CE57584CF.title: "成书入库"
+	quest.95856C2CE57584CF.description: [
+	"签完成书就改不了了 —— 这正是史书该有的性质。"
+	]
+	quest.E4564722B0C9A750.title: "上架"
+	quest.B9E6F43D0E377703.title: "分类书架"
+	quest.B9E6F43D0E377703.description: [
+	"雕纹书架能按格放书：**按年代或按主题分格**，找起来是翻还是查的区别。"
+	]
+	quest.BF742D20C6CE1A9B.title: "可翻阅"
+	quest.BF742D20C6CE1A9B.description: [
+	"讲台让书**摊开着放**：来的人不用借，站着就能读。"
+	]
+	quest.370E76F2C92551A2.title: "档案室"
+	quest.370E76F2C92551A2.description: [
+	"桶比箱子好：**闭着眼也知道哪一格是什么**（配合牌子）。"
+	]
+	quest.5A5D78EB75FFDE58.title: "立像"
+	quest.5A5D78EB75FFDE58.description: [
+	"盔甲架穿上那套装备，就是这个人在这座城里的样子 —— 比一行名字有用。"
+	]
+	quest.AA01EFF419AAC3D8.title: "遗物上墙"
+	quest.AA01EFF419AAC3D8.description: [
+	"第一把铁镐、第一块钢锭、第一张图纸 —— 这些东西扔了可惜，挂着就是展品。"
+	]
+	quest.D6DBACA9220377B6.title: "旗与徽"
+	quest.D6DBACA9220377B6.description: [
+	"图案化的旗帜是这个包**唯一可自定义的「标识系统」**：一人一旗、一城一旗。"
+	]
+	quest.95B7E374EE247E4A.title: "名人堂"
+	quest.95B7E374EE247E4A.description: [
+	"把像、遗物、旗放在同一间屋里 —— 走一圈就是一次「这地方是谁建的」。"
+	]
+	quest.5D4DFFE4238220E4.title: "舆图归档"
+	quest.5D4DFFE4238220E4.description: [
+	"把探索过的地图**装框上墙**：一张图就是一个人的足迹。"
+	"制图台能把旧图复制、缩放 —— 归档前先做一份副本，原件留着。"
+	]
+	quest.54F8DE1326F96FB9.title: "交接册"
+	quest.54F8DE1326F96FB9.description: [
+	"写给**下一个人**的那一册：城里有什么、东西在哪、哪些事还没做完、哪些坑别再踩。"
+	"这是全包里唯一一条「为了你不在的时候」写的任务。"
+	]
+	quest.5E564111F4F622AA.title: "开架"
+	quest.5E564111F4F622AA.description: [
+	"把交接册放在公共讲台上：任何人、任何时候都能读，不需要问谁要。"
+	]
+	quest.D963435C3F1056D7.title: "这座城记得住"
+	quest.D963435C3F1056D7.description: [
+	"碑成林、册成架、像成堂、图成墙、册能交接 ——"
+	"到这一步，「我们做过什么」不再依赖任何人的记忆。这也是一段存档真正的毕业条件。"
+	]
+}

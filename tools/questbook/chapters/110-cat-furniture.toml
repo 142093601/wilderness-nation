@@ -1,27 +1,31 @@
 # 类目 · 家具与生活
 #
-# 本章的 mod：Handcrafted · Refurbished Furniture · Macaw's Furniture · Another Furniture ·
-#             Supplementaries（摆件）· Immersive Paintings · 花盆/书架一类起居件
+# 本章的 mod：Macaw's Furniture(mcwfurnitures，柜/桌/椅/床/书架/衣柜) ·
+#             Another Furniture(椅/凳/沙发/窗帘/棚/钟) · MrCrayfish Refurbished(厨卫家电) ·
+#             Handcrafted(手作家具、战利品、上墙的画) · Supplementaries(摆件)
 #
-# 与「建筑与装饰」的分工：那一章管**结构**（桥、窗、门面、材质），
-# 这一章管**进屋之后**（坐、睡、收纳、摆件）。
+# 与「建筑构件」的分工：那一章管**结构**（桥、窗、门面、材质、墙），
+# 这一章管**进屋之后**（坐、睡、收纳、做饭、洗漱、摆件）。
+# 与「装饰与细节」的分工：摆件与画面在这里只作为「房间的一部分」出现，
+# 单件装饰的玩法归那一章。
 
 key = "cat_furniture"
-title = "家具与生活"
-subtitle = "房子盖好之后：让它住得下人"
+title = "家具"
+subtitle = "屋子盖好之后：把它做成能住人的家"
 group = "category"
 icon = "handcrafted:acacia_couch"
-order_index = 31
+order_index = 52
 
 grid = { step = 1.5, row_h = 1.75 }
 
-# ---------------- 簇 1：起居（坐 / 睡 / 收纳） ----------------
+# ---------------- 簇 1：木制家具 ----------------
 
 [[quest]]
 name = "f_seating"
 title = "座位"
 desc = [
 	"沙发、长凳、椅子。站着说话的议事厅不是议事厅。",
+	"这是本章第一条：先把「坐」这件事解决，其余家具才有摆放的理由。",
 ]
 icon = "handcrafted:acacia_couch"
 shape = "pentagon"
@@ -30,18 +34,9 @@ tasks = [
 	{ type = "item", item = "handcrafted:acacia_couch", count = 4 },
 	{ type = "item", item = "handcrafted:acacia_dining_bench", count = 4 },
 ]
-
-[[quest]]
-name = "f_storage_furniture"
-title = "柜与抽屉"
-desc = [
-	"Macaw's Furniture 的柜体：室内收纳不该全靠木箱。",
-]
-icon = "mcwfurnitures:acacia_drawer"
-shape = "rsquare"
-deps = ["f_seating"]
-tasks = [
-	{ type = "item", item = "mcwfurnitures:acacia_drawer", count = 4 },
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
 ]
 
 [[quest]]
@@ -59,21 +54,242 @@ tasks = [
 ]
 
 [[quest]]
+name = "f_dining_chair"
+title = "餐椅够一桌"
+desc = [
+	"待客与聚餐要按人数配椅子，四把是一桌的下限。",
+]
+icon = "mcwfurnitures:oak_chair"
+shape = "square"
+size = 1.5
+deps = ["f_bed"]
+tasks = [
+	{ type = "item", item = "mcwfurnitures:oak_chair", count = 4 },
+]
+
+[[quest]]
+name = "f_dining_table"
+title = "餐桌"
+desc = [
+	"餐桌是室内第一件「集体家具」——它决定房间留多大。",
+]
+icon = "mcwfurnitures:oak_table"
+shape = "rsquare"
+size = 1.75
+deps = ["f_dining_chair"]
+tasks = [
+	{ type = "item", item = "mcwfurnitures:oak_table" },
+]
+
+[[quest]]
+name = "f_chair_another"
+title = "另一套椅子"
+desc = [
+	"Another Furniture 的椅子与餐椅：两套并用，同一间屋里才有层次。",
+]
+icon = "another_furniture:oak_chair"
+shape = "circle"
+size = 1.2
+deps = ["f_dining_table"]
+tasks = [
+	{ type = "item", item = "another_furniture:oak_chair", count = 4 },
+	{ type = "item", item = "another_furniture:oak_bench", count = 2 },
+]
+
+[[quest]]
+name = "f_storage_furniture"
+title = "柜与抽屉"
+desc = [
+	"Macaw's Furniture 的柜体：室内收纳不该全靠木箱。",
+]
+icon = "mcwfurnitures:acacia_drawer"
+shape = "rsquare"
+size = 1.75
+deps = ["f_chair_another"]
+tasks = [
+	{ type = "item", item = "mcwfurnitures:acacia_drawer", count = 4 },
+]
+
+[[quest]]
+name = "f_chest_of_drawers"
+title = "抽屉柜"
+desc = [
+	"一组抽屉柜比四个箱子省地方，也更容易看出装了什么。",
+]
+icon = "another_furniture:oak_drawer"
+shape = "circle"
+size = 1.2
+deps = ["f_storage_furniture"]
+tasks = [
+	{ type = "item", item = "another_furniture:oak_drawer" },
+]
+
+[[quest]]
+name = "f_bookshelf_wall"
+title = "书架与橱柜书架"
+desc = [
+	"带门的书架：书与档案既要放得下，也要关得上。",
+]
+icon = "mcwfurnitures:oak_bookshelf_cupboard"
+shape = "rsquare"
+size = 1.75
+deps = ["f_chest_of_drawers"]
+tasks = [
+	{ type = "item", item = "mcwfurnitures:oak_bookshelf_cupboard" },
+]
+
+[[quest]]
+name = "f_wardrobe"
+title = "衣柜"
+desc = [
+	"双门衣柜是卧室与更衣间的分界：盔甲、衣物、杂物各有归处。",
+]
+icon = "mcwfurnitures:oak_wardrobe"
+shape = "rsquare"
+size = 1.75
+deps = ["f_bookshelf_wall"]
+tasks = [
+	{ type = "item", item = "mcwfurnitures:oak_wardrobe" },
+]
+
+[[quest]]
+name = "f_nightstand"
+title = "床头柜"
+desc = [
+	"床边一件小家具，顺手放书、灯、随身物。",
+]
+icon = "handcrafted:oak_nightstand"
+shape = "circle"
+size = 1.2
+deps = ["f_wardrobe"]
+tasks = [
+	{ type = "item", item = "handcrafted:oak_nightstand", count = 2 },
+]
+
+[[quest]]
+name = "f_desk_study"
+title = "书桌"
+desc = [
+	"书桌是「档案与国史」在屋里的落点，也是本章过半的标记。",
+]
+icon = "mcwfurnitures:oak_desk"
+shape = "octagon"
+size = 1.75
+deps = ["f_nightstand"]
+tasks = [
+	{ type = "item", item = "mcwfurnitures:oak_desk" },
+	{ type = "item", item = "handcrafted:oak_shelf", count = 2 },
+]
+rewards = [
+	{ type = "xp", xp = 40 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "f_tables_another"
+title = "桌子与边桌"
+desc = [
+	"茶几、边桌、长桌：小桌比大桌更常被用到。",
+]
+icon = "another_furniture:oak_table"
+shape = "circle"
+size = 1.2
+deps = ["f_desk_study"]
+tasks = [
+	{ type = "item", item = "another_furniture:oak_table" },
+	{ type = "item", item = "another_furniture:oak_small_shelf" },
+]
+
+[[quest]]
+name = "f_glass_table"
+title = "玻璃桌与咖啡桌"
+desc = [
+	"透明与矮桌让房间显得不挤，靠窗的位置尤其明显。",
+]
+icon = "mcwfurnitures:oak_glass_table"
+shape = "circle"
+size = 1.2
+deps = ["f_tables_another"]
+tasks = [
+	{ type = "item", item = "mcwfurnitures:oak_glass_table" },
+	{ type = "item", item = "mcwfurnitures:oak_coffee_table" },
+]
+
+[[quest]]
+name = "f_stools"
+title = "凳子与高脚凳"
+desc = [
+	"吧台、工作台、柜前：站着干活的地方配一张高脚凳。",
+]
+icon = "another_furniture:white_stool"
+shape = "circle"
+size = 1.2
+deps = ["f_glass_table"]
+tasks = [
+	{ type = "item", item = "another_furniture:white_stool", count = 2 },
+	{ type = "item", item = "another_furniture:white_tall_stool", count = 2 },
+]
+
+[[quest]]
+name = "f_modern_chair"
+title = "现代线条的椅子"
+desc = [
+	"同一间屋里换一种椅型，家具才不像同一件东西复制出来的。",
+]
+icon = "mcwfurnitures:oak_modern_chair"
+shape = "circle"
+size = 1.2
+deps = ["f_stools"]
+tasks = [
+	{ type = "item", item = "mcwfurnitures:oak_modern_chair", count = 2 },
+	{ type = "item", item = "mcwfurnitures:oak_modern_desk" },
+]
+
+[[quest]]
+name = "f_sofa_lounge"
+title = "沙发与躺椅"
+desc = [
+	"休息区要有开阔感：沙发加一张长条坐具，客厅才成形状。",
+]
+icon = "another_furniture:white_sofa"
+shape = "circle"
+size = 1.2
+deps = ["f_modern_chair"]
+tasks = [
+	{ type = "item", item = "another_furniture:white_sofa" },
+	{ type = "item", item = "handcrafted:bench" },
+]
+
+[[quest]]
 name = "f_kitchen_full"
 title = "成套厨房"
 desc = [
 	"台面 + 水槽 + 抽屉：Refurbished 的厨房系列能凑出一间真厨房。",
+	"这是本章第一条真正需要「四面墙」的家具组合。",
 ]
 icon = "refurbished_furniture:acacia_kitchen_drawer"
-shape = "circle"
-size = 1.2
-deps = ["f_seating"]
+shape = "rsquare"
+size = 1.75
+deps = ["f_sofa_lounge"]
 tasks = [
 	{ type = "item", item = "refurbished_furniture:acacia_kitchen_drawer", count = 2 },
 	{ type = "item", item = "refurbished_furniture:acacia_kitchen_sink" },
 ]
 
-# ---------------- 簇 2：摆件与装饰 ----------------
+[[quest]]
+name = "f_kitchen_counter"
+title = "厨台与操作台"
+desc = [
+	"切菜、摆盘、上菜都要台面；没有台面的厨房只是几个柜子。",
+]
+icon = "handcrafted:oak_counter"
+shape = "square"
+size = 1.5
+deps = ["f_kitchen_full"]
+tasks = [
+	{ type = "item", item = "handcrafted:oak_counter", count = 4 },
+	{ type = "item", item = "refurbished_furniture:acacia_cutting_board" },
+]
 
 [[quest]]
 name = "f_plants"
@@ -83,7 +299,8 @@ desc = [
 ]
 icon = "minecraft:flower_pot"
 shape = "rsquare"
-deps = ["f_seating"]
+size = 1.75
+deps = ["f_kitchen_counter"]
 tasks = [
 	{ type = "item", item = "minecraft:flower_pot", count = 8 },
 ]
@@ -94,12 +311,13 @@ title = "落地灯与吊灯"
 desc = [
 	"室内照明换个层次：不再只有天花板上一排火把。",
 ]
-icon = "another_furniture:acacia_chair"
+icon = "another_furniture:white_lamp"
 shape = "circle"
 size = 1.2
-deps = ["f_seating"]
+deps = ["f_plants"]
 tasks = [
-	{ type = "item", item = "another_furniture:acacia_chair", count = 4 },
+	{ type = "item", item = "another_furniture:white_lamp", count = 4 },
+	{ type = "item", item = "another_furniture:oak_chair", count = 2 },
 ]
 
 [[quest]]
@@ -111,40 +329,25 @@ desc = [
 ]
 icon = "supplementaries:globe"
 shape = "rsquare"
-deps = ["f_plants"]
+size = 1.75
+deps = ["f_lamps"]
 tasks = [
 	{ type = "item", item = "supplementaries:globe" },
 ]
 
 [[quest]]
-name = "f_pictures"
-title = "把照片挂起来"
+name = "f_curtains"
+title = "窗帘与窗"
 desc = [
-	"Exposure 拍照 + Immersive Paintings 上墙：把「这一局发生过什么」变成墙上的画。",
-	"这条对应设计里「国史 / 碑林」的日常化版本。",
+	"窗帘和窗棂：把窗从「一个洞」变成房间的一部分。",
 ]
-icon = "minecraft:item_frame"
+icon = "another_furniture:white_curtain"
 shape = "circle"
 size = 1.2
 deps = ["f_supplementaries"]
 tasks = [
-	{ type = "item", item = "minecraft:item_frame", count = 8 },
-]
-
-# ---------------- 簇 3：起居配套 ----------------
-
-[[quest]]
-name = "f_bookshelf_deco"
-title = "书架与书房"
-desc = [
-	"密集书架墙：档案、国史、闲书都该有地方放。",
-]
-icon = "minecraft:bookshelf"
-shape = "circle"
-size = 1.2
-deps = ["f_storage_furniture"]
-tasks = [
-	{ type = "item", item = "minecraft:bookshelf", count = 16 },
+	{ type = "item", item = "another_furniture:white_curtain", count = 4 },
+	{ type = "item", item = "another_furniture:oak_shutter", count = 2 },
 ]
 
 [[quest]]
@@ -156,9 +359,342 @@ desc = [
 icon = "minecraft:white_carpet"
 shape = "circle"
 size = 1.2
-deps = ["f_storage_furniture"]
+deps = ["f_curtains"]
 tasks = [
 	{ type = "item", item = "minecraft:white_carpet", count = 16 },
+]
+
+[[quest]]
+name = "f_wood_set"
+title = "一套木制家具"
+desc = [
+	"坐、睡、收纳、照明、绿植五样齐了：房间不再是「放了东西的屋子」。",
+	"此后每一间屋都照这套配，只是换木料与配色。",
+]
+icon = "mcwfurnitures:oak_wardrobe"
+shape = "hexagon"
+size = 2.5
+deps = ["f_bed", "f_seating", "f_dining_table", "f_modern_chair", "f_kitchen_counter",
+        "f_kitchen_full", "f_nightstand", "f_wardrobe", "f_plants", "f_lamps"]
+tasks = [
+	{ type = "item", item = "mcwfurnitures:oak_wardrobe" },
+	{ type = "item", item = "mcwfurnitures:oak_table" },
+	{ type = "item", item = "handcrafted:oak_fancy_bed" },
+	{ type = "item", item = "another_furniture:white_sofa" },
+	{ type = "item", item = "another_furniture:oak_grandfather_clock" },
+]
+rewards = [
+	{ type = "xp", xp = 90 },
+	{ type = "toast" },
+]
+
+# ---------------- 簇 2：厨卫与家电（Refurbished） ----------------
+
+[[quest]]
+name = "f_wood_bookshelf"
+title = "木质书架"
+desc = [
+	"书架是室内立面最省事的装饰：有东西可放，也有东西可看。",
+]
+icon = "mcwfurnitures:oak_bookshelf"
+shape = "circle"
+size = 1.2
+deps = ["f_wood_set"]
+tasks = [
+	{ type = "item", item = "mcwfurnitures:oak_bookshelf", count = 4 },
+]
+
+[[quest]]
+name = "f_toaster"
+title = "烤面包机"
+desc = [
+	"Refurbished 家电的第一件：厨房从「有灶」变成「有台面设备」。",
+	"它需要电，所以它也是屋内配电的起点。",
+]
+icon = "refurbished_furniture:light_toaster"
+shape = "pentagon"
+size = 2.0
+deps = ["f_wood_bookshelf"]
+tasks = [
+	{ type = "item", item = "refurbished_furniture:light_toaster" },
+	{ type = "item", item = "refurbished_furniture:bread_slice", count = 4 },
+]
+rewards = [
+	{ type = "xp", xp = 30 },
+	{ type = "toast" },
+]
+
+[[quest]]
+name = "f_microwave"
+title = "微波炉"
+desc = [
+	"加热与保鲜进入同一面墙：厨房效率的提升从这里开始。",
+]
+icon = "refurbished_furniture:light_microwave"
+shape = "circle"
+size = 1.2
+deps = ["f_toaster"]
+tasks = [
+	{ type = "item", item = "refurbished_furniture:light_microwave" },
+]
+
+[[quest]]
+name = "f_fridge"
+title = "冰箱与冷冻柜"
+desc = [
+	"食物要按周存，不再按顿做。冰箱是「屯粮」这一步的家具形态。",
+]
+icon = "refurbished_furniture:light_fridge"
+shape = "rsquare"
+size = 1.75
+deps = ["f_microwave"]
+tasks = [
+	{ type = "item", item = "refurbished_furniture:light_fridge" },
+	{ type = "item", item = "refurbished_furniture:light_freezer" },
+]
+
+[[quest]]
+name = "f_stove"
+title = "炉灶与油烟机"
+desc = [
+	"明火搬进室内就要配排烟：油烟机是长期住人的必要条件。",
+]
+icon = "refurbished_furniture:light_stove"
+shape = "rsquare"
+size = 1.75
+deps = ["f_fridge"]
+tasks = [
+	{ type = "item", item = "refurbished_furniture:light_stove" },
+	{ type = "item", item = "refurbished_furniture:light_range_hood" },
+	{ type = "item", item = "handcrafted:kitchen_hood_pipe", count = 4 },
+]
+
+[[quest]]
+name = "f_bathroom"
+title = "浴室"
+desc = [
+	"浴缸、洗手盆、马桶：从「住得下」到「住得久」的分界。",
+	"这一组家具也意味着房间里要单独划出一间。",
+]
+icon = "refurbished_furniture:white_bath"
+shape = "rsquare"
+size = 1.75
+deps = ["f_stove"]
+tasks = [
+	{ type = "item", item = "refurbished_furniture:white_bath" },
+	{ type = "item", item = "refurbished_furniture:white_basin" },
+	{ type = "item", item = "refurbished_furniture:white_toilet" },
+]
+
+[[quest]]
+name = "f_storage_cabinet"
+title = "储物高柜"
+desc = [
+	"带门的高柜：把杂项从台面上收进去，厨房才留得出工作面。",
+]
+icon = "refurbished_furniture:oak_storage_cabinet"
+shape = "circle"
+size = 1.2
+deps = ["f_bathroom"]
+tasks = [
+	{ type = "item", item = "refurbished_furniture:oak_storage_cabinet", count = 2 },
+]
+
+[[quest]]
+name = "f_ceiling_fan"
+title = "吊扇与顶灯"
+desc = [
+	"面积大的房间靠顶灯与吊扇撑住，不然一半空间永远是暗的。",
+]
+icon = "refurbished_furniture:oak_light_ceiling_fan"
+shape = "circle"
+size = 1.2
+deps = ["f_storage_cabinet"]
+tasks = [
+	{ type = "item", item = "refurbished_furniture:oak_light_ceiling_fan" },
+	{ type = "item", item = "refurbished_furniture:light_ceiling_light", count = 4 },
+]
+
+[[quest]]
+name = "f_lightswitch"
+title = "开关与灯控"
+desc = [
+	"一个开关管一间屋的灯：这是室内配电第一次成为「设施」而不是「火把」。",
+]
+icon = "refurbished_furniture:light_lightswitch"
+shape = "circle"
+size = 1.2
+deps = ["f_ceiling_fan"]
+tasks = [
+	{ type = "item", item = "refurbished_furniture:light_lightswitch", count = 4 },
+]
+
+[[quest]]
+name = "f_mailbox"
+title = "信箱与门铃"
+desc = [
+	"门外的第一件家具：访客与信件有固定的落点，不必满地图找人。",
+]
+icon = "refurbished_furniture:oak_mail_box"
+shape = "circle"
+size = 1.2
+deps = ["f_lightswitch"]
+tasks = [
+	{ type = "item", item = "refurbished_furniture:oak_mail_box" },
+	{ type = "item", item = "refurbished_furniture:post_box" },
+]
+
+[[quest]]
+name = "f_sofa_variant"
+title = "换一种配色"
+desc = [
+	"成套家具换一组颜色，同一栋楼里的房间才不会互相混淆。",
+]
+icon = "refurbished_furniture:red_sofa"
+shape = "circle"
+size = 1.2
+deps = ["f_mailbox"]
+tasks = [
+	{ type = "item", item = "refurbished_furniture:red_sofa" },
+	{ type = "item", item = "another_furniture:red_sofa" },
+	{ type = "item", item = "another_furniture:red_awning", count = 2 },
+]
+
+[[quest]]
+name = "f_cushions"
+title = "床单与坐垫"
+desc = [
+	"床与坐具的软装：房间的完成度有一半来自这些不起眼的东西。",
+]
+icon = "handcrafted:white_sheet"
+shape = "square"
+size = 1.5
+deps = ["f_sofa_variant"]
+tasks = [
+	{ type = "item", item = "handcrafted:white_sheet", count = 2 },
+	{ type = "item", item = "handcrafted:white_cushion", count = 4 },
+]
+
+# ---------------- 簇 3：成套搭配 ----------------
+
+[[quest]]
+name = "f_console_tables"
+title = "柜台与条案"
+desc = [
+	"齐腰高的柜台与条案：成套搭配从「同一高度的一排家具」开始。",
+]
+icon = "mcwfurnitures:oak_drawer_counter"
+shape = "circle"
+size = 1.2
+deps = ["f_cushions"]
+tasks = [
+	{ type = "item", item = "mcwfurnitures:oak_drawer_counter" },
+	{ type = "item", item = "mcwfurnitures:oak_cupboard_counter" },
+]
+
+[[quest]]
+name = "f_wall_lamps"
+title = "壁灯与灯柱"
+desc = [
+	"壁灯管走廊，灯柱管院子：两者成对才算一套完整的照明方案。",
+]
+icon = "another_furniture:white_lamp"
+shape = "circle"
+size = 1.2
+deps = ["f_console_tables"]
+tasks = [
+	{ type = "item", item = "another_furniture:white_lamp", count = 4 },
+	{ type = "item", item = "another_furniture:lamp_connector", count = 2 },
+]
+
+[[quest]]
+name = "f_trophy_wall"
+title = "挂在墙上的战利品"
+desc = [
+	"战利品是这一局的记录：打过什么、去过哪里，都该留在墙上。",
+]
+icon = "handcrafted:blaze_trophy"
+shape = "circle"
+size = 1.2
+deps = ["f_wall_lamps"]
+tasks = [
+	{ type = "item", item = "handcrafted:blaze_trophy" },
+	{ type = "item", item = "handcrafted:skeleton_trophy" },
+	{ type = "item", item = "handcrafted:spider_trophy" },
+]
+
+[[quest]]
+name = "f_pictures"
+title = "把照片挂起来"
+desc = [
+	"Exposure 拍照 + Immersive Paintings 上墙：把「这一局发生过什么」变成墙上的画。",
+	"这条对应设计里「国史 / 碑林」的日常化版本。",
+]
+icon = "minecraft:item_frame"
+shape = "rsquare"
+size = 1.75
+deps = ["f_trophy_wall"]
+tasks = [
+	{ type = "item", item = "minecraft:item_frame", count = 8 },
+]
+
+[[quest]]
+name = "f_stacked_books"
+title = "可以堆起来的书"
+desc = [
+	"书不只放在书架里：桌上、柜顶、床头都能摞。",
+]
+icon = "handcrafted:stackable_book"
+shape = "square"
+size = 1.5
+deps = ["f_pictures"]
+tasks = [
+	{ type = "item", item = "handcrafted:stackable_book", count = 8 },
+]
+
+[[quest]]
+name = "f_crockery"
+title = "餐具与罐子"
+desc = [
+	"碗、盘、杯、储物罐：厨房与餐厅之间那一段的距离就靠它们补上。",
+]
+icon = "handcrafted:white_crockery_combo"
+shape = "square"
+size = 1.5
+deps = ["f_stacked_books"]
+tasks = [
+	{ type = "item", item = "handcrafted:white_crockery_combo" },
+	{ type = "item", item = "refurbished_furniture:oak_storage_jar", count = 4 },
+]
+
+[[quest]]
+name = "f_television"
+title = "电视与工作间"
+desc = [
+	"Refurbished 的屏幕与工作台：公共房间需要一个视觉中心。",
+]
+icon = "refurbished_furniture:television"
+shape = "rsquare"
+size = 1.75
+deps = ["f_crockery"]
+tasks = [
+	{ type = "item", item = "refurbished_furniture:television" },
+	{ type = "item", item = "refurbished_furniture:workbench" },
+]
+
+[[quest]]
+name = "f_house_clock"
+title = "计时与作息"
+desc = [
+	"钟、服务铃、墙面装饰：一间屋子开始有自己的节奏。",
+]
+icon = "another_furniture:oak_grandfather_clock"
+shape = "circle"
+size = 1.2
+deps = ["f_television"]
+tasks = [
+	{ type = "item", item = "another_furniture:oak_grandfather_clock" },
+	{ type = "item", item = "another_furniture:service_bell" },
 ]
 
 [[quest]]
@@ -168,14 +704,34 @@ desc = [
 	"坐具、床、收纳、照明、绿植、上墙的画——凑齐这六样。",
 ]
 icon = "minecraft:white_bed"
-shape = "hexagon"
-size = 2.5
-deps = ["f_storage_furniture", "f_bed", "f_kitchen_full", "f_lamps", "f_pictures",
-        "f_bookshelf_deco", "f_carpet"]
+shape = "circle"
+size = 1.2
+deps = ["f_house_clock"]
 tasks = [
 	{ type = "item", item = "minecraft:white_bed" },
 ]
+
+[[quest]]
+name = "f_home_lived_in"
+title = "一栋楼全部住得下人"
+desc = [
+	"按同一套配法把公共建筑与住区都装完：家具不再是单间的事，而是城市的标准。",
+	"到此本章结束——往后新建的每一间屋，都照这套清单走。",
+]
+icon = "refurbished_furniture:light_fridge"
+shape = "hexagon"
+size = 2.5
+deps = ["f_completed_room", "f_kitchen_full", "f_bookshelf_wall", "f_wardrobe",
+        "f_bed", "f_seating", "f_lamps", "f_pictures", "f_carpet", "f_console_tables"]
+tasks = [
+	{ type = "item", item = "refurbished_furniture:light_fridge" },
+	{ type = "item", item = "handcrafted:oak_couch" },
+	{ type = "item", item = "handcrafted:oak_fancy_bed" },
+	{ type = "item", item = "mcwfurnitures:oak_wardrobe" },
+	{ type = "item", item = "another_furniture:oak_table" },
+	{ type = "item", item = "minecraft:item_frame", count = 8 },
+]
 rewards = [
-	{ type = "xp", xp = 60 },
+	{ type = "xp", xp = 120 },
 	{ type = "toast" },
 ]

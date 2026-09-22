@@ -1,0 +1,96 @@
+{
+	quest.08EFEA4CB7B868AD.title: "先砍树"
+	quest.08EFEA4CB7B868AD.description: [
+	"任何路线的第一格都是原木。先攒够一组，别砍两棵就跑去挖矿。"
+	]
+	quest.5CDCAEEEDAABD290.title: "工作台"
+	quest.5CDCAEEEDAABD290.description: [
+	"没有工作台，后面所有东西都做不出来。它也是你要记住「回家的那个方块」。"
+	]
+	quest.61009ACF418BB488.title: "木镐"
+	quest.61009ACF418BB488.description: [
+	"第一把镐子只能挖石头。它的意义不是「好用」，是**把石头变成可获取资源**。"
+	]
+	quest.5DDEE55D99B915D5.title: "圆石"
+	quest.5DDEE55D99B915D5.description: [
+	"圆石是第一个「要多少有多少」的材料：工具、熔炉、墙，全从它开始。"
+	]
+	quest.AFCC5A397773318C.title: "石器一套"
+	quest.AFCC5A397773318C.description: [
+	"镐、斧、锹、剑换一遍。石制工具是这一章的「工作马」，别省。"
+	]
+	quest.E3AD57553E577FA5.title: "熔炉"
+	quest.E3AD57553E577FA5.description: [
+	"熔炉是把「挖到的」变成「能用的」的唯一入口。第一个熔炉放在营地中心。"
+	]
+	quest.8F2453E754691C6A.title: "先烧木炭"
+	quest.8F2453E754691C6A.description: [
+	"没找到煤之前，木炭就是煤。这一步让「照明」不必等运气。"
+	]
+	quest.F8BA35D13A7EE474.title: "点亮营地"
+	quest.F8BA35D13A7EE474.description: [
+	"火把不是装饰，是**刷怪范围的开关**。营地范围内不留黑块，是硬纪律。"
+	]
+	quest.29A9742B4CFDD7DD.title: "打到第一块肉"
+	quest.C0E82AF8654F9C9A.title: "做熟再吃"
+	quest.C0E82AF8654F9C9A.description: [
+	"生肉的回饱食度低、还占背包。从这一顿起，所有肉都过一遍熔炉。"
+	]
+	quest.2673C61DDE50A846.title: "第一块田"
+	quest.2673C61DDE50A846.description: [
+	"动物会跑光，田不会。有田之后，粮食问题从「今天有没有」变成「够不够多」。"
+	]
+	quest.86D0EAA051C6FB66.title: "第一茬麦子"
+	quest.980D99AAD17277F0.title: "面包"
+	quest.980D99AAD17277F0.description: [
+	"面包是三样东西换一顿饱：种田、收割、合成。它标志着你不再靠打猎过活。"
+	]
+	quest.A600FB53530E095F.title: "稳定的水源"
+	quest.A600FB53530E095F.description: [
+	"一桶水就够：倒在地上就是一格无限水源。别每次跑河边。"
+	]
+	quest.B8936D0B9EFE0304.title: "下矿"
+	quest.B8936D0B9EFE0304.description: [
+	"带上火把、镐子、食物，往 y=-10 到 y=15 这一段走。"
+	"不要一个人下矿 —— 后面「出关」章会讲前哨，但第一条纪律是：留个人在上面。"
+	]
+	quest.E3BE18193B343FDE.title: "第一块铁锭"
+	quest.D7C4643430A13F9A.title: "铁镐"
+	quest.D7C4643430A13F9A.description: [
+	"铁镐是**分水岭**：钻石、红石、金，全都只有它能挖。"
+	]
+	quest.8EE406AFB917BCA3.title: "铁桶"
+	quest.8EE406AFB917BCA3.description: [
+	"一个铁桶 = 水源 + 岩浆 + 牛奶 + 挤奶。它是性价比最高的三块铁。"
+	]
+	quest.667B011F39B5DA08.title: "盾"
+	quest.667B011F39B5DA08.description: [
+	"举盾能挡下绝大多数正面伤害。它是这个包**最好用的保命件**，成本只有一块铁加六块木板。"
+	]
+	quest.0DA00EF0CCE03F03.title: "一套铁甲"
+	quest.CC038023D9DCCD70.title: "铁剑"
+	quest.69123CD1EC0349C5.title: "一张床"
+	quest.69123CD1EC0349C5.description: [
+	"床把「今晚死一次」变成「今晚睡一觉」，还顺手把重生点搬到营地。"
+	"它通常是全队第一个真正的「公共设施」。"
+	]
+	quest.998313EBE326627E.title: "装上门"
+	quest.998313EBE326627E.description: [
+	"门挡不住玩家，但挡得住夜里的怪。营地有门之后，进出不必拆墙。"
+	]
+	quest.3008F8F6FA186EE6.title: "把东西放下"
+	quest.3008F8F6FA186EE6.description: [
+	"箱子 + 物品展示框，是「这堆东西归谁」的起点。"
+	"个人箱子随便放，公共箱子在「立国」章会单独立规矩。"
+	]
+	quest.7F4BE75C892B4957.title: "过完第一晚"
+	quest.7F4BE75C892B4957.description: [
+	"有屋顶、有门、有光、有床 —— 这一晚不需要战斗力，只需要**别出去**。"
+	"判据是「屋里的三件东西都到位」；「有没有死」模组不记，也不该记。"
+	]
+	quest.55EE1B8350CDE02A.title: "可以动手了"
+	quest.55EE1B8350CDE02A.description: [
+	"铁器、粮食、住处三件事齐了：从这一刻起，你才真的能开始「建国」这件事。"
+	"下一页（落地）讲的是挑哪块地 —— 先把这一章收掉。"
+	]
+}

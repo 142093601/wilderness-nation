@@ -12,8 +12,7 @@ title = "无尽纪元"
 subtitle = "毕业之后：不是结束，是终于有空做想做的事"
 group = "chronicle"
 icon = "minecraft:nether_star"
-order_index = 7
-
+order_index = 10
 grid = { step = 1.5, row_h = 1.75 }
 
 # ---------------- 横向目标 ----------------

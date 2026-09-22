@@ -9,7 +9,6 @@ title = "序"
 group = "chronicle"
 icon = "minecraft:book"
 order_index = 0
-
 grid = { step = 1.5, row_h = 1.75 }
 
 [[quest]]

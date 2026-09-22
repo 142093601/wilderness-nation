@@ -18,8 +18,7 @@ title = "御敌"
 subtitle = "御敌：这个时代的达标线在哪——袭击规模会长，工事就得跟着长"
 group = "chronicle"
 icon = "minecraft:shield"
-order_index = 5
-
+order_index = 6
 grid = { step = 1.5, row_h = 1.75 }
 
 # ---------------- 国策主线 ----------------

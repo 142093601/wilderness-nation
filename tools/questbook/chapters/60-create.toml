@@ -24,8 +24,7 @@ title = "机械动力"
 subtitle = "从手摇开始，一路到蒸汽与列车：箭头就是路线图"
 group = "craft"
 icon = "create:cogwheel"
-order_index = 20
-
+order_index = 31
 grid = { step = 1.5, row_h = 1.75 }
 
 

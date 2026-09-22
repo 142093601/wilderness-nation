@@ -13,8 +13,7 @@ title = "蒸汽与铁路"
 subtitle = "从烧一炉水，到让整张地图变短"
 group = "craft"
 icon = "create:steam_engine"
-order_index = 24
-
+order_index = 34
 grid = { step = 1.5, row_h = 1.75 }
 
 # ---------------- 起点：蒸汽 ----------------

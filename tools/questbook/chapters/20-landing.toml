@@ -20,8 +20,7 @@ title = "落地"
 subtitle = "第一夜之前，先弄明白「我们为什么会在这里」"
 group = "chronicle"
 icon = "minecraft:campfire"
-order_index = 1
-
+order_index = 2
 grid = { step = 1.5, row_h = 1.75 }
 
 # ---------------- 主线 ----------------

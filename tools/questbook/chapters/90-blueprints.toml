@@ -14,8 +14,7 @@ title = "图纸与工程"
 subtitle = "把「盖一次」变成「盖一百次」：这条链通了，造城速度会变一个量级"
 group = "craft"
 icon = "portable_blueprints:blueprint"
-order_index = 22
-
+order_index = 35
 grid = { step = 1.5, row_h = 1.75 }
 
 # ---------------- 起点：先有一张纸 ----------------

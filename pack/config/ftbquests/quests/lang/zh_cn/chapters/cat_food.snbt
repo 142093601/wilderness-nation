@@ -70,4 +70,66 @@
 	"把这一章的东西凑成一桌：主菜、配菜、饮品、甜点各有一样。"
 	"这一条之后，「食堂」才算真的开张（基建章的食堂到了这里才有内容）。"
 	]
+	quest.3349B259353ACB31.title: "草秆"
+	quest.EC2FA26DBF6A5613.title: "整块肉"
+	quest.6FF9C7201D4FE499.title: "在家种蘑菇"
+	quest.4CCA50D7CB6CF083.title: "有机堆肥"
+	quest.05DE0BEEB15AE537.title: "浅水里的稻"
+	quest.CC6C9ACB8852B43F.title: "把菜端上桌"
+	quest.CC6C9ACB8852B43F.description: [
+	"一个人吃饭，碗就够；宴席块是给一屋子人准备的。"
+	"食堂、宴请、节庆都要用到它，所以放在本章中段。"
+	]
+	quest.444FDF195136ED40.title: "农庄的锅灶"
+	quest.444FDF195136ED40.description: [
+	"Farm & Charm 的烹饪线：同一批食材，菜谱比乐事更偏农家菜。"
+	"它和厨锅共用原料，所以排在乐事的锅之后。"
+	]
+	quest.AD0C57B4F49E11D4.title: "烘焙机"
+	quest.7CECBADDA0B9934C.title: "绞肉机"
+	quest.1AD8D6AE1942F941.title: "肥沃泥土"
+	quest.4F95F99A3916D6EB.title: "洒水器"
+	quest.AB0BF6A73DF6D191.title: "烤箱"
+	quest.E4C2B7D818851FBD.title: "冰箱"
+	quest.99A9EDF7E5416C56.title: "保鲜室"
+	quest.79AAD64EE9125ABE.title: "苹果压榨器"
+	quest.79AAD64EE9125ABE.description: [
+	"Vinery 的第一步不是葡萄，是压榨：果汁与果泥都从这里出。"
+	"先有压榨，后面的发酵与陈酿才有原料。"
+	]
+	quest.6438450F8DB65E22.title: "第一颗樱桃"
+	quest.3F749E094ABBD534.title: "让藤蔓爬上去"
+	quest.4FC9806DF3A1E7A2.title: "第一瓶酒"
+	quest.98A01A265BCC9DAA.title: "把酒单集全"
+	quest.98A01A265BCC9DAA.description: [
+	"Vinery 的终点不是一瓶酒，而是一整柜。"
+	"酒款集齐之后，酒窖与宴会才算真正开张。"
+	]
+	quest.1D2D16DF8FF038DA.title: "发酵桶（酿造与咀嚼）"
+	quest.105B587364AFF5BC.title: "给桶控温"
+	quest.6DEF2AD8CA1E4F45.title: "奶酪"
+	quest.FDCB89A2D74156CD.title: "扩展乐事：榨汁机"
+	quest.FDCB89A2D74156CD.description: [
+	"Expanded Delight 把厨房往外接了一段：榨汁、罐头、盐与奶酪。"
+	"前面的厨具到这里才算有了产线。"
+	]
+	quest.5DAD08228930245B.title: "盐"
+	quest.6C226AD3AAD1CC17.title: "花生酱"
+	quest.9CE7D3C148C5E154.title: "潜影贝上桌"
+	quest.9CE7D3C148C5E154.description: [
+	"末地的东西本来只能换经验；Ender's Delight 让潜影贝与虚空胡椒进厨房。"
+	"所以这一条排在去过末地之后。"
+	]
+	quest.BC253B9B9A7F3536.title: "虚空胡椒"
+	quest.10AF811BED8B99DC.title: "下界炉灶"
+	quest.0DD0A7B2F1868C48.title: "填馅疣猪兽"
+	quest.696FEEEBE30AED1F.title: "守卫者浓汤"
+	quest.2F604EC3FF4722ED.title: "洞里的铜锅"
+	quest.29110956A5F7695A.title: "洞穴萝卜"
+	quest.822124A587CAC57E.title: "杯装汤"
+	quest.15F094975BE3C08C.title: "村里的厨师"
+	quest.15F094975BE3C08C.description: [
+	"Chef's Delight 往村庄里添了厨师与厨工两户人家，房子只在村庄里生成。"
+	"懒得自己种的时候，这是最省事的一条补给线。"
+	]
 }

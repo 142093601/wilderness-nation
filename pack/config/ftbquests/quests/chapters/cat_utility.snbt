@@ -1,0 +1,829 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "cat_utility"
+	group: "1439886072EE757D"
+	icon: {
+		id: "waystones:warp_plate"
+	}
+	id: "D0C74967FD0CEDCE"
+	order_index: 59
+	quest_links: [ ]
+	quests: [
+	{
+		icon: {
+			id: "waystones:warp_plate"
+		}
+		id: "C0BBC7D3AB4EEF4F"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "waystones:warp_plate"
+			id: "A3CE543012680E61"
+			type: "item"
+		}
+		]
+		x: -5.62d
+		y: 0.0d
+	}
+	{
+		dependencies: [
+		"C0BBC7D3AB4EEF4F"
+		]
+		icon: {
+			id: "waystones:attuned_shard"
+		}
+		id: "73E5BACAB3F473ED"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "waystones:attuned_shard"
+			id: "7A1E3C985B626E73"
+			type: "item"
+		}
+		]
+		x: -22.39d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"73E5BACAB3F473ED"
+		]
+		icon: {
+			id: "waystones:deepslate_shard"
+		}
+		id: "00869398419D1511"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "waystones:deepslate_shard"
+			id: "B8FE31E4FF49F5A2"
+			type: "item"
+		}
+		]
+		x: -10.2d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"C0BBC7D3AB4EEF4F"
+		]
+		icon: {
+			id: "waystones:portal_scroll"
+		}
+		id: "0FF8B59917D5F18C"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "waystones:portal_scroll"
+			id: "63035B26A09AE58E"
+			type: "item"
+		}
+		]
+		x: -19.61d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"C0BBC7D3AB4EEF4F"
+		]
+		icon: {
+			id: "waystones:twinbound_feather"
+		}
+		id: "A1399243D9FBFF46"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "waystones:twinbound_feather"
+			id: "1E67771646E1BD81"
+			type: "item"
+		}
+		]
+		x: -16.84d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"C0BBC7D3AB4EEF4F"
+		]
+		icon: {
+			id: "waystones:epitaph"
+		}
+		id: "D3D82A3652AA9059"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "waystones:epitaph"
+			id: "5585CC82D62419B5"
+			type: "item"
+		}
+		]
+		x: -14.06d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"C0BBC7D3AB4EEF4F"
+		]
+		icon: {
+			id: "waystones:portstone"
+		}
+		id: "560266D2609959F2"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "waystones:portstone"
+			id: "B751717F340A16C1"
+			type: "item"
+		}
+		]
+		x: -11.29d
+		y: -1.75d
+	}
+	{
+		icon: {
+			id: "betterarcheology:archeology_table"
+		}
+		id: "F71FB8C5FEB49FC9"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "betterarcheology:archeology_table"
+			id: "0C3FBB0F10C9D4A0"
+			type: "item"
+		}
+		]
+		x: -1.88d
+		y: 0.0d
+	}
+	{
+		dependencies: [
+		"F71FB8C5FEB49FC9"
+		]
+		icon: {
+			id: "betterarcheology:iron_brush"
+		}
+		id: "AE62EEB55D7F15C3"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "betterarcheology:iron_brush"
+			id: "930590DEEA66436D"
+			type: "item"
+		}
+		]
+		x: -8.51d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"AE62EEB55D7F15C3"
+		]
+		icon: {
+			id: "betterarcheology:suspicious_dirt"
+		}
+		id: "969CE08F6D303CF6"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "betterarcheology:suspicious_dirt"
+			count: 8
+			id: "EF13CE89CEE49AFC"
+			type: "item"
+		}
+		{
+			item: "betterarcheology:suspicious_red_sand"
+			count: 8
+			id: "391F1DA26EA9AD0F"
+			type: "item"
+		}
+		]
+		x: -7.65d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"AE62EEB55D7F15C3"
+		]
+		icon: {
+			id: "betterarcheology:fossiliferous_dirt"
+		}
+		id: "09A2E7B7EE5170C8"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "betterarcheology:fossiliferous_dirt"
+			count: 8
+			id: "A43370519A6E447D"
+			type: "item"
+		}
+		]
+		x: -5.1d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"969CE08F6D303CF6"
+		"09A2E7B7EE5170C8"
+		]
+		icon: {
+			id: "betterarcheology:identified_artifact"
+		}
+		id: "4497F23114906057"
+		shape: "octagon"
+		size: 1.75d
+		tasks: [
+		{
+			item: "betterarcheology:unidentified_artifact"
+			id: "0F839BF0327FD4F6"
+			type: "item"
+		}
+		{
+			item: "betterarcheology:identified_artifact"
+			id: "13583BCED88A4C00"
+			type: "item"
+		}
+		]
+		x: -3.0d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"AE62EEB55D7F15C3"
+		]
+		icon: {
+			id: "betterarcheology:loot_vase"
+		}
+		id: "A23B72FFFA68078E"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "betterarcheology:loot_vase"
+			count: 4
+			id: "2917927AA44FD43B"
+			type: "item"
+		}
+		]
+		x: -2.55d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"09A2E7B7EE5170C8"
+		]
+		icon: {
+			id: "betterarcheology:wolf_fossil"
+		}
+		id: "B1B4918120572A40"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "betterarcheology:wolf_fossil_head"
+			id: "6951934115D33265"
+			type: "item"
+		}
+		{
+			item: "betterarcheology:wolf_fossil_body"
+			id: "49CB2078F1CFABEB"
+			type: "item"
+		}
+		]
+		x: 0.19d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"F71FB8C5FEB49FC9"
+		]
+		icon: {
+			id: "betterarcheology:growth_totem"
+		}
+		id: "6146E0EA2216D1B6"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "betterarcheology:growth_totem"
+			id: "E201BC2100F6EE5C"
+			type: "item"
+		}
+		]
+		x: -5.51d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"6146E0EA2216D1B6"
+		]
+		icon: {
+			id: "betterarcheology:radiance_totem"
+		}
+		id: "54736BFB9EEA4AA3"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "betterarcheology:radiance_totem"
+			id: "737DEBBE99C80C39"
+			type: "item"
+		}
+		]
+		x: -0.0d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"6146E0EA2216D1B6"
+		]
+		icon: {
+			id: "betterarcheology:soul_totem"
+		}
+		id: "AF31C02576EA7E31"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "betterarcheology:soul_totem"
+			id: "3FE9CB0080C1F868"
+			type: "item"
+		}
+		{
+			item: "betterarcheology:torrent_totem"
+			id: "39FF9ABDE66A9374"
+			type: "item"
+		}
+		]
+		x: 2.55d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"F71FB8C5FEB49FC9"
+		]
+		icon: {
+			id: "betterarcheology:evoker_trap"
+		}
+		id: "161ED02B39C2C1D7"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "betterarcheology:evoker_trap"
+			id: "0B3BE631B5963937"
+			type: "item"
+		}
+		]
+		x: -2.74d
+		y: -1.75d
+	}
+	{
+		icon: {
+			id: "exposure:camera"
+		}
+		id: "0F3F15274257F914"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "exposure:camera"
+			id: "A6114FEDABD0585C"
+			type: "item"
+		}
+		]
+		x: 1.88d
+		y: 0.0d
+	}
+	{
+		dependencies: [
+		"0F3F15274257F914"
+		]
+		icon: {
+			id: "exposure:black_and_white_film"
+		}
+		id: "638F59514F9FCF27"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "exposure:black_and_white_film"
+			id: "B8C44314523CC1D0"
+			type: "item"
+		}
+		]
+		x: -0.19d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"638F59514F9FCF27"
+		]
+		icon: {
+			id: "exposure:color_film"
+		}
+		id: "F4DF4151F22BE0BD"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "exposure:color_film"
+			id: "1EDB8F216317C548"
+			type: "item"
+		}
+		{
+			item: "exposure:high_sensitivity_color_film"
+			id: "C90F2CB0874F44E7"
+			type: "item"
+		}
+		]
+		x: 5.1d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"0F3F15274257F914"
+		]
+		icon: {
+			id: "exposure:lightroom"
+		}
+		id: "BE16B5B021A02F70"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "exposure:lightroom"
+			id: "7FF0C2FD14141191"
+			type: "item"
+		}
+		]
+		x: 2.59d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"BE16B5B021A02F70"
+		]
+		icon: {
+			id: "exposure:developed_color_film"
+		}
+		id: "14FA656C40AD262E"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "exposure:developed_color_film"
+			id: "6B31DD68BF5DFC1E"
+			type: "item"
+		}
+		]
+		x: 7.65d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"14FA656C40AD262E"
+		]
+		icon: {
+			id: "exposure:photograph"
+		}
+		id: "363CE1A4B3C0F411"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "exposure:photograph"
+			id: "25AE30D8D1BE4B79"
+			type: "item"
+		}
+		{
+			item: "exposure:chromatic_sheet"
+			id: "524F1F609909CC1E"
+			type: "item"
+		}
+		]
+		x: 3.19d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"363CE1A4B3C0F411"
+		]
+		icon: {
+			id: "exposure:photograph_frame"
+		}
+		id: "377CFC52EFCFA3BE"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "exposure:photograph_frame"
+			count: 4
+			id: "A3E42F585A58EBD5"
+			type: "item"
+		}
+		{
+			item: "exposure:glass_photograph_frame"
+			id: "BA73FEC142D64F5C"
+			type: "item"
+		}
+		]
+		x: -3.19d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"363CE1A4B3C0F411"
+		]
+		icon: {
+			id: "exposure:album"
+		}
+		id: "D45AA0BF70539033"
+		shape: "octagon"
+		size: 1.75d
+		tasks: [
+		{
+			item: "exposure:album"
+			id: "F8012BFCA32EE050"
+			type: "item"
+		}
+		]
+		x: -0.23d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"0F3F15274257F914"
+		]
+		icon: {
+			id: "exposure:camera_stand"
+		}
+		id: "B67ABBBB254327F6"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "exposure:camera_stand"
+			id: "74CF557B17BAD5C6"
+			type: "item"
+		}
+		{
+			item: "exposure:selfie_stick"
+			id: "FE5E2AE9A92E8554"
+			type: "item"
+		}
+		]
+		x: 5.36d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"363CE1A4B3C0F411"
+		]
+		icon: {
+			id: "exposure:interplanar_projector"
+		}
+		id: "7D450B0D4CA48DBE"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "exposure:interplanar_projector"
+			id: "B9A78735D2476E1F"
+			type: "item"
+		}
+		]
+		x: 2.96d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"0F3F15274257F914"
+		]
+		icon: {
+			id: "exposure_polaroid:instant_camera"
+		}
+		id: "CB9D767EC490A9CE"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "exposure_polaroid:instant_camera"
+			id: "33DEE98C75417F6A"
+			type: "item"
+		}
+		]
+		x: 8.14d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"CB9D767EC490A9CE"
+		]
+		icon: {
+			id: "exposure_polaroid:instant_color_slide"
+		}
+		id: "C63F21FB060A029B"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "exposure_polaroid:instant_color_slide"
+			id: "0412781687F0509C"
+			type: "item"
+		}
+		{
+			item: "exposure_polaroid:high_sensitivity_instant_color_slide"
+			id: "26CD653414D7E4D6"
+			type: "item"
+		}
+		]
+		x: 10.2d
+		y: -3.5d
+	}
+	{
+		icon: {
+			id: "friendsandfoes:crab_claw"
+		}
+		id: "FFD2733B828090E2"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "friendsandfoes:crab_claw"
+			id: "B906D15A27314C76"
+			type: "item"
+		}
+		]
+		x: 5.62d
+		y: 0.0d
+	}
+	{
+		dependencies: [
+		"FFD2733B828090E2"
+		]
+		icon: {
+			id: "friendsandfoes:totem_of_freezing"
+		}
+		id: "242F0668956B6AEA"
+		shape: "octagon"
+		size: 1.75d
+		tasks: [
+		{
+			item: "friendsandfoes:totem_of_freezing"
+			id: "79D171E0AE212262"
+			type: "item"
+		}
+		{
+			item: "friendsandfoes:totem_of_illusion"
+			id: "64490532DEEFC38C"
+			type: "item"
+		}
+		]
+		x: 11.33d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"FFD2733B828090E2"
+		]
+		icon: {
+			id: "friendsandfoes:wildfire_crown"
+		}
+		id: "95B51AF9C31D03AE"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "friendsandfoes:wildfire_crown"
+			id: "60E20015F5F86210"
+			type: "item"
+		}
+		]
+		x: 14.51d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"FFD2733B828090E2"
+		]
+		icon: {
+			id: "friendsandfoes:music_disc_around_the_corner"
+		}
+		id: "B3DA9049B45D935F"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "friendsandfoes:music_disc_around_the_corner"
+			id: "96CAF4308053C172"
+			type: "item"
+		}
+		]
+		x: 17.29d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"FFD2733B828090E2"
+		]
+		icon: {
+			id: "friendsandfoes:cherry_beehive"
+		}
+		id: "8B1039A010ADFE15"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "friendsandfoes:cherry_beehive"
+			id: "B238100129A15459"
+			type: "item"
+		}
+		]
+		x: 19.84d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"FFD2733B828090E2"
+		]
+		icon: {
+			id: "friendsandfoes:buttercup"
+		}
+		id: "E59EE86E5D072D1F"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "friendsandfoes:buttercup"
+			count: 4
+			id: "358B4A7FB832A009"
+			type: "item"
+		}
+		]
+		x: 22.39d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"D3D82A3652AA9059"
+		"54736BFB9EEA4AA3"
+		"D45AA0BF70539033"
+		"242F0668956B6AEA"
+		]
+		icon: {
+			id: "minecraft:bundle"
+		}
+		id: "916580DA1D552D6F"
+		rewards: [
+		{
+			xp: 60
+			id: "4214E868872E406F"
+			type: "xp"
+		}
+		{
+			id: "4F3DEC34170EEC1A"
+			type: "toast"
+		}
+		]
+		shape: "hexagon"
+		size: 2.5d
+		tasks: [
+		{
+			item: "waystones:warp_plate"
+			count: 2
+			id: "A055E3F0F1B117BB"
+			type: "item"
+		}
+		{
+			item: "betterarcheology:radiance_totem"
+			id: "F88C5E7EFA3E165C"
+			type: "item"
+		}
+		{
+			item: "exposure:album"
+			id: "828603CF64B3CE1A"
+			type: "item"
+		}
+		{
+			item: "friendsandfoes:totem_of_freezing"
+			id: "CB3A51E028A9F84C"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -8.75d
+	}
+	]
+}

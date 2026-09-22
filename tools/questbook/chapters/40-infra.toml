@@ -12,8 +12,7 @@ title = "基建"
 subtitle = "路通四邻，第一件事不用人管"
 group = "chronicle"
 icon = "create:cogwheel"
-order_index = 3
-
+order_index = 4
 grid = { step = 1.5, row_h = 1.75 }
 
 # ---------------- 国策主线 ----------------

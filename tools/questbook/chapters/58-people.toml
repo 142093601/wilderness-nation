@@ -1,0 +1,445 @@
+# 编年 · 人口与民生
+#
+# 这一章补的是「城」与「国」之间缺的那一层
+# ----------------------------------------
+# 前面几章都在讲**造东西**（基建、材料、机械），后面几章讲**文明规模**。
+# 中间少了一个问题：**这些东西是给谁用的**。
+# 一个只有玩家、没有居民的据点不叫国家；而「让每个职业都有人干」这件事
+# 恰好是一张**有明确实物判据**的清单（15 种工作站方块），非常适合做任务。
+#
+# 与其它章的分工（边界写清楚，免得写重）：
+#   · 立国     = 圈地、公共仓库、议事厅、粮仓起步（**设施**）
+#   · 本章     = 居民本身：床位、职业、繁衍、治安、配给（**人**）
+#   · 农牧章   = mod 家族视角（Farming for Blockheads / More Villagers / Naturalist）
+#                —— **More Villagers 新增的职业不在本章**，在本章只做原版 15 种
+#
+# 判据：工作站、床、粮、铁傀儡的**实物**。没有一条 checkmark。
+
+key = "people"
+title = "人口与民生"
+subtitle = "让城里真的有居民，而不是一排空房子"
+group = "chronicle"
+icon = "minecraft:bell"
+order_index = 7
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 簇 1：把人留下来 ----------------
+
+[[quest]]
+name = "p_beds"
+title = "床位够住"
+desc = [
+	"村民认床：晚上没床他就走。**床数 = 人口上限**，这是最硬的约束。",
+	"想留住 8 个人，先摆 8 张床。",
+]
+icon = "minecraft:white_bed"
+shape = "pentagon"
+size = 2.0
+tasks = [
+	{ type = "item", item = "minecraft:white_bed", count = 8 },
+]
+
+[[quest]]
+name = "p_houses"
+title = "给每户一间屋"
+desc = [
+	"有墙有门有屋顶，才算一间屋。露天摆床不算 —— 村民会认，但雷雨天会出事。",
+]
+icon = "minecraft:oak_door"
+shape = "rsquare"
+deps = ["p_beds"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_door", count = 8 },
+]
+
+[[quest]]
+name = "p_lanterns"
+title = "村里不黑"
+desc = [
+	"居民区不留黑块：既是为了不刷怪，也是为了**村民晚上敢走动**。",
+]
+icon = "minecraft:lantern"
+shape = "square"
+deps = ["p_houses"]
+tasks = [
+	{ type = "item", item = "minecraft:lantern", count = 12 },
+]
+
+[[quest]]
+name = "p_bell"
+title = "村钟"
+desc = [
+	"钟是村子的中心点：敲一下，附近的居民会往这里聚。",
+	"它也是「这个聚落已经成型」最直观的标志 —— 放在广场上。",
+]
+icon = "minecraft:bell"
+shape = "rsquare"
+deps = ["p_houses"]
+tasks = [
+	{ type = "item", item = "minecraft:bell" },
+]
+
+# ---------------- 簇 2：职业配齐（15 种工作站） ----------------
+
+[[quest]]
+name = "p_job_farm"
+title = "堆肥桶 · 农人"
+desc = [
+	"从这一条起是**职业清单**：一个工作站方块 = 一个能上岗的居民。",
+	"按你的产业需要去配，不必一次配齐 —— 但缺了哪个，那类物资就只能玩家自己干。",
+]
+icon = "minecraft:composter"
+shape = "pentagon"
+size = 2.0
+deps = ["p_beds"]
+tasks = [
+	{ type = "item", item = "minecraft:composter" },
+]
+
+[[quest]]
+name = "p_job_fish"
+title = "木桶 · 渔夫"
+icon = "minecraft:barrel"
+shape = "circle"
+size = 1.2
+deps = ["p_job_farm"]
+tasks = [
+	{ type = "item", item = "minecraft:barrel" },
+]
+
+[[quest]]
+name = "p_job_shepherd"
+title = "织布机 · 牧羊人"
+icon = "minecraft:loom"
+shape = "circle"
+size = 1.2
+deps = ["p_job_farm"]
+tasks = [
+	{ type = "item", item = "minecraft:loom" },
+]
+
+[[quest]]
+name = "p_job_fletcher"
+title = "制箭台 · 制箭师"
+desc = [
+	"制箭师卖箭与弓。对「御敌」章那套消耗品经济来说，这是最省事的一条补给线。",
+]
+icon = "minecraft:fletching_table"
+shape = "rsquare"
+deps = ["p_job_farm"]
+tasks = [
+	{ type = "item", item = "minecraft:fletching_table" },
+]
+
+[[quest]]
+name = "p_job_cleric"
+title = "酿造台 · 牧师"
+desc = [
+	"牧师收腐肉、卖附魔之瓶与红石。**腐肉终于有去处了** —— 顺带解决僵尸夜的库存问题。",
+]
+icon = "minecraft:brewing_stand"
+shape = "rsquare"
+deps = ["p_job_farm"]
+tasks = [
+	{ type = "item", item = "minecraft:brewing_stand" },
+]
+
+[[quest]]
+name = "p_job_weapon"
+title = "砂轮 · 武器匠"
+icon = "minecraft:grindstone"
+shape = "circle"
+size = 1.2
+deps = ["p_job_farm"]
+tasks = [
+	{ type = "item", item = "minecraft:grindstone" },
+]
+
+[[quest]]
+name = "p_job_tool"
+title = "锻造台 · 工具匠"
+desc = [
+	"工具匠是**钻石工具的唯一稳定来源**（不必自己凑附魔）。",
+]
+icon = "minecraft:smithing_table"
+shape = "rsquare"
+deps = ["p_job_farm"]
+tasks = [
+	{ type = "item", item = "minecraft:smithing_table" },
+]
+
+[[quest]]
+name = "p_job_armor"
+title = "高炉 · 盔甲匠"
+desc = [
+	"高炉本身也是你熔炼链的一环 —— 一个方块两份收益。",
+]
+icon = "minecraft:blast_furnace"
+shape = "rsquare"
+deps = ["p_job_farm"]
+tasks = [
+	{ type = "item", item = "minecraft:blast_furnace" },
+]
+
+[[quest]]
+name = "p_job_cartographer"
+title = "制图台 · 制图师"
+desc = [
+	"制图师卖**林地府邸与海底神殿的地图**。想出关又不知道去哪，先问他。",
+]
+icon = "minecraft:cartography_table"
+shape = "rsquare"
+deps = ["p_job_farm"]
+tasks = [
+	{ type = "item", item = "minecraft:cartography_table" },
+]
+
+[[quest]]
+name = "p_job_librarian"
+title = "讲台 · 图书管理员"
+desc = [
+	"整个包里**性价比最高的一格**：讲台 + 一个新村民 = 无限次刷附魔书。",
+	"他要纸，所以这后面应该接纸的生产线（材料章那条）。",
+]
+icon = "minecraft:lectern"
+shape = "rsquare"
+size = 1.75
+deps = ["p_job_farm"]
+tasks = [
+	{ type = "item", item = "minecraft:lectern" },
+]
+
+[[quest]]
+name = "p_job_butcher"
+title = "烟熏炉 · 屠夫"
+icon = "minecraft:smoker"
+shape = "circle"
+size = 1.2
+deps = ["p_job_farm"]
+tasks = [
+	{ type = "item", item = "minecraft:smoker" },
+]
+
+[[quest]]
+name = "p_job_leather"
+title = "炼药锅 · 皮匠"
+icon = "minecraft:cauldron"
+shape = "circle"
+size = 1.2
+deps = ["p_job_farm"]
+tasks = [
+	{ type = "item", item = "minecraft:cauldron" },
+]
+
+[[quest]]
+name = "p_job_mason"
+title = "切石机 · 石匠"
+desc = [
+	"石匠卖石英与各类磨制石 —— 大规模盖楼时的建材缺口，靠他补。",
+]
+icon = "minecraft:stonecutter"
+shape = "rsquare"
+deps = ["p_job_farm"]
+tasks = [
+	{ type = "item", item = "minecraft:stonecutter" },
+]
+
+[[quest]]
+name = "p_jobs_all"
+title = "每个职业都有人干"
+desc = [
+	"十五种工作站全部就位之后，这个据点**在物资上基本不需要玩家亲自去换东西**了。",
+	"从这一刻起，你们的角色从「打工人」变成「管事的人」。",
+]
+icon = "minecraft:emerald_block"
+shape = "octagon"
+size = 1.75
+deps = ["p_job_fish", "p_job_shepherd", "p_job_fletcher", "p_job_cleric", "p_job_weapon",
+        "p_job_tool", "p_job_armor", "p_job_cartographer", "p_job_librarian",
+        "p_job_butcher", "p_job_leather", "p_job_mason"]
+tasks = [
+	{ type = "item", item = "minecraft:emerald_block", count = 4 },
+]
+
+# ---------------- 簇 3：口粮与繁衍 ----------------
+
+[[quest]]
+name = "p_bread_line"
+title = "面包管够"
+desc = [
+	"村民繁殖要食物，玩家也要。**面包是最省事的那一种**：三个麦子一个包。",
+]
+icon = "minecraft:bread"
+shape = "pentagon"
+size = 2.0
+deps = ["p_job_farm"]
+tasks = [
+	{ type = "item", item = "minecraft:bread", count = 32 },
+]
+
+[[quest]]
+name = "p_carrot_field"
+title = "胡萝卜田"
+desc = [
+	"胡萝卜既能喂人也能喂村民，还能喂兔子。它比小麦更「一条顶三条用」。",
+]
+icon = "minecraft:carrot"
+shape = "square"
+deps = ["p_bread_line"]
+tasks = [
+	{ type = "item", item = "minecraft:carrot", count = 32 },
+]
+
+[[quest]]
+name = "p_growth"
+title = "人口增长"
+desc = [
+	"给两个村民足够的食物，他们就会生出下一代 —— 这是**唯一**的人口增长方式。",
+	"所以「粮食储备」不是后勤细节，是国策。",
+]
+icon = "minecraft:wheat"
+shape = "rsquare"
+deps = ["p_bread_line", "p_carrot_field"]
+tasks = [
+	{ type = "item", item = "minecraft:wheat", count = 24 },
+	{ type = "item", item = "minecraft:carrot", count = 24 },
+]
+
+[[quest]]
+name = "p_hay_store"
+title = "公共粮囤"
+desc = [
+	"干草块是压缩粮：九个麦子压一格。全队的口粮应该有**一个地方**放着。",
+]
+icon = "minecraft:hay_block"
+shape = "square"
+deps = ["p_growth"]
+tasks = [
+	{ type = "item", item = "minecraft:hay_block", count = 16 },
+]
+
+# ---------------- 簇 4：治安与公共事务 ----------------
+
+[[quest]]
+name = "p_iron_golem"
+title = "铁傀儡"
+desc = [
+	"四个铁块加一个南瓜：这是**不需要玩家在线**的治安力量。",
+	"它挡不住尸潮，但挡得住夜里的零散怪 —— 有它之后你才敢离开据点出远门。",
+]
+icon = "minecraft:carved_pumpkin"
+shape = "rsquare"
+deps = ["p_jobs_all"]
+tasks = [
+	{ type = "item", item = "minecraft:carved_pumpkin" },
+	{ type = "item", item = "minecraft:iron_block", count = 4 },
+]
+
+[[quest]]
+name = "p_watch"
+title = "常驻岗哨"
+desc = [
+	"至少两个铁傀儡，才算「夜里有人看着」；一个会被逐个引开。",
+]
+icon = "minecraft:iron_block"
+shape = "circle"
+size = 1.2
+deps = ["p_iron_golem"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_block", count = 8 },
+]
+
+[[quest]]
+name = "p_well"
+title = "水井"
+desc = [
+	"居民区要有**不用跑远**的水：一口井（水源 + 炼药锅）解决喝、洗、灭火三件事。",
+]
+icon = "minecraft:water_bucket"
+shape = "circle"
+size = 1.2
+deps = ["p_bell"]
+tasks = [
+	{ type = "item", item = "minecraft:water_bucket", count = 2 },
+	{ type = "item", item = "minecraft:stone_bricks", count = 16 },
+]
+
+[[quest]]
+name = "p_medicine"
+title = "药与治疗"
+desc = [
+	"金苹果是最早能拿到的「稳定治疗」：八个金锭一个果，值得为它留一条金矿线。",
+]
+icon = "minecraft:golden_apple"
+shape = "circle"
+size = 1.2
+deps = ["p_job_cleric"]
+tasks = [
+	{ type = "item", item = "minecraft:golden_apple", count = 4 },
+]
+
+[[quest]]
+name = "p_school"
+title = "学堂"
+desc = [
+	"书架 + 讲台：既是附魔的产能基础，也是「这里有人在读书」的标志。",
+]
+icon = "minecraft:bookshelf"
+shape = "rsquare"
+deps = ["p_job_librarian"]
+tasks = [
+	{ type = "item", item = "minecraft:bookshelf", count = 15 },
+	{ type = "item", item = "minecraft:lectern" },
+]
+
+[[quest]]
+name = "p_register"
+title = "户籍登记"
+desc = [
+	"命名牌 + 告示牌：谁负责什么，写在墙上。",
+	"国家一旦超过五六个人，**口头分工就开始失效** —— 这一条是在为那个时刻做准备。",
+]
+icon = "minecraft:name_tag"
+shape = "circle"
+size = 1.2
+deps = ["p_jobs_all"]
+tasks = [
+	{ type = "item", item = "minecraft:name_tag", count = 4 },
+	{ type = "item", item = "minecraft:oak_sign", count = 8 },
+]
+
+[[quest]]
+name = "p_graveyard"
+title = "墓园"
+desc = [
+	"按规矩埋人，比把人埋在门口体面。石砖围墙圈一块地，插牌记名。",
+	"（碑林那一章会把「记名」这件事做成制度。）",
+]
+icon = "minecraft:stone_brick_wall"
+shape = "circle"
+size = 1.2
+deps = ["p_register"]
+tasks = [
+	{ type = "item", item = "minecraft:stone_brick_wall", count = 24 },
+	{ type = "item", item = "minecraft:soul_lantern", count = 4 },
+]
+
+[[quest]]
+name = "p_people_done"
+title = "这是一座城了"
+desc = [
+	"有居民、有职业、有粮、有治安、有记录 —— 从这一条开始，",
+	"「文明」章里那些大工程才不是空房子。",
+]
+icon = "minecraft:bell"
+shape = "hexagon"
+size = 2.5
+deps = ["p_lanterns", "p_hay_store", "p_watch", "p_well", "p_medicine", "p_school", "p_graveyard"]
+tasks = [
+	{ type = "item", item = "minecraft:emerald_block", count = 8 },
+]
+rewards = [
+	{ type = "xp", xp = 90 },
+	{ type = "toast" },
+]

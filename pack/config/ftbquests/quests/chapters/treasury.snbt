@@ -1,0 +1,487 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "treasury"
+	group: "83CFE1997D6DEDDC"
+	icon: {
+		id: "minecraft:emerald_block"
+	}
+	id: "76A53255FAB13707"
+	order_index: 8
+	quest_links: [ ]
+	quests: [
+	{
+		icon: {
+			id: "minecraft:emerald"
+		}
+		id: "4FDF0E878C889CD3"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "minecraft:emerald"
+			count: 32
+			id: "29CC4813E1C05D51"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: 0.0d
+	}
+	{
+		dependencies: [
+		"4FDF0E878C889CD3"
+		]
+		icon: {
+			id: "minecraft:emerald_ore"
+		}
+		id: "09FFFD94D3DC5151"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:emerald_ore"
+			count: 4
+			id: "198442AA9DDE74EF"
+			type: "item"
+		}
+		]
+		x: -4.88d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"4FDF0E878C889CD3"
+		]
+		icon: {
+			id: "minecraft:emerald"
+		}
+		id: "4244AD469635CB7A"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			advancement: "minecraft:adventure/trade"
+			id: "0BF9FB4E6CCDAC8D"
+			type: "advancement"
+		}
+		]
+		x: -1.88d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"4FDF0E878C889CD3"
+		]
+		icon: {
+			id: "minecraft:gold_ingot"
+		}
+		id: "202DBDF0A0D1D284"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:gold_ingot"
+			count: 32
+			id: "3EAC5DD420BC7485"
+			type: "item"
+		}
+		]
+		x: 1.12d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"202DBDF0A0D1D284"
+		]
+		icon: {
+			id: "minecraft:diamond"
+		}
+		id: "6762FAE6CE3C3862"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:diamond"
+			count: 8
+			id: "3A6CD737BD988C0F"
+			type: "item"
+		}
+		]
+		x: -3.0d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"4FDF0E878C889CD3"
+		]
+		icon: {
+			id: "minecraft:iron_door"
+		}
+		id: "8AABCD717640D318"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "minecraft:iron_door"
+			id: "28B8D42E2EBBF35D"
+			type: "item"
+		}
+		{
+			item: "minecraft:lever"
+			id: "6D307E427E935AB6"
+			type: "item"
+		}
+		]
+		x: 4.5d
+		y: -1.75d
+	}
+	{
+		dependencies: [
+		"8AABCD717640D318"
+		]
+		icon: {
+			id: "minecraft:barrel"
+		}
+		id: "9A9B7750686D8AD3"
+		shape: "square"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:barrel"
+			count: 12
+			id: "37B74F333A11D43B"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"8AABCD717640D318"
+		]
+		icon: {
+			id: "minecraft:writable_book"
+		}
+		id: "3583359A4EFAAFFB"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:written_book"
+			id: "8460A088BE378614"
+			type: "item"
+		}
+		]
+		x: 3.0d
+		y: -3.5d
+	}
+	{
+		dependencies: [
+		"3583359A4EFAAFFB"
+		]
+		icon: {
+			id: "minecraft:oak_sign"
+		}
+		id: "0CB702AF66EFB585"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:oak_sign"
+			count: 2
+			id: "19EB27A8E8023C35"
+			type: "item"
+		}
+		]
+		x: -3.0d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"3583359A4EFAAFFB"
+		]
+		icon: {
+			id: "minecraft:paper"
+		}
+		id: "4973387ED7732A00"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:paper"
+			count: 16
+			id: "B159DFD0C481ACB8"
+			type: "item"
+		}
+		{
+			id: "D99631B199EDC8C2"
+			type: "checkmark"
+		}
+		]
+		x: -0.23d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"4973387ED7732A00"
+		]
+		icon: {
+			id: "minecraft:stone_bricks"
+		}
+		id: "0E03B35433F25829"
+		shape: "square"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:stone_bricks"
+			count: 64
+			id: "9181C829E268C87F"
+			type: "item"
+		}
+		{
+			item: "minecraft:glass"
+			count: 32
+			id: "FF76F0877565972E"
+			type: "item"
+		}
+		{
+			item: "minecraft:iron_ingot"
+			count: 16
+			id: "94659DFDE0696DA8"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -7.0d
+	}
+	{
+		dependencies: [
+		"9A9B7750686D8AD3"
+		"0E03B35433F25829"
+		]
+		icon: {
+			id: "minecraft:gold_block"
+		}
+		id: "32F80074F7A5FC72"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:gold_block"
+			count: 4
+			id: "77A3217D3797AE64"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -8.75d
+	}
+	{
+		dependencies: [
+		"32F80074F7A5FC72"
+		]
+		icon: {
+			id: "minecraft:chest"
+		}
+		id: "99ACAD069F82FAC1"
+		shape: "octagon"
+		size: 1.75d
+		tasks: [
+		{
+			item: "minecraft:chest"
+			count: 8
+			id: "7A9AE75B2EF23722"
+			type: "item"
+		}
+		{
+			item: "minecraft:scaffolding"
+			count: 16
+			id: "2DBCBF8922A53C8E"
+			type: "item"
+		}
+		]
+		x: -3.0d
+		y: -10.5d
+	}
+	{
+		dependencies: [
+		"99ACAD069F82FAC1"
+		]
+		icon: {
+			id: "minecraft:beacon"
+		}
+		id: "197EAC790B8DDC09"
+		shape: "pentagon"
+		size: 2.0d
+		tasks: [
+		{
+			item: "minecraft:scaffolding"
+			count: 48
+			id: "7CDC29ADCCB3E3A3"
+			type: "item"
+		}
+		{
+			item: "minecraft:lantern"
+			count: 16
+			id: "C8BC2F1C4B4D7BB3"
+			type: "item"
+		}
+		]
+		x: -2.78d
+		y: -12.25d
+	}
+	{
+		dependencies: [
+		"6762FAE6CE3C3862"
+		]
+		icon: {
+			id: "minecraft:netherite_ingot"
+		}
+		id: "8F6AA450E1C15CE0"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:netherite_scrap"
+			count: 4
+			id: "A6B497F748D4AE11"
+			type: "item"
+		}
+		]
+		x: 2.77d
+		y: -5.25d
+	}
+	{
+		dependencies: [
+		"32F80074F7A5FC72"
+		]
+		icon: {
+			id: "minecraft:anvil"
+		}
+		id: "DE8498BAF34EDE36"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:anvil"
+			id: "09CE5C08A7069C9C"
+			type: "item"
+		}
+		{
+			item: "minecraft:grindstone"
+			count: 2
+			id: "2811598F68A8D83F"
+			type: "item"
+		}
+		]
+		x: 0.19d
+		y: -10.5d
+	}
+	{
+		dependencies: [
+		"32F80074F7A5FC72"
+		]
+		icon: {
+			id: "minecraft:emerald_block"
+		}
+		id: "911F5C878E1A9DFA"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:emerald_block"
+			count: 2
+			id: "A90EB0686C94DC7E"
+			type: "item"
+		}
+		]
+		x: 3.19d
+		y: -10.5d
+	}
+	{
+		dependencies: [
+		"911F5C878E1A9DFA"
+		]
+		icon: {
+			id: "minecraft:spyglass"
+		}
+		id: "8CED8A6DA9D853AE"
+		shape: "circle"
+		size: 1.2d
+		tasks: [
+		{
+			item: "minecraft:spyglass"
+			id: "355D5C579BA82F79"
+			type: "item"
+		}
+		]
+		x: 0.37d
+		y: -12.25d
+	}
+	{
+		dependencies: [
+		"911F5C878E1A9DFA"
+		]
+		icon: {
+			id: "minecraft:diamond_block"
+		}
+		id: "203D1577C8D6058B"
+		shape: "rsquare"
+		size: 1.5d
+		tasks: [
+		{
+			item: "minecraft:emerald_block"
+			count: 4
+			id: "A1B65BA0905A142E"
+			type: "item"
+		}
+		{
+			item: "minecraft:diamond_block"
+			count: 2
+			id: "202E4BF9AE3A710F"
+			type: "item"
+		}
+		]
+		x: 3.15d
+		y: -12.25d
+	}
+	{
+		dependencies: [
+		"0CB702AF66EFB585"
+		"8F6AA450E1C15CE0"
+		"DE8498BAF34EDE36"
+		"8CED8A6DA9D853AE"
+		"203D1577C8D6058B"
+		"197EAC790B8DDC09"
+		]
+		icon: {
+			id: "minecraft:beacon"
+		}
+		id: "7CDBD8D8FCC7025B"
+		rewards: [
+		{
+			xp: 100
+			id: "D51B7882A02D97F3"
+			type: "xp"
+		}
+		{
+			id: "05D2D0E5B5A8E8AF"
+			type: "toast"
+		}
+		]
+		shape: "hexagon"
+		size: 2.5d
+		tasks: [
+		{
+			item: "minecraft:beacon"
+			id: "F836D03E2763506A"
+			type: "item"
+		}
+		]
+		x: 0.0d
+		y: -14.0d
+	}
+	]
+}

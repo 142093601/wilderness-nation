@@ -1,0 +1,49 @@
+{
+	quest.6734D8BABA9D0941.title: "环境音：AmbientSounds"
+	quest.6734D8BABA9D0941.description: [
+	"这一簇解决「这个地方听起来是什么样」——它不加一个方块，只加声音。"
+	"顺序上它排在最前：声音是最便宜的氛围，装上就有，不用动土。"
+	]
+	quest.F46AA19C573076D2.title: "敲一口钟，听混响：Sound Physics"
+	quest.C7C502C6FF4B107E.title: "换一套背景音乐：Medieval Music"
+	quest.35703C6C1A022D87.title: "音符盒做报时"
+	quest.55D85D1144F8476D.title: "环境音与音乐分开调"
+	quest.ABAD74B217320D7E.title: "用山羊角集合"
+	quest.78294FAFB8691B73.title: "给吵闹的机器围一圈羊毛"
+	quest.DAACF9FCE821511C.title: "声音也能开门"
+	quest.5B38EED40824CE1C.title: "连接材质：玻璃与砖不再有缝"
+	quest.5B38EED40824CE1C.description: [
+	"这一簇要的是「细节看起来是整块的」：同样是墙，接缝对的与不对，观感差一档。"
+	"它不改方块本身，只改贴图怎么连——所以不影响存档与配方。"
+	]
+	quest.C0E6039FCF533B63.title: "窗要用玻璃板"
+	quest.4A4FE2E3C9583043.title: "整片石砖墙"
+	quest.FCA659D2028CD33B.title: "实体模型：Entity Model Features（EMF）"
+	quest.98F542B4AFC5EA68.title: "同一群牛花色不同：Entity Texture Features（ETF）"
+	quest.4A390DDC3FB70CCC.title: "手里拿火把，路就亮了"
+	quest.458B94031ABE08D9.title: "雨要有雨的粒子：Particle Rain"
+	quest.FC3C503D9A9003FF.title: "动作补全：Not Enough Animations"
+	quest.4DFD40A755BDB25E.title: "画面档位调到「华丽」"
+	quest.1261AF4B823DE950.title: "入夜先点灯"
+	quest.1261AF4B823DE950.description: [
+	"这一簇是**动手的部分**：前面两簇装了就生效，这一簇要把东西摆出去。"
+	"从一盏灯开始——夜里能不能看清路，是氛围与实用的同一件事。"
+	]
+	quest.EF06858280466259.title: "篝火：声、光、烟一次到位"
+	quest.98E1E03337E09CF2.title: "冷色的第二种光"
+	quest.1797D19450C917A5.title: "蜡烛：小范围的光"
+	quest.0FAF7E2CA1DF0A53.title: "顶上一块荧光石"
+	quest.24DE528E69E3E3BC.title: "城里放一台唱片机"
+	quest.7D68344DDBDE2AAC.title: "窗台与花盆"
+	quest.58DB46729EA2B32B.title: "盔甲架摆成套装备"
+	quest.69F3BD0B25964B7A.title: "展示框挂战利品"
+	quest.B3EB6F292F06681A.title: "挖一个小水池"
+	quest.46329A02879239A4.title: "天黑了自己亮灯"
+	quest.2CB4A85919349E30.title: "节庆放一次烟花"
+	quest.50FA7878381031E0.title: "牵一条狗回家"
+	quest.92A4CA2CD1505172.title: "声音、光、天气都摆过一遍"
+	quest.92A4CA2CD1505172.description: [
+	"声音、画面、氛围三簇都走过一遍之后，这一章就算翻篇了。"
+	"后面的氛围件不用一次做完——哪间屋先住人，就先做哪一间。"
+	]
+}

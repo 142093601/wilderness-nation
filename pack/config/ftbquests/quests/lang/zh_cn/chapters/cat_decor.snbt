@@ -1,0 +1,170 @@
+{
+	quest.93AB317CE2C3771E.title: "绳索"
+	quest.93AB317CE2C3771E.description: [
+	"Supplementaries 里最通用的一件：能顺着墙垂到楼下，能当扶手，能挂东西。"
+	"它也是这一章的地基——后面所有「挂起来的东西」都要有一根绳。"
+	]
+	quest.63BE61AC96C7F1FE.title: "彩旗与横旗"
+	quest.63BE61AC96C7F1FE.description: [
+	"过节、开市、庆典：一挂彩旗比一块牌子管用。"
+	]
+	quest.A1834747BDA80C05.title: "遮阳棚"
+	quest.A1834747BDA80C05.description: [
+	"店面前那一片阴影：既遮阳，也是「这里有生意」的信号。"
+	]
+	quest.7A81059042B4A689.title: "玻璃罐"
+	quest.7A81059042B4A689.description: [
+	"装东西也是摆东西：柜台上一排罐子，比空墙像住处。"
+	]
+	quest.3F793EB57DCBD260.title: "种植盆"
+	quest.3F793EB57DCBD260.description: [
+	"墙面与窗台的绿化：不用整地，放上去就长。"
+	]
+	quest.6F085A76483F7F7C.title: "木支架"
+	quest.6F085A76483F7F7C.description: [
+	"给房子加一副「骨架」：外露的支架是半木结构建筑的全部味道。"
+	]
+	quest.1EF69B5AEDB471FE.title: "石瓦"
+	quest.1EF69B5AEDB471FE.description: [
+	"屋顶与墙面要有比砖更小一号的材质，远看才有纹理。"
+	]
+	quest.BD7DC0A4E6BD3935.title: "风向标与风箱"
+	quest.BD7DC0A4E6BD3935.description: [
+	"屋顶上的风向标、炉边的风箱：两件会动的小东西。"
+	]
+	quest.44AC5F648A84239F.title: "滑轮"
+	quest.44AC5F648A84239F.description: [
+	"阁楼与仓库的吊运：绳索系统里唯一能省力的那件。"
+	]
+	quest.53563CB92B34F2C0.title: "沙漏"
+	quest.53563CB92B34F2C0.description: [
+	"会议、比武、换班都靠它计时——比看太阳体面。"
+	]
+	quest.CD9208613AFBC21C.title: "保险箱"
+	quest.CD9208613AFBC21C.description: [
+	"公共仓库之外，总要有几个能上锁的柜子。"
+	]
+	quest.814EE7B233C17B49.title: "雕像"
+	quest.814EE7B233C17B49.description: [
+	"广场中心要有东西可看：雕像是纪念碑最便宜的做法。"
+	]
+	quest.7F2A1C89E5C46360.title: "水龙头与酒杯"
+	quest.7F2A1C89E5C46360.description: [
+	"酒馆的两件标配：能接水的龙头、能上桌的杯子。"
+	]
+	quest.2A86702A4661F394.title: "地毯台阶与地毯楼梯"
+	quest.2A86702A4661F394.description: [
+	"Amendments 的做法不是加新方块，是**让原版方块多一种摆法**："
+	"地毯顺着台阶与楼梯铺下去，再也不用一格一格切形状。"
+	"大厅、议事厅、剧院这类踩上去要安静的公共空间，从此有得铺。"
+	]
+	quest.F0C46B1816DE9F84.title: "吊顶旗帜"
+	quest.F0C46B1816DE9F84.description: [
+	"旗帜能从天花板上垂下来了：大厅与城门洞的纵向装饰。"
+	]
+	quest.FA32D90519DBAAD8.title: "墙上的灯笼"
+	quest.FA32D90519DBAAD8.description: [
+	"灯笼不再只能吊在方块底下：贴墙挂能省一层空间，走廊尤其明显。"
+	]
+	quest.11FAA8E90EDFD52B.title: "染料瓶"
+	quest.11FAA8E90EDFD52B.description: [
+	"Amendments 唯一的新物品：把染料装进瓶里，染锅才有料可下。"
+	]
+	quest.528D37E06FF9585A.title: "锅里分药水"
+	quest.528D37E06FF9585A.description: [
+	"一锅药水够一队人喝：公共食堂旁边该有的东西。"
+	]
+	quest.8274F12563CC2489.title: "头颅烛台"
+	quest.8274F12563CC2489.description: [
+	"蜡烛能坐在头骨上：工坊与地窖的氛围件。"
+	]
+	quest.C2B0904B5B2946D0.title: "悬挂花盆"
+	quest.C2B0904B5B2946D0.description: [
+	"吊在梁下的花盆：不占地面，是狭窄街巷里唯一能加绿的地方。"
+	]
+	quest.8F098BA6AB951103.title: "多层蛋糕"
+	quest.8F098BA6AB951103.description: [
+	"蛋糕能换朝向、能叠起来——食堂的长桌才摆得下。"
+	]
+	quest.6BA164B227B3DEF7.title: "柱饰与檐饰"
+	quest.6BA164B227B3DEF7.description: [
+	"Handcrafted 把装饰做成了**收边件**：柱子该有柱头，屋檐该有檐口。"
+	"房子「盖完了」和「盖得像样」之间的差别，基本都在这几厘米上。"
+	]
+	quest.20C3742BA9D62B9A.title: "陶罐"
+	quest.20C3742BA9D62B9A.description: [
+	"角落与墙根的空缺，用罐子补：比再多一个箱子好看。"
+	]
+	quest.16D477BFBB5F8ED0.title: "店铺招牌"
+	quest.16D477BFBB5F8ED0.description: [
+	"Builders Crafts & Additions 的招牌件：挂在门外，一眼看清这家做什么。"
+	]
+	quest.297AD83E945DA863.title: "柜台"
+	quest.297AD83E945DA863.description: [
+	"有柜台才谈得上「营业」：交易、登记、发料都需要一个台面。"
+	]
+	quest.F8383C3C0F06082F.title: "石面案台"
+	quest.F8383C3C0F06082F.description: [
+	"深板岩与黑石的台面：工坊与酒馆用得住的那一档。"
+	]
+	quest.1FA92B1681EDE815.title: "橱柜与储物柜"
+	quest.1FA92B1681EDE815.description: [
+	"敞开的架子放常拿的，柜门里的放不常拿的。"
+	]
+	quest.8BE07155F32FB715.title: "木工台"
+	quest.8BE07155F32FB715.description: [
+	"这个 mod 的木作件都在木工台上出——它是整条店面线的起点。"
+	"先立台子，后面的招牌、柜台、梁架才有来源。"
+	]
+	quest.2338BD4583EFE6EC.title: "支撑梁与立柱"
+	quest.2338BD4583EFE6EC.description: [
+	"外露的梁与柱：木结构建筑最便宜也最有效的「结构感」。"
+	]
+	quest.AE97EE324DAE1E33.title: "墙面挂板"
+	quest.AE97EE324DAE1E33.description: [
+	"整面墙的木板贴面：一层楼的高度差就靠它抹平。"
+	]
+	quest.919B9EFE63534A69.title: "开放木架"
+	quest.919B9EFE63534A69.description: [
+	"不装门的架子：摆出来比收起来重要。"
+	]
+	quest.3056F2F5E0E7D5A9.title: "抱枕"
+	quest.3056F2F5E0E7D5A9.description: [
+	"长凳与台阶上的软垫：一小块颜色，房间就不那么硬。"
+	]
+	quest.6077DA44C1F5F8B1.title: "街机"
+	quest.6077DA44C1F5F8B1.description: [
+	"酒馆里的一台街机：不用电、不用网，摆着就能玩。"
+	]
+	quest.CFB016BD05D6C772.title: "自制画与涂鸦"
+	quest.CFB016BD05D6C772.description: [
+	"Immersive Paintings 让你把自己的图挂上墙——纪念日、地图、全家福。"
+	"这是本章唯一能「记录我们做过什么」的一层，和其它装饰不是一回事。"
+	]
+	quest.EC25D0FE71D5B057.title: "荧光画"
+	quest.EC25D0FE71D5B057.description: [
+	"夜里也看得见的那一版：门口与地下通道尤其合适。"
+	]
+	quest.EC40BCA1C414705A.title: "画框与图样"
+	quest.EC40BCA1C414705A.description: [
+	"Macaw's Paintings 与 Medieval Paintings 带来成批的画图样——"
+	"图样多了，画框也得跟上，才挂得满一面墙。"
+	]
+	quest.D63CFADB2650524A.title: "展示台与物品架"
+	quest.D63CFADB2650524A.description: [
+	"把东西单独摆出来的两件家具：值得被看见的物件不该锁在箱子里。"
+	]
+	quest.6EDD864669A43AE9.title: "补上绿意"
+	quest.6EDD864669A43AE9.description: [
+	"房子之间的空档、墙角、屋顶边缘：绿植是唯一能软化建筑的东西。"
+	]
+	quest.18F8B51290877CA4.title: "爬藤与苔藓"
+	quest.18F8B51290877CA4.description: [
+	"旧墙上的藤与地面上的苔：建筑「有年份」最省力的做法。"
+	]
+	quest.B60A98D89980E69B.title: "一间「看得出住过人」的屋子"
+	quest.B60A98D89980E69B.description: [
+	"结构、家具、附属物、画、绿植各用上一次：屋里要有坐在那儿的人留下的痕迹。"
+	"这一条之后，「装饰」这一层就算通了——剩下的只是换风格。"
+	]
+}

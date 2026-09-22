@@ -23,8 +23,7 @@ title = "邦交"
 subtitle = "世界不只有你们：先看见邻邦，再决定怎么打交道"
 group = "diplomacy"
 icon = "minecraft:lectern"
-order_index = 10
-
+order_index = 20
 grid = { step = 1.5, row_h = 1.75 }
 
 # ---------------- 开场：世界不是空的 ----------------

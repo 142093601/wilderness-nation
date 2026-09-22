@@ -12,8 +12,7 @@ title = "文明"
 subtitle = "把打下来的东西，变成能留下来的东西"
 group = "chronicle"
 icon = "minecraft:beacon"
-order_index = 6
-
+order_index = 9
 grid = { step = 1.5, row_h = 1.75 }
 
 # ---------------- 国策主线 ----------------

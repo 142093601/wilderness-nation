@@ -1,0 +1,110 @@
+{
+	quest.298F2A1C1D777330.title: "国书"
+	quest.298F2A1C1D777330.description: [
+	"第一次正式接触要有一封**成文的**国书：你们是谁、在哪、想谈什么。"
+	"游戏里它就是一本成书 —— 内容判不了，但「有没有这东西」判得了。"
+	]
+	quest.FBB4E095495D688B.title: "印信"
+	quest.FBB4E095495D688B.description: [
+	"一枚实体印信：文件上要有「出自谁手」的凭证。金锭压印是最便宜的仪式感。"
+	]
+	quest.FFEB213838107DC0.title: "使节行装"
+	quest.FFEB213838107DC0.description: [
+	"出使是**一个人出远门**：行装要能撑到对面都城再回来。"
+	"这一条同时是后面的伏笔 —— 没有补给线，外交就只能停在纸面上。"
+	]
+	quest.96BCA81ED9738FDF.title: "通译"
+	quest.96BCA81ED9738FDF.description: [
+	"和邻国打交道，最贵的成本是**理解对方在说什么**。"
+	"游戏里没有语言系统，所以这一条落到「你手上有一本记着对方规矩的册子」。"
+	]
+	quest.94DE8F3187ACE60B.title: "礼单"
+	quest.94DE8F3187ACE60B.description: [
+	"空手去谈是没有诚意的。礼单不是贿赂，是**表态**：我们愿意先付出。"
+	]
+	quest.60A525EC6B9E6115.title: "休战旗"
+	quest.60A525EC6B9E6115.description: [
+	"谈判现场要有一个「现在不打」的信号。白旗是全世界都认的那一个。"
+	]
+	quest.CC04DC383129327F.title: "谈判桌"
+	quest.CC04DC383129327F.description: [
+	"谈判需要一个**固定的地方**（情报站旁边最好）。桌子本身不重要，固定地点才重要。"
+	]
+	quest.94BDBBD2F032C19E.title: "见证人"
+	quest.94BDBBD2F032C19E.description: [
+	"条约要有第三方看着签 —— 队伍里至少两个人到场，事后各记一笔。"
+	]
+	quest.F5A760DC1BF85B6A.title: "签约"
+	quest.F5A760DC1BF85B6A.description: [
+	"条款要能执行才有意义：写清**边界、义务、期限、违约怎么办**。"
+	"⚠️ 这条判不了（没有 mod 侧的条约系统）。用「成书 + 印信都在手里」当替代判据。"
+	]
+	quest.DD5A0A215EA66716.title: "定界"
+	quest.DD5A0A215EA66716.description: [
+	"书面边界要落到地上：界碑一路插过去，谁站哪边不留争议。"
+	]
+	quest.43D00AEBD982383B.title: "关税"
+	quest.43D00AEBD982383B.description: [
+	"通商的第一个具体条款就是关税：过境要交多少、交给谁。"
+	"一个桶就是海关 —— 别把它想复杂。"
+	]
+	quest.B3E2D26F60E9D4AE.title: "通行证"
+	quest.B3E2D26F60E9D4AE.description: [
+	"商队要能证明「我是获准过境的」。纸质凭证是这个包最便宜的可验证物。"
+	]
+	quest.CCC3EAF57E111D03.title: "副本存档"
+	quest.CCC3EAF57E111D03.description: [
+	"一式两份、各自存档。**吵架的时候，副本就是证据。**"
+	]
+	quest.4C7B22DF65779025.title: "跑通商路"
+	quest.4C7B22DF65779025.description: [
+	"条约能不能兑现，看的是**有没有人真的走那条路**。"
+	"第一批货自己押运一次，把沿途的补给点踩出来。"
+	]
+	quest.B543AAFB46E01D06.title: "商队"
+	quest.B543AAFB46E01D06.description: [
+	"商队需要驮畜与鞍：这是「运量」从背包级升到车级的第一步。"
+	]
+	quest.26F30EC1E871D670.title: "通商货栈"
+	quest.26F30EC1E871D670.description: [
+	"两国之间的货要**在中途落地**，不能全靠随身带。"
+	"货栈也是情报点：来往的人会告诉你对面最近在干什么。"
+	]
+	quest.FD60169B9A9A9414.title: "关税账"
+	quest.823E5E23A00A63C6.title: "国库有进项"
+	quest.823E5E23A00A63C6.description: [
+	"通商带来的国库增长是**邦交线唯一的正反馈**：有钱 → 买图纸 → 建更大的东西。"
+	"这一条开始，外交不再是「礼貌」，而是产能的一部分。"
+	]
+	quest.04125FD2FA67EA40.title: "互市"
+	quest.04125FD2FA67EA40.description: [
+	"规模到这一档，两个国家之间就有了**稳定的物资互补**：你缺的它能供，它缺的你有。"
+	]
+	quest.E19576319EBE7A3D.title: "结盟"
+	quest.E19576319EBE7A3D.description: [
+	"同盟 = 一方被打时另一方必须来。**签之前先想清楚自己能不能做到。**"
+	"旗帜互换是这个包能做到的「仪式的实物」。"
+	]
+	quest.0B69739A26CAF2FF.title: "联合演训"
+	quest.0B69739A26CAF2FF.description: [
+	"同盟的可靠性只能靠演练证明一次。对练一场，比十条条款都管用。"
+	]
+	quest.C230496F0169FC5E.title: "情报共享"
+	quest.C230496F0169FC5E.description: [
+	"把你们的地图与邻国的地图对一遍：**双方都缺的那一块，就是下一站。**"
+	]
+	quest.8589458A96E915B0.title: "求援与驰援"
+	quest.8589458A96E915B0.description: [
+	"求援信号要**提前约定**（钟声几下、烟花什么颜色），临时商量来不及。"
+	]
+	quest.0FADF3759763BBE6.title: "烽火通约"
+	quest.0FADF3759763BBE6.description: [
+	"跨国的预警网络：你这边点火，它那边能看见。这是同盟最实用的一项条款。"
+	]
+	quest.92291802551801D3.title: "文字变成了秩序"
+	quest.92291802551801D3.description: [
+	"国书、印信、条款、商路、同盟、预警 —— 到这一步，"
+	"你们和邻国之间的关系**不再取决于谁在线**。"
+	"（如果这些条款最后崩了，下一章讲怎么办。）"
+	]
+}

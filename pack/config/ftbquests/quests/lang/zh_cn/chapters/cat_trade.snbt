@@ -1,0 +1,146 @@
+{
+	quest.EABC069C0D2D57DE.title: "资料架"
+	quest.EABC069C0D2D57DE.description: [
+	"配方、图样、坐标，靠记是记不长久的。"
+	"这一层先把「要查的东西」放到手边：书架、地图、笔记各就各位。"
+	]
+	quest.2D82CABC07F468CC.title: "书架墙"
+	quest.2D82CABC07F468CC.description: [
+	"附魔台要书架，查阅也要书架：一面墙的书比散在箱子里好找。"
+	]
+	quest.5C8975558B8077F2.title: "制图台"
+	quest.5C8975558B8077F2.description: [
+	"地图要复制、要锁定、要放大，都得在制图台上做。"
+	]
+	quest.E4D77E240AE7D35D.title: "墙上挂图"
+	quest.2B6F1914A31AA7F9.title: "记事本"
+	quest.2B6F1914A31AA7F9.description: [
+	"看见什么就先记下来：坐标、配方、谁欠谁什么。"
+	]
+	quest.3F31859EC3D1F15A.title: "把做法定稿成书"
+	quest.3F31859EC3D1F15A.description: [
+	"写定稿的书能抄、能发、能放在讲台上一起看——工序要传下去就得成书。"
+	]
+	quest.E8E5A7D5C4ED09FB.title: "纸与墨"
+	quest.4D72B714C338524E.title: "望远镜"
+	quest.4D72B714C338524E.description: [
+	"出门前先看清地形，比走过去再折回来便宜。"
+	]
+	quest.FC493A9A958D5D4E.title: "配方卡上墙"
+	quest.FC493A9A958D5D4E.description: [
+	"把常用配方做成展示框挂在机器旁，新人不用问人。"
+	]
+	quest.7A8925A130DD910F.title: "酿造台"
+	quest.7A8925A130DD910F.description: [
+	"药水配方是最容易记错的一类，酿造台旁边应该有一张表。"
+	]
+	quest.72AA81334F50656B.title: "查得到、看得见"
+	quest.72AA81334F50656B.description: [
+	"资料、图、配方卡、药水表都有了，接下来才是动手合成。"
+	]
+	quest.F710E53D65E32F72.title: "工坊一角"
+	quest.F710E53D65E32F72.description: [
+	"合成这一步的摩擦全在细节：台子够不够、料在不在旁边、修装备要不要排队。"
+	"先把它当一个固定的地方来建，而不是到处临时凑。"
+	]
+	quest.DD65C0C04D30DF2F.title: "合成器"
+	quest.DD65C0C04D30DF2F.description: [
+	"接上红石就能批量合成：需要一百个台阶时不必按一百次。"
+	]
+	quest.F7F329CD6A5A20EA.title: "切石机"
+	quest.F7F329CD6A5A20EA.description: [
+	"切石机比合成省料：一块石头能出的东西更多，形状也更整齐。"
+	]
+	quest.D23107D29D922119.title: "铁砧"
+	quest.D23107D29D922119.description: [
+	"改名、合并附魔、修工具，都在这台上。"
+	]
+	quest.460337D38DB5E56E.title: "砂轮"
+	quest.460337D38DB5E56E.description: [
+	"附魔选错了不用重新做：砂轮能拆下来，还能还一部分经验。"
+	]
+	quest.9DFD85738299B8BD.title: "锻造台"
+	quest.9DFD85738299B8BD.description: [
+	"下界合金升级与盔甲纹饰模板都在这里用，做之前先备好模板。"
+	]
+	quest.EF5E3FEBDF58BBD3.title: "织布机"
+	quest.EF5E3FEBDF58BBD3.description: [
+	"旗帜图案只能用织布机，做队旗之前得先把它摆出来。"
+	]
+	quest.88F5ED368CB6EAE8.title: "炼药锅"
+	quest.88F5ED368CB6EAE8.description: [
+	"洗旗帜、洗皮革、接雨水，都靠它——工坊里最便宜的一件设施。"
+	]
+	quest.33986C747A8C2C28.title: "零件桶"
+	quest.33986C747A8C2C28.description: [
+	"台子旁边放一排桶，比每次开主仓翻找快得多。"
+	]
+	quest.2DDA15E517151D36.title: "一千次合成"
+	quest.2DDA15E517151D36.description: [
+	"手熟是工坊的底子：到这一档，批量活儿基本不用看配方了。"
+	]
+	quest.0BB74DC94E54889F.title: "修装工位不排队"
+	quest.0BB74DC94E54889F.description: [
+	"工坊里最容易排队的是修装备那三步：铁砧、砂轮、切石机。"
+	"多备一套放在工地，远的活儿也能就地修。"
+	]
+	quest.503972A93B161D9A.title: "贸易台"
+	quest.503972A93B161D9A.description: [
+	"Trading Post：把村民请上贸易台，交易不用追着他跑。"
+	"它只加这一个方块，但这是本章「贸易」那一半的起点。"
+	]
+	quest.CD8A669A704BE451.title: "周转的绿宝石"
+	quest.CD8A669A704BE451.description: [
+	"交易要现钱：先攒一组绿宝石，后面才谈得上挑货。"
+	]
+	quest.61E26F4DE09C9806.title: "绿宝石块"
+	quest.61E26F4DE09C9806.description: [
+	"大额交易与储值用块更方便，也省箱子格数。"
+	]
+	quest.110F5904CBDEE376.title: "第一笔成交"
+	quest.2CBF3FA88BBA5194.title: "高空成交"
+	quest.2CBF3FA88BBA5194.description: [
+	"在世界最高处和村民做成一次交易——顺便看看你们的城在天上看是什么样。"
+	]
+	quest.5E248A22BCD97FAB.title: "集市的钟"
+	quest.5E248A22BCD97FAB.description: [
+	"贸易点要有钟：商队到了敲一下，比挨个去叫人快。"
+	]
+	quest.467E10E3A66452BB.title: "堆肥桶"
+	quest.467E10E3A66452BB.description: [
+	"没有职业的村民不会做生意：堆肥桶是把他变成农民最快的一件东西。"
+	]
+	quest.EDCE98A3511859E7.title: "制箭师"
+	quest.EDCE98A3511859E7.description: [
+	"制箭师收羽毛与木棍、卖箭与弓，是最早能稳定供货的交易之一。"
+	]
+	quest.833045A8DE5C8FA0.title: "盔甲匠的皮料"
+	quest.833045A8DE5C8FA0.description: [
+	"盔甲匠用皮革与铁换装备，交易前先把料备在自己手里。"
+	]
+	quest.892346A4CE4D8BCF.title: "把村民运回来"
+	quest.892346A4CE4D8BCF.description: [
+	"贸易台要有货源：矿车加拴绳，是最稳的搬运方式。"
+	]
+	quest.15EDF2D2C96676EF.title: "只收该收的"
+	quest.15EDF2D2C96676EF.description: [
+	"FTB Filter System：把「什么该进箱子」写成一个能复用的条件，交易来的杂货不必手动分。"
+	]
+	quest.CA6CF28A8330E600.title: "漏斗收尾"
+	quest.CA6CF28A8330E600.description: [
+	"交易出来的东西直接进箱，人就可以一直站在贸易台前。"
+	]
+	quest.1E6719ACAA26BF51.title: "投掷器分流"
+	quest.1E6719ACAA26BF51.description: [
+	"投掷器把成品推向下一格，是「不用人接」的最小一步。"
+	]
+	quest.4B03A69F792798C8.title: "集市开张"
+	quest.4B03A69F792798C8.description: [
+	"两台贸易台分开摆（一台对外、一台对内），交易不再堵在一个人手上。"
+	]
+	quest.BDCDD5789FD1ED8A.title: "查得到、做得快、换得动"
+	quest.BDCDD5789FD1ED8A.description: [
+	"三件事齐了：要查的有地方查（资料与图）、要做的做得快（台子与修装位）、要换的换得动（贸易台与过滤器）。"
+	"这一层做完，剩下的时间才真的花在建东西上。"
+	]
+}
