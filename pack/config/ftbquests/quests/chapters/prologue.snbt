@@ -42,7 +42,7 @@
 			type: "checkmark"
 		}
 		]
-		x: 0.0d
+		x: 3.8d
 		y: 0.0d
 	}
 	{
@@ -61,8 +61,8 @@
 			type: "checkmark"
 		}
 		]
-		x: -8.78d
-		y: -1.75d
+		x: 0.38d
+		y: -1.18d
 	}
 	{
 		dependencies: [
@@ -80,8 +80,8 @@
 			type: "checkmark"
 		}
 		]
-		x: -5.78d
-		y: -1.75d
+		x: 1.77d
+		y: -1.18d
 	}
 	{
 		dependencies: [
@@ -99,8 +99,8 @@
 			type: "checkmark"
 		}
 		]
-		x: -2.78d
-		y: -3.5d
+		x: 1.3d
+		y: -2.11d
 	}
 	{
 		dependencies: [
@@ -118,8 +118,8 @@
 			type: "checkmark"
 		}
 		]
-		x: 0.22d
-		y: -3.5d
+		x: 2.23d
+		y: -2.11d
 	}
 	{
 		dependencies: [
@@ -137,8 +137,8 @@
 			type: "checkmark"
 		}
 		]
-		x: -3.0d
-		y: -1.75d
+		x: 3.09d
+		y: -1.18d
 	}
 	{
 		dependencies: [
@@ -156,8 +156,8 @@
 			type: "checkmark"
 		}
 		]
-		x: -0.23d
-		y: -1.75d
+		x: 4.2d
+		y: -1.18d
 	}
 	{
 		dependencies: [
@@ -175,8 +175,8 @@
 			type: "checkmark"
 		}
 		]
-		x: 2.77d
-		y: -1.75d
+		x: 5.38d
+		y: -1.18d
 	}
 	{
 		dependencies: [
@@ -194,8 +194,8 @@
 			type: "checkmark"
 		}
 		]
-		x: 5.77d
-		y: -1.75d
+		x: 6.3d
+		y: -1.18d
 	}
 	{
 		dependencies: [
@@ -213,8 +213,8 @@
 			type: "checkmark"
 		}
 		]
-		x: 3.0d
-		y: -3.5d
+		x: 4.2d
+		y: -2.11d
 	}
 	{
 		dependencies: [
@@ -232,8 +232,8 @@
 			type: "checkmark"
 		}
 		]
-		x: 0.0d
-		y: -5.25d
+		x: 4.2d
+		y: -3.04d
 	}
 	{
 		dependencies: [
@@ -251,8 +251,8 @@
 			type: "checkmark"
 		}
 		]
-		x: 8.77d
-		y: -1.75d
+		x: 7.23d
+		y: -1.18d
 	}
 	{
 		dependencies: [
@@ -277,8 +277,8 @@
 			type: "checkmark"
 		}
 		]
-		x: 0.0d
-		y: -7.0d
+		x: 4.2d
+		y: -3.97d
 	}
 	]
 }

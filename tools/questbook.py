@@ -71,6 +71,8 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import math
+import re
 import sys
 import tomllib
 from pathlib import Path
@@ -290,6 +292,14 @@ class ChapterDef:
         self.links: list[dict] = raw.get("link", []) or []
         # 坐标排布参数（章级可覆盖）
         self.grid: dict = raw.get("grid", {})
+        # 原始文本：**排版要用它读簇注释**（`# ---- 簇 N：名字 ----`）。
+        # 为什么从注释读而不是加 TOML 字段：42 个章文件已经写好了这套注释，
+        # 而"加一个 quest 级字段"要动全部文件、还会让已有的 name/id 逻辑多一层。
+        # 注释是**本来就有的结构信息**，直接读它最省且不会漂。
+        try:
+            self.text: str = path.read_text(encoding="utf-8")
+        except Exception:  # noqa: BLE001
+            self.text = ""
 
 
 def load_groups() -> list[dict]:
@@ -362,64 +372,199 @@ def dep_cycles(quests: list[dict]) -> list[list[str]]:
     return found
 
 
-def layout(chapter: ChapterDef) -> dict[str, tuple[float, float]]:
-    """给没有显式 x/y 的任务排布坐标。
+def cluster_of(chapter: "ChapterDef") -> dict[str, int]:
+    """从章文件的注释里读「每条任务属于哪个簇」。
 
-    约定（见 QUESTBOOK-FORMAT.md §5.2）：
-      - 主线（shape = rsquare / pentagon）沿 y = 0 横向排开，左→右
-      - 其余任务按"第一条依赖所在的行"决定行号：依赖主线 → 下一行；依赖支线 → 再下一行
-      - 每行按该行任务的 size 计算间距，保持不重叠
+    约定（作者一直在用）：`# ---- 簇 3：包裹与地址 ----` 之后的任务属于簇 3。
+    没有簇注释的章 → 全章算**一个簇**（退化成"整章一棵树"，不会乱）。
 
-    ⚠️ 行号用**迭代式不动点**算，不用递归：递归在依赖成环时会 `RecursionError`
-    把生成器整个打挂（2026-09-22 实测）。这里的写法有环时**不会崩**，
-    环里的节点留在第 0 行，由 `compile_chapter()` 报成可读的错误。
+    为什么排版要用簇而不是全局深度（2026-09-22 实测）
+    ------------------------------------------------
+    旧版把**全章同深度的任务排进同一行**。实测后果：
+      · `100-cat-building` 56 条 → 65.0 × 7.0（横向长条），最宽一行 25 个
+      · `55-defense-era` 51 条 → 66.4 × 10.5
+      · `75-steam` 95 条 → **342 条依赖线交叉**（图变成一团毛线）
+    而这些章的依赖**78% 都在簇内** —— 也就是说"同深度"里混着好几个互不相干的
+    簇的成员，排成一行等于**排版在撒谎**：它告诉玩家"这 25 件事是并列的"，
+    实际它们分属 5 个不同的主题。
     """
-    g = {"step": 1.5, "row_h": 1.5, "origin_x": 0.0, "origin_y": 0.0}
+    out: dict[str, int] = {}
+    cur = 0
+    for ln in (chapter.text or "").split("\n"):
+        m = re.match(r"^#\s*-+\s*簇\s*(\d+)", ln)
+        if m:
+            cur = int(m.group(1))
+            continue
+        m2 = re.match(r'^name = "([^"]+)"$', ln)
+        if m2:
+            out[m2.group(1)] = cur
+    return out
+
+
+def layout(chapter: ChapterDef) -> dict[str, tuple[float, float]]:
+    """排布坐标：**整齐树（tidy tree）**，零交叉是结构性保证。
+
+    为什么最终是这个算法（2026-09-22，绕了三版才定）
+    ----------------------------------------------
+    我先后试过：①全局分层（改前）②按簇分块 + 蛇形折列 + 网格装箱。
+    前者的产物是一根 65 宽的横带、最宽一行 25 个；后者把交叉线搞到 375 条。
+    两个都是在**没量参照物**的情况下调的。
+
+    量了参照物之后结论完全不同（`tools/_probe_ref_crossings.py`）：
+
+      | 包 | 章数 | 中位 宽×高 | 面积 | **依赖线交叉** |
+      |---|---|---|---|---|
+      | ATM10 | 61 | 18.5 × 15.0 | 240 | **0** |
+      | 天空蜂巢 | 31 | 19.5 × 13.4 | 255 | **0** |
+
+    253 条的 `productive_bees` 只用 21 × 29.5 且**一条交叉都没有**。
+    能做到零交叉只有一个原因：**它们是整齐树** ——
+      · 每个子树占一条**连续的横向带**（兄弟子树绝不交错）
+      · 父节点 x = 子节点的中点
+    这两条一成立，"两条边相交"在几何上就不可能发生。
+
+    同时参照物给出了**间距公式**：ATM10 的邻接中心距是 0.5，而它的
+    `size` 是 1.0、`grid_scale` 是 0.5 —— 正好等于 `(s₁+s₂)/2 × grid_scale`，
+    也就是"两个图标刚刚好不重叠"。本包之前用固定步长 1.5~3.75，
+    **比需要的松 3~5 倍**，这才是画布铺得开的真正原因（不是内容多）。
+    """
+    g = {"gap": 0.18, "unit": 0.5, "origin_x": 0.0, "origin_y": 0.0}
     g.update(chapter.grid)
-    step = float(g["step"])
-    row_h = float(g["row_h"])
+    gap = float(g["gap"])
+    unit = float(g["unit"])          # = data.snbt 的 grid_scale
 
     quests = chapter.quests
-    by_name = {q["name"]: q for q in quests}
-    # ⚠️ 只有**章内存在**的依赖才算数。跨章引用会被 compile_chapter 报错，
-    # 但 layout() 先跑，所以这里必须自己过滤 —— 否则
-    # `max()` 收到空序列会抛 ValueError，把生成器整个打挂
-    # （2026-09-22 拆章时实测踩到：14 条任务带着跨章依赖搬进新章）。
-    local_deps = {q["name"]: [d for d in (q.get("deps") or []) if d in by_name] for q in quests}
+    names = [q["name"] for q in quests]
+    if not names:
+        return {}
+    by = {q["name"]: q for q in quests}
+    idx = {n: i for i, n in enumerate(names)}
+    size = {n: float(by[n].get("size", 1.5)) for n in names}
+    w = {n: size[n] * unit for n in names}         # 图标在坐标空间里的实际宽度
+    local = {n: [d for d in (by[n].get("deps") or []) if d in by] for n in names}
 
-    row_of: dict[str, int] = {}
-    for _ in range(len(quests) + 2):          # 最多 N+1 轮就能到不动点
+    # ---- 深度（迭代式不动点，环不会崩）----
+    depth: dict[str, int] = {}
+    for _ in range(len(names) + 2):
         progressed = False
-        for name, deps in local_deps.items():
-            if name in row_of:
+        for n in names:
+            if n in depth:
                 continue
-            if all(d in row_of for d in deps):
-                row_of[name] = 0 if not deps else 1 + max(row_of[d] for d in deps)
+            ds = local[n]
+            if all(d in depth for d in ds):
+                depth[n] = 0 if not ds else 1 + max(depth[d] for d in ds)
                 progressed = True
         if not progressed:
             break
-    for name in local_deps:                   # 环里的节点兜底
-        row_of.setdefault(name, 0)
+    for n in names:
+        depth.setdefault(n, 0)
 
-    rows: dict[int, list[dict]] = {}
-    for q in quests:
-        rows.setdefault(row_of[q["name"]], []).append(q)
+    # ---- 主父节点：多前置的节点（DAG）挂在**最深的前置**下面 ----
+    #
+    # 为什么是"最深"而不是"第一个"（2026-09-22 实测：换成最深之后
+    # 60-create 的交叉从 219 降到 85、45-expedition 从 198 降到 125）：
+    #   · 挂"第一个前置"会把节点拉到树上很高的位置，
+    #     它到**其它**前置的连线就要横跨大半个画布 → 一路穿线。
+    #   · 挂"最深的前置"= 语义上"最后一个前提做完就能做它"，
+    #     节点落在它实际可做的位置附近，多余的依赖线都变短。
+    parent: dict[str, str | None] = {}
+    for n in names:
+        ds = local[n]
+        parent[n] = max(ds, key=lambda d: (depth[d], -idx[d])) if ds else None
+    kids: dict[str, list[str]] = {n: [] for n in names}
+    for n in names:
+        p = parent[n]
+        if p:
+            kids[p].append(n)
 
-    pos: dict[str, tuple[float, float]] = {}
-    for row, items in sorted(rows.items()):
-        # 每行按 size 累加宽度，再整体居中
-        widths = [max(step, float(it.get("size", 1.5)) * step + step * 0.5) for it in items]
-        total = sum(widths)
-        cursor = float(g["origin_x"]) - total / 2.0
-        for it, w in zip(items, widths):
-            pos[it["name"]] = (cursor + w / 2.0, float(g["origin_y"]) - row * row_h)
-            cursor += w
-    return pos
+    # ---- 叶子按 **DFS 序**排槽 ----
+    #
+    # ⚠️ 这里是最关键的一步，写错了整个算法就白做（2026-09-22 实测：
+    # 第一版按 TOML 顺序给叶子排槽，结果 75-steam 交叉线 396 条 —— 比改前还差）。
+    # 原因：**整齐树零交叉的前提是"每个子树的叶子在横向上连续"**。
+    # 按 TOML 顺序排槽，两个兄弟子树的叶子会交错（A1 B1 A2 B2），
+    # 于是 A 的连线必然穿过 B —— 几何上就注定了。
+    # 按 DFS 序排槽（A1 A2 B1 B2）则每个子树占一条独立的带，不可能相交。
+    roots = [n for n in names if parent[n] is None]
+    dfs_order: list[str] = []
+    seen: set[str] = set()
+
+    def walk(n: str) -> None:
+        if n in seen:
+            return
+        seen.add(n)
+        dfs_order.append(n)
+        for k in kids[n]:
+            walk(k)
+
+    for r in roots:
+        walk(r)
+    for n in names:                      # 环里的节点兜底
+        walk(n)
+
+    x: dict[str, float] = {}
+    cursor = 0.0
+    for n in dfs_order:
+        if not kids[n]:                            # 叶子
+            x[n] = cursor + w[n] / 2.0
+            cursor += w[n] + gap
+    # 后序：先算完子节点再算父节点。深度从大到小就是合法的后序。
+    for d in sorted({depth[n] for n in names}, reverse=True):
+        for n in names:
+            if depth[n] != d or not kids[n]:
+                continue
+            ks = kids[n]
+            x[n] = (min(x[k] for k in ks) + max(x[k] for k in ks)) / 2.0
+    width = cursor
+
+    # ---- 同层消重叠：子树之间不能挤在一起（这一步保证"带"互不交错）----
+    for _ in range(3):
+        for d in sorted({depth[n] for n in names}):
+            row = [n for n in names if depth[n] == d]
+            row.sort(key=lambda n: x[n])
+            for a, b in zip(row, row[1:]):
+                need = (w[a] + w[b]) / 2.0 + gap
+                if x[b] - x[a] < need:
+                    shift = need - (x[b] - x[a])
+                    x[b] += shift
+                    for m in names:                # 带动整棵子树一起挪
+                        if depth[m] > d and _is_desc(m, b, parent):
+                            x[m] += shift
+        # 重新居中父节点
+        for d in sorted({depth[n] for n in names}, reverse=True):
+            for n in names:
+                if depth[n] == d and kids[n]:
+                    ks = kids[n]
+                    x[n] = (min(x[k] for k in ks) + max(x[k] for k in ks)) / 2.0
+
+    # ---- y 按层累加（每层高度取该层最大图标）----
+    y: dict[str, float] = {}
+    cur = float(g["origin_y"])
+    for d in sorted({depth[n] for n in names}):
+        row = [n for n in names if depth[n] == d]
+        for n in row:
+            y[n] = round(cur, 2)
+        cur -= max(w[m] for m in row) + gap
+
+    lo = min(x[n] - w[n] / 2.0 for n in names)
+    ox = float(g["origin_x"]) - lo
+    return {n: (round(x[n] + ox, 2), y[n]) for n in names}
 
 
-# ======================================================================
-# 编译
-# ======================================================================
+def _is_desc(node: str, root: str, parent: dict[str, str | None]) -> bool:
+    """node 是不是 root 的后代（沿主父链上溯，带环保护）。
+
+    消重叠时要"带动整棵子树一起挪"，就需要这个判断。
+    """
+    seen = 0
+    cur = parent.get(node)
+    while cur is not None and seen < 10000:
+        if cur == root:
+            return True
+        cur = parent.get(cur)
+        seen += 1
+    return False
+
 
 class Compiler:
     def __init__(self) -> None:

@@ -41,7 +41,7 @@
 			type: "stat"
 		}
 		]
-		x: 0.0d
+		x: 5.59d
 		y: 0.0d
 	}
 	{
@@ -62,8 +62,8 @@
 			type: "kill"
 		}
 		]
-		x: -3.38d
-		y: -1.75d
+		x: 1.16d
+		y: -1.18d
 	}
 	{
 		dependencies: [
@@ -89,8 +89,8 @@
 			type: "kill"
 		}
 		]
-		x: -10.2d
-		y: -3.5d
+		x: 0.38d
+		y: -2.36d
 	}
 	{
 		dependencies: [
@@ -116,8 +116,8 @@
 			type: "kill"
 		}
 		]
-		x: -7.65d
-		y: -3.5d
+		x: 1.16d
+		y: -2.36d
 	}
 	{
 		dependencies: [
@@ -143,8 +143,8 @@
 			type: "kill"
 		}
 		]
-		x: -12.53d
-		y: -5.25d
+		x: 0.38d
+		y: -3.54d
 	}
 	{
 		dependencies: [
@@ -164,8 +164,8 @@
 			type: "kill"
 		}
 		]
-		x: -6.82d
-		y: -7.0d
+		x: 0.38d
+		y: -4.72d
 	}
 	{
 		dependencies: [
@@ -185,8 +185,8 @@
 			type: "stat"
 		}
 		]
-		x: -0.38d
-		y: -1.75d
+		x: 5.65d
+		y: -1.18d
 	}
 	{
 		dependencies: [
@@ -206,8 +206,8 @@
 			type: "item"
 		}
 		]
-		x: -5.1d
-		y: -3.5d
+		x: 1.94d
+		y: -2.36d
 	}
 	{
 		dependencies: [
@@ -237,8 +237,8 @@
 			type: "item"
 		}
 		]
-		x: -1.95d
-		y: -3.5d
+		x: 4.46d
+		y: -2.36d
 	}
 	{
 		dependencies: [
@@ -264,8 +264,8 @@
 			type: "item"
 		}
 		]
-		x: -9.53d
-		y: -5.25d
+		x: 2.79d
+		y: -3.54d
 	}
 	{
 		dependencies: [
@@ -285,8 +285,8 @@
 			type: "kill"
 		}
 		]
-		x: -6.53d
-		y: -5.25d
+		x: 3.72d
+		y: -3.54d
 	}
 	{
 		dependencies: [
@@ -306,8 +306,8 @@
 			type: "kill"
 		}
 		]
-		x: -4.28d
-		y: -7.0d
+		x: 3.72d
+		y: -4.72d
 	}
 	{
 		dependencies: [
@@ -327,8 +327,8 @@
 			type: "kill"
 		}
 		]
-		x: -3.75d
-		y: -5.25d
+		x: 4.58d
+		y: -3.54d
 	}
 	{
 		dependencies: [
@@ -348,8 +348,8 @@
 			type: "item"
 		}
 		]
-		x: -1.2d
-		y: -5.25d
+		x: 5.36d
+		y: -3.54d
 	}
 	{
 		dependencies: [
@@ -369,8 +369,8 @@
 			type: "stat"
 		}
 		]
-		x: 1.35d
-		y: -5.25d
+		x: 6.14d
+		y: -3.54d
 	}
 	{
 		dependencies: [
@@ -390,8 +390,8 @@
 			type: "stat"
 		}
 		]
-		x: 1.42d
-		y: -3.5d
+		x: 6.84d
+		y: -2.36d
 	}
 	{
 		dependencies: [
@@ -422,8 +422,8 @@
 			type: "item"
 		}
 		]
-		x: 3.0d
-		y: -1.75d
+		x: 10.02d
+		y: -1.18d
 	}
 	{
 		dependencies: [
@@ -443,8 +443,8 @@
 			type: "item"
 		}
 		]
-		x: 4.42d
-		y: -3.5d
+		x: 7.77d
+		y: -2.36d
 	}
 	{
 		dependencies: [
@@ -470,8 +470,8 @@
 			type: "item"
 		}
 		]
-		x: 7.2d
-		y: -3.5d
+		x: 9.13d
+		y: -2.36d
 	}
 	{
 		dependencies: [
@@ -491,8 +491,8 @@
 			type: "kill"
 		}
 		]
-		x: 9.97d
-		y: -3.5d
+		x: 12.27d
+		y: -2.36d
 	}
 	{
 		dependencies: [
@@ -512,8 +512,8 @@
 			type: "kill"
 		}
 		]
-		x: 3.9d
-		y: -5.25d
+		x: 11.21d
+		y: -3.54d
 	}
 	{
 		dependencies: [
@@ -533,8 +533,8 @@
 			type: "kill"
 		}
 		]
-		x: 6.45d
-		y: -5.25d
+		x: 12.54d
+		y: -3.54d
 	}
 	{
 		dependencies: [
@@ -554,8 +554,8 @@
 			type: "kill"
 		}
 		]
-		x: 9.0d
-		y: -5.25d
+		x: 13.32d
+		y: -3.54d
 	}
 	{
 		dependencies: [
@@ -575,8 +575,8 @@
 			type: "kill"
 		}
 		]
-		x: -1.5d
-		y: -7.0d
+		x: 10.66d
+		y: -4.72d
 	}
 	{
 		dependencies: [
@@ -596,8 +596,8 @@
 			type: "stat"
 		}
 		]
-		x: 1.27d
-		y: -7.0d
+		x: 11.76d
+		y: -4.72d
 	}
 	{
 		dependencies: [
@@ -634,8 +634,8 @@
 			type: "item"
 		}
 		]
-		x: 12.15d
-		y: -5.25d
+		x: 9.13d
+		y: -3.54d
 	}
 	{
 		dependencies: [
@@ -664,8 +664,8 @@
 			type: "item"
 		}
 		]
-		x: 4.05d
-		y: -7.0d
+		x: 8.7d
+		y: -4.72d
 	}
 	{
 		dependencies: [
@@ -684,8 +684,8 @@
 			type: "item"
 		}
 		]
-		x: -1.27d
-		y: -8.75d
+		x: 10.66d
+		y: -5.65d
 	}
 	{
 		dependencies: [
@@ -710,8 +710,8 @@
 			type: "item"
 		}
 		]
-		x: 1.27d
-		y: -8.75d
+		x: 11.76d
+		y: -5.65d
 	}
 	{
 		dependencies: [
@@ -737,8 +737,8 @@
 			type: "item"
 		}
 		]
-		x: 6.82d
-		y: -7.0d
+		x: 9.55d
+		y: -4.72d
 	}
 	{
 		dependencies: [
@@ -788,8 +788,8 @@
 			type: "kill"
 		}
 		]
-		x: 0.0d
-		y: -10.5d
+		x: 10.66d
+		y: -6.43d
 	}
 	]
 }
