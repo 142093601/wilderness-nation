@@ -112,7 +112,7 @@ shape = "circle"
 size = 1.2
 deps = ["building_catalog"]
 tasks = [
-	{ type = "item", item = "create_pattern_schematics:pattern_schematic" },
+	{ type = "item", item = "create_pattern_schematics:pattern_schematic", count = 4 },
 ]
 
 [[quest]]

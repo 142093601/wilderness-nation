@@ -854,7 +854,7 @@ shape = "pentagon"
 size = 2.0
 deps = ["three_structures"]
 tasks = [
-	{ type = "item", item = "betterarcheology:archeology_table" },
+	{ type = "item", item = "betterarcheology:archeology_table" , count = 2 },
 	{ type = "item", item = "betterarcheology:iron_brush" },
 ]
 

@@ -238,7 +238,7 @@ shape = "circle"
 size = 1.2
 deps = ["shared_chest"]
 tasks = [
-	{ type = "item", item = "ftbfiltersystem:smart_filter", count = 2 },
+	{ type = "item", item = "ftbfiltersystem:smart_filter" , count = 8 },
 ]
 
 [[quest]]
@@ -315,7 +315,7 @@ icon = "waystones:warp_dust"
 shape = "rsquare"
 deps = ["first_waystone"]
 tasks = [
-	{ type = "item", item = "waystones:warp_dust", count = 8 },
+	{ type = "item", item = "waystones:warp_dust" , count = 8 },
 ]
 
 [[quest]]
@@ -329,7 +329,7 @@ icon = "waystones:warp_plate"
 shape = "rsquare"
 deps = ["warp_dust"]
 tasks = [
-	{ type = "item", item = "waystones:warp_plate", count = 2 },
+	{ type = "item", item = "waystones:warp_plate" , count = 4 },
 ]
 
 [[quest]]
@@ -372,7 +372,7 @@ shape = "circle"
 size = 1.2
 deps = ["warp_scroll"]
 tasks = [
-	{ type = "item", item = "waystones:return_scroll", count = 2 },
+	{ type = "item", item = "waystones:return_scroll" , count = 8 },
 ]
 
 [[quest]]
@@ -386,7 +386,7 @@ shape = "circle"
 size = 1.2
 deps = ["warp_scroll"]
 tasks = [
-	{ type = "item", item = "waystones:blank_scroll", count = 4 },
+	{ type = "item", item = "waystones:blank_scroll" , count = 8 },
 ]
 
 [[quest]]
@@ -473,7 +473,7 @@ icon = "waystones:attuned_shard"
 shape = "rsquare"
 deps = ["shard_dormant"]
 tasks = [
-	{ type = "item", item = "waystones:attuned_shard" },
+	{ type = "item", item = "waystones:attuned_shard" , count = 4 },
 ]
 
 [[quest]]
@@ -561,8 +561,7 @@ icon = "waystones:white_portstone"
 shape = "rsquare"
 deps = ["share_stone_public"]
 tasks = [
-	{ type = "item", item = "waystones:white_portstone" },
-	{ type = "item", item = "waystones:white_portstone" },
+	{ type = "item", item = "waystones:white_portstone" , count = 4 },
 ]
 
 [[quest]]
@@ -665,7 +664,7 @@ shape = "circle"
 size = 1.2
 deps = ["warp_portal"]
 tasks = [
-	{ type = "item", item = "waystones:twinbound_feather" },
+	{ type = "item", item = "waystones:twinbound_feather" , count = 4 },
 ]
 
 # ---------------- 簇 4：冲突与规矩 ----------------

@@ -145,6 +145,7 @@
 		tasks: [
 		{
 			item: "create_pattern_schematics:pattern_schematic"
+			count: 4
 			id: "76AD686756FFD80F"
 			type: "item"
 		}

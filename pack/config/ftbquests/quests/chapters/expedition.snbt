@@ -1326,6 +1326,7 @@
 		tasks: [
 		{
 			item: "betterarcheology:archeology_table"
+			count: 2
 			id: "3F29364790B95AF2"
 			type: "item"
 		}

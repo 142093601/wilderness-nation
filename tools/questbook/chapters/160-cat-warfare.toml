@@ -436,7 +436,7 @@ shape = "circle"
 size = 1.2
 deps = ["w_steel"]
 tasks = [
-	{ type = "item", item = "siegemachines:siege_workbench" },
+	{ type = "item", item = "siegemachines:siege_workbench" , count = 2 },
 ]
 
 [[quest]]

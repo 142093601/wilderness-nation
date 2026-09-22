@@ -40,6 +40,7 @@
 		tasks: [
 		{
 			item: "travelersbackpack:backpack_tank"
+			count: 4
 			id: "B6EA253FEF83FF0F"
 			type: "item"
 		}
@@ -541,7 +542,7 @@
 		tasks: [
 		{
 			item: "create:smart_chute"
-			count: 2
+			count: 4
 			id: "B1CC4E0D2AA1DBFC"
 			type: "item"
 		}
@@ -583,7 +584,7 @@
 		tasks: [
 		{
 			item: "create:brass_funnel"
-			count: 4
+			count: 8
 			id: "12630AABB11C7649"
 			type: "item"
 		}
@@ -604,7 +605,7 @@
 		tasks: [
 		{
 			item: "create:depot"
-			count: 4
+			count: 8
 			id: "BD00D1ABEC77F65A"
 			type: "item"
 		}
@@ -688,7 +689,7 @@
 		tasks: [
 		{
 			item: "create:factory_gauge"
-			count: 2
+			count: 4
 			id: "8FC6BE4A3CC65A26"
 			type: "item"
 		}
@@ -960,7 +961,7 @@
 		tasks: [
 		{
 			item: "ftbfiltersystem:smart_filter"
-			count: 2
+			count: 4
 			id: "BEB427DACB5ADDBB"
 			type: "item"
 		}

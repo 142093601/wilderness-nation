@@ -24,7 +24,7 @@
 			type: "item"
 		}
 		]
-		x: 4.56d
+		x: 4.17d
 		y: 0.0d
 	}
 	{
@@ -145,7 +145,7 @@
 			type: "item"
 		}
 		]
-		x: 3.02d
+		x: 2.92d
 		y: -1.18d
 	}
 	{
@@ -165,7 +165,7 @@
 			type: "item"
 		}
 		]
-		x: 7.49d
+		x: 6.71d
 		y: -1.18d
 	}
 	{
@@ -185,7 +185,7 @@
 			type: "checkmark"
 		}
 		]
-		x: 3.02d
+		x: 2.92d
 		y: -2.11d
 	}
 	{
@@ -250,7 +250,7 @@
 			type: "item"
 		}
 		]
-		x: 4.1d
+		x: 3.91d
 		y: -3.04d
 	}
 	{
@@ -290,7 +290,7 @@
 			type: "item"
 		}
 		]
-		x: 8.73d
+		x: 7.95d
 		y: -1.18d
 	}
 	{
@@ -310,7 +310,7 @@
 			type: "item"
 		}
 		]
-		x: 8.34d
+		x: 7.56d
 		y: -2.11d
 	}
 	{
@@ -331,7 +331,7 @@
 			type: "item"
 		}
 		]
-		x: 9.12d
+		x: 8.34d
 		y: -2.11d
 	}
 	{
@@ -351,7 +351,7 @@
 			type: "item"
 		}
 		]
-		x: 5.42d
+		x: 5.03d
 		y: -3.97d
 	}
 	{
@@ -371,7 +371,7 @@
 			type: "item"
 		}
 		]
-		x: 5.42d
+		x: 5.03d
 		y: -4.9d
 	}
 	{
@@ -412,26 +412,6 @@
 		}
 		]
 		x: 5.85d
-		y: -5.83d
-	}
-	{
-		dependencies: [
-		"41366FB6A64C0C4B"
-		]
-		icon: {
-			id: "create:goggles"
-		}
-		id: "666E1BD4F4D67631"
-		shape: "circle"
-		size: 1.2d
-		tasks: [
-		{
-			item: "create:goggles"
-			id: "543A12CCAF9CE611"
-			type: "item"
-		}
-		]
-		x: 6.63d
 		y: -5.83d
 	}
 	{
@@ -579,7 +559,6 @@
 		"620D533C7B483140"
 		"134BCA05AABDAB48"
 		"B940E9183C1324C4"
-		"666E1BD4F4D67631"
 		"761FC57ADC502A54"
 		"AB5C0F8AB5A21194"
 		"3950266FB1CB2E49"

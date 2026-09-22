@@ -80,6 +80,7 @@
 		tasks: [
 		{
 			item: "create:steam_whistle"
+			count: 2
 			id: "E41437E0795179CD"
 			type: "item"
 		}
@@ -759,7 +760,7 @@
 		tasks: [
 		{
 			item: "create:track_station"
-			count: 2
+			count: 4
 			id: "D5A4489580BD4014"
 			type: "item"
 		}
@@ -1700,6 +1701,7 @@
 		tasks: [
 		{
 			item: "create:schedule"
+			count: 2
 			id: "78B98D0576E7E506"
 			type: "item"
 		}

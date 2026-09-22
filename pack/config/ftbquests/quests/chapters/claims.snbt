@@ -281,7 +281,7 @@
 		tasks: [
 		{
 			item: "ftbfiltersystem:smart_filter"
-			count: 2
+			count: 8
 			id: "8D382B3D35E922F1"
 			type: "item"
 		}
@@ -423,7 +423,7 @@
 		tasks: [
 		{
 			item: "waystones:warp_plate"
-			count: 2
+			count: 4
 			id: "F1C8C0C1B6992C7B"
 			type: "item"
 		}
@@ -485,7 +485,7 @@
 		tasks: [
 		{
 			item: "waystones:return_scroll"
-			count: 2
+			count: 8
 			id: "7389D5A5DDD12A3A"
 			type: "item"
 		}
@@ -506,7 +506,7 @@
 		tasks: [
 		{
 			item: "waystones:blank_scroll"
-			count: 4
+			count: 8
 			id: "DAE296F157B31C86"
 			type: "item"
 		}
@@ -649,6 +649,7 @@
 		tasks: [
 		{
 			item: "waystones:attuned_shard"
+			count: 4
 			id: "3DA98DD35FAA0E3B"
 			type: "item"
 		}
@@ -785,12 +786,8 @@
 		tasks: [
 		{
 			item: "waystones:white_portstone"
+			count: 4
 			id: "7263F8F57D48C2AB"
-			type: "item"
-		}
-		{
-			item: "waystones:white_portstone"
-			id: "0E3BC4724E025859"
 			type: "item"
 		}
 		]
@@ -944,6 +941,7 @@
 		tasks: [
 		{
 			item: "waystones:twinbound_feather"
+			count: 4
 			id: "F6E6BD7924461A09"
 			type: "item"
 		}

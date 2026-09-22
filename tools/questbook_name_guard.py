@@ -67,7 +67,12 @@ def main() -> int:
         pass
     ap = argparse.ArgumentParser(description="任务 name 守护")
     ap.add_argument("--rev", default="HEAD", help="对比的 git 版本（空串 = 不与历史比）")
+    ap.add_argument("--allow", default="",
+                    help="**有意删除**的 name（逗号分隔）。本守护的职责是抓"
+                         "「不小心删掉」，不是禁止删除 —— 所以删除要么显式写进这里，"
+                         "要么就当作事故处理。")
     args = ap.parse_args()
+    allowed = {x.strip() for x in args.allow.split(",") if x.strip()}
 
     problems = 0
     for p in sorted(CHAPTERS.glob("*.toml")):
@@ -90,7 +95,10 @@ def main() -> int:
         old = names_at_rev(args.rev, rel)
         if old is None:
             continue                      # 新文件，没有历史
-        gone = [n for n in old if n not in cur]
+        gone = [n for n in old if n not in cur and n not in allowed]
+        ok_gone = [n for n in old if n not in cur and n in allowed]
+        if ok_gone:
+            print(f"    {p.name}: 有意删除 {len(ok_gone)} 个 name（--allow 已登记）：{ok_gone}")
         if gone:
             print(f"  x {p.name}: 相对 {args.rev} 消失了 {len(gone)} 个 name（id 会变、"
                   f"语言键会成孤儿、玩家进度会回退）：{gone[:10]}")

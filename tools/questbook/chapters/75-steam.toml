@@ -87,7 +87,7 @@ shape = "circle"
 size = 1.2
 deps = ["st_boiler"]
 tasks = [
-	{ type = "item", item = "create:steam_whistle" },
+	{ type = "item", item = "create:steam_whistle" , count = 2 },
 ]
 
 [[quest]]
@@ -542,7 +542,7 @@ icon = "create:track_station"
 shape = "rsquare"
 deps = ["st_signal"]
 tasks = [
-	{ type = "item", item = "create:track_station", count = 2 },
+	{ type = "item", item = "create:track_station" , count = 4 },
 ]
 
 [[quest]]
@@ -1134,7 +1134,7 @@ icon = "create:schedule"
 shape = "rsquare"
 deps = ["st_station"]
 tasks = [
-	{ type = "item", item = "create:schedule" },
+	{ type = "item", item = "create:schedule" , count = 2 },
 ]
 
 [[quest]]

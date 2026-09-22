@@ -671,6 +671,7 @@
 		tasks: [
 		{
 			item: "siegemachines:siege_workbench"
+			count: 2
 			id: "C585B78CBCB06FC3"
 			type: "item"
 		}

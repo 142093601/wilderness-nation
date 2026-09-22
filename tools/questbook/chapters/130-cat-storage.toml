@@ -60,7 +60,7 @@ shape = "circle"
 size = 1.2
 deps = ["s_backpack"]
 tasks = [
-	{ type = "item", item = "travelersbackpack:backpack_tank" },
+	{ type = "item", item = "travelersbackpack:backpack_tank" , count = 4 },
 ]
 
 [[quest]]
@@ -366,7 +366,7 @@ shape = "pentagon"
 size = 2.0
 deps = ["s_deposit"]
 tasks = [
-	{ type = "item", item = "create:smart_chute", count = 2 },
+	{ type = "item", item = "create:smart_chute" , count = 4 },
 ]
 rewards = [
 	{ type = "xp", xp = 30 },
@@ -392,7 +392,7 @@ shape = "circle"
 size = 1.2
 deps = ["s_funnel_andesite"]
 tasks = [
-	{ type = "item", item = "create:brass_funnel", count = 4 },
+	{ type = "item", item = "create:brass_funnel" , count = 8 },
 ]
 
 [[quest]]
@@ -403,7 +403,7 @@ shape = "circle"
 size = 1.2
 deps = ["s_smart_chute"]
 tasks = [
-	{ type = "item", item = "create:depot", count = 4 },
+	{ type = "item", item = "create:depot" , count = 8 },
 ]
 
 [[quest]]
@@ -446,7 +446,7 @@ shape = "circle"
 size = 1.2
 deps = ["s_content_observer"]
 tasks = [
-	{ type = "item", item = "create:factory_gauge", count = 2 },
+	{ type = "item", item = "create:factory_gauge" , count = 4 },
 ]
 
 [[quest]]
@@ -601,7 +601,7 @@ icon = "ftbfiltersystem:smart_filter"
 shape = "rsquare"
 deps = ["s_stock_keeper"]
 tasks = [
-	{ type = "item", item = "ftbfiltersystem:smart_filter", count = 2 },
+	{ type = "item", item = "ftbfiltersystem:smart_filter" , count = 4 },
 ]
 
 [[quest]]

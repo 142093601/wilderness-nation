@@ -307,20 +307,6 @@ tasks = [
 ]
 
 [[quest]]
-name = "engineer_goggles"
-title = "工程师护目镜"
-desc = [
-	"护目镜是这套工程制里少数「给自己用」的东西：看配置、看尺寸都靠它。",
-]
-icon = "create:goggles"
-shape = "circle"
-size = 1.2
-deps = ["material_list"]
-tasks = [
-	{ type = "item", item = "create:goggles" },
-]
-
-[[quest]]
 name = "scaffold_kit"
 title = "脚手架"
 desc = [
@@ -420,7 +406,7 @@ desc = [
 icon = "minecraft:stone_bricks"
 shape = "rsquare"
 deps = ["material_stock", "server_side", "worn_repair", "pattern_empty",
-        "scaffold_brass", "engineer_goggles", "toolbox", "blueprint_site_plan",
+        "scaffold_brass", "toolbox", "blueprint_site_plan",
         "pattern_quill", "repair_kit", "blueprint_blank_paper"]
 tasks = [
 	{ type = "item", item = "minecraft:stone_bricks", count = 64 },
