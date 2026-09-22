@@ -1,0 +1,147 @@
+{
+	quest.9E1DAE7B466B49E6.title: "林木场"
+	quest.9E1DAE7B466B49E6.description: [
+	"原木是最耗的原料。有计划地种与砍，比每次缺了才出去伐一片强。"
+	]
+	quest.9E44A22C310B1163.title: "石料场"
+	quest.9E44A22C310B1163.description: [
+	"建城的石头要成规模地来。一台钻机配一条传送带，就是一个石料场。"
+	]
+	quest.B8B96C8E8707E277.title: "矿石处理线"
+	quest.B8B96C8E8707E277.description: [
+	"矿石进来、粉碎、进熔炉——整条线一个人都不用站。"
+	"这是「基建」这个时代最典型的产物。"
+	]
+	quest.FC95389E59246805.title: "批量烧炼"
+	quest.FC95389E59246805.description: [
+	"鼓风机吹熔岩做批量烧炼，比一排熔炉省燃料也省地方。"
+	]
+	quest.D887D1666A788299.title: "混凝土与建材"
+	quest.D887D1666A788299.description: [
+	"建材要能成批出。混凝土让「大体积建筑」变得现实。"
+	]
+	quest.78CB9F2A4F58C5E9.title: "砖窑"
+	quest.78CB9F2A4F58C5E9.description: [
+	"砖是城里最常见的墙面材料。有了砖窑，建筑不再受「手上有什么」限制。"
+	]
+	quest.3218C68FAA3131C0.title: "石砖线"
+	quest.3218C68FAA3131C0.description: [
+	"石砖是城墙、道路、广场的通用件。批量产出，才有资格谈规模。"
+	]
+	quest.6560739F25226A88.title: "锯木场"
+	quest.6560739F25226A88.description: [
+	"原木进来、木板出去。把「砍」和「加工」放在同一处，省一趟运输。"
+	]
+	quest.C7735C932F4CCABC.title: "石作场"
+	quest.C7735C932F4CCABC.description: [
+	"石阶、石砖、磨制石料集中在一处加工。"
+	"同一种原料的多种形态放在一起，找起来才不费劲。"
+	]
+	quest.F4F424782F65001A.title: "羊毛场"
+	quest.F4F424782F65001A.description: [
+	"羊毛是床、地毯、旗帜的原料，也是最早能自动化的畜产。"
+	]
+	quest.2A67B291CA51AF13.title: "染料线"
+	quest.2A67B291CA51AF13.description: [
+	"有颜色才有区分度：队伍标识、建筑分区、地图标记都靠它。"
+	]
+	quest.D16DB8B0ABA12995.title: "造纸线"
+	quest.D16DB8B0ABA12995.description: [
+	"纸是地图、书、图纸的前置。地图墙那一章要的纸从这里来。"
+	]
+	quest.A0477352418AA810.title: "玻璃线"
+	quest.A0477352418AA810.description: [
+	"窗、温室、观察孔都要玻璃。用鼓风机批量烧，比一炉一炉快得多。"
+	]
+	quest.98FA6C4CA498C31F.title: "炭窑"
+	quest.98FA6C4CA498C31F.description: [
+	"燃料要提前备。炭比原木耐烧，也免了跟煤抢产量。"
+	]
+	quest.771BC508C99A0C29.title: "原料从哪来"
+	quest.771BC508C99A0C29.description: [
+	"这一章只回答一件事：一座城每天要吃多少原料、这些原料怎么稳定进来。"
+	"先清点现有的：木、石、铁、煤各能撑多久。"
+	]
+	quest.945AE8C7F5650C93.title: "矿石分类堆放"
+	quest.945AE8C7F5650C93.description: [
+	"原矿、锭、块分开放。混在一起是最常见的「找不到东西」来源。"
+	]
+	quest.83A818828C8B57FA.title: "煤矿线"
+	quest.83A818828C8B57FA.description: [
+	"燃料是工业的血液。煤的稳定供应决定熔炉与蒸汽机能开多久。"
+	]
+	quest.9D443444E963DB9A.title: "铁的生产线"
+	quest.9D443444E963DB9A.description: [
+	"铁是使用量最大的金属。从原矿到锭，这条线要能连续出。"
+	]
+	quest.73CCDDEF6A734205.title: "铜线"
+	quest.73CCDDEF6A734205.description: [
+	"铜大量用于建筑装饰，也是 Create 黄铜的前置。用量比想象的大。"
+	]
+	quest.1870DBA0ABB206EB.title: "深层矿"
+	quest.1870DBA0ABB206EB.description: [
+	"深板岩层矿更多，但挖起来慢。要不要往下走，取决于上面几条线够不够用。"
+	]
+	quest.F227A53ADD6418B3.title: "板材线"
+	quest.F227A53ADD6418B3.description: [
+	"木板是所有木制品的基础。原木进来、板材出去，中间不用人。"
+	]
+	quest.98F6161246855603.title: "木棍与把手"
+	quest.98F6161246855603.description: [
+	"工具、栅栏、轨道都要木棍。它便宜但用量极大，值得单独一条线。"
+	]
+	quest.45A3A2DF8E33655A.title: "箱柜量产"
+	quest.45A3A2DF8E33655A.description: [
+	"储物是所有产线的终点。箱子要有安全库存，不然产线会堵。"
+	]
+	quest.2E24924F6E0A157A.title: "平滑石与磨制石"
+	quest.2E24924F6E0A157A.description: [
+	"同一种石头的不同形态决定建筑质感。批量做，才能大面积铺。"
+	]
+	quest.454241738BB54EAB.title: "深板岩建材"
+	quest.454241738BB54EAB.description: [
+	"深色建材做对比与基座。挖深层矿时顺手就有了原料。"
+	]
+	quest.6C21C097210ABDB7.title: "陶与黏土"
+	quest.6C21C097210ABDB7.description: [
+	"陶瓦是最耐看的屋面材料。黏土要成规模地找与囤。"
+	]
+	quest.BFCF205364CAF377.title: "石英与白色建材"
+	quest.BFCF205364CAF377.description: [
+	"白色建材做亮度与干净感。下界一趟能带回不少。"
+	]
+	quest.18A3C6A38CC22367.title: "铜制建材"
+	quest.18A3C6A38CC22367.description: [
+	"铜块会氧化变色，能做新旧对比。切割与打蜡都可以用机械手自动化。"
+	]
+	quest.43E1D0E26EDDC05D.title: "下界砖"
+	quest.43E1D0E26EDDC05D.description: [
+	"下界的建材自带异域感，适合地标与要塞。"
+	]
+	quest.73F84F22C4A161B5.title: "玻璃板与采光"
+	quest.73F84F22C4A161B5.description: [
+	"窗与温室都要玻璃板。它比整块玻璃省料，用量却更大。"
+	]
+	quest.83F9211E95D97F07.title: "混凝土粉"
+	quest.83F9211E95D97F07.description: [
+	"混凝土要先出粉再遇水固化。这一步靠鼓风机洗涤能全自动。"
+	]
+	quest.B11A79873CCA022F.title: "吞吐量达标"
+	quest.B11A79873CCA022F.description: [
+	"随机抽一条线看：从原料进到成品出，一个人都不需要站。"
+	"这一条成立，城的建材供应才算脱离「人拉着走」。"
+	]
+	quest.5CF0DE1C69CA3E21.title: "建材战略储备"
+	quest.5CF0DE1C69CA3E21.description: [
+	"常用建材各留一仓。扩建时最怕的不是没矿，是矿在但没炼。"
+	]
+	quest.D65FBEE5C30B80CA.title: "废料处理"
+	quest.D65FBEE5C30B80CA.description: [
+	"多出来的圆石、泥土要能消掉，不然仓库永远爆满。"
+	]
+	quest.F857B05C2BFC38A4.title: "工业碑"
+	quest.F857B05C2BFC38A4.description: [
+	"刻上这个时代投产的第一条全自动产线是什么。"
+	"下一章往更大的机器走之前，原料这一层必须稳。"
+	]
+}

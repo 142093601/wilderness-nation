@@ -16,7 +16,7 @@ key = "cat_warfare"
 title = "战斗与军械"
 subtitle = "从一把好剑，到一台能砸开城门的机器"
 group = "category"
-icon = "magistuarmory:steel_chestplate"
+icon = "magistuarmory:steel_chainmail"
 order_index = 36
 
 grid = { step = 1.5, row_h = 1.75 }

@@ -448,9 +448,27 @@ def check_types_and_registry(d: dict, r: Report) -> None:
             return None          # 这个 mod 一条进度都没有 → 不能断言（它可能本来就不发进度）
         return False
 
+    def check_icon(icon, where: str, what: str) -> None:
+        """图标也是 `ItemStack`：id 写错在服务端一样报 `Unknown registry key`。
+
+        这一项是 2026-09-22 补的：此前 ④⑦ 只查**判据与奖励**，图标完全没人管，
+        于是 `magistuarmory:steel_chestplate`（该 mod 根本没有这件护甲，
+        钢甲叫 `steel_chainmail`）在 160-cat-warfare 里从写下来那天起就是坏的
+        —— 任务照常能完成，只是在游戏里显示成一个缺材质图标，没人会去查。
+        「不影响完成度」不等于「不算错」，所以判 fail。
+        """
+        iid = ref_id(icon)
+        if not iid:
+            return
+        if check_registry and exists(iid) is False:
+            r.fail("⑦ 判据 id 真实性",
+                   f"{where}: {what}图标 {iid} 在注册表里找不到 → 游戏里是缺材质方块")
+
     for key, ch in d["chapters"].items():
+        check_icon(ch.get("icon"), f"chapters/{key}.snbt", "章")
         for q in ch.get("quests", []) or []:
             where = f"chapters/{key}.snbt:{q.get('id')}"
+            check_icon(q.get("icon"), where, "任务")
             for t in q.get("tasks", []) or []:
                 ttype = t.get("type")
                 if ttype not in TASK_TYPES:

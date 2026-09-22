@@ -1,0 +1,518 @@
+# 材料与工业（技艺章 · 从「基建」拆出，2026-09-22）
+#
+# 为什么有这一章
+# --------------
+# `40-infra` 长到 54 条时混了两类内容：**公共设施**（路/水/照明/生活）与
+# **材料产线**（木/石/矿/烧炼/建材）。它们的心智模型不同 ——
+# 前者回答「城里还缺什么」，后者回答「原料怎么变成建材」。
+# 拆开之后两章各自能继续长（ATM10 的机械动力章有 90 条，材料类也是大章）。
+#
+# 设计约束（沿用本包规则）
+# ----------------------
+# · 不重复 mod 自带教学（Create 有 Ponder 动画）：desc 只讲「为什么需要、在流程里的位置」
+# · 判据优先用已核验过的 vanilla 物品与确定存在的 Create 物品，不凭空造 mod id
+# · 与 100-cat-building（有哪些建材 mod 可用）分工：这里讲「城里真要用起来的那几条线」
+
+key = "materials"
+title = "材料与工业"
+subtitle = "原料进来、建材出去：一座城的实际吞吐量"
+group = "craft"
+icon = "minecraft:blast_furnace"
+order_index = 22
+
+grid = { step = 1.5, row_h = 1.75 }
+
+# ---------------- 从「基建」带过来的产线 ----------------
+
+[[quest]]
+name = "tree_farm"
+title = "林木场"
+desc = [
+	"原木是最耗的原料。有计划地种与砍，比每次缺了才出去伐一片强。",
+]
+icon = "minecraft:oak_sapling"
+shape = "circle"
+size = 1.2
+tasks = [
+	{ type = "item", item = "minecraft:oak_sapling", count = 16 },
+	{ type = "item", item = "create:mechanical_saw", count = 1 },
+]
+
+[[quest]]
+name = "quarry"
+title = "石料场"
+desc = [
+	"建城的石头要成规模地来。一台钻机配一条传送带，就是一个石料场。",
+]
+icon = "minecraft:cobblestone"
+shape = "circle"
+size = 1.2
+tasks = [
+	{ type = "item", item = "minecraft:cobblestone", count = 256 },
+]
+
+[[quest]]
+name = "ore_processing"
+title = "矿石处理线"
+desc = [
+	"矿石进来、粉碎、进熔炉——整条线一个人都不用站。",
+	"这是「基建」这个时代最典型的产物。",
+]
+icon = "create:crushing_wheel"
+shape = "circle"
+size = 1.2
+tasks = [
+	{ type = "item", item = "create:crushing_wheel", count = 2 },
+]
+
+[[quest]]
+name = "bulk_smelting"
+title = "批量烧炼"
+desc = [
+	"鼓风机吹熔岩做批量烧炼，比一排熔炉省燃料也省地方。",
+]
+icon = "create:encased_fan"
+shape = "circle"
+size = 1.2
+tasks = [
+	{ type = "item", item = "create:encased_fan", count = 2 },
+]
+
+[[quest]]
+name = "concrete_plant"
+title = "混凝土与建材"
+desc = [
+	"建材要能成批出。混凝土让「大体积建筑」变得现实。",
+]
+icon = "minecraft:white_concrete"
+shape = "circle"
+size = 1.2
+deps = ["quarry"]
+tasks = [
+	{ type = "item", item = "minecraft:white_concrete", count = 64 },
+]
+
+[[quest]]
+name = "brick_factory"
+title = "砖窑"
+desc = [
+	"砖是城里最常见的墙面材料。有了砖窑，建筑不再受「手上有什么」限制。",
+]
+icon = "minecraft:bricks"
+shape = "circle"
+size = 1.2
+deps = ["quarry"]
+tasks = [
+	{ type = "item", item = "minecraft:bricks", count = 64 },
+]
+
+[[quest]]
+name = "stone_brick_line"
+title = "石砖线"
+desc = [
+	"石砖是城墙、道路、广场的通用件。批量产出，才有资格谈规模。",
+]
+icon = "minecraft:stone_bricks"
+shape = "circle"
+size = 1.2
+deps = ["quarry"]
+tasks = [
+	{ type = "item", item = "minecraft:stone_bricks", count = 128 },
+]
+
+[[quest]]
+name = "lumber_mill"
+title = "锯木场"
+desc = [
+	"原木进来、木板出去。把「砍」和「加工」放在同一处，省一趟运输。",
+]
+icon = "create:mechanical_saw"
+shape = "circle"
+size = 1.2
+deps = ["tree_farm"]
+tasks = [
+	{ type = "item", item = "create:mechanical_saw", count = 2 },
+	{ type = "item", item = "create:depot", count = 2 },
+]
+
+[[quest]]
+name = "stoneworks"
+title = "石作场"
+desc = [
+	"石阶、石砖、磨制石料集中在一处加工。",
+	"同一种原料的多种形态放在一起，找起来才不费劲。",
+]
+icon = "create:mechanical_drill"
+shape = "circle"
+size = 1.2
+deps = ["quarry"]
+tasks = [
+	{ type = "item", item = "create:mechanical_drill", count = 2 },
+]
+
+[[quest]]
+name = "wool_farm"
+title = "羊毛场"
+desc = [
+	"羊毛是床、地毯、旗帜的原料，也是最早能自动化的畜产。",
+]
+icon = "minecraft:white_wool"
+shape = "circle"
+size = 1.2
+tasks = [
+	{ type = "item", item = "minecraft:white_wool", count = 32 },
+]
+
+[[quest]]
+name = "dye_line"
+title = "染料线"
+desc = [
+	"有颜色才有区分度：队伍标识、建筑分区、地图标记都靠它。",
+]
+icon = "minecraft:red_dye"
+shape = "circle"
+size = 1.2
+deps = ["wool_farm"]
+tasks = [
+	{ type = "item", item = "minecraft:red_dye", count = 16 },
+]
+
+[[quest]]
+name = "paper_line"
+title = "造纸线"
+desc = [
+	"纸是地图、书、图纸的前置。地图墙那一章要的纸从这里来。",
+]
+icon = "minecraft:paper"
+shape = "circle"
+size = 1.2
+deps = ["tree_farm"]
+tasks = [
+	{ type = "item", item = "minecraft:paper", count = 64 },
+]
+
+[[quest]]
+name = "glass_line"
+title = "玻璃线"
+desc = [
+	"窗、温室、观察孔都要玻璃。用鼓风机批量烧，比一炉一炉快得多。",
+]
+icon = "minecraft:glass"
+shape = "circle"
+size = 1.2
+deps = ["bulk_smelting"]
+tasks = [
+	{ type = "item", item = "minecraft:glass", count = 64 },
+]
+
+[[quest]]
+name = "charcoal_kiln"
+title = "炭窑"
+desc = [
+	"燃料要提前备。炭比原木耐烧，也免了跟煤抢产量。",
+]
+icon = "minecraft:charcoal"
+shape = "circle"
+size = 1.2
+deps = ["tree_farm"]
+tasks = [
+	{ type = "item", item = "minecraft:charcoal", count = 64 },
+]
+
+# ---------------- 本段新增：原料、加工与储备 ----------------
+
+[[quest]]
+name = "mats_intro"
+title = "原料从哪来"
+desc = [
+	"这一章只回答一件事：一座城每天要吃多少原料、这些原料怎么稳定进来。",
+	"先清点现有的：木、石、铁、煤各能撑多久。",
+]
+icon = "minecraft:iron_ore"
+shape = "circle"
+size = 1.2
+tasks = [
+	{ type = "item", item = "minecraft:iron_ore", count = 32 },
+]
+
+[[quest]]
+name = "ore_stock"
+title = "矿石分类堆放"
+desc = [
+	"原矿、锭、块分开放。混在一起是最常见的「找不到东西」来源。",
+]
+icon = "minecraft:raw_iron"
+shape = "circle"
+size = 1.2
+deps = ["mats_intro"]
+tasks = [
+	{ type = "item", item = "minecraft:raw_iron", count = 64 },
+]
+
+[[quest]]
+name = "coal_line"
+title = "煤矿线"
+desc = [
+	"燃料是工业的血液。煤的稳定供应决定熔炉与蒸汽机能开多久。",
+]
+icon = "minecraft:coal_ore"
+shape = "circle"
+size = 1.2
+deps = ["mats_intro"]
+tasks = [
+	{ type = "item", item = "minecraft:coal", count = 64 },
+]
+
+[[quest]]
+name = "iron_line"
+title = "铁的生产线"
+desc = [
+	"铁是使用量最大的金属。从原矿到锭，这条线要能连续出。",
+]
+icon = "minecraft:iron_ingot"
+shape = "circle"
+size = 1.2
+deps = ["ore_processing"]
+tasks = [
+	{ type = "item", item = "minecraft:iron_ingot", count = 64 },
+]
+
+[[quest]]
+name = "copper_line"
+title = "铜线"
+desc = [
+	"铜大量用于建筑装饰，也是 Create 黄铜的前置。用量比想象的大。",
+]
+icon = "minecraft:copper_ingot"
+shape = "circle"
+size = 1.2
+deps = ["ore_processing"]
+tasks = [
+	{ type = "item", item = "minecraft:copper_ingot", count = 64 },
+]
+
+[[quest]]
+name = "deep_ores"
+title = "深层矿"
+desc = [
+	"深板岩层矿更多，但挖起来慢。要不要往下走，取决于上面几条线够不够用。",
+]
+icon = "minecraft:deepslate"
+shape = "circle"
+size = 1.2
+deps = ["ore_processing"]
+tasks = [
+	{ type = "item", item = "minecraft:deepslate", count = 64 },
+]
+
+[[quest]]
+name = "plank_line"
+title = "板材线"
+desc = [
+	"木板是所有木制品的基础。原木进来、板材出去，中间不用人。",
+]
+icon = "minecraft:oak_planks"
+shape = "circle"
+size = 1.2
+deps = ["lumber_mill"]
+tasks = [
+	{ type = "item", item = "minecraft:oak_planks", count = 128 },
+]
+
+[[quest]]
+name = "stick_line"
+title = "木棍与把手"
+desc = [
+	"工具、栅栏、轨道都要木棍。它便宜但用量极大，值得单独一条线。",
+]
+icon = "minecraft:stick"
+shape = "circle"
+size = 1.2
+deps = ["plank_line"]
+tasks = [
+	{ type = "item", item = "minecraft:stick", count = 128 },
+]
+
+[[quest]]
+name = "chest_line"
+title = "箱柜量产"
+desc = [
+	"储物是所有产线的终点。箱子要有安全库存，不然产线会堵。",
+]
+icon = "minecraft:chest"
+shape = "circle"
+size = 1.2
+deps = ["plank_line"]
+tasks = [
+	{ type = "item", item = "minecraft:chest", count = 32 },
+]
+
+[[quest]]
+name = "smooth_stone"
+title = "平滑石与磨制石"
+desc = [
+	"同一种石头的不同形态决定建筑质感。批量做，才能大面积铺。",
+]
+icon = "minecraft:smooth_stone"
+shape = "circle"
+size = 1.2
+deps = ["stoneworks"]
+tasks = [
+	{ type = "item", item = "minecraft:smooth_stone", count = 64 },
+]
+
+[[quest]]
+name = "deepslate_bricks"
+title = "深板岩建材"
+desc = [
+	"深色建材做对比与基座。挖深层矿时顺手就有了原料。",
+]
+icon = "minecraft:deepslate_bricks"
+shape = "circle"
+size = 1.2
+deps = ["deep_ores"]
+tasks = [
+	{ type = "item", item = "minecraft:deepslate_bricks", count = 64 },
+]
+
+[[quest]]
+name = "clay_and_terracotta"
+title = "陶与黏土"
+desc = [
+	"陶瓦是最耐看的屋面材料。黏土要成规模地找与囤。",
+]
+icon = "minecraft:terracotta"
+shape = "circle"
+size = 1.2
+deps = ["brick_factory"]
+tasks = [
+	{ type = "item", item = "minecraft:terracotta", count = 64 },
+]
+
+[[quest]]
+name = "quartz_line"
+title = "石英与白色建材"
+desc = [
+	"白色建材做亮度与干净感。下界一趟能带回不少。",
+]
+icon = "minecraft:quartz_block"
+shape = "circle"
+size = 1.2
+deps = ["bulk_smelting"]
+tasks = [
+	{ type = "item", item = "minecraft:quartz_block", count = 32 },
+]
+
+[[quest]]
+name = "copper_blocks"
+title = "铜制建材"
+desc = [
+	"铜块会氧化变色，能做新旧对比。切割与打蜡都可以用机械手自动化。",
+]
+icon = "minecraft:cut_copper"
+shape = "circle"
+size = 1.2
+deps = ["copper_line"]
+tasks = [
+	{ type = "item", item = "minecraft:cut_copper", count = 64 },
+]
+
+[[quest]]
+name = "nether_bricks"
+title = "下界砖"
+desc = [
+	"下界的建材自带异域感，适合地标与要塞。",
+]
+icon = "minecraft:nether_bricks"
+shape = "circle"
+size = 1.2
+deps = ["brick_factory"]
+tasks = [
+	{ type = "item", item = "minecraft:nether_bricks", count = 64 },
+]
+
+[[quest]]
+name = "glass_pane"
+title = "玻璃板与采光"
+desc = [
+	"窗与温室都要玻璃板。它比整块玻璃省料，用量却更大。",
+]
+icon = "minecraft:glass_pane"
+shape = "circle"
+size = 1.2
+deps = ["glass_line"]
+tasks = [
+	{ type = "item", item = "minecraft:glass_pane", count = 64 },
+]
+
+[[quest]]
+name = "concrete_powder"
+title = "混凝土粉"
+desc = [
+	"混凝土要先出粉再遇水固化。这一步靠鼓风机洗涤能全自动。",
+]
+icon = "minecraft:white_concrete_powder"
+shape = "circle"
+size = 1.2
+deps = ["concrete_plant"]
+tasks = [
+	{ type = "item", item = "minecraft:white_concrete_powder", count = 64 },
+]
+
+[[quest]]
+name = "mats_throughput"
+title = "吞吐量达标"
+desc = [
+	"随机抽一条线看：从原料进到成品出，一个人都不需要站。",
+	"这一条成立，城的建材供应才算脱离「人拉着走」。",
+]
+icon = "create:item_vault"
+shape = "circle"
+size = 1.2
+deps = ["iron_line", "plank_line"]
+tasks = [
+	{ type = "item", item = "create:item_vault", count = 8 },
+]
+
+[[quest]]
+name = "mats_reserve"
+title = "建材战略储备"
+desc = [
+	"常用建材各留一仓。扩建时最怕的不是没矿，是矿在但没炼。",
+]
+icon = "minecraft:barrel"
+shape = "circle"
+size = 1.2
+deps = ["mats_throughput"]
+tasks = [
+	{ type = "item", item = "minecraft:barrel", count = 16 },
+]
+
+[[quest]]
+name = "waste_disposal"
+title = "废料处理"
+desc = [
+	"多出来的圆石、泥土要能消掉，不然仓库永远爆满。",
+]
+icon = "minecraft:lava_bucket"
+shape = "circle"
+size = 1.2
+deps = ["mats_reserve"]
+tasks = [
+	{ type = "item", item = "minecraft:lava_bucket", count = 4 },
+]
+
+[[quest]]
+name = "mats_monument"
+title = "工业碑"
+desc = [
+	"刻上这个时代投产的第一条全自动产线是什么。",
+	"下一章往更大的机器走之前，原料这一层必须稳。",
+]
+icon = "minecraft:anvil"
+shape = "circle"
+size = 1.2
+deps = ["mats_throughput", "mats_reserve"]
+tasks = [
+	{ type = "item", item = "minecraft:anvil", count = 2 },
+]

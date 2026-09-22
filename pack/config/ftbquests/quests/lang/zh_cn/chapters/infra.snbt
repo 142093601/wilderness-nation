@@ -134,64 +134,6 @@
 	quest.1681123594D42BFD.description: [
 	"工具要有地方修。附魔与耐久管理的落脚点在这里。"
 	]
-	quest.D86302E03CFB2898.title: "林木场"
-	quest.D86302E03CFB2898.description: [
-	"原木是最耗的原料。有计划地种与砍，比每次缺了才出去伐一片强。"
-	]
-	quest.E82C15BBCE5763B4.title: "石料场"
-	quest.E82C15BBCE5763B4.description: [
-	"建城的石头要成规模地来。一台钻机配一条传送带，就是一个石料场。"
-	]
-	quest.F33E6F0E75CD1091.title: "矿石处理线"
-	quest.F33E6F0E75CD1091.description: [
-	"矿石进来、粉碎、进熔炉——整条线一个人都不用站。"
-	"这是「基建」这个时代最典型的产物。"
-	]
-	quest.6FD93447844D5A76.title: "批量烧炼"
-	quest.6FD93447844D5A76.description: [
-	"鼓风机吹熔岩做批量烧炼，比一排熔炉省燃料也省地方。"
-	]
-	quest.4F56997EC674B4BE.title: "混凝土与建材"
-	quest.4F56997EC674B4BE.description: [
-	"建材要能成批出。混凝土让「大体积建筑」变得现实。"
-	]
-	quest.1F30845A116606AF.title: "砖窑"
-	quest.1F30845A116606AF.description: [
-	"砖是城里最常见的墙面材料。有了砖窑，建筑不再受「手上有什么」限制。"
-	]
-	quest.AC7F2C94C5F50E11.title: "石砖线"
-	quest.AC7F2C94C5F50E11.description: [
-	"石砖是城墙、道路、广场的通用件。批量产出，才有资格谈规模。"
-	]
-	quest.F8C0C9F7B1FF49D0.title: "锯木场"
-	quest.F8C0C9F7B1FF49D0.description: [
-	"原木进来、木板出去。把「砍」和「加工」放在同一处，省一趟运输。"
-	]
-	quest.26ADC35A2CA0B3A6.title: "石作场"
-	quest.26ADC35A2CA0B3A6.description: [
-	"石阶、石砖、磨制石料集中在一处加工。"
-	"同一种原料的多种形态放在一起，找起来才不费劲。"
-	]
-	quest.FFE2ED9656922065.title: "羊毛场"
-	quest.FFE2ED9656922065.description: [
-	"羊毛是床、地毯、旗帜的原料，也是最早能自动化的畜产。"
-	]
-	quest.668625570B5D23BE.title: "染料线"
-	quest.668625570B5D23BE.description: [
-	"有颜色才有区分度：队伍标识、建筑分区、地图标记都靠它。"
-	]
-	quest.7E423EA24AA40836.title: "造纸线"
-	quest.7E423EA24AA40836.description: [
-	"纸是地图、书、图纸的前置。地图墙那一章要的纸从这里来。"
-	]
-	quest.75DFEB9C40F9FBC3.title: "玻璃线"
-	quest.75DFEB9C40F9FBC3.description: [
-	"窗、温室、观察孔都要玻璃。用鼓风机批量烧，比一炉一炉快得多。"
-	]
-	quest.786D1545AFBDCF71.title: "炭窑"
-	quest.786D1545AFBDCF71.description: [
-	"燃料要提前备。炭比原木耐烧，也免了跟煤抢产量。"
-	]
 	quest.993F5DBB86D7FD03.title: "桥"
 	quest.993F5DBB86D7FD03.description: [
 	"路遇到水就断了。桥是把路网连成网的关键一件。"

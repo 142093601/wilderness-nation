@@ -78,11 +78,15 @@ hash = "b42a5ef3e3bae8eb9d0230d153f63215bbf6e9f2de7e662997bd5475f4ae3030"
 
 [[files]]
 file = "config/ftbquests/quests/chapters/infra.snbt"
-hash = "d4c2f45a9afda551b5e4d934b28b18411df053a7cb14da437dbfc5ed0cf7d152"
+hash = "1f645d295e3a414205f8c05b8775a55ca779690261436a9be8ebdd7e20502cf5"
 
 [[files]]
 file = "config/ftbquests/quests/chapters/landing.snbt"
 hash = "c0733f9712e5359cc2dc56bae32e61586ad07419b0971255ffdc0be0a416a0d4"
+
+[[files]]
+file = "config/ftbquests/quests/chapters/materials.snbt"
+hash = "329dd9c011a4d3c2739d206a3e4250b148df341c18d0f269e89d50de0d3376f3"
 
 [[files]]
 file = "config/ftbquests/quests/chapters/prologue.snbt"
@@ -98,7 +102,7 @@ hash = "2c7f21b3a0e142ba080eedc253984ace91ceb3044c0b3bcf34cf04c680674bc5"
 
 [[files]]
 file = "config/ftbquests/quests/lang/zh_cn/chapter.snbt"
-hash = "1e9db2cb4433cad8e6dfdfdb4a921039fea3b74604c8053f4da0ec54c9cd6465"
+hash = "1565f28f5db73b2b077928621cf0298dcc287a9e4e5142b46170c78a7de8dd08"
 
 [[files]]
 file = "config/ftbquests/quests/lang/zh_cn/chapter_group.snbt"
@@ -178,11 +182,15 @@ hash = "71ca71fe24602dad8a7ba3d7cb465c55f4c3292cb15031f2b7be26539b547ebc"
 
 [[files]]
 file = "config/ftbquests/quests/lang/zh_cn/chapters/infra.snbt"
-hash = "2e7f00816bb20e6a60ab350f9681d324df76403a925390b49ceacbb60e4fe275"
+hash = "16885a888c6220f2e0348daffb71a20dc28a06fbbd772581d5aa69985c5c34e1"
 
 [[files]]
 file = "config/ftbquests/quests/lang/zh_cn/chapters/landing.snbt"
 hash = "5946ada2f1b357e891c5ddb13ba6f414b5573a0ee5419fd7780dbfd2a68eefd1"
+
+[[files]]
+file = "config/ftbquests/quests/lang/zh_cn/chapters/materials.snbt"
+hash = "d19f73755b1a2f48514158d5a3af8d15f6844aea9c498a65995df51ddd15cec5"
 
 [[files]]
 file = "config/ftbquests/quests/lang/zh_cn/chapters/prologue.snbt"

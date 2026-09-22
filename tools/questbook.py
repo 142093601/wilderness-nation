@@ -348,10 +348,15 @@ def layout(chapter: ChapterDef) -> dict[str, tuple[float, float]]:
         if q is None:
             return 0
         deps = q.get("deps", []) or []
-        if not deps:
+        # ⚠️ 只有**章内存在**的依赖才算数。跨章引用会被 compile_chapter 报错，
+        # 但 layout() 先跑，所以这里必须自己过滤 —— 否则
+        # `max()` 收到空序列会抛 ValueError，把生成器整个打挂
+        # （2026-09-22 拆章时实测踩到：14 条任务带着跨章依赖搬进新章）。
+        local_deps = [d for d in deps if d in by_name]
+        if not local_deps:
             row = 0
         else:
-            row = 1 + max(row_for(d) for d in deps if d in by_name)
+            row = 1 + max(row_for(d) for d in local_deps)
         row_of[name] = row
         return row
 
