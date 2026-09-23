@@ -449,6 +449,12 @@ MCP 的整窗截图会**强制 GL 帧缓冲回读**（采样动作本身拖慢�
 
 **这套设置如何回滚**：`python tools/options_set.py --restore`（从 `options.txt.perfbackup` 整份还原）。
 
+> **测试存档 `scdev` 现在的状态**（下次做性能对照前要知道）：世界时间被冻在正午
+> （`doDaylightCycle=false`、时间 6000）、天气设成长期晴朗。
+> 这是**故意**的 —— 不冻住昼夜和天气就没法比帧数。要恢复正常游玩请在世界里敲
+> `/gamerule doDaylightCycle true`。**玩家的其它存档没有被碰过。**
+
+
 ### 8.5 E9：ModernFix `dynamic_resources` —— **实测负优化，已回滚**
 
 `config/modernfix-mixins.properties` 里的 `mixin.perf.dynamic_resources` **默认就是 false**
