@@ -312,12 +312,12 @@ python tools\pid_guard_selftest.py --with-server     # 改过进程相关代码�
 |---|---|---|
 | ~~高~~ | ~~铺其余 17 章~~ | ✅ **已完成**（2026-09-21：22 章 / 297 任务） |
 | ~~高~~ | ~~Statecraft"提前推进时代"入口~~ | ✅ **已完成**（`/statecraft accelerate`） |
-| **高** | **E7：Every Compat `ALWAYS`→`CACHED_ZIPPED`** | 每次会话重算 **436 个（客户端）+ 438 个（服务端）** 动态任务，是"资源重载→进世界"那 79 秒里最大的一块可动项。改 `config/everycomp-client.toml`，用 `perf_baseline.py` 前后各跑一次比"世界就绪"（口径见 `DESIGN-PERF.md` §四之四）|
-| **高** | 钉住进世界后 40~120 秒的 **2~8 秒卡顿** | 已具名两个来源（WorldEdit 状态表 5787 ms / RoadWeaver 673 结构）；**这段窗口 = "客户端可玩"尾段（稳定 58~59 s，见 `DESIGN-PERF.md` §七之二）**。采样用 spark：`/spark profiler start --timeout 90`——**不要加 `--save-to-file`**（加了只写 `config/spark/profile-<日期>.sparkprofile` 这个**二进制**文件；不加则会上传并打印 `spark.lucko.me/<key>` 链接，那个 key 的原始 JSON 在 `bytebin.lucko.me/<key>`，可以直接取来算热点）。发出命令后 **5 秒内截图聊天栏**确认（至少验过一次这样是有效的） |
-| **高** | 把"加载速度"的口径统一到**客户端可玩** | 以前所有报表只算到 `Time elapsed:`（服务端就绪），**少算 58 秒**；`perf_report.py` 已新增该阶段（注意 AdvancementTree 那行会打两次，必须取最后一次）|
-| 中 | E4：`scdev` 跑 `/chunky radius 64` 预生成后再测卡顿 | 耗时估算见 `DESIGN-PREGEN.md §5.1` |
-| 中 | E3：`-Xmx12G` vs 8G | 本机只有 15.8 GB，得等无人时跑；8G 下 GC 日志已出现 **Evacuation Failure**（堆偏紧）|
-| 中 | E8：临时移走 `chipped`/`rechiseled` 测启动 | 占全部注册项 **41%**；**需玩家拍板**（改内容）|
+| ~~高~~ | ~~E7：Every Compat `ALWAYS`→`CACHED_ZIPPED`~~ | ❌ **已测并回滚**：热缓存与 ALWAYS 打平（136.0 vs 136.2 s），冷缓存反而 +35 s。见 `DESIGN-PERF.md` §七 |
+| ~~中~~ | ~~E4：预生成后再测卡顿~~ | ✅ **已测**：探索新地形巨停 **14.8 s → 3.4 s（−77%）**；但对"进世界卡顿"无效。见 §十二。**给玩家的命令要用方块半径**（`/chunky radius 1024` ≈ 23 分钟）|
+| ~~中~~ | ~~E8：移走 `chipped`/`rechiseled`~~ | ❌ **已测，不建议**：41% 注册项只换 ~10~14 s（总加载 5~7%），代价是内容 + 17 处任务书引用 + 已有存档物品失效。见 §十三 |
+| 中 | **AppCDS（类数据共享）** | **唯一还没实测的 JVM 项**：`-XX:ArchiveClassesAtExit=…` 先生成归档、再 `-XX:SharedArchiveFile=…` 跑一次对比。预计收益小（ModLauncher 的自定义类加载器可能让 mod 类进不了归档），但要**证否**才算关掉 |
+| 中 | E3：`-Xmx12G` vs 8G | 本机只有 15.8 GB，得等无人时跑（可用内存要 ≥12 GB）；8G 下 GC 日志已出现 **Evacuation Failure**（堆偏紧）|
+| 中 | 钉住进世界后 40~120 秒的 **2~8 秒卡顿** | 已具名两个来源（WorldEdit 状态表 5787 ms / RoadWeaver 673 结构），且 JFR 已把成因归到"状态空间查表 + jar 解码"（§十一）；**这段窗口 = "客户端可玩"尾段（稳定 58~59 s，§七之二）**。采样用 spark：`/spark profiler start --timeout 90`——**不要加 `--save-to-file`**（加了只写二进制 `config/spark/profile-<日期>.sparkprofile`；不加会上传并打印 `spark.lucko.me/<key>`，其原始 JSON 在 `bytebin.lucko.me/<key>` 可取来算热点）。发出命令后 **5 秒内截图聊天栏**确认 |
 | 低 | 把 `farm_and_charm:mincer`（**13332 个方块状态**）报给作者 / 试新版本 | WorldEdit 自己的判词：该方块"属性用法不当" |
 | 中 | 给邦交/防御补 mod 侧信号（§3.4） | 不补则那两条只能是 `checkmark`。core 已有事件，接线成本不高 |
 | 中 | `DEFERRED.md` E1：纯原版性能基线（组 0） | 只起服务端，我能跑 |
