@@ -307,7 +307,13 @@ python tools\pid_guard_selftest.py --with-server     # 改过进程相关代码�
 |---|---|---|
 | ~~高~~ | ~~铺其余 17 章~~ | ✅ **已完成**（2026-09-21：22 章 / 297 任务） |
 | ~~高~~ | ~~Statecraft"提前推进时代"入口~~ | ✅ **已完成**（`/statecraft accelerate`） |
-| **高** | **给邦交/防御补 mod 侧信号**（§3.4） | 不补则那两条只能是 `checkmark`。core 已有事件，接线成本不高 |
+| **高** | **E7：Every Compat `ALWAYS`→`CACHED_ZIPPED`** | 每次会话重算 **436 个（客户端）+ 438 个（服务端）** 动态任务，是"资源重载→进世界"那 79 秒里最大的一块可动项。改 `config/everycomp-client.toml`，用 `perf_baseline.py` 前后各跑一次比"世界就绪"（口径见 `DESIGN-PERF.md` §四之四）|
+| **高** | 钉住进世界后 40~120 秒的 **2~8 秒卡顿** | 已具名两个来源（WorldEdit 状态表 5787 ms / RoadWeaver 673 结构）；剩下的要用 spark 或 MC `/debug` 采样器，**命令我能自己敲**，不需要玩家 |
+| 中 | E4：`scdev` 跑 `/chunky radius 64` 预生成后再测卡顿 | 耗时估算见 `DESIGN-PREGEN.md §5.1` |
+| 中 | E3：`-Xmx12G` vs 8G | 本机只有 15.8 GB，得等无人时跑；8G 下 GC 日志已出现 **Evacuation Failure**（堆偏紧）|
+| 中 | E8：临时移走 `chipped`/`rechiseled` 测启动 | 占全部注册项 **41%**；**需玩家拍板**（改内容）|
+| 低 | 把 `farm_and_charm:mincer`（**13332 个方块状态**）报给作者 / 试新版本 | WorldEdit 自己的判词：该方块"属性用法不当" |
+| 中 | 给邦交/防御补 mod 侧信号（§3.4） | 不补则那两条只能是 `checkmark`。core 已有事件，接线成本不高 |
 | 中 | `DEFERRED.md` E1：纯原版性能基线（组 0） | 只起服务端，我能跑 |
 | 中 | 方块/物品名 5862 条的规则化补全 | 已有资源包流水线；触发条件见 `DEFERRED.md` C 组 |
 | 中 | **任务书图片引导（期 3）** | PLAN §九：要客户端截图；`dsh-computer-use-win` 可自己截 |
@@ -322,8 +328,14 @@ python tools\pid_guard_selftest.py --with-server     # 改过进程相关代码�
 - **M0**：HYW 单位会不会主动打玩家（**挡夺城/计划 5**）
 - **A 组联机**（含 **A4 图纸 × 领地 = 项目关键路径**）· **B 组人眼** · **F 组军事 8 条**
 - ✅ **旧阻碍已解除**：`dsh-computer-use-win` 已上线（22 个工具），"看画面"类验收
-  **我自己截图判定**（`tools/COMPUTER-USE.md`）。但**发送按键进游戏仍然不可靠**，
-  所以"操作类"验收还需要人。
+  **我自己截图判定**（`tools/COMPUTER-USE.md`）。
+- ✅ **"按键发不进游戏"已不成立**（2026-09-23 实测）：顺序是
+  ① `activate_window` 把窗口弄到前台 →
+  ② `keypress` / `type_text`（chat 命令 = `keypress T` → `type_text "/xxx"` → `keypress Enter`，整条链走通）；
+  ③ 读画面用 `tools/fps_shot.py`（只截一小块，比整窗截图便宜且不拖慢被测帧）。
+  **唯一坑**：有模态界面时按键会被它吃掉 —— 例如 Enhanced Celestials 每次进世界都弹的
+  "EC2 is here!" 公告屏，必须先 `Escape` 关掉，`F3` 才会生效。
+  ⇒ **操作类验收现在也能自己做**（这台机器上）。
 
 ## 十一、等用户拍板的
 

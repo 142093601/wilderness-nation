@@ -106,6 +106,12 @@ def main() -> int:
     ap.add_argument("--world", default="scdev", help="**测试存档**（绝不用玩家的存档）")
     ap.add_argument("--aikar", action="store_true", help="加上 Aikar's flags")
     ap.add_argument("--extra", default="", help="额外 JVM 参数（空格分隔）")
+    # 窗口分辨率：做 **FPS** 对照时必须固定画面像素数。
+    # 854x480 下 GPU 只有三成占用（实测 F3），帧数瓶颈全在 CPU —— 在那上面测
+    # "Fabulous→Fancy 省多少帧"只会得到"几乎没差"的假结论。
+    # 留空 = 沿用 autotest 的 854x480（启动耗时对照的老口径）。
+    ap.add_argument("--width", default="", help="窗口宽（留空=854）")
+    ap.add_argument("--height", default="", help="窗口高（留空=480）")
     args = ap.parse_args()
 
     PERF.mkdir(parents=True, exist_ok=True)
@@ -148,6 +154,9 @@ def main() -> int:
            # 用空格分隔时 argparse 会把它当成另一个选项，报
            # "argument --jvm-args: expected one argument"（第一次跑就踩了）。
            "--jvm-args=" + " ".join(jvm)]
+    if args.width and args.height:
+        cmd += ["--width", args.width, "--height", args.height]
+        print(f"窗口：{args.width}x{args.height}")
     print("受控启动：", " ".join(cmd[:8]), "…")
     t0 = time.time()
     r = subprocess.run(cmd, cwd=str(ROOT), text=True, encoding="utf-8", errors="replace",
@@ -174,6 +183,7 @@ def main() -> int:
     # 用同一个报告器解析（它自己会拒绝被污染的日志并退 2）
     rep = PERF / f"{args.label}.md"
     rr = subprocess.run([sys.executable, "tools/perf_report.py",
+                         "--log", str(VERSION_DIR / "logs" / "latest.log"),
                          "--gc-log", str(gc_log), "--out", str(rep)],
                         cwd=str(ROOT))
     if rr.returncode == 2:
@@ -183,12 +193,30 @@ def main() -> int:
     # 抽成可比的 JSON
     text = rep.read_text(encoding="utf-8") if rep.is_file() else ""
     m = re.search(r"共 \*\*(\d+) 次\*\* · 累计落后 \*\*([\d.]+) 秒\*\* · 最严重 \*\*(\d+)ms", text)
+
+    # 加载阶段用**可自证**的口径：全部来自日志时间戳（JVM 第一行 → 各里程碑）。
+    # 不用 ModernFix 那几句 "Game took / Time from main menu / Total time" ——
+    # 它们的计时起点我在日志里看不到，2026-09-23 就是引用它们把一次 132 秒的会话
+    # 记成了 221 秒（见 DESIGN-PERF §四之四）。
+    phases: dict[str, int] = {}
+    for name, cum in re.findall(
+            r"\| (数据包与配方|进入世界|世界就绪) \| [0-9:]+ \| \+\d+s \| \*{0,2}\+(\d+)s", text):
+        phases[name] = int(cum)
+    # 「世界就绪」那一列的"距启动"就是全程耗时 —— 不再去正文里抠一句话
+    # （第一版抠的是 `共 **143** 秒`，可实际排版是整句加粗 `**从…共 143 秒。**`，
+    #  于是永远匹配不到、JSON 里静默留空。锚在表格列上就不会再错。）
+    if "世界就绪" in phases:
+        phases["合计"] = phases["世界就绪"]
+
     stats = {
         "label": args.label,
         "xmx": args.xmx,
         "aikar": args.aikar,
         "world": args.world,
         "seconds": args.seconds,
+        "width": args.width or "854",
+        "height": args.height or "480",
+        "phases": phases,
         "stalls": int(m.group(1)) if m else 0,
         "stall_seconds": float(m.group(2)) if m else 0.0,
         "worst_stall_ms": int(m.group(3)) if m else 0,
@@ -199,6 +227,9 @@ def main() -> int:
         json.dumps(stats, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"\n本次基线：卡顿 {stats['stalls']} 次 · 累计 {stats['stall_seconds']}s · "
           f"最严重 {stats['worst_stall_ms']}ms")
+    if phases:
+        print("加载阶段（日志时间戳口径，距 JVM 启动）："
+              + " · ".join(f"{k} +{v}s" for k, v in phases.items()))
     print(f"-> {rep}  ·  {gc_log}")
     return 0
 

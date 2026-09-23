@@ -34,6 +34,21 @@ def secs(m: re.Match) -> float:
     return int(m.group(1)) * 3600 + int(m.group(2)) * 60 + int(m.group(3)) + int(m.group(4)) / 1000.0
 
 
+def read_lines(p: pathlib.Path) -> list[str]:
+    """读日志（**支持 .gz**）。
+
+    2026-09-23 踩到：以前这里直接 `read_text()`，对 `.gz` 就是"把压缩字节按 utf-8
+    解码"，得到一堆乱码行 —— 于是对一个 4176 行的会话只解析出 2200 行、
+    **报出"0 个 ≥0.5s 的空档"**。而真相是那次会话确实有几十秒的启动耗时差，
+    我差点拿这个假绿去解释另一件事。`perf_report.py` 早就支持 .gz，这里补齐。
+    """
+    if p.suffix == ".gz":
+        import gzip
+        with gzip.open(p, "rt", encoding="utf-8", errors="replace") as fh:
+            return fh.read().splitlines()
+    return p.read_text(encoding="utf-8", errors="replace").splitlines()
+
+
 def default_log() -> pathlib.Path | None:
     try:
         sys.path.insert(0, str(HERE))
@@ -70,7 +85,7 @@ def main() -> int:
     if not log or not log.is_file():
         print("找不到日志；用 --log 指定")
         return 1
-    lines = log.read_text(encoding="utf-8", errors="replace").splitlines()
+    lines = read_lines(log)
 
     def bound(s: str | None) -> float | None:
         if not s:
