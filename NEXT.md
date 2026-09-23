@@ -308,7 +308,8 @@ python tools\pid_guard_selftest.py --with-server     # 改过进程相关代码�
 | ~~高~~ | ~~铺其余 17 章~~ | ✅ **已完成**（2026-09-21：22 章 / 297 任务） |
 | ~~高~~ | ~~Statecraft"提前推进时代"入口~~ | ✅ **已完成**（`/statecraft accelerate`） |
 | **高** | **E7：Every Compat `ALWAYS`→`CACHED_ZIPPED`** | 每次会话重算 **436 个（客户端）+ 438 个（服务端）** 动态任务，是"资源重载→进世界"那 79 秒里最大的一块可动项。改 `config/everycomp-client.toml`，用 `perf_baseline.py` 前后各跑一次比"世界就绪"（口径见 `DESIGN-PERF.md` §四之四）|
-| **高** | 钉住进世界后 40~120 秒的 **2~8 秒卡顿** | 已具名两个来源（WorldEdit 状态表 5787 ms / RoadWeaver 673 结构）；剩下的要用 spark 或 MC `/debug` 采样器，**命令我能自己敲**，不需要玩家 |
+| **高** | 钉住进世界后 40~120 秒的 **2~8 秒卡顿** | 已具名两个来源（WorldEdit 状态表 5787 ms / RoadWeaver 673 结构）；**这段窗口 = "客户端可玩"尾段（稳定 58~59 s，见 `DESIGN-PERF.md` §七之二）**。采样用 spark：`/spark profiler start --timeout 90`——**不要加 `--save-to-file`**（加了只写 `config/spark/profile-<日期>.sparkprofile` 这个**二进制**文件；不加则会上传并打印 `spark.lucko.me/<key>` 链接，那个 key 的原始 JSON 在 `bytebin.lucko.me/<key>`，可以直接取来算热点）。发出命令后 **5 秒内截图聊天栏**确认（至少验过一次这样是有效的） |
+| **高** | 把"加载速度"的口径统一到**客户端可玩** | 以前所有报表只算到 `Time elapsed:`（服务端就绪），**少算 58 秒**；`perf_report.py` 已新增该阶段（注意 AdvancementTree 那行会打两次，必须取最后一次）|
 | 中 | E4：`scdev` 跑 `/chunky radius 64` 预生成后再测卡顿 | 耗时估算见 `DESIGN-PREGEN.md §5.1` |
 | 中 | E3：`-Xmx12G` vs 8G | 本机只有 15.8 GB，得等无人时跑；8G 下 GC 日志已出现 **Evacuation Failure**（堆偏紧）|
 | 中 | E8：临时移走 `chipped`/`rechiseled` 测启动 | 占全部注册项 **41%**；**需玩家拍板**（改内容）|

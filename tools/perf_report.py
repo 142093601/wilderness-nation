@@ -58,6 +58,13 @@ PHASES = [
     ("开始建世界",       r"Preparing spawn area"),
     ("进入世界",         r"Starting integrated minecraft server"),
     ("世界就绪",         r"Time elapsed: (\d+) ms"),
+    # ⚠️ 这一行才是**玩家体感**的终点：`Time elapsed:` 只是**服务端**把出生区块准备好了，
+    # 客户端这时还在"加载地形中..."。实测 r13：世界就绪 11:25:22 → 客户端真正进世界 11:26:18
+    # （Xaero `Minimap updated server level id`）/ 11:26:20，**多等 56~58 秒**。
+    # ⚠️⚠️ 这个 logger 会打**两次**：启动时装完数据包那次（`Loaded 9803 advancements`，
+    # 在 `世界就绪` **之前**）和**真正加入世界**那次（`Loaded 253 advancements`）。
+    # 同名的两次匹配只取第一个就会算出**负的间隔** —— 我连踩两次，所以这里显式声明 `last`。
+    ("客户端可玩",       r"\[net\.minecraft\.advancements\.AdvancementTree/\]: Loaded \d+ advancements", "last"),
     ("完成",            r"Done \(([\d.]+)s\)!"),
 ]
 
@@ -140,14 +147,22 @@ def main() -> int:
     # ---- 1. 阶段耗时 ----
     emit("## 1. 加载各阶段")
     marks: list[tuple[str, str, str]] = []
-    for label, pat in PHASES:
+    for entry in PHASES:
+        # 允许三元组 (label, pattern, "last")：有些 milestone 的同一行会在日志里出现多次
+        # （例如 AdvancementTree 的 "Loaded N advancements"：启动一次、真正进世界再一次），
+        # 取第一个会算出负的间隔，必须能显式声明"取最后一次"。
+        label, pat = entry[0], entry[1]
+        pick_last = len(entry) > 2 and entry[2] == "last"
+        hits = []
         for ln in lines:
             m = re.search(pat, ln)
             if m:
                 ts = TS.search(ln)
                 if ts:
-                    marks.append((label, ts.group(1), m.group(0)[:52]))
-                break
+                    hits.append((ts.group(1), m.group(0)[:52]))
+        if hits:
+            ts, ev = hits[-1] if pick_last else hits[0]
+            marks.append((label, ts, ev))
     # 去重（同一秒同一标签）
     seen: set[tuple[str, str]] = set()
     marks = [m for m in marks if not (m[0] in seen or seen.add((m[0], m[1])))]  # type: ignore[func-returns-value]
