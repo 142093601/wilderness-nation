@@ -952,6 +952,61 @@ E8（砍装饰变体）不只是"少几个方块"，它会直接削掉这条热�
 * ⚠️ F3 那行是 `NNN fps / 无限制 fps 垂直同步`：**"无限制"不等于"关掉 vsync"**，
   它只是把软限速器拿掉；实际帧数仍被显示器与工作能力约束（实测 141.5，未超 144）。
 
+---
+
+## 十八、加载耗时的**完整归因**（三段，调用树口径，2026-09-23）
+
+到这里"加载速度"这条线的假设已经穷尽。用 r14 的 JFR（`--mode total` = 按"出现在调用树里"统计）
+把三段逐一归因，每段都能指到具体机制。
+
+### 18.1 JVM → 资源重载（0~63 s）
+
+| 调用树占比 | 框架 | 含义 |
+|---|---|---|
+| **33.2%** | `ClassTransformer.transform` / `TransformingClassLoader.maybeTransformClassBytes` | **类加载时做字节码变换** |
+| **28.2%** | `MixinProcessor.applyMixins` / `MixinTransformer.transformClass` / `MixinApplicatorStandard.apply` | **Mixin 施加** |
+| ~19% | `AbstractPipeline.copyInto` / `wrapAndCopyInto` | 变换用的 ASM 读写管线 |
+| 13% | `Constructor.newInstanceWithCaller` / `DirectConstructorHandleAccessor` | 反射实例化 |
+
+⇒ 这一段约三分之一是"Mixin/ASM 改字节码"，四分之一是 Mixin 本身 —— 231 个 mod 的 mixin 配置的固定代价。
+ModernFix 的 `class_search_cache` 已开着（默认 true）⇒ **没有可动的开关**。
+
+### 18.2 资源重载 → 集成服务端（63~153 s）
+
+| 调用树占比 | 框架 | 含义 |
+|---|---|---|
+| **28.7%** | `MultiPackResourceManager.listResources` / `FallbackResourceManager.listResources` / `FilePackResources.listResources` | **跨"包"列举资源**（231 个 mod 包 + 5.2 MB 语言包）|
+| **25.8%** | `FileToIdConverter.listMatchingResources` | 按目录列举模型/贴图 |
+| **25.6% / 20.0%** | `ModelManager.loadModels` / `ModelBakery.bakeModels` | 模型加载与烘焙 |
+| **22.2%** | `SpriteSourceList.list` / `SpriteLoader.loadAndStitch` | **贴图图集拼接** |
+| 21~24% | `ZipFile$ZipEntryIterator.next` / `getZipEntry` | 上面那些列举**在 jar 里的实现** |
+
+**关键否定**：这一段里**没有出现 `Language`/Gson/JSON 解析帧**
+⇒ "那个 5.2 MB 中文语言包拖慢重载"这个猜想**不成立**（**不用为加载速度牺牲汉化**）。
+
+### 18.3 世界就绪 → 客户端可玩（尾段 55~60 s）
+
+§11 已归因：服务端在**方块状态的属性查表/哈希**上烧时间（`AbstractProperty.equals`、Guava `ImmutableMap` 构造），
+客户端在**区块载入/光照/重建**上烧时间；`WorldEdit` 的 5787 ms 与 `RoadWeaver` 的 673 结构也在这段。
+
+**顺带否掉"尾段与玩家存档的探索量有多大关系"**：拿玩家自己那次会话
+（`logs/2026-09-22-1.log.gz`，23:45 那次，世界已探索很多）算：
+世界就绪 +444 s → 客户端真正进世界（第二次 `AdvancementTree` + Xaero minimap）+495~497 s
+⇒ **尾段约 51 秒**，与我测试档的 55~60 秒**同量级**
+⇒ 尾段**不是**被"存档探索量 / Xaero 地图缓存"撑大的。
+
+### 18.4 总判决
+
+三段都指到机制上了，而且三段都是**"mod 数量 × 每 mod 的代码/资源量"的线性代价**：
+字节码变换、资源列举、模型烘焙、贴图拼接、方块状态空间 —— **没有任何一段是配置错误**。
+⇒ **加载速度这一半，在 `config` / `JVM 参数` / `预生成` / `脚本` 四层里已经穷尽**；
+要再动只能动**mod 数量**或**内存/启动器**（三件都在玩家侧）。
+
+> 附：`config/voxy-client.toml` 是**孤儿配置** —— 包里有这份配置，但 `mods/` 里**已经没有 voxy**
+> （2026-09-21 的日志里还能看到 `client.voxy.mixins.json`，现在没了）。它不影响任何东西，
+> 但下次别再去找"voxy 的开关"。要不要删由玩家定（我没动别人的文件）。
+
+
 
 
 ---
