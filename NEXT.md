@@ -229,6 +229,11 @@ python tools\verify_questbook_on_server.py     # 5) 真机：章数/任务数一
 | `tools/i18n_cover.py` / `i18n_verify.py` | 汉化真实缺口 / 产出独立验收 |
 | `tools/tests/sc_*.txt`、`statecraft_build.txt`、`m0_hyw.txt` | 真机验收脚本 |
 | `tools/COMPUTER-USE.md` | 电脑控制插件用法（**已上线**，22 个 `mcp__wincu__*` 工具） |
+| **`tools/perf_baseline.py`** | 受控性能跑（`--label/--xmx/--seconds/--width/--height/--extra`）。**`--extra` 的值以 `-` 开头时必须用 `=` 形式**（`--extra="-XX:…"`），否则 argparse 报"expected one argument" |
+| `tools/perf_report.py` | 从日志算阶段耗时（**含"客户端可玩"** = 玩家体感终点）、卡顿、GC。`--log` 与 `--gc-log` 要给全，只给 gc 日志会得到空阶段表 |
+| `tools/perf_gaps.py` | 单线程日志空档（**跨线程空档不是串行成本**，硬规则 23）|
+| **`tools/jfr_hotspots.py`** | **从 JFR 录制算热点方法**（JDK 21 没有 `jfr view hot-methods`）。用法：`perf_baseline … --extra="-XX:StartFlightRecording=filename=logs/x.jfr,settings=default,dumponexit=true"`，再 `python tools/jfr_hotspots.py logs/x.jfr --window <lo> <hi> [--thread "Server thread"]`。**这是唯一能覆盖"进世界尾段"的采样手段**（那段客户端卡在加载屏幕，聊天命令发不进去）；注意 **JFR 本身拖慢启动 ~18%，只能用来归因** |
+| `tools/fps_shot.py` / `tools/options_set.py` | FPS 采样（只截一小块 + 拼图）/ 改 `options.txt`（带备份、在跑就拒绝） |
 
 **跑测试**：
 

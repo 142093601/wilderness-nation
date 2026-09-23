@@ -103,11 +103,12 @@ Chunky 已在包里。按区块数算（`DESIGN-PREGEN.md` §5.1）：
 | E5 | 定位巨停 | spark / MC 自带 `/debug` 采样器 | 🟡 已具名两个来源（WorldEdit 状态表 5787 ms、RoadWeaver 673 结构）；剩余 2~8 s 未具名 |
 | E6 | 客户端画质 vs 帧数 | `graphicsMode` / `particles` / `renderClouds` / `entityDistanceScaling` | ✅ **四项合计 +20%**（Fancy 单独 +10%、另三项 +9%），见 §8.4 |
 | E7 | Every Compat | `dynamic_assets_generation_mode` ALWAYS→CACHED_ZIPPED | ❌ **热缓存打平、冷缓存 +35 s，已回滚**，见 §七 |
-| E8 | 移走 `chipped`/`rechiseled` | mods（占全部注册项 41%）| ⬜ **需玩家拍板**（改内容）|
+| E8 | 移走 `chipped`/`rechiseled` | mods（占全部注册项 41%）| ⬜ **需玩家拍板**（改内容）。**现在有机制证据**：尾段的服务端热点就是方块状态的属性查表/哈希（§11.1）⇒ 砍变体会直接削掉它 |
 | E9 | ModernFix `dynamic_resources=true` | config（默认关闭）| ❌ **实测负优化（+155.1 s），已回滚**，见 §8.5 |
 | E10 | 窗口分辨率 | 854×480 vs 1920×1080 | ✅ 1080p 慢 **10~15 s（+8~11%）** |
 | E11 | 具名元凶 `farm_and_charm:mincer` | 13332 个方块状态 → WorldEdit 建表 5787 ms | ✅ 已定位（处置待定：报作者 / 换版本 / 接受）|
-| E12 | 进世界后头 90 秒的巨停 | WorldEdit 状态表 + RoadWeaver 结构发现 | 🟡 两个来源已具名；剩余 2~8 s 未定。**这段窗口同时就是"客户端可玩"尾段（§七之二）**；spark 采样路径已验证（§9.3）|
+| E12 | 进世界后头 90 秒的巨停 | WorldEdit 状态表 + RoadWeaver 结构发现 | ✅ **已归因**（JFR，§十一）：尾段 = 状态空间查表/哈希 + jar/zip 解码 + 剔除；**配置层已无可压缩的开关** |
+| E13 | JFR 采样（新仪器） | `-XX:StartFlightRecording` + `tools/jfr_hotspots.py` | ✅ **可用**（唯一能覆盖尾段的手段；注意它本身拖慢启动约 18%）|
 
 
 每条都记 `data/perf/<label>.json`，同一套口径比对。
@@ -662,6 +663,77 @@ This block is likely improperly using properties. State count: 13332. 5787ms ela
 ⚠️ **这一版的总表也提醒了一件事**：1080p 这 8 次的极差（136.2~155.1 = **19 秒**）
 比我一开始估计的 5% 更大 —— 所以**单次跑不足以判定 10~20 秒级的启动改动**，
 至少得两边各两次。E7/E8 的测法必须照这个来。
+
+---
+
+## 十一、用 JFR 把"尾段 58 秒"拆开（2026-09-23 新增）
+
+**手段**：JVM 级 Flight Recorder，从**进程启动那一刻**就在录，所以连"启动阶段 + 进世界 + 尾段"
+全都能采到 —— 这是**唯一**能覆盖尾段的采样方式（尾段里客户端还卡在"加载地形中…"屏幕，
+**聊天命令根本发不进去**，spark / `/debug` 都够不着）。
+
+```bash
+# 录制（r14）：加到 perf_baseline 的额外 JVM 参数里
+python tools/perf_baseline.py --label r14-jfr-8G --xmx 8G --seconds 200 \
+  --width 1920 --height 1080 \
+  --extra="-XX:StartFlightRecording=filename=logs/r14.jfr,settings=default,dumponexit=true"
+# 分析（JDK 21 没有 `jfr view hot-methods`，用自带的聚合器）
+python tools/jfr_hotspots.py logs/r14.jfr --window 164 300        # 尾段窗口
+python tools/jfr_hotspots.py logs/r14.jfr --window 164 300 --thread "Server thread"
+```
+
+> ⚠️ **JFR 会拖慢启动**：r14 是 +164 s 世界就绪 / **+237 s 客户端可玩**，
+> 比同期基线（+140 / +198）慢约 18%。⇒ **只拿它做归因，不要拿它当性能基线。**
+> （r14 仍抓到 2 次卡顿、累计 9.3 s、最坏 7215 ms，说明窗口覆盖到了。）
+
+### 11.1 尾段（世界就绪 → 之后约 2 分钟）到底在算什么
+
+`Server thread` 的 **self** 热点（2107 个采样，占全场采样 21%）：
+
+| 排名 | 方法 | 占比 |
+|---|---|---:|
+| 1 | `Maps.equalsImpl` | 7.5% |
+| 2 | `RegularImmutableMap.get` | 5.8% |
+| 3 | `HashMap$TreeNode.find` | 4.5% |
+| 4 | `ImmutableMapEntrySet.isHashCodeFast` | 4.4% |
+| 5 | `RegularImmutableMap.size` | 3.4% |
+| 6 | `RegularImmutableMap.fromEntryArrayCheckingBucketOverflow` | 2.3% |
+| 7 | `HashMap.putVal` | 2.3% |
+| 8 | **`AbstractProperty.equals`** | **2.3%** |
+| 9 | *（其后）* `BlockState.withValue` | 1.0% |
+
+**读法**：`AbstractProperty.equals` + `BlockState.withValue` + 一堆 `ImmutableMap`
+（`fromEntryArrayCheckingBucketOverflow` 就是 Guava **在建 ImmutableMap**）
+⇒ 服务端在**按属性值查方块状态**上烧时间。**这一项的成本随"方块状态空间"增长** ——
+而这个包的注册项是 26,024（`chipped` 6,993 + `rechiseled` 3,628 = 41%），
+再加上 `farm_and_charm:mincer` 一个方块就 **13,332 个状态**（§9.1）。
+
+⇒ **这是把 §9 的"具名元凶"和 E8 连起来的机制证据**：
+E8（砍装饰变体）不只是"少几个方块"，它会直接削掉这条热点。
+
+### 11.2 同一窗口里其它线程在干什么
+
+| 线程 | self 热点 | 含义 |
+|---|---|---|
+| `Worker-ResourceReload-1` | `JavaUtilJarAccessImpl.entryFor` **36%**、`String.newStringUTF8NoRepl` **24%**、`ZipFile.getZipEntry` 14% | **从 jar 里读条目 + UTF-8 解码字符串**（231 个 mod + 那个 5.2 MB 中文语言包）—— 这是"资源重载"那 79 秒的实质 |
+| `Worker-ResourceReload-4` | `Objects.equals` **14%**、`HashMap.putVal` 6% | 解析/去重 |
+| `CullThread` | `Arrays.fill` **55%**、`Provider.isOpaqueFullCube` 17% | Embeddium 的遮挡剔除在**清数组**（这是剔除本身的开销，不是配置问题）|
+| `Chunk Render Task Executor #0/#1` | `copycats$customOcclusion` **8%**、`SimpleBakedModel.getQuads` 8%、`ChunkBuilderMeshingTask.execute` 7% | 客户端区块重建；其中 8% 花在 **Copycats 的方块状态遮挡钩子**上（又一个"状态空间"税）|
+| `main` | `HashMap.getNode` 4%、`Holder$Reference.value` 3% | 注册表查表 |
+
+### 11.3 结论（**这一轮的答案**）
+
+尾段的 58 秒**不是某个 mod 的 bug，也不是配置错**，而是：
+
+1. **方块状态空间的查表/哈希**（服务端），以及同源的 Copycats 遮挡钩子（客户端）；
+2. **从 231 个 jar 里读条目 + 解码 UTF-8**（重载 worker）；
+3. Embeddium 剔除的固定开销。
+
+⇒ 在"config / JVM 参数 / 预生成 / 脚本"这四层里**已经没有能显著压缩它的开关了**；
+能真正压缩它的只有**内容规模**（E8 砍装饰变体、或整体减 mod 数），
+那是**要玩家拍板的内容决定**。这是本轮最重要的结论：
+**继续在配置层找"省几十秒"的开关是徒劳的 —— 已经用采样证据证明了。**
+
 
 
 
