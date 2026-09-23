@@ -99,7 +99,7 @@ Chunky 已在包里。按区块数算（`DESIGN-PREGEN.md` §5.1）：
 | E1 | 基线 | `-Xmx8G`，JDK 默认 G1 | ✅ 世界就绪 **+130.5 s**（854×480）|
 | E2 | GC 调参 | `-Xmx8G` + Aikar's flags | ✅ **否决**（最坏暂停 319→3101 ms）|
 | E3 | 堆大小 | `-Xmx12G` 对比 E1 | ⬜ 未跑（本机仅 15.8 GB，12 G 堆会换页）|
-| E4 | 预生成 | `scdev` 跑 `/chunky radius 64` 后再测 | ⬜ |
+| E4 | 预生成 | `scdev` 跑 `/chunky radius 64` 后再测 | ⬜ **范围已收窄**：尾段里没有任何区块生成帧（§11.4）⇒ **治不了"进世界卡顿"**，只对"探索新地形"有意义 |
 | E5 | 定位巨停 | spark / MC 自带 `/debug` 采样器 | 🟡 已具名两个来源（WorldEdit 状态表 5787 ms、RoadWeaver 673 结构）；剩余 2~8 s 未具名 |
 | E6 | 客户端画质 vs 帧数 | `graphicsMode` / `particles` / `renderClouds` / `entityDistanceScaling` | ✅ **四项合计 +20%**（Fancy 单独 +10%、另三项 +9%），见 §8.4 |
 | E7 | Every Compat | `dynamic_assets_generation_mode` ALWAYS→CACHED_ZIPPED | ❌ **热缓存打平、冷缓存 +35 s，已回滚**，见 §七 |
@@ -733,6 +733,23 @@ E8（砍装饰变体）不只是"少几个方块"，它会直接削掉这条热�
 能真正压缩它的只有**内容规模**（E8 砍装饰变体、或整体减 mod 数），
 那是**要玩家拍板的内容决定**。这是本轮最重要的结论：
 **继续在配置层找"省几十秒"的开关是徒劳的 —— 已经用采样证据证明了。**
+
+### 11.4 顺带否掉"预生成能治进世界卡顿"（E4 的范围被收窄）
+
+尾段窗口 top 60 里**没有任何区块生成帧**（没有 `ChunkGenerator` / `NoiseBasedChunkGenerator` /
+`Structure` / `Feature`）。出现的是：
+
+| 类别 | 代表帧 |
+|---|---|
+| 取区块 | `ServerChunkCache.getChunk` 1.0% |
+| 光照 | `IBlockStateExtension.getLightEmission` 0.7%、`DynamicLightingEngine.getDynamicLightLevel` 0.5%、`ArrayLightDataCache.get` 0.5% |
+| 区块重建 | `ChunkBuilderMeshingTask.execute` 0.6%、`ChunkMeshBufferBuilder.push` 0.4% |
+| 碰撞 | `ChunkAwareBlockCollisionSweeper.computeNext` 0.4% |
+
+⇒ **进世界那一分钟的卡顿是"载入 + 光照 + 重建"，不是"生成"**（`scdev` 出生区早就生成过了）。
+所以 **E4 预生成治不了"进世界卡顿"**，它治的是**探索新地形时**的生成卡顿
+（玩家那次 17.9 秒的巨停可能属于后者 —— 但需要另测）。
+**别为了"进世界卡顿"去跑几小时预生成。**
 
 
 
